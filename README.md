@@ -5,7 +5,7 @@ A Monster Hunter Wilds inspired addon for **Tensura 2.0.1.3**, **Minecraft
 
 ## Download
 
-The built addon is included at [releases/tensura-wild-hunt-0.2.0.jar](releases/tensura-wild-hunt-0.2.0.jar).
+The built addon is included at [releases/tensura-wild-hunt-0.3.0.jar](releases/tensura-wild-hunt-0.3.0.jar).
 Install it alongside Tensura and its required dependencies on both client and server.
 
 ## Human hunter progression
@@ -40,16 +40,30 @@ ability interface and key bindings.
 
 | Inspiration | Unique → Ultimate | Three modes |
 | --- | --- | --- |
-| Rey Dau | Storm Crown → Raijin, Lord of Thunder | Railbolt; Thunderclap; Storm Mantle |
+| Rey Dau | Storm Crown → Raijin, Lord of Thunder | Railbolt; Thunderstorm; Storm Mantle |
 | Uth Duna | Scarlet Deluge → Varuna, Lord of Tides | Crushing Current; Scarlet Undertow; Water Veil |
 | Nu Udra | Black Flame → Agni, Lord of the Black Flame | Oil Lash; Blackflame Ignition; Furnace Mantle |
-| Jin Dahaad | Frostbound Colossus → Ymir, Lord of Winter | Glacial Lance; Freezing Mist; Colossus Guard |
+| Jin Dahaad | Frostbound Colossus → Ymir, Lord of Winter | Glacial Rupture; Freezing Mist; Colossus Guard |
 
-- Lightning deals 30% more damage to wet/drenched targets and grants a speed mantle.
-- Water drenches and slows targets; undertow pulls inward; the veil grants absorption and water breathing.
-- Oil Lash marks targets for ten seconds. Ignition consumes your own oil mark for double damage and burning. Furnace Mantle grants fire resistance and strength.
-- Ice attacks build freezing and slow targets; Colossus Guard grants resistance.
-- Ultimates strengthen all three modes and add a fourth: a ten-second elemental domain that pulses once per second.
+- **Rey Dau:** piercing railbolts chain lightning into nearby enemies. Thunderstorm
+  leaves a persistent damage field; Storm Mantle boosts movement, attack speed and
+  lightning power. Wet/drenched targets take 30% extra damage.
+- **Uth Duna:** a pressure cone deals 50% extra damage to drenched enemies;
+  Undertow pulls enemies into a whirlpool. Water Veil adds absorption, armor,
+  a magic barrier and water breathing.
+- **Nu Udra:** sweeping Oil Lash adds up to three oil stacks. Ignition consumes
+  your own stacks for a heavy detonation, native Black Burn and a burning field.
+  Furnace Mantle boosts melee attack, flame power and armor.
+- **Jin Dahaad:** Freezing Mist builds rime and Chill; Glacial Rupture consumes
+  three rime stacks for a shattering strike. Colossus Guard adds armor,
+  a magic barrier and knockback resistance.
+- **Ultimates:** triple base damage, longer reach, stronger 30-second mantles,
+  and distinct ten-second elemental domains with one-second pulses.
+
+Damage grows with EP and mastery. Corrected cooldowns are measured in seconds:
+Unique primaries take 3–4 seconds, fields 7–8 seconds, and mantles 18–20 seconds.
+Read the [full comparison of all four lines](docs/BALANCE.md) for exact values,
+Tensura benchmarks, aura costs and the capped scaling formula.
 
 Skills use Tensura elemental damage, resistances, aura, mastery, native storage,
 and cooldowns. Attacks check teams, PvP settings, owned pets, creative/spectator
@@ -74,12 +88,16 @@ permission is needed. Actual Monster Hunter boss mobs are planned for later;
 existing eligible bosses provide progression now. Balance values are currently
 defined in Java.
 
-### Updating from 0.1.0
+### Updating from 0.1.0 or 0.2.0
 
-Replace the old addon jar with 0.2.0; do not install both. Already learned skills
+Replace the old addon jar with 0.3.0; do not install both. Already learned skills
 are retained. Old ordinary-hunt totals and trial flags do not grant boss credit
 or gate skills, and boss kills before this update cannot be reconstructed.
-New boss kills begin the distinct-boss record.
+When updating from 0.1.0, new boss kills begin the distinct-boss record. Existing
+0.2.0 boss history and rolled skills remain valid. The 0.3.0 update fixes skill
+names, rebalances all eight skills, adds original monster portraits and overhauls
+combat effects. Old saved cooldowns are shortened to the corrected limits on
+first login; rerolling your skill is not required.
 
 ## Build and test
 
@@ -99,18 +117,24 @@ verifies published SHA-512 hashes. Dependency jars are not bundled in the addon.
 
 `./gradlew test` runs progression unit tests. `runGameTestServer` runs native
 registration, evolution/storage, casting/cooldown, ascension, boss deduplication,
-reincarnation rolling, and death-persistence checks.
+reincarnation rolling, death persistence, all eight primary attacks, combo damage,
+mantle cleanup, and domain pulse timing.
 `./gradlew runClient` starts a development client on a machine with graphics.
 
-Install `build/libs/tensura-wild-hunt-0.2.0.jar` on **both client and server**,
+Install `build/libs/tensura-wild-hunt-0.3.0.jar` on **both client and server**,
 alongside Tensura and its required dependencies. The addon jar is not a complete
 modpack. Additional development dependency versions are in `runtime-mods.lock.json`.
 
 ## Scope and credits
 
-An early playable implementation with original simple icons and Minecraft
-particles. Custom monster mobs, equipment, animations, and a custom progression
-screen are not included. Client visuals and balance require in-game playtesting.
+An early playable implementation with original 64×64 pixel-art monster portraits
+and elemental beam, field, mantle and domain effects. Custom monster mobs,
+equipment, animated 3D models, and a custom progression screen are not included.
+Client visuals and balance require in-game playtesting.
+
+Portrait source art is in `art/apex-portraits.png`; optional regeneration uses
+`python3 scripts/prepare-icons.py` with Pillow installed. Normal builds do not
+need Pillow.
 
 Unofficial fan project inspired by Capcom's Monster Hunter Wilds; not affiliated
 with Capcom or ManasMods. No Monster Hunter or Tensura assets are redistributed.

@@ -1,6 +1,6 @@
 package dev.wildhunt;
 
-/** Immutable balance and identity data shared by skills, trials and commands. */
+/** Identity and visual palette shared by skills and commands. */
 public enum Apex {
     REY_DAU("storm_crown", "raijin", "Storm Crown", "Raijin, Lord of Thunder", 0xE9C64A),
     UTH_DUNA("scarlet_deluge", "varuna", "Scarlet Deluge", "Varuna, Lord of Tides", 0xDE627A),

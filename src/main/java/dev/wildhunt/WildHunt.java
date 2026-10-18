@@ -34,6 +34,8 @@ public final class WildHunt {
         NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.LOWEST, HunterEvents::onKill);
         NeoForge.EVENT_BUS.addListener(HunterEvents::onClone);
         NeoForge.EVENT_BUS.addListener(HunterCommands::register);
+        NeoForge.EVENT_BUS.addListener(ApexTimers::onEntityTick);
+        NeoForge.EVENT_BUS.addListener(ApexTimers::onLogin);
     }
     public static ResourceLocation id(String path) { return ResourceLocation.fromNamespaceAndPath(ID, path); }
 }

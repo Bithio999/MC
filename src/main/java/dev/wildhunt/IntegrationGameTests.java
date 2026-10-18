@@ -181,4 +181,131 @@ public final class IntegrationGameTests {
         helper.assertTrue(HunterData.bossKills(original).size() == 1, "Clone shares mutable boss history");
         helper.succeed();
     }
+    private static net.minecraft.world.entity.monster.Zombie durableTarget(GameTestHelper helper) {
+        var target = helper.spawnWithNoFreeWill(net.minecraft.world.entity.EntityType.ZOMBIE, 3, 1, 1);
+        target.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH).setBaseValue(1024);
+        target.setHealth(target.getMaxHealth());
+        return target;
+    }
+    private static net.minecraft.server.level.ServerPlayer combatPlayer(GameTestHelper helper) {
+        var player = testPlayer(helper);
+        player.setGameMode(net.minecraft.world.level.GameType.SURVIVAL);
+        var pos = helper.absolutePos(new net.minecraft.core.BlockPos(1, 1, 1));
+        player.setPos(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
+        player.setYRot(-90); player.setXRot(0);
+        RaceAPI.getRaceFrom(player).setRace(WildHunt.HUNTERS.getFirst().get(), false);
+        TensuraStorages.getExistenceFrom(player).setAura(100_000);
+        return player;
+    }
+    @GameTest(template = "empty", timeoutTicks = 100)
+    public static void everySkillDisplaysNamesAndPrimaryAttacksWork(GameTestHelper helper) {
+        var player = combatPlayer(helper);
+        for (Apex apex : Apex.values()) for (boolean ultimate : new boolean[]{false, true}) {
+            var target = durableTarget(helper);
+            var skill = (ultimate ? WildHunt.ULTIMATE : WildHunt.UNIQUE).get(apex).get();
+            HunterData.learnReward(player, skill);
+            var instance = SkillAPI.getSkillsFrom(player).getSkill(skill).orElseThrow();
+            helper.assertTrue(skill.getColoredName().getString().equals(ultimate ? apex.ultimateName : apex.uniqueName),
+                "Incorrect skill name: " + skill.getColoredName().getString());
+            float before = target.getHealth();
+            skill.onPressed(instance, player, 0, 0);
+            helper.assertTrue(target.getHealth() < before, "Primary did not hit: " + apex);
+            helper.assertTrue(instance.getCoolDown(0) <= 4 && instance.getCoolDown(0) > 0, "Tick-style cooldown returned: " + apex);
+            target.discard();
+        }
+        helper.succeed();
+    }
+    @GameTest(template = "empty", timeoutTicks = 100)
+    public static void oilStacksDetonateAndRimeShatters(GameTestHelper helper) {
+        var player = combatPlayer(helper);
+        for (Apex apex : java.util.List.of(Apex.NU_UDRA, Apex.JIN_DAHAAD)) {
+            var skill = WildHunt.UNIQUE.get(apex).get();
+            HunterData.learnReward(player, skill);
+            var instance = SkillAPI.getSkillsFrom(player).getSkill(skill).orElseThrow();
+            var target = durableTarget(helper);
+            if (apex == Apex.NU_UDRA) {
+                for (int i = 0; i < 3; i++) {
+                    target.invulnerableTime = 0; instance.setCoolDown(0, 0);
+                    skill.onPressed(instance, player, 0, 0);
+                }
+                helper.assertTrue(HunterData.of(target).getInt("oil_stacks") == 3, "Oil did not build three stacks");
+                target.invulnerableTime = 0;
+                float before = target.getHealth();
+                skill.onPressed(instance, player, 0, 1);
+                helper.assertTrue(before - target.getHealth() > 150, "Oil did not amplify ignition");
+                helper.assertTrue(!HunterData.of(target).contains("oil_stacks"), "Ignition did not consume oil");
+            } else {
+                var data = HunterData.of(target);
+                data.putInt("rime_stacks", 3); data.putUUID("rime_owner", player.getUUID());
+                data.putLong("rime_until", helper.getLevel().getGameTime() + 200);
+                float before = target.getHealth();
+                skill.onPressed(instance, player, 0, 0);
+                helper.assertTrue(before - target.getHealth() > 150, "Rime did not amplify shatter");
+                helper.assertTrue(!data.contains("rime_stacks"), "Shatter did not consume rime");
+            }
+            target.discard();
+        }
+        helper.succeed();
+    }
+    @GameTest(template = "empty", timeoutTicks = 100)
+    public static void mantlesExpireAndDoNotStackTheirAttributes(GameTestHelper helper) {
+        var player = combatPlayer(helper);
+        var armor = player.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.ARMOR);
+        double baseline = armor.getValue();
+        for (Apex apex : Apex.values()) {
+            var skill = WildHunt.UNIQUE.get(apex).get();
+            HunterData.learnReward(player, skill);
+            var instance = SkillAPI.getSkillsFrom(player).getSkill(skill).orElseThrow();
+            skill.onPressed(instance, player, 0, 2);
+            helper.assertTrue(armor.getValue() > baseline, "Mantle provided no defense: " + apex);
+            double boosted = armor.getValue();
+            skill.tickActive(instance, player);
+            helper.assertTrue(armor.getValue() == boosted, "Mantle stacked on refresh: " + apex);
+            instance.getOrCreateTag().putLong("mantle_until", helper.getLevel().getGameTime());
+            ApexTimers.onEntityTick(new net.neoforged.neoforge.event.tick.EntityTickEvent.Post(player));
+            helper.assertTrue(armor.getValue() == baseline, "Expired mantle left armor behind: " + apex);
+        }
+        helper.succeed();
+    }
+    @GameTest(template = "empty", timeoutTicks = 100)
+    public static void domainUsesOneSecondScheduling(GameTestHelper helper) {
+        var player = combatPlayer(helper);
+        var skill = WildHunt.ULTIMATE.get(Apex.REY_DAU).get();
+        HunterData.learnReward(player, skill);
+        var instance = SkillAPI.getSkillsFrom(player).getSkill(skill).orElseThrow();
+        skill.onPressed(instance, player, 0, 3);
+        long initial = instance.getOrCreateTag().getLong("domain_next");
+        helper.runAfterDelay(21, () -> {
+            ApexTimers.onEntityTick(new net.neoforged.neoforge.event.tick.EntityTickEvent.Post(player));
+            long next = instance.getOrCreateTag().getLong("domain_next");
+            helper.assertTrue(next > initial && next == helper.getLevel().getGameTime() + 20, "Domain still waits for ManasCore's five-second tick");
+            ApexTimers.onEntityTick(new net.neoforged.neoforge.event.tick.EntityTickEvent.Post(player));
+            helper.assertTrue(instance.getOrCreateTag().getLong("domain_next") == next, "Domain pulsed twice in one tick");
+            helper.runAfterDelay(21, () -> {
+                ApexTimers.onEntityTick(new net.neoforged.neoforge.event.tick.EntityTickEvent.Post(player));
+                helper.assertTrue(instance.getOrCreateTag().getLong("domain_next") > next, "Second domain pulse was missed");
+                helper.succeed();
+            });
+        });
+    }
+
+    @GameTest(template = "empty", timeoutTicks = 100)
+    public static void existingCharactersGetCorrectedCooldownsOnLogin(GameTestHelper helper) {
+        var player = combatPlayer(helper);
+        for (Apex apex : Apex.values()) for (boolean ultimate : new boolean[]{false, true}) {
+            var skill = (ultimate ? WildHunt.ULTIMATE : WildHunt.UNIQUE).get(apex).get();
+            HunterData.learnReward(player, skill);
+            var instance = SkillAPI.getSkillsFrom(player).getSkill(skill).orElseThrow();
+            for (int mode = 0; mode < instance.getModes(); mode++) instance.setCoolDown(mode == 3 ? 1200 : 400, mode);
+        }
+        ApexTimers.onLogin(new net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent(player));
+        for (var instance : SkillAPI.getSkillsFrom(player).getLearnedSkills()) {
+            if (instance.getSkill() instanceof ApexSkill skill) {
+                for (int mode = 0; mode < instance.getModes(); mode++) helper.assertTrue(
+                    instance.getCoolDown(mode) == skill.balance.cooldown(mode, skill.ultimate), "Legacy cooldown was not corrected");
+            }
+        }
+        helper.succeed();
+    }
+
 }
