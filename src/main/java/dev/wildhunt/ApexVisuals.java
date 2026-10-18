@@ -1,77 +1,138 @@
 package dev.wildhunt;
 
-import net.minecraft.core.particles.DustParticleOptions;
+import io.github.manasmods.tensura.entity.magic.MagicCircle;
+import io.github.manasmods.tensura.entity.variant.MagicCircleVariant;
+import io.github.manasmods.tensura.particle.TensuraParticleHelper;
+import io.github.manasmods.tensura.particle.TensuraParticleUtils;
+import io.github.manasmods.tensura.registry.particle.TensuraParticleTypes;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.Vec3;
-import org.joml.Vector3f;
 
-/** Server-authored geometry: both local and remote clients see the same effects. */
+/** Reuse Tensura's registered particles/renderers without copying its assets. */
 public final class ApexVisuals {
     private ApexVisuals() {}
-    private static ParticleOptions tint(Apex apex, float size) {
-        int rgb = apex.color;
-        return new DustParticleOptions(new Vector3f(((rgb >> 16) & 255) / 255f,
-            ((rgb >> 8) & 255) / 255f, (rgb & 255) / 255f), size);
-    }
-    private static void dot(ServerLevel level, ParticleOptions particle, Vec3 p) {
-        level.sendParticles(particle, p.x, p.y, p.z, 1, 0, 0, 0, 0);
-    }
-    private static ParticleOptions element(Apex apex) {
+    public static ParticleOptions element(Apex apex) {
         return switch (apex) {
-            case REY_DAU -> ParticleTypes.ELECTRIC_SPARK;
-            case UTH_DUNA -> ParticleTypes.FALLING_WATER;
-            case NU_UDRA -> ParticleTypes.SOUL_FIRE_FLAME;
-            case JIN_DAHAAD -> ParticleTypes.SNOWFLAKE;
+            case REY_DAU -> TensuraParticleTypes.YELLOW_LIGHTNING_SPARK.get();
+            case UTH_DUNA -> TensuraParticleUtils.getWaterEffect();
+            case NU_UDRA -> TensuraParticleTypes.BLACK_FIRE.get();
+            case JIN_DAHAAD -> TensuraParticleTypes.SNOWFLAKE_EFFECT.get();
         };
     }
+    private static void dot(ServerLevel level, ParticleOptions type, Vec3 pos) {
+        TensuraParticleHelper.spawnServerParticles(level, type, pos.x, pos.y, pos.z);
+    }
+    public static void circle(ServerLevel level, LivingEntity owner, Apex apex, Vec3 pos, float size, int ticks, boolean vertical) {
+        var circle = new MagicCircle(level, owner);
+        circle.setVariant(switch (apex) {
+            case REY_DAU -> MagicCircleVariant.LIGHTNING;
+            case UTH_DUNA -> MagicCircleVariant.WATER;
+            case NU_UDRA -> MagicCircleVariant.FLAME;
+            case JIN_DAHAAD -> MagicCircleVariant.ICE;
+        });
+        circle.setFollowPosition(false); circle.setFollowViewDistance(-1);
+        circle.setSpinning(true); circle.setSize(size); circle.setRemoveIn(ticks);
+        circle.setPos(pos); circle.setYRot(owner.getYRot()); circle.setXRot(vertical ? 0 : -90);
+        level.addFreshEntity(circle);
+    }
     public static void beam(ServerLevel level, Apex apex, Vec3 from, Vec3 to, boolean ultimate) {
-        Vec3 delta = to.subtract(from);
-        Vec3 side = delta.normalize().cross(new Vec3(0, 1, 0));
-        if (side.lengthSqr() < 0.01) side = new Vec3(1, 0, 0);
-        side = side.normalize();
-        Vec3 up = side.cross(delta.normalize()).normalize();
-        int steps = Math.min(160, Math.max(2, (int) (delta.length() * 3)));
-        for (int i = 0; i <= steps; i++) {
-            double t = (double) i / steps;
-            Vec3 p = from.add(delta.scale(t));
-            dot(level, tint(apex, ultimate ? 1.4f : 0.9f), p);
-            double angle = i * 0.9, width = ultimate ? 0.45 : 0.24;
-            Vec3 spiral = side.scale(Math.cos(angle) * width).add(up.scale(Math.sin(angle) * width));
-            dot(level, element(apex), p.add(spiral));
-            if (ultimate || i % 2 == 0) dot(level, tint(apex, 0.7f), p.subtract(spiral));
+        if (apex == Apex.REY_DAU) {
+            Vec3 delta = to.subtract(from);
+            // Two irregular filaments around a straight railgun core.
+            for (int i = 0, steps = Math.min(110, Math.max(2, (int)(delta.length() * 3))); i <= steps; i++) {
+                Vec3 core = from.add(delta.scale((double)i / steps));
+                dot(level, TensuraParticleTypes.LIGHTNING_EFFECT.get(), core);
+                if (i % 2 == 0) dot(level, element(apex), core.add(Math.sin(i * 2.3) * 0.28, Math.cos(i * 1.7) * 0.28, 0));
+            }
+        } else if (apex == Apex.NU_UDRA) {
+            // A heavy, downward-curving tentacle, rather than another laser.
+            Vec3 delta = to.subtract(from);
+            for (int i = 0; i <= 28; i++) {
+                double t = i / 28.0;
+                Vec3 p = from.add(delta.scale(t)).add(0, Math.sin(t * Math.PI) * 1.3, 0);
+                dot(level, TensuraParticleUtils.getBlackCloud(0.15f, 0.15f, 0.15f), p);
+                if (i % 3 == 0) dot(level, element(apex), p);
+            }
+        } else if (apex == Apex.JIN_DAHAAD) {
+            Vec3 delta = to.subtract(from);
+            for (int i = 0; i <= 20; i++) crystal(level, from.add(delta.scale(i / 20.0)), ultimate ? 2 : 1);
+        } else {
+            Vec3 delta = to.subtract(from);
+            for (int i = 0; i <= 30; i++) dot(level, TensuraParticleUtils.getWaterBubble(), from.add(delta.scale(i / 30.0)));
+        }
+    }
+    public static void wave(ServerLevel level, Vec3 center, Vec3 right, double width) {
+        for (int i = -12; i <= 12; i++) {
+            Vec3 p = center.add(right.scale(width * i / 12.0));
+            for (int h = 0; h < 3; h++) dot(level, TensuraParticleUtils.getWaterBubble(), p.add(0, h * 0.55, 0));
+        }
+        dot(level, TensuraParticleUtils.getBlueWave(0.85f, 2, 0, false), center.add(0, 0.7, 0));
+    }
+    public static void crystal(ServerLevel level, Vec3 center, double height) {
+        for (int i = 0; i < 8; i++) {
+            double y = i * height / 8, width = 0.3 * (1 - i / 8.0);
+            dot(level, element(Apex.JIN_DAHAAD), center.add(width, y, width));
+            dot(level, ParticleTypes.END_ROD, center.add(-width, y, -width));
         }
     }
     public static void ring(ServerLevel level, Apex apex, Vec3 center, double radius, double height, boolean ultimate) {
-        for (int i = 0; i < 48; i++) {
-            double angle = Math.PI * 2 * i / 48;
+        int points = 40;
+        for (int i = 0; i < points; i++) {
+            double angle = i * Math.PI * 2 / points;
             Vec3 p = center.add(Math.cos(angle) * radius, height, Math.sin(angle) * radius);
-            dot(level, tint(apex, ultimate ? 1.3f : 0.8f), p);
-            if (i % 4 == 0) dot(level, element(apex), p.add(0, 0.3, 0));
+            if (apex == Apex.NU_UDRA && i % 2 == 0) dot(level, TensuraParticleUtils.getBlackCloud(0.2f, 0.2f, 0.2f), p);
+            else dot(level, element(apex), p);
         }
     }
-    public static void impact(ServerLevel level, Apex apex, Vec3 p, boolean ultimate) {
-        level.sendParticles(element(apex), p.x, p.y, p.z, ultimate ? 36 : 18, 0.6, 0.8, 0.6, 0.08);
-        level.sendParticles(tint(apex, 1.5f), p.x, p.y, p.z, 12, 0.4, 0.4, 0.4, 0);
-        if (ultimate) level.sendParticles(ParticleTypes.FLASH, p.x, p.y, p.z, 1, 0, 0, 0, 0);
+    public static void impact(ServerLevel level, Apex apex, Vec3 pos, boolean ultimate) {
+        level.sendParticles(element(apex), pos.x, pos.y, pos.z, ultimate ? 24 : 12, 0.5, 0.7, 0.5, 0.03);
+        if (apex == Apex.UTH_DUNA) dot(level, TensuraParticleUtils.getBlueWave(0.85f, 2, 0, false), pos);
+        if (apex == Apex.NU_UDRA) dot(level, TensuraParticleUtils.getBlackWave(0.9f, 2, 0, false), pos);
+        if (apex == Apex.JIN_DAHAAD) crystal(level, pos.subtract(0, 0.5, 0), ultimate ? 3 : 1.5);
     }
     public static void mantle(ServerLevel level, Apex apex, Vec3 p, boolean ultimate) {
-        double spin = level.getGameTime() * 0.15;
-        for (int i = 0; i < 12; i++) {
-            double a = spin + i * Math.PI / 6;
-            Vec3 point = p.add(Math.cos(a) * 0.75, 0.4 + (i % 4) * 0.4, Math.sin(a) * 0.75);
-            dot(level, i % 2 == 0 ? element(apex) : tint(apex, ultimate ? 1.2f : 0.7f), point);
+        switch (apex) {
+            case REY_DAU -> {
+                dot(level, TensuraParticleUtils.getGoldAura(0.8f, 1.2f, 0), p.add(0, 0.8, 0));
+                dot(level, element(apex), p.add(Math.sin(level.getGameTime()) * 0.7, 1.4, 0));
+            }
+            case UTH_DUNA -> {
+                for (int i = 0; i < 12; i++) {
+                    double angle = i * Math.PI / 6 + level.getGameTime() * 0.1;
+                    dot(level, TensuraParticleUtils.getWaterBubble(), p.add(Math.cos(angle), 0.4 + (i % 3) * 0.6, Math.sin(angle)));
+                }
+            }
+            case NU_UDRA -> {
+                dot(level, TensuraParticleUtils.getBlackAura(0.6f, 1.3f, 0), p.add(0, 0.8, 0));
+                level.sendParticles(element(apex), p.x, p.y + 0.5, p.z, 6, 0.7, 0.4, 0.7, 0.02);
+            }
+            case JIN_DAHAAD -> {
+                crystal(level, p.add(-0.7, 0, 0), 1.2); crystal(level, p.add(0.7, 0, 0), 1.2);
+            }
         }
     }
     public static void domain(ServerLevel level, Apex apex, Vec3 center, double radius) {
-        ring(level, apex, center, radius, 0.2, true);
-        ring(level, apex, center, radius * 0.55, 0.3, true);
-        if (level.getGameTime() % 20 == 0) {
-            for (int i = 0; i < 6; i++) {
-                double a = i * Math.PI / 3;
-                Vec3 base = center.add(Math.cos(a) * radius, 0, Math.sin(a) * radius);
-                beam(level, apex, base, base.add(0, 4, 0), true);
+        switch (apex) {
+            case REY_DAU -> {
+                for (int i = 0; i < 6; i++) {
+                    double a = i * Math.PI / 3 + level.getGameTime() * 0.03;
+                    dot(level, TensuraParticleTypes.LIGHTNING_EFFECT.get(), center.add(Math.cos(a) * radius, 5, Math.sin(a) * radius));
+                }
+            }
+            case UTH_DUNA -> {
+                for (int i = 0; i < 3; i++) ring(level, apex, center, radius * (i + 1) / 3, i * 0.3, true);
+            }
+            case NU_UDRA -> {
+                level.sendParticles(TensuraParticleUtils.getBlackCloud(0.5f, 0.5f, 0.5f), center.x, center.y + 0.4, center.z, 8, radius * 0.5, 0.2, radius * 0.5, 0);
+            }
+            case JIN_DAHAAD -> {
+                for (int i = 0; i < 12; i++) {
+                    double a = i * Math.PI / 6;
+                    crystal(level, center.add(Math.cos(a) * radius, 0, Math.sin(a) * radius), 2.5);
+                }
             }
         }
     }

@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Agni, Lord of the Black Flame — Wild Hunt Wiki</title><link rel="stylesheet" href="wiki.css">
+<script defer src="search-index.js"></script><script defer src="search.js"></script></head>
+<body data-root="../"><a class="skip" href="#article">Skip to article</a>
+<header><a class="brand" href="../index.html"><span>WILD HUNT</span><small>Tensura: Reincarnated addon wiki</small></a>
+<div class="search"><label for="wiki-search">Search the wiki</label><input id="wiki-search" type="search" placeholder="Find a skill, race, or mechanic…" autocomplete="off"><div id="search-results" aria-live="polite"></div></div></header>
+<div class="layout"><nav class="sidebar" aria-label="Wiki navigation"><h2>Explore</h2><a href="../index.html">Main Page</a><a href="../site/Getting-Started.html">Getting started</a><a href="../site/Skills.html">Skills</a><a href="../site/Evolution.html">Human evolution</a><a href="../site/Mechanics.html">Combat mechanics</a><a href="../site/Commands.html">Commands</a><a href="../site/Version-History.html">Version history</a>
+<h2>Apex arts</h2><a href="../site/Storm-Crown.html">Storm Crown</a><a href="../site/Scarlet-Deluge.html">Scarlet Deluge</a><a href="../site/Black-Flame.html">Black Flame</a><a href="../site/Frostbound-Colossus.html">Frostbound Colossus</a>
+<p>Version 0.4.0<br>Minecraft 1.21.1<br>NeoForge</p></nav>
+<main id="article"><div class="page-tabs"><span>Article</span><a href="../pages/Agni.md">Read Markdown</a></div>
+<h1>Agni, Lord of the Black Flame</h1><p class="subtitle">From the Tensura: Wild Hunt Wiki</p>
+<aside class="infobox" aria-label="Page data"><p><img alt="Agni, Lord of the Black Flame" src="../../src/main/resources/assets/wildhunt/textures/skill/agni.png" /></p><table>
+<thead>
+<tr>
+<th>Skill data</th>
+<th>Agni, Lord of the Black Flame</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Category</td>
+<td>Ultimate Skill</td>
+</tr>
+<tr>
+<td>Inspiration</td>
+<td>Nu Udra</td>
+</tr>
+<tr>
+<td>Combat role</td>
+<td>Trap placement / oil detonation</td>
+</tr>
+<tr>
+<td>Resource</td>
+<td>Aura</td>
+</tr>
+<tr>
+<td>Modes</td>
+<td>4</td>
+</tr>
+<tr>
+<td>Registry ID</td>
+<td><code>wildhunt:agni</code></td>
+</tr>
+<tr>
+<td>Previous</td>
+<td><a href="Black-Flame.html">Black Flame</a></td>
+</tr>
+<tr>
+<td>Evolution</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></aside><details class="contents" open><summary>Contents</summary><div class="toc">
+<ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#acquisition">Acquisition</a></li>
+<li><a href="#modes">Modes</a><ul>
+<li><a href="#oil-lash">Oil Lash</a></li>
+<li><a href="#blackflame-ignition">Blackflame Ignition</a></li>
+<li><a href="#furnace-mantle">Furnace Mantle</a></li>
+<li><a href="#black-sun-caldera">Black Sun Caldera</a></li>
+</ul>
+</li>
+<li><a href="#suggested-combo">Suggested combo</a></li>
+<li><a href="#strengths-and-limitations">Strengths and limitations</a></li>
+<li><a href="#evolution-notes">Evolution notes</a></li>
+<li><a href="#visual-effects">Visual effects</a></li>
+<li><a href="#related-pages">Related pages</a></li>
+</ul>
+</div>
+</details><p><a href="../index.html">Main Page</a> · <a href="Skills.html">Skills</a> · <a href="Evolution.html">Evolution</a> · <a href="Mechanics.html">Mechanics</a> · <a href="Commands.html">Commands</a></p>
+
+
+<h2 id="overview">Overview</h2>
+<p>A setup-and-detonate art with limited, owned oil pools. Its lash grabs targets, its mantle oils melee victims, and ignition only burns the caster’s own pool network. Enemies outside those locations avoid the detonation.</p>
+<h2 id="acquisition">Acquisition</h2>
+<p>Evolve from <a href="Black-Flame.html">Black Flame</a> as Sovereign Hunter with 2,000,000 base EP and mastery of that matching Unique skill. Use <code>/wildhunt ascend nu_udra</code>. The Ultimate replaces only its source Unique; mastery of the new Ultimate starts separately.</p>
+<h2 id="modes">Modes</h2>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th style="text-align: right;">Aura</th>
+<th style="text-align: right;">Cooldown</th>
+<th>Raw damage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. Oil Lash</td>
+<td style="text-align: right;">640</td>
+<td style="text-align: right;">2 s</td>
+<td>210</td>
+</tr>
+<tr>
+<td>2. Blackflame Ignition</td>
+<td style="text-align: right;">3,200</td>
+<td style="text-align: right;">7 s</td>
+<td>270 initial / 72 pulse</td>
+</tr>
+<tr>
+<td>3. Furnace Mantle</td>
+<td style="text-align: right;">1,400</td>
+<td style="text-align: right;">19 s</td>
+<td>—</td>
+</tr>
+<tr>
+<td>4. Black Sun Caldera</td>
+<td style="text-align: right;">6,000</td>
+<td style="text-align: right;">60 s</td>
+<td>Signature-specific; see below</td>
+</tr>
+</tbody>
+</table>
+<p>Raw damage in this table already includes the Ultimate’s 3× base multiplier where applicable. EP, mastery, elemental boosts, defenses and combo modifiers apply separately. <a href="Mechanics.html#damage-and-mastery">Damage formula</a>.</p>
+<h3 id="oil-lash">Oil Lash</h3>
+<p>Lashes up to 6 enemies in a forward fan within 22 blocks, pulls them toward you, and adds one of three oil stacks lasting fifteen seconds. Curved tentacle trails connect caster and victims. Leaves an oil pool at the last struck target; an empty cast places one about ten blocks ahead. Maximum owned pools: 5. Oldest pools are replaced first.</p>
+<h3 id="blackflame-ignition">Blackflame Ignition</h3>
+<p>Ignites your valid oil pools for six seconds. Each pool damages enemies within 4 blocks; overlapping pools cannot hit one enemy twice in the same pulse. Initial ignition consumes your own oil stacks for +60% damage per stack, up to 2.8× base. Burning pools pulse once per second and apply native Black Burn. If you have no pools, ignition places a fallback pool at your aim point.</p>
+<h3 id="furnace-mantle">Furnace Mantle</h3>
+<p>For 30 seconds, gain 18 armor, fire resistance, 100% melee attack and 100% flame boost. Successful ordinary melee attacks coat living victims with your oil. Skill damage does not recursively count as an ordinary melee hit.</p>
+<h3 id="black-sun-caldera">Black Sun Caldera</h3>
+<p>Establishes five ignited pools in a ring six blocks around the caster. For ten seconds, the caldera pulses through valid owned pools, with a thirty-two-block control leash. This is a location-based trap network, not a caster-centered damage aura.</p>
+<h2 id="suggested-combo">Suggested combo</h2>
+<p>Pull a target into an oil pool with Oil Lash → add oil with lashes or mantle-assisted melee → use Blackflame Ignition. Layer pools to cover escape paths rather than stacking them for duplicate hits.</p>
+<h2 id="strengths-and-limitations">Strengths and limitations</h2>
+<p>Only your oil amplifies your ignition. Pools expire after fifteen seconds when unlit or six seconds after ordinary ignition. They must be in the same dimension and within thirty-two blocks when controlled. Bosses can resist pulls, fire and status effects.</p>
+<h2 id="evolution-notes">Evolution notes</h2>
+<p>Six lash targets, twenty-two-block reach, five pools, four-block ignition radius, stronger Black Burn, a 30-second mantle, and the five-pool caldera.</p>
+<h2 id="visual-effects">Visual effects</h2>
+<p>Native black clouds shape curved tentacle trails, Black Fire marks ignition, and Flame magic circles identify the art. Pool footprints show the areas that can detonate.</p>
+<h2 id="related-pages">Related pages</h2>
+<p><a href="Skills.html">Skills</a> · <a href="Evolution.html">Human evolution</a> · <a href="Mechanics.html">Combat mechanics</a> · <a href="Commands.html">Commands</a></p>
+<hr />
+<p><strong>Categories:</strong> Tensura: Wild Hunt · Version 0.4.0</p>
+<footer>Unofficial fan addon. Original documentation and portraits. Not affiliated with Capcom or ManasMods. Offline edition; no external services required.</footer></main></div></body></html>

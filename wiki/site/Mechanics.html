@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Combat mechanics — Wild Hunt Wiki</title><link rel="stylesheet" href="wiki.css">
+<script defer src="search-index.js"></script><script defer src="search.js"></script></head>
+<body data-root="../"><a class="skip" href="#article">Skip to article</a>
+<header><a class="brand" href="../index.html"><span>WILD HUNT</span><small>Tensura: Reincarnated addon wiki</small></a>
+<div class="search"><label for="wiki-search">Search the wiki</label><input id="wiki-search" type="search" placeholder="Find a skill, race, or mechanic…" autocomplete="off"><div id="search-results" aria-live="polite"></div></div></header>
+<div class="layout"><nav class="sidebar" aria-label="Wiki navigation"><h2>Explore</h2><a href="../index.html">Main Page</a><a href="../site/Getting-Started.html">Getting started</a><a href="../site/Skills.html">Skills</a><a href="../site/Evolution.html">Human evolution</a><a href="../site/Mechanics.html">Combat mechanics</a><a href="../site/Commands.html">Commands</a><a href="../site/Version-History.html">Version history</a>
+<h2>Apex arts</h2><a href="../site/Storm-Crown.html">Storm Crown</a><a href="../site/Scarlet-Deluge.html">Scarlet Deluge</a><a href="../site/Black-Flame.html">Black Flame</a><a href="../site/Frostbound-Colossus.html">Frostbound Colossus</a>
+<p>Version 0.4.0<br>Minecraft 1.21.1<br>NeoForge</p></nav>
+<main id="article"><div class="page-tabs"><span>Article</span><a href="../pages/Mechanics.md">Read Markdown</a></div>
+<h1>Combat mechanics</h1><p class="subtitle">From the Tensura: Wild Hunt Wiki</p>
+<details class="contents" open><summary>Contents</summary><div class="toc">
+<ul>
+<li><a href="#damage-and-mastery">Damage and mastery</a></li>
+<li><a href="#art-resources">Art resources</a></li>
+<li><a href="#aiming-and-movement">Aiming and movement</a></li>
+<li><a href="#defense-and-reactions">Defense and reactions</a></li>
+<li><a href="#native-effects">Native effects</a></li>
+<li><a href="#timers-and-persistence">Timers and persistence</a></li>
+</ul>
+</div>
+</details><p><a href="../index.html">Main Page</a> · <a href="Skills.html">Skills</a> · <a href="Evolution.html">Evolution</a> · <a href="Mechanics.html">Mechanics</a> · <a href="Commands.html">Commands</a></p>
+<h2 id="damage-and-mastery">Damage and mastery</h2>
+<p>Raw damage is multiplied by:</p>
+<pre><code class="language-text">(1 + sqrt(clamp(baseEP / 2,000,000, 0, 1)))
+× (1 + 0.5 × clamp(masteryFraction, 0, 1))
+× (Ultimate ? 3 : 1)
+</code></pre>
+<p>Skill pages include the Ultimate’s 3× base multiplier in their displayed raw values. Do not multiply it twice. Progression caps at 3× the unprogressed Unique base or 9× that same base for a mastered Ultimate. Tensura applies its elemental boosts, rank interactions, resistances and barriers afterward. Raw damage is not guaranteed damage removed from a boss.</p>
+<h2 id="art-resources">Art resources</h2>
+<table>
+<thead>
+<tr>
+<th>Resource</th>
+<th>Created by</th>
+<th>Spent by</th>
+<th>Limit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Storm charge</td>
+<td>Fulgurite rod hits; movement during Storm Mantle; successful Heaven’s Thunder hits</td>
+<td>Railbolt</td>
+<td>3</td>
+</tr>
+<tr>
+<td>Drenched</td>
+<td>Water wave, whirlpool and tide hits</td>
+<td>Persists as a timed mark; boosts water and lightning interactions</td>
+<td>12 seconds</td>
+</tr>
+<tr>
+<td>Owned oil stacks</td>
+<td>Oil Lash; ordinary melee during Furnace Mantle</td>
+<td>Your initial pool ignition</td>
+<td>3; 15 seconds</td>
+</tr>
+<tr>
+<td>Oil pools</td>
+<td>Oil Lash; fallback ignition; Black Sun Caldera</td>
+<td>Ignition turns pools into burning ground</td>
+<td>3 Unique / 5 Ultimate</td>
+</tr>
+<tr>
+<td>Owned rime</td>
+<td>Fissure and rampart hits; Absolute Winter</td>
+<td>Your Glacial Rupture at 3 stacks</td>
+<td>3; 10 seconds</td>
+</tr>
+<tr>
+<td>Ward budget</td>
+<td>Glacial Rampart</td>
+<td>Intercepted hostile projectiles</td>
+<td>3 Unique / 6 Ultimate</td>
+</tr>
+</tbody>
+</table>
+<h2 id="aiming-and-movement">Aiming and movement</h2>
+<p>Railbolt is immediate and block-clipped. Water waves and ice fissures travel over about sixteen game ticks. Oil Lash selects a limited number of enemies in a facing cone. Fields stay anchored except the mobile tide and targeted storm. Dimension changes invalidate anchored effects; they do not teleport fields into a new world.</p>
+<p>Forced movement respects knockback resistance. Friendly teams, owned pets, creative/spectator players, disabled player-vs-player combat and line of sight are checked. Strong bosses may resist elemental/status effects or movement.</p>
+<h2 id="defense-and-reactions">Defense and reactions</h2>
+<p>Water Veil has an attacker-targeted counter after health damage, with its own cooldown. Furnace Mantle oils ordinary melee victims. Storm Mantle trades movement for charge. Colossus Guard adds defensive attributes while Glacial Rampart spends a finite projectile budget. These are separate mechanics, not one renamed shield.</p>
+<h2 id="native-effects">Native effects</h2>
+<p>Tensura supplies the registered lightning particles, water bubbles, shockwaves, Black Fire, snowflake effects and animated elemental magic circles. Wild Hunt calls those APIs at runtime. It does not redistribute Tensura’s effect textures or create destructive vanilla lightning.</p>
+<h2 id="timers-and-persistence">Timers and persistence</h2>
+<p>Cooldown values are seconds. Travelling fronts, pools and short fields use a server tick handler; damage windows remain subject to normal invulnerability rules. Mantle attributes expire or are removed when forgetting their skill. Logged-in upgrades cap the old oversized cooldowns and cancel obsolete transient field timers while preserving rolled skills, mastery and boss history.</p>
+<hr />
+<p><strong>Categories:</strong> Tensura: Wild Hunt · Version 0.4.0</p>
+<footer>Unofficial fan addon. Original documentation and portraits. Not affiliated with Capcom or ManasMods. Offline edition; no external services required.</footer></main></div></body></html>

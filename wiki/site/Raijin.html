@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Raijin, Lord of Thunder — Wild Hunt Wiki</title><link rel="stylesheet" href="wiki.css">
+<script defer src="search-index.js"></script><script defer src="search.js"></script></head>
+<body data-root="../"><a class="skip" href="#article">Skip to article</a>
+<header><a class="brand" href="../index.html"><span>WILD HUNT</span><small>Tensura: Reincarnated addon wiki</small></a>
+<div class="search"><label for="wiki-search">Search the wiki</label><input id="wiki-search" type="search" placeholder="Find a skill, race, or mechanic…" autocomplete="off"><div id="search-results" aria-live="polite"></div></div></header>
+<div class="layout"><nav class="sidebar" aria-label="Wiki navigation"><h2>Explore</h2><a href="../index.html">Main Page</a><a href="../site/Getting-Started.html">Getting started</a><a href="../site/Skills.html">Skills</a><a href="../site/Evolution.html">Human evolution</a><a href="../site/Mechanics.html">Combat mechanics</a><a href="../site/Commands.html">Commands</a><a href="../site/Version-History.html">Version history</a>
+<h2>Apex arts</h2><a href="../site/Storm-Crown.html">Storm Crown</a><a href="../site/Scarlet-Deluge.html">Scarlet Deluge</a><a href="../site/Black-Flame.html">Black Flame</a><a href="../site/Frostbound-Colossus.html">Frostbound Colossus</a>
+<p>Version 0.4.0<br>Minecraft 1.21.1<br>NeoForge</p></nav>
+<main id="article"><div class="page-tabs"><span>Article</span><a href="../pages/Raijin.md">Read Markdown</a></div>
+<h1>Raijin, Lord of Thunder</h1><p class="subtitle">From the Tensura: Wild Hunt Wiki</p>
+<aside class="infobox" aria-label="Page data"><p><img alt="Raijin, Lord of Thunder" src="../../src/main/resources/assets/wildhunt/textures/skill/raijin.png" /></p><table>
+<thead>
+<tr>
+<th>Skill data</th>
+<th>Raijin, Lord of Thunder</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Category</td>
+<td>Ultimate Skill</td>
+</tr>
+<tr>
+<td>Inspiration</td>
+<td>Rey Dau</td>
+</tr>
+<tr>
+<td>Combat role</td>
+<td>Precision / charge management</td>
+</tr>
+<tr>
+<td>Resource</td>
+<td>Aura</td>
+</tr>
+<tr>
+<td>Modes</td>
+<td>4</td>
+</tr>
+<tr>
+<td>Registry ID</td>
+<td><code>wildhunt:raijin</code></td>
+</tr>
+<tr>
+<td>Previous</td>
+<td><a href="Storm-Crown.html">Storm Crown</a></td>
+</tr>
+<tr>
+<td>Evolution</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></aside><details class="contents" open><summary>Contents</summary><div class="toc">
+<ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#acquisition">Acquisition</a></li>
+<li><a href="#modes">Modes</a><ul>
+<li><a href="#railbolt">Railbolt</a></li>
+<li><a href="#fulgurite-array">Fulgurite Array</a></li>
+<li><a href="#storm-mantle">Storm Mantle</a></li>
+<li><a href="#heavens-thunder">Heaven’s Thunder</a></li>
+</ul>
+</li>
+<li><a href="#suggested-combo">Suggested combo</a></li>
+<li><a href="#strengths-and-limitations">Strengths and limitations</a></li>
+<li><a href="#evolution-notes">Evolution notes</a></li>
+<li><a href="#visual-effects">Visual effects</a></li>
+<li><a href="#related-pages">Related pages</a></li>
+</ul>
+</div>
+</details><p><a href="../index.html">Main Page</a> · <a href="Skills.html">Skills</a> · <a href="Evolution.html">Evolution</a> · <a href="Mechanics.html">Mechanics</a> · <a href="Commands.html">Commands</a></p>
+
+
+<h2 id="overview">Overview</h2>
+<p>A precision lightning art built around a three-charge battery. Its array chooses individual targets; it does not blanket an area with damage. Store charge, line up a shot, and spend the battery on a piercing railgun discharge.</p>
+<h2 id="acquisition">Acquisition</h2>
+<p>Evolve from <a href="Storm-Crown.html">Storm Crown</a> as Sovereign Hunter with 2,000,000 base EP and mastery of that matching Unique skill. Use <code>/wildhunt ascend rey_dau</code>. The Ultimate replaces only its source Unique; mastery of the new Ultimate starts separately.</p>
+<h2 id="modes">Modes</h2>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th style="text-align: right;">Aura</th>
+<th style="text-align: right;">Cooldown</th>
+<th>Raw damage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. Railbolt</td>
+<td style="text-align: right;">800</td>
+<td style="text-align: right;">3 s</td>
+<td>270</td>
+</tr>
+<tr>
+<td>2. Fulgurite Array</td>
+<td style="text-align: right;">2,400</td>
+<td style="text-align: right;">7 s</td>
+<td>180 initial / 60 pulse</td>
+</tr>
+<tr>
+<td>3. Storm Mantle</td>
+<td style="text-align: right;">1,200</td>
+<td style="text-align: right;">19 s</td>
+<td>—</td>
+</tr>
+<tr>
+<td>4. Heaven’s Thunder</td>
+<td style="text-align: right;">6,000</td>
+<td style="text-align: right;">60 s</td>
+<td>Signature-specific; see below</td>
+</tr>
+</tbody>
+</table>
+<p>Raw damage in this table already includes the Ultimate’s 3× base multiplier where applicable. EP, mastery, elemental boosts, defenses and combo modifiers apply separately. <a href="Mechanics.html#damage-and-mastery">Damage formula</a>.</p>
+<h3 id="railbolt">Railbolt</h3>
+<p>An instant, block-clipped railgun reaches 56 blocks and pierces 4 direct targets. It consumes all stored charge for +25% direct-hit damage per charge, up to +75%. Chains deal 55% of the uncharged primary base damage and reach six blocks from the direct target. Each charge adds one possible chain target. Wet or drenched targets take 30% more lightning damage.</p>
+<h3 id="fulgurite-array">Fulgurite Array</h3>
+<p>Creates three fulgurite rods in a line centered five blocks ahead, spaced four blocks apart. Each rod chooses one visible enemy within six blocks, with no duplicate victim within a pulse. Initial hits use the secondary raw damage; later hits use the pulse raw damage once per second for six seconds. Every successful rod hit restores one charge, capped at three.</p>
+<h3 id="storm-mantle">Storm Mantle</h3>
+<p>For 30 seconds, gain 60% movement, 50% attack speed, 12 armor and 100% lightning boost. Moving at least three and at most sixteen blocks between one-second samples restores a charge. Teleport-sized jumps do not recharge it.</p>
+<h3 id="heavens-thunder">Heaven’s Thunder</h3>
+<p>For ten seconds, judge up to five visible enemies within fourteen blocks once per second, prioritizing maximum health. Each successful strike replenishes charge. Lightning descends on selected enemies rather than damaging the whole radius.</p>
+<h2 id="suggested-combo">Suggested combo</h2>
+<p>Place the Fulgurite Array where enemies will cross it → let hits charge the battery → align several enemies → fire Railbolt. Storm Mantle helps reposition and replenish charge between shots.</p>
+<h2 id="strengths-and-limitations">Strengths and limitations</h2>
+<p>Railbolt spends charge even if the shot misses. Rods need valid visible targets to recharge. Charges are not an extra skill tier; the maximum remains three. Both source and victim line-of-sight checks restrict chains.</p>
+<h2 id="evolution-notes">Evolution notes</h2>
+<p>Four direct targets, five base chain targets, a 56-block railgun, and a 30-second mantle. Its fourth mode supplies targeted storm judgments and charge recovery.</p>
+<h2 id="visual-effects">Visual effects</h2>
+<p>Native Tensura lightning particles and animated Lightning magic circles mark the railgun, fulgurite rods and selected storm victims. No destructive vanilla lightning entity is spawned.</p>
+<h2 id="related-pages">Related pages</h2>
+<p><a href="Skills.html">Skills</a> · <a href="Evolution.html">Human evolution</a> · <a href="Mechanics.html">Combat mechanics</a> · <a href="Commands.html">Commands</a></p>
+<hr />
+<p><strong>Categories:</strong> Tensura: Wild Hunt · Version 0.4.0</p>
+<footer>Unofficial fan addon. Original documentation and portraits. Not affiliated with Capcom or ManasMods. Offline edition; no external services required.</footer></main></div></body></html>

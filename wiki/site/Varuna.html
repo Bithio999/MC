@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Varuna, Lord of Tides — Wild Hunt Wiki</title><link rel="stylesheet" href="wiki.css">
+<script defer src="search-index.js"></script><script defer src="search.js"></script></head>
+<body data-root="../"><a class="skip" href="#article">Skip to article</a>
+<header><a class="brand" href="../index.html"><span>WILD HUNT</span><small>Tensura: Reincarnated addon wiki</small></a>
+<div class="search"><label for="wiki-search">Search the wiki</label><input id="wiki-search" type="search" placeholder="Find a skill, race, or mechanic…" autocomplete="off"><div id="search-results" aria-live="polite"></div></div></header>
+<div class="layout"><nav class="sidebar" aria-label="Wiki navigation"><h2>Explore</h2><a href="../index.html">Main Page</a><a href="../site/Getting-Started.html">Getting started</a><a href="../site/Skills.html">Skills</a><a href="../site/Evolution.html">Human evolution</a><a href="../site/Mechanics.html">Combat mechanics</a><a href="../site/Commands.html">Commands</a><a href="../site/Version-History.html">Version history</a>
+<h2>Apex arts</h2><a href="../site/Storm-Crown.html">Storm Crown</a><a href="../site/Scarlet-Deluge.html">Scarlet Deluge</a><a href="../site/Black-Flame.html">Black Flame</a><a href="../site/Frostbound-Colossus.html">Frostbound Colossus</a>
+<p>Version 0.4.0<br>Minecraft 1.21.1<br>NeoForge</p></nav>
+<main id="article"><div class="page-tabs"><span>Article</span><a href="../pages/Varuna.md">Read Markdown</a></div>
+<h1>Varuna, Lord of Tides</h1><p class="subtitle">From the Tensura: Wild Hunt Wiki</p>
+<aside class="infobox" aria-label="Page data"><p><img alt="Varuna, Lord of Tides" src="../../src/main/resources/assets/wildhunt/textures/skill/varuna.png" /></p><table>
+<thead>
+<tr>
+<th>Skill data</th>
+<th>Varuna, Lord of Tides</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Category</td>
+<td>Ultimate Skill</td>
+</tr>
+<tr>
+<td>Inspiration</td>
+<td>Uth Duna</td>
+</tr>
+<tr>
+<td>Combat role</td>
+<td>Position control / reactive defense</td>
+</tr>
+<tr>
+<td>Resource</td>
+<td>Aura</td>
+</tr>
+<tr>
+<td>Modes</td>
+<td>4</td>
+</tr>
+<tr>
+<td>Registry ID</td>
+<td><code>wildhunt:varuna</code></td>
+</tr>
+<tr>
+<td>Previous</td>
+<td><a href="Scarlet-Deluge.html">Scarlet Deluge</a></td>
+</tr>
+<tr>
+<td>Evolution</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></aside><details class="contents" open><summary>Contents</summary><div class="toc">
+<ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#acquisition">Acquisition</a></li>
+<li><a href="#modes">Modes</a><ul>
+<li><a href="#crushing-current">Crushing Current</a></li>
+<li><a href="#scarlet-undertow">Scarlet Undertow</a></li>
+<li><a href="#water-veil">Water Veil</a></li>
+<li><a href="#crimson-ocean">Crimson Ocean</a></li>
+</ul>
+</li>
+<li><a href="#suggested-combo">Suggested combo</a></li>
+<li><a href="#strengths-and-limitations">Strengths and limitations</a></li>
+<li><a href="#evolution-notes">Evolution notes</a></li>
+<li><a href="#visual-effects">Visual effects</a></li>
+<li><a href="#related-pages">Related pages</a></li>
+</ul>
+</div>
+</details><p><a href="../index.html">Main Page</a> · <a href="Skills.html">Skills</a> · <a href="Evolution.html">Evolution</a> · <a href="Mechanics.html">Mechanics</a> · <a href="Commands.html">Commands</a></p>
+
+
+<h2 id="overview">Overview</h2>
+<p>An aquatic control art that physically moves opponents. Its primary is a travelling wave, its secondary is an aimed whirlpool, and its veil answers incoming attacks. Positioning matters more than lining up a laser.</p>
+<h2 id="acquisition">Acquisition</h2>
+<p>Evolve from <a href="Scarlet-Deluge.html">Scarlet Deluge</a> as Sovereign Hunter with 2,000,000 base EP and mastery of that matching Unique skill. Use <code>/wildhunt ascend uth_duna</code>. The Ultimate replaces only its source Unique; mastery of the new Ultimate starts separately.</p>
+<h2 id="modes">Modes</h2>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th style="text-align: right;">Aura</th>
+<th style="text-align: right;">Cooldown</th>
+<th>Raw damage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. Crushing Current</td>
+<td style="text-align: right;">640</td>
+<td style="text-align: right;">2 s</td>
+<td>195</td>
+</tr>
+<tr>
+<td>2. Scarlet Undertow</td>
+<td style="text-align: right;">2,000</td>
+<td style="text-align: right;">6 s</td>
+<td>135 initial / 54 pulse</td>
+</tr>
+<tr>
+<td>3. Water Veil</td>
+<td style="text-align: right;">1,000</td>
+<td style="text-align: right;">17 s</td>
+<td>75 retaliation</td>
+</tr>
+<tr>
+<td>4. Crimson Ocean</td>
+<td style="text-align: right;">6,000</td>
+<td style="text-align: right;">60 s</td>
+<td>Signature-specific; see below</td>
+</tr>
+</tbody>
+</table>
+<p>Raw damage in this table already includes the Ultimate’s 3× base multiplier where applicable. EP, mastery, elemental boosts, defenses and combo modifiers apply separately. <a href="Mechanics.html#damage-and-mastery">Damage formula</a>.</p>
+<h3 id="crushing-current">Crushing Current</h3>
+<p>Sends a broad wave along the ground toward your facing direction. The front travels up to 26 blocks over about 0.8 seconds, carrying and drenching each enemy it hits. One wave cannot damage the same entity twice. A previously drenched victim takes 50% more primary damage.</p>
+<h3 id="scarlet-undertow">Scarlet Undertow</h3>
+<p>Places a six-second whirlpool at your aim point, up to six blocks away. The radius is 13 blocks. It hits immediately, then pulses once per second, and applies gentle inward current between damage pulses. Pulls respect knockback resistance.</p>
+<h3 id="water-veil">Water Veil</h3>
+<p>For 30 seconds, gain 25 armor, a 40-point magic barrier, 32 absorption HP, water breathing and 100% water boost. A resolved hostile hit that removes health triggers a retaliatory water strike against a visible attacker within twelve blocks. Counter cooldown: 1 seconds.</p>
+<h3 id="crimson-ocean">Crimson Ocean</h3>
+<p>For ten seconds, alternate inward and outward surges within fourteen blocks. Incoming tide gathers enemies; outgoing tide pushes them away and slightly upward. The sequence follows the caster instead of remaining at the original whirlpool position.</p>
+<h2 id="suggested-combo">Suggested combo</h2>
+<p>Aim Scarlet Undertow behind or between enemies → use the current to gather them → send Crushing Current through the drenched group. Use Water Veil when expecting a counterattack.</p>
+<h2 id="strengths-and-limitations">Strengths and limitations</h2>
+<p>A wave is a moving front, so distant targets are not hit immediately. Knockback resistance reduces carrying and currents. Environmental damage has no attacker to retaliate against. A veil counter requires health damage and a visible attacker.</p>
+<h2 id="evolution-notes">Evolution notes</h2>
+<p>A 26-block wave, thirteen-block whirlpool, a 30-second stronger veil, one-second retaliation cooldown, and a fourth mode that alternates the tide.</p>
+<h2 id="visual-effects">Visual effects</h2>
+<p>Native water bubbles and blue shockwaves form a moving wavefront and a rotating whirlpool. Water magic circles mark the field; the veil uses orbiting bubbles instead of a recolored fire aura.</p>
+<h2 id="related-pages">Related pages</h2>
+<p><a href="Skills.html">Skills</a> · <a href="Evolution.html">Human evolution</a> · <a href="Mechanics.html">Combat mechanics</a> · <a href="Commands.html">Commands</a></p>
+<hr />
+<p><strong>Categories:</strong> Tensura: Wild Hunt · Version 0.4.0</p>
+<footer>Unofficial fan addon. Original documentation and portraits. Not affiliated with Capcom or ManasMods. Offline edition; no external services required.</footer></main></div></body></html>

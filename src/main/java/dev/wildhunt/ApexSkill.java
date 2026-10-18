@@ -54,20 +54,21 @@ public final class ApexSkill extends Skill {
             case NU_UDRA -> "Black Sun Caldera"; case JIN_DAHAAD -> "Absolute Winter";
         };
         return switch (apex) {
-            case REY_DAU -> switch (mode) { case 0 -> "Railbolt"; case 1 -> "Thunderstorm"; default -> "Storm Mantle"; };
+            case REY_DAU -> switch (mode) { case 0 -> "Railbolt"; case 1 -> "Fulgurite Array"; default -> "Storm Mantle"; };
             case UTH_DUNA -> switch (mode) { case 0 -> "Crushing Current"; case 1 -> "Scarlet Undertow"; default -> "Water Veil"; };
             case NU_UDRA -> switch (mode) { case 0 -> "Oil Lash"; case 1 -> "Blackflame Ignition"; default -> "Furnace Mantle"; };
-            case JIN_DAHAAD -> switch (mode) { case 0 -> "Glacial Rupture"; case 1 -> "Freezing Mist"; default -> "Colossus Guard"; };
+            case JIN_DAHAAD -> switch (mode) { case 0 -> "Glacial Rupture"; case 1 -> "Glacial Rampart"; default -> "Colossus Guard"; };
         };
     }
     public String description() {
         return switch (apex) {
-            case REY_DAU -> "Piercing railbolt chains to nearby enemies. Thunderstorm strikes a persistent field. Storm Mantle boosts speed, attack speed and lightning power. Wet targets take 30% more damage.";
-            case UTH_DUNA -> "A broad pressure wave deals bonus damage to drenched enemies. Undertow pulls enemies into a persistent whirlpool. Water Veil grants absorption, armor, a magic barrier and water breathing.";
-            case NU_UDRA -> "Sweeping tentacles coat enemies in oil, stacking three times. Ignition consumes your oil stacks for a powerful detonation and Black Burn. Furnace Mantle strengthens attacks and fire power.";
-            case JIN_DAHAAD -> "Freezing Mist builds three rime stacks. Glacial Rupture shatters a fully rimed target for bonus damage. Colossus Guard grants armor, a magic barrier and knockback resistance.";
-        } + (ultimate ? " Ultimate power: triple base damage, stronger defenses and a ten-second domain." : " Grows with EP and mastery. Master this skill to unlock its Ultimate as Sovereign Hunter.");
+            case REY_DAU -> "Railbolt consumes up to three charges for +25% damage each. Fulgurite rods strike nearby targets to recharge it. Storm Mantle gains charge by moving. Wet targets take 30% more damage.";
+            case UTH_DUNA -> "A travelling tidal wave carries and drenches enemies. Aim a persistent whirlpool to gather them. Water Veil retaliates after health damage. Crimson Ocean alternates inward and outward tides.";
+            case NU_UDRA -> "Tentacle lashes grab enemies, stack oil and leave up to three oil pools (five as Agni). Ignition burns only your pools. Furnace Mantle coats melee victims in oil. Caldera establishes a burning pool network.";
+            case JIN_DAHAAD -> "Ground fissures shatter fully rimed enemies. Glacial Rampart chills enemies crossing a frontal ward and intercepts three hostile projectiles (six as Ymir). Absolute Winter is an expanding frostfront that primes shatter.";
+        } + (ultimate ? " Ultimate rank: stronger attacks and defenses, plus a ten-second signature ability." : " Damage grows with EP and mastery. Master this skill to unlock its Ultimate as Sovereign Hunter.");
     }
+
     @Override public MutableComponent getSkillDescription() { return Component.translatableWithFallback(key() + ".description", description()); }
     @Override public double getDefaultAcquiringMagiculeCost() { return ultimate ? 1_000_000 : 25_000; }
     @Override public double getMagiculeCost(LivingEntity entity, ManasSkillInstance instance, int mode) { return 0; }
@@ -85,24 +86,17 @@ public final class ApexSkill extends Skill {
         long now = level.getGameTime();
         var tag = instance.getOrCreateTag();
         switch (mode) {
-            case 0 -> primary(level, instance, caster);
-            case 1 -> {
-                Vec3 center = caster.position();
-                area(level, instance, caster, center, radius(), balance.burst(), mode, false);
-                tag.putLong("field_until", now + 120); tag.putLong("field_next", now + 20);
-                tag.putString("field_dimension", level.dimension().location().toString());
-                tag.putDouble("field_x", center.x); tag.putDouble("field_y", center.y); tag.putDouble("field_z", center.z);
-                startRipple(instance, caster, radius());
+            case 0 -> {
+                ApexVisuals.circle(level, caster, apex, caster.position().add(0, 0.15, 0), 2, 16, false);
+                ApexArts.primary(this, level, instance, caster);
             }
+            case 1 -> ApexArts.secondary(this, level, instance, caster);
             case 2 -> {
                 tag.putLong("mantle_until", now + (ultimate ? 600 : 300));
+                ApexArts.point(tag, "mantle_last", caster.position());
                 applyMantle(caster); mantleEffects(caster); startRipple(instance, caster, 2);
             }
-            case 3 -> {
-                tag.putLong("domain_until", now + 200); tag.putLong("domain_next", now + 20);
-                area(level, instance, caster, caster.position(), 14, balance.burst(), mode, false);
-                startRipple(instance, caster, 14);
-            }
+            case 3 -> ApexArts.domain(this, level, instance, caster);
             default -> { return; }
         }
         instance.markDirty();
@@ -117,7 +111,7 @@ public final class ApexSkill extends Skill {
             case JIN_DAHAAD -> SoundEvents.GLASS_BREAK;
         }, SoundSource.PLAYERS, mode == 3 ? 1.1f : 0.75f, ultimate ? 0.7f : 1.0f);
     }
-    private double radius() { return ultimate ? balance.radius() + 4 : balance.radius(); }
+    double radius() { return ultimate ? balance.radius() + 4 : balance.radius(); }
     private void startRipple(ManasSkillInstance instance, LivingEntity caster, double radius) {
         var t = instance.getOrCreateTag(); long now = caster.level().getGameTime();
         t.putLong("ripple_start", now); t.putLong("ripple_until", now + 12); t.putDouble("ripple_radius", radius);
@@ -128,28 +122,19 @@ public final class ApexSkill extends Skill {
         var tag = instance.getOrCreateTag(); long now = level.getGameTime(); boolean active = false;
         if (tag.getLong("mantle_until") > now) {
             active = true;
-            if (now % 20 == 0) applyMantle(caster);
+            if (now % 20 == 0) {
+                applyMantle(caster);
+                if (apex == Apex.REY_DAU) {
+                    double distance = caster.position().distanceTo(ApexArts.point(tag, "mantle_last"));
+                    if (distance >= 3 && distance <= 16) ApexArts.charge(instance, 1);
+                    ApexArts.point(tag, "mantle_last", caster.position());
+                }
+            }
             if (now % 4 == 0) ApexVisuals.mantle(level, apex, caster.position(), ultimate);
         } else if (tag.contains("mantle_until")) {
             removeMantle(caster); tag.remove("mantle_until"); instance.markDirty();
         }
-        if (tag.getLong("field_until") > now && tag.getString("field_dimension").equals(level.dimension().location().toString())) {
-            active = true;
-            Vec3 center = new Vec3(tag.getDouble("field_x"), tag.getDouble("field_y"), tag.getDouble("field_z"));
-            if (now >= tag.getLong("field_next")) {
-                area(level, instance, caster, center, radius(), balance.pulse(), 1, true);
-                tag.putLong("field_next", now + 20); instance.markDirty();
-            }
-            if (now % 8 == 0) ApexVisuals.ring(level, apex, center, radius(), 0.3, ultimate);
-        }
-        if (tag.getLong("domain_until") > now) {
-            active = true;
-            if (now >= tag.getLong("domain_next")) {
-                area(level, instance, caster, caster.position(), 14, balance.pulse() * 1.5f, 3, true);
-                tag.putLong("domain_next", now + 20); instance.markDirty();
-            }
-            if (now % 5 == 0) ApexVisuals.domain(level, apex, caster.position(), 14);
-        }
+        active |= ApexArts.tick(this, level, instance, caster);
         if (tag.getLong("ripple_until") > now) {
             active = true;
             if (now % 2 == 0) {
@@ -160,23 +145,7 @@ public final class ApexSkill extends Skill {
         }
         return active;
     }
-    private void primary(ServerLevel level, ManasSkillInstance instance, LivingEntity caster) {
-        if (apex == Apex.UTH_DUNA || apex == Apex.NU_UDRA) {
-            double reach = apex == Apex.UTH_DUNA ? 18 : 14;
-            if (ultimate) reach += 8;
-            Vec3 start = caster.getEyePosition(), look = caster.getLookAngle();
-            for (int i = -2; i <= 2; i++) {
-                Vec3 end = start.add(look.yRot(i * 0.18f).scale(reach));
-                end = level.clip(new ClipContext(start, end, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, caster)).getLocation();
-                ApexVisuals.beam(level, apex, start, end, ultimate);
-            }
-            for (LivingEntity target : level.getEntitiesOfClass(LivingEntity.class, caster.getBoundingBox().inflate(reach))) {
-                if (!HunterData.canHarm(caster, target) || !caster.hasLineOfSight(target) || caster.distanceToSqr(target) > reach * reach) continue;
-                if (target.getEyePosition().subtract(start).normalize().dot(look) > (apex == Apex.NU_UDRA ? 0.55 : 0.75))
-                    strike(level, instance, caster, target, balance.primary(), 0, false);
-            }
-            return;
-        }
+    void railgun(ServerLevel level, ManasSkillInstance instance, LivingEntity caster, float multiplier, int charges) {
         Vec3 start = caster.getEyePosition();
         Vec3 desired = start.add(caster.getLookAngle().scale(ultimate ? 56 : 36));
         Vec3 end = level.clip(new ClipContext(start, desired, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, caster)).getLocation();
@@ -187,34 +156,33 @@ public final class ApexSkill extends Skill {
         for (LivingEntity target : targets) {
             if (!HunterData.canHarm(caster, target) || !caster.hasLineOfSight(target)
                     || target.getBoundingBox().inflate(ultimate ? 1 : 0.6).clip(start, end).isEmpty()) continue;
-            if (strike(level, instance, caster, target, balance.primary(), 0, false) && apex == Apex.REY_DAU)
-                chain(level, instance, caster, target);
+            if (strike(level, instance, caster, target, balance.primary() * multiplier, 0, false) && apex == Apex.REY_DAU)
+                chain(level, instance, caster, target, charges);
             if (++hits >= (ultimate ? 4 : apex == Apex.REY_DAU ? 2 : 1)) break;
         }
     }
-    private void chain(ServerLevel level, ManasSkillInstance instance, LivingEntity caster, LivingEntity origin) {
+    private void chain(ServerLevel level, ManasSkillInstance instance, LivingEntity caster, LivingEntity origin, int charges) {
         var nearby = level.getEntitiesOfClass(LivingEntity.class, origin.getBoundingBox().inflate(6));
         nearby.sort(Comparator.comparingDouble(origin::distanceToSqr)); int count = 0;
         for (LivingEntity target : nearby) {
             if (target == origin || !HunterData.canHarm(caster, target) || !origin.hasLineOfSight(target) || !caster.hasLineOfSight(target)) continue;
             if (strike(level, instance, caster, target, balance.primary() * 0.55f, 0, true)) {
                 ApexVisuals.beam(level, apex, origin.getEyePosition(), target.getEyePosition(), ultimate);
-                if (++count >= (ultimate ? 5 : 3)) break;
+                if (++count >= (ultimate ? 5 : 3) + charges) break;
             }
         }
     }
-    private void area(ServerLevel level, ManasSkillInstance instance, LivingEntity caster, Vec3 center,
+    void area(ServerLevel level, ManasSkillInstance instance, LivingEntity caster, Vec3 center,
                       double radius, float damage, int mode, boolean pulse) {
         for (LivingEntity target : level.getEntitiesOfClass(LivingEntity.class, new AABB(center, center).inflate(radius))) {
             if (!HunterData.canHarm(caster, target) || target.position().distanceToSqr(center) > radius * radius || !caster.hasLineOfSight(target)) continue;
             if (!strike(level, instance, caster, target, damage, mode, pulse)) continue;
             Vec3 push = target.position().subtract(center).multiply(1, 0, 1).normalize();
             if (apex == Apex.UTH_DUNA) push = push.scale(-1.8);
-            target.push(push.x * 0.4, apex == Apex.JIN_DAHAAD ? 0 : 0.15, push.z * 0.4);
-            target.hurtMarked = true;
+            ApexArts.push(target, push.scale(0.4).add(0, apex == Apex.JIN_DAHAAD ? 0 : 0.15, 0));
         }
     }
-    private boolean strike(ServerLevel level, ManasSkillInstance instance, LivingEntity caster, LivingEntity target,
+    boolean strike(ServerLevel level, ManasSkillInstance instance, LivingEntity caster, LivingEntity target,
                            float raw, int mode, boolean pulse) {
         long now = level.getGameTime(); var data = HunterData.of(target);
         boolean ownOil = data.hasUUID("oil_owner") && data.getUUID("oil_owner").equals(caster.getUUID()) && data.getLong("oil_until") > now;
@@ -321,7 +289,8 @@ public final class ApexSkill extends Skill {
     }
     @Override public void onForgetSkill(ManasSkillInstance instance, LivingEntity caster) {
         removeMantle(caster);
-        for (String key : java.util.List.of("mantle_until", "field_until", "domain_until", "ripple_until")) instance.getOrCreateTag().remove(key);
+        for (String key : java.util.List.of("mantle_until", "field_until", "domain_until", "ripple_until", "travel_until")) instance.getOrCreateTag().remove(key);
+        instance.getOrCreateTag().remove("oil_pools");
         super.onForgetSkill(instance, caster);
     }
 }

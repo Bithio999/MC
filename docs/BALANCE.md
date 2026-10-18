@@ -1,5 +1,9 @@
 # 0.3.0: comparison and rebalance of all four skill lines
 
+> Historical 0.3.0 comparison. The 0.4.0 [wiki](../wiki/README.md) documents
+> the current distinct arts, targeting, costs and combos. The native Tensura
+> benchmarks below remain useful reference values.
+
 The reference is Tensura: Reincarnated **2.0.1.3**, using the defaults in its
 Extra/Unique skill and Aspectual Magic configuration. This compares **all four
 addon Unique skills and their Ultimate evolutions**, not every ability in Tensura.

@@ -36,6 +36,19 @@ public final class HunterCommands {
             + "/3 | EP " + (long) EnergyHelper.getBaseMaxEP(player) + " | Distinct bosses " + HunterData.bossKills(player).size()
             + " | Mastered " + HunterData.mastered(player) + "/4"), false);
         ctx.getSource().sendSuccess(() -> Component.literal("Defeated: " + String.join(", ", HunterData.bossKills(player))), false);
+        for (Apex apex : Apex.values()) {
+            for (var instance : SkillAPI.getSkillsFrom(player).getLearnedSkills()) {
+                if (!(instance.getSkill() instanceof ApexSkill skill) || skill.apex != apex) continue;
+                var tag = instance.getOrCreateTag();
+                String resource = switch (apex) {
+                    case REY_DAU -> "Charge " + tag.getInt("storm_charge") + "/3";
+                    case UTH_DUNA -> "Veil " + (tag.getLong("mantle_until") > player.level().getGameTime() ? "active" : "inactive");
+                    case NU_UDRA -> "Oil pools " + tag.getList("oil_pools", net.minecraft.nbt.Tag.TAG_COMPOUND).size() + "/" + (skill.ultimate ? 5 : 3);
+                    case JIN_DAHAAD -> "Ward interceptions " + (tag.getLong("field_until") > player.level().getGameTime() && tag.getString("field_dimension").equals(player.level().dimension().location().toString()) ? tag.getInt("ward_budget") : 0);
+                };
+                ctx.getSource().sendSuccess(() -> skill.getName().append(": " + resource), false);
+            }
+        }
         return Command.SINGLE_SUCCESS;
     }
     private static int evolve(CommandContext<CommandSourceStack> ctx) throws com.mojang.brigadier.exceptions.CommandSyntaxException {

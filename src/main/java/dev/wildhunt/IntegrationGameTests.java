@@ -308,4 +308,122 @@ public final class IntegrationGameTests {
         helper.succeed();
     }
 
+    @GameTest(template = "empty", timeoutTicks = 100)
+    public static void rodsBuildChargeAndRailgunConsumesIt(GameTestHelper helper) {
+        var player = combatPlayer(helper); var target = durableTarget(helper);
+        var skill = WildHunt.UNIQUE.get(Apex.REY_DAU).get(); HunterData.learnReward(player, skill);
+        var instance = SkillAPI.getSkillsFrom(player).getSkill(skill).orElseThrow();
+        skill.onPressed(instance, player, 0, 1);
+        helper.assertTrue(instance.getOrCreateTag().getInt("storm_charge") > 0, "Fulgurite rods did not build charge");
+        target.invulnerableTime = 0; skill.onPressed(instance, player, 0, 0);
+        helper.assertTrue(instance.getOrCreateTag().getInt("storm_charge") == 0, "Railgun did not consume stored charge");
+        helper.assertTrue(helper.getLevel().getEntitiesOfClass(io.github.manasmods.tensura.entity.magic.MagicCircle.class,
+            player.getBoundingBox().inflate(20)).stream().anyMatch(c -> c.getVariant() == io.github.manasmods.tensura.entity.variant.MagicCircleVariant.LIGHTNING), "Native lightning circle was not spawned");
+        helper.succeed();
+    }
+    @GameTest(template = "empty", timeoutTicks = 100)
+    public static void tidalWaveTravelsAndHitsEachTargetOnce(GameTestHelper helper) {
+        var player = combatPlayer(helper); var target = durableTarget(helper);
+        // Keep long-range checks above neighboring GameTest structure walls.
+        player.setPos(player.position().add(0, 20, 0));
+        helper.getLevel().getChunk(net.minecraft.core.BlockPos.containing(player.position().add(12, 0, 0)));
+        target.setNoGravity(true); target.teleportTo(player.getX() + 12, player.getY(), player.getZ());
+        var skill = WildHunt.UNIQUE.get(Apex.UTH_DUNA).get(); HunterData.learnReward(player, skill);
+        var instance = SkillAPI.getSkillsFrom(player).getSkill(skill).orElseThrow();
+        float before = target.getHealth(); skill.onPressed(instance, player, 0, 0);
+        helper.assertTrue(target.getHealth() == before, "Wave hit a distant target instantly");
+        for (int step = 0; step < 7; step++) ApexArts.advance(skill, helper.getLevel(), instance, player);
+        helper.assertTrue(target.getHealth() < before, "Travelling wave missed its distant target");
+        helper.assertTrue(instance.getOrCreateTag().getList("travel_hits", net.minecraft.nbt.Tag.TAG_STRING).size() == 1, "Wave hit its target more than once");
+        helper.assertTrue(target.getDeltaMovement().x > 0, "Tidal wave did not carry its target forward");
+        helper.succeed();
+    }
+    @GameTest(template = "empty", timeoutTicks = 100)
+    public static void ultimateFissureSweepsTheSpaceBetweenFronts(GameTestHelper helper) {
+        var player = combatPlayer(helper); var target = durableTarget(helper);
+        player.setPos(player.position().add(0, 20, 0));
+        helper.getLevel().getChunk(net.minecraft.core.BlockPos.containing(player.position().add(8, 0, 0)));
+        target.setNoGravity(true); target.teleportTo(player.getX() + 8, player.getY(), player.getZ());
+        var skill = WildHunt.ULTIMATE.get(Apex.JIN_DAHAAD).get(); HunterData.learnReward(player, skill);
+        var instance = SkillAPI.getSkillsFrom(player).getSkill(skill).orElseThrow(); float before = target.getHealth();
+        skill.onPressed(instance, player, 0, 0);
+        helper.assertTrue(target.getHealth() == before, "Fissure hit before its front arrived");
+        ApexArts.advance(skill, helper.getLevel(), instance, player);
+        helper.assertTrue(target.getHealth() < before, "Long-range fissure skipped an enemy between successive fronts");
+        float after = target.getHealth(); target.invulnerableTime = 0;
+        ApexArts.advance(skill, helper.getLevel(), instance, player);
+        helper.assertTrue(target.getHealth() == after, "One fissure hit the same target twice");
+        helper.succeed();
+    }
+    @GameTest(template = "empty", timeoutTicks = 100)
+    public static void oilIgnitionIsLimitedToOwnedPoolLocations(GameTestHelper helper) {
+        var player = combatPlayer(helper); var target = durableTarget(helper);
+        var remote = durableTarget(helper); remote.setPos(player.getX(), player.getY(), player.getZ() + 10);
+        var skill = WildHunt.UNIQUE.get(Apex.NU_UDRA).get(); HunterData.learnReward(player, skill);
+        var instance = SkillAPI.getSkillsFrom(player).getSkill(skill).orElseThrow();
+        skill.onPressed(instance, player, 0, 0); target.invulnerableTime = 0;
+        float nearby = target.getHealth(), distant = remote.getHealth(); skill.onPressed(instance, player, 0, 1);
+        helper.assertTrue(target.getHealth() < nearby, "Owned oil pool did not detonate");
+        helper.assertTrue(remote.getHealth() == distant, "Ignition behaved like a generic radial attack");
+        for (int n = 0; n < 6; n++) ApexArts.addPool(skill, helper.getLevel(), instance, player, player.position().add(n, 0, 0), false, 300);
+        helper.assertTrue(instance.getOrCreateTag().getList("oil_pools", net.minecraft.nbt.Tag.TAG_COMPOUND).size() == 3, "Unique oil pool limit was exceeded");
+        helper.succeed();
+    }
+    @GameTest(template = "empty", timeoutTicks = 100)
+    public static void frostWardInterceptsHostileShotsButPreservesOwnedShots(GameTestHelper helper) {
+        var player = combatPlayer(helper); var shooter = durableTarget(helper);
+        var skill = WildHunt.UNIQUE.get(Apex.JIN_DAHAAD).get(); HunterData.learnReward(player, skill);
+        var instance = SkillAPI.getSkillsFrom(player).getSkill(skill).orElseThrow(); skill.onPressed(instance, player, 0, 1);
+        var tag = instance.getOrCreateTag(); var center = ApexArts.point(tag, "field"); var normal = ApexArts.point(tag, "ward_normal");
+        var owned = new net.minecraft.world.entity.projectile.Arrow(net.minecraft.world.entity.EntityType.ARROW, helper.getLevel());
+        owned.setOwner(player); owned.setPos(center.add(normal.scale(0.2)).add(0, 1, 0)); owned.setDeltaMovement(normal.scale(-1)); helper.getLevel().addFreshEntity(owned);
+        for (int n = 0; n < 3; n++) {
+            var arrow = new net.minecraft.world.entity.projectile.Arrow(net.minecraft.world.entity.EntityType.ARROW, helper.getLevel());
+            arrow.setOwner(shooter); arrow.setPos(center.add(normal.scale(0.2)).add(0, 1, 0)); arrow.setDeltaMovement(normal.scale(-1)); helper.getLevel().addFreshEntity(arrow);
+            ApexArts.intercept(skill, helper.getLevel(), instance, player);
+            helper.assertTrue(arrow.isRemoved(), "Hostile projectile crossed the ice ward");
+        }
+        helper.assertTrue(!owned.isRemoved(), "Ice ward destroyed its owner's projectile");
+        helper.assertTrue(tag.getInt("ward_budget") == 0 && tag.getLong("field_until") <= helper.getLevel().getGameTime(), "Ward did not collapse after three interceptions");
+        owned.discard(); helper.succeed();
+    }
+    @GameTest(template = "empty", timeoutTicks = 100)
+    public static void absoluteWinterExpandsAndPrimesOneShatterPerTarget(GameTestHelper helper) {
+        var player = combatPlayer(helper); var target = durableTarget(helper);
+        // Keep long-range checks above neighboring GameTest structure walls.
+        player.setPos(player.position().add(0, 20, 0));
+        helper.getLevel().getChunk(net.minecraft.core.BlockPos.containing(player.position().add(12, 0, 0)));
+        target.setNoGravity(true); target.teleportTo(player.getX() + 12, player.getY(), player.getZ());
+        var skill = WildHunt.ULTIMATE.get(Apex.JIN_DAHAAD).get(); HunterData.learnReward(player, skill);
+        var instance = SkillAPI.getSkillsFrom(player).getSkill(skill).orElseThrow(); float before = target.getHealth();
+        skill.onPressed(instance, player, 0, 3);
+        helper.assertTrue(target.getHealth() == before, "Whiteout hit its full radius immediately");
+        instance.getOrCreateTag().putLong("domain_start", helper.getLevel().getGameTime() - 180);
+        ApexArts.pulseDomain(skill, helper.getLevel(), instance, player, false);
+        helper.assertTrue(target.getHealth() < before && HunterData.of(target).getInt("rime_stacks") == 3, "Expanding frostfront did not hit and prime rime");
+        float after = target.getHealth(); target.invulnerableTime = 0;
+        ApexArts.pulseDomain(skill, helper.getLevel(), instance, player, false);
+        helper.assertTrue(target.getHealth() == after, "Whiteout repeatedly hit an already crossed target");
+        helper.succeed();
+    }
+    @GameTest(template = "empty", timeoutTicks = 100)
+    public static void mantleReactionsAreDistinctForWaterAndOil(GameTestHelper helper) {
+        var player = combatPlayer(helper); var target = durableTarget(helper);
+        // FakeServerPlayer.tick is a no-op, so its 60-tick spawn immunity never
+        // expires. Exercise resolved health damage with a real living caster.
+        var defender = helper.spawnWithNoFreeWill(net.minecraft.world.entity.EntityType.PIG, 1, 1, 1);
+        defender.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH).setBaseValue(1024);
+        defender.setHealth(defender.getMaxHealth());
+        TensuraStorages.getExistenceFrom(defender).setAura(100_000);
+        var water = WildHunt.UNIQUE.get(Apex.UTH_DUNA).get(); HunterData.learnReward(defender, water);
+        var veil = SkillAPI.getSkillsFrom(defender).getSkill(water).orElseThrow(); water.onPressed(veil, defender, 0, 2);
+        float before = target.getHealth(); defender.hurt(defender.damageSources().mobAttack(target), 100);
+        helper.assertTrue(target.getHealth() < before && veil.getOrCreateTag().getLong("counter_next") > helper.getLevel().getGameTime(), "Water Veil failed to retaliate after health damage");
+        var fire = WildHunt.UNIQUE.get(Apex.NU_UDRA).get(); HunterData.learnReward(player, fire);
+        var mantle = SkillAPI.getSkillsFrom(player).getSkill(fire).orElseThrow(); fire.onPressed(mantle, player, 0, 2);
+        target.invulnerableTime = 0; target.hurt(player.damageSources().playerAttack(player), 10);
+        helper.assertTrue(HunterData.of(target).getInt("oil_stacks") == 1, "Furnace Mantle did not coat a melee victim");
+        helper.succeed();
+    }
+
 }
