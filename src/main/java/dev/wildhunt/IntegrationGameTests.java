@@ -39,7 +39,7 @@ public final class IntegrationGameTests {
         var races = RaceAPI.getRaceFrom(player);
         races.setRace(TensuraRaces.HUMAN.get(), false);
         EnergyHelper.setBaseMaxEP(player, 100_000);
-        HunterData.of(player).putInt("hunts", 20);
+        HunterData.recordBossKill(player, net.minecraft.resources.ResourceLocation.parse("minecraft:wither"));
         var human = races.getRace().orElseThrow();
         helper.assertTrue(human.getEvolutionProgress(player, WildHunt.HUNTERS.getFirst().get()) >= 100, "First evolution never reaches 100%");
         helper.assertTrue(races.evolveRace(WildHunt.HUNTERS.getFirst().get()), "Evolution rejected");
@@ -61,7 +61,7 @@ public final class IntegrationGameTests {
         energy.setAura(10_000);
         var skill = WildHunt.UNIQUE.get(Apex.UTH_DUNA).get();
         var storage = SkillAPI.getSkillsFrom(player);
-        helper.assertTrue(HunterData.learnReward(player, skill), "Guard trial reward was rejected");
+        helper.assertTrue(HunterData.learnReward(player, skill), "Guard skill reward was rejected");
         var instance = storage.getSkill(skill).orElseThrow();
         skill.onPressed(instance, player, 0, 2);
         helper.assertTrue(player.hasEffect(MobEffects.ABSORPTION), "Water Veil did not activate");
@@ -80,11 +80,10 @@ public final class IntegrationGameTests {
         EnergyHelper.setBaseMaxEP(player, 2_000_000);
         var source = WildHunt.UNIQUE.get(Apex.REY_DAU).get();
         var other = WildHunt.UNIQUE.get(Apex.UTH_DUNA).get();
-        helper.assertTrue(HunterData.learnReward(player, source), "Source trial reward rejected");
-        helper.assertTrue(HunterData.learnReward(player, other), "Other trial reward rejected");
+        helper.assertTrue(HunterData.learnReward(player, source), "Source skill reward rejected");
+        helper.assertTrue(HunterData.learnReward(player, other), "Other skill reward rejected");
         var instance = skills.getSkill(source).orElseThrow();
         instance.setMastery(instance.getMaxMastery());
-        HunterData.of(player).putBoolean("rey_dau_trial", true);
         var commands = helper.getLevel().getServer().getCommands();
         commands.getDispatcher().execute("wildhunt ascend rey_dau", player.createCommandSourceStack());
         helper.assertTrue(skills.getSkill(WildHunt.ULTIMATE.get(Apex.REY_DAU).get()).isPresent(), "Ultimate not learned");
@@ -112,16 +111,74 @@ public final class IntegrationGameTests {
         helper.succeed();
     }
     @GameTest(template = "empty", timeoutTicks = 100)
-    public static void hostileKillCompletesTrialAndGrantsUnique(GameTestHelper helper) {
+    public static void onlyDistinctBossTypesCountAndDoNotGrantSkills(GameTestHelper helper) {
         var player = testPlayer(helper);
-        RaceAPI.getRaceFrom(player).setRace(WildHunt.HUNTERS.getFirst().get(), false);
-        HunterData.of(player).putInt("rey_dau_kills", 9);
-        var phantom = helper.spawnWithNoFreeWill(net.minecraft.world.entity.EntityType.PHANTOM, 2, 1, 2);
-        phantom.setHealth(1);
-        phantom.hurt(player.damageSources().playerAttack(player), 100_000);
-        helper.assertTrue(HunterData.of(player).getInt("hunts") == 1, "Hostile death was not counted");
-        helper.assertTrue(HunterData.of(player).getBoolean("rey_dau_trial"), "Trial did not complete");
-        helper.assertTrue(SkillAPI.getSkillsFrom(player).getSkill(WildHunt.UNIQUE.get(Apex.REY_DAU).get()).isPresent(), "Trial skill was not granted");
+        RaceAPI.getRaceFrom(player).setRace(TensuraRaces.HUMAN.get(), false);
+        var zombie = helper.spawnWithNoFreeWill(net.minecraft.world.entity.EntityType.ZOMBIE, 2, 1, 2);
+        zombie.setHealth(1);
+        zombie.hurt(player.damageSources().playerAttack(player), 100_000);
+        helper.assertTrue(HunterData.bossKills(player).isEmpty(), "Ordinary hostile counted as a boss");
+        for (int i = 0; i < 2; i++) {
+            var wither = helper.spawnWithNoFreeWill(net.minecraft.world.entity.EntityType.WITHER, 2, 1, 2);
+            wither.setHealth(1);
+            wither.hurt(player.damageSources().playerAttack(player), 100_000);
+        }
+        helper.assertTrue(HunterData.bossKills(player).size() == 1, "Repeated Withers counted more than once");
+        helper.assertTrue(HunterData.bossKills(player).contains("minecraft:wither"), "Wither credit missing");
+        helper.assertTrue(HunterData.recordBossKill(player, WildHunt.id("future_monster")), "A second boss ID did not count");
+        helper.assertTrue(HunterData.bossKills(player).size() == 2, "Distinct boss count did not increase");
+        for (Apex apex : Apex.values()) helper.assertTrue(
+            SkillAPI.getSkillsFrom(player).getSkill(WildHunt.UNIQUE.get(apex).get()).isEmpty(), "Kills still award a Unique skill");
+        helper.succeed();
+    }
+    @GameTest(template = "empty", timeoutTicks = 100)
+    public static void nativeReincarnationPoolAndRollIncludeApexUniques(GameTestHelper helper) {
+        var config = io.github.manasmods.tensura.menu.ReincarnationMenu.CONFIG.Skills;
+        var original = config.startingSkills;
+        var second = config.secondSkills;
+        int number = config.skillNumber;
+        double chance = config.additionalUniqueChance;
+        try {
+            config.startingSkills = java.util.List.of("tensura:great_sage", "tensura:great_sage", "wildhunt:storm_crown");
+            var pool = io.github.manasmods.tensura.menu.ReincarnationMenu.getSkillPool();
+            helper.assertTrue(pool.contains(io.github.manasmods.tensura.registry.skill.UniqueSkills.GREAT_SAGE.get()), "Configured vanilla pool entry lost");
+            helper.assertTrue(java.util.Collections.frequency(pool, io.github.manasmods.tensura.registry.skill.UniqueSkills.GREAT_SAGE.get()) == 2, "Configured base-pool weighting changed");
+            for (Apex apex : Apex.values()) {
+                var unique = WildHunt.UNIQUE.get(apex).get();
+                helper.assertTrue(java.util.Collections.frequency(pool, unique) == 1, "Apex Unique missing or duplicated in roll pool");
+                helper.assertTrue(!pool.contains(WildHunt.ULTIMATE.get(apex).get()), "Ultimate became a starting skill");
+                helper.assertTrue(unique.createDefaultInstance().is(io.github.manasmods.tensura.data.TensuraSkillTags.UNIQUE_SKILLS), "Unique classification tag missing");
+            }
+            // Restrict only the test's configured base pool: the addon injects all four
+            // candidates, then Tensura's real random-selection and grant code runs.
+            config.startingSkills = java.util.List.of();
+            config.secondSkills = java.util.List.of();
+            config.skillNumber = 1;
+            config.additionalUniqueChance = 0;
+            var player = testPlayer(helper);
+            RaceAPI.getRaceFrom(player).setRace(TensuraRaces.HUMAN.get(), false);
+            io.github.manasmods.tensura.menu.ReincarnationMenu.randomUniqueSkill(player, true);
+            long count = java.util.Arrays.stream(Apex.values()).filter(apex ->
+                SkillAPI.getSkillsFrom(player).getSkill(WildHunt.UNIQUE.get(apex).get()).isPresent()).count();
+            helper.assertTrue(count == 1, "Native reincarnation did not grant exactly one rolled apex Unique");
+        } finally {
+            config.startingSkills = original; config.secondSkills = second;
+            config.skillNumber = number; config.additionalUniqueChance = chance;
+        }
+        helper.succeed();
+    }
+    @GameTest(template = "empty", timeoutTicks = 100)
+    public static void bossHistorySurvivesDeathAndIgnoresLegacyHunts(GameTestHelper helper) {
+        var original = testPlayer(helper);
+        HunterData.of(original).putInt("hunts", 1000);
+        HunterData.of(original).putBoolean("rey_dau_trial", true);
+        helper.assertTrue(HunterData.bossKills(original).isEmpty(), "Legacy hunts were converted into boss credit");
+        HunterData.recordBossKill(original, net.minecraft.resources.ResourceLocation.parse("minecraft:wither"));
+        var replacement = testPlayer(helper);
+        HunterEvents.onClone(new net.neoforged.neoforge.event.entity.player.PlayerEvent.Clone(replacement, original, true));
+        helper.assertTrue(HunterData.bossKills(replacement).equals(HunterData.bossKills(original)), "Death lost boss history");
+        HunterData.recordBossKill(replacement, net.minecraft.resources.ResourceLocation.parse("minecraft:ender_dragon"));
+        helper.assertTrue(HunterData.bossKills(original).size() == 1, "Clone shares mutable boss history");
         helper.succeed();
     }
 }

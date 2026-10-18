@@ -48,9 +48,8 @@ public final class HunterRace extends TensuraRace {
     }
     @Override public Map<EvolutionRequirement, Float> getEvolutionRequirements(ManasRaceInstance instance, LivingEntity entity) {
         Map<EvolutionRequirement, Float> gates = new LinkedHashMap<>();
-        gates.put(new EvolutionRequirement.EPRequirement(HunterProgression.EP[stage]), stage < 3 ? 50f : 25f);
-        gates.put(new Gate("Complete " + HunterProgression.HUNTS[stage] + " hostile hunts", e -> (float) HunterData.of(e).getInt("hunts") / HunterProgression.HUNTS[stage]), stage == 1 ? 50f : 25f);
-        if (stage >= 2) gates.put(new Gate("Complete all four apex trials", e -> HunterData.trials(e) / 4f), 25f);
+        gates.put(new EvolutionRequirement.EPRequirement(HunterProgression.EP[stage]), 50f);
+        gates.put(new Gate("Defeat " + HunterProgression.BOSSES[stage] + " distinct boss types", e -> (float) HunterData.bossKills(e).size() / HunterProgression.BOSSES[stage]), stage < 3 ? 50f : 25f);
         if (stage >= 3) gates.put(new Gate("Master an apex Unique skill", e -> HunterData.mastered(e) > 0 ? 1f : 0f), 25f);
         return gates;
     }

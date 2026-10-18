@@ -21,10 +21,20 @@ public final class HunterData {
         return RaceAPI.getRaceFrom(entity).getRace()
             .map(r -> r.getRaceId().toString().equals("tensura:human")).orElse(false);
     }
-    public static int trials(LivingEntity entity) {
-        int count = 0;
-        for (Apex apex : Apex.values()) if (of(entity).getBoolean(apex.id() + "_trial")) count++;
-        return count;
+    /** Boss credit is keyed by registry ID, never by an individual spawn's UUID. */
+    public static java.util.Set<String> bossKills(LivingEntity entity) {
+        var result = new java.util.TreeSet<String>();
+        for (var tag : of(entity).getList("boss_kills", net.minecraft.nbt.Tag.TAG_STRING)) {
+            result.add(tag.getAsString());
+        }
+        return java.util.Collections.unmodifiableSet(result);
+    }
+    public static boolean recordBossKill(LivingEntity entity, net.minecraft.resources.ResourceLocation bossId) {
+        if (bossKills(entity).contains(bossId.toString())) return false;
+        var kills = of(entity).getList("boss_kills", net.minecraft.nbt.Tag.TAG_STRING);
+        kills.add(net.minecraft.nbt.StringTag.valueOf(bossId.toString()));
+        of(entity).put("boss_kills", kills);
+        return true;
     }
     public static int mastered(LivingEntity entity) {
         int count = 0;
@@ -37,7 +47,7 @@ public final class HunterData {
     }
     public static boolean learnReward(LivingEntity entity, ApexSkill skill) {
         var instance = skill.createDefaultInstance();
-        // Tensura's supported reward flag: earning a trial/ascension must not also
+        // Tensura's supported reward flag: granting an ascension reward must not also
         // consume permanent max magicules as if buying the skill from a menu.
         instance.getOrCreateTag().putBoolean("NoMagiculeCost", true);
         return SkillAPI.getSkillsFrom(entity).learnSkill(instance);
