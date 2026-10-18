@@ -1,0 +1,7 @@
+{
+  "required": true,
+  "package": "dev.wildhunt.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": ["HumanEvolutionMixin"],
+  "injectors": {"defaultRequire": 1}
+}
