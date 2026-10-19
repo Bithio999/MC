@@ -14,7 +14,7 @@ python3 scripts/build-wiki.py
 This generates:
 
 - `wiki/index.html` and `wiki/site/*.html`: the styled visual edition.
-- `wiki/github/*.md`: the actual GitHub Wiki edition, including `Home.md`, all 20 articles, `_Sidebar.md`, and `_Footer.md`.
+- `wiki/github/*.md`: the actual GitHub Wiki edition, including `Home.md`, all 19 gameplay articles, `_Sidebar.md`, and `_Footer.md`.
 - `releases/wild-hunt-wiki-0.7.2.zip`: the self-contained offline edition.
 
 GitHub Wiki uses GitHub's own theme and strips custom CSS and scripts. Its pages mirror the visual edition's structure, original portraits, topic tables, navigation, and article content. The ZIP provides the full custom theme and search.
@@ -48,3 +48,5 @@ The reference's light-theme colors include white content, `#006ee6` borders, `#2
 ## Individual article layout
 
 Skill articles use a lead summary, grouped data table, Usage with Passive / Active subsections and labeled arts, Obtaining, Evolution, then strategy and reference notes. Race articles group information, vitality bonuses, evolution and obtaining in their infobox, with Racial Ability, Traits and Evolution in the body. NPC pages put abilities and spawning before the screenshot gallery. The renderer turns the same Markdown data into a sectioned right-hand infobox; GitHub readers retain an ordinary data table. No gameplay values are changed by this layout.
+
+Development history, save migration, and balancing references live separately in [CHANGELOG.md](CHANGELOG.md). Keep gameplay articles in present tense and describe current behavior.

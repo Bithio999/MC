@@ -8,7 +8,7 @@ An unofficial reference for the Monster Hunter inspired addon to **Tensura: Rein
 
 <p align="center"><img src="assets/skill/storm_crown.png" width="64" height="64" alt="Rey Dau"> <img src="assets/skill/scarlet_deluge.png" width="64" height="64" alt="Uth Duna"> <img src="assets/skill/black_flame.png" width="64" height="64" alt="Nu Udra"> <img src="assets/skill/frostbound_colossus.png" width="64" height="64" alt="Jin Dahaad"></p>
 
-We currently document **20 articles**, covering four apex skill lines, three hunter evolutions, aura recovery, and otherworlders.
+We currently document **19 articles**, covering four apex skill lines, three hunter evolutions, aura recovery, and otherworlders.
 
 **Wild Hunt 0.7.2 · Minecraft 1.21.1 · NeoForge**
 
@@ -24,7 +24,7 @@ Build around aura, native barriers, regeneration, and movement. Meet Alma and Ge
 | --- | --- | --- |
 | [Unique and Ultimate skills](pages/Skills.md) | [Human evolution](pages/Evolution.md) | [Getting started](pages/Getting-Started.md) |
 | [Aura regeneration](pages/Aura-Regeneration.md) | [Alma](pages/Alma.md) · [Gemma](pages/Gemma.md) | [Commands](pages/Commands.md) |
-| [Combat mechanics](pages/Mechanics.md) | [Race bonuses](pages/Evolution.md#hp-and-shp-growth) | [Version history](pages/Version-History.md) |
+| [Combat mechanics](pages/Mechanics.md) | [Race bonuses](pages/Evolution.md#hp-and-shp-growth) | [Changelog](../docs/CHANGELOG.md) |
 
 ## Apex abilities
 

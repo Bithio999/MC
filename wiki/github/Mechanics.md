@@ -4,6 +4,19 @@
 
 This page explains **Wild Hunt combat mechanics**, including native barriers, skill toggles, damage modifiers, and aura consumption.
 
+## Damage types
+
+| Skill line | Unique / Ultimate | Native damage type |
+| --- | --- | --- |
+| Rey Dau | Storm Crown / Raijin | Lightning — `tensura:lightning_elemental` |
+| Uth Duna | Scarlet Deluge / Varuna | Water — `tensura:water_elemental` |
+| Nu Udra | Black Flame / Agni | Fire — `tensura:fire_elemental` |
+| Jin Dahaad | Frostbound Colossus / Ymir | Ice — `tensura:ice_elemental` |
+
+Every damaging active, area pulse, signature, and Water Veil retaliation uses its line's listed element. Oil Lash deals fire elemental damage; Avalanche Crash and Glacial Prison deal ice elemental damage despite their physical-looking animations. Unique and Ultimate versions retain the same element.
+
+Aura is the skill's fuel, not a separate damage type. These attacks use Tensura's native skill damage source, elemental boosts, resistance rules, and barriers. In Tensura 2.0.1.3's bundled damage tags, all four types bypass ordinary armor; that does not imply bypassing native barriers or elemental resistances. Nu Udra's ignition hits also apply the native Black Burn status, which has its own native behavior.
+
 ## Damage and mastery
 
 Wild Hunt’s damage multiplier is:
@@ -12,19 +25,17 @@ Wild Hunt’s damage multiplier is:
 0.90 × (1 + 0.5 × clamp(masteryFraction, 0, 1)) × (Ultimate ? 3 : 1)
 ```
 
-**No EP term is present.** After the 10% damage reduction, mastery caps at 1.35× the old Unique raw base, or 4.05× that base for a mastered Ultimate. The reduction also covers every area pulse, counter and signature impact. Skill-page tables already include the Ultimate’s 3× multiplier. Native Tensura elemental boosts, global combat rules, rank interactions, barriers and resistances still apply; raw values do not promise the same health damage against every enemy.
+**EP does not multiply damage.** A mastered Unique uses 1.35× its raw base value; a mastered Ultimate uses 4.05× the corresponding Unique raw base. The reduction also covers every area pulse, counter and signature impact. Skill-page tables already include the Ultimate’s 3× multiplier. Native Tensura elemental boosts, global combat rules, rank interactions, barriers and resistances still apply; raw values do not promise the same health damage against every enemy.
 
 EP remains a requirement for race evolution and Ultimate ascension. Those progression gates do not increase these attacks’ raw damage.
 
-## No passive stacks
+## World effects
 
-Storm charge, owned oil stacks and owned rime stacks are removed. No attack builds, consumes or amplifies damage from them. Old marks are ignored and removed as entities tick. There is no shatter threshold or melee coating.
-
-Oil pools remain finite **world locations**, not passive stacks on a character. Drenched remains one timed water mark: it has no counter or buildup and supports the documented water/lightning interactions.
+Oil pools occupy finite world locations. Drenched is a timed water mark that supports the water/lightning interactions described on the skill pages.
 
 ## Toggleable passives
 
-Each skill has two active modes (three for an Ultimate) plus a separate native skill toggle in Tensura’s Ability Selection. The old final buff modes are removed from mode cycling.
+Each skill has two active modes (three for an Ultimate) plus a separate native skill toggle in Tensura’s Ability Selection.
 
 | Line | Passive | Unique aura / second | Ultimate aura / second |
 | --- | --- | ---: | ---: |
@@ -37,7 +48,7 @@ The first second is paid when enabling; upkeep is charged once every twenty game
 
 ## Native barriers
 
-Water Veil and Colossus Carapace contribute to Tensura’s `PHYSICAL_BARRIER` and `MAGIC_BARRIER` attributes and now arm `MULTILAYER_BARRIER`, which is the attribute read by its shield HUD counter. Tensura handles their interaction with damage and renders its native barrier layer around the character. Wild Hunt adds no absorption hearts and does not implement a parallel shield-health pool. Other skills’ barrier contributions remain separate.
+Water Veil and Colossus Carapace contribute to Tensura’s `PHYSICAL_BARRIER` and `MAGIC_BARRIER` attributes and arm `MULTILAYER_BARRIER`, which is the attribute read by its shield HUD counter. Tensura handles their interaction with damage and renders its native barrier layer around the character. Wild Hunt adds no separate absorption-heart pool. Other skills’ barrier contributions remain separate.
 
 | Passive | Unique capacity | Ultimate capacity |
 | --- | ---: | ---: |
@@ -46,7 +57,7 @@ Water Veil and Colossus Carapace contribute to Tensura’s `PHYSICAL_BARRIER` an
 
 The displayed value is native per-hit blocking capacity. Tensura charges magicules for blocked damage. Overflow, inadequate magicules and native power interactions can break the shield. A broken multilayer barrier automatically rearms at the first paid upkeep after ten seconds without a hit (normally 10–11 seconds). Hits, including fully blocked hits, restart recovery. Retoggling cannot skip this delay. The shield modifier is saved across relogs; turning off removes only this art’s contribution. Ensure Tensura’s **Barrier** HUD decoration is enabled if you have customized its HUD.
 
-Water Veil retains water breathing and an attacker-targeted retaliation after actual health damage. Furnace Mantle retains fire protection while enabled; both utility effects stop immediately on toggle-off without leftover timed potions. Furnace Mantle no longer oils melee victims. The old frost ward’s projectile deletion and interception budget are removed.
+Water Veil retains water breathing and an attacker-targeted retaliation after actual health damage. Furnace Mantle retains fire protection while enabled; both utility effects stop immediately on toggle-off without leftover timed potions.
 
 ## Aiming and movement
 
@@ -70,23 +81,17 @@ Tensura supplies elemental particles, shockwaves, native barrier rendering and a
 
 ![Colossus Carapace native HUD showing 150](https://github.com/Bithio999/MC/blob/main/wiki/media/colossus-carapace-hud.png?raw=true)
 
-Captured with the Unique passives enabled in the Minecraft development client, Wild Hunt 0.6.0.
+The examples show the Unique passives enabled.
 
 ![Centered portraits and combined native barrier HUD](https://github.com/Bithio999/MC/blob/main/wiki/media/hunter-icons-and-barriers.png?raw=true)
 
-Wild Hunt 0.7.0: centered Rey Dau, Uth Duna and Jin Dahaad portraits. The native HUD shows 250 combined capacity with both Unique barrier passives enabled (100 Water Veil + 150 Colossus Carapace); no custom bubble/frost orbit is emitted.
+The native HUD shows 250 combined capacity with both Unique barrier passives enabled (100 Water Veil + 150 Colossus Carapace); no custom bubble/frost orbit is emitted.
 
 ## Hunter vitality
 
-Race HP bonuses are +100 / +500 / +1,000; native SHP bonuses are +400 / +3,200 / +6,600. These replace earlier hunter-stage bonuses. Existing saved hunters get the updated caps on login without being healed. See [Human evolution](https://github.com/Bithio999/MC/wiki/Evolution#hp-and-shp-growth).
+Race HP bonuses are +100 / +500 / +1,000; native SHP bonuses are +400 / +3,200 / +6,600. These replace earlier hunter-stage bonuses. See [Human evolution](https://github.com/Bithio999/MC/wiki/Evolution#hp-and-shp-growth).
 
-## Updating saved characters
-
-Version 0.7.0 refreshes race vitality on login, grants missing racial regeneration skills, and leaves current HP/SHP unchanged. Barrier cooldowns and surviving shield state remain saved.
-
-
-Version 0.5.0 introduced the mode migration and keeps learned skills, mastery and distinct boss history. It removes old transient combat timers and resources, drops the old buff mode, and moves the former fourth Ultimate mode into the third active slot while preserving/capping its cooldown. Equipped presets migrate with the mode list. When upgrading from pre-0.5.0 combat, legacy toggle passives start off; no skill reroll is needed. A matching still-active legacy Water Veil absorption effect is cleared during migration. Version 0.6.0 added native HUD barriers to already-enabled passives on login and refreshes hunter HP/SHP modifiers; existing toggle state, mastery and boss history remain intact.
 
 ---
 
-**Categories:** Tensura: Wild Hunt · Version 0.7.0
+**Categories:** Tensura: Wild Hunt

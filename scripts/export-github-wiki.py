@@ -57,7 +57,7 @@ def export(output):
         ('Unique Skills', ['Storm-Crown', 'Scarlet-Deluge', 'Black-Flame', 'Frostbound-Colossus']),
         ('Ultimate Skills', ['Raijin', 'Varuna', 'Agni', 'Ymir']),
         ('Races', ['Awakened-Hunter', 'Apex-Hunter', 'Sovereign-Hunter']),
-        ('Otherworlders', ['Alma', 'Gemma']), ('Reference', ['Commands', 'Version-History'])]:
+        ('Otherworlders', ['Alma', 'Gemma']), ('Reference', ['Commands'])]:
         sidebar += '### ' + heading + '\n\n'
         for slug in slugs:
             title = next(p['title'] for p in CATALOG if p['slug'] == slug)

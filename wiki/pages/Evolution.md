@@ -20,11 +20,7 @@ The alternate branch is **Human → Awakened Hunter → Apex Hunter → Sovereig
 | Apex Hunter | +500 | +3,200 | +400 | +2,800 |
 | Sovereign Hunter | +1,000 | +6,600 | +500 | +3,400 |
 
-These are bonuses to the underlying maximums, not total health values. They use native HP and `MAX_SPIRITUAL_HEALTH` attributes. Evolution replaces the previous race modifiers instead of stacking them. Login upgrades existing hunter maximums while preserving current HP and SHP; it does not refill them.
-
-## Balance reference
-
-Tensura 2.0.1.3 defaults give Enlightened Human +80 HP/+300 SHP at 100K EP, Human Saint +480/+3,000 at 400K EP plus four boss kills, and Divine Human +980/+6,000 at 2M EP. Hunters keep the same EP gates but require distinct boss types (and mastery at the final stage). Their bonuses stay near this curve, with a modest premium for those constraints. Sovereign's 1,020 base total HP stays below Minecraft's default 1,024 attribute cap.
+These are bonuses to the underlying maximums, not total health values. They use native HP and `MAX_SPIRITUAL_HEALTH` attributes. Evolution replaces the previous race modifiers instead of stacking them.
 
 ## Aura recovery and EP
 
@@ -44,4 +40,4 @@ Use Tensura’s evolution menu or `/wildhunt evolve` after meeting the same gate
 
 ---
 
-**Categories:** Tensura: Wild Hunt · Version 0.7.0
+**Categories:** Tensura: Wild Hunt

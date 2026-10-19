@@ -27,7 +27,7 @@ lines = [
     ("Jin Dahaad", "Frostbound-Colossus", "Ymir", "frostbound_colossus", "Ice · Capture"),
 ]
 groups = [
-    ("Navigation", [("", "Main Page"), ("Getting-Started", "Getting started"), ("Version-History", "Version history")]),
+    ("Navigation", [("", "Main Page"), ("Getting-Started", "Getting started")]),
     ("Gameplay", [("Skills", "Skills"), ("Evolution", "Human evolution"), ("Mechanics", "Combat mechanics"), ("Aura-Regeneration", "Aura regeneration")]),
     ("Apex skills", [(row[1], titles[row[1]]) for row in lines]),
     ("Otherworlders", [("Alma", "Alma"), ("Gemma", "Gemma")]),
@@ -51,7 +51,7 @@ def portal():
     links = "".join(f'<a href="{link(slug)}">{label}</a>' for slug, label in [
         ("Skills", "Abilities"), ("Evolution", "Races"), ("Alma", "Otherworlders"),
         ("Aura-Regeneration", "Aura regeneration"), ("Commands", "Commands"), ("Mechanics", "Mechanics"),
-        ("Getting-Started", "Getting started"), ("Version-History", "Version history"), ("Gemma", "Gemma")])
+        ("Getting-Started", "Getting started"), ("Gemma", "Gemma")])
     rows = "".join(f'<tr><td><img src="assets/skill/{icon}.png" width="48" height="48" alt=""> {monster}</td><td><a href="{link(unique)}">{titles[unique]}</a></td><td><a href="{link(ultimate)}">{titles[ultimate]}</a></td><td>{role}</td></tr>' for monster, unique, ultimate, icon, role in lines)
     return f'''<section class="welcome portal-panel"><div class="welcome-wordmark" aria-label="Tensura: Wild Hunt"><small>TENSURA: REINCARNATED ADDON</small><strong>WILD HUNT</strong><span>THE HUNTER'S FIELD GUIDE</span></div><h2>Welcome to the Tensura: Wild Hunt Wiki!</h2><div class="panel-body"><p>An unofficial reference for the Monster Hunter inspired addon to <strong>Tensura: Reincarnated</strong>.</p><div class="welcome-portraits">{icons}</div><p>We currently document <strong>{len(catalog)} articles</strong>, covering four apex skill lines, three hunter evolutions, aura recovery, and otherworlders.</p><p><strong>Wild Hunt 0.7.2 · Minecraft 1.21.1 · NeoForge</strong></p></div></section>
 <section class="portal-panel"><h2>About the addon</h2><div class="panel-body"><p>Follow a human-looking hunter evolution branch and wield abilities inspired by Rey Dau, Uth Duna, Nu Udra, and Jin Dahaad. Each apex Unique Skill evolves into an Ultimate with its own signature art.</p><p>Build around aura, native barriers, regeneration, and movement. Meet Alma and Gemma through Tensura's otherworlder system. Start with <a href="{link('Getting-Started')}">Getting started</a> for installation and your first steps.</p></div></section>
@@ -150,7 +150,7 @@ def render(source, destination, home=False):
     elif category == "Otherworlders":
         related_groups = [("Otherworlders", ["Alma", "Gemma"]), ("Race", ["Awakened-Hunter"])]
     else:
-        related_groups = [("Reference", ["Getting-Started", "Skills", "Evolution", "Mechanics", "Commands", "Version-History"])]
+        related_groups = [("Reference", ["Getting-Started", "Skills", "Evolution", "Mechanics", "Commands"])]
     related = ""
     for group, slugs in related_groups:
         anchors = "".join(f'<a href="{link(key, prefix)}"' + (' aria-current="page"' if key == slug else '') + f'>{html.escape(titles[key])}</a>' for key in slugs)
@@ -166,7 +166,7 @@ def render(source, destination, home=False):
 <header class="masthead"><a class="brand" href="{prefix}index.html"><span class="brand-mark" aria-hidden="true">W</span><span>WILD HUNT<small>Tensura: Reincarnated addon wiki</small></span></a>
 <div class="search"><label for="wiki-search">Search Wild Hunt Wiki</label><input id="wiki-search" type="search" placeholder="Search skills, races, characters…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="search-results" aria-expanded="false"><div id="search-results" role="listbox" aria-label="Search results" hidden></div><span id="search-status" class="sr-only" aria-live="polite"></span></div></header>
 <div class="layout"><button id="navigation-toggle" aria-controls="wiki-navigation" aria-expanded="false">☰ Wiki navigation</button><nav id="wiki-navigation" class="sidebar" aria-label="Wiki navigation">{nav}<div class="sidebar-version">Wild Hunt <strong>0.7.2</strong><br>Minecraft 1.21.1 · NeoForge<br><span>Offline reference edition</span></div></nav>
-<main id="article" class="{'main-page' if home else 'article-page'}"><div class="page-tabs"><span aria-current="page">{'Main Page' if home else 'Article'}</span><a href="{'README.md' if home else '../pages/' + source.name}">Read Markdown</a><a href="{link('Version-History', prefix)}">Version history</a></div>
+<main id="article" class="{'main-page' if home else 'article-page'}"><div class="page-tabs"><span aria-current="page">{'Main Page' if home else 'Article'}</span><a href="{'README.md' if home else '../pages/' + source.name}">Read Markdown</a><a href="https://github.com/Bithio999/MC/blob/main/docs/CHANGELOG.md">Changelog</a></div>
 <div class="article-heading"><div class="breadcrumbs"><a href="{prefix}index.html">Wild Hunt Wiki</a>{' / ' + category if not home else ''}</div><h1>{html.escape(title)}</h1><p class="subtitle">From the unofficial Tensura: Wild Hunt Wiki</p></div>
 <div class="article-content">{introduction}{infobox}{toc}{content}</div>{navbox}
 <div class="categories">Categories: <a href="{prefix}index.html">Tensura: Wild Hunt</a> · {category if not home else 'Main Page'}</div>

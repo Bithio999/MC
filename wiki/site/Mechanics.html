@@ -7,13 +7,14 @@
 <div class="global-bar"><span>TENSURA: WILD HUNT</span><div><a href="https://tensura.wiki.gg/wiki/Tensura:_Reincarnated_Wiki">Base mod wiki</a><a href="https://github.com/Bithio999/MC">GitHub</a></div></div>
 <header class="masthead"><a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">W</span><span>WILD HUNT<small>Tensura: Reincarnated addon wiki</small></span></a>
 <div class="search"><label for="wiki-search">Search Wild Hunt Wiki</label><input id="wiki-search" type="search" placeholder="Search skills, races, characters…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="search-results" aria-expanded="false"><div id="search-results" role="listbox" aria-label="Search results" hidden></div><span id="search-status" class="sr-only" aria-live="polite"></span></div></header>
-<div class="layout"><button id="navigation-toggle" aria-controls="wiki-navigation" aria-expanded="false">☰ Wiki navigation</button><nav id="wiki-navigation" class="sidebar" aria-label="Wiki navigation"><section><h2>Navigation</h2><a href="../index.html">Main Page</a><a href="../site/Getting-Started.html">Getting started</a><a href="../site/Version-History.html">Version history</a></section><section><h2>Gameplay</h2><a href="../site/Skills.html">Skills</a><a href="../site/Evolution.html">Human evolution</a><a href="../site/Mechanics.html" aria-current="page">Combat mechanics</a><a href="../site/Aura-Regeneration.html">Aura regeneration</a></section><section><h2>Apex skills</h2><a href="../site/Storm-Crown.html">Storm Crown</a><a href="../site/Scarlet-Deluge.html">Scarlet Deluge</a><a href="../site/Black-Flame.html">Black Flame</a><a href="../site/Frostbound-Colossus.html">Frostbound Colossus</a></section><section><h2>Otherworlders</h2><a href="../site/Alma.html">Alma</a><a href="../site/Gemma.html">Gemma</a></section><section><h2>Tools</h2><a href="../site/Commands.html">Commands</a></section><div class="sidebar-version">Wild Hunt <strong>0.7.2</strong><br>Minecraft 1.21.1 · NeoForge<br><span>Offline reference edition</span></div></nav>
-<main id="article" class="article-page"><div class="page-tabs"><span aria-current="page">Article</span><a href="../pages/Mechanics.md">Read Markdown</a><a href="../site/Version-History.html">Version history</a></div>
+<div class="layout"><button id="navigation-toggle" aria-controls="wiki-navigation" aria-expanded="false">☰ Wiki navigation</button><nav id="wiki-navigation" class="sidebar" aria-label="Wiki navigation"><section><h2>Navigation</h2><a href="../index.html">Main Page</a><a href="../site/Getting-Started.html">Getting started</a></section><section><h2>Gameplay</h2><a href="../site/Skills.html">Skills</a><a href="../site/Evolution.html">Human evolution</a><a href="../site/Mechanics.html" aria-current="page">Combat mechanics</a><a href="../site/Aura-Regeneration.html">Aura regeneration</a></section><section><h2>Apex skills</h2><a href="../site/Storm-Crown.html">Storm Crown</a><a href="../site/Scarlet-Deluge.html">Scarlet Deluge</a><a href="../site/Black-Flame.html">Black Flame</a><a href="../site/Frostbound-Colossus.html">Frostbound Colossus</a></section><section><h2>Otherworlders</h2><a href="../site/Alma.html">Alma</a><a href="../site/Gemma.html">Gemma</a></section><section><h2>Tools</h2><a href="../site/Commands.html">Commands</a></section><div class="sidebar-version">Wild Hunt <strong>0.7.2</strong><br>Minecraft 1.21.1 · NeoForge<br><span>Offline reference edition</span></div></nav>
+<main id="article" class="article-page"><div class="page-tabs"><span aria-current="page">Article</span><a href="../pages/Mechanics.md">Read Markdown</a><a href="https://github.com/Bithio999/MC/blob/main/docs/CHANGELOG.md">Changelog</a></div>
 <div class="article-heading"><div class="breadcrumbs"><a href="../index.html">Wild Hunt Wiki</a> / Guides</div><h1>Combat mechanics</h1><p class="subtitle">From the unofficial Tensura: Wild Hunt Wiki</p></div>
 <div class="article-content"><div class="article-intro"><p>This page explains <strong>Wild Hunt combat mechanics</strong>, including native barriers, skill toggles, damage modifiers, and aura consumption.</p></div><details class="contents" open><summary>Contents</summary><div class="toc">
 <ul>
+<li><a href="#damage-types">Damage types</a></li>
 <li><a href="#damage-and-mastery">Damage and mastery</a></li>
-<li><a href="#no-passive-stacks">No passive stacks</a></li>
+<li><a href="#world-effects">World effects</a></li>
 <li><a href="#toggleable-passives">Toggleable passives</a></li>
 <li><a href="#native-barriers">Native barriers</a></li>
 <li><a href="#aiming-and-movement">Aiming and movement</a></li>
@@ -21,21 +22,53 @@
 <li><a href="#visual-effects">Visual effects</a></li>
 <li><a href="#barrier-hud-examples">Barrier HUD examples</a></li>
 <li><a href="#hunter-vitality">Hunter vitality</a></li>
-<li><a href="#updating-saved-characters">Updating saved characters</a></li>
 </ul>
 </div>
 </details>
+<h2 id="damage-types">Damage types</h2>
+<div class="article-table"><table>
+<thead>
+<tr>
+<th>Skill line</th>
+<th>Unique / Ultimate</th>
+<th>Native damage type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Rey Dau</td>
+<td>Storm Crown / Raijin</td>
+<td>Lightning — <code>tensura:lightning_elemental</code></td>
+</tr>
+<tr>
+<td>Uth Duna</td>
+<td>Scarlet Deluge / Varuna</td>
+<td>Water — <code>tensura:water_elemental</code></td>
+</tr>
+<tr>
+<td>Nu Udra</td>
+<td>Black Flame / Agni</td>
+<td>Fire — <code>tensura:fire_elemental</code></td>
+</tr>
+<tr>
+<td>Jin Dahaad</td>
+<td>Frostbound Colossus / Ymir</td>
+<td>Ice — <code>tensura:ice_elemental</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>Every damaging active, area pulse, signature, and Water Veil retaliation uses its line's listed element. Oil Lash deals fire elemental damage; Avalanche Crash and Glacial Prison deal ice elemental damage despite their physical-looking animations. Unique and Ultimate versions retain the same element.</p>
+<p>Aura is the skill's fuel, not a separate damage type. These attacks use Tensura's native skill damage source, elemental boosts, resistance rules, and barriers. In Tensura 2.0.1.3's bundled damage tags, all four types bypass ordinary armor; that does not imply bypassing native barriers or elemental resistances. Nu Udra's ignition hits also apply the native Black Burn status, which has its own native behavior.</p>
 <h2 id="damage-and-mastery">Damage and mastery</h2>
 <p>Wild Hunt’s damage multiplier is:</p>
 <pre><code class="language-text">0.90 × (1 + 0.5 × clamp(masteryFraction, 0, 1)) × (Ultimate ? 3 : 1)
 </code></pre>
-<p><strong>No EP term is present.</strong> After the 10% damage reduction, mastery caps at 1.35× the old Unique raw base, or 4.05× that base for a mastered Ultimate. The reduction also covers every area pulse, counter and signature impact. Skill-page tables already include the Ultimate’s 3× multiplier. Native Tensura elemental boosts, global combat rules, rank interactions, barriers and resistances still apply; raw values do not promise the same health damage against every enemy.</p>
+<p><strong>EP does not multiply damage.</strong> A mastered Unique uses 1.35× its raw base value; a mastered Ultimate uses 4.05× the corresponding Unique raw base. The reduction also covers every area pulse, counter and signature impact. Skill-page tables already include the Ultimate’s 3× multiplier. Native Tensura elemental boosts, global combat rules, rank interactions, barriers and resistances still apply; raw values do not promise the same health damage against every enemy.</p>
 <p>EP remains a requirement for race evolution and Ultimate ascension. Those progression gates do not increase these attacks’ raw damage.</p>
-<h2 id="no-passive-stacks">No passive stacks</h2>
-<p>Storm charge, owned oil stacks and owned rime stacks are removed. No attack builds, consumes or amplifies damage from them. Old marks are ignored and removed as entities tick. There is no shatter threshold or melee coating.</p>
-<p>Oil pools remain finite <strong>world locations</strong>, not passive stacks on a character. Drenched remains one timed water mark: it has no counter or buildup and supports the documented water/lightning interactions.</p>
+<h2 id="world-effects">World effects</h2>
+<p>Oil pools occupy finite world locations. Drenched is a timed water mark that supports the water/lightning interactions described on the skill pages.</p>
 <h2 id="toggleable-passives">Toggleable passives</h2>
-<p>Each skill has two active modes (three for an Ultimate) plus a separate native skill toggle in Tensura’s Ability Selection. The old final buff modes are removed from mode cycling.</p>
+<p>Each skill has two active modes (three for an Ultimate) plus a separate native skill toggle in Tensura’s Ability Selection.</p>
 <div class="article-table"><table>
 <thead>
 <tr>
@@ -74,7 +107,7 @@
 </table></div>
 <p>The first second is paid when enabling; upkeep is charged once every twenty game ticks while active. Passives stay on until disabled, unfunded or blocked by activation requirements. They do not expire after fifteen or thirty seconds. Attribute contributions use stable IDs, so refreshes cannot accumulate duplicate bonuses. Turning off or forgetting the skill removes its modifiers. Saved native toggle state is restored on login.</p>
 <h2 id="native-barriers">Native barriers</h2>
-<p>Water Veil and Colossus Carapace contribute to Tensura’s <code>PHYSICAL_BARRIER</code> and <code>MAGIC_BARRIER</code> attributes and now arm <code>MULTILAYER_BARRIER</code>, which is the attribute read by its shield HUD counter. Tensura handles their interaction with damage and renders its native barrier layer around the character. Wild Hunt adds no absorption hearts and does not implement a parallel shield-health pool. Other skills’ barrier contributions remain separate.</p>
+<p>Water Veil and Colossus Carapace contribute to Tensura’s <code>PHYSICAL_BARRIER</code> and <code>MAGIC_BARRIER</code> attributes and arm <code>MULTILAYER_BARRIER</code>, which is the attribute read by its shield HUD counter. Tensura handles their interaction with damage and renders its native barrier layer around the character. Wild Hunt adds no separate absorption-heart pool. Other skills’ barrier contributions remain separate.</p>
 <div class="article-table"><table>
 <thead>
 <tr>
@@ -97,7 +130,7 @@
 </tbody>
 </table></div>
 <p>The displayed value is native per-hit blocking capacity. Tensura charges magicules for blocked damage. Overflow, inadequate magicules and native power interactions can break the shield. A broken multilayer barrier automatically rearms at the first paid upkeep after ten seconds without a hit (normally 10–11 seconds). Hits, including fully blocked hits, restart recovery. Retoggling cannot skip this delay. The shield modifier is saved across relogs; turning off removes only this art’s contribution. Ensure Tensura’s <strong>Barrier</strong> HUD decoration is enabled if you have customized its HUD.</p>
-<p>Water Veil retains water breathing and an attacker-targeted retaliation after actual health damage. Furnace Mantle retains fire protection while enabled; both utility effects stop immediately on toggle-off without leftover timed potions. Furnace Mantle no longer oils melee victims. The old frost ward’s projectile deletion and interception budget are removed.</p>
+<p>Water Veil retains water breathing and an attacker-targeted retaliation after actual health damage. Furnace Mantle retains fire protection while enabled; both utility effects stop immediately on toggle-off without leftover timed potions.</p>
 <h2 id="aiming-and-movement">Aiming and movement</h2>
 <p>Railbolt begins with a block-clipped aimed hit, then ricochets from the latest victim. Thunder Step follows the full aim vector, including vertical pitch, and sweeps the whole caster bounding box. Collisions, build-height limits and the world border stop it. Railbolt bounces reach twelve blocks through walls from the most recent victim. Thunder Step reaches 16/24 blocks with a 5/4 second cooldown and preserves all three components of player momentum. Undertow is placed on the crosshair ray within 24/36 blocks, using the hit surface or bounded endpoint. Water waves sweep continuous segments so targets cannot hide between movement updates. Oil Lash selects a limited forward fan and creates synced tentacle geometry. Avalanche Crash is an aimed area impact; Glacial Prison targets one enemy. Heavenfall Glacier warns fixed positions for half a second before impact.</p>
 <p>Attacks respect teams, owned pets, creative/spectator immunity and PvP settings. They check line of sight except for Railbolt ricochets after the initial hit. Movement respects knockback resistance. Dimension changes invalidate anchored effects. Native status resistance and skill ranks can prevent Frost or Chill. No art destroys terrain or places permanent ice.</p>
@@ -109,14 +142,11 @@
 <h2 id="barrier-hud-examples">Barrier HUD examples</h2>
 <p><img alt="Water Veil native HUD showing 100" src="../media/water-veil-hud.png" /></p>
 <p><img alt="Colossus Carapace native HUD showing 150" src="../media/colossus-carapace-hud.png" /></p>
-<p>Captured with the Unique passives enabled in the Minecraft development client, Wild Hunt 0.6.0.</p>
+<p>The examples show the Unique passives enabled.</p>
 <p><img alt="Centered portraits and combined native barrier HUD" src="../media/hunter-icons-and-barriers.png" /></p>
-<p>Wild Hunt 0.7.0: centered Rey Dau, Uth Duna and Jin Dahaad portraits. The native HUD shows 250 combined capacity with both Unique barrier passives enabled (100 Water Veil + 150 Colossus Carapace); no custom bubble/frost orbit is emitted.</p>
+<p>The native HUD shows 250 combined capacity with both Unique barrier passives enabled (100 Water Veil + 150 Colossus Carapace); no custom bubble/frost orbit is emitted.</p>
 <h2 id="hunter-vitality">Hunter vitality</h2>
-<p>Race HP bonuses are +100 / +500 / +1,000; native SHP bonuses are +400 / +3,200 / +6,600. These replace earlier hunter-stage bonuses. Existing saved hunters get the updated caps on login without being healed. See <a href="Evolution.html#hp-and-shp-growth">Human evolution</a>.</p>
-<h2 id="updating-saved-characters">Updating saved characters</h2>
-<p>Version 0.7.0 refreshes race vitality on login, grants missing racial regeneration skills, and leaves current HP/SHP unchanged. Barrier cooldowns and surviving shield state remain saved.</p>
-<p>Version 0.5.0 introduced the mode migration and keeps learned skills, mastery and distinct boss history. It removes old transient combat timers and resources, drops the old buff mode, and moves the former fourth Ultimate mode into the third active slot while preserving/capping its cooldown. Equipped presets migrate with the mode list. When upgrading from pre-0.5.0 combat, legacy toggle passives start off; no skill reroll is needed. A matching still-active legacy Water Veil absorption effect is cleared during migration. Version 0.6.0 added native HUD barriers to already-enabled passives on login and refreshes hunter HP/SHP modifiers; existing toggle state, mastery and boss history remain intact.</p>
-</div><nav class="related-box" aria-label="Related guides"><strong>Wild Hunt · Guides</strong><div class="navbox-row"><strong>Reference</strong><div><a href="../site/Getting-Started.html">Getting started</a><a href="../site/Skills.html">Skills</a><a href="../site/Evolution.html">Human evolution</a><a href="../site/Mechanics.html" aria-current="page">Combat mechanics</a><a href="../site/Commands.html">Commands</a><a href="../site/Version-History.html">Version history</a></div></div></nav>
+<p>Race HP bonuses are +100 / +500 / +1,000; native SHP bonuses are +400 / +3,200 / +6,600. These replace earlier hunter-stage bonuses. See <a href="Evolution.html#hp-and-shp-growth">Human evolution</a>.</p>
+</div><nav class="related-box" aria-label="Related guides"><strong>Wild Hunt · Guides</strong><div class="navbox-row"><strong>Reference</strong><div><a href="../site/Getting-Started.html">Getting started</a><a href="../site/Skills.html">Skills</a><a href="../site/Evolution.html">Human evolution</a><a href="../site/Mechanics.html" aria-current="page">Combat mechanics</a><a href="../site/Commands.html">Commands</a></div></div></nav>
 <div class="categories">Categories: <a href="../index.html">Tensura: Wild Hunt</a> · Guides</div>
 <footer>Unofficial fan addon. Original documentation and portraits. Not affiliated with Capcom or ManasMods.<br>Wild Hunt 0.7.2 · Offline edition · No external services required.</footer></main></div></body></html>

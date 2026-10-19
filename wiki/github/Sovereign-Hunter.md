@@ -41,7 +41,7 @@ This stage unlocks the eligibility to evolve a mastered apex Unique into its mat
 
 These replace the previous hunter stage’s racial modifiers. They do not stack with earlier stages. Toggleable skill passives have separate modifiers and remain subject to attribute caps.
 
-The HP bonuses across the branch are +100 / +500 / +1,000; SHP bonuses are +400 / +3,200 / +6,600. Each stage replaces the previous stage’s bonus. Existing hunter characters receive the new maximums on login without free healing.
+The HP bonuses across the branch are +100 / +500 / +1,000; SHP bonuses are +400 / +3,200 / +6,600. Each stage replaces the previous stage’s bonus.
 
 ## Evolution
 
@@ -56,8 +56,8 @@ Begin as Apex Hunter. Reach 2,000,000 base EP and defeat 5 different eligible bo
 
 ## Notes
 
-Boss credit survives death. Old ordinary-hunt counts from 0.1.0 are not converted into boss credit. [Commands](https://github.com/Bithio999/MC/wiki/Commands) provide status and evolution controls.
+Boss credit survives death. [Commands](https://github.com/Bithio999/MC/wiki/Commands) provide status and evolution controls.
 
 ---
 
-**Categories:** Tensura: Wild Hunt · Version 0.7.0
+**Categories:** Tensura: Wild Hunt

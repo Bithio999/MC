@@ -8,7 +8,7 @@ An unofficial reference for the Monster Hunter inspired addon to **Tensura: Rein
 
 <p align="center"><img src="https://github.com/Bithio999/MC/blob/main/wiki/assets/skill/storm_crown.png?raw=true" width="64" height="64" alt="Rey Dau"> <img src="https://github.com/Bithio999/MC/blob/main/wiki/assets/skill/scarlet_deluge.png?raw=true" width="64" height="64" alt="Uth Duna"> <img src="https://github.com/Bithio999/MC/blob/main/wiki/assets/skill/black_flame.png?raw=true" width="64" height="64" alt="Nu Udra"> <img src="https://github.com/Bithio999/MC/blob/main/wiki/assets/skill/frostbound_colossus.png?raw=true" width="64" height="64" alt="Jin Dahaad"></p>
 
-We currently document **20 articles**, covering four apex skill lines, three hunter evolutions, aura recovery, and otherworlders.
+We currently document **19 articles**, covering four apex skill lines, three hunter evolutions, aura recovery, and otherworlders.
 
 **Wild Hunt 0.7.2 · Minecraft 1.21.1 · NeoForge**
 
@@ -24,7 +24,7 @@ Build around aura, native barriers, regeneration, and movement. Meet Alma and Ge
 | --- | --- | --- |
 | [Unique and Ultimate skills](https://github.com/Bithio999/MC/wiki/Skills) | [Human evolution](https://github.com/Bithio999/MC/wiki/Evolution) | [Getting started](https://github.com/Bithio999/MC/wiki/Getting-Started) |
 | [Aura regeneration](https://github.com/Bithio999/MC/wiki/Aura-Regeneration) | [Alma](https://github.com/Bithio999/MC/wiki/Alma) · [Gemma](https://github.com/Bithio999/MC/wiki/Gemma) | [Commands](https://github.com/Bithio999/MC/wiki/Commands) |
-| [Combat mechanics](https://github.com/Bithio999/MC/wiki/Mechanics) | [Race bonuses](https://github.com/Bithio999/MC/wiki/Evolution#hp-and-shp-growth) | [Version history](https://github.com/Bithio999/MC/wiki/Version-History) |
+| [Combat mechanics](https://github.com/Bithio999/MC/wiki/Mechanics) | [Race bonuses](https://github.com/Bithio999/MC/wiki/Evolution#hp-and-shp-growth) | [Changelog](https://github.com/Bithio999/MC/blob/main/docs/CHANGELOG.md) |
 
 ## Apex abilities
 

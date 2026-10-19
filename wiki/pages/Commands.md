@@ -24,4 +24,4 @@ Be Sovereign Hunter, retain at least two million base EP, own the matching Uniqu
 
 ---
 
-**Categories:** Tensura: Wild Hunt · Version 0.7.0
+**Categories:** Tensura: Wild Hunt

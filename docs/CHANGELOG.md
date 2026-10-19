@@ -1,6 +1,5 @@
-# Version history
+# Changelog
 
-[Main Page](../README.md) · [Skills](Skills.md) · [Evolution](Evolution.md) · [Mechanics](Mechanics.md) · [Commands](Commands.md)
 
 This page records **Wild Hunt version history**, including gameplay changes, compatibility notes, and visual corrections.
 
@@ -68,6 +67,48 @@ Removed ordinary hunts and skill trials. Added one/three/five distinct boss gate
 
 Added the human hunter branch and the eight skill registrations. Its ordinary-hunt/trial design was superseded. Old hunt totals are not converted into boss credit.
 
----
 
-**Categories:** Tensura: Wild Hunt · Version 0.7.0
+## Upgrade and save migration notes
+
+
+Version 0.7.0 refreshes race vitality on login, grants missing racial regeneration skills, and leaves current HP/SHP unchanged. Barrier cooldowns and surviving shield state remain saved.
+
+
+Version 0.5.0 introduced the mode migration and keeps learned skills, mastery and distinct boss history. It removes old transient combat timers and resources, drops the old buff mode, and moves the former fourth Ultimate mode into the third active slot while preserving/capping its cooldown. Equipped presets migrate with the mode list. When upgrading from pre-0.5.0 combat, legacy toggle passives start off; no skill reroll is needed. A matching still-active legacy Water Veil absorption effect is cleared during migration. Version 0.6.0 added native HUD barriers to already-enabled passives on login and refreshes hunter HP/SHP modifiers; existing toggle state, mastery and boss history remain intact.
+
+
+## Development references
+
+### Hunter vitality balancing
+
+Tensura 2.0.1.3 defaults give Enlightened Human +80 HP/+300 SHP at 100K EP, Human Saint +480/+3,000 at 400K EP plus four boss kills, and Divine Human +980/+6,000 at 2M EP. Hunters keep the same EP gates but require distinct boss types (and mastery at the final stage). Their bonuses stay near this curve, with a modest premium for those constraints. Sovereign's 1,020 base total HP stays below Minecraft's default 1,024 attribute cap.
+
+
+### Alma — Front hairline correction in 0.7.2
+
+Alma's front hairline now uses a short, even fringe above a narrow forehead. The large triangular gap on the front is removed. This correction changes only the top four pixel rows of the front head face; her glasses, eyes, nose, mouth, other head faces and outfit are preserved.
+
+![Alma front hairline in Minecraft 0.7.2](media/alma-front-hairline-072.png)
+
+
+### Alma — Skin correction in 0.7.1
+
+The top, side and rear head textures now use a separate opaque atlas. This removes Gemma's black patch and gives Alma a coherent swept-back hairstyle. The existing front faces, clothing and equipment pixels are preserved.
+
+![Corrected rear head textures in Minecraft 0.7.1](media/otherworlder-hair-rear-071.png)
+
+
+### Alma — Visual reference and skin provenance
+
+Appearance reference: [Monster Hunter Wilds Alma page](https://monsterhunterwilds.wiki.fextralife.com/Alma). Common skin libraries blocked automated downloads during development, so this is an **original generated and UV-packed interpretation**, not a downloaded community skin or a ripped game texture. The character reference images are not redistributed in this repository. Source art and reproducible nearest-neighbor UV packing are in `art/` and `scripts/prepare-skins.py`.
+
+### Gemma — Skin correction in 0.7.1
+
+The top, side and rear head textures now use a separate opaque atlas. This removes Gemma's black patch and gives Alma a coherent swept-back hairstyle. The existing front faces, clothing and equipment pixels are preserved.
+
+![Corrected rear head textures in Minecraft 0.7.1](media/otherworlder-hair-rear-071.png)
+
+
+### Gemma — Visual reference and skin provenance
+
+Appearance reference: [Monster Hunter Wilds Gemma page](https://monsterhunterwilds.wiki.fextralife.com/Gemma). Common skin libraries blocked automated downloads during development, so this is an **original generated and UV-packed interpretation**, not a downloaded community skin or a ripped game texture. The character reference images are not redistributed in this repository. Source art and reproducible nearest-neighbor UV packing are in `art/` and `scripts/prepare-skins.py`.

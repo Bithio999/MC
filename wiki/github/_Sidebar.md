@@ -38,5 +38,4 @@
 ### Reference
 
 - [Commands](https://github.com/Bithio999/MC/wiki/Commands)
-- [Version history](https://github.com/Bithio999/MC/wiki/Version-History)
 

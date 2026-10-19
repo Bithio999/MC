@@ -11,6 +11,8 @@
 | **Information** | |
 | Type | Unique Skill |
 | Inspiration | Rey Dau |
+| Damage type | Lightning elemental |
+| Damage ID | `tensura:lightning_elemental` |
 | Combat role | Ricochet lightning / mobility |
 | Active modes | 2 |
 | Toggleable passive | Storm Mantle |
@@ -21,6 +23,8 @@
 | Evolution | [Raijin, Lord of Thunder](Raijin.md) |
 | **Obtaining** | |
 | Method | Reincarnation / starting skill roll |
+
+All damaging arts in this skill use **lightning elemental damage**, including its area hits and pulses.
 
 ## Usage
 
@@ -39,7 +43,7 @@ Enable or disable this through Tensura’s native **Ability Selection** skill to
 | 1. Railbolt | 200 | 4 s | 90 |
 | 2. Thunder Step | 600 | 5 s | 80 |
 
-**0.7.0 damage adjustment:** multiply every raw damage value below by **0.90**. This applies to direct hits, ricochets, fields, counters and signature pulses. Raw values already include the Ultimate’s 3× multiplier where applicable. Mastery adds up to 50%. **Wild Hunt applies no EP damage scaling.** Native elemental boosts, defenses, rank interactions and the listed situational modifiers still apply. EP requirements for race evolution and Ultimate ascension are unchanged.
+**Damage calculation:** multiply the listed base values by **0.90**, then by the mastery multiplier (up to **1.50**). Ultimate table values already include their 3× base multiplier. Elemental boosts, defenses, barriers, and situational modifiers also apply. EP does not multiply damage.
 
 #### Railbolt
 
@@ -51,7 +55,7 @@ Aim the first hit along a block-clipped ray up to 36 blocks. The bolt then ricoc
 
 [Active - Press] — **Thunder Step**
 
-Dash along your full aim direction for up to 16 blocks, including upward and downward, and shock enemies within 2.5 blocks of the travelled segment. The path sweeps the caster’s whole bounding box in half-block increments; walls, low ceilings, collisions the world border and build-height limits stop it. The teleport preserves your current horizontal and vertical velocity and syncs it to the client. It replaces Fulgurite Array completely and creates no persistent rods or charge.
+Dash along your full aim direction for up to 16 blocks, including upward and downward, and shock enemies within 2.5 blocks of the travelled segment. The path sweeps the caster’s whole bounding box in half-block increments; walls, low ceilings, collisions the world border and build-height limits stop it. The teleport preserves your current horizontal and vertical velocity and syncs it to the client.
 
 ## Obtaining
 
@@ -79,4 +83,4 @@ A missed initial ray cannot start a ricochet. Bounces pass through walls but can
 
 ---
 
-**Categories:** Tensura: Wild Hunt · Version 0.7.0
+**Categories:** Tensura: Wild Hunt

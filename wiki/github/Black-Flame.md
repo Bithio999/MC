@@ -11,6 +11,8 @@
 | **Information** | |
 | Type | Unique Skill |
 | Inspiration | Nu Udra |
+| Damage type | Fire elemental |
+| Damage ID | `tensura:fire_elemental` |
 | Combat role | Tentacle pulls / burning ground |
 | Active modes | 2 |
 | Toggleable passive | Furnace Mantle |
@@ -21,6 +23,8 @@
 | Evolution | [Agni, Lord of the Black Flame](https://github.com/Bithio999/MC/wiki/Agni) |
 | **Obtaining** | |
 | Method | Reincarnation / starting skill roll |
+
+All damaging arts in this skill use **fire elemental damage**, including its area hits and pulses.
 
 ## Usage
 
@@ -39,7 +43,7 @@ Enable or disable this through Tensura’s native **Ability Selection** skill to
 | 1. Oil Lash | 160 | 3 s | 70 |
 | 2. Blackflame Ignition | 800 | 8 s | 90 |
 
-**0.7.0 damage adjustment:** multiply every raw damage value below by **0.90**. This applies to direct hits, ricochets, fields, counters and signature pulses. Raw values already include the Ultimate’s 3× multiplier where applicable. Mastery adds up to 50%. **Wild Hunt applies no EP damage scaling.** Native elemental boosts, defenses, rank interactions and the listed situational modifiers still apply. EP requirements for race evolution and Ultimate ascension are unchanged.
+**Damage calculation:** multiply the listed base values by **0.90**, then by the mastery multiplier (up to **1.50**). Ultimate table values already include their 3× base multiplier. Elemental boosts, defenses, barriers, and situational modifiers also apply. EP does not multiply damage.
 
 #### Oil Lash
 
@@ -77,7 +81,7 @@ Pools are world locations, not status stacks on enemies. Unlit pools expire afte
 
 ![Oil Lash tentacles](https://github.com/Bithio999/MC/blob/main/wiki/media/oil-lash.png?raw=true)
 
-Captured in the Minecraft 1.21.1 development client with Wild Hunt 0.5.0.
+In-game example of the active art.
 
 ## Related pages
 
@@ -85,4 +89,4 @@ Captured in the Minecraft 1.21.1 development client with Wild Hunt 0.5.0.
 
 ---
 
-**Categories:** Tensura: Wild Hunt · Version 0.7.0
+**Categories:** Tensura: Wild Hunt

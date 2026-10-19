@@ -11,6 +11,8 @@
 | **Information** | |
 | Type | Unique Skill |
 | Inspiration | Uth Duna |
+| Damage type | Water elemental |
+| Damage ID | `tensura:water_elemental` |
 | Combat role | Moving tides / native barriers |
 | Active modes | 2 |
 | Toggleable passive | Water Veil |
@@ -21,6 +23,8 @@
 | Evolution | [Varuna, Lord of Tides](https://github.com/Bithio999/MC/wiki/Varuna) |
 | **Obtaining** | |
 | Method | Reincarnation / starting skill roll |
+
+All damaging arts in this skill use **water elemental damage**, including its area hits and pulses.
 
 ## Usage
 
@@ -43,7 +47,7 @@ No constant bubble orbit is emitted while the passive is enabled. Native barrier
 | 1. Crushing Current | 160 | 3 s | 65 |
 | 2. Scarlet Undertow | 500 | 7 s | 45 |
 
-**0.7.0 damage adjustment:** multiply every raw damage value below by **0.90**. This applies to direct hits, ricochets, fields, counters and signature pulses. Raw values already include the Ultimate’s 3× multiplier where applicable. Mastery adds up to 50%. **Wild Hunt applies no EP damage scaling.** Native elemental boosts, defenses, rank interactions and the listed situational modifiers still apply. EP requirements for race evolution and Ultimate ascension are unchanged.
+**Damage calculation:** multiply the listed base values by **0.90**, then by the mastery multiplier (up to **1.50**). Ultimate table values already include their 3× base multiplier. Elemental boosts, defenses, barriers, and situational modifiers also apply. EP does not multiply damage.
 
 #### Crushing Current
 
@@ -83,13 +87,13 @@ The veil must remain funded. Native barriers follow Tensura’s rules and do not
 
 ![Scarlet Undertow spiral ribbons](https://github.com/Bithio999/MC/blob/main/wiki/media/scarlet-undertow.png?raw=true)
 
-Captured in the 0.7.0 Minecraft client. These are short-lived active arts, not ambient toggle effects.
+These visuals appear during active arts.
 
 ## Native barrier HUD
 
 ![Native shield HUD counter](https://github.com/Bithio999/MC/blob/main/wiki/media/water-veil-hud.png?raw=true)
 
-The Unique passive’s native shield counter in Wild Hunt 0.6.0. Its Ultimate uses a higher capacity.
+The Unique passive’s native shield counter. Its Ultimate uses a higher capacity.
 
 ## Related pages
 
@@ -97,4 +101,4 @@ The Unique passive’s native shield counter in Wild Hunt 0.6.0. Its Ultimate us
 
 ---
 
-**Categories:** Tensura: Wild Hunt · Version 0.7.0
+**Categories:** Tensura: Wild Hunt

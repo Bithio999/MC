@@ -11,6 +11,8 @@
 | **Information** | |
 | Type | Ultimate Skill |
 | Inspiration | Jin Dahaad |
+| Damage type | Ice elemental |
+| Damage ID | `tensura:ice_elemental` |
 | Combat role | Avalanche impact / capture / ice siege |
 | Active modes | 3 |
 | Toggleable passive | Colossus Carapace |
@@ -21,6 +23,8 @@
 | Evolution | — |
 | **Obtaining** | |
 | Method | Ascend the matching mastered Unique |
+
+All damaging arts in this skill use **ice elemental damage**, including its area hits and pulses.
 
 ## Usage
 
@@ -34,7 +38,7 @@ The passive also arms a **350-capacity native Multilayer Barrier**, which appear
 
 Enable or disable this through Tensura’s native **Ability Selection** skill toggle. It is separate from active mode cycling and has no fifteen/thirty-second duration. Upkeep is **80 aura per second**, with the first second paid on enabling. It turns off when aura is insufficient or activation requirements fail. Turning it off removes its own attribute modifiers immediately.
 
-The toggle no longer emits constant frost crystals. Native barrier rendering and the HUD remain.
+The toggle uses native barrier rendering and the shield HUD.
 
 ### Active
 
@@ -44,13 +48,13 @@ The toggle no longer emits constant frost crystals. Native barrier rendering and
 | 2. Glacial Prison | 2,600 | 7 s | 165 |
 | 3. Heavenfall Glacier | 6,000 | 60 s | See signature below |
 
-**0.7.0 damage adjustment:** multiply every raw damage value below by **0.90**. This applies to direct hits, ricochets, fields, counters and signature pulses. Raw values already include the Ultimate’s 3× multiplier where applicable. Mastery adds up to 50%. **Wild Hunt applies no EP damage scaling.** Native elemental boosts, defenses, rank interactions and the listed situational modifiers still apply. EP requirements for race evolution and Ultimate ascension are unchanged.
+**Damage calculation:** multiply the listed base values by **0.90**, then by the mastery multiplier (up to **1.50**). Ultimate table values already include their 3× base multiplier. Elemental boosts, defenses, barriers, and situational modifiers also apply. EP does not multiply damage.
 
 #### Avalanche Crash
 
 [Active - Press] — **Avalanche Crash**
 
-Aim at a visible enemy up to 24 blocks away, or at the endpoint if no enemy is selected. Erupt eight rendered ice spires around the impact. Damage enemies in a 6-block radius and launch them upward and outward, respecting knockback resistance. This is an immediate aimed impact, not the old travelling fissure. It neither builds nor consumes rime.
+Aim at a visible enemy up to 24 blocks away, or at the endpoint if no enemy is selected. Erupt eight rendered ice spires around the impact. Damage enemies in a 6-block radius and launch them upward and outward, respecting knockback resistance.
 
 #### Glacial Prison
 
@@ -88,13 +92,13 @@ Prison uses native Frost, so immunity, skill rank and stronger defensive effects
 
 ![Glacial Prison](https://github.com/Bithio999/MC/blob/main/wiki/media/glacial-prison.png?raw=true)
 
-Captured in the Minecraft 1.21.1 development client with Wild Hunt 0.5.0.
+In-game example of the active art.
 
 ## Native barrier HUD
 
 ![Native shield HUD counter](https://github.com/Bithio999/MC/blob/main/wiki/media/colossus-carapace-hud.png?raw=true)
 
-The Unique passive’s native shield counter in Wild Hunt 0.6.0. Its Ultimate uses a higher capacity.
+The Unique passive’s native shield counter. Its Ultimate uses a higher capacity.
 
 ## Related pages
 
@@ -102,4 +106,4 @@ The Unique passive’s native shield counter in Wild Hunt 0.6.0. Its Ultimate us
 
 ---
 
-**Categories:** Tensura: Wild Hunt · Version 0.7.0
+**Categories:** Tensura: Wild Hunt

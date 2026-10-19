@@ -21,8 +21,8 @@ Equip and cycle active modes using Tensura’s normal ability interface. Enable 
 
 ## Power
 
-Mastery improves damage by up to 50%; Ultimates use a 3× base multiplier. Wild Hunt adds no EP-based damage scaling, charge battery, oil stacks or rime stacks. Read [Combat mechanics](Mechanics.md) for native barrier behavior and migration details.
+Mastery improves damage by up to 50%; Ultimates use a 3× base multiplier. Damage does not scale with EP. Read [Combat mechanics](Mechanics.md) for damage types, barriers, and aura costs.
 
 ---
 
-**Categories:** Tensura: Wild Hunt · Version 0.7.0
+**Categories:** Tensura: Wild Hunt

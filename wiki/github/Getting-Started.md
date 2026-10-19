@@ -27,7 +27,7 @@ Stay Human, grow to 100K base EP, and defeat one eligible boss type. Select Awak
 
 Choose [Storm Crown](https://github.com/Bithio999/MC/wiki/Storm-Crown) for ricochets and mobility, [Scarlet Deluge](https://github.com/Bithio999/MC/wiki/Scarlet-Deluge) for currents and native barriers, [Black Flame](https://github.com/Bithio999/MC/wiki/Black-Flame) for visible tentacle pulls and burning ground, or [Frostbound Colossus](https://github.com/Bithio999/MC/wiki/Frostbound-Colossus) for avalanche impacts and ice capture.
 
-Each skill has a separate toggleable passive in Tensura’s Ability Selection. Toggle it on for sustained benefits while paying aura upkeep. It is no longer the last active buff mode. Mastery improves damage; EP does not supply an addon damage multiplier.
+Each skill has a separate toggleable passive in Tensura’s Ability Selection. Toggle it on for sustained benefits while paying aura upkeep. Mastery improves damage; EP does not supply an addon damage multiplier.
 
 ## In-game help
 
@@ -35,4 +35,4 @@ Each skill has a separate toggleable passive in Tensura’s Ability Selection. T
 
 ---
 
-**Categories:** Tensura: Wild Hunt · Version 0.7.2
+**Categories:** Tensura: Wild Hunt
