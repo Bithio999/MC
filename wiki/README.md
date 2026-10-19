@@ -1,6 +1,6 @@
 # Tensura: Wild Hunt Wiki
 
-> Welcome to the unofficial addon wiki. **Minecraft 1.21.1 · NeoForge · Wild Hunt 0.7.0**
+> Welcome to the unofficial addon wiki. **Minecraft 1.21.1 · NeoForge · Wild Hunt 0.7.1**
 
 A field guide to four Monster Hunter Wilds inspired skill lines and a human hunter evolution branch for Tensura: Reincarnated.
 
@@ -34,12 +34,14 @@ Pages use skill/race infoboxes, acquisition sections, mode tables, progression l
 
 Read these Markdown pages directly on GitHub, or open `wiki/index.html` locally for the offline sidebar-and-infobox edition. The HTML edition is included in Git; no hosting or login is required to open it. GitHub displays HTML source unless it is downloaded or separately hosted.
 
-[Download the addon](../releases/tensura-wild-hunt-0.7.0.jar) · [Repository README](../README.md) · [Official Tensura wiki](https://tensura.wiki.gg/wiki/Tensura:_Reincarnated_Wiki)
+[Download the addon](../releases/tensura-wild-hunt-0.7.1.jar) · [Repository README](../README.md) · [Official Tensura wiki](https://tensura.wiki.gg/wiki/Tensura:_Reincarnated_Wiki)
 
 ## Aura skills and otherworlders
 
 [Aura regeneration](pages/Aura-Regeneration.md) · [Alma](pages/Alma.md) · [Gemma](pages/Gemma.md)
 
-0.7.0 adds aura recovery, stronger hunter vitality, native otherworlder NPCs, quieter water/ice toggles, recovering barriers, a 10% damage adjustment, and the revised lightning movement and water visuals.
+0.7.0 introduced aura recovery, stronger hunter vitality, native otherworlder NPCs, quieter water/ice toggles, recovering barriers, a 10% damage adjustment, and the revised lightning movement and water visuals.
 
 ![Alma and Gemma in Minecraft](media/alma-gemma.png)
+
+0.7.1 corrects Gemma’s black head patch and Alma’s hair wrapping. Faces and outfits are preserved.

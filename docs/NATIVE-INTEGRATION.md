@@ -95,3 +95,15 @@ into classic 64×64 Minecraft UVs by `scripts/prepare-skins.py`, not downloaded
 community skins. Generated source islands are retained in `art/`. Third-party
 reference images were viewed locally and are not included in the repository.
 Native regeneration icons are referenced by resource location at runtime.
+
+## 0.7.1 hair correction
+
+The old back/side head crops could sample transparent gaps in the generated
+island sheet. Forcing those samples opaque exposed their black RGB values.
+The packer now uses opaque head-only atlases for the top, bottom, sides and back,
+checks their opacity, and orients side tiles to Minecraft's UV direction. It
+preserves the exact original front-face and body pixels. The 0.7.1 release was
+built successfully; all 8 existing unit tests passed. Pixel-difference checks
+confirmed that changes are confined to the five non-front head faces, and client
+views confirmed the repaired rear and side hair. Native NPC/gameplay code was
+unchanged from 0.7.0.

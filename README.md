@@ -5,7 +5,7 @@ A Monster Hunter Wilds inspired addon for **Tensura 2.0.1.3**, **Minecraft
 
 ## Download
 
-The built addon is included at [releases/tensura-wild-hunt-0.7.0.jar](releases/tensura-wild-hunt-0.7.0.jar).
+The built addon is included at [releases/tensura-wild-hunt-0.7.1.jar](releases/tensura-wild-hunt-0.7.1.jar).
 Install it alongside Tensura and its required dependencies on both client and server.
 
 ## Human hunter progression
@@ -105,7 +105,7 @@ defined in Java.
 
 ### Updating from an earlier release
 
-Replace the old addon jar with 0.7.0; do not install both. Learned skills,
+Replace the old addon jar with 0.7.1; do not install both. Learned skills,
 mastery, distinct boss history and native passive toggle state are retained.
 Existing hunters get the stronger HP/SHP caps on login without free healing.
 Already-enabled water/ice passives receive their initial native HUD barrier.
@@ -141,7 +141,7 @@ vertical dashes, through-wall ricochets, momentum preservation, native shield
 breakage and timed recovery, HP/SHP evolution, aura regeneration and native NPC loadouts.
 `./gradlew runClient` starts a development client on a machine with graphics.
 
-Install `build/libs/tensura-wild-hunt-0.7.0.jar` on **both client and server**,
+Install `build/libs/tensura-wild-hunt-0.7.1.jar` on **both client and server**,
 alongside Tensura and its required dependencies. The addon jar is not a complete
 modpack. Additional development dependency versions are in `runtime-mods.lock.json`.
 
@@ -165,3 +165,5 @@ The official [Human wiki page](https://tensura.wiki.gg/wiki/Races/Human) informe
 the EP balancing reference.
 
 Water and ice toggles no longer emit constant custom particles. Their physical/magic barrier bonuses are reduced 10%; broken native multilayer barriers rearm automatically after ten seconds without a hit while the toggle stays funded. Undertow is placed along the crosshair ray within 24/36 blocks and renders rotating teal/coral water ribbons.
+
+Version 0.7.1 corrects Alma and Gemma’s top, side and rear hair textures while preserving their existing faces and outfits.

@@ -35,6 +35,21 @@ for name,parts in crops.items():
    tile=source.crop(crop).resize((dest[2]-dest[0],dest[3]-dest[1]),Image.Resampling.NEAREST)
    # JPEG-like island edge transparency is inappropriate for a base skin face.
    tile.putalpha(255);skin.paste(tile,dest)
+ # Head correction atlas: six equal panels, top/bottom/right/front/left/back.
+ # Preserve the exact existing front face (glasses, eyes and expression), body,
+ # and equipment. Only the five other head faces are replaced.
+ head=Image.open(root/f'art/{name}-head-tiles.png').convert('RGBA')
+ for index,dest in enumerate(faces(0,0,8,8,8)):
+  if index == 3: continue
+  column,row=index%3,index//3
+  crop=(column*head.width//3,row*head.height//2,
+        (column+1)*head.width//3,(row+1)*head.height//2)
+  tile=head.crop(crop).resize((8,8),Image.Resampling.NEAREST)
+  # UV side faces run in opposite directions around the cube.
+  if index in (2,4): tile=tile.transpose(Image.Transpose.FLIP_LEFT_RIGHT)
+  if tile.getchannel('A').getextrema()[0] != 255:
+   raise ValueError(f'{name}: head atlas contains a transparent cutout')
+  skin.paste(tile,dest)
  # The 8x8 face must not be hidden by another full face on the outer layer.
  # Hair is conveyed by the base wrap, with goggles/glasses baked into the face.
  skin.save(out/f'{name}.png')

@@ -70,7 +70,7 @@ def render(source, destination, home=False):
 <div class="search"><label for="wiki-search">Search the wiki</label><input id="wiki-search" type="search" placeholder="Find a skill, race, or mechanic…" autocomplete="off"><div id="search-results" aria-live="polite"></div></div></header>
 <div class="layout"><nav class="sidebar" aria-label="Wiki navigation"><h2>Explore</h2>{links}
 <h2>Apex arts</h2>{''.join(f'<a href="{prefix}site/{slug}.html">{label}</a>' for label,slug in [('Storm Crown','Storm-Crown'),('Scarlet Deluge','Scarlet-Deluge'),('Black Flame','Black-Flame'),('Frostbound Colossus','Frostbound-Colossus')])}
-<p>Version 0.7.0<br>Minecraft 1.21.1<br>NeoForge</p></nav>
+<p>Version 0.7.1<br>Minecraft 1.21.1<br>NeoForge</p></nav>
 <main id="article"><div class="page-tabs"><span>Article</span><a href="{'README.md' if home else '../pages/' + source.name}">Read Markdown</a></div>
 <h1>{html.escape(title)}</h1><p class="subtitle">From the Tensura: Wild Hunt Wiki</p>
 {infobox}{toc}{content}

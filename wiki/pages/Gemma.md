@@ -36,10 +36,16 @@ Gemma participates in Tensura's **otherworlder spawn distribution**, including i
 
 Use `/summon wildhunt:gemma` or `/give @s wildhunt:gemma_spawn_egg` for a direct check. Native otherworlder ownership, inventory, home handling, interaction menus and configured Unique-skill drops are inherited. Races, skills and equipment persist through native saving; loading never reinitializes them. Their native entity data supplies 160,000 aura / 80,000 magicules before any applicable modifiers.
 
+## Skin correction in 0.7.1
+
+The top, side and rear head textures now use a separate opaque atlas. This removes Gemma's black patch and gives Alma a coherent swept-back hairstyle. The existing front faces, clothing and equipment pixels are preserved.
+
+![Corrected rear head textures in Minecraft 0.7.1](../media/otherworlder-hair-rear-071.png)
+
 ## Visual reference and skin provenance
 
 Appearance reference: [Monster Hunter Wilds Gemma page](https://monsterhunterwilds.wiki.fextralife.com/Gemma). Common skin libraries blocked automated downloads during development, so this is an **original generated and UV-packed interpretation**, not a downloaded community skin or a ripped game texture. The character reference images are not redistributed in this repository. Source art and reproducible nearest-neighbor UV packing are in `art/` and `scripts/prepare-skins.py`.
 
 ---
 
-**Categories:** Tensura: Wild Hunt · Otherworlders · Version 0.7.0
+**Categories:** Tensura: Wild Hunt · Otherworlders · Version 0.7.1

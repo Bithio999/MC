@@ -2,6 +2,14 @@
 
 [Main Page](../README.md) · [Skills](Skills.md) · [Evolution](Evolution.md) · [Mechanics](Mechanics.md) · [Commands](Commands.md)
 
+## 0.7.1 — Otherworlder hair corrections
+
+- Replaced Gemma's side, top and back head textures to remove the black cutout artifact.
+- Reworked Alma's hair into a coherent swept-back style with a low bun.
+- Preserved both existing front faces, outfits and equipment pixels exactly.
+- The skin packer now rejects transparent head-face tiles rather than forcing cutouts opaque.
+
+
 ## 0.7.0
 
 - Railbolt ricochets ignore blocks after the initial block-clipped shot. Horns and portrait gutters are corrected; each icon is isolated and centered.
