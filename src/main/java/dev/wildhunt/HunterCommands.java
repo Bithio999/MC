@@ -27,7 +27,7 @@ public final class HunterCommands {
         ctx.getSource().sendSuccess(() -> Component.literal("Wild Hunt — Human → Awakened Hunter → Apex Hunter → Sovereign Hunter\n"
             + "Awakened: 100K EP + 1 distinct boss. Apex: 400K EP + 3 distinct bosses. Sovereign: 2M EP + 5 distinct bosses + mastery of an apex skill.\n"
             + "Repeated kills of one boss type count once. Apex Unique skills are rollable through normal Tensura reincarnation.\n"
-            + "Equip skills in Tensura's ability menu. Use /wildhunt status, /wildhunt evolve, and /wildhunt ascend <apex>. Each Ultimate requires mastery of its own Unique skill."), false);
+            + "Equip skills and toggle passives in Tensura's ability menu. Use /wildhunt status, /wildhunt evolve, and /wildhunt ascend <apex>. Each Ultimate requires mastery of its own Unique skill."), false);
         return Command.SINGLE_SUCCESS;
     }
     private static int status(CommandContext<CommandSourceStack> ctx) throws com.mojang.brigadier.exceptions.CommandSyntaxException {
@@ -40,12 +40,8 @@ public final class HunterCommands {
             for (var instance : SkillAPI.getSkillsFrom(player).getLearnedSkills()) {
                 if (!(instance.getSkill() instanceof ApexSkill skill) || skill.apex != apex) continue;
                 var tag = instance.getOrCreateTag();
-                String resource = switch (apex) {
-                    case REY_DAU -> "Charge " + tag.getInt("storm_charge") + "/3";
-                    case UTH_DUNA -> "Veil " + (tag.getLong("mantle_until") > player.level().getGameTime() ? "active" : "inactive");
-                    case NU_UDRA -> "Oil pools " + tag.getList("oil_pools", net.minecraft.nbt.Tag.TAG_COMPOUND).size() + "/" + (skill.ultimate ? 5 : 3);
-                    case JIN_DAHAAD -> "Ward interceptions " + (tag.getLong("field_until") > player.level().getGameTime() && tag.getString("field_dimension").equals(player.level().dimension().location().toString()) ? tag.getInt("ward_budget") : 0);
-                };
+                String resource = skill.passiveName() + ": " + (instance.isToggled() ? "ON" : "OFF")
+                    + " | Upkeep " + (long)skill.balance.upkeep(skill.ultimate) + " aura/s";
                 ctx.getSource().sendSuccess(() -> skill.getName().append(": " + resource), false);
             }
         }

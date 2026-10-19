@@ -2,27 +2,27 @@
 
 [Main Page](../README.md) · [Skills](Skills.md) · [Evolution](Evolution.md) · [Mechanics](Mechanics.md) · [Commands](Commands.md)
 
-Wild Hunt adds four rollable Unique skills and four Ultimate evolutions. Each line keeps a different targeting pattern, resource loop and defensive purpose.
+Four rollable Uniques evolve into four Ultimates. Every line has **two active modes plus one toggleable passive**. Each Ultimate adds a **third active signature**.
 
-| Unique Skill | Ultimate Skill | Inspiration | Playstyle |
+| Unique | Ultimate | Active arts | Toggleable passive |
 | --- | --- | --- | --- |
-| [Storm Crown](Storm-Crown.md) | [Raijin, Lord of Thunder](Raijin.md) | Rey Dau | Precision / charge management |
-| [Scarlet Deluge](Scarlet-Deluge.md) | [Varuna, Lord of Tides](Varuna.md) | Uth Duna | Position control / reactive defense |
-| [Black Flame](Black-Flame.md) | [Agni, Lord of the Black Flame](Agni.md) | Nu Udra | Trap placement / oil detonation |
-| [Frostbound Colossus](Frostbound-Colossus.md) | [Ymir, Lord of Winter](Ymir.md) | Jin Dahaad | Ground rupture / projectile defense |
+| [Storm Crown](Storm-Crown.md) | [Raijin](Raijin.md) | Ricochet Railbolt; Thunder Step | Storm Mantle |
+| [Scarlet Deluge](Scarlet-Deluge.md) | [Varuna](Varuna.md) | Travelling wave; aimed whirlpool | Water Veil |
+| [Black Flame](Black-Flame.md) | [Agni](Agni.md) | Rendered Oil Lash; pool ignition | Furnace Mantle |
+| [Frostbound Colossus](Frostbound-Colossus.md) | [Ymir](Ymir.md) | Avalanche Crash; Glacial Prison | Colossus Carapace |
 
 ## Obtaining skills
 
-The Uniques join the ordinary Tensura reincarnation pool. No apex trial or boss kill directly awards a skill. Ultimates are excluded from starting rolls and require the matching Unique’s mastery plus Sovereign Hunter and 2M base EP.
+Uniques join Tensura’s configured reincarnation primary pool. Rolls remain random. There are no skill trials or skills awarded for boss kills. Ultimates require Sovereign Hunter, two million base EP and mastery of the matching Unique.
 
-## Using modes
+## Using skills
 
-Equip the skill in Tensura’s normal ability menu. Use its slot and mode-cycle controls. The wiki numbers modes from one for players; the implementation stores mode indices from zero. Cooldowns are independent per mode and measured in seconds. `/wildhunt status` shows art resources.
+Equip and cycle active modes using Tensura’s normal ability interface. Enable the passive with the native skill toggle in **Ability Selection**; it is separate from the active modes. It requires ongoing aura. `/wildhunt status` shows its on/off state and upkeep.
 
-## Unique and Ultimate
+## Power
 
-Ultimates preserve the line’s identity, increase its base damage multiplier, strengthen defenses and targeting, and add a fourth signature. They do not grant automatic full mastery of the evolved skill.
+Mastery improves damage by up to 50%; Ultimates use a 3× base multiplier. Wild Hunt adds no EP-based damage scaling, charge battery, oil stacks or rime stacks. Read [Combat mechanics](Mechanics.md) for native barrier behavior and migration details.
 
 ---
 
-**Categories:** Tensura: Wild Hunt · Version 0.4.0
+**Categories:** Tensura: Wild Hunt · Version 0.5.0

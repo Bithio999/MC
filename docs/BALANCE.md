@@ -1,6 +1,6 @@
 # 0.3.0: comparison and rebalance of all four skill lines
 
-> Historical 0.3.0 comparison. The 0.4.0 [wiki](../wiki/README.md) documents
+> Historical 0.3.0 comparison. The 0.5.0 [wiki](../wiki/README.md) documents
 > the current distinct arts, targeting, costs and combos. The native Tensura
 > benchmarks below remain useful reference values.
 

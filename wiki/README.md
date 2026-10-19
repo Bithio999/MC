@@ -1,6 +1,6 @@
 # Tensura: Wild Hunt Wiki
 
-> Welcome to the unofficial addon wiki. **Minecraft 1.21.1 · NeoForge · Wild Hunt 0.4.0**
+> Welcome to the unofficial addon wiki. **Minecraft 1.21.1 · NeoForge · Wild Hunt 0.5.0**
 
 A field guide to four Monster Hunter Wilds inspired skill lines and a human hunter evolution branch for Tensura: Reincarnated.
 
@@ -15,10 +15,12 @@ A field guide to four Monster Hunter Wilds inspired skill lines and a human hunt
 
 | Inspiration | Unique Skill | Ultimate Skill | Combat identity |
 | --- | --- | --- | --- |
-| Rey Dau | [Storm Crown](pages/Storm-Crown.md) | [Raijin, Lord of Thunder](pages/Raijin.md) | Precision / charge management |
-| Uth Duna | [Scarlet Deluge](pages/Scarlet-Deluge.md) | [Varuna, Lord of Tides](pages/Varuna.md) | Position control / reactive defense |
-| Nu Udra | [Black Flame](pages/Black-Flame.md) | [Agni, Lord of the Black Flame](pages/Agni.md) | Trap placement / oil detonation |
-| Jin Dahaad | [Frostbound Colossus](pages/Frostbound-Colossus.md) | [Ymir, Lord of Winter](pages/Ymir.md) | Ground rupture / projectile defense |
+| Rey Dau | [Storm Crown](pages/Storm-Crown.md) | [Raijin, Lord of Thunder](pages/Raijin.md) | Ricochet lightning / mobility |
+| Uth Duna | [Scarlet Deluge](pages/Scarlet-Deluge.md) | [Varuna, Lord of Tides](pages/Varuna.md) | Moving tides / native barriers |
+| Nu Udra | [Black Flame](pages/Black-Flame.md) | [Agni, Lord of the Black Flame](pages/Agni.md) | Tentacle pulls / burning ground |
+| Jin Dahaad | [Frostbound Colossus](pages/Frostbound-Colossus.md) | [Ymir, Lord of Winter](pages/Ymir.md) | Avalanche impact / ice capture |
+
+Each line has two active arts and a separate native toggleable passive; Ultimates add a third signature art. Passive stack counters and addon EP damage scaling are removed.
 
 ## Hunter evolution
 
@@ -32,4 +34,4 @@ Pages use skill/race infoboxes, acquisition sections, mode tables, progression l
 
 Read these Markdown pages directly on GitHub, or open `wiki/index.html` locally for the offline sidebar-and-infobox edition. The HTML edition is included in Git; no hosting or login is required to open it. GitHub displays HTML source unless it is downloaded or separately hosted.
 
-[Download the addon](../releases/tensura-wild-hunt-0.4.0.jar) · [Repository README](../README.md) · [Official Tensura wiki](https://tensura.wiki.gg/wiki/Tensura:_Reincarnated_Wiki)
+[Download the addon](../releases/tensura-wild-hunt-0.5.0.jar) · [Repository README](../README.md) · [Official Tensura wiki](https://tensura.wiki.gg/wiki/Tensura:_Reincarnated_Wiki)

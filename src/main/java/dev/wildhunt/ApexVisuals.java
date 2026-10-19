@@ -38,6 +38,26 @@ public final class ApexVisuals {
         circle.setPos(pos); circle.setYRot(owner.getYRot()); circle.setXRot(vertical ? 0 : -90);
         level.addFreshEntity(circle);
     }
+    public static void lash(ServerLevel level, Vec3 from, Vec3 to) {
+        ArtVisualEntity.spawn(level, ArtVisualEntity.LASH, from, to.subtract(from), 16);
+    }
+    public static void iceBurst(ServerLevel level, LivingEntity caster, Vec3 center, double radius) {
+        circle(level, caster, Apex.JIN_DAHAAD, center.add(0, 0.1, 0), (float)radius, 18, false);
+        for (int i = 0; i < 8; i++) {
+            double a = i * Math.PI / 4;
+            ArtVisualEntity.spawn(level, ArtVisualEntity.CRYSTAL, center.add(Math.cos(a) * radius * 0.6, 0, Math.sin(a) * radius * 0.6), new Vec3(0, 2 + (i % 3) * 0.5, 0), 18);
+        }
+    }
+    public static void prison(ServerLevel level, LivingEntity caster, Vec3 center, int ticks) {
+        circle(level, caster, Apex.JIN_DAHAAD, center.add(0, 0.1, 0), 1.8f, ticks, false);
+        for (int i = 0; i < 6; i++) {
+            double a = i * Math.PI / 3;
+            ArtVisualEntity.spawn(level, ArtVisualEntity.CRYSTAL, center.add(Math.cos(a) * 1.1, 0, Math.sin(a) * 1.1), new Vec3(0, 2.8, 0), ticks);
+        }
+    }
+    public static void fallingIce(ServerLevel level, Vec3 impact) {
+        ArtVisualEntity.spawn(level, ArtVisualEntity.FALLING_ICE, impact.add(0, 6, 0), new Vec3(0, -6, 0), 10);
+    }
     public static void beam(ServerLevel level, Apex apex, Vec3 from, Vec3 to, boolean ultimate) {
         if (apex == Apex.REY_DAU) {
             Vec3 delta = to.subtract(from);
@@ -46,15 +66,6 @@ public final class ApexVisuals {
                 Vec3 core = from.add(delta.scale((double)i / steps));
                 dot(level, TensuraParticleTypes.LIGHTNING_EFFECT.get(), core);
                 if (i % 2 == 0) dot(level, element(apex), core.add(Math.sin(i * 2.3) * 0.28, Math.cos(i * 1.7) * 0.28, 0));
-            }
-        } else if (apex == Apex.NU_UDRA) {
-            // A heavy, downward-curving tentacle, rather than another laser.
-            Vec3 delta = to.subtract(from);
-            for (int i = 0; i <= 28; i++) {
-                double t = i / 28.0;
-                Vec3 p = from.add(delta.scale(t)).add(0, Math.sin(t * Math.PI) * 1.3, 0);
-                dot(level, TensuraParticleUtils.getBlackCloud(0.15f, 0.15f, 0.15f), p);
-                if (i % 3 == 0) dot(level, element(apex), p);
             }
         } else if (apex == Apex.JIN_DAHAAD) {
             Vec3 delta = to.subtract(from);

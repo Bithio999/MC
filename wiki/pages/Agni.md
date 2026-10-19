@@ -8,68 +8,68 @@
 | --- | --- |
 | Category | Ultimate Skill |
 | Inspiration | Nu Udra |
-| Combat role | Trap placement / oil detonation |
-| Resource | Aura |
-| Modes | 4 |
+| Combat role | Tentacle pulls / burning ground |
+| Active modes | 3 |
+| Toggleable passive | Furnace Mantle |
+| Passive upkeep | 60 aura / second |
 | Registry ID | `wildhunt:agni` |
 | Previous | [Black Flame](Black-Flame.md) |
 | Evolution | — |
 
 ## Overview
 
-A setup-and-detonate art with limited, owned oil pools. Its lash grabs targets, its mantle oils melee victims, and ignition only burns the caster’s own pool network. Enemies outside those locations avoid the detonation.
+A location-based fire kit. Oil Lash draws animated, solid tentacles, pulls enemies, and places oil on the ground. Ignition burns those locations directly; neither lashes nor melee attacks create oil stacks.
 
 ## Acquisition
 
-Evolve from [Black Flame](Black-Flame.md) as Sovereign Hunter with 2,000,000 base EP and mastery of that matching Unique skill. Use `/wildhunt ascend nu_udra`. The Ultimate replaces only its source Unique; mastery of the new Ultimate starts separately.
+Evolve [Black Flame](Black-Flame.md) as Sovereign Hunter with 2,000,000 base EP and mastery of that Unique. Use `/wildhunt ascend nu_udra`. It replaces only the matching Unique; the Ultimate starts with its own mastery.
 
-## Modes
+## Active modes
 
-| Mode | Aura | Cooldown | Raw damage |
-| --- | ---: | ---: | --- |
+| Mode | Aura | Cooldown | Raw opening damage |
+| --- | ---: | ---: | ---: |
 | 1. Oil Lash | 640 | 2 s | 210 |
-| 2. Blackflame Ignition | 3,200 | 7 s | 270 initial / 72 pulse |
-| 3. Furnace Mantle | 1,400 | 19 s | — |
-| 4. Black Sun Caldera | 6,000 | 60 s | Signature-specific; see below |
+| 2. Blackflame Ignition | 3,200 | 7 s | 270 |
+| 3. Black Sun Caldera | 6,000 | 60 s | See signature below |
 
-Raw damage in this table already includes the Ultimate’s 3× base multiplier where applicable. EP, mastery, elemental boosts, defenses and combo modifiers apply separately. [Damage formula](Mechanics.md#damage-and-mastery).
+Raw values already include the Ultimate’s 3× multiplier where applicable. Mastery adds up to 50%. **Wild Hunt applies no EP damage scaling.** Native elemental boosts, defenses, rank interactions and the listed situational modifiers still apply. EP requirements for race evolution and Ultimate ascension are unchanged.
 
 ### Oil Lash
 
-Lashes up to 6 enemies in a forward fan within 22 blocks, pulls them toward you, and adds one of three oil stacks lasting fifteen seconds. Curved tentacle trails connect caster and victims. Leaves an oil pool at the last struck target; an empty cast places one about ten blocks ahead. Maximum owned pools: 5. Oldest pools are replaced first.
+Lash up to 6 enemies in a forward fan within 22 blocks and pull them toward you. Each lash has a synced three-dimensional tapered tentacle with a dark body and glowing orange bands. It extends, curls and recoils over sixteen ticks. A missed cast still shows a tentacle sweep. Leave a pool at the final victim’s location, or at the aim point about ten blocks away on a miss. Maintain up to 5 pools; the oldest is replaced first.
 
 ### Blackflame Ignition
 
-Ignites your valid oil pools for six seconds. Each pool damages enemies within 4 blocks; overlapping pools cannot hit one enemy twice in the same pulse. Initial ignition consumes your own oil stacks for +60% damage per stack, up to 2.8× base. Burning pools pulse once per second and apply native Black Burn. If you have no pools, ignition places a fallback pool at your aim point.
-
-### Furnace Mantle
-
-For 30 seconds, gain 18 armor, fire resistance, 100% melee attack and 100% flame boost. Successful ordinary melee attacks coat living victims with your oil. Skill damage does not recursively count as an ordinary melee hit.
+Ignite valid owned pools for six seconds. Each affects a 4-block radius; overlapping pools cannot damage one enemy twice in a pulse. Opening damage is immediate and fixed, with no oil-stack multiplier. Later pulses deal 72 raw damage once per second and apply native Black Burn. If no valid controllable pool exists, place a fallback pool at the aim point up to six blocks away.
 
 ### Black Sun Caldera
 
-Establishes five ignited pools in a ring six blocks around the caster. For ten seconds, the caldera pulses through valid owned pools, with a thirty-two-block control leash. This is a location-based trap network, not a caster-centered damage aura.
+Create five burning pools in a ring six blocks around the caster. The ten-second caldera pulses through those owned locations. Opening raw damage is 270; later pulses use 108, before mastery and native modifiers. Existing secondary pulses pause during the domain to avoid duplicate scheduling.
+
+## Toggleable passive: Furnace Mantle
+
+While toggled on, gain 18 armor, 100% melee attack and 100% flame boost. Fire-tagged damage is resisted while the passive is enabled, preserving its fire-protection utility without a lingering potion. Melee attacks do not coat targets or accumulate oil. This is an offensive passive, not an extra ignition step.
+
+Enable or disable this through Tensura’s native **Ability Selection** skill toggle. It is separate from active mode cycling and has no fifteen/thirty-second duration. Upkeep is **60 aura per second**, with the first second paid on enabling. It turns off when aura is insufficient or activation requirements fail. Turning it off removes its own attribute modifiers immediately.
 
 ## Suggested combo
 
-Pull a target into an oil pool with Oil Lash → add oil with lashes or mantle-assisted melee → use Blackflame Ignition. Layer pools to cover escape paths rather than stacking them for duplicate hits.
+Use Oil Lash to pull a victim and place a pool → ignite the pool. Cover likely escape routes with separate pools instead of farming stacks or overlapping them for duplicate damage.
 
 ## Strengths and limitations
 
-Only your oil amplifies your ignition. Pools expire after fifteen seconds when unlit or six seconds after ordinary ignition. They must be in the same dimension and within thirty-two blocks when controlled. Bosses can resist pulls, fire and status effects.
+Pools are world locations, not status stacks on enemies. Unlit pools expire after fifteen seconds; ordinary ignition burns for six. Only your pools in the same dimension and within thirty-two blocks can be controlled. Native Black Burn and forced movement may be resisted.
 
-## Evolution notes
+## In-game preview
 
-Six lash targets, twenty-two-block reach, five pools, four-block ignition radius, stronger Black Burn, a 30-second mantle, and the five-pool caldera.
+![Oil Lash tentacles](../media/oil-lash.png)
 
-## Visual effects
-
-Native black clouds shape curved tentacle trails, Black Fire marks ignition, and Flame magic circles identify the art. Pool footprints show the areas that can detonate.
+Captured in the Minecraft 1.21.1 development client with Wild Hunt 0.5.0.
 
 ## Related pages
 
-[Skills](Skills.md) · [Human evolution](Evolution.md) · [Combat mechanics](Mechanics.md) · [Commands](Commands.md)
+[Skills](Skills.md) · [Mechanics](Mechanics.md) · [Evolution](Evolution.md) · [Commands](Commands.md)
 
 ---
 
-**Categories:** Tensura: Wild Hunt · Version 0.4.0
+**Categories:** Tensura: Wild Hunt · Version 0.5.0

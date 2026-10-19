@@ -8,68 +8,68 @@
 | --- | --- |
 | Category | Ultimate Skill |
 | Inspiration | Jin Dahaad |
-| Combat role | Ground rupture / projectile defense |
-| Resource | Aura |
-| Modes | 4 |
+| Combat role | Avalanche impact / capture / ice siege |
+| Active modes | 3 |
+| Toggleable passive | Colossus Carapace |
+| Passive upkeep | 80 aura / second |
 | Registry ID | `wildhunt:ymir` |
 | Previous | [Frostbound Colossus](Frostbound-Colossus.md) |
 | Evolution | — |
 
 ## Overview
 
-A deliberate ice art with ground fissures and a finite frontal projectile ward. Build rime at the rampart, interrupt incoming shots, then rupture a fully prepared opponent. Its Ultimate spreads a frostfront rather than repeating a full-radius burst.
+A complete replacement for the former rime/fissure/ward kit. Aim a heavy avalanche impact, capture a single foe in an ice prison, and sustain a native barrier carapace. Ymir’s signature rains telegraphed ice onto fixed positions.
 
 ## Acquisition
 
-Evolve from [Frostbound Colossus](Frostbound-Colossus.md) as Sovereign Hunter with 2,000,000 base EP and mastery of that matching Unique skill. Use `/wildhunt ascend jin_dahaad`. The Ultimate replaces only its source Unique; mastery of the new Ultimate starts separately.
+Evolve [Frostbound Colossus](Frostbound-Colossus.md) as Sovereign Hunter with 2,000,000 base EP and mastery of that Unique. Use `/wildhunt ascend jin_dahaad`. It replaces only the matching Unique; the Ultimate starts with its own mastery.
 
-## Modes
+## Active modes
 
-| Mode | Aura | Cooldown | Raw damage |
-| --- | ---: | ---: | --- |
-| 1. Glacial Rupture | 800 | 3 s | 225 |
-| 2. Glacial Rampart | 2,600 | 7 s | 135 initial / 60 pulse |
-| 3. Colossus Guard | 1,400 | 19 s | — |
-| 4. Absolute Winter | 6,000 | 60 s | Signature-specific; see below |
+| Mode | Aura | Cooldown | Raw opening damage |
+| --- | ---: | ---: | ---: |
+| 1. Avalanche Crash | 800 | 3 s | 300 |
+| 2. Glacial Prison | 2,600 | 7 s | 165 |
+| 3. Heavenfall Glacier | 6,000 | 60 s | See signature below |
 
-Raw damage in this table already includes the Ultimate’s 3× base multiplier where applicable. EP, mastery, elemental boosts, defenses and combo modifiers apply separately. [Damage formula](Mechanics.md#damage-and-mastery).
+Raw values already include the Ultimate’s 3× multiplier where applicable. Mastery adds up to 50%. **Wild Hunt applies no EP damage scaling.** Native elemental boosts, defenses, rank interactions and the listed situational modifiers still apply. EP requirements for race evolution and Ultimate ascension are unchanged.
 
-### Glacial Rupture
+### Avalanche Crash
 
-Sends a narrow ground fissure forward, reaching up to 56 blocks in about 0.8 seconds. The fissure hits 4 targets once each. A target with three of your rime stacks takes +360 raw damage and loses those stacks. Other hits add rime; native Chill accompanies the frost effects.
+Aim at a visible enemy up to 24 blocks away, or at the endpoint if no enemy is selected. Erupt eight rendered ice spires around the impact. Damage enemies in a 6-block radius and launch them upward and outward, respecting knockback resistance. This is an immediate aimed impact, not the old travelling fissure. It neither builds nor consumes rime.
 
-### Glacial Rampart
+### Glacial Prison
 
-Raises a ten-block-wide frontal frost ward four blocks ahead for up to six seconds. It chills and builds rime on enemies crossing its slab, with initial and one-second pulse damage. Intercepts up to 6 hostile moving projectiles, then collapses. Your shots and allied shots are preserved.
+Aim at one visible hostile within 28 blocks. Deal the listed hit damage, then apply Tensura’s native Frost effect for up to 6 seconds, subject to its rank and resistance checks. Six rendered spires and an Ice magic circle mark the prison. The visual cage places no blocks and adds no separate collision wall. There is no projectile-interception budget.
 
-### Colossus Guard
+### Heavenfall Glacier
 
-For 30 seconds, gain 40 armor, a 40-point magic barrier, one knockback resistance and 100% water-element boost (Tensura classifies ice under water). This is defense and stability, not blanket boss invulnerability.
+Anchor an ice siege at the selected enemy’s position within twenty-four blocks, or at the aim endpoint. For ten seconds, select up to three enemies within ten blocks of that anchor each second. Mark their current positions with circles and falling ice. Each mark explodes after ten ticks (half a second), striking a 2.5-block radius. Opening raw damage is 300 per impact; later impacts use 135, before mastery and native modifiers. Overlapping marks cannot strike one victim twice in the same resolution tick. Enemies can leave the marked locations before impact.
 
-### Absolute Winter
+## Toggleable passive: Colossus Carapace
 
-Anchors a growing frostfront at the cast position. It begins at radius two and reaches fourteen blocks over nine seconds of its ten-second lifetime. Each newly reached enemy can be hit once and is primed with three owned rime stacks for Glacial Rupture.
+While toggled on, gain 40 armor, 80 physical barrier, 40 magic barrier, one knockback resistance and 100% water-element boost. Tensura classifies ice under water for this boost. This uses the native barrier layer and damage rules, not absorption or the former projectile-deletion ward.
+
+Enable or disable this through Tensura’s native **Ability Selection** skill toggle. It is separate from active mode cycling and has no fifteen/thirty-second duration. Upkeep is **80 aura per second**, with the first second paid on enabling. It turns off when aura is insufficient or activation requirements fail. Turning it off removes its own attribute modifiers immediately.
 
 ## Suggested combo
 
-Stand behind Glacial Rampart while it chills enemies and blocks shots → wait for three rime stacks → aim Glacial Rupture. As Ymir, Absolute Winter can prepare multiple enemies before a piercing rupture.
+Capture an enemy with Glacial Prison → aim Avalanche Crash at the captive and nearby foes. As Ymir, use the prison to hold a target within Heavenfall Glacier’s warning circles.
 
 ## Strengths and limitations
 
-The ward is a frontal plane, not an enclosing dome or a solid world block. It cannot stop hitscan beams, stationary effects or ownerless shots. The Unique ward does not intercept native projectiles marked as Ultimate skills. Projectile budgets and ordinary rank/resistance rules still apply.
+Prison uses native Frost, so immunity, skill rank and stronger defensive effects can affect it. The cage mesh is visual. Icefall marks stay where they were placed and can be dodged. Neither spires nor falling ice change terrain. There are no rime stacks, shatter preparation, finite projectile wards or expanding frostfronts.
 
-## Evolution notes
+## In-game preview
 
-Four fissure targets, fifty-six-block reach, six interceptions, a 30-second stronger guard, and an expanding frostfront that primes the shatter combo.
+![Glacial Prison](../media/glacial-prison.png)
 
-## Visual effects
-
-Native snowflake effects outline jagged fissures and frost growth. Upright Ice magic circles identify the ward plane. The frostfront grows outward from its anchored origin.
+Captured in the Minecraft 1.21.1 development client with Wild Hunt 0.5.0.
 
 ## Related pages
 
-[Skills](Skills.md) · [Human evolution](Evolution.md) · [Combat mechanics](Mechanics.md) · [Commands](Commands.md)
+[Skills](Skills.md) · [Mechanics](Mechanics.md) · [Evolution](Evolution.md) · [Commands](Commands.md)
 
 ---
 
-**Categories:** Tensura: Wild Hunt · Version 0.4.0
+**Categories:** Tensura: Wild Hunt · Version 0.5.0

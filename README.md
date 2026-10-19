@@ -5,7 +5,7 @@ A Monster Hunter Wilds inspired addon for **Tensura 2.0.1.3**, **Minecraft
 
 ## Download
 
-The built addon is included at [releases/tensura-wild-hunt-0.4.0.jar](releases/tensura-wild-hunt-0.4.0.jar).
+The built addon is included at [releases/tensura-wild-hunt-0.5.0.jar](releases/tensura-wild-hunt-0.5.0.jar).
 Install it alongside Tensura and its required dependencies on both client and server.
 
 ## Human hunter progression
@@ -38,29 +38,34 @@ skill count, additional-skill chances, and truly-unique rules still apply.
 Ultimates are not starting rolls. Equip and cycle modes through Tensura's normal
 ability interface and key bindings.
 
-| Inspiration | Unique → Ultimate | Three modes |
-| --- | --- | --- |
-| Rey Dau | Storm Crown → Raijin, Lord of Thunder | Railbolt; Fulgurite Array; Storm Mantle |
-| Uth Duna | Scarlet Deluge → Varuna, Lord of Tides | Crushing Current; Scarlet Undertow; Water Veil |
-| Nu Udra | Black Flame → Agni, Lord of the Black Flame | Oil Lash; Blackflame Ignition; Furnace Mantle |
-| Jin Dahaad | Frostbound Colossus → Ymir, Lord of Winter | Glacial Rupture; Glacial Rampart; Colossus Guard |
+| Inspiration | Unique → Ultimate | Two active arts | Toggleable passive |
+| --- | --- | --- | --- |
+| Rey Dau | Storm Crown → Raijin, Lord of Thunder | Railbolt; Thunder Step | Storm Mantle |
+| Uth Duna | Scarlet Deluge → Varuna, Lord of Tides | Crushing Current; Scarlet Undertow | Water Veil |
+| Nu Udra | Black Flame → Agni, Lord of the Black Flame | Oil Lash; Blackflame Ignition | Furnace Mantle |
+| Jin Dahaad | Frostbound Colossus → Ymir, Lord of Winter | Avalanche Crash; Glacial Prison | Colossus Carapace |
 
-- **Rey Dau:** piercing railbolts spend a three-charge battery. Three fulgurite
-  rods select nearby enemies to recharge it; moving during Storm Mantle also
-  builds charge. Raijin adds targeted sky judgments.
-- **Uth Duna:** a travelling wave carries enemies through an aimed whirlpool.
-  Water Veil retaliates after health damage. Varuna alternates inward and
-  outward tides around the caster.
-- **Nu Udra:** curved tentacle lashes pull and oil enemies, leaving limited owned
-  pools. Ignition detonates those locations; Furnace Mantle coats melee victims.
-  Agni establishes a five-pool caldera.
-- **Jin Dahaad:** ground fissures consume rime for shatter damage. Glacial Rampart
-  intercepts a finite number of hostile projectiles. Ymir adds an expanding,
-  anchored frostfront that primes each reached enemy once.
+- **Rey Dau:** Railbolt ricochets sequentially through up to four enemies (six as
+  Raijin). Thunder Step replaces the rod array with a collision-checked dash.
+- **Uth Duna:** moving waves and aimed whirlpools control enemies. Water Veil
+  uses Tensura’s native physical and magic barriers and retaliates after health
+  damage. It adds no absorption hearts.
+- **Nu Udra:** Oil Lash draws solid animated tentacles that extend, curl and
+  recoil, including on a miss. Pull enemies onto owned pools, then ignite them.
+- **Jin Dahaad:** a completely rebuilt kit: aimed avalanche impacts, single-target
+  ice capture, a native barrier carapace, and Ymir’s telegraphed falling-ice siege.
 
-Damage grows with EP and mastery. Unique primaries take 3–4 seconds, secondary
-arts 7–8 seconds, and mantles 18–20 seconds. Ultimates triple base damage,
-strengthen each art, and add its fourth signature mode.
+**Charge, oil stacks, rime stacks and addon EP damage scaling are removed.**
+Mastery adds up to 50% damage; Ultimates retain their 3× base multiplier. Native
+Tensura combat rules and elemental modifiers still apply. EP progression gates
+remain in place.
+
+Passives are separate native skill toggles in Tensura’s **Ability Selection**,
+not the last active mode. They stay enabled while funded, charging 10/10/15/20
+aura per second for the four Unique lines (4× as an Ultimate). Turning a passive
+off immediately removes its attribute contributions. Uniques have two active
+modes; Ultimates add a third signature: Heaven’s Thunder, Crimson Ocean,
+Black Sun Caldera, or Heavenfall Glacier.
 
 Read the [Wild Hunt Wiki](wiki/README.md) for all eight skill pages, exact costs,
 combos, race infoboxes, commands and mechanics. An offline visual edition is
@@ -92,13 +97,12 @@ defined in Java.
 
 ### Updating from an earlier release
 
-Replace the old addon jar with 0.4.0; do not install both. Learned skills, mastery,
-and recorded distinct bosses are retained. Old ordinary-hunt totals and trial
-flags do not grant boss credit or gate skills. Login corrects oversized legacy
-cooldowns and cancels obsolete transient fields; rerolling is not required.
-
-Version 0.4.0 centers the existing portraits, separates every art’s combat loop,
-and uses Tensura’s native particles and animated elemental magic circles.
+Replace the old addon jar with 0.5.0; do not install both. Learned skills,
+mastery and distinct boss history are retained. Login removes obsolete stack
+resources and combat timers, replaces the old buff mode, migrates equipped
+modes and moves each Ultimate’s fourth mode/cooldown into its third active slot.
+The new passives initially start off for legacy characters. Rerolling is not
+required. Centered monster portraits remain unchanged.
 
 ## Build and test
 
@@ -116,21 +120,22 @@ ManasCore API modules are extracted into `build/` for compilation. The runtime
 helper downloads pinned GeckoLib, SmartBrainLib and TerraBlender releases and
 verifies published SHA-512 hashes. Dependency jars are not bundled in the addon.
 
-`./gradlew test` runs progression unit tests. `runGameTestServer` runs native
-registration, evolution/storage, casting/cooldown, ascension, boss deduplication,
-reincarnation rolling, death persistence, all eight primary attacks, combo damage,
-mantle cleanup, domain pulse timing, charge consumption, travelling waves, oil
-pool placement, projectile wards, expanding frostfronts and reactive mantles.
+`./gradlew test` checks progression, mastery-only damage multipliers and costs.
+`runGameTestServer` checks native registration/evolution, reincarnation rolls,
+boss history, ascension, all eight primary attacks and toggles, barrier attributes,
+legacy-save migration, ricochets, collision-safe dashes, travelling waves,
+oil pools, tentacle lifetime, native Frost capture, and dodgeable icefall marks.
 `./gradlew runClient` starts a development client on a machine with graphics.
 
-Install `build/libs/tensura-wild-hunt-0.4.0.jar` on **both client and server**,
+Install `build/libs/tensura-wild-hunt-0.5.0.jar` on **both client and server**,
 alongside Tensura and its required dependencies. The addon jar is not a complete
 modpack. Additional development dependency versions are in `runtime-mods.lock.json`.
 
 ## Scope and credits
 
 An early playable implementation with original 64×64 pixel-art monster portraits
-and distinct elemental effects built with Tensura’s native APIs. Custom monster mobs,
+and distinct elemental effects built with Tensura’s native APIs plus procedural
+tentacle and ice meshes. Custom monster mobs,
 equipment, animated 3D models, and a custom progression screen are not included.
 Client visuals and balance require in-game playtesting.
 

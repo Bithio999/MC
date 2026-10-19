@@ -8,68 +8,62 @@
 | --- | --- |
 | Category | Ultimate Skill |
 | Inspiration | Uth Duna |
-| Combat role | Position control / reactive defense |
-| Resource | Aura |
-| Modes | 4 |
+| Combat role | Moving tides / native barriers |
+| Active modes | 3 |
+| Toggleable passive | Water Veil |
+| Passive upkeep | 40 aura / second |
 | Registry ID | `wildhunt:varuna` |
 | Previous | [Scarlet Deluge](Scarlet-Deluge.md) |
 | Evolution | — |
 
 ## Overview
 
-An aquatic control art that physically moves opponents. Its primary is a travelling wave, its secondary is an aimed whirlpool, and its veil answers incoming attacks. Positioning matters more than lining up a laser.
+A water-control kit with a travelling wave, an aimed whirlpool, and a sustained defensive passive. Its defense uses Tensura’s physical and magic barriers instead of absorption hearts.
 
 ## Acquisition
 
-Evolve from [Scarlet Deluge](Scarlet-Deluge.md) as Sovereign Hunter with 2,000,000 base EP and mastery of that matching Unique skill. Use `/wildhunt ascend uth_duna`. The Ultimate replaces only its source Unique; mastery of the new Ultimate starts separately.
+Evolve [Scarlet Deluge](Scarlet-Deluge.md) as Sovereign Hunter with 2,000,000 base EP and mastery of that Unique. Use `/wildhunt ascend uth_duna`. It replaces only the matching Unique; the Ultimate starts with its own mastery.
 
-## Modes
+## Active modes
 
-| Mode | Aura | Cooldown | Raw damage |
-| --- | ---: | ---: | --- |
+| Mode | Aura | Cooldown | Raw opening damage |
+| --- | ---: | ---: | ---: |
 | 1. Crushing Current | 640 | 2 s | 195 |
-| 2. Scarlet Undertow | 2,000 | 6 s | 135 initial / 54 pulse |
-| 3. Water Veil | 1,000 | 17 s | 75 retaliation |
-| 4. Crimson Ocean | 6,000 | 60 s | Signature-specific; see below |
+| 2. Scarlet Undertow | 2,000 | 6 s | 135 |
+| 3. Crimson Ocean | 6,000 | 60 s | See signature below |
 
-Raw damage in this table already includes the Ultimate’s 3× base multiplier where applicable. EP, mastery, elemental boosts, defenses and combo modifiers apply separately. [Damage formula](Mechanics.md#damage-and-mastery).
+Raw values already include the Ultimate’s 3× multiplier where applicable. Mastery adds up to 50%. **Wild Hunt applies no EP damage scaling.** Native elemental boosts, defenses, rank interactions and the listed situational modifiers still apply. EP requirements for race evolution and Ultimate ascension are unchanged.
 
 ### Crushing Current
 
-Sends a broad wave along the ground toward your facing direction. The front travels up to 26 blocks over about 0.8 seconds, carrying and drenching each enemy it hits. One wave cannot damage the same entity twice. A previously drenched victim takes 50% more primary damage.
+Send a broad wave up to 26 blocks over about sixteen game ticks. It carries and drenches each enemy it reaches, damaging a given entity at most once per wave. Its front is 5 blocks wide on either side. Previously drenched enemies take 50% extra primary damage. Drenched is a single twelve-second mark, never a stack counter.
 
 ### Scarlet Undertow
 
-Places a six-second whirlpool at your aim point, up to six blocks away. The radius is 13 blocks. It hits immediately, then pulses once per second, and applies gentle inward current between damage pulses. Pulls respect knockback resistance.
-
-### Water Veil
-
-For 30 seconds, gain 25 armor, a 40-point magic barrier, 32 absorption HP, water breathing and 100% water boost. A resolved hostile hit that removes health triggers a retaliatory water strike against a visible attacker within twelve blocks. Counter cooldown: 1 seconds.
+Place a six-second whirlpool at the aim point, up to six blocks away. The radius is 13 blocks. It hits immediately and once per second, with a gentle inward current between pulses. Raw pulse damage is 54; the table lists opening damage.
 
 ### Crimson Ocean
 
-For ten seconds, alternate inward and outward surges within fourteen blocks. Incoming tide gathers enemies; outgoing tide pushes them away and slightly upward. The sequence follows the caster instead of remaining at the original whirlpool position.
+For ten seconds, alternate inward and outward tides within fourteen blocks around the caster. Incoming tides gather; outgoing tides push away and slightly upward. Raw damage is 135 on the opening pulse and 81 on later pulses, before mastery and native modifiers.
+
+## Toggleable passive: Water Veil
+
+While toggled on, gain 25 armor, 40 physical barrier, 40 magic barrier and 100% water boost. These native attributes participate in Tensura’s damage handling and visible barrier layer. Water breathing remains active while toggled on. No absorption hearts are added. A hostile hit that removes health triggers a 25-raw water counter (75 as Varuna) against a visible attacker within twelve blocks, with a 1-second cooldown.
+
+Enable or disable this through Tensura’s native **Ability Selection** skill toggle. It is separate from active mode cycling and has no fifteen/thirty-second duration. Upkeep is **40 aura per second**, with the first second paid on enabling. It turns off when aura is insufficient or activation requirements fail. Turning it off removes its own attribute modifiers immediately.
 
 ## Suggested combo
 
-Aim Scarlet Undertow behind or between enemies → use the current to gather them → send Crushing Current through the drenched group. Use Water Veil when expecting a counterattack.
+Place Scarlet Undertow to gather enemies → send Crushing Current through the drenched group. Toggle Water Veil when you need sustained defense.
 
 ## Strengths and limitations
 
-A wave is a moving front, so distant targets are not hit immediately. Knockback resistance reduces carrying and currents. Environmental damage has no attacker to retaliate against. A veil counter requires health damage and a visible attacker.
-
-## Evolution notes
-
-A 26-block wave, thirteen-block whirlpool, a 30-second stronger veil, one-second retaliation cooldown, and a fourth mode that alternates the tide.
-
-## Visual effects
-
-Native water bubbles and blue shockwaves form a moving wavefront and a rotating whirlpool. Water magic circles mark the field; the veil uses orbiting bubbles instead of a recolored fire aura.
+The veil must remain funded. Native barriers follow Tensura’s rules and do not guarantee immunity to stronger attacks. Its retaliation requires health damage, a hostile living attacker and line of sight. Knockback resistance reduces tides and wave carrying.
 
 ## Related pages
 
-[Skills](Skills.md) · [Human evolution](Evolution.md) · [Combat mechanics](Mechanics.md) · [Commands](Commands.md)
+[Skills](Skills.md) · [Mechanics](Mechanics.md) · [Evolution](Evolution.md) · [Commands](Commands.md)
 
 ---
 
-**Categories:** Tensura: Wild Hunt · Version 0.4.0
+**Categories:** Tensura: Wild Hunt · Version 0.5.0

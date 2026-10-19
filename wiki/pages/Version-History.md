@@ -2,6 +2,16 @@
 
 [Main Page](../README.md) · [Skills](Skills.md) · [Evolution](Evolution.md) · [Mechanics](Mechanics.md) · [Commands](Commands.md)
 
+## 0.5.0 — Direct combat and toggleable passives
+
+- Removed Storm charge, oil stacks, rime stacks and EP damage scaling.
+- Made Railbolt ricochet sequentially; replaced Fulgurite Array with collision-checked Thunder Step.
+- Removed the last buff mode from all eight skills; added native toggleable passives with ongoing aura upkeep.
+- Replaced absorption hearts with native physical and magic barriers.
+- Added rendered tentacles for Oil Lash and faceted ice geometry.
+- Replaced Jin Dahaad’s fissure/rime/ward/frostfront kit with Avalanche Crash, Glacial Prison, Colossus Carapace and Ymir’s telegraphed Heavenfall Glacier.
+- Preserved race gates, reincarnation rolls, learned skills, mastery, boss history and the centered portraits.
+
 ## 0.4.0 — Distinct arts and wiki
 
 - Centered all eight existing portraits with consistent transparent padding.
@@ -24,4 +34,4 @@ Added the human hunter branch and the eight skill registrations. Its ordinary-hu
 
 ---
 
-**Categories:** Tensura: Wild Hunt · Version 0.4.0
+**Categories:** Tensura: Wild Hunt · Version 0.5.0

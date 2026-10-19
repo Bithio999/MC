@@ -8,63 +8,57 @@
 | --- | --- |
 | Category | Unique Skill |
 | Inspiration | Uth Duna |
-| Combat role | Position control / reactive defense |
-| Resource | Aura |
-| Modes | 3 |
+| Combat role | Moving tides / native barriers |
+| Active modes | 2 |
+| Toggleable passive | Water Veil |
+| Passive upkeep | 10 aura / second |
 | Registry ID | `wildhunt:scarlet_deluge` |
 | Previous | — |
 | Evolution | [Varuna, Lord of Tides](Varuna.md) |
 
 ## Overview
 
-An aquatic control art that physically moves opponents. Its primary is a travelling wave, its secondary is an aimed whirlpool, and its veil answers incoming attacks. Positioning matters more than lining up a laser.
+A water-control kit with a travelling wave, an aimed whirlpool, and a sustained defensive passive. Its defense uses Tensura’s physical and magic barriers instead of absorption hearts.
 
 ## Acquisition
 
-Roll this skill through Tensura’s normal reincarnation system. It is added to the configured primary pool; it is not guaranteed and has no race requirement to roll. There are no skill trials. Starting skill count, additional rolls and truly-unique restrictions come from the server’s Tensura settings.
+Roll through Tensura’s normal reincarnation system. These Uniques join the configured primary pool; no particular roll is guaranteed. There are no skill trials, boss-awarded skills or race requirements to roll.
 
-## Modes
+## Active modes
 
-| Mode | Aura | Cooldown | Raw damage |
-| --- | ---: | ---: | --- |
+| Mode | Aura | Cooldown | Raw opening damage |
+| --- | ---: | ---: | ---: |
 | 1. Crushing Current | 160 | 3 s | 65 |
-| 2. Scarlet Undertow | 500 | 7 s | 45 initial / 18 pulse |
-| 3. Water Veil | 250 | 18 s | 25 retaliation |
+| 2. Scarlet Undertow | 500 | 7 s | 45 |
 
-Raw damage in this table already includes the Ultimate’s 3× base multiplier where applicable. EP, mastery, elemental boosts, defenses and combo modifiers apply separately. [Damage formula](Mechanics.md#damage-and-mastery).
+Raw values already include the Ultimate’s 3× multiplier where applicable. Mastery adds up to 50%. **Wild Hunt applies no EP damage scaling.** Native elemental boosts, defenses, rank interactions and the listed situational modifiers still apply. EP requirements for race evolution and Ultimate ascension are unchanged.
 
 ### Crushing Current
 
-Sends a broad wave along the ground toward your facing direction. The front travels up to 18 blocks over about 0.8 seconds, carrying and drenching each enemy it hits. One wave cannot damage the same entity twice. A previously drenched victim takes 50% more primary damage.
+Send a broad wave up to 18 blocks over about sixteen game ticks. It carries and drenches each enemy it reaches, damaging a given entity at most once per wave. Its front is 4 blocks wide on either side. Previously drenched enemies take 50% extra primary damage. Drenched is a single twelve-second mark, never a stack counter.
 
 ### Scarlet Undertow
 
-Places a six-second whirlpool at your aim point, up to six blocks away. The radius is 9 blocks. It hits immediately, then pulses once per second, and applies gentle inward current between damage pulses. Pulls respect knockback resistance.
+Place a six-second whirlpool at the aim point, up to six blocks away. The radius is 9 blocks. It hits immediately and once per second, with a gentle inward current between pulses. Raw pulse damage is 18; the table lists opening damage.
 
-### Water Veil
+## Toggleable passive: Water Veil
 
-For 15 seconds, gain 10 armor, a 20-point magic barrier, 16 absorption HP, water breathing and 50% water boost. A resolved hostile hit that removes health triggers a retaliatory water strike against a visible attacker within twelve blocks. Counter cooldown: 3 seconds.
+While toggled on, gain 10 armor, 20 physical barrier, 20 magic barrier and 50% water boost. These native attributes participate in Tensura’s damage handling and visible barrier layer. Water breathing remains active while toggled on. No absorption hearts are added. A hostile hit that removes health triggers a 25-raw water counter (75 as Varuna) against a visible attacker within twelve blocks, with a 3-second cooldown.
+
+Enable or disable this through Tensura’s native **Ability Selection** skill toggle. It is separate from active mode cycling and has no fifteen/thirty-second duration. Upkeep is **10 aura per second**, with the first second paid on enabling. It turns off when aura is insufficient or activation requirements fail. Turning it off removes its own attribute modifiers immediately.
 
 ## Suggested combo
 
-Aim Scarlet Undertow behind or between enemies → use the current to gather them → send Crushing Current through the drenched group. Use Water Veil when expecting a counterattack.
+Place Scarlet Undertow to gather enemies → send Crushing Current through the drenched group. Toggle Water Veil when you need sustained defense.
 
 ## Strengths and limitations
 
-A wave is a moving front, so distant targets are not hit immediately. Knockback resistance reduces carrying and currents. Environmental damage has no attacker to retaliate against. A veil counter requires health damage and a visible attacker.
-
-## Evolution notes
-
-An 18-block wave, nine-block whirlpool, and 15-second veil with a three-second retaliation cooldown. A 26-block wave, thirteen-block whirlpool, a 30-second stronger veil, one-second retaliation cooldown, and a fourth mode that alternates the tide.
-
-## Visual effects
-
-Native water bubbles and blue shockwaves form a moving wavefront and a rotating whirlpool. Water magic circles mark the field; the veil uses orbiting bubbles instead of a recolored fire aura.
+The veil must remain funded. Native barriers follow Tensura’s rules and do not guarantee immunity to stronger attacks. Its retaliation requires health damage, a hostile living attacker and line of sight. Knockback resistance reduces tides and wave carrying.
 
 ## Related pages
 
-[Skills](Skills.md) · [Human evolution](Evolution.md) · [Combat mechanics](Mechanics.md) · [Commands](Commands.md)
+[Skills](Skills.md) · [Mechanics](Mechanics.md) · [Evolution](Evolution.md) · [Commands](Commands.md)
 
 ---
 
-**Categories:** Tensura: Wild Hunt · Version 0.4.0
+**Categories:** Tensura: Wild Hunt · Version 0.5.0

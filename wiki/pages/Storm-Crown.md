@@ -8,63 +8,57 @@
 | --- | --- |
 | Category | Unique Skill |
 | Inspiration | Rey Dau |
-| Combat role | Precision / charge management |
-| Resource | Aura |
-| Modes | 3 |
+| Combat role | Ricochet lightning / mobility |
+| Active modes | 2 |
+| Toggleable passive | Storm Mantle |
+| Passive upkeep | 10 aura / second |
 | Registry ID | `wildhunt:storm_crown` |
 | Previous | — |
 | Evolution | [Raijin, Lord of Thunder](Raijin.md) |
 
 ## Overview
 
-A precision lightning art built around a three-charge battery. Its array chooses individual targets; it does not blanket an area with damage. Store charge, line up a shot, and spend the battery on a piercing railgun discharge.
+A direct lightning kit with sequential ricochets and a collision-checked dash. There is no charge battery, rod array, or stack preparation.
 
 ## Acquisition
 
-Roll this skill through Tensura’s normal reincarnation system. It is added to the configured primary pool; it is not guaranteed and has no race requirement to roll. There are no skill trials. Starting skill count, additional rolls and truly-unique restrictions come from the server’s Tensura settings.
+Roll through Tensura’s normal reincarnation system. These Uniques join the configured primary pool; no particular roll is guaranteed. There are no skill trials, boss-awarded skills or race requirements to roll.
 
-## Modes
+## Active modes
 
-| Mode | Aura | Cooldown | Raw damage |
-| --- | ---: | ---: | --- |
+| Mode | Aura | Cooldown | Raw opening damage |
+| --- | ---: | ---: | ---: |
 | 1. Railbolt | 200 | 4 s | 90 |
-| 2. Fulgurite Array | 600 | 8 s | 60 initial / 20 pulse |
-| 3. Storm Mantle | 300 | 20 s | — |
+| 2. Thunder Step | 600 | 8 s | 80 |
 
-Raw damage in this table already includes the Ultimate’s 3× base multiplier where applicable. EP, mastery, elemental boosts, defenses and combo modifiers apply separately. [Damage formula](Mechanics.md#damage-and-mastery).
+Raw values already include the Ultimate’s 3× multiplier where applicable. Mastery adds up to 50%. **Wild Hunt applies no EP damage scaling.** Native elemental boosts, defenses, rank interactions and the listed situational modifiers still apply. EP requirements for race evolution and Ultimate ascension are unchanged.
 
 ### Railbolt
 
-An instant, block-clipped railgun reaches 36 blocks and pierces 2 direct targets. It consumes all stored charge for +25% direct-hit damage per charge, up to +75%. Chains deal 55% of the uncharged primary base damage and reach six blocks from the direct target. Each charge adds one possible chain target. Wet or drenched targets take 30% more lightning damage.
+Aim the first hit along a block-clipped ray up to 36 blocks. The bolt then ricochets from its latest victim to the nearest eligible, visible enemy within eight blocks. It can hit up to 4 different targets, including the initial victim, and never revisits one. Each hop retains 90% of the preceding hop’s raw damage. Every hop checks both caster-to-target and victim-to-victim line of sight. Wet or drenched enemies take 30% extra lightning damage.
 
-### Fulgurite Array
+### Thunder Step
 
-Creates three fulgurite rods in a line centered five blocks ahead, spaced four blocks apart. Each rod chooses one visible enemy within six blocks, with no duplicate victim within a pulse. Initial hits use the secondary raw damage; later hits use the pulse raw damage once per second for six seconds. Every successful rod hit restores one charge, capped at three.
+Dash horizontally up to 8 blocks in your facing direction and shock enemies within 2.5 blocks of the travelled segment. The path sweeps the caster’s whole bounding box in half-block increments; walls, low ceilings, collisions and the world border stop it. It replaces Fulgurite Array completely and creates no persistent rods or charge.
 
-### Storm Mantle
+## Toggleable passive: Storm Mantle
 
-For 15 seconds, gain 35% movement, 25% attack speed, 6 armor and 50% lightning boost. Moving at least three and at most sixteen blocks between one-second samples restores a charge. Teleport-sized jumps do not recharge it.
+While toggled on, gain 6 armor, 35% movement, 25% attack speed and 50% lightning boost. Movement generates no resource.
+
+Enable or disable this through Tensura’s native **Ability Selection** skill toggle. It is separate from active mode cycling and has no fifteen/thirty-second duration. Upkeep is **10 aura per second**, with the first second paid on enabling. It turns off when aura is insufficient or activation requirements fail. Turning it off removes its own attribute modifiers immediately.
 
 ## Suggested combo
 
-Place the Fulgurite Array where enemies will cross it → let hits charge the battery → align several enemies → fire Railbolt. Storm Mantle helps reposition and replenish charge between shots.
+Use Thunder Step to find a clear angle → aim Railbolt at one edge of a group → let its successive hops reach enemies beyond the initial victim’s bounce radius.
 
 ## Strengths and limitations
 
-Railbolt spends charge even if the shot misses. Rods need valid visible targets to recharge. Charges are not an extra skill tier; the maximum remains three. Both source and victim line-of-sight checks restrict chains.
-
-## Evolution notes
-
-Two direct targets and up to three base chain targets; a 15-second mobile mantle. Four direct targets, five base chain targets, a 56-block railgun, and a 30-second mantle. Its fourth mode supplies targeted storm judgments and charge recovery.
-
-## Visual effects
-
-Native Tensura lightning particles and animated Lightning magic circles mark the railgun, fulgurite rods and selected storm victims. No destructive vanilla lightning entity is spawned.
+A missed initial ray cannot start a ricochet. Bounces cannot pass through walls or revisit an enemy. The dash follows a horizontal clear path and can carry you off a ledge; it is not flight.
 
 ## Related pages
 
-[Skills](Skills.md) · [Human evolution](Evolution.md) · [Combat mechanics](Mechanics.md) · [Commands](Commands.md)
+[Skills](Skills.md) · [Mechanics](Mechanics.md) · [Evolution](Evolution.md) · [Commands](Commands.md)
 
 ---
 
-**Categories:** Tensura: Wild Hunt · Version 0.4.0
+**Categories:** Tensura: Wild Hunt · Version 0.5.0

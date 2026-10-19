@@ -30,13 +30,15 @@ public final class WildHunt {
         }
     }
     public WildHunt() {
-        RACES.register(); SKILLS.register();
+        RACES.register(); SKILLS.register(); ArtVisualEntity.register();
         NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.LOWEST, HunterEvents::onKill);
         NeoForge.EVENT_BUS.addListener(HunterEvents::onClone);
         NeoForge.EVENT_BUS.addListener(HunterCommands::register);
         NeoForge.EVENT_BUS.addListener(ApexTimers::onEntityTick);
         NeoForge.EVENT_BUS.addListener(ApexTimers::onLogin);
         NeoForge.EVENT_BUS.addListener(ApexArts::onDamage);
+        NeoForge.EVENT_BUS.addListener(ApexArts::onBreathe);
+        NeoForge.EVENT_BUS.addListener(ApexArts::onIncomingDamage);
     }
     public static ResourceLocation id(String path) { return ResourceLocation.fromNamespaceAndPath(ID, path); }
 }

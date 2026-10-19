@@ -4,45 +4,57 @@
 
 ## Damage and mastery
 
-Raw damage is multiplied by:
+Wild Hunt’s damage multiplier is:
 
 ```text
-(1 + sqrt(clamp(baseEP / 2,000,000, 0, 1)))
-× (1 + 0.5 × clamp(masteryFraction, 0, 1))
-× (Ultimate ? 3 : 1)
+(1 + 0.5 × clamp(masteryFraction, 0, 1)) × (Ultimate ? 3 : 1)
 ```
 
-Skill pages include the Ultimate’s 3× base multiplier in their displayed raw values. Do not multiply it twice. Progression caps at 3× the unprogressed Unique base or 9× that same base for a mastered Ultimate. Tensura applies its elemental boosts, rank interactions, resistances and barriers afterward. Raw damage is not guaranteed damage removed from a boss.
+**No EP term is present.** Mastery caps at 1.5× the Unique’s raw base, or 4.5× that same base for a mastered Ultimate. Skill-page tables already include the Ultimate’s 3× multiplier. Native Tensura elemental boosts, global combat rules, rank interactions, barriers and resistances still apply; raw values do not promise the same health damage against every enemy.
 
-## Art resources
+EP remains a requirement for race evolution and Ultimate ascension. Those progression gates do not increase these attacks’ raw damage.
 
-| Resource | Created by | Spent by | Limit |
-| --- | --- | --- | --- |
-| Storm charge | Fulgurite rod hits; movement during Storm Mantle; successful Heaven’s Thunder hits | Railbolt | 3 |
-| Drenched | Water wave, whirlpool and tide hits | Persists as a timed mark; boosts water and lightning interactions | 12 seconds |
-| Owned oil stacks | Oil Lash; ordinary melee during Furnace Mantle | Your initial pool ignition | 3; 15 seconds |
-| Oil pools | Oil Lash; fallback ignition; Black Sun Caldera | Ignition turns pools into burning ground | 3 Unique / 5 Ultimate |
-| Owned rime | Fissure and rampart hits; Absolute Winter | Your Glacial Rupture at 3 stacks | 3; 10 seconds |
-| Ward budget | Glacial Rampart | Intercepted hostile projectiles | 3 Unique / 6 Ultimate |
+## No passive stacks
+
+Storm charge, owned oil stacks and owned rime stacks are removed. No attack builds, consumes or amplifies damage from them. Old marks are ignored and removed as entities tick. There is no shatter threshold or melee coating.
+
+Oil pools remain finite **world locations**, not passive stacks on a character. Drenched remains one timed water mark: it has no counter or buildup and supports the documented water/lightning interactions.
+
+## Toggleable passives
+
+Each skill has two active modes (three for an Ultimate) plus a separate native skill toggle in Tensura’s Ability Selection. The old final buff modes are removed from mode cycling.
+
+| Line | Passive | Unique aura / second | Ultimate aura / second |
+| --- | --- | ---: | ---: |
+| Rey Dau | Storm Mantle | 10 | 40 |
+| Uth Duna | Water Veil | 10 | 40 |
+| Nu Udra | Furnace Mantle | 15 | 60 |
+| Jin Dahaad | Colossus Carapace | 20 | 80 |
+
+The first second is paid when enabling; upkeep is charged once every twenty game ticks while active. Passives stay on until disabled, unfunded or blocked by activation requirements. They do not expire after fifteen or thirty seconds. Attribute contributions use stable IDs, so refreshes cannot accumulate duplicate bonuses. Turning off or forgetting the skill removes its modifiers. Saved native toggle state is restored on login.
+
+## Native barriers
+
+Water Veil and Colossus Carapace contribute to Tensura’s `PHYSICAL_BARRIER` and `MAGIC_BARRIER` attributes. Tensura handles their interaction with damage and renders its native barrier layer around the character. Wild Hunt adds no absorption hearts and does not implement a parallel shield-health pool. Other skills’ barrier contributions remain separate.
+
+Water Veil retains water breathing and an attacker-targeted retaliation after actual health damage. Furnace Mantle retains fire protection while enabled; both utility effects stop immediately on toggle-off without leftover timed potions. Furnace Mantle no longer oils melee victims. The old frost ward’s projectile deletion and interception budget are removed.
 
 ## Aiming and movement
 
-Railbolt is immediate and block-clipped. Water waves and ice fissures travel over about sixteen game ticks. Oil Lash selects a limited number of enemies in a facing cone. Fields stay anchored except the mobile tide and targeted storm. Dimension changes invalidate anchored effects; they do not teleport fields into a new world.
+Railbolt begins with a block-clipped aimed hit, then ricochets from the latest victim. Thunder Step sweeps the whole caster bounding box and stops at collisions. Water waves sweep continuous segments so targets cannot hide between movement updates. Oil Lash selects a limited forward fan and creates synced tentacle geometry. Avalanche Crash is an aimed area impact; Glacial Prison targets one enemy. Heavenfall Glacier warns fixed positions for half a second before impact.
 
-Forced movement respects knockback resistance. Friendly teams, owned pets, creative/spectator players, disabled player-vs-player combat and line of sight are checked. Strong bosses may resist elemental/status effects or movement.
+Attacks respect teams, owned pets, creative/spectator immunity, PvP settings and line of sight. Movement respects knockback resistance. Dimension changes invalidate anchored effects. Native status resistance and skill ranks can prevent Frost or Chill. No art destroys terrain or places permanent ice.
 
-## Defense and reactions
+## Visual effects
 
-Water Veil has an attacker-targeted counter after health damage, with its own cooldown. Furnace Mantle oils ordinary melee victims. Storm Mantle trades movement for charge. Colossus Guard adds defensive attributes while Glacial Rampart spends a finite projectile budget. These are separate mechanics, not one renamed shield.
+Oil Lash uses a synced procedural mesh with a dark tapered body, glowing orange bands, extension and recoil, including on a miss. Ice spires, prison bars and falling ice use rendered faceted crystals. Those visual entities deal no damage by themselves, have no collision and expire automatically; server skill logic owns targeting and damage.
 
-## Native effects
+Tensura supplies elemental particles, shockwaves, native barrier rendering and animated magic circles. Its assets are used at runtime and are not copied into the addon.
 
-Tensura supplies the registered lightning particles, water bubbles, shockwaves, Black Fire, snowflake effects and animated elemental magic circles. Wild Hunt calls those APIs at runtime. It does not redistribute Tensura’s effect textures or create destructive vanilla lightning.
+## Updating saved characters
 
-## Timers and persistence
-
-Cooldown values are seconds. Travelling fronts, pools and short fields use a server tick handler; damage windows remain subject to normal invulnerability rules. Mantle attributes expire or are removed when forgetting their skill. Logged-in upgrades cap the old oversized cooldowns and cancel obsolete transient field timers while preserving rolled skills, mastery and boss history.
+Version 0.5.0 keeps learned skills, mastery and distinct boss history. It removes old transient combat timers and resources, drops the old buff mode, and moves the former fourth Ultimate mode into the third active slot while preserving/capping its cooldown. Equipped presets migrate with the mode list. Legacy toggle passives start off; no skill reroll is needed. A matching still-active legacy Water Veil absorption effect is cleared during migration.
 
 ---
 
-**Categories:** Tensura: Wild Hunt · Version 0.4.0
+**Categories:** Tensura: Wild Hunt · Version 0.5.0

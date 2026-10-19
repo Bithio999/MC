@@ -14,9 +14,9 @@ All commands affect the issuing player. No operator permission is required, and 
 | `/wildhunt ascend nu_udra` | Evolve mastered Black Flame into Agni |
 | `/wildhunt ascend jin_dahaad` | Evolve mastered Frostbound Colossus into Ymir |
 
-## Status resources
+## Passive status
 
-Storm lines report charge out of three. Water reports whether its veil is active. Fire reports the owned-pool count and limit. Ice reports remaining ward interceptions. These are informational and do not grant resources.
+Each learned art reports its passive name, ON/OFF state and aura upkeep per second. Use the native skill toggle in Tensura’s Ability Selection to change that state. Status does not grant resources or change a toggle.
 
 ## Ascension requirements
 
@@ -24,4 +24,4 @@ Be Sovereign Hunter, retain at least two million base EP, own the matching Uniqu
 
 ---
 
-**Categories:** Tensura: Wild Hunt · Version 0.4.0
+**Categories:** Tensura: Wild Hunt · Version 0.5.0

@@ -2,21 +2,18 @@ package dev.wildhunt;
 
 import io.github.manasmods.manascore.skill.api.ManasSkillInstance;
 import io.github.manasmods.manascore.skill.api.SkillAPI;
-import io.github.manasmods.tensura.entity.TensuraProjectile;
-import io.github.manasmods.tensura.entity.magic.MagicCircle;
-import io.github.manasmods.tensura.ability.skill.Skill;
+import io.github.manasmods.tensura.registry.effect.TensuraMobEffects;
 import net.minecraft.nbt.*;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import java.util.*;
 
-/** The four arts have different targeting, resources, movement and field behavior. */
+/** Distinct, stack-free targeting and short-lived world effects. */
 public final class ApexArts {
     private ApexArts() {}
     static Vec3 forward(LivingEntity e) {
@@ -39,61 +36,95 @@ public final class ApexArts {
         list.sort(Comparator.comparingDouble(e -> e.position().distanceToSqr(center)));
         return list;
     }
+    static LivingEntity target(ServerLevel level, LivingEntity caster, double range) {
+        Vec3 from = caster.getEyePosition(), to = from.add(caster.getLookAngle().scale(range));
+        Vec3 end = level.clip(new ClipContext(from, to, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, caster)).getLocation();
+        return level.getEntitiesOfClass(LivingEntity.class, new AABB(from, end).inflate(1),
+                e -> HunterData.canHarm(caster, e) && caster.hasLineOfSight(e)
+                    && e.getBoundingBox().inflate(0.6).clip(from, end).isPresent())
+            .stream().min(Comparator.comparingDouble(e -> e.getBoundingBox().inflate(0.6).clip(from, end).orElse(end).distanceToSqr(from))).orElse(null);
+    }
     static void push(LivingEntity target, Vec3 vector) {
         double resistance = Math.clamp(target.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE), 0, 1);
-        target.push(vector.x * (1 - resistance), vector.y * (1 - resistance), vector.z * (1 - resistance));
-        target.hurtMarked = true;
-    }
-    static void charge(ManasSkillInstance instance, int amount) {
-        var tag = instance.getOrCreateTag(); tag.putInt("storm_charge", Math.min(3, tag.getInt("storm_charge") + amount));
-        instance.markDirty();
+        target.push(vector.x * (1 - resistance), vector.y * (1 - resistance), vector.z * (1 - resistance)); target.hurtMarked = true;
     }
     public static void primary(ApexSkill skill, ServerLevel level, ManasSkillInstance instance, LivingEntity caster) {
         var tag = instance.getOrCreateTag(); long now = level.getGameTime();
         switch (skill.apex) {
-            case REY_DAU -> {
-                int charge = tag.getInt("storm_charge"); tag.putInt("storm_charge", 0);
-                skill.railgun(level, instance, caster, 1 + charge * 0.25f, charge);
-            }
-            case UTH_DUNA, JIN_DAHAAD -> {
-                Vec3 direction = forward(caster);
+            case REY_DAU -> ricochet(skill, level, instance, caster);
+            case UTH_DUNA -> {
+                Vec3 direction = forward(caster), eye = caster.getEyePosition();
                 point(tag, "travel_origin", caster.position()); point(tag, "travel_forward", direction);
-                double reach = skill.apex == Apex.UTH_DUNA ? (skill.ultimate ? 26 : 18) : (skill.ultimate ? 56 : 36);
-                Vec3 eye = caster.getEyePosition();
+                double reach = skill.ultimate ? 26 : 18;
                 Vec3 end = level.clip(new ClipContext(eye, eye.add(direction.scale(reach)), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, caster)).getLocation();
                 tag.putDouble("travel_reach", Math.min(reach, eye.distanceTo(end)));
-                tag.putString("travel_dimension", level.dimension().location().toString());
-                tag.putLong("travel_until", now + 16); tag.putInt("travel_step", 0);
-                tag.put("travel_hits", new ListTag());
-                advance(skill, level, instance, caster);
+                tag.putString("travel_dimension", dimension(level)); tag.putLong("travel_until", now + 16); tag.putInt("travel_step", 0);
+                tag.put("travel_hits", new ListTag()); advance(skill, level, instance, caster);
             }
             case NU_UDRA -> {
-                Vec3 origin = caster.getEyePosition(); int hits = 0; Vec3 puddle = aim(level, caster, 10);
-                for (var target : enemies(level, caster, caster.position(), skill.ultimate ? 22 : 14)) {
-                    if (target.getEyePosition().subtract(origin).normalize().dot(caster.getLookAngle()) < 0.55) continue;
-                    if (skill.strike(level, instance, caster, target, skill.balance.primary(), 0, false)) {
-                        ApexVisuals.beam(level, skill.apex, caster.position().add(0, 0.6, 0), target.getEyePosition(), skill.ultimate);
-                        push(target, caster.position().subtract(target.position()).normalize().scale(0.65));
-                        puddle = target.position();
-                        if (++hits >= (skill.ultimate ? 6 : 4)) break;
+                Vec3 origin = caster.position().add(0, 0.7, 0), puddle = aim(level, caster, 10); int hits = 0;
+                for (var enemy : enemies(level, caster, caster.position(), skill.ultimate ? 22 : 14)) {
+                    if (enemy.getEyePosition().subtract(caster.getEyePosition()).normalize().dot(caster.getLookAngle()) < 0.55) continue;
+                    ApexVisuals.lash(level, origin, enemy.getEyePosition());
+                    if (skill.strike(level, instance, caster, enemy, skill.balance.primary(), 0, false)) {
+                        push(enemy, caster.position().subtract(enemy.position()).normalize().scale(0.65)); puddle = enemy.position();
                     }
+                    if (++hits >= (skill.ultimate ? 6 : 4)) break;
                 }
+                if (hits == 0) ApexVisuals.lash(level, origin, puddle.add(0, 0.8, 0));
                 addPool(skill, level, instance, caster, puddle, false, 300);
+            }
+            case JIN_DAHAAD -> {
+                var victim = target(level, caster, skill.ultimate ? 24 : 16);
+                Vec3 center = victim == null ? aim(level, caster, skill.ultimate ? 24 : 16) : victim.position();
+                ApexVisuals.iceBurst(level, caster, center, skill.ultimate ? 6 : 4);
+                for (var enemy : enemies(level, caster, center, skill.ultimate ? 6 : 4)) {
+                    if (skill.strike(level, instance, caster, enemy, skill.balance.primary(), 0, false))
+                        push(enemy, enemy.position().subtract(center).multiply(1, 0, 1).normalize().scale(0.5).add(0, skill.ultimate ? 1.2 : 0.8, 0));
+                }
             }
         }
     }
+    static void ricochet(ApexSkill skill, ServerLevel level, ManasSkillInstance instance, LivingEntity caster) {
+        LivingEntity current = target(level, caster, skill.ultimate ? 56 : 36);
+        Vec3 from = caster.getEyePosition(); Set<UUID> visited = new HashSet<>();
+        if (current == null) {
+            Vec3 to = level.clip(new ClipContext(from, from.add(caster.getLookAngle().scale(skill.ultimate ? 56 : 36)), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, caster)).getLocation();
+            ApexVisuals.beam(level, skill.apex, from, to, skill.ultimate); return;
+        }
+        for (int bounce = 0; current != null && bounce < (skill.ultimate ? 6 : 4); bounce++) {
+            visited.add(current.getUUID()); ApexVisuals.beam(level, skill.apex, from, current.getEyePosition(), skill.ultimate);
+            skill.strike(level, instance, caster, current, skill.balance.primary() * (float)Math.pow(0.9, bounce), 0, false);
+            LivingEntity previous = current; from = current.getEyePosition();
+            current = enemies(level, caster, previous.position(), 8).stream()
+                .filter(e -> !visited.contains(e.getUUID()) && previous.hasLineOfSight(e)).findFirst().orElse(null);
+        }
+    }
+    static void thunderStep(ApexSkill skill, ServerLevel level, ManasSkillInstance instance, LivingEntity caster) {
+        Vec3 start = caster.position(), direction = forward(caster), end = start;
+        // Sweep the body, not just the eyes: never dash through walls or low ceilings.
+        for (double d = 0.5; d <= (skill.ultimate ? 12 : 8); d += 0.5) {
+            Vec3 delta = direction.scale(d); AABB box = caster.getBoundingBox().move(delta);
+            if (!level.getWorldBorder().isWithinBounds(box) || !level.noCollision(caster, box)) break;
+            end = start.add(delta);
+        }
+        Vec3 segment = end.subtract(start); double length = segment.lengthSqr();
+        for (var enemy : enemies(level, caster, start.add(end).scale(0.5), Math.sqrt(length) / 2 + 3)) {
+            double t = length < 0.01 ? 0 : Math.clamp(enemy.position().subtract(start).dot(segment) / length, 0, 1);
+            if (enemy.position().distanceToSqr(start.add(segment.scale(t))) <= 2.5 * 2.5)
+                skill.strike(level, instance, caster, enemy, skill.balance.burst(), 1, false);
+        }
+        caster.teleportTo(end.x, end.y, end.z); caster.fallDistance = 0;
+        ApexVisuals.beam(level, skill.apex, start.add(0, 0.8, 0), end.add(0, 0.8, 0), skill.ultimate);
+        ApexVisuals.impact(level, skill.apex, end.add(0, 1, 0), skill.ultimate);
+    }
     public static void secondary(ApexSkill skill, ServerLevel level, ManasSkillInstance instance, LivingEntity caster) {
         var tag = instance.getOrCreateTag(); long now = level.getGameTime();
-        tag.putLong("field_until", now + 120); tag.putLong("field_next", now + 20);
-        tag.putString("field_dimension", level.dimension().location().toString());
-        Vec3 center;
         switch (skill.apex) {
-            case REY_DAU -> {
-                center = caster.position().add(forward(caster).scale(5)); point(tag, "field", center);
-                rods(skill, level, instance, caster, skill.balance.burst());
-            }
+            case REY_DAU -> thunderStep(skill, level, instance, caster);
             case UTH_DUNA -> {
-                center = aim(level, caster, 6); point(tag, "field", center);
+                Vec3 center = aim(level, caster, 6); point(tag, "field", center);
+                tag.putLong("field_until", now + 120); tag.putLong("field_next", now + 20); tag.putString("field_dimension", dimension(level));
                 ApexVisuals.circle(level, caster, skill.apex, center.add(0, 0.1, 0), (float)skill.radius(), 120, false);
                 skill.area(level, instance, caster, center, skill.radius(), skill.balance.burst(), 1, false);
             }
@@ -105,133 +136,80 @@ public final class ApexArts {
                 }
                 if (!usable) addPool(skill, level, instance, caster, aim(level, caster, 6), false, 300);
                 for (Tag raw : tag.getList("oil_pools", Tag.TAG_COMPOUND)) {
-                    CompoundTag pool = (CompoundTag) raw;
-                    if (validPool(pool, level, now) && point(pool, "pool").distanceToSqr(caster.position()) <= 32 * 32) { pool.putBoolean("lit", true); pool.putLong("until", now + 120); }
+                    var pool = (CompoundTag)raw;
+                    if (validPool(pool, level, now) && point(pool, "pool").distanceToSqr(caster.position()) <= 32 * 32) {
+                        pool.putBoolean("lit", true); pool.putLong("until", now + 120);
+                    }
                 }
-                pools(skill, level, instance, caster, skill.balance.burst(), false);
+                tag.putLong("field_until", now + 120); tag.putLong("field_next", now + 20); tag.putString("field_dimension", dimension(level));
+                pools(skill, level, instance, caster, skill.balance.burst(), 1);
             }
             case JIN_DAHAAD -> {
-                center = caster.position().add(forward(caster).scale(4)); point(tag, "field", center);
-                point(tag, "ward_normal", forward(caster)); tag.putInt("ward_budget", skill.ultimate ? 6 : 3);
-                for (int i = -1; i <= 1; i++) ApexVisuals.circle(level, caster, skill.apex,
-                    center.add(forward(caster).yRot((float)(Math.PI / 2)).scale(i * 3)).add(0, 1.4, 0), 2.5f, 120, true);
-                frostWall(skill, level, instance, caster, skill.balance.burst());
+                var victim = target(level, caster, skill.ultimate ? 28 : 20);
+                if (victim == null) { ApexVisuals.iceBurst(level, caster, aim(level, caster, 12), 2); return; }
+                if (skill.strike(level, instance, caster, victim, skill.balance.burst(), 1, false)) {
+                    skill.addEffect(victim, instance, 1, caster, TensuraMobEffects.getReference(TensuraMobEffects.FROST), skill.ultimate ? 120 : 80, 0);
+                    ApexVisuals.prison(level, caster, victim.position(), skill.ultimate ? 120 : 80);
+                }
             }
         }
     }
+    static String dimension(ServerLevel level) { return level.dimension().location().toString(); }
     public static void domain(ApexSkill skill, ServerLevel level, ManasSkillInstance instance, LivingEntity caster) {
         var tag = instance.getOrCreateTag(); long now = level.getGameTime();
-        tag.putLong("domain_until", now + 200); tag.putLong("domain_next", now + 20); tag.putLong("domain_start", now);
-        tag.putString("domain_dimension", level.dimension().location().toString()); point(tag, "domain", caster.position());
-        tag.put("domain_hits", new ListTag()); tag.putInt("tide_phase", 0);
-        ApexVisuals.circle(level, caster, skill.apex, caster.position().add(0, 0.1, 0), skill.apex == Apex.NU_UDRA ? 4 : 8, 200, false);
+        tag.putLong("domain_until", now + 200); tag.putLong("domain_next", now + 20);
+        tag.putString("domain_dimension", dimension(level)); point(tag, "domain", caster.position()); tag.putInt("tide_phase", 0);
         if (skill.apex == Apex.NU_UDRA) {
             for (int i = 0; i < 5; i++) {
                 double a = i * Math.PI * 2 / 5;
                 addPool(skill, level, instance, caster, caster.position().add(Math.cos(a) * 6, 0, Math.sin(a) * 6), true, 200);
             }
         }
+        if (skill.apex == Apex.JIN_DAHAAD) {
+            var victim = target(level, caster, 24); point(tag, "domain", victim == null ? aim(level, caster, 16) : victim.position());
+        }
+        ApexVisuals.circle(level, caster, skill.apex, point(tag, "domain").add(0, 0.1, 0), skill.apex == Apex.NU_UDRA ? 4 : 8, 200, false);
         pulseDomain(skill, level, instance, caster, true);
     }
     static boolean validPool(CompoundTag pool, ServerLevel level, long now) {
-        return pool.getLong("until") > now && pool.getString("dimension").equals(level.dimension().location().toString());
+        return pool.getLong("until") > now && pool.getString("dimension").equals(dimension(level));
     }
     static void addPool(ApexSkill skill, ServerLevel level, ManasSkillInstance instance, LivingEntity caster, Vec3 p, boolean lit, int duration) {
         ListTag list = instance.getOrCreateTag().getList("oil_pools", Tag.TAG_COMPOUND);
         while (list.size() >= (skill.ultimate ? 5 : 3)) list.removeFirst();
         var pool = new CompoundTag(); point(pool, "pool", p); pool.putBoolean("lit", lit);
-        pool.putLong("until", level.getGameTime() + duration); pool.putString("dimension", level.dimension().location().toString());
+        pool.putLong("until", level.getGameTime() + duration); pool.putString("dimension", dimension(level));
         list.add(pool); instance.getOrCreateTag().put("oil_pools", list);
-        ApexVisuals.ring(level, skill.apex, p, 2.5, 0.1, skill.ultimate);
-        instance.markDirty();
+        ApexVisuals.ring(level, skill.apex, p, 2.5, 0.1, skill.ultimate); instance.markDirty();
     }
-    static void pools(ApexSkill skill, ServerLevel level, ManasSkillInstance instance, LivingEntity caster, float damage, boolean pulse) {
+    static void pools(ApexSkill skill, ServerLevel level, ManasSkillInstance instance, LivingEntity caster, float damage, int mode) {
         Set<UUID> hit = new HashSet<>();
         for (Tag raw : instance.getOrCreateTag().getList("oil_pools", Tag.TAG_COMPOUND)) {
             var pool = (CompoundTag)raw;
             if (!validPool(pool, level, level.getGameTime()) || !pool.getBoolean("lit")) continue;
-            Vec3 center = point(pool, "pool");
-            if (center.distanceToSqr(caster.position()) > 32 * 32) continue;
-            for (var enemy : enemies(level, caster, center, skill.ultimate ? 4 : 3)) {
-                if (hit.add(enemy.getUUID())) skill.strike(level, instance, caster, enemy, damage, 1, pulse);
-            }
+            Vec3 center = point(pool, "pool"); if (center.distanceToSqr(caster.position()) > 32 * 32) continue;
+            for (var enemy : enemies(level, caster, center, skill.ultimate ? 4 : 3))
+                if (hit.add(enemy.getUUID())) skill.strike(level, instance, caster, enemy, damage, mode, true);
             ApexVisuals.impact(level, skill.apex, center, skill.ultimate);
-        }
-    }
-    static void rods(ApexSkill skill, ServerLevel level, ManasSkillInstance instance, LivingEntity caster, float damage) {
-        Vec3 center = point(instance.getOrCreateTag(), "field"), side = forward(caster).yRot((float)(Math.PI / 2));
-        Set<UUID> hit = new HashSet<>();
-        for (int i = -1; i <= 1; i++) {
-            Vec3 rod = center.add(side.scale(i * 4));
-            ApexVisuals.circle(level, caster, skill.apex, rod, 1.3f, 22, false);
-            for (var enemy : enemies(level, caster, rod, 6)) {
-                if (!hit.add(enemy.getUUID())) continue;
-                if (skill.strike(level, instance, caster, enemy, damage, 1, true)) {
-                    charge(instance, 1);
-                    ApexVisuals.beam(level, skill.apex, rod.add(0, 6, 0), enemy.getEyePosition(), skill.ultimate);
-                }
-                break;
-            }
         }
     }
     static void advance(ApexSkill skill, ServerLevel level, ManasSkillInstance instance, LivingEntity caster) {
         var tag = instance.getOrCreateTag(); int step = tag.getInt("travel_step") + 1; tag.putInt("travel_step", step);
-        Vec3 origin = point(tag, "travel_origin"), forward = point(tag, "travel_forward"), right = forward.yRot((float)(Math.PI / 2));
-        boolean water = skill.apex == Apex.UTH_DUNA;
+        Vec3 origin = point(tag, "travel_origin"), direction = point(tag, "travel_forward"), right = direction.yRot((float)(Math.PI / 2));
         double reach = tag.getDouble("travel_reach"), initial = Math.min(2, reach);
         double distance = initial + (reach - initial) * (step - 1) / 7;
-        double previousDistance = step == 1 ? 0 : initial + (reach - initial) * (step - 2) / 7;
-        Vec3 front = origin.add(forward.scale(distance));
-        Vec3 midpoint = origin.add(forward.scale((previousDistance + distance) / 2));
-        double halfLength = (distance - previousDistance) / 2 + 0.6, width = water ? 4 : 1.8;
-        // Sweep the entire segment: widely spaced Ultimate fronts must not skip enemies.
-        double searchRadius = Math.sqrt(halfLength * halfLength + width * width + 2.5 * 2.5);
+        double previous = step == 1 ? 0 : initial + (reach - initial) * (step - 2) / 7;
+        Vec3 front = origin.add(direction.scale(distance)), midpoint = origin.add(direction.scale((previous + distance) / 2));
+        double halfLength = (distance - previous) / 2 + 0.6, width = skill.ultimate ? 5 : 4;
         ListTag hit = tag.getList("travel_hits", Tag.TAG_STRING);
-        for (var enemy : enemies(level, caster, midpoint, searchRadius)) {
+        for (var enemy : enemies(level, caster, midpoint, Math.sqrt(halfLength * halfLength + width * width + 6.25))) {
             Vec3 d = enemy.position().subtract(midpoint);
-            if (Math.abs(d.dot(forward)) > halfLength || Math.abs(d.dot(right)) > width || Math.abs(d.y) > 2.5) continue;
-            if (hit.contains(StringTag.valueOf(enemy.getStringUUID()))) continue;
-            if (!water && hit.size() >= (skill.ultimate ? 4 : 1)) break;
+            if (Math.abs(d.dot(direction)) > halfLength || Math.abs(d.dot(right)) > width || Math.abs(d.y) > 2.5 || hit.contains(StringTag.valueOf(enemy.getStringUUID()))) continue;
             if (skill.strike(level, instance, caster, enemy, skill.balance.primary(), 0, false)) {
-                hit.add(StringTag.valueOf(enemy.getStringUUID()));
-                if (water) push(enemy, forward.scale(0.85).add(0, 0.12, 0));
+                hit.add(StringTag.valueOf(enemy.getStringUUID())); push(enemy, direction.scale(0.85).add(0, 0.12, 0));
             }
         }
-        tag.put("travel_hits", hit);
-        if (water) ApexVisuals.wave(level, front, right, skill.ultimate ? 5 : 4);
-        else {
-            Vec3 previous = origin.add(forward.scale(previousDistance));
-            ApexVisuals.beam(level, skill.apex, previous, front, skill.ultimate);
-        }
-        instance.markDirty();
-    }
-    static void frostWall(ApexSkill skill, ServerLevel level, ManasSkillInstance instance, LivingEntity caster, float damage) {
-        var tag = instance.getOrCreateTag(); Vec3 center = point(tag, "field"), normal = point(tag, "ward_normal"), right = normal.yRot((float)(Math.PI / 2));
-        for (var target : enemies(level, caster, center, 7)) {
-            Vec3 relative = target.position().subtract(center);
-            if (Math.abs(relative.dot(normal)) <= 2.5 && Math.abs(relative.dot(right)) <= 5)
-                skill.strike(level, instance, caster, target, damage, 1, true);
-        }
-        for (int i = -2; i <= 2; i++) ApexVisuals.crystal(level, center.add(right.scale(i * 2)), 2.5);
-    }
-    static void intercept(ApexSkill skill, ServerLevel level, ManasSkillInstance instance, LivingEntity caster) {
-        var tag = instance.getOrCreateTag(); int budget = tag.getInt("ward_budget"); if (budget <= 0) return;
-        Vec3 center = point(tag, "field"), normal = point(tag, "ward_normal"), right = normal.yRot((float)(Math.PI / 2));
-        for (var projectile : level.getEntitiesOfClass(Projectile.class, new AABB(center, center).inflate(8))) {
-            if (projectile instanceof MagicCircle || projectile.getDeltaMovement().lengthSqr() < 0.01
-                    || !(projectile.getOwner() instanceof LivingEntity shooter) || !HunterData.canHarm(caster, shooter)) continue;
-            if (!skill.ultimate && projectile instanceof TensuraProjectile nativeShot && nativeShot.getSkill() != null
-                    && nativeShot.getSkill().getSkill() instanceof Skill s && s.getType() == Skill.SkillType.ULTIMATE) continue;
-            Vec3 current = projectile.position(), previous = current.subtract(projectile.getDeltaMovement());
-            double a = previous.subtract(center).dot(normal), b = current.subtract(center).dot(normal);
-            if (a * b > 0 && Math.abs(b) > 0.8) continue;
-            double fraction = Math.abs(a - b) < 0.001 ? 1 : Math.clamp(a / (a - b), 0, 1);
-            Vec3 crossing = previous.lerp(current, fraction).subtract(center);
-            if (Math.abs(crossing.dot(right)) > 5 || crossing.y < -0.5 || crossing.y > 4) continue;
-            ApexVisuals.impact(level, skill.apex, projectile.position(), skill.ultimate); projectile.discard();
-            if (--budget <= 0) { tag.putLong("field_until", level.getGameTime()); break; }
-        }
-        tag.putInt("ward_budget", budget); instance.markDirty();
+        tag.put("travel_hits", hit); ApexVisuals.wave(level, front, right, width); instance.markDirty();
     }
     static void pulseDomain(ApexSkill skill, ServerLevel level, ManasSkillInstance instance, LivingEntity caster, boolean first) {
         var tag = instance.getOrCreateTag(); float damage = first ? skill.balance.burst() : skill.balance.pulse() * 1.5f;
@@ -240,47 +218,55 @@ public final class ApexArts {
                 var targets = enemies(level, caster, caster.position(), 14);
                 targets.sort(Comparator.comparingDouble(LivingEntity::getMaxHealth).reversed());
                 for (int i = 0; i < Math.min(5, targets.size()); i++) {
-                    var target = targets.get(i);
-                    if (skill.strike(level, instance, caster, target, damage, 3, true)) {
-                        charge(instance, 1); ApexVisuals.beam(level, skill.apex, target.position().add(0, 8, 0), target.getEyePosition(), true);
-                    }
+                    var victim = targets.get(i); skill.strike(level, instance, caster, victim, damage, 2, true);
+                    ApexVisuals.beam(level, skill.apex, victim.position().add(0, 8, 0), victim.getEyePosition(), true);
                 }
             }
             case UTH_DUNA -> {
                 int phase = tag.getInt("tide_phase"); tag.putInt("tide_phase", phase + 1);
-                for (var target : enemies(level, caster, caster.position(), 14)) {
-                    skill.strike(level, instance, caster, target, damage, 3, true);
-                    Vec3 direction = target.position().subtract(caster.position()).multiply(1, 0, 1).normalize();
-                    push(target, direction.scale(phase % 2 == 0 ? -0.8 : 1.1).add(0, phase % 2 == 0 ? 0 : 0.2, 0));
+                for (var victim : enemies(level, caster, caster.position(), 14)) {
+                    skill.strike(level, instance, caster, victim, damage, 2, true);
+                    Vec3 direction = victim.position().subtract(caster.position()).multiply(1, 0, 1).normalize();
+                    push(victim, direction.scale(phase % 2 == 0 ? -0.8 : 1.1).add(0, phase % 2 == 0 ? 0 : 0.2, 0));
                 }
             }
-            case NU_UDRA -> pools(skill, level, instance, caster, damage, !first);
+            case NU_UDRA -> pools(skill, level, instance, caster, damage, 2);
             case JIN_DAHAAD -> {
-                double radius = first ? 2 : Math.min(14, 2 + (level.getGameTime() - tag.getLong("domain_start")) * 12 / 180.0);
-                ListTag hits = tag.getList("domain_hits", Tag.TAG_STRING);
-                for (var target : enemies(level, caster, point(tag, "domain"), radius)) {
-                    if (hits.contains(StringTag.valueOf(target.getStringUUID()))) continue;
-                    if (skill.strike(level, instance, caster, target, skill.balance.burst() + 120, 3, true)) {
-                        hits.add(StringTag.valueOf(target.getStringUUID()));
-                        var rime = HunterData.of(target); rime.putInt("rime_stacks", 3);
-                        rime.putUUID("rime_owner", caster.getUUID()); rime.putLong("rime_until", level.getGameTime() + 200);
-                    }
+                // Telegraph fixed positions: an enemy can leave before the ice lands.
+                var victims = enemies(level, caster, point(tag, "domain"), 10);
+                ListTag impacts = tag.getList("icefalls", Tag.TAG_COMPOUND);
+                for (int i = 0; i < Math.min(3, victims.size()); i++) {
+                    Vec3 p = victims.get(i).position(); var mark = new CompoundTag(); point(mark, "impact", p);
+                    mark.putLong("at", level.getGameTime() + 10); mark.putFloat("damage", first ? 100 : 45);
+                    mark.putString("dimension", dimension(level)); impacts.add(mark);
+                    ApexVisuals.circle(level, caster, skill.apex, p.add(0, 0.1, 0), 2.5f, 10, false);
+                    ApexVisuals.fallingIce(level, p);
                 }
-                tag.put("domain_hits", hits);
+                tag.put("icefalls", impacts);
             }
         }
         instance.markDirty();
     }
+    static void resolveIcefalls(ApexSkill skill, ServerLevel level, ManasSkillInstance instance, LivingEntity caster) {
+        var marks = instance.getOrCreateTag().getList("icefalls", Tag.TAG_COMPOUND); Set<UUID> hit = new HashSet<>();
+        for (int i = marks.size() - 1; i >= 0; i--) {
+            var mark = marks.getCompound(i);
+            if (!mark.getString("dimension").equals(dimension(level))) { marks.remove(i); instance.markDirty(); continue; }
+            if (mark.getLong("at") > level.getGameTime()) continue;
+            Vec3 p = point(mark, "impact"); ApexVisuals.iceBurst(level, caster, p, 2.5);
+            for (var victim : enemies(level, caster, p, 2.5))
+                if (hit.add(victim.getUUID())) skill.strike(level, instance, caster, victim, mark.getFloat("damage"), 2, true);
+            marks.remove(i); instance.markDirty();
+        }
+    }
     public static boolean tick(ApexSkill skill, ServerLevel level, ManasSkillInstance instance, LivingEntity caster) {
         var tag = instance.getOrCreateTag(); long now = level.getGameTime(); boolean active = false;
-        if (tag.getLong("travel_until") > now && tag.getInt("travel_step") < 8
-                && tag.getString("travel_dimension").equals(level.dimension().location().toString())) {
+        if (tag.getLong("travel_until") > now && tag.getInt("travel_step") < 8 && tag.getString("travel_dimension").equals(dimension(level))) {
             active = true; if (now % 2 == 0) advance(skill, level, instance, caster);
         }
-        ListTag pools = tag.getList("oil_pools", Tag.TAG_COMPOUND);
-        int oldPoolCount = pools.size();
+        ListTag pools = tag.getList("oil_pools", Tag.TAG_COMPOUND); int oldCount = pools.size();
         for (int i = pools.size() - 1; i >= 0; i--) if (!validPool(pools.getCompound(i), level, now)) pools.remove(i);
-        if (pools.size() != oldPoolCount) instance.markDirty();
+        if (pools.size() != oldCount) instance.markDirty();
         if (!pools.isEmpty()) {
             active = true;
             if (now % 10 == 0) for (Tag raw : pools) {
@@ -288,22 +274,16 @@ public final class ApexArts {
                 ApexVisuals.ring(level, skill.apex, point(pool, "pool"), pool.getBoolean("lit") ? 3 : 2.5, 0.1, skill.ultimate);
             }
         }
-        boolean domain = tag.getLong("domain_until") > now && tag.getString("domain_dimension").equals(level.dimension().location().toString());
-        if (tag.getLong("field_until") > now && tag.getString("field_dimension").equals(level.dimension().location().toString())) {
+        boolean domain = tag.getLong("domain_until") > now && tag.getString("domain_dimension").equals(dimension(level));
+        if (tag.getLong("field_until") > now && tag.getString("field_dimension").equals(dimension(level))) {
             active = true;
-            if (skill.apex == Apex.JIN_DAHAAD) intercept(skill, level, instance, caster);
             if (skill.apex == Apex.UTH_DUNA && now % 4 == 0) {
                 Vec3 center = point(tag, "field");
-                for (var target : enemies(level, caster, center, skill.radius()))
-                    push(target, center.subtract(target.position()).multiply(1, 0, 1).normalize().scale(0.22));
+                for (var victim : enemies(level, caster, center, skill.radius())) push(victim, center.subtract(victim.position()).multiply(1, 0, 1).normalize().scale(0.22));
             }
             if (now >= tag.getLong("field_next")) {
-                switch (skill.apex) {
-                    case REY_DAU -> rods(skill, level, instance, caster, skill.balance.pulse());
-                    case UTH_DUNA -> skill.area(level, instance, caster, point(tag, "field"), skill.radius(), skill.balance.pulse(), 1, true);
-                    case NU_UDRA -> { if (!domain) pools(skill, level, instance, caster, skill.balance.pulse(), true); }
-                    case JIN_DAHAAD -> frostWall(skill, level, instance, caster, skill.balance.pulse());
-                }
+                if (skill.apex == Apex.UTH_DUNA) skill.area(level, instance, caster, point(tag, "field"), skill.radius(), skill.balance.pulse(), 1, true);
+                if (skill.apex == Apex.NU_UDRA && !domain) pools(skill, level, instance, caster, skill.balance.pulse(), 1);
                 tag.putLong("field_next", now + 20); instance.markDirty();
             }
             if (now % 8 == 0 && skill.apex == Apex.UTH_DUNA) ApexVisuals.ring(level, skill.apex, point(tag, "field"), skill.radius(), 0.2, skill.ultimate);
@@ -311,42 +291,40 @@ public final class ApexArts {
         if (domain) {
             active = true;
             if (now >= tag.getLong("domain_next")) {
-                pulseDomain(skill, level, instance, caster, false);
-                tag.putLong("domain_next", now + 20); instance.markDirty();
+                pulseDomain(skill, level, instance, caster, false); tag.putLong("domain_next", now + 20); instance.markDirty();
             }
-            if (now % 8 == 0) {
-                Vec3 center = skill.apex == Apex.JIN_DAHAAD ? point(tag, "domain") : caster.position();
-                double radius = skill.apex == Apex.JIN_DAHAAD ? Math.min(14, 2 + (now - tag.getLong("domain_start")) * 12 / 180.0) : 14;
-                ApexVisuals.domain(level, skill.apex, center, radius);
-            }
+            if (now % 8 == 0) ApexVisuals.domain(level, skill.apex, skill.apex == Apex.JIN_DAHAAD ? point(tag, "domain") : caster.position(), skill.apex == Apex.JIN_DAHAAD ? 10 : 14);
+        }
+        if (!tag.getList("icefalls", Tag.TAG_COMPOUND).isEmpty()) {
+            resolveIcefalls(skill, level, instance, caster); active |= !tag.getList("icefalls", Tag.TAG_COMPOUND).isEmpty();
         }
         return active;
     }
-    public static void onDamage(LivingDamageEvent.Post event) {
-        if (!(event.getEntity().level() instanceof ServerLevel level) || event.getNewDamage() <= 0) return;
-        LivingEntity victim = event.getEntity();
-        if (victim.isAlive() && event.getSource().getEntity() instanceof LivingEntity attacker && HunterData.canHarm(victim, attacker)) {
-            for (var instance : SkillAPI.getSkillsFrom(victim).getLearnedSkills()) {
-                if (!(instance.getSkill() instanceof ApexSkill skill) || skill.apex != Apex.UTH_DUNA) continue;
-                var tag = instance.getOrCreateTag(); long now = level.getGameTime();
-                if (tag.getLong("mantle_until") <= now || tag.getLong("counter_next") > now
-                        || victim.distanceToSqr(attacker) > 144 || !victim.hasLineOfSight(attacker)) continue;
-                tag.putLong("counter_next", now + (skill.ultimate ? 20 : 60)); instance.markDirty();
-                skill.strike(level, instance, victim, attacker, 25, 2, false);
-                push(attacker, attacker.position().subtract(victim.position()).normalize().scale(0.8));
-            }
+    private static boolean passiveEnabled(LivingEntity entity, Apex apex) {
+        if (!entity.getPersistentData().getCompound("wildhunt").getBoolean("active_skills")) return false;
+        return SkillAPI.getSkillsFrom(entity).getLearnedSkills().stream().anyMatch(instance ->
+            instance.isToggled() && instance.getSkill() instanceof ApexSkill skill && skill.apex == apex);
+    }
+    public static void onBreathe(net.neoforged.neoforge.event.entity.living.LivingBreatheEvent event) {
+        if (passiveEnabled(event.getEntity(), Apex.UTH_DUNA)) {
+            event.setCanBreathe(true); event.setConsumeAirAmount(0); event.setRefillAirAmount(4);
         }
-        if (!(event.getSource().getEntity() instanceof LivingEntity attacker) || !HunterData.canHarm(attacker, victim)) return;
-        if (!event.getSource().is(net.minecraft.world.damagesource.DamageTypes.PLAYER_ATTACK)
-                && !event.getSource().is(net.minecraft.world.damagesource.DamageTypes.MOB_ATTACK)) return;
-        for (var instance : SkillAPI.getSkillsFrom(attacker).getLearnedSkills()) {
-            if (instance.getSkill() instanceof ApexSkill skill && skill.apex == Apex.NU_UDRA
-                    && instance.getOrCreateTag().getLong("mantle_until") > level.getGameTime()) {
-                var data = HunterData.of(victim);
-                boolean own = data.hasUUID("oil_owner") && data.getUUID("oil_owner").equals(attacker.getUUID()) && data.getLong("oil_until") > level.getGameTime();
-                data.putInt("oil_stacks", Math.min(3, (own ? data.getInt("oil_stacks") : 0) + 1));
-                data.putUUID("oil_owner", attacker.getUUID()); data.putLong("oil_until", level.getGameTime() + 300);
-            }
+    }
+    public static void onIncomingDamage(net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent event) {
+        if (event.getSource().is(net.minecraft.tags.DamageTypeTags.IS_FIRE) && passiveEnabled(event.getEntity(), Apex.NU_UDRA)) event.setCanceled(true);
+    }
+    public static void onDamage(LivingDamageEvent.Post event) {
+        if (!(event.getEntity().level() instanceof ServerLevel level) || event.getNewDamage() <= 0 || !event.getEntity().isAlive()) return;
+        LivingEntity victim = event.getEntity();
+        if (!(event.getSource().getEntity() instanceof LivingEntity attacker) || !HunterData.canHarm(victim, attacker)) return;
+        for (var instance : SkillAPI.getSkillsFrom(victim).getLearnedSkills()) {
+            if (!(instance.getSkill() instanceof ApexSkill skill) || skill.apex != Apex.UTH_DUNA || !instance.isToggled()) continue;
+            var tag = instance.getOrCreateTag(); long now = level.getGameTime();
+            if (tag.getLong("counter_next") > now || victim.distanceToSqr(attacker) > 144 || !victim.hasLineOfSight(attacker)) continue;
+            tag.putLong("counter_next", now + (skill.ultimate ? 20 : 60)); instance.markDirty();
+            // Retaliation belongs to the passive; mode 1 supplies native source metadata.
+            skill.strike(level, instance, victim, attacker, 25, 1, false);
+            push(attacker, attacker.position().subtract(victim.position()).normalize().scale(0.8));
         }
     }
 }

@@ -22,4 +22,4 @@ Use Tensura’s evolution menu or `/wildhunt evolve` after meeting the same gate
 
 ---
 
-**Categories:** Tensura: Wild Hunt · Version 0.4.0
+**Categories:** Tensura: Wild Hunt · Version 0.5.0
