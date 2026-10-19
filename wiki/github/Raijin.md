@@ -1,6 +1,6 @@
 # Raijin, Lord of Thunder
 
-[Main Page](https://github.com/Bithio999/MC/wiki/Home) · [Skills](https://github.com/Bithio999/MC/wiki/Skills) · [Evolution](https://github.com/Bithio999/MC/wiki/Evolution) · [Mechanics](https://github.com/Bithio999/MC/wiki/Mechanics) · [Commands](https://github.com/Bithio999/MC/wiki/Commands)
+[Main Page](https://github.com/Bithio999/MC/wiki/Home) · [Skills](https://github.com/Bithio999/MC/wiki/Skills) · [Ability index](https://github.com/Bithio999/MC/wiki/Abilities) · [Damage types](https://github.com/Bithio999/MC/wiki/Damage-Types)
 
 **Raijin, Lord of Thunder** is a Ultimate Skill inspired by **Rey Dau**. It combines ricochet lightning with an aimed movement art.
 
@@ -32,6 +32,12 @@ All damaging arts in this skill use **lightning elemental damage**, including it
 
 [Passive - Toggle] — **Storm Mantle**
 
+| Ability information | Value |
+| --- | --- |
+| Damage type | None — support / defense |
+| Damage ID | — |
+| Effect | No direct damage; modifies the caster’s attributes or defenses. |
+
 While toggled on, gain 12 armor, 60% movement, 50% attack speed and 100% lightning boost. Movement generates no resource.
 
 Enable or disable this through Tensura’s native **Ability Selection** skill toggle. It is separate from active mode cycling and has no fifteen/thirty-second duration. Upkeep is **40 aura per second**, with the first second paid on enabling. It turns off when aura is insufficient or activation requirements fail. Turning it off removes its own attribute modifiers immediately.
@@ -50,17 +56,35 @@ Enable or disable this through Tensura’s native **Ability Selection** skill to
 
 [Active - Press] — **Railbolt**
 
+| Ability information | Value |
+| --- | --- |
+| Damage type | [Lightning elemental](https://github.com/Bithio999/MC/wiki/Damage-Types#lightning) |
+| Damage ID | `tensura:lightning_elemental` |
+| Effect | Direct hits use this native element. |
+
 Aim the first hit along a block-clipped ray up to 56 blocks. The bolt then ricochets from its latest victim to the nearest eligible enemy within twelve blocks. It can hit up to 6 different targets, including the initial victim, and never revisits one. Each hop retains 90% of the preceding hop’s raw damage. Ricochets ignore blocks and line of sight; the initial aimed shot still stops at blocks. Wet or drenched enemies take 30% extra lightning damage.
 
 #### Thunder Step
 
 [Active - Press] — **Thunder Step**
 
+| Ability information | Value |
+| --- | --- |
+| Damage type | [Lightning elemental](https://github.com/Bithio999/MC/wiki/Damage-Types#lightning) |
+| Damage ID | `tensura:lightning_elemental` |
+| Effect | Direct hits use this native element. |
+
 Dash along your full aim direction for up to 24 blocks, including upward and downward, and shock enemies within 2.5 blocks of the travelled segment. The path sweeps the caster’s whole bounding box in half-block increments; walls, low ceilings, collisions the world border and build-height limits stop it. The teleport preserves your current horizontal and vertical velocity and syncs it to the client.
 
 #### Heaven’s Thunder
 
 [Active - Press] — **Heaven’s Thunder**
+
+| Ability information | Value |
+| --- | --- |
+| Damage type | [Lightning elemental](https://github.com/Bithio999/MC/wiki/Damage-Types#lightning) |
+| Damage ID | `tensura:lightning_elemental` |
+| Effect | Direct hits use this native element. |
 
 For ten seconds, strike up to five visible enemies within fourteen blocks once per second, prioritizing maximum health. Raw damage is 240 on the opening strike and 90 on later strikes, before mastery and native modifiers. This signature supplies damage directly and never creates charge.
 
@@ -76,6 +100,10 @@ Evolve [Storm Crown](https://github.com/Bithio999/MC/wiki/Storm-Crown) as Sovere
 
 Ascension replaces only the matching Unique. The Ultimate starts with its own mastery.
 
+### Godly evolution
+
+At mastery, True Hero or True Demon Lord awakening, and 12M base EP, use **Skills → Godly → Ascension** to evolve this Ultimate into [Aion, God of Causality](https://github.com/Bithio999/MC/wiki/Aion). It replaces the selected Ultimate while preserving presets and remaining cooldowns.
+
 ## Suggested combo
 
 Use Thunder Step to find a clear angle → aim Railbolt at one edge of a group → let its successive hops reach enemies beyond the initial victim’s bounce radius.
@@ -90,8 +118,4 @@ A missed initial ray cannot start a ricochet. Bounces pass through walls but can
 
 ---
 
-**Categories:** Tensura Myths
-
-## Godly evolution
-
-At mastery, True Hero or True Demon Lord awakening, and 12M base EP, use **Skills → Godly → Ascension** to evolve this Ultimate into [Aion, God of Causality](https://github.com/Bithio999/MC/wiki/Aion). It replaces the selected Ultimate while preserving presets and remaining cooldowns.
+**Categories:** Tensura Myths · Skills

@@ -1,6 +1,6 @@
 # Human evolution
 
-[Main Page](../README.md) · [Skills](Skills.md) · [Evolution](Evolution.md) · [Mechanics](Mechanics.md) · [Commands](Commands.md)
+[Main Page](../README.md) · [Races](Races.md) · [Ability index](Abilities.md) · [Damage types](Damage-Types.md)
 
 **Human evolution** is the alternate hunter race branch. It progresses through Awakened Hunter, Apex Hunter, and Sovereign Hunter while preserving the player’s Human appearance.
 
@@ -40,4 +40,4 @@ Use Tensura’s evolution menu or `/wildhunt evolve` after meeting the same gate
 
 ---
 
-**Categories:** Tensura Myths
+**Categories:** Tensura Myths · Races

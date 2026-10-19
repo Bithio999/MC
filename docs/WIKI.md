@@ -14,7 +14,7 @@ python3 scripts/build-wiki.py
 This generates:
 
 - `wiki/index.html` and `wiki/site/*.html`: the styled visual edition.
-- `wiki/github/*.md`: the actual GitHub Wiki edition, including `Home.md`, all 128 gameplay articles, `_Sidebar.md`, and `_Footer.md`.
+- `wiki/github/*.md`: the actual GitHub Wiki edition, including `Home.md`, all 137 gameplay articles, `_Sidebar.md`, and `_Footer.md`.
 - `releases/tensura-myths-wiki-0.10.0.zip`: the self-contained offline edition.
 
 GitHub Wiki uses GitHub's own theme and strips custom CSS and scripts. Its pages mirror the visual edition's structure, original portraits, topic tables, navigation, and article content. The ZIP provides the full custom theme and search.
@@ -50,3 +50,9 @@ The reference's light-theme colors include white content, `#006ee6` borders, `#2
 Skill articles use a lead summary, grouped data table, Usage with Passive / Active subsections and labeled arts, Obtaining, Evolution, then strategy and reference notes. Race articles group information, vitality bonuses, evolution and obtaining in their infobox, with Racial Ability, Traits and Evolution in the body. NPC pages put abilities and spawning before the screenshot gallery. The renderer turns the same Markdown data into a sectioned right-hand infobox; GitHub readers retain an ordinary data table. No gameplay values are changed by this layout.
 
 Development history, save migration, and balancing references live separately in [CHANGELOG.md](CHANGELOG.md). Keep gameplay articles in present tense and describe current behavior.
+
+## Topic organization and damage fields
+
+The shared sidebar is defined in `wiki/navigation.json`. `wiki/catalog.json` records article category and skill tier; both editions use these for a consistent hierarchy. Skills, Races, Otherworlders and Reference are the main entry points. The 105 fusion articles remain individually addressable and are indexed by ancestry.
+
+Each active/passive variant is listed in `wiki/abilities.json` and the Ability index. Under each skill's usage label, include an Ability information table with Damage type and Damage ID. Explicitly label utility/healing as None. Separate direct hits from native status damage such as Black Burn; never infer damage from an animation, skill name or resource. Update the ability index and metadata when adding an art. See [damage audit](WIKI-DAMAGE-AUDIT.md) for the inspected native paths.

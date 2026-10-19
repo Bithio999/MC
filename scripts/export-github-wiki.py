@@ -52,17 +52,11 @@ def export(output):
     for source in sources:
         (output / (pages[source.resolve()] + '.md')).write_text(convert(source))
     sidebar = '# Tensura Myths\n\n[Home](' + WIKI_URL + ')\n\n'
-    for heading, slugs in [
-        ('Start here', ['Getting-Started', 'Skills', 'Evolution', 'Mechanics', 'Aura-Regeneration']),
-        ('Unique Skills', ['Storm-Crown', 'Scarlet-Deluge', 'Black-Flame', 'Frostbound-Colossus']),
-        ('Ultimate Skills', ['Raijin', 'Varuna', 'Agni', 'Ymir']),
-        ('Myths progression', ['Godly', 'Aion', 'Duo-Races', 'Convergent-Awakening']),
-        ('Races', ['Awakened-Hunter', 'Apex-Hunter', 'Sovereign-Hunter']),
-        ('Otherworlders', ['Alma', 'Gemma']), ('Reference', ['Commands'])]:
+    for heading, entries in json.loads((WIKI / 'navigation.json').read_text()):
         sidebar += '### ' + heading + '\n\n'
-        for slug in slugs:
-            title = next(p['title'] for p in CATALOG if p['slug'] == slug)
-            sidebar += f'- [{title}]({WIKI_URL}/{slug})\n'
+        for slug, label in entries:
+            if not slug:continue
+            sidebar += f'- [{label}]({WIKI_URL}/{slug})\n'
         sidebar += '\n'
     (output / '_Sidebar.md').write_text(sidebar)
     (output / '_Footer.md').write_text(f'**Tensura Myths 0.10.0** · Minecraft 1.21.1 · NeoForge\n\n[Home]({WIKI_URL}) · [Source]({REPO}) · [Base mod wiki](https://tensura.wiki.gg/wiki/Tensura:_Reincarnated_Wiki)\n\nUnofficial fan addon. Original documentation and portraits. Not affiliated with Capcom or ManasMods.\n')

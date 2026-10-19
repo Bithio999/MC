@@ -1,55 +1,39 @@
 # Tensura Myths Wiki
 
-<p align="center"><strong>TENSURA: REINCARNATED ADDON<br>T E N S U R A &nbsp; M Y T H S</strong><br>Skills · Races · Awakening</p>
+An unofficial reference for the **Tensura Myths** addon to **Tensura: Reincarnated**. Minecraft 1.21.1 · NeoForge · Addon 0.10.0.
 
-## Welcome to the Tensura Myths Wiki!
+## Start here
 
-An unofficial reference for the skills and progression addon to **Tensura: Reincarnated**.
+[Getting started](https://github.com/Bithio999/MC/wiki/Getting-Started) explains installation and the first reincarnation. Choose a topic below or use the [ability index](https://github.com/Bithio999/MC/wiki/Abilities) to find an individual move.
 
-<p align="center"><img src="https://github.com/Bithio999/MC/blob/main/wiki/assets/skill/storm_crown.png?raw=true" width="64" height="64" alt="Rey Dau"> <img src="https://github.com/Bithio999/MC/blob/main/wiki/assets/skill/scarlet_deluge.png?raw=true" width="64" height="64" alt="Uth Duna"> <img src="https://github.com/Bithio999/MC/blob/main/wiki/assets/skill/black_flame.png?raw=true" width="64" height="64" alt="Nu Udra"> <img src="https://github.com/Bithio999/MC/blob/main/wiki/assets/skill/frostbound_colossus.png?raw=true" width="64" height="64" alt="Jin Dahaad"></p>
+## Skills
 
-We currently document **128 articles**, covering Godly skills, Duo Races, all 105 Convergent races, apex abilities, hunter evolutions and otherworlders.
-
-**Tensura Myths 0.10.0 · Minecraft 1.21.1 · NeoForge**
-
-## Myths progression
-
-[Aion, God of Causality](https://github.com/Bithio999/MC/wiki/Aion) introduces the [Godly skill tier](https://github.com/Bithio999/MC/wiki/Godly). Build a [Duo Race](https://github.com/Bithio999/MC/wiki/Duo-Races), finish both evolution paths, and undergo [Convergent Awakening](https://github.com/Bithio999/MC/wiki/Convergent-Awakening). The catalog contains all 105 ancestral pairings with individual race articles, original icons and distinct EP growth profiles.
-
-## About the addon
-
-Follow a human-looking hunter evolution branch and wield abilities inspired by Rey Dau, Uth Duna, Nu Udra, and Jin Dahaad. Each apex Unique Skill evolves into an Ultimate with its own signature art.
-
-Build around aura, native barriers, regeneration, and movement. Meet Alma and Gemma through Tensura's otherworlder system. Start with [Getting started](https://github.com/Bithio999/MC/wiki/Getting-Started) for installation and your first steps.
-
-## Links
-
-| Abilities | World | Reference |
+| Tier | Directory | Obtaining |
 | --- | --- | --- |
-| [Unique and Ultimate skills](https://github.com/Bithio999/MC/wiki/Skills) | [Human evolution](https://github.com/Bithio999/MC/wiki/Evolution) | [Getting started](https://github.com/Bithio999/MC/wiki/Getting-Started) |
-| [Aura regeneration](https://github.com/Bithio999/MC/wiki/Aura-Regeneration) | [Alma](https://github.com/Bithio999/MC/wiki/Alma) · [Gemma](https://github.com/Bithio999/MC/wiki/Gemma) | [Commands](https://github.com/Bithio999/MC/wiki/Commands) |
-| [Combat mechanics](https://github.com/Bithio999/MC/wiki/Mechanics) | [Race bonuses](https://github.com/Bithio999/MC/wiki/Evolution#hp-and-shp-growth) | [Changelog](https://github.com/Bithio999/MC/blob/main/docs/CHANGELOG.md) |
+| Unique | [Four reincarnation skills](https://github.com/Bithio999/MC/wiki/Unique-Skills) | Starting-skill rolls |
+| Ultimate | [Four evolved skills](https://github.com/Bithio999/MC/wiki/Ultimate-Skills) | Mastered Unique, Sovereign Hunter, 2M base EP |
+| Godly | [Aion, God of Causality](https://github.com/Bithio999/MC/wiki/Godly) | Mastered Ultimate, true awakening, 12M base EP |
+| Extra | [Three aura recovery skills](https://github.com/Bithio999/MC/wiki/Aura-Regeneration) | Hunter evolution |
 
-## Apex abilities
+[Skill overview](https://github.com/Bithio999/MC/wiki/Skills) · [Every active and passive ability](https://github.com/Bithio999/MC/wiki/Abilities) · [Damage types](https://github.com/Bithio999/MC/wiki/Damage-Types)
 
-| Inspiration | Unique Skill | Ultimate Skill | Combat identity |
-| --- | --- | --- | --- |
-| Rey Dau | [Storm Crown](https://github.com/Bithio999/MC/wiki/Storm-Crown) | [Raijin, Lord of Thunder](https://github.com/Bithio999/MC/wiki/Raijin) | Ricochet lightning / mobility |
-| Uth Duna | [Scarlet Deluge](https://github.com/Bithio999/MC/wiki/Scarlet-Deluge) | [Varuna, Lord of Tides](https://github.com/Bithio999/MC/wiki/Varuna) | Moving tides / native barriers |
-| Nu Udra | [Black Flame](https://github.com/Bithio999/MC/wiki/Black-Flame) | [Agni, Lord of the Black Flame](https://github.com/Bithio999/MC/wiki/Agni) | Tentacle pulls / burning ground |
-| Jin Dahaad | [Frostbound Colossus](https://github.com/Bithio999/MC/wiki/Frostbound-Colossus) | [Ymir, Lord of Winter](https://github.com/Bithio999/MC/wiki/Ymir) | Avalanche impact / ice capture |
+## Races
 
-## Hunter evolution
+[Race directory](https://github.com/Bithio999/MC/wiki/Races) covers the Human hunter branch and all **105 Convergent races**, grouped by ancestry.
 
-**Human → [Awakened Hunter](https://github.com/Bithio999/MC/wiki/Awakened-Hunter) → [Apex Hunter](https://github.com/Bithio999/MC/wiki/Apex-Hunter) → [Sovereign Hunter](https://github.com/Bithio999/MC/wiki/Sovereign-Hunter)**
+- [Hunter evolution](https://github.com/Bithio999/MC/wiki/Evolution): Human → Awakened Hunter → Apex Hunter → Sovereign Hunter.
+- [Secondary races](https://github.com/Bithio999/MC/wiki/Duo-Races): develop an independent lineage and gain 10% extra EP.
+- [Convergent Awakening](https://github.com/Bithio999/MC/wiki/Convergent-Awakening): unite two fully evolved lineages into one unique race.
 
-Progress through 100K / 400K / 2M base EP and 1 / 3 / 5 distinct boss types. Sovereign Hunter also requires mastery of an apex Unique. Each stage grants an [aura regeneration Extra Skill](https://github.com/Bithio999/MC/wiki/Aura-Regeneration). See [Human evolution](https://github.com/Bithio999/MC/wiki/Evolution) for full requirements and vitality bonuses.
+## Otherworlders
 
-## Contribute to the wiki
+[Character directory](https://github.com/Bithio999/MC/wiki/Otherworlders) · [Alma](https://github.com/Bithio999/MC/wiki/Alma) · [Gemma](https://github.com/Bithio999/MC/wiki/Gemma)
 
-Report missing details, suggest corrections, or improve the [Markdown articles](https://github.com/Bithio999/MC/tree/main/wiki/pages). Please include the addon version when reporting a gameplay difference. See [Wiki publishing](https://github.com/Bithio999/MC/blob/main/docs/WIKI.md) for authoring and GitHub Wiki synchronization.
+## Combat and reference
 
-[GitHub Wiki](https://github.com/Bithio999/MC/wiki) · [Download the addon](https://github.com/Bithio999/MC/blob/main/releases/tensura-myths-0.10.0.jar) · [Official Tensura wiki](https://tensura.wiki.gg/wiki/Tensura:_Reincarnated_Wiki)
+[Damage types](https://github.com/Bithio999/MC/wiki/Damage-Types) · [Combat mechanics](https://github.com/Bithio999/MC/wiki/Mechanics) · [Commands](https://github.com/Bithio999/MC/wiki/Commands)
+
+Ability articles separate direct elemental hits, additional status damage, healing and utility. Their data tables include damage types, resource costs, cooldowns and acquisition requirements.
 
 
 [Download the styled offline edition](https://github.com/Bithio999/MC/blob/main/releases/tensura-myths-wiki-0.10.0.zip)

@@ -29,7 +29,7 @@ function search() {
   })).filter(match => match.score).sort((a, b) => b.score - a.score).slice(0, 8);
   for (const {page} of matches) {
     const anchor = document.createElement('a');
-    anchor.href = document.body.dataset.root + 'site/' + page.slug + '.html';
+    anchor.href = document.body.dataset.root + 'site/' + page.slug + '.html' + (page.anchor ? '#' + page.anchor : '');
     anchor.textContent = page.title;
     anchor.id = 'search-result-' + results.children.length;
     anchor.setAttribute('role', 'option');

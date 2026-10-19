@@ -1,6 +1,6 @@
 # Aion, God of Causality
 
-[Main Page](../README.md) · [Godly Skills](Godly.md) · [Skills](Skills.md) · [Mechanics](Mechanics.md)
+[Main Page](../README.md) · [Skills](Skills.md) · [Ability index](Abilities.md) · [Damage types](Damage-Types.md)
 
 **Aion, God of Causality** is a Godly skill built around spatial precision, battlefield control and a personal HP/SHP rewind with a safe recorded position. Its active arts use magicules and space elemental damage. Its power grows with mastery, without EP damage scaling.
 
@@ -29,6 +29,12 @@
 
 [Passive - Toggle] — **Unbroken Continuum**
 
+| Ability information | Value |
+| --- | --- |
+| Damage type | None — defense / damage modifier / slowing |
+| Damage ID | — |
+| Damage bonus | +35% to qualifying outgoing attacks; preserves each attack’s damage type |
+
 Adds **45 physical barrier**, **45 magic barrier**, **0.75 knockback resistance** and **1,200 native Multilayer Barrier** capacity. The latter uses Tensura’s existing barrier HUD. Its owned multilayer contribution rearms after **10 seconds without an incoming hit**, checked on the next upkeep tick. Upkeep does not repair it during combat. Turning the passive off removes its own contributions while preserving other barrier modifiers.
 
 Enabling costs the first 180 magicules, then 180 magicules each second. It turns off when unfunded or suppressed. It emits no constant passive particle cloud.
@@ -48,23 +54,51 @@ Eligible enemies within **16 blocks** suffer causal time dilation. Movement redu
 | Causal Reversal | 2,400 | 1 second to recast; 25 seconds after return or expiry | Personal checkpoint, 20-second window | — |
 | Genesis Verdict | 15,000 | 45 seconds | 64-block placement; 12 / 14-block radius | 700 + 700 + 1,400 / 2,100 |
 
+#### Worldline Sever
+
 [Active - Mode 1] — **Worldline Sever**
+
+| Ability information | Value |
+| --- | --- |
+| Damage type | [Space elemental](Damage-Types.md#space) |
+| Damage ID | `tensura:space_elemental` |
 
 Hold the assigned skill key to channel a gold-white spatial beam that follows the current crosshair direction. It pierces up to eight eligible enemies per pulse and stops at blocks. Damage pulses every half second; the opening pulse costs 800 magicules and each additional pulse costs 400. A full six-second channel has twelve pulses and costs 5,200 magicules before native cost modifiers.
 
 Releasing the key, exhausting magicules, suppression, death, dimension changes or reaching six seconds ends the beam and starts its four-second cooldown. The channel cannot keep damaging after release. Each pulse rechecks friendly/PvP protection.
 
+#### Event Horizon
+
 [Active - Mode 2] — **Event Horizon**
+
+| Ability information | Value |
+| --- | --- |
+| Damage type | [Space elemental](Damage-Types.md#space) |
+| Damage ID | `tensura:space_elemental` |
 
 Place a gravity domain with a dark core, counter-rotating accretion bands and Tensura’s native **Gravity** magic circle. Enemies within **24 blocks** are pulled toward the core; only enemies within the **10-block inner radius** take space damage each second. A faint outer ring marks the pull range, while the bright inner circle marks the damage zone. Knockback resistance reduces the pull. Hostile or unowned projectiles lose 35% velocity per tick and curve toward the center; the caster’s own and allied projectiles are preserved.
 
+#### Causal Reversal
+
 [Active - Mode 3] — **Causal Reversal**
+
+| Ability information | Value |
+| --- | --- |
+| Damage type | None — recovery / repositioning |
+| Damage ID | — |
 
 The first press places a visible clockwork checkpoint and records position, HP and SHP. Press again after the one-second recast delay, within twenty seconds, to return and recover HP/SHP toward their recorded values, limited by current caps. Both casts cost magicules. Native **Recovery** circle effects and spatial bursts mark the return.
 
 Reversal does not restore aura, magicules, items, cooldowns, buffs or lost lives. The destination must remain unobstructed, inside the world border and in the same dimension. An unsafe return charges no magicules. Returning or expiration applies the full twenty-five-second cooldown. Death, relogging and dimension changes clear the checkpoint.
 
+#### Genesis Verdict
+
 [Active - Mode 4] — **Genesis Verdict**
+
+| Ability information | Value |
+| --- | --- |
+| Damage type | [Space elemental](Damage-Types.md#space) |
+| Damage ID | `tensura:space_elemental` |
 
 Place a warned spatial catastrophe at the cursor within 64 blocks. After one second of warning, three pulses strike at one-second intervals: **700, 700 and 1,400** base damage within twelve blocks.
 
@@ -82,6 +116,8 @@ Use **Skills → Godly → Ascension** to replace one mastered Myths Ultimate af
 
 ![Worldline Sever channeled along the current aim](../media/aion-worldline-channel.png)
 
-![Aion in Tensura’s native Godly category](../media/aion-godly-ui.png)
-
 ![Event Horizon’s gravity core, orbital bands and native Gravity circle](../media/aion-event-horizon.png)
+
+---
+
+**Categories:** Tensura Myths · Skills

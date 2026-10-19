@@ -1,6 +1,6 @@
 # Ymir, Lord of Winter
 
-[Main Page](https://github.com/Bithio999/MC/wiki/Home) · [Skills](https://github.com/Bithio999/MC/wiki/Skills) · [Evolution](https://github.com/Bithio999/MC/wiki/Evolution) · [Mechanics](https://github.com/Bithio999/MC/wiki/Mechanics) · [Commands](https://github.com/Bithio999/MC/wiki/Commands)
+[Main Page](https://github.com/Bithio999/MC/wiki/Home) · [Skills](https://github.com/Bithio999/MC/wiki/Skills) · [Ability index](https://github.com/Bithio999/MC/wiki/Abilities) · [Damage types](https://github.com/Bithio999/MC/wiki/Damage-Types)
 
 **Ymir, Lord of Winter** is a Ultimate Skill inspired by **Jin Dahaad**. It combines avalanche impacts, ice capture, and a defensive carapace.
 
@@ -32,6 +32,12 @@ All damaging arts in this skill use **ice elemental damage**, including its area
 
 [Passive - Toggle] — **Colossus Carapace**
 
+| Ability information | Value |
+| --- | --- |
+| Damage type | None — support / defense |
+| Damage ID | — |
+| Effect | No direct damage; modifies the caster’s attributes or defenses. |
+
 While toggled on, gain 40 armor, 72 physical barrier, 36 magic barrier, one knockback resistance and 100% water-element boost. Tensura classifies ice under water for this boost. This uses the native barrier layer and damage rules, not absorption or the former projectile-deletion ward.
 
 The passive also arms a **350-capacity native Multilayer Barrier**, which appears in Tensura’s shield HUD counter when its Barrier decoration is enabled. The counter is a per-hit blocking capacity, not absorption hearts or a custom health bar. Native rules spend magicules on blocked damage and can break the barrier on overflow, insufficient magicules or stronger attacks. While still toggled on, a broken barrier automatically rearms on the first paid upkeep after **ten seconds without an incoming hit**. Any new hit restarts the delay, including hits completely blocked by a surviving shield. Retoggling does not bypass the delay. Surviving shields persist across relogs.
@@ -54,17 +60,35 @@ The toggle uses native barrier rendering and the shield HUD.
 
 [Active - Press] — **Avalanche Crash**
 
+| Ability information | Value |
+| --- | --- |
+| Damage type | [Ice elemental](https://github.com/Bithio999/MC/wiki/Damage-Types#ice) |
+| Damage ID | `tensura:ice_elemental` |
+| Effect | Direct hits use this native element. |
+
 Aim at a visible enemy up to 24 blocks away, or at the endpoint if no enemy is selected. Erupt eight rendered ice spires around the impact. Damage enemies in a 6-block radius and launch them upward and outward, respecting knockback resistance.
 
 #### Glacial Prison
 
 [Active - Press] — **Glacial Prison**
 
+| Ability information | Value |
+| --- | --- |
+| Damage type | [Ice elemental](https://github.com/Bithio999/MC/wiki/Damage-Types#ice) |
+| Damage ID | `tensura:ice_elemental` |
+| Effect | Direct hits use this native element. |
+
 Aim at one visible hostile within 28 blocks. Deal the listed hit damage, then apply Tensura’s native Frost effect for up to 6 seconds, subject to its rank and resistance checks. Six rendered spires and an Ice magic circle mark the prison. The visual cage places no blocks and adds no separate collision wall. There is no projectile-interception budget.
 
 #### Heavenfall Glacier
 
 [Active - Press] — **Heavenfall Glacier**
+
+| Ability information | Value |
+| --- | --- |
+| Damage type | [Ice elemental](https://github.com/Bithio999/MC/wiki/Damage-Types#ice) |
+| Damage ID | `tensura:ice_elemental` |
+| Effect | Direct hits use this native element. |
 
 Anchor an ice siege at the selected enemy’s position within twenty-four blocks, or at the aim endpoint. For ten seconds, select up to three enemies within ten blocks of that anchor each second. Mark their current positions with circles and falling ice. Each mark explodes after ten ticks (half a second), striking a 2.5-block radius. Opening raw damage is 300 per impact; later impacts use 135, before mastery and native modifiers. Overlapping marks cannot strike one victim twice in the same resolution tick. Enemies can leave the marked locations before impact.
 
@@ -79,6 +103,10 @@ Evolve [Frostbound Colossus](https://github.com/Bithio999/MC/wiki/Frostbound-Col
 | [Frostbound Colossus](https://github.com/Bithio999/MC/wiki/Frostbound-Colossus) | Ymir, Lord of Winter | Sovereign Hunter; 2,000,000 base EP; matching Unique mastered |
 
 Ascension replaces only the matching Unique. The Ultimate starts with its own mastery.
+
+### Godly evolution
+
+At mastery, True Hero or True Demon Lord awakening, and 12M base EP, use **Skills → Godly → Ascension** to evolve this Ultimate into [Aion, God of Causality](https://github.com/Bithio999/MC/wiki/Aion). It replaces the selected Ultimate while preserving presets and remaining cooldowns.
 
 ## Suggested combo
 
@@ -106,8 +134,4 @@ The Unique passive’s native shield counter. Its Ultimate uses a higher capacit
 
 ---
 
-**Categories:** Tensura Myths
-
-## Godly evolution
-
-At mastery, True Hero or True Demon Lord awakening, and 12M base EP, use **Skills → Godly → Ascension** to evolve this Ultimate into [Aion, God of Causality](https://github.com/Bithio999/MC/wiki/Aion). It replaces the selected Ultimate while preserving presets and remaining cooldowns.
+**Categories:** Tensura Myths · Skills

@@ -1,6 +1,6 @@
 # Convergent Awakening
 
-[Main Page](https://github.com/Bithio999/MC/wiki/Home) · [Duo Races](https://github.com/Bithio999/MC/wiki/Duo-Races) · [Evolution](https://github.com/Bithio999/MC/wiki/Evolution)
+[Main Page](https://github.com/Bithio999/MC/wiki/Home) · [Races](https://github.com/Bithio999/MC/wiki/Races) · [Ability index](https://github.com/Bithio999/MC/wiki/Abilities) · [Damage types](https://github.com/Bithio999/MC/wiki/Damage-Types)
 
 **Convergent Awakening** unites two fully evolved lineages into a single registered race. There are **105 unique pairs** among the fifteen supported ancestral families. Every pair has its own name, original pixel icon, registry ID and EP growth profile. Reversing the pair produces the same fused race.
 
@@ -18,6 +18,8 @@ The primary becomes the actual fused native race. Its predecessor state and the 
 - Native race tags drawn from both final ancestral races.
 - A fused attribute profile derived from 65% of both native final stages, plus 80 HP, 1,500 SHP and a pair-dependent attack bonus; the total racial HP bonus is capped at 1,000.
 - A distinct future EP growth profile with the inherited **10% EP gain bonus**.
+
+**Damage type:** None — Concordance Pulse heals and applies knockback without an attack damage call.
 
 Shared racial action: **Concordance Pulse** heals 10% maximum HP up to 80 and pushes nearby enemies. It costs 1,500 aura, has a 30-second cooldown and renders the pair's ancestral colors. The 105 races share this action; they do not each add a separate combat kit.
 
@@ -144,3 +146,7 @@ Weights multiply the same baseline used by native aura/magicule gain attributes.
 The world’s `serverconfig/tensura-myths-server.toml` controls `secondaryRaceEP` (5M), `secondaryEvolutionEPStep` (2.5M new EP per stage), `convergenceEP` (10M), `godlyEP` (12M) and `convergenceEnergyMultiplier` (1.25). Server requirements are checked again when a request arrives. Client button state is not authoritative.
 
 Ordinary death and relogging retain the fused race and ancestry data. Reincarnation or an external replacement of the primary race resets the previous Duo life. There is no normal menu action to swap an existing secondary or repeatedly claim the awakening bonus.
+
+---
+
+**Categories:** Tensura Myths · Races

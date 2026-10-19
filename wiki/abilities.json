@@ -1,0 +1,372 @@
+[
+  {
+    "skill": "Storm-Crown",
+    "name": "Storm Mantle",
+    "tier": "Unique",
+    "kind": "Passive",
+    "damage": "None",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "anchor": "passive"
+  },
+  {
+    "skill": "Storm-Crown",
+    "name": "Railbolt",
+    "tier": "Unique",
+    "kind": "Active",
+    "damage": "Lightning elemental",
+    "damage_id": "tensura:lightning_elemental",
+    "secondary_damage_id": null,
+    "anchor": "railbolt"
+  },
+  {
+    "skill": "Storm-Crown",
+    "name": "Thunder Step",
+    "tier": "Unique",
+    "kind": "Active",
+    "damage": "Lightning elemental",
+    "damage_id": "tensura:lightning_elemental",
+    "secondary_damage_id": null,
+    "anchor": "thunder-step"
+  },
+  {
+    "skill": "Raijin",
+    "name": "Storm Mantle",
+    "tier": "Ultimate",
+    "kind": "Passive",
+    "damage": "None",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "anchor": "passive"
+  },
+  {
+    "skill": "Raijin",
+    "name": "Railbolt",
+    "tier": "Ultimate",
+    "kind": "Active",
+    "damage": "Lightning elemental",
+    "damage_id": "tensura:lightning_elemental",
+    "secondary_damage_id": null,
+    "anchor": "railbolt"
+  },
+  {
+    "skill": "Raijin",
+    "name": "Thunder Step",
+    "tier": "Ultimate",
+    "kind": "Active",
+    "damage": "Lightning elemental",
+    "damage_id": "tensura:lightning_elemental",
+    "secondary_damage_id": null,
+    "anchor": "thunder-step"
+  },
+  {
+    "skill": "Raijin",
+    "name": "Heaven’s Thunder",
+    "tier": "Ultimate",
+    "kind": "Active",
+    "damage": "Lightning elemental",
+    "damage_id": "tensura:lightning_elemental",
+    "secondary_damage_id": null,
+    "anchor": "heavens-thunder"
+  },
+  {
+    "skill": "Scarlet-Deluge",
+    "name": "Water Veil",
+    "tier": "Unique",
+    "kind": "Passive",
+    "damage": "Water elemental",
+    "damage_id": "tensura:water_elemental",
+    "secondary_damage_id": null,
+    "anchor": "passive"
+  },
+  {
+    "skill": "Scarlet-Deluge",
+    "name": "Crushing Current",
+    "tier": "Unique",
+    "kind": "Active",
+    "damage": "Water elemental",
+    "damage_id": "tensura:water_elemental",
+    "secondary_damage_id": null,
+    "anchor": "crushing-current"
+  },
+  {
+    "skill": "Scarlet-Deluge",
+    "name": "Scarlet Undertow",
+    "tier": "Unique",
+    "kind": "Active",
+    "damage": "Water elemental",
+    "damage_id": "tensura:water_elemental",
+    "secondary_damage_id": null,
+    "anchor": "scarlet-undertow"
+  },
+  {
+    "skill": "Varuna",
+    "name": "Water Veil",
+    "tier": "Ultimate",
+    "kind": "Passive",
+    "damage": "Water elemental",
+    "damage_id": "tensura:water_elemental",
+    "secondary_damage_id": null,
+    "anchor": "passive"
+  },
+  {
+    "skill": "Varuna",
+    "name": "Crushing Current",
+    "tier": "Ultimate",
+    "kind": "Active",
+    "damage": "Water elemental",
+    "damage_id": "tensura:water_elemental",
+    "secondary_damage_id": null,
+    "anchor": "crushing-current"
+  },
+  {
+    "skill": "Varuna",
+    "name": "Scarlet Undertow",
+    "tier": "Ultimate",
+    "kind": "Active",
+    "damage": "Water elemental",
+    "damage_id": "tensura:water_elemental",
+    "secondary_damage_id": null,
+    "anchor": "scarlet-undertow"
+  },
+  {
+    "skill": "Varuna",
+    "name": "Crimson Ocean",
+    "tier": "Ultimate",
+    "kind": "Active",
+    "damage": "Water elemental",
+    "damage_id": "tensura:water_elemental",
+    "secondary_damage_id": null,
+    "anchor": "crimson-ocean"
+  },
+  {
+    "skill": "Black-Flame",
+    "name": "Furnace Mantle",
+    "tier": "Unique",
+    "kind": "Passive",
+    "damage": "None",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "anchor": "passive"
+  },
+  {
+    "skill": "Black-Flame",
+    "name": "Oil Lash",
+    "tier": "Unique",
+    "kind": "Active",
+    "damage": "Fire elemental",
+    "damage_id": "tensura:fire_elemental",
+    "secondary_damage_id": null,
+    "anchor": "oil-lash"
+  },
+  {
+    "skill": "Black-Flame",
+    "name": "Blackflame Ignition",
+    "tier": "Unique",
+    "kind": "Active",
+    "damage": "Fire elemental",
+    "damage_id": "tensura:fire_elemental",
+    "secondary_damage_id": "tensura:black_flame",
+    "anchor": "blackflame-ignition"
+  },
+  {
+    "skill": "Agni",
+    "name": "Furnace Mantle",
+    "tier": "Ultimate",
+    "kind": "Passive",
+    "damage": "None",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "anchor": "passive"
+  },
+  {
+    "skill": "Agni",
+    "name": "Oil Lash",
+    "tier": "Ultimate",
+    "kind": "Active",
+    "damage": "Fire elemental",
+    "damage_id": "tensura:fire_elemental",
+    "secondary_damage_id": null,
+    "anchor": "oil-lash"
+  },
+  {
+    "skill": "Agni",
+    "name": "Blackflame Ignition",
+    "tier": "Ultimate",
+    "kind": "Active",
+    "damage": "Fire elemental",
+    "damage_id": "tensura:fire_elemental",
+    "secondary_damage_id": "tensura:black_flame",
+    "anchor": "blackflame-ignition"
+  },
+  {
+    "skill": "Agni",
+    "name": "Black Sun Caldera",
+    "tier": "Ultimate",
+    "kind": "Active",
+    "damage": "Fire elemental",
+    "damage_id": "tensura:fire_elemental",
+    "secondary_damage_id": "tensura:black_flame",
+    "anchor": "black-sun-caldera"
+  },
+  {
+    "skill": "Frostbound-Colossus",
+    "name": "Colossus Carapace",
+    "tier": "Unique",
+    "kind": "Passive",
+    "damage": "None",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "anchor": "passive"
+  },
+  {
+    "skill": "Frostbound-Colossus",
+    "name": "Avalanche Crash",
+    "tier": "Unique",
+    "kind": "Active",
+    "damage": "Ice elemental",
+    "damage_id": "tensura:ice_elemental",
+    "secondary_damage_id": null,
+    "anchor": "avalanche-crash"
+  },
+  {
+    "skill": "Frostbound-Colossus",
+    "name": "Glacial Prison",
+    "tier": "Unique",
+    "kind": "Active",
+    "damage": "Ice elemental",
+    "damage_id": "tensura:ice_elemental",
+    "secondary_damage_id": null,
+    "anchor": "glacial-prison"
+  },
+  {
+    "skill": "Ymir",
+    "name": "Colossus Carapace",
+    "tier": "Ultimate",
+    "kind": "Passive",
+    "damage": "None",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "anchor": "passive"
+  },
+  {
+    "skill": "Ymir",
+    "name": "Avalanche Crash",
+    "tier": "Ultimate",
+    "kind": "Active",
+    "damage": "Ice elemental",
+    "damage_id": "tensura:ice_elemental",
+    "secondary_damage_id": null,
+    "anchor": "avalanche-crash"
+  },
+  {
+    "skill": "Ymir",
+    "name": "Glacial Prison",
+    "tier": "Ultimate",
+    "kind": "Active",
+    "damage": "Ice elemental",
+    "damage_id": "tensura:ice_elemental",
+    "secondary_damage_id": null,
+    "anchor": "glacial-prison"
+  },
+  {
+    "skill": "Ymir",
+    "name": "Heavenfall Glacier",
+    "tier": "Ultimate",
+    "kind": "Active",
+    "damage": "Ice elemental",
+    "damage_id": "tensura:ice_elemental",
+    "secondary_damage_id": null,
+    "anchor": "heavenfall-glacier"
+  },
+  {
+    "skill": "Aion",
+    "name": "Unbroken Continuum",
+    "tier": "Godly",
+    "kind": "Passive",
+    "damage": "None",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "anchor": "passive"
+  },
+  {
+    "skill": "Aion",
+    "name": "Worldline Sever",
+    "tier": "Godly",
+    "kind": "Active",
+    "damage": "Space elemental",
+    "damage_id": "tensura:space_elemental",
+    "secondary_damage_id": null,
+    "anchor": "worldline-sever"
+  },
+  {
+    "skill": "Aion",
+    "name": "Event Horizon",
+    "tier": "Godly",
+    "kind": "Active",
+    "damage": "Space elemental",
+    "damage_id": "tensura:space_elemental",
+    "secondary_damage_id": null,
+    "anchor": "event-horizon"
+  },
+  {
+    "skill": "Aion",
+    "name": "Causal Reversal",
+    "tier": "Godly",
+    "kind": "Active",
+    "damage": "None",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "anchor": "causal-reversal"
+  },
+  {
+    "skill": "Aion",
+    "name": "Genesis Verdict",
+    "tier": "Godly",
+    "kind": "Active",
+    "damage": "Space elemental",
+    "damage_id": "tensura:space_elemental",
+    "secondary_damage_id": null,
+    "anchor": "genesis-verdict"
+  },
+  {
+    "skill": "Hunters-Recovery",
+    "name": "Hunter’s Recovery",
+    "tier": "Extra",
+    "kind": "Passive",
+    "damage": "None",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "anchor": "passive"
+  },
+  {
+    "skill": "Apex-Renewal",
+    "name": "Apex Renewal",
+    "tier": "Extra",
+    "kind": "Passive",
+    "damage": "None",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "anchor": "passive"
+  },
+  {
+    "skill": "Sovereign-Rebirth",
+    "name": "Sovereign Rebirth",
+    "tier": "Extra",
+    "kind": "Passive",
+    "damage": "None",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "anchor": "passive"
+  },
+  {
+    "skill": "Convergent-Awakening",
+    "name": "Concordance Pulse",
+    "tier": "Racial",
+    "kind": "Active",
+    "damage": "None",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "anchor": "awakening-rewards"
+  }
+]

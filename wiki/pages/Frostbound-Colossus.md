@@ -1,6 +1,6 @@
 # Frostbound Colossus
 
-[Main Page](../README.md) · [Skills](Skills.md) · [Evolution](Evolution.md) · [Mechanics](Mechanics.md) · [Commands](Commands.md)
+[Main Page](../README.md) · [Skills](Skills.md) · [Ability index](Abilities.md) · [Damage types](Damage-Types.md)
 
 **Frostbound Colossus** is a Unique Skill inspired by **Jin Dahaad**. It combines avalanche impacts, ice capture, and a defensive carapace.
 
@@ -32,6 +32,12 @@ All damaging arts in this skill use **ice elemental damage**, including its area
 
 [Passive - Toggle] — **Colossus Carapace**
 
+| Ability information | Value |
+| --- | --- |
+| Damage type | None — support / defense |
+| Damage ID | — |
+| Effect | No direct damage; modifies the caster’s attributes or defenses. |
+
 While toggled on, gain 20 armor, 36 physical barrier, 13.5 magic barrier, one knockback resistance and 50% water-element boost. Tensura classifies ice under water for this boost. This uses the native barrier layer and damage rules, not absorption or the former projectile-deletion ward.
 
 The passive also arms a **150-capacity native Multilayer Barrier**, which appears in Tensura’s shield HUD counter when its Barrier decoration is enabled. The counter is a per-hit blocking capacity, not absorption hearts or a custom health bar. Native rules spend magicules on blocked damage and can break the barrier on overflow, insufficient magicules or stronger attacks. While still toggled on, a broken barrier automatically rearms on the first paid upkeep after **ten seconds without an incoming hit**. Any new hit restarts the delay, including hits completely blocked by a surviving shield. Retoggling does not bypass the delay. Surviving shields persist across relogs.
@@ -53,11 +59,23 @@ The toggle uses native barrier rendering and the shield HUD.
 
 [Active - Press] — **Avalanche Crash**
 
+| Ability information | Value |
+| --- | --- |
+| Damage type | [Ice elemental](Damage-Types.md#ice) |
+| Damage ID | `tensura:ice_elemental` |
+| Effect | Direct hits use this native element. |
+
 Aim at a visible enemy up to 16 blocks away, or at the endpoint if no enemy is selected. Erupt eight rendered ice spires around the impact. Damage enemies in a 4-block radius and launch them upward and outward, respecting knockback resistance.
 
 #### Glacial Prison
 
 [Active - Press] — **Glacial Prison**
+
+| Ability information | Value |
+| --- | --- |
+| Damage type | [Ice elemental](Damage-Types.md#ice) |
+| Damage ID | `tensura:ice_elemental` |
+| Effect | Direct hits use this native element. |
 
 Aim at one visible hostile within 20 blocks. Deal the listed hit damage, then apply Tensura’s native Frost effect for up to 4 seconds, subject to its rank and resistance checks. Six rendered spires and an Ice magic circle mark the prison. The visual cage places no blocks and adds no separate collision wall. There is no projectile-interception budget.
 
@@ -99,4 +117,4 @@ The Unique passive’s native shield counter. Its Ultimate uses a higher capacit
 
 ---
 
-**Categories:** Tensura Myths
+**Categories:** Tensura Myths · Skills

@@ -1,8 +1,8 @@
 # Combat mechanics
 
-[Main Page](../README.md) · [Skills](Skills.md) · [Evolution](Evolution.md) · [Mechanics](Mechanics.md) · [Commands](Commands.md)
+[Main Page](../README.md) · [Reference](Mechanics.md) · [Ability index](Abilities.md) · [Damage types](Damage-Types.md)
 
-This page explains **Wild Hunt combat mechanics**, including native barriers, skill toggles, damage modifiers, and aura consumption.
+This page explains **Tensura Myths combat mechanics**, including native barriers, skill toggles, damage modifiers, and aura consumption.
 
 ## Damage types
 
@@ -12,14 +12,15 @@ This page explains **Wild Hunt combat mechanics**, including native barriers, sk
 | Uth Duna | Scarlet Deluge / Varuna | Water — `tensura:water_elemental` |
 | Nu Udra | Black Flame / Agni | Fire — `tensura:fire_elemental` |
 | Jin Dahaad | Frostbound Colossus / Ymir | Ice — `tensura:ice_elemental` |
+| Causality | Aion | Space — `tensura:space_elemental` |
 
-Every damaging active, area pulse, signature, and Water Veil retaliation uses its line's listed element. Oil Lash deals fire elemental damage; Avalanche Crash and Glacial Prison deal ice elemental damage despite their physical-looking animations. Unique and Ultimate versions retain the same element.
+Every damaging active, area pulse, signature, and Water Veil retaliation uses its line's listed element. The [ability index](Abilities.md) records each art separately. Oil Lash deals fire elemental damage; Avalanche Crash and Glacial Prison deal ice elemental damage despite their physical-looking animations. Unique and Ultimate versions retain the same element.
 
-Aura is the skill's fuel, not a separate damage type. These attacks use Tensura's native skill damage source, elemental boosts, resistance rules, and barriers. In Tensura 2.0.1.3's bundled damage tags, all four types bypass ordinary armor; that does not imply bypassing native barriers or elemental resistances. Nu Udra's ignition hits also apply the native Black Burn status, which has its own native behavior.
+Aura and magicules are skill resources, not separate damage types. These attacks use Tensura's native skill damage source, elemental boosts, resistance rules, and barriers. In Tensura 2.0.1.3's bundled damage tags, all five listed types bypass ordinary armor; that does not imply bypassing native barriers or elemental resistances. Nu Udra's ignition hits also apply the native Black Burn status, whose ticking source is `tensura:black_flame`, separate from the direct `tensura:fire_elemental` hit. See [Damage types](Damage-Types.md#black-burn).
 
 ## Damage and mastery
 
-Wild Hunt’s damage multiplier is:
+The four apex lines’ damage multiplier is:
 
 ```text
 0.90 × (1 + 0.5 × clamp(masteryFraction, 0, 1)) × (Ultimate ? 3 : 1)
@@ -28,6 +29,10 @@ Wild Hunt’s damage multiplier is:
 **EP does not multiply damage.** A mastered Unique uses 1.35× its raw base value; a mastered Ultimate uses 4.05× the corresponding Unique raw base. The reduction also covers every area pulse, counter and signature impact. Skill-page tables already include the Ultimate’s 3× multiplier. Native Tensura elemental boosts, global combat rules, rank interactions, barriers and resistances still apply; raw values do not promise the same health damage against every enemy.
 
 EP remains a requirement for race evolution and Ultimate ascension. Those progression gates do not increase these attacks’ raw damage.
+
+## Aion’s damage
+
+Aion uses space elemental damage and a **1 + 0.5 × mastery fraction** multiplier, capped at 1.5×, without the apex lines’ 0.90 reduction or Ultimate 3× base multiplier. While Unbroken Continuum is active, eligible attacks against non-Godly owners gain another 35%; the passive preserves the attack’s original damage type. Causal Reversal and the slowing aura do not deal damage. [Aion](Aion.md) lists the individual arts and passive defense rules.
 
 ## World effects
 
@@ -91,7 +96,6 @@ The native HUD shows 250 combined capacity with both Unique barrier passives ena
 
 Race HP bonuses are +100 / +500 / +1,000; native SHP bonuses are +400 / +3,200 / +6,600. These replace earlier hunter-stage bonuses. See [Human evolution](Evolution.md#hp-and-shp-growth).
 
-
 ---
 
-**Categories:** Tensura Myths
+**Categories:** Tensura Myths · Reference

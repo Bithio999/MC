@@ -1,32 +1,37 @@
 # Skills
 
-[Main Page](../README.md) · [Skills](Skills.md) · [Evolution](Evolution.md) · [Mechanics](Mechanics.md) · [Commands](Commands.md)
+[Main Page](../README.md) · [Skills](Skills.md) · [Ability index](Abilities.md) · [Damage types](Damage-Types.md)
 
-Four rollable Uniques evolve into four Ultimates. Every line has **two active modes plus one toggleable passive**. Each Ultimate adds a **third active signature**.
+**Skills** are organized by tier and acquisition method. The addon provides four Unique Skills, four Ultimate Skills, one Godly skill and three aura recovery Extra Skills.
 
-| Unique | Ultimate | Active arts | Toggleable passive |
+## Skill tiers
+
+| Tier | Skills | Obtaining | Resource |
 | --- | --- | --- | --- |
-| [Storm Crown](Storm-Crown.md) | [Raijin](Raijin.md) | Ricochet Railbolt; Thunder Step | Storm Mantle |
-| [Scarlet Deluge](Scarlet-Deluge.md) | [Varuna](Varuna.md) | Travelling wave; aimed whirlpool | Water Veil |
-| [Black Flame](Black-Flame.md) | [Agni](Agni.md) | Rendered Oil Lash; pool ignition | Furnace Mantle |
-| [Frostbound Colossus](Frostbound-Colossus.md) | [Ymir](Ymir.md) | Avalanche Crash; Glacial Prison | Colossus Carapace |
+| [Unique](Unique-Skills.md) | Storm Crown, Scarlet Deluge, Black Flame, Frostbound Colossus | Reincarnation starting-skill rolls | Aura |
+| [Ultimate](Ultimate-Skills.md) | Raijin, Varuna, Agni, Ymir | Matching mastered Unique; Sovereign Hunter; 2M base EP | Aura |
+| [Godly](Godly.md) | Aion, God of Causality | Mastered Myths Ultimate; True Hero / True Demon Lord; 12M base EP | Magicules |
+| [Extra](Aura-Regeneration.md) | Hunter’s Recovery, Apex Renewal, Sovereign Rebirth | Hunter race evolution | Aura |
 
-## Obtaining skills
+## Individual abilities
 
-Uniques join Tensura’s configured reincarnation primary pool. Rolls remain random. There are no skill trials or skills awarded for boss kills. Ultimates require Sovereign Hunter, two million base EP and mastery of the matching Unique.
+The [ability index](Abilities.md) lists every active art, toggleable passive and shared racial action, with a link to its description and its damage type. Healing and utility arts are labeled **None**. [Damage types](Damage-Types.md) explains direct elemental hits, status damage, armor and barriers.
 
 ## Using skills
 
-Equip and cycle active modes using Tensura’s normal ability interface. Enable the passive with the native skill toggle in **Ability Selection**; it is separate from the active modes. It requires ongoing aura. `/wildhunt status` shows its on/off state and upkeep.
+Equip active modes and cycle them through Tensura’s native ability interface. Passives use the native toggle. Each apex Unique has two active modes; its Ultimate has three. Aion has four active modes and a separate passive. Recovery Extra Skills are passive-only.
 
-## Power
+## Skill evolution
 
-Mastery improves damage by up to 50%; Ultimates use a 3× base multiplier. Damage does not scale with EP. Read [Combat mechanics](Mechanics.md) for damage types, barriers, and aura costs.
+| Unique | Ultimate | Godly |
+| --- | --- | --- |
+| [Storm Crown](Storm-Crown.md) | [Raijin](Raijin.md) | [Aion](Aion.md) |
+| [Scarlet Deluge](Scarlet-Deluge.md) | [Varuna](Varuna.md) | [Aion](Aion.md) |
+| [Black Flame](Black-Flame.md) | [Agni](Agni.md) | [Aion](Aion.md) |
+| [Frostbound Colossus](Frostbound-Colossus.md) | [Ymir](Ymir.md) | [Aion](Aion.md) |
+
+Ascension replaces the chosen source skill. Read each skill’s Obtaining and Evolution sections for exact requirements.
 
 ---
 
-**Categories:** Tensura Myths
-
-## Godly Skills
-
-[Aion, God of Causality](Aion.md) evolves from any mastered Myths Ultimate after True Hero or True Demon Lord awakening and 12M base EP. See [Godly Skills](Godly.md) for classification, menu access and progression.
+**Categories:** Tensura Myths · Skills

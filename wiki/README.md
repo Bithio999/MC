@@ -1,62 +1,44 @@
 # Tensura Myths Wiki
 
-<p align="center"><strong>TENSURA: REINCARNATED ADDON<br>T E N S U R A &nbsp; M Y T H S</strong><br>Skills · Races · Awakening</p>
+An unofficial reference for the **Tensura Myths** addon to **Tensura: Reincarnated**. Minecraft 1.21.1 · NeoForge · Addon 0.10.0.
 
-## Welcome to the Tensura Myths Wiki!
+## Start here
 
-An unofficial reference for the skills and progression addon to **Tensura: Reincarnated**.
+[Getting started](pages/Getting-Started.md) explains installation and the first reincarnation. Choose a topic below or use the [ability index](pages/Abilities.md) to find an individual move.
 
-<p align="center"><img src="assets/skill/storm_crown.png" width="64" height="64" alt="Rey Dau"> <img src="assets/skill/scarlet_deluge.png" width="64" height="64" alt="Uth Duna"> <img src="assets/skill/black_flame.png" width="64" height="64" alt="Nu Udra"> <img src="assets/skill/frostbound_colossus.png" width="64" height="64" alt="Jin Dahaad"></p>
+## Skills
 
-We currently document **128 articles**, covering Godly skills, Duo Races, all 105 Convergent races, apex abilities, hunter evolutions and otherworlders.
-
-**Tensura Myths 0.10.0 · Minecraft 1.21.1 · NeoForge**
-
-## Myths progression
-
-[Aion, God of Causality](pages/Aion.md) introduces the [Godly skill tier](pages/Godly.md). Build a [Duo Race](pages/Duo-Races.md), finish both evolution paths, and undergo [Convergent Awakening](pages/Convergent-Awakening.md). The catalog contains all 105 ancestral pairings with individual race articles, original icons and distinct EP growth profiles.
-
-## About the addon
-
-Follow a human-looking hunter evolution branch and wield abilities inspired by Rey Dau, Uth Duna, Nu Udra, and Jin Dahaad. Each apex Unique Skill evolves into an Ultimate with its own signature art.
-
-Build around aura, native barriers, regeneration, and movement. Meet Alma and Gemma through Tensura's otherworlder system. Start with [Getting started](pages/Getting-Started.md) for installation and your first steps.
-
-## Links
-
-| Abilities | World | Reference |
+| Tier | Directory | Obtaining |
 | --- | --- | --- |
-| [Unique and Ultimate skills](pages/Skills.md) | [Human evolution](pages/Evolution.md) | [Getting started](pages/Getting-Started.md) |
-| [Aura regeneration](pages/Aura-Regeneration.md) | [Alma](pages/Alma.md) · [Gemma](pages/Gemma.md) | [Commands](pages/Commands.md) |
-| [Combat mechanics](pages/Mechanics.md) | [Race bonuses](pages/Evolution.md#hp-and-shp-growth) | [Changelog](../docs/CHANGELOG.md) |
+| Unique | [Four reincarnation skills](pages/Unique-Skills.md) | Starting-skill rolls |
+| Ultimate | [Four evolved skills](pages/Ultimate-Skills.md) | Mastered Unique, Sovereign Hunter, 2M base EP |
+| Godly | [Aion, God of Causality](pages/Godly.md) | Mastered Ultimate, true awakening, 12M base EP |
+| Extra | [Three aura recovery skills](pages/Aura-Regeneration.md) | Hunter evolution |
 
-## Apex abilities
+[Skill overview](pages/Skills.md) · [Every active and passive ability](pages/Abilities.md) · [Damage types](pages/Damage-Types.md)
 
-| Inspiration | Unique Skill | Ultimate Skill | Combat identity |
-| --- | --- | --- | --- |
-| Rey Dau | [Storm Crown](pages/Storm-Crown.md) | [Raijin, Lord of Thunder](pages/Raijin.md) | Ricochet lightning / mobility |
-| Uth Duna | [Scarlet Deluge](pages/Scarlet-Deluge.md) | [Varuna, Lord of Tides](pages/Varuna.md) | Moving tides / native barriers |
-| Nu Udra | [Black Flame](pages/Black-Flame.md) | [Agni, Lord of the Black Flame](pages/Agni.md) | Tentacle pulls / burning ground |
-| Jin Dahaad | [Frostbound Colossus](pages/Frostbound-Colossus.md) | [Ymir, Lord of Winter](pages/Ymir.md) | Avalanche impact / ice capture |
+## Races
 
-## Hunter evolution
+[Race directory](pages/Races.md) covers the Human hunter branch and all **105 Convergent races**, grouped by ancestry.
 
-**Human → [Awakened Hunter](pages/Awakened-Hunter.md) → [Apex Hunter](pages/Apex-Hunter.md) → [Sovereign Hunter](pages/Sovereign-Hunter.md)**
+- [Hunter evolution](pages/Evolution.md): Human → Awakened Hunter → Apex Hunter → Sovereign Hunter.
+- [Secondary races](pages/Duo-Races.md): develop an independent lineage and gain 10% extra EP.
+- [Convergent Awakening](pages/Convergent-Awakening.md): unite two fully evolved lineages into one unique race.
 
-Progress through 100K / 400K / 2M base EP and 1 / 3 / 5 distinct boss types. Sovereign Hunter also requires mastery of an apex Unique. Each stage grants an [aura regeneration Extra Skill](pages/Aura-Regeneration.md). See [Human evolution](pages/Evolution.md) for full requirements and vitality bonuses.
+## Otherworlders
 
-## Contribute to the wiki
+[Character directory](pages/Otherworlders.md) · [Alma](pages/Alma.md) · [Gemma](pages/Gemma.md)
 
-Report missing details, suggest corrections, or improve the Markdown articles in `wiki/pages`. Please include the addon version when reporting a gameplay difference. See [Wiki publishing](../docs/WIKI.md) for authoring and GitHub Wiki synchronization.
+## Combat and reference
 
-[GitHub Wiki](https://github.com/Bithio999/MC/wiki) · [Download the addon](../releases/tensura-myths-0.10.0.jar) · [Official Tensura wiki](https://tensura.wiki.gg/wiki/Tensura:_Reincarnated_Wiki)
+[Damage types](pages/Damage-Types.md) · [Combat mechanics](pages/Mechanics.md) · [Commands](pages/Commands.md)
+
+Ability articles separate direct elemental hits, additional status damage, healing and utility. Their data tables include damage types, resource costs, cooldowns and acquisition requirements.
 
 ## Open the visual edition
 
-**[Download the styled wiki ZIP](../releases/tensura-myths-wiki-0.10.0.zip)**, extract it, and open `index.html`. It includes every article, original portraits, screenshots, and offline search. You can also open `wiki/index.html` after downloading this repository. GitHub displays HTML source rather than the styled page.
+[Download the styled offline wiki](../releases/tensura-myths-wiki-0.10.0.zip), extract it, and open `index.html`. It contains every article, portraits, screenshots and offline search. GitHub readers can use the Markdown links above.
 
-Article previews: [Storm Crown skill page](media/skill-article-preview.png) · [Awakened Hunter race page](media/race-article-preview.png).
-
-The visual design references the official wiki's homepage and Human article: white content, blue borders, centered welcome and topic panels, serif headings, and data infoboxes. The text, branding, and assets remain original. GitHub Wiki uses GitHub's own theme; its version mirrors the article organization, tables, images, sidebar, and footer.
+[Download the addon](../releases/tensura-myths-0.10.0.jar) · [Base mod wiki](https://tensura.wiki.gg/wiki/Tensura:_Reincarnated_Wiki) · [Changelog](../docs/CHANGELOG.md) · [Wiki authoring](../docs/WIKI.md)
 
 Unofficial fan addon. Not affiliated with Capcom or ManasMods.

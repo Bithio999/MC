@@ -197,3 +197,16 @@ hr { border: 0; border-top: 1px solid #a2a9b1; }
   .related-box>.navbox-row { grid-template-columns: 1fr; }
   .navbox-row>strong { padding: 5px 8px; }
 }
+/* Shared topic hierarchy and compact per-ability data, including utility arts. */
+.topic-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 14px; }
+.topic-grid .portal-panel { margin: 0; min-width: 0; }
+.topic-grid .panel-body { overflow-x: auto; }
+.ability-data { max-width: 620px; border: 1px solid #c8d7ee; border-left: 4px solid var(--line); }
+.ability-data table { min-width: 0 !important; font-size: 13px; }
+.ability-data th { background: #edf1fa; }
+.ability-data td:first-child { width: 32%; font-weight: bold; background: #f7f9fd; }
+.ability-data td { overflow-wrap: anywhere; }
+@media (max-width: 780px) { .topic-grid { grid-template-columns: 1fr; } }
+
+.topic-grid>.portal-panel:first-child, .topic-grid>.portal-panel:last-child { grid-column: 1 / -1; }
+.topic-grid table th:first-child, .topic-grid table td:first-child { white-space: nowrap; }

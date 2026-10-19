@@ -1,6 +1,6 @@
 # Human evolution
 
-[Main Page](https://github.com/Bithio999/MC/wiki/Home) · [Skills](https://github.com/Bithio999/MC/wiki/Skills) · [Evolution](https://github.com/Bithio999/MC/wiki/Evolution) · [Mechanics](https://github.com/Bithio999/MC/wiki/Mechanics) · [Commands](https://github.com/Bithio999/MC/wiki/Commands)
+[Main Page](https://github.com/Bithio999/MC/wiki/Home) · [Races](https://github.com/Bithio999/MC/wiki/Races) · [Ability index](https://github.com/Bithio999/MC/wiki/Abilities) · [Damage types](https://github.com/Bithio999/MC/wiki/Damage-Types)
 
 **Human evolution** is the alternate hunter race branch. It progresses through Awakened Hunter, Apex Hunter, and Sovereign Hunter while preserving the player’s Human appearance.
 
@@ -40,4 +40,4 @@ Use Tensura’s evolution menu or `/wildhunt evolve` after meeting the same gate
 
 ---
 
-**Categories:** Tensura Myths
+**Categories:** Tensura Myths · Races

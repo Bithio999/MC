@@ -1,6 +1,6 @@
 # Awakened Hunter
 
-[Main Page](../README.md) · [Skills](Skills.md) · [Evolution](Evolution.md) · [Mechanics](Mechanics.md) · [Commands](Commands.md)
+[Main Page](../README.md) · [Races](Races.md) · [Ability index](Abilities.md) · [Damage types](Damage-Types.md)
 
 **Awakened Hunter** is the first stage of the alternate Human hunter evolution branch. It preserves the player’s Human appearance and advances through encounters with distinct boss types.
 
@@ -20,14 +20,9 @@
 | Base EP gate | 100,000 |
 | Distinct bosses | 1 |
 
-## Racial Ability
+## Obtaining
 
-This stage grants **[Hunter's Recovery](Aura-Regeneration.md)** as a native Extra Skill, at no permanent magicule acquisition cost. Earlier recovery tiers remain learned, but only the strongest toggled tier heals. Native racial skill learning enables the new tier automatically.
-
-Base energy uses two thirds aura and one third magicules. Default-alignment kill EP retains Tensura’s native 2:1 split.
-
-
-Continue building a distinct-boss record toward the next stage. You can roll and use apex Unique skills before reaching this stage. Race evolution does not directly grant a Unique skill.
+Begin as Human. Reach 100,000 base EP and defeat 1 different eligible boss types. No trial, skill roll or skill mastery is required for this stage. [Boss eligibility and counting](Evolution.md#distinct-boss-kills).
 
 ## Traits
 
@@ -43,6 +38,17 @@ These replace the previous hunter stage’s racial modifiers. They do not stack 
 
 The HP bonuses across the branch are +100 / +500 / +1,000; SHP bonuses are +400 / +3,200 / +6,600. Each stage replaces the previous stage’s bonus.
 
+## Racial Ability
+
+**Damage type:** None — the race grants a recovery Extra Skill, not an elemental attack.
+
+This stage grants **[Hunter's Recovery](Hunters-Recovery.md)** as a native Extra Skill, at no permanent magicule acquisition cost. Earlier recovery tiers remain learned, but only the strongest toggled tier heals. Native racial skill learning enables the new tier automatically.
+
+Base energy uses two thirds aura and one third magicules. Default-alignment kill EP retains Tensura’s native 2:1 split.
+
+
+Continue building a distinct-boss record toward the next stage. You can roll and use apex Unique skills before reaching this stage. Race evolution does not directly grant a Unique skill.
+
 ## Evolution
 
 | Race | Base EP | Distinct boss types | Additional requirement |
@@ -52,12 +58,10 @@ The HP bonuses across the branch are +100 / +500 / +1,000; SHP bonuses are +400 
 | [Sovereign Hunter](Sovereign-Hunter.md) | 2,000,000 | 5 | Apex Hunter; master an apex Unique |
 
 
-Begin as Human. Reach 100,000 base EP and defeat 1 different eligible boss types. No trial, skill roll or skill mastery is required for this stage. [Boss eligibility and counting](Evolution.md#distinct-boss-kills).
-
 ## Notes
 
 Boss credit survives death. [Commands](Commands.md) provide status and evolution controls.
 
 ---
 
-**Categories:** Tensura Myths
+**Categories:** Tensura Myths · Races

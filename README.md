@@ -136,6 +136,10 @@ ensure Tensura’s **Barrier** decoration is enabled.
 When upgrading from a version before 0.5.0, the earlier stack/mode migration
 also runs. Rerolling is not required. Portraits now keep Rey Dau’s full horns within their own centered tile.
 
+## Wiki reference
+
+The [wiki](wiki/README.md) organizes all gameplay reference by [skill tier](wiki/pages/Skills.md), [race ancestry](wiki/pages/Races.md), and [otherworlder](wiki/pages/Otherworlders.md). The [ability index](wiki/pages/Abilities.md) lists all 37 active/passive entries with damage types; [Damage types](wiki/pages/Damage-Types.md) separates direct hits, status damage and non-damaging utility.
+
 ## Build and test
 
 Install a Java 21 JDK and Python 3. From this checkout:

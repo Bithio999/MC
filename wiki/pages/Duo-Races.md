@@ -1,6 +1,6 @@
 # Duo Races
 
-[Main Page](../README.md) · [Evolution](Evolution.md) · [Convergent Awakening](Convergent-Awakening.md) · [Commands](Commands.md)
+[Main Page](../README.md) · [Races](Races.md) · [Ability index](Abilities.md) · [Damage types](Damage-Types.md)
 
 **Duo Races** let an awakened player develop a second ancestral race alongside their primary race. The primary race retains the body, size and normal racial key. The secondary supplies half-strength shared attributes, its native intrinsic skills, racial reactions and a separate racial action.
 
@@ -59,3 +59,7 @@ The native Status menu shows the current independent lineages as **Primary Race/
 ## Awakening
 
 Once **both** races finish evolving, follow [Convergent Awakening](Convergent-Awakening.md). The new fused race uses its own EP profile and retains the 10% growth bonus.
+
+---
+
+**Categories:** Tensura Myths · Races

@@ -1,6 +1,6 @@
 # Commands
 
-[Main Page](https://github.com/Bithio999/MC/wiki/Home) · [Skills](https://github.com/Bithio999/MC/wiki/Skills) · [Evolution](https://github.com/Bithio999/MC/wiki/Evolution) · [Mechanics](https://github.com/Bithio999/MC/wiki/Mechanics) · [Commands](https://github.com/Bithio999/MC/wiki/Commands)
+[Main Page](https://github.com/Bithio999/MC/wiki/Home) · [Reference](https://github.com/Bithio999/MC/wiki/Mechanics) · [Ability index](https://github.com/Bithio999/MC/wiki/Abilities) · [Damage types](https://github.com/Bithio999/MC/wiki/Damage-Types)
 
 All commands affect the issuing player. No operator permission is required, and progression gates are still enforced.
 
@@ -22,9 +22,6 @@ Each learned art reports its passive name, ON/OFF state and aura upkeep per seco
 
 Be Sovereign Hunter, retain at least two million base EP, own the matching Unique, and master it. The new Ultimate is learned before its source Unique is removed. Failed eligibility checks do not consume your source skill. There is no trial requirement.
 
----
-
-**Categories:** Tensura Myths
 
 ## Myths progression
 
@@ -40,3 +37,7 @@ Be Sovereign Hunter, retain at least two million base EP, own the matching Uniqu
 These commands are available to players and enforce the same server-side requirements as the menu. Valid secondary keys: `beastfolk`, `harpy`, `ogre`, `goblin`, `giant`, `orc`, `lizardman`, `merfolk`, `elf`, `human`, `dwarf`, `slime`, `vampire`, `wight`, `daemon`.
 
 Aion is `wildhunt:aion`. Fused race IDs follow `wildhunt:convergence/<sorted_family_pair>`; the [catalog](https://github.com/Bithio999/MC/wiki/Convergent-Awakening#race-catalog) links to each exact ID.
+
+---
+
+**Categories:** Tensura Myths · Reference

@@ -1,6 +1,6 @@
 # Getting started
 
-[Main Page](../README.md) · [Skills](Skills.md) · [Evolution](Evolution.md) · [Mechanics](Mechanics.md) · [Commands](Commands.md)
+[Main Page](../README.md) · [Reference](Mechanics.md) · [Ability index](Abilities.md) · [Damage types](Damage-Types.md)
 
 This guide covers installing **Tensura Myths**, rolling an apex skill, and beginning the Human hunter evolution branch.
 
@@ -33,10 +33,11 @@ Each skill has a separate toggleable passive in Tensura’s Ability Selection. T
 
 `/wildhunt guide` explains progression. `/wildhunt status` shows base EP, distinct boss IDs, mastery and passive status. [Command reference](Commands.md).
 
----
-
-**Categories:** Tensura Myths
 
 ## Beyond the hunter path
 
 Use Tensura’s **right-side Secondary Race / Convergent Awakening tabs** and **Skills → Godly → Ascension** menus for [Duo Races](Duo-Races.md), [Convergent Awakening](Convergent-Awakening.md), and [Godly Skills](Godly.md). See [Aion](Aion.md) for its four active arts and barrier passive.
+
+---
+
+**Categories:** Tensura Myths · Reference

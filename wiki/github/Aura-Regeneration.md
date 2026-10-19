@@ -1,6 +1,6 @@
 # Aura regeneration
 
-[Main Page](https://github.com/Bithio999/MC/wiki/Home) · [Skills](https://github.com/Bithio999/MC/wiki/Skills) · [Evolution](https://github.com/Bithio999/MC/wiki/Evolution) · [Mechanics](https://github.com/Bithio999/MC/wiki/Mechanics) · [Commands](https://github.com/Bithio999/MC/wiki/Commands)
+[Main Page](https://github.com/Bithio999/MC/wiki/Home) · [Skills](https://github.com/Bithio999/MC/wiki/Skills) · [Ability index](https://github.com/Bithio999/MC/wiki/Abilities) · [Damage types](https://github.com/Bithio999/MC/wiki/Damage-Types)
 
 **Aura regeneration** is a line of three toggleable Extra Skills granted by the hunter race branch. Each tier recovers health using aura instead of magicules.
 
@@ -8,6 +8,7 @@
 | --- | --- |
 | **Information** | |
 | Type | Extra |
+| Damage type | None — healing / survival |
 | **Obtaining** | |
 | Acquisition | Hunter race evolution; no permanent magicule acquisition cost |
 | Activation | Native toggle; new racial tier enabled automatically |
@@ -20,13 +21,15 @@
 
 [Passive - Toggle] — Only the strongest enabled recovery tier heals.
 
+**Damage type:** None for all three tiers. Open an individual skill article below for its costs, acquisition and limitations.
+
 ### Recovery tiers
 
 | Extra Skill | Race | Native inspiration | Healing | Aura cost |
 | --- | --- | --- | --- | --- |
-| Hunter's Recovery | Awakened Hunter | Self Regeneration | 4 HP/second; 8 mastered | 20 per HP |
-| Apex Renewal | Apex Hunter | Ultraspeed Regeneration | Missing HP every half second | 30 per HP; 20 mastered |
-| Sovereign Rebirth | Sovereign Hunter | Infinite Regeneration | Missing HP and SHP every half second | 30 per HP / 10 per SHP; 20 / 5 mastered |
+| [Hunter’s Recovery](https://github.com/Bithio999/MC/wiki/Hunters-Recovery) | Awakened Hunter | Self Regeneration | 4 HP/second; 8 mastered | 20 per HP |
+| [Apex Renewal](https://github.com/Bithio999/MC/wiki/Apex-Renewal) | Apex Hunter | Ultraspeed Regeneration | Missing HP every half second | 30 per HP; 20 mastered |
+| [Sovereign Rebirth](https://github.com/Bithio999/MC/wiki/Sovereign-Rebirth) | Sovereign Hunter | Infinite Regeneration | Missing HP and SHP every half second | 30 per HP / 10 per SHP; 20 / 5 mastered |
 
 Registry IDs: `wildhunt:hunters_recovery`, `wildhunt:apex_renewal`, `wildhunt:sovereign_rebirth`.
 
@@ -46,4 +49,4 @@ Hunter base evolution energy is split **2/3 aura and 1/3 magicules**. Tensura's 
 
 ---
 
-**Categories:** Tensura Myths · Extra Skills
+**Categories:** Tensura Myths · Skills

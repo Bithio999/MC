@@ -26,13 +26,9 @@ lines = [
     ("Nu Udra", "Black-Flame", "Agni", "black_flame", "Flame · Control"),
     ("Jin Dahaad", "Frostbound-Colossus", "Ymir", "frostbound_colossus", "Ice · Capture"),
 ]
-groups = [
-    ("Navigation", [("", "Main Page"), ("Getting-Started", "Getting started")]),
-    ("Gameplay", [("Godly", "Godly skills"), ("Duo-Races", "Duo Races"), ("Convergent-Awakening", "Convergent races"), ("Skills", "Skills"), ("Evolution", "Human evolution"), ("Mechanics", "Combat mechanics"), ("Aura-Regeneration", "Aura regeneration")]),
-    ("Apex skills", [(row[1], titles[row[1]]) for row in lines]),
-    ("Otherworlders", [("Alma", "Alma"), ("Gemma", "Gemma")]),
-    ("Tools", [("Commands", "Commands")]),
-]
+groups = json.loads((WIKI / "navigation.json").read_text())
+metadata = {item["slug"]: item for item in catalog}
+abilities = json.loads((WIKI / "abilities.json").read_text())
 # Ship only original addon art; the HTML never relies on the source tree.
 textures = ROOT / "src/main/resources/assets/wildhunt/textures"
 for directory in ("skill", "race", "entity/otherworlder"):
@@ -48,20 +44,15 @@ def link(slug, prefix=""):
     return prefix + ("site/" + slug + ".html" if slug else "index.html")
 
 
-def portal():
+def portal(content):
     icons = "".join(f'<a href="{link(unique)}"><img src="assets/skill/{icon}.png" width="64" height="64" alt="{monster}"></a>' for monster, unique, ultimate, icon, role in lines)
-    links = "".join(f'<a href="{link(slug)}">{label}</a>' for slug, label in [
-        ("Skills", "Abilities"), ("Evolution", "Races"), ("Alma", "Otherworlders"),
-        ("Aura-Regeneration", "Aura regeneration"), ("Commands", "Commands"), ("Mechanics", "Mechanics"),
-        ("Godly", "Godly skills"), ("Duo-Races", "Duo Races"), ("Convergent-Awakening", "Convergent races"), ("Getting-Started", "Getting started"), ("Gemma", "Gemma")])
-    rows = "".join(f'<tr><td><img src="assets/skill/{icon}.png" width="48" height="48" alt=""> {monster}</td><td><a href="{link(unique)}">{titles[unique]}</a></td><td><a href="{link(ultimate)}">{titles[ultimate]}</a></td><td>{role}</td></tr>' for monster, unique, ultimate, icon, role in lines)
-    return f'''<section class="welcome portal-panel"><div class="welcome-wordmark" aria-label="Tensura Myths"><small>TENSURA: REINCARNATED ADDON</small><strong>TENSURA MYTHS</strong><span>SKILLS · RACES · AWAKENING</span></div><h2>Welcome to the Tensura Myths Wiki!</h2><div class="panel-body"><p>An unofficial reference for the skills and progression addon to <strong>Tensura: Reincarnated</strong>.</p><div class="welcome-portraits">{icons}</div><p>We currently document <strong>{len(catalog)} articles</strong>, covering Godly skills, Duo Races, 105 Convergent races, hunter evolutions, apex abilities and otherworlders.</p><p><strong>Tensura Myths 0.10.0 · Minecraft 1.21.1 · NeoForge</strong></p></div></section>
-<section class="portal-panel"><h2>About the addon</h2><div class="panel-body"><p>Follow a human-looking hunter evolution branch and wield abilities inspired by Rey Dau, Uth Duna, Nu Udra, and Jin Dahaad. Each apex Unique Skill evolves into an Ultimate with its own signature art.</p><p>Build around aura, native barriers, regeneration, and movement. Meet Alma and Gemma through Tensura's otherworlder system. Start with <a href="{link('Getting-Started')}">Getting started</a> for installation and your first steps.</p></div></section>
-<section class="portal-panel"><h2>Links</h2><nav class="portal-links" aria-label="Wiki topics">{links}</nav></section>
-<section class="portal-panel"><h2>Myths progression</h2><div class="panel-body"><p>Ascend a mastered Ultimate into <a href="{link('Aion')}">Aion, God of Causality</a>, a <a href="{link('Godly')}">Godly skill</a> with four causal arts. Choose a <a href="{link('Duo-Races')}">secondary race</a> after reaching your primary final evolution, then finish both paths for <a href="{link('Convergent-Awakening')}">Convergent Awakening</a>.</p><p>Every one of the 105 ancestral pairs has a named race, an original icon, and its own EP growth profile. The old hunter paths, skills and otherworlders remain available.</p></div></section>
-<section class="portal-panel"><h2>Apex abilities</h2><div class="panel-body table-scroll"><table><thead><tr><th>Inspiration</th><th>Unique Skill</th><th>Ultimate Skill</th><th>Combat identity</th></tr></thead><tbody>{rows}</tbody></table></div></section>
-<section class="portal-panel"><h2>Hunter evolution</h2><div class="panel-body"><p class="evolution-path">Human → <a href="{link('Awakened-Hunter')}">Awakened Hunter</a> → <a href="{link('Apex-Hunter')}">Apex Hunter</a> → <a href="{link('Sovereign-Hunter')}">Sovereign Hunter</a></p><p>Progress through 100K / 400K / 2M base EP and 1 / 3 / 5 distinct boss types. Sovereign Hunter also requires mastery of an apex Unique. Each stage grants an <a href="{link('Aura-Regeneration')}">aura regeneration Extra Skill</a>. See <a href="{link('Evolution')}">Human evolution</a> for full requirements and vitality bonuses.</p></div></section>
-<section class="portal-panel"><h2>Contribute to the wiki</h2><div class="panel-body"><p>Report missing details, suggest corrections, or improve the Markdown articles in the <a href="https://github.com/Bithio999/MC/tree/main/wiki/pages">repository</a>. Please include the addon version when reporting a gameplay difference.</p><p><a href="https://github.com/Bithio999/MC/wiki">GitHub Wiki</a> · <a href="https://github.com/Bithio999/MC/blob/main/releases/tensura-myths-wiki-0.10.0.zip">Download the offline wiki</a> · <a href="https://tensura.wiki.gg/wiki/Tensura:_Reincarnated_Wiki">Base mod wiki</a></p><p>This is an unofficial fan addon, not the official Tensura or Monster Hunter wiki.</p></div></section>'''
+    welcome = f'<section class="welcome portal-panel"><div class="welcome-wordmark"><small>TENSURA: REINCARNATED ADDON</small><strong>TENSURA MYTHS</strong><span>SKILLS · RACES · OTHERWORLDERS</span></div><h2>Welcome to the Tensura Myths Wiki!</h2><div class="panel-body"><p>{len(catalog)} articles · {len(abilities)} active/passive ability entries · 105 Convergent races</p><div class="welcome-portraits">{icons}</div></div></section>'
+    # Render the same canonical homepage in the styled and Markdown editions.
+    sections = re.split(r"(<h2[^>]*>.*?</h2>)", content, flags=re.S)
+    cards = []
+    for heading, body in zip(sections[1::2], sections[2::2]):
+        cards.append('<section class="portal-panel">' + heading + '<div class="panel-body">' + body + '</div></section>')
+    return welcome + '<div class="topic-grid">' + "".join(cards) + '</div>'
 
 
 def data_infobox(title, portrait, data, category):
@@ -114,11 +105,11 @@ def render(source, destination, home=False):
     content = re.sub(r'^\s*<p><a href="../index.html">Main Page</a>.*?</p>', '', content, count=1, flags=re.S)
     content = re.sub(r'<hr\s*/?>\s*<p><strong>Categories:</strong>.*?</p>', '', content, flags=re.S)
     infobox = ""
-    category = "Guides"
+    category = metadata.get(slug, {}).get("category", "Reference")
     table = re.search(r"<table>.*?</table>", content, flags=re.S)
     if table and any(kind + " data" in table[0] for kind in ("Skill", "Race", "NPC")):
         data = table[0]
-        category = "Skills" if "Skill data" in data else "Races" if "Race data" in data else "Otherworlders"
+        category = metadata.get(slug, {}).get("category", category)
         content = content[:table.start()] + content[table.end():]
         portrait = ""
         if category == "Skills":
@@ -126,7 +117,7 @@ def render(source, destination, home=False):
             if match:
                 portrait = '<div class="infobox-portrait">' + match[0] + '</div>'
                 content = content[:match.start()] + content[match.end():]
-        elif category == "Races":
+        elif category in ("Races", "Convergent races"):
             match = re.search(r'<p><img [^>]*src="../assets/race/[^>]+></p>', content)
             if match:
                 portrait = '<div class="infobox-portrait">' + match[0] + '</div>'
@@ -141,7 +132,7 @@ def render(source, destination, home=False):
         nav += f'<section><h2>{group}</h2>' + ''.join(f'<a href="{link(key, prefix)}"' + (' aria-current="page"' if key == slug else '') + f'>{label}</a>' for key, label in entries) + '</section>'
     toc = '<details class="contents" open><summary>Contents</summary>' + renderer.toc + '</details>' if renderer.toc_tokens and not home else ""
     if home:
-        content = portal()
+        content = portal(content)
     # Put the article introduction before its contents, as on skill/race pages.
     introduction = ""
     if not home:
@@ -150,20 +141,34 @@ def render(source, destination, home=False):
             introduction = '<div class="article-intro">' + lead[1] + '</div>'
             content = content[lead.end():]
         content = re.sub(r'<p>(\[(?:Active|Passive)[^]]*\])', r'<p class="ability-label">\1', content)
-        content = re.sub(r"(<table>.*?</table>)", r'<div class="article-table">\1</div>', content, flags=re.S)
+        content = re.sub(r"(<table>.*?</table>)", lambda m: '<div class="article-table' + (' ability-data' if 'Ability information' in m[1] else '') + '">' + m[1] + '</div>', content, flags=re.S)
     if category == "Skills":
-        related_groups = [("Unique Skills", [row[1] for row in lines]), ("Ultimate Skills", [row[2] for row in lines]), ("Godly Skills", ["Godly", "Aion"]), ("Extra Skills", ["Aura-Regeneration"])]
-    elif category == "Races":
-        related_groups = [("Race systems", ["Duo-Races", "Convergent-Awakening"]), ("Human / Hunter", ["Evolution", "Awakened-Hunter", "Apex-Hunter", "Sovereign-Hunter"])]
+        related_groups = [("Skill directories", ["Skills", "Unique-Skills", "Ultimate-Skills", "Godly", "Aura-Regeneration"]), ("Related abilities", ["Abilities", "Damage-Types"]), ("Extra Skills", ["Hunters-Recovery", "Apex-Renewal", "Sovereign-Rebirth"])]
+    elif category in ("Races", "Convergent races"):
+        related_groups = [("Race directory", ["Races"]), ("Race systems", ["Duo-Races", "Convergent-Awakening"]), ("Human / Hunter", ["Evolution", "Awakened-Hunter", "Apex-Hunter", "Sovereign-Hunter"])]
     elif category == "Otherworlders":
-        related_groups = [("Otherworlders", ["Alma", "Gemma"]), ("Race", ["Awakened-Hunter"])]
+        related_groups = [("Otherworlders", ["Otherworlders", "Alma", "Gemma"]), ("Race", ["Awakened-Hunter"])]
     else:
-        related_groups = [("Reference", ["Getting-Started", "Skills", "Godly", "Duo-Races", "Convergent-Awakening", "Evolution", "Mechanics", "Commands"])]
+        related_groups = [("Reference", ["Getting-Started", "Skills", "Abilities", "Damage-Types", "Races", "Otherworlders", "Mechanics", "Commands"])]
+    if category == "Convergent races":
+        related_groups = [("Race systems", ["Races", "Duo-Races", "Convergent-Awakening"])]
     related = ""
     for group, slugs in related_groups:
         anchors = "".join(f'<a href="{link(key, prefix)}"' + (' aria-current="page"' if key == slug else '') + f'>{html.escape(titles[key])}</a>' for key in slugs)
         related += f'<div class="navbox-row"><strong>{group}</strong><div>{anchors}</div></div>'
+    if category == "Convergent races":
+        ancestry = " · ".join(f'<a href="{link("Races", prefix)}#{family}-ancestry">{family.title()} ancestry</a>' for family in slug.removeprefix("Fusion-").split("-"))
+        related += '<div class="navbox-row"><strong>Ancestries</strong><div>' + ancestry + '</div></div>'
     navbox = f'<nav class="related-box" aria-label="Related {category.lower()}"><strong>Tensura Myths · {category}</strong>{related}</nav>' if not home else ""
+    parent = "Skills" if category == "Skills" else "Races" if category in ("Races", "Convergent races") else "Otherworlders" if category == "Otherworlders" else "Mechanics"
+    crumb = f'<a href="{link(parent, prefix)}">{category}</a>'
+    if category == "Convergent races":
+        crumb = f'<a href="{link("Races", prefix)}">Races</a> / <a href="{link("Convergent-Awakening", prefix)}">Convergent races</a>'
+    tier = metadata.get(slug, {}).get("tier")
+    if tier:
+        tier_page = {"Unique": "Unique-Skills", "Ultimate": "Ultimate-Skills", "Godly": "Godly", "Extra": "Aura-Regeneration"}[tier]
+        crumb += f' / <a href="{link(tier_page, prefix)}">{tier} Skills</a>'
+    category_link = crumb if not home else 'Main Page'
     page = f'''<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="{html.escape(title)} — the unofficial Tensura Myths addon reference.">
@@ -175,9 +180,9 @@ def render(source, destination, home=False):
 <div class="search"><label for="wiki-search">Search Tensura Myths Wiki</label><input id="wiki-search" type="search" placeholder="Search skills, races, characters…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="search-results" aria-expanded="false"><div id="search-results" role="listbox" aria-label="Search results" hidden></div><span id="search-status" class="sr-only" aria-live="polite"></span></div></header>
 <div class="layout"><button id="navigation-toggle" aria-controls="wiki-navigation" aria-expanded="false">☰ Wiki navigation</button><nav id="wiki-navigation" class="sidebar" aria-label="Wiki navigation">{nav}<div class="sidebar-version">Tensura Myths <strong>0.10.0</strong><br>Minecraft 1.21.1 · NeoForge<br><span>Offline reference edition</span></div></nav>
 <main id="article" class="{'main-page' if home else 'article-page'}"><div class="page-tabs"><span aria-current="page">{'Main Page' if home else 'Article'}</span><a href="{'README.md' if home else '../pages/' + source.name}">Read Markdown</a><a href="https://github.com/Bithio999/MC/blob/main/docs/CHANGELOG.md">Changelog</a></div>
-<div class="article-heading"><div class="breadcrumbs"><a href="{prefix}index.html">Tensura Myths Wiki</a>{' / ' + category if not home else ''}</div><h1>{html.escape(title)}</h1><p class="subtitle">From the unofficial Tensura Myths Wiki</p></div>
+<div class="article-heading"><div class="breadcrumbs"><a href="{prefix}index.html">Tensura Myths Wiki</a>{' / ' + crumb if not home else ''}</div><h1>{html.escape(title)}</h1><p class="subtitle">From the unofficial Tensura Myths Wiki</p></div>
 <div class="article-content">{introduction}{infobox}{toc}{content}</div>{navbox}
-<div class="categories">Categories: <a href="{prefix}index.html">Tensura Myths</a> · {category if not home else 'Main Page'}</div>
+<div class="categories">Categories: <a href="{prefix}index.html">Tensura Myths</a> · {category_link}</div>
 <footer>Unofficial fan addon. Original documentation and portraits. Not affiliated with Capcom or ManasMods.<br>Tensura Myths 0.10.0 · Offline edition · No external services required.</footer></main></div></body></html>'''
     destination.write_text(page)
 
@@ -186,8 +191,13 @@ render(WIKI / "README.md", WIKI / "index.html", True)
 for item in catalog:
     source = WIKI / "pages" / (item["slug"] + ".md")
     render(source, SITE / (item["slug"] + ".html"))
-    item["keywords"] = source.read_text().split("## Usage")[0].split("## Racial Ability")[0]
-(SITE / "search-index.js").write_text("window.WIKI_PAGES = " + json.dumps(catalog) + ";\n")
+    item["keywords"] = source.read_text().split("## Usage")[0].split("## Racial Ability")[0] + " " + " ".join(a["name"] + " " + a["damage"] for a in abilities if a["skill"] == item["slug"])
+search_entries = list(catalog) + [
+    {"slug": a["skill"], "anchor": a["anchor"], "title": a["name"] + " — " + titles[a["skill"]],
+     "keywords": a["tier"] + " " + a["kind"] + " " + a["damage"]}
+    for a in abilities
+]
+(SITE / "search-index.js").write_text("window.WIKI_PAGES = " + json.dumps(search_entries) + ";\n")
 subprocess.run([sys.executable, str(ROOT / "scripts/export-github-wiki.py")], check=True)
 # Fixed timestamps and sorted entries keep this documentation bundle reproducible.
 archive = ROOT / "releases/tensura-myths-wiki-0.10.0.zip"

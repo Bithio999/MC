@@ -1,6 +1,6 @@
 # Commands
 
-[Main Page](../README.md) · [Skills](Skills.md) · [Evolution](Evolution.md) · [Mechanics](Mechanics.md) · [Commands](Commands.md)
+[Main Page](../README.md) · [Reference](Mechanics.md) · [Ability index](Abilities.md) · [Damage types](Damage-Types.md)
 
 All commands affect the issuing player. No operator permission is required, and progression gates are still enforced.
 
@@ -22,9 +22,6 @@ Each learned art reports its passive name, ON/OFF state and aura upkeep per seco
 
 Be Sovereign Hunter, retain at least two million base EP, own the matching Unique, and master it. The new Ultimate is learned before its source Unique is removed. Failed eligibility checks do not consume your source skill. There is no trial requirement.
 
----
-
-**Categories:** Tensura Myths
 
 ## Myths progression
 
@@ -40,3 +37,7 @@ Be Sovereign Hunter, retain at least two million base EP, own the matching Uniqu
 These commands are available to players and enforce the same server-side requirements as the menu. Valid secondary keys: `beastfolk`, `harpy`, `ogre`, `goblin`, `giant`, `orc`, `lizardman`, `merfolk`, `elf`, `human`, `dwarf`, `slime`, `vampire`, `wight`, `daemon`.
 
 Aion is `wildhunt:aion`. Fused race IDs follow `wildhunt:convergence/<sorted_family_pair>`; the [catalog](Convergent-Awakening.md#race-catalog) links to each exact ID.
+
+---
+
+**Categories:** Tensura Myths · Reference

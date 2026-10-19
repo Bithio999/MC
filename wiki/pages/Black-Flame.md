@@ -1,6 +1,6 @@
 # Black Flame
 
-[Main Page](../README.md) · [Skills](Skills.md) · [Evolution](Evolution.md) · [Mechanics](Mechanics.md) · [Commands](Commands.md)
+[Main Page](../README.md) · [Skills](Skills.md) · [Ability index](Abilities.md) · [Damage types](Damage-Types.md)
 
 **Black Flame** is a Unique Skill inspired by **Nu Udra**. It uses visible oil tentacles to pull targets into burning ground.
 
@@ -13,6 +13,7 @@
 | Inspiration | Nu Udra |
 | Damage type | Fire elemental |
 | Damage ID | `tensura:fire_elemental` |
+| Additional status damage | Black Burn — `tensura:black_flame` |
 | Combat role | Tentacle pulls / burning ground |
 | Active modes | 2 |
 | Toggleable passive | Furnace Mantle |
@@ -32,6 +33,12 @@ All damaging arts in this skill use **fire elemental damage**, including its are
 
 [Passive - Toggle] — **Furnace Mantle**
 
+| Ability information | Value |
+| --- | --- |
+| Damage type | None — support / defense |
+| Damage ID | — |
+| Effect | No direct damage; modifies the caster’s attributes or defenses. |
+
 While toggled on, gain 8 armor, 50% melee attack and 50% flame boost. Fire-tagged damage is resisted while the passive is enabled, preserving its fire-protection utility without a lingering potion. Melee attacks do not coat targets or accumulate oil. This is an offensive passive, not an extra ignition step.
 
 Enable or disable this through Tensura’s native **Ability Selection** skill toggle. It is separate from active mode cycling and has no fifteen/thirty-second duration. Upkeep is **15 aura per second**, with the first second paid on enabling. It turns off when aura is insufficient or activation requirements fail. Turning it off removes its own attribute modifiers immediately.
@@ -49,11 +56,26 @@ Enable or disable this through Tensura’s native **Ability Selection** skill to
 
 [Active - Press] — **Oil Lash**
 
+| Ability information | Value |
+| --- | --- |
+| Damage type | [Fire elemental](Damage-Types.md#fire) |
+| Damage ID | `tensura:fire_elemental` |
+| Additional status damage | Black Burn — `tensura:black_flame` |
+| Effect | Direct hits use this native element. |
+
 Lash up to 4 enemies in a forward fan within 14 blocks and pull them toward you. Each lash has a synced three-dimensional tapered tentacle with a dark body and glowing orange bands. It extends, curls and recoils over sixteen ticks. A missed cast still shows a tentacle sweep. Leave a pool at the final victim’s location, or at the aim point about ten blocks away on a miss. Maintain up to 3 pools; the oldest is replaced first.
 
 #### Blackflame Ignition
 
 [Active - Press] — **Blackflame Ignition**
+
+| Ability information | Value |
+| --- | --- |
+| Damage type | [Fire elemental](Damage-Types.md#fire) |
+| Damage ID | `tensura:fire_elemental` |
+| Additional status damage | Black Burn — `tensura:black_flame` |
+| Effect | Direct hits use this native element. |
+| Additional status damage | Black Burn: `tensura:black_flame` ([details](Damage-Types.md#black-burn)) |
 
 Ignite valid owned pools for six seconds. Each affects a 3-block radius; overlapping pools cannot damage one enemy twice in a pulse. Opening damage is immediate and fixed, with no oil-stack multiplier. Later pulses deal 24 raw damage once per second and apply native Black Burn. If no valid controllable pool exists, place a fallback pool at the aim point up to six blocks away.
 
@@ -89,4 +111,4 @@ In-game example of the active art.
 
 ---
 
-**Categories:** Tensura Myths
+**Categories:** Tensura Myths · Skills

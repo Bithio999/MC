@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Damage types — the unofficial Tensura Myths addon reference.">
+<title>Damage types — Tensura Myths Wiki</title><link rel="stylesheet" href="wiki.css">
+<script defer src="search-index.js"></script><script defer src="search.js"></script></head>
+<body data-root="../"><a class="skip" href="#article">Skip to article</a>
+<div class="global-bar"><span>TENSURA MYTHS</span><div><a href="https://tensura.wiki.gg/wiki/Tensura:_Reincarnated_Wiki">Base mod wiki</a><a href="https://github.com/Bithio999/MC">GitHub</a></div></div>
+<header class="masthead"><a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">M</span><span>TENSURA MYTHS<small>Tensura: Reincarnated addon wiki</small></span></a>
+<div class="search"><label for="wiki-search">Search Tensura Myths Wiki</label><input id="wiki-search" type="search" placeholder="Search skills, races, characters…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="search-results" aria-expanded="false"><div id="search-results" role="listbox" aria-label="Search results" hidden></div><span id="search-status" class="sr-only" aria-live="polite"></span></div></header>
+<div class="layout"><button id="navigation-toggle" aria-controls="wiki-navigation" aria-expanded="false">☰ Wiki navigation</button><nav id="wiki-navigation" class="sidebar" aria-label="Wiki navigation"><section><h2>Start here</h2><a href="../index.html">Main Page</a><a href="../site/Getting-Started.html">Getting started</a></section><section><h2>Skills</h2><a href="../site/Skills.html">Skill overview</a><a href="../site/Unique-Skills.html">Unique Skills</a><a href="../site/Ultimate-Skills.html">Ultimate Skills</a><a href="../site/Godly.html">Godly Skills</a><a href="../site/Aura-Regeneration.html">Extra Skills</a><a href="../site/Abilities.html">Ability index</a></section><section><h2>Races</h2><a href="../site/Races.html">Race directory</a><a href="../site/Evolution.html">Hunter evolution</a><a href="../site/Duo-Races.html">Secondary races</a><a href="../site/Convergent-Awakening.html">Convergent Awakening</a></section><section><h2>Otherworlders</h2><a href="../site/Otherworlders.html">Character directory</a><a href="../site/Alma.html">Alma</a><a href="../site/Gemma.html">Gemma</a></section><section><h2>Reference</h2><a href="../site/Damage-Types.html" aria-current="page">Damage types</a><a href="../site/Mechanics.html">Combat mechanics</a><a href="../site/Commands.html">Commands</a></section><div class="sidebar-version">Tensura Myths <strong>0.10.0</strong><br>Minecraft 1.21.1 · NeoForge<br><span>Offline reference edition</span></div></nav>
+<main id="article" class="article-page"><div class="page-tabs"><span aria-current="page">Article</span><a href="../pages/Damage-Types.md">Read Markdown</a><a href="https://github.com/Bithio999/MC/blob/main/docs/CHANGELOG.md">Changelog</a></div>
+<div class="article-heading"><div class="breadcrumbs"><a href="../index.html">Tensura Myths Wiki</a> / <a href="../site/Mechanics.html">Reference</a></div><h1>Damage types</h1><p class="subtitle">From the unofficial Tensura Myths Wiki</p></div>
+<div class="article-content"><div class="article-intro"><p><strong>Damage types</strong> identify the native attack source used by an ability. Aura and magicules are resources; neither is a damage type. Skill tier, elemental damage and physical-looking animation are separate properties.</p></div><details class="contents" open><summary>Contents</summary><div class="toc">
+<ul>
+<li><a href="#direct-damage">Direct damage</a></li>
+<li><a href="#lightning">Lightning</a></li>
+<li><a href="#water">Water</a></li>
+<li><a href="#fire">Fire</a></li>
+<li><a href="#ice">Ice</a></li>
+<li><a href="#space">Space</a></li>
+<li><a href="#black-burn">Black Burn</a></li>
+<li><a href="#non-damaging-abilities">Non-damaging abilities</a></li>
+<li><a href="#armor-barriers-and-resistance">Armor, barriers and resistance</a></li>
+<li><a href="#complete-reference">Complete reference</a></li>
+</ul>
+</div>
+</details>
+<h2 id="direct-damage">Direct damage</h2>
+<div class="article-table"><table>
+<thead>
+<tr>
+<th>Element</th>
+<th>Native damage ID</th>
+<th>Addon skill lines</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#lightning">Lightning</a></td>
+<td><code>tensura:lightning_elemental</code></td>
+<td>Storm Crown / Raijin</td>
+</tr>
+<tr>
+<td><a href="#water">Water</a></td>
+<td><code>tensura:water_elemental</code></td>
+<td>Scarlet Deluge / Varuna</td>
+</tr>
+<tr>
+<td><a href="#fire">Fire</a></td>
+<td><code>tensura:fire_elemental</code></td>
+<td>Black Flame / Agni</td>
+</tr>
+<tr>
+<td><a href="#ice">Ice</a></td>
+<td><code>tensura:ice_elemental</code></td>
+<td>Frostbound Colossus / Ymir</td>
+</tr>
+<tr>
+<td><a href="#space">Space</a></td>
+<td><code>tensura:space_elemental</code></td>
+<td>Aion</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="lightning">Lightning</h2>
+<p><strong>Damage ID:</strong> <code>tensura:lightning_elemental</code>.</p>
+<p>Railbolt, Thunder Step and Heaven’s Thunder deal lightning damage, including ricochets and area hits.</p>
+<p><a href="Storm-Crown.html">Storm Crown</a> · <a href="Raijin.html">Raijin, Lord of Thunder</a></p>
+<h2 id="water">Water</h2>
+<p><strong>Damage ID:</strong> <code>tensura:water_elemental</code>.</p>
+<p>Crushing Current, Scarlet Undertow, Crimson Ocean and Water Veil retaliation deal water damage. The barrier itself does not deal damage.</p>
+<p><a href="Scarlet-Deluge.html">Scarlet Deluge</a> · <a href="Varuna.html">Varuna, Lord of Tides</a></p>
+<h2 id="fire">Fire</h2>
+<p><strong>Damage ID:</strong> <code>tensura:fire_elemental</code>.</p>
+<p>Oil Lash, ignition opening hits, burning-pool pulses and Black Sun Caldera direct hits deal fire elemental damage. Oil Lash is not a physical-damage attack. Ignition and caldera can additionally inflict native Black Burn.</p>
+<p><a href="Black-Flame.html">Black Flame</a> · <a href="Agni.html">Agni, Lord of the Black Flame</a></p>
+<h2 id="ice">Ice</h2>
+<p><strong>Damage ID:</strong> <code>tensura:ice_elemental</code>.</p>
+<p>Avalanche Crash, Glacial Prison and Heavenfall Glacier impacts deal ice damage. Impact and falling-ice visuals do not change them into physical damage. Chill and Frost are additional effects.</p>
+<p><a href="Frostbound-Colossus.html">Frostbound Colossus</a> · <a href="Ymir.html">Ymir, Lord of Winter</a></p>
+<h2 id="space">Space</h2>
+<p><strong>Damage ID:</strong> <code>tensura:space_elemental</code>.</p>
+<p>Worldline Sever, Event Horizon’s inner damage area and Genesis Verdict deal space damage. Causal Reversal does not deal damage. Unbroken Continuum’s bonus preserves the original type of the attack it strengthens.</p>
+<p><a href="Aion.html">Aion, God of Causality</a></p>
+<h2 id="black-burn">Black Burn</h2>
+<p>Native <strong>Black Burn</strong> is separate from the direct fire elemental hit that applies it. In Tensura 2.0.1.3 its ticking source is <strong><code>tensura:black_flame</code></strong>, with the Flame element, passed through native split-elemental damage handling. Its damage and behavior use Tensura’s Black Flame configuration. The direct attack’s table value is not the combined damage of the attack plus its full status duration.</p>
+<p>Black Flame and Agni’s ignition/pool and caldera hits can apply this status. Oil Lash applies slowing instead of Black Burn.</p>
+<h2 id="non-damaging-abilities">Non-damaging abilities</h2>
+<p>Causal Reversal restores position/HP/SHP. Hunter’s Recovery, Apex Renewal and Sovereign Rebirth heal. Concordance Pulse heals and pushes enemies without a damage call. Most defensive passives add attributes or barriers; Water Veil is the exception with its typed retaliation. Aion’s slowing aura and resistance degradation do not themselves create periodic damage.</p>
+<h2 id="armor-barriers-and-resistance">Armor, barriers and resistance</h2>
+<p>Tensura 2.0.1.3 places all five listed direct elemental damage IDs in the native <strong>bypasses armor</strong> tag. This does not make them barrier-bypassing, unresistable, physical, or generic magic damage. Native skill authority, elemental boosts, barriers, resistance/nullification skills and server data still govern the result. Datapacks can change native damage tags.</p>
+<p>Aion’s active passive adds its documented resistance/nullification degradation and non-Godly bonus. It does not convert every attack into space damage. See <a href="Aion.html#passive">Aion</a> for its exact scope and <a href="Mechanics.html">combat mechanics</a> for mastery and barrier behavior.</p>
+<h2 id="complete-reference">Complete reference</h2>
+<p><a href="Abilities.html">Ability index</a> · <a href="Skills.html">Skill overview</a> · <a href="Mechanics.html">Combat mechanics</a></p>
+</div><nav class="related-box" aria-label="Related reference"><strong>Tensura Myths · Reference</strong><div class="navbox-row"><strong>Reference</strong><div><a href="../site/Getting-Started.html">Getting started</a><a href="../site/Skills.html">Skills</a><a href="../site/Abilities.html">Ability index</a><a href="../site/Damage-Types.html" aria-current="page">Damage types</a><a href="../site/Races.html">Race directory</a><a href="../site/Otherworlders.html">Otherworlders</a><a href="../site/Mechanics.html">Combat mechanics</a><a href="../site/Commands.html">Commands</a></div></div></nav>
+<div class="categories">Categories: <a href="../index.html">Tensura Myths</a> · <a href="../site/Mechanics.html">Reference</a></div>
+<footer>Unofficial fan addon. Original documentation and portraits. Not affiliated with Capcom or ManasMods.<br>Tensura Myths 0.10.0 · Offline edition · No external services required.</footer></main></div></body></html>

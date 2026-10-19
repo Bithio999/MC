@@ -1,5 +1,13 @@
 # Changelog
 
+## Wiki organization for 0.10.0
+
+- Reorganize 137 articles into shared Skills, Races, Otherworlders and Reference navigation, with skill-tier breadcrumbs and ancestry-based race links.
+- Add individual recovery Extra Skill articles and a complete index of 37 active/passive ability variants, each with explicit damage type or non-damaging classification.
+- Distinguish direct fire elemental hits from native Black Burn's black-flame source, and classify Water Veil retaliation, NPC loadouts and utility actions.
+- Rebuild the styled edition, GitHub Wiki mirror and offline bundle. Gameplay code and the mod JAR remain unchanged.
+
+
 ## 0.10.0
 
 - Restore native-sized icon buttons for all seven skill categories, including Godly, and fit their blue background to the grid.

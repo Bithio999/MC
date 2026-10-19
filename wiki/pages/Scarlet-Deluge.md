@@ -1,6 +1,6 @@
 # Scarlet Deluge
 
-[Main Page](../README.md) · [Skills](Skills.md) · [Evolution](Evolution.md) · [Mechanics](Mechanics.md) · [Commands](Commands.md)
+[Main Page](../README.md) · [Skills](Skills.md) · [Ability index](Abilities.md) · [Damage types](Damage-Types.md)
 
 **Scarlet Deluge** is a Unique Skill inspired by **Uth Duna**. It combines travelling currents, aimed whirlpools, and native barriers.
 
@@ -32,6 +32,12 @@ All damaging arts in this skill use **water elemental damage**, including its ar
 
 [Passive - Toggle] — **Water Veil**
 
+| Ability information | Value |
+| --- | --- |
+| Damage type | [Water elemental](Damage-Types.md#water) |
+| Damage ID | `tensura:water_elemental` |
+| Effect | Retaliation deals water elemental damage; the barrier itself deals none. |
+
 While toggled on, gain 10 armor, 18 physical barrier, 18 magic barrier and 50% water boost. These native attributes participate in Tensura’s damage handling and visible barrier layer. Water breathing remains active while toggled on. No absorption hearts are added. A hostile hit that removes health triggers a 25-raw water counter (75 as Varuna) against a visible attacker within twelve blocks, with a 3-second cooldown.
 
 The passive also arms a **100-capacity native Multilayer Barrier**, which appears in Tensura’s shield HUD counter when its Barrier decoration is enabled. The counter is a per-hit blocking capacity, not absorption hearts or a custom health bar. Native rules spend magicules on blocked damage and can break the barrier on overflow, insufficient magicules or stronger attacks. While still toggled on, a broken barrier automatically rearms on the first paid upkeep after **ten seconds without an incoming hit**. Any new hit restarts the delay, including hits completely blocked by a surviving shield. Retoggling does not bypass the delay. Surviving shields persist across relogs.
@@ -53,11 +59,23 @@ No constant bubble orbit is emitted while the passive is enabled. Native barrier
 
 [Active - Press] — **Crushing Current**
 
+| Ability information | Value |
+| --- | --- |
+| Damage type | [Water elemental](Damage-Types.md#water) |
+| Damage ID | `tensura:water_elemental` |
+| Effect | Direct hits use this native element. |
+
 Send a broad wave up to 18 blocks over about sixteen game ticks. It carries and drenches each enemy it reaches, damaging a given entity at most once per wave. Its front is 4 blocks wide on either side. Previously drenched enemies take 50% extra primary damage. Drenched is a single twelve-second mark, never a stack counter.
 
 #### Scarlet Undertow
 
 [Active - Press] — **Scarlet Undertow**
+
+| Ability information | Value |
+| --- | --- |
+| Damage type | [Water elemental](Damage-Types.md#water) |
+| Damage ID | `tensura:water_elemental` |
+| Effect | Direct hits use this native element. |
 
 Place a six-second whirlpool at the aim point, up to 24 blocks away along the crosshair ray. The radius is 9 blocks. A block or water surface under the crosshair sets the position; a miss places it at the bounded ray endpoint. It hits immediately and once per second, with a gentle inward current between pulses. Raw pulse damage is 18; the table lists opening damage.
 
@@ -101,4 +119,4 @@ The Unique passive’s native shield counter. Its Ultimate uses a higher capacit
 
 ---
 
-**Categories:** Tensura Myths
+**Categories:** Tensura Myths · Skills

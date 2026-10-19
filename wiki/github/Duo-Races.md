@@ -1,6 +1,6 @@
 # Duo Races
 
-[Main Page](https://github.com/Bithio999/MC/wiki/Home) · [Evolution](https://github.com/Bithio999/MC/wiki/Evolution) · [Convergent Awakening](https://github.com/Bithio999/MC/wiki/Convergent-Awakening) · [Commands](https://github.com/Bithio999/MC/wiki/Commands)
+[Main Page](https://github.com/Bithio999/MC/wiki/Home) · [Races](https://github.com/Bithio999/MC/wiki/Races) · [Ability index](https://github.com/Bithio999/MC/wiki/Abilities) · [Damage types](https://github.com/Bithio999/MC/wiki/Damage-Types)
 
 **Duo Races** let an awakened player develop a second ancestral race alongside their primary race. The primary race retains the body, size and normal racial key. The secondary supplies half-strength shared attributes, its native intrinsic skills, racial reactions and a separate racial action.
 
@@ -59,3 +59,7 @@ The native Status menu shows the current independent lineages as **Primary Race/
 ## Awakening
 
 Once **both** races finish evolving, follow [Convergent Awakening](https://github.com/Bithio999/MC/wiki/Convergent-Awakening). The new fused race uses its own EP profile and retains the 10% growth bonus.
+
+---
+
+**Categories:** Tensura Myths · Races

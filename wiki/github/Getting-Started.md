@@ -1,6 +1,6 @@
 # Getting started
 
-[Main Page](https://github.com/Bithio999/MC/wiki/Home) · [Skills](https://github.com/Bithio999/MC/wiki/Skills) · [Evolution](https://github.com/Bithio999/MC/wiki/Evolution) · [Mechanics](https://github.com/Bithio999/MC/wiki/Mechanics) · [Commands](https://github.com/Bithio999/MC/wiki/Commands)
+[Main Page](https://github.com/Bithio999/MC/wiki/Home) · [Reference](https://github.com/Bithio999/MC/wiki/Mechanics) · [Ability index](https://github.com/Bithio999/MC/wiki/Abilities) · [Damage types](https://github.com/Bithio999/MC/wiki/Damage-Types)
 
 This guide covers installing **Tensura Myths**, rolling an apex skill, and beginning the Human hunter evolution branch.
 
@@ -33,10 +33,11 @@ Each skill has a separate toggleable passive in Tensura’s Ability Selection. T
 
 `/wildhunt guide` explains progression. `/wildhunt status` shows base EP, distinct boss IDs, mastery and passive status. [Command reference](https://github.com/Bithio999/MC/wiki/Commands).
 
----
-
-**Categories:** Tensura Myths
 
 ## Beyond the hunter path
 
 Use Tensura’s **right-side Secondary Race / Convergent Awakening tabs** and **Skills → Godly → Ascension** menus for [Duo Races](https://github.com/Bithio999/MC/wiki/Duo-Races), [Convergent Awakening](https://github.com/Bithio999/MC/wiki/Convergent-Awakening), and [Godly Skills](https://github.com/Bithio999/MC/wiki/Godly). See [Aion](https://github.com/Bithio999/MC/wiki/Aion) for its four active arts and barrier passive.
+
+---
+
+**Categories:** Tensura Myths · Reference

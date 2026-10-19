@@ -1,6 +1,6 @@
 # Godly Skills
 
-[Main Page](../README.md) · [Skills](Skills.md) · [Aion](Aion.md)
+[Main Page](../README.md) · [Skills](Skills.md) · [Ability index](Abilities.md) · [Damage types](Damage-Types.md)
 
 **Godly** is Tensura Myths’ skill tier above Ultimate. It appears as **Godly** in Tensura’s skill menu, alongside the six original categories. Its native classification remains **Ultimate** so native skill storage, combat authority, presets, toggles and commands continue to recognize it.
 
@@ -31,3 +31,7 @@ The server’s `godlyEP` setting controls the default EP gate. The native skill 
 ## Gallery
 
 ![Tensura’s original six skill categories and the Godly entry](../media/native-skill-categories.png)
+
+---
+
+**Categories:** Tensura Myths · Skills
