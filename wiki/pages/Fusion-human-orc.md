@@ -14,7 +14,7 @@
 | Alignment | Chaos |
 | Aura gain weight | 4.055 |
 | Magicule gain weight | 1.945 |
-| Growth at a baseline of 3 | 12.165 aura / 5.835 magicules |
+| Growth at a baseline of 3, including +10% | 13.3815 aura / 6.4185 magicules |
 | Racial action | Concordance Pulse |
 | Registry ID | `wildhunt:convergence/human_orc` |
 | **Evolution** | |
@@ -41,7 +41,7 @@ This action is shared by Convergent races; their ancestry-derived traits, icons 
 
 ## EP growth
 
-Future native kill awards use **4.055 aura weight / 1.945 magicule weight**. This profile replaces the earlier primary-plus-half-secondary formula. Native gain attributes, penalties and caps still apply. Reversing the primary and secondary order produces this same race and growth profile.
+Future native kill awards use **4.055 aura weight / 1.945 magicule weight**. The inherited **10% EP gain bonus** multiplies both weights by 1.1 without changing their proportions. Native gain attributes, penalties and caps still apply. Reversing the primary and secondary order produces this same race and growth profile.
 
 ## Obtaining
 

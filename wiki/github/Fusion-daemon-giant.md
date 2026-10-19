@@ -14,7 +14,7 @@
 | Alignment | Chaos |
 | Aura gain weight | 3.035 |
 | Magicule gain weight | 2.965 |
-| Growth at a baseline of 3 | 9.105 aura / 8.895 magicules |
+| Growth at a baseline of 3, including +10% | 10.0155 aura / 9.7845 magicules |
 | Racial action | Concordance Pulse |
 | Registry ID | `wildhunt:convergence/daemon_giant` |
 | **Evolution** | |
@@ -41,7 +41,7 @@ This action is shared by Convergent races; their ancestry-derived traits, icons 
 
 ## EP growth
 
-Future native kill awards use **3.035 aura weight / 2.965 magicule weight**. This profile replaces the earlier primary-plus-half-secondary formula. Native gain attributes, penalties and caps still apply. Reversing the primary and secondary order produces this same race and growth profile.
+Future native kill awards use **3.035 aura weight / 2.965 magicule weight**. The inherited **10% EP gain bonus** multiplies both weights by 1.1 without changing their proportions. Native gain attributes, penalties and caps still apply. Reversing the primary and secondary order produces this same race and growth profile.
 
 ## Obtaining
 

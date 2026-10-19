@@ -11,9 +11,27 @@ final class GodlyGeometry {
         double fade=Math.clamp(Math.min(age/6d,(life-age)/10d),0,1),r=data.x;
         if(kind==ArtVisualEntity.CAUSAL_RAY){
             Vec3 axis=data.normalize(),side=axis.cross(Math.abs(axis.y)>.98?new Vec3(1,0,0):new Vec3(0,1,0)).normalize(),up=axis.cross(side).normalize();
-            for(int n=0;n<3;n++){
-                double w=(n==0?.5:n==1?.23:.075)*fade;int color=n==0?0x809B64FF:n==1?0xDDF3C66B:0xFFFFFFFF;
-                for(var normal:new Vec3[]{side,up})quad(pose,mesh,normal.scale(w),normal.scale(-w),data.subtract(normal.scale(w)),data.add(normal.scale(w)),color);
+            // A tube and crosswise rings remain visible when looking directly down the ray.
+            for(int layer=0;layer<3;layer++) {
+                double width=(layer==0?.28:layer==1?.13:.04)*fade;
+                int color=layer==0?0x809B64FF:layer==1?0xDDF3C66B:0xFFFFFFFF;
+                for(int n=0;n<8;n++) {
+                    double a=n*Math.PI/4,b=(n+1)*Math.PI/4;
+                    Vec3 p=side.scale(Math.cos(a)*width).add(up.scale(Math.sin(a)*width));
+                    Vec3 q=side.scale(Math.cos(b)*width).add(up.scale(Math.sin(b)*width));
+                    quad(pose,mesh,p,q,data.add(q),data.add(p),color);
+                    if(layer==2)quad(pose,mesh,data,data.add(p),data.add(q),data,color);
+                }
+            }
+            double length=data.length();
+            for(double along=1.5;along<length;along+=3) {
+                double radius=(.42+.06*Math.sin(age*.2-along))*fade;
+                Vec3 center=axis.scale(along);
+                for(int n=0;n<24;n++) {
+                    double a=n*Math.PI/12+age*.03,b=(n+1)*Math.PI/12+age*.03;
+                    Vec3 p=side.scale(Math.cos(a)).add(up.scale(Math.sin(a))),q=side.scale(Math.cos(b)).add(up.scale(Math.sin(b)));
+                    quad(pose,mesh,center.add(p.scale(radius)),center.add(p.scale(radius+.045)),center.add(q.scale(radius+.045)),center.add(q.scale(radius)),n%3==0?0xFFFFE6AD:0xBBC79CFF);
+                }
             }
             return;
         }
@@ -34,6 +52,14 @@ final class GodlyGeometry {
             return;
         }
         boolean verdict=kind==ArtVisualEntity.CAUSAL_VERDICT;
+        if(kind==ArtVisualEntity.CAUSAL_DOMAIN && data.y>r) {
+            ring(pose,mesh,data.y*fade,.05,-age*.009,0,0x666F5EAE,new Vec3(0,.05,0));
+            for(int n=0;n<12;n++) {
+                double angle=n*Math.PI/6+age*.006,rr=data.y-(age*.22+n)%Math.max(1,data.y-r);
+                Vec3 p=new Vec3(Math.cos(angle)*rr,.15,Math.sin(angle)*rr);
+                diamond(pose,mesh,p,.11*fade,0x99B895E5);
+            }
+        }
         Vec3 core=new Vec3(0,verdict?3:1.8,0);double charge=verdict?Math.clamp(age/60d,0,1):1;
         sphere(pose,mesh,core,(verdict?.5+charge*2.1:r*.22)*fade,0xF017102A);
         // Counter-rotating accretion bands: visible from above, below and the side.
@@ -91,5 +117,5 @@ final class GodlyGeometry {
         quad(p,v,c.add(0,r,0),c.add(r,0,0),c.add(0,-r,0),c.add(-r,0,0),color);
         quad(p,v,c.add(0,r,0),c.add(0,0,r),c.add(0,-r,0),c.add(0,0,-r),color);
     }
-    private static void quad(PoseStack.Pose p,VertexConsumer v,Vec3 a,Vec3 b,Vec3 c,Vec3 d,int color){for(var point:new Vec3[]{a,b,c,d,d,c,b,a})v.addVertex(p,(float)point.x,(float)point.y,(float)point.z).setColor(color);}
+    private static void quad(PoseStack.Pose p,VertexConsumer v,Vec3 a,Vec3 b,Vec3 c,Vec3 d,int color){for(var point:new Vec3[]{a,b,c,d})v.addVertex(p,(float)point.x,(float)point.y,(float)point.z).setColor(color);}
 }

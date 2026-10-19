@@ -6,6 +6,8 @@ public final class MythsConfig {
     private static final ModConfigSpec.Builder B = new ModConfigSpec.Builder();
     public static final ModConfigSpec.DoubleValue SECONDARY_EP = B.comment("Base EP required to choose a permanent secondary race.")
         .defineInRange("secondaryRaceEP", 5_000_000d, 0, 1e15);
+    public static final ModConfigSpec.DoubleValue SECONDARY_EVOLUTION_STEP = B.comment("Additional base EP earned after selection per secondary evolution. Native requirements also apply.")
+        .defineInRange("secondaryEvolutionEPStep", 2_500_000d, 1, 1e15);
     public static final ModConfigSpec.DoubleValue CONVERGENCE_EP = B.comment("Base EP required when both lineages are terminal and the player is awakened.")
         .defineInRange("convergenceEP", 10_000_000d, 0, 1e15);
     public static final ModConfigSpec.DoubleValue GODLY_EP = B.comment("Base EP required to evolve a mastered addon Ultimate into Aion.")

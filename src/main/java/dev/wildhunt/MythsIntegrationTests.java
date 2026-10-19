@@ -20,6 +20,7 @@ public final class MythsIntegrationTests {
         RaceAPI.getRaceFrom(p).setRace(WildHunt.HUNTERS.get(2).get(),false);
         EnergyHelper.setBaseMaxEP(p,20_000_000);TensuraStorages.getExistenceFrom(p).setTrueHero(true);
         TensuraStorages.getExistenceFrom(p).setAura(10_000_000);
+        TensuraStorages.getExistenceFrom(p).setMagicule(10_000_000);
         return p;
     }
     @GameTest(template="empty",timeoutTicks=100)
@@ -37,13 +38,17 @@ public final class MythsIntegrationTests {
         h.succeed();
     }
     @GameTest(template="empty",timeoutTicks=100)
-    public static void secondRaceUsesNativeEvolutionAndHalfBaseGain(GameTestHelper h) {
+    public static void secondRaceRequiresNewEPAndKeepsPrimarySplit(GameTestHelper h) {
         var p=player(h);DuoSystem.select(p,RaceFamily.SLIME);
         h.assertTrue(DuoSystem.secondary(p).orElseThrow().getRace()==TensuraRaces.SLIME.get(),"Secondary did not start at base Slime");
-        var gains=DuoSystem.gains(p,2,1);h.assertTrue(gains.aura()==2.5 && gains.magicules()==2,"Human-Slime weights differ from requested rule");
-        var message=DuoSystem.evolve(p,TensuraRaces.DEMON_SLIME.getId());
+        var gains=DuoSystem.gains(p,2,1);h.assertTrue(Math.abs(gains.aura()-2.2)<1e-9 && Math.abs(gains.magicules()-1.1)<1e-9,"Secondary bonus changed the native primary split");
+        var blocked=DuoSystem.evolve(p,TensuraRaces.DEMON_SLIME.getId());
+        h.assertTrue(DuoSystem.secondary(p).orElseThrow().getRace()==TensuraRaces.SLIME.get(),"High existing EP bypassed fresh-growth requirement: "+blocked);
+        h.assertTrue(DuoSystem.secondaryEvolutionEP(p)==22_500_000,"First secondary stage threshold did not use selection EP");
+        var message=evolveSecondary(p,TensuraRaces.DEMON_SLIME.getId());
+        h.assertTrue(DuoSystem.secondaryEvolutionEP(p)==25_000_000,"Second stage did not raise the EP gate");
         h.assertTrue(DuoSystem.secondary(p).orElseThrow().getRace()==TensuraRaces.DEMON_SLIME.get(),"Native awakened evolution failed: "+message);
-        DuoSystem.evolve(p,TensuraRaces.GOD_SLIME.getId());
+        evolveSecondary(p,TensuraRaces.GOD_SLIME.getId());
         h.assertTrue(DuoSystem.secondary(p).orElseThrow().getRace()==TensuraRaces.GOD_SLIME.get(),"Secondary never reaches final evolution");
         h.assertTrue(DuoSystem.gains(p,2,1).equals(gains),"Secondary stage incorrectly changes base ancestry gain");
         var serialized=DuoSystem.secondary(p).orElseThrow().toNBT();var restored=ManasRaceInstance.fromNBT(serialized);
@@ -58,17 +63,19 @@ public final class MythsIntegrationTests {
         double aa=EnergyHelper.getBaseMaxAura(p)-a,mm=EnergyHelper.getBaseMaxMagicule(p)-m;
         double attrA=p.getAttributeValue(io.github.manasmods.tensura.registry.attribute.TensuraAttributes.AURA_GAIN);
         double attrM=p.getAttributeValue(io.github.manasmods.tensura.registry.attribute.TensuraAttributes.MAGICULE_GAIN);
-        h.assertTrue(Math.abs(aa-attrA*2.5)<.0001 && Math.abs(mm-attrM*2)<.0001,"Native award did not apply the secondary base weights exactly once");h.succeed();
+        h.assertTrue(Math.abs(aa-attrA*2.2)<.0001 && Math.abs(mm-attrM*1.1)<.0001,"Native award did not apply the ten percent bonus exactly once");h.succeed();
     }
     @GameTest(template="empty",timeoutTicks=100)
     public static void convergenceRequiresBothTerminalAndIsOneTime(GameTestHelper h) {
         var p=player(h);DuoSystem.select(p,RaceFamily.SLIME);
         DuoSystem.convergence(p);h.assertTrue(!(RaceAPI.getRaceFrom(p).getRace().orElseThrow().getRace() instanceof FusionRace),"Base secondary was allowed to fuse");
-        DuoSystem.evolve(p,TensuraRaces.DEMON_SLIME.getId());DuoSystem.evolve(p,TensuraRaces.GOD_SLIME.getId());
+        evolveSecondary(p,TensuraRaces.DEMON_SLIME.getId());evolveSecondary(p,TensuraRaces.GOD_SLIME.getId());
         double before=EnergyHelper.getBaseMaxEP(p);var result=DuoSystem.convergence(p);
         h.assertTrue(DuoSystem.converged(p),"Convergence rejected: "+result);
         h.assertTrue(RaceAPI.getRaceFrom(p).getRace().orElseThrow().getRace()==FusionCatalog.RACES.get("human_slime").get(),"Wrong unique fusion registered");
         h.assertTrue(Math.abs(EnergyHelper.getBaseMaxEP(p)-before*1.25)<1,"Awakening gain did not apply once");
+        var profile=FusionCatalog.PROFILES.get("human_slime");var growth=DuoSystem.gains(p,2,1);
+        h.assertTrue(Math.abs(growth.aura()-profile.aura()*1.1)<1e-9 && Math.abs(growth.magicules()-profile.magicules()*1.1)<1e-9,"Fusion lost its profile or inherited growth bonus");
         double after=EnergyHelper.getBaseMaxEP(p);DuoSystem.convergence(p);
         h.assertTrue(EnergyHelper.getBaseMaxEP(p)==after,"Awakening can be farmed");
         var restored=ManasRaceInstance.fromNBT(RaceAPI.getRaceFrom(p).getRace().orElseThrow().toNBT());
@@ -105,9 +112,9 @@ public final class MythsIntegrationTests {
         var start=p.position();WildHunt.GODLY.get().onPressed(i,p,0,2);
         h.assertTrue(i.getOrCreateTag().contains("anchor_until"),"Causal checkpoint was not set");
         i.setCoolDown(0,2);p.teleportTo(start.x+2,start.y,start.z);p.setHealth(Math.max(1,p.getHealth()-20));
-        double aura=TensuraStorages.getExistenceFrom(p).getAura();WildHunt.GODLY.get().onPressed(i,p,0,2);
+        double aura=TensuraStorages.getExistenceFrom(p).getMagicule();WildHunt.GODLY.get().onPressed(i,p,0,2);
         h.assertTrue(p.position().distanceTo(start)<.1,"Reversal did not return to safe anchor");
-        h.assertTrue(TensuraStorages.getExistenceFrom(p).getAura()<aura,"Reversal restored or did not pay energy");
+        h.assertTrue(TensuraStorages.getExistenceFrom(p).getMagicule()<aura,"Reversal restored or did not pay energy");
         h.assertTrue(i.getCoolDown(2)==25,"Reversal bypasses its cooldown");h.succeed();
     }
 
@@ -116,14 +123,14 @@ public final class MythsIntegrationTests {
         var p=player(h);RaceAPI.getRaceFrom(p).setRace(TensuraRaces.DIVINE_HUMAN.get(),false);
         EnergyHelper.setBaseMaxEP(p,20_000_000);DuoSystem.select(p,RaceFamily.SLIME);
         var g=DuoSystem.gains(p,1,2);
-        h.assertTrue(g.aura()==1.5 && g.magicules()==3,"Duo overwrote the current Holy primary's growth weights");
+        h.assertTrue(Math.abs(g.aura()-1.1)<1e-9 && Math.abs(g.magicules()-2.2)<1e-9,"Duo overwrote the current Holy primary's growth weights");
         var clone=player(h);HunterEvents.onClone(new net.neoforged.neoforge.event.entity.player.PlayerEvent.Clone(clone,p,true));
         h.assertTrue(DuoSystem.secondary(clone).orElseThrow().getRace()==TensuraRaces.SLIME.get(),"Death lost secondary ancestry");
         DuoSystem.data(clone).putString("secondary_family","daemon");
         h.assertTrue(DuoSystem.secondaryFamily(p).orElseThrow()==RaceFamily.SLIME,"Death clone shares mutable Duo state");h.succeed();
     }
     @GameTest(template="empty",timeoutTicks=100)
-    public static void godlySeverPiercesEightTargetsAndChargesAura(GameTestHelper h) {
+    public static void godlyChannelPiercesEightTargetsAndChargesMagicules(GameTestHelper h) {
         var p=player(h);p.setPos(p.position().add(896,80,896));p.setYRot(-90);p.setXRot(0);
         var targets=new java.util.ArrayList<net.minecraft.world.entity.monster.Zombie>();
         for(int n=0;n<9;n++) {
@@ -132,18 +139,18 @@ public final class MythsIntegrationTests {
             z.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH).setBaseValue(1024);z.setHealth(1024);targets.add(z);
         }
         HunterData.learnReward(p,WildHunt.GODLY.get());var i=SkillAPI.getSkillsFrom(p).getSkill(WildHunt.GODLY.get()).orElseThrow();
-        double aura=TensuraStorages.getExistenceFrom(p).getAura();WildHunt.GODLY.get().onPressed(i,p,0,0);
+        double aura=TensuraStorages.getExistenceFrom(p).getMagicule();WildHunt.GODLY.get().onPressed(i,p,0,0);
         for(int n=0;n<8;n++)h.assertTrue(targets.get(n).getHealth()<1024,"Spatial ray missed pierced target "+n);
         h.assertTrue(targets.get(8).getHealth()==1024,"Spatial ray exceeded its eight-target cap");
-        h.assertTrue(Math.abs(aura-TensuraStorages.getExistenceFrom(p).getAura()-3200)<.01,"Spatial ray charged the wrong pool or cost");
-        h.assertTrue(i.getCoolDown(0)==4,"Spatial ray cooldown differs");
-        h.assertTrue(i.getOrCreateTag().getList("sever_echoes",10).size()==8,"Sever did not record exactly eight echo victims");h.succeed();
+        h.assertTrue(Math.abs(aura-TensuraStorages.getExistenceFrom(p).getMagicule()-800)<.01,"Spatial ray charged the wrong pool or cost");
+        h.assertTrue(i.getCoolDown(0)==0 && i.getOrCreateTag().contains("channel_until"),"Channel did not start before its release cooldown");
+        WildHunt.GODLY.get().onRelease(i,p,1,0,0);h.assertTrue(i.getCoolDown(0)==4 && !i.getOrCreateTag().contains("channel_until"),"Release did not stop the channel and start cooldown");h.succeed();
     }
     @GameTest(template="empty",timeoutTicks=100)
     public static void godlyVerdictCanCastAloneAndConsumesItsFieldForEmpowerment(GameTestHelper h) {
         var p=player(h);HunterData.learnReward(p,WildHunt.GODLY.get());var i=SkillAPI.getSkillsFrom(p).getSkill(WildHunt.GODLY.get()).orElseThrow();
-        double aura=TensuraStorages.getExistenceFrom(p).getAura();WildHunt.GODLY.get().onPressed(i,p,0,3);
-        h.assertTrue(TensuraStorages.getExistenceFrom(p).getAura()==aura-15000 && i.onCoolDown(3) && !i.getOrCreateTag().getBoolean("verdict_empowered"),"Standalone Verdict failed or received unearned empowerment");
+        double aura=TensuraStorages.getExistenceFrom(p).getMagicule();WildHunt.GODLY.get().onPressed(i,p,0,3);
+        h.assertTrue(TensuraStorages.getExistenceFrom(p).getMagicule()==aura-15000 && i.onCoolDown(3) && !i.getOrCreateTag().getBoolean("verdict_empowered"),"Standalone Verdict failed or received unearned empowerment");
         i.setCoolDown(0,3);
         WildHunt.GODLY.get().onPressed(i,p,0,1);h.assertTrue(i.getOrCreateTag().contains("horizon_until"),"Horizon did not persist its center/lifetime");
         WildHunt.GODLY.get().onPressed(i,p,0,3);
@@ -183,10 +190,10 @@ public final class MythsIntegrationTests {
         var energy=TensuraStorages.getExistenceFrom(p);energy.setSpiritualHealth(500);
         WildHunt.GODLY.get().onPressed(i,p,0,2);var anchor=p.blockPosition();i.setCoolDown(0,2);p.setPos(p.position().add(3,0,0));energy.setSpiritualHealth(100);
         h.getLevel().setBlockAndUpdate(anchor,net.minecraft.world.level.block.Blocks.STONE.defaultBlockState());
-        double aura=energy.getAura();WildHunt.GODLY.get().onPressed(i,p,0,2);
-        h.assertTrue(energy.getAura()==aura && i.getOrCreateTag().contains("anchor_until"),"Blocked return charged energy or discarded a valid pending checkpoint");
+        double aura=energy.getMagicule();WildHunt.GODLY.get().onPressed(i,p,0,2);
+        h.assertTrue(energy.getMagicule()==aura && i.getOrCreateTag().contains("anchor_until"),"Blocked return charged energy or discarded a valid pending checkpoint");
         h.getLevel().setBlockAndUpdate(anchor,net.minecraft.world.level.block.Blocks.AIR.defaultBlockState());WildHunt.GODLY.get().onPressed(i,p,0,2);
-        h.assertTrue(energy.getSpiritualHealth()==500 && energy.getAura()==aura-2400,"Reversal failed to restore recorded SHP or refunded energy");h.succeed();
+        h.assertTrue(energy.getSpiritualHealth()==500 && energy.getMagicule()==aura-2400,"Reversal failed to restore recorded SHP or refunded energy");h.succeed();
     }
     @GameTest(template="empty",timeoutTicks=100)
     public static void horizonBendsHostileProjectilesButPreservesFriendlyShots(GameTestHelper h) {
@@ -209,15 +216,85 @@ public final class MythsIntegrationTests {
     }
 
     @GameTest(template="empty",timeoutTicks=100)
-    public static void severEchoesStrikeTwiceWithoutChargingAgain(GameTestHelper h) {
+    public static void channelTracksAimBillsPulsesAndStopsOnRelease(GameTestHelper h) {
         var p=player(h);p.setPos(p.position().add(0,100,0));p.setYRot(-90);p.setXRot(0);
-        var pos=p.position().add(3,0,0);h.getLevel().getChunk(net.minecraft.core.BlockPos.containing(pos));
-        var target=h.spawnWithNoFreeWill(EntityType.ZOMBIE,2,1,2);target.setPos(pos);target.setNoGravity(true);
-        target.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH).setBaseValue(1024);target.setHealth(1024);target.setInvulnerable(true);
-        HunterData.learnReward(p,WildHunt.GODLY.get());var i=SkillAPI.getSkillsFrom(p).getSkill(WildHunt.GODLY.get()).orElseThrow();WildHunt.GODLY.get().onPressed(i,p,0,0);target.setInvulnerable(false);
-        double aura=TensuraStorages.getExistenceFrom(p).getAura();
-        h.runAfterDelay(13,()->{WildHunt.GODLY.get().tickActive(i,p);h.assertTrue(target.getHealth()<1024 && i.getOrCreateTag().getInt("echo_count")==1,"First echo: hp="+target.getHealth()+" count="+i.getOrCreateTag().getInt("echo_count")+" due="+i.getOrCreateTag().getLong("echo_next")+" now="+h.getLevel().getGameTime()+" victims="+i.getOrCreateTag().getList("sever_echoes",10).size()+" exists="+(h.getLevel().getEntity(target.getUUID())!=null)+" los="+p.hasLineOfSight(target)+" alive="+target.isAlive()+" invul="+target.isInvulnerable()+" hurt="+target.invulnerableTime+" shp="+TensuraStorages.getExistenceFrom(target).getSpiritualHealth());float after=target.getHealth();
-            h.runAfterDelay(13,()->{WildHunt.GODLY.get().tickActive(i,p);h.assertTrue(target.getHealth()<after && !i.getOrCreateTag().contains("sever_echoes"),"Second causal echo did not strike or kept its victims active");h.assertTrue(TensuraStorages.getExistenceFrom(p).getAura()==aura,"Echoes charged aura again");h.succeed();});
+        var first=tank(h,p.position().add(3,0,0));var second=tank(h,p.position().add(0,0,3));
+        HunterData.learnReward(p,WildHunt.GODLY.get());var i=SkillAPI.getSkillsFrom(p).getSkill(WildHunt.GODLY.get()).orElseThrow();
+        var energy=TensuraStorages.getExistenceFrom(p);double aura=energy.getAura();WildHunt.GODLY.get().onPressed(i,p,0,0);
+        float after=first.getHealth();h.assertTrue(after<1024 && second.getHealth()==1024,"Channel opener did not follow initial aim");
+        double mp=energy.getMagicule();p.setYRot(0);
+        h.runAfterDelay(11,()->{
+            h.assertTrue(WildHunt.GODLY.get().onHeld(i,p,11,0),"Native held callback did not continue channel");
+            h.assertTrue(second.getHealth()<1024 && first.getHealth()==after,"Channel pulse did not follow changed aim");
+            h.assertTrue(energy.getMagicule()==mp-400 && energy.getAura()==aura,"Channel billed the wrong resource or pulse cost");
+            WildHunt.GODLY.get().onRelease(i,p,11,0,0);
+            h.assertTrue(!WildHunt.GODLY.get().onHeld(i,p,12,0) && !i.getOrCreateTag().hasUUID("channel_visual"),"Released channel retained a damaging beam");h.succeed();
         });
+    }
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void channelStopsWhenMagiculesAreExhausted(GameTestHelper h) {
+        var p=player(h);HunterData.learnReward(p,WildHunt.GODLY.get());var i=SkillAPI.getSkillsFrom(p).getSkill(WildHunt.GODLY.get()).orElseThrow();
+        TensuraStorages.getExistenceFrom(p).setMagicule(800);WildHunt.GODLY.get().onPressed(i,p,0,0);
+        i.getOrCreateTag().putLong("channel_next",0);
+        h.assertTrue(!WildHunt.GODLY.get().onHeld(i,p,10,0) && !i.getOrCreateTag().contains("channel_until") && i.getCoolDown(0)==4,"Unfunded channel continued");h.succeed();
+    }
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void godlyPassiveDefeatsResistancesWithoutDeletingThem(GameTestHelper h) {
+        var p=player(h);HunterData.learnReward(p,WildHunt.GODLY.get());var i=SkillAPI.getSkillsFrom(p).getSkill(WildHunt.GODLY.get()).orElseThrow();
+        var target=tank(h,p.position().add(2,100,0));
+        var nullification=io.github.manasmods.tensura.registry.skill.ResistanceSkills.SPATIAL_ATTACK_NULLIFICATION.get();
+        var resistance=io.github.manasmods.tensura.registry.skill.ResistanceSkills.SPATIAL_ATTACK_RESISTANCE.get();
+        HunterData.learnReward(target,nullification);HunterData.learnReward(target,resistance);
+        var ni=SkillAPI.getSkillsFrom(target).getSkill(nullification).orElseThrow();ni.setToggled(true);
+        var ri=SkillAPI.getSkillsFrom(target).getSkill(resistance).orElseThrow();ri.setToggled(true);
+        var source=WildHunt.GODLY.get().createSource(i,p,io.github.manasmods.tensura.damage.TensuraDamageTypes.SPACE_ELEMENTAL,0);
+        h.assertTrue(!nullification.onBeingDamaged(ni,target,source,100),"Test nullification did not initially reject spatial damage");
+        WildHunt.GODLY.get().onToggleOn(i,p);
+        h.assertTrue(nullification.onBeingDamaged(ni,target,source,100),"Aion did not degrade native nullification");
+        var amount=io.github.manasmods.manascore.network.api.util.Changeable.of(100f);
+        h.assertTrue(resistance.onTakenDamage(ri,target,source,amount) && amount.get()==100f,"Resistance retained damage reduction against Aion");
+        GodlySkill.modifyDamage(SkillAPI.getSkillsFrom(target),target,source,amount);
+        h.assertTrue(Math.abs(amount.get()-135)<.001,"Passive bonus against non-Godly target missing");
+        HunterData.learnReward(target,WildHunt.GODLY.get());amount.set(100f);GodlySkill.modifyDamage(SkillAPI.getSkillsFrom(target),target,source,amount);
+        h.assertTrue(amount.get()==100f,"Godly owner incorrectly took the non-Godly damage bonus");
+        // Exercise the complete native damage path, including attribute resistance and the registered bonus hook.
+        target.getAttribute(io.github.manasmods.tensura.registry.attribute.TensuraAttributes.SPACE_RESISTANCE).setBaseValue(.9);
+        float before=target.getHealth();target.hurt(source,100);
+        h.assertTrue(before-target.getHealth()>50,"Native elemental resistance still blocked the active Aion caster's attack");
+        target.invulnerableTime=0;WildHunt.GODLY.get().onToggleOff(i,p);
+        before=target.getHealth();target.hurt(source,100);
+        h.assertTrue(target.getHealth()==before,"Turning Aion off did not restore the native nullification damage gate");
+        h.assertTrue(ni.isToggled() && ri.isToggled() && !nullification.onBeingDamaged(ni,target,source,100),"Aion permanently removed the target's defenses");h.succeed();
+    }
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void proximitySlowIsStrongerNearbyAndExpires(GameTestHelper h) {
+        var p=player(h);p.setPos(p.position().add(0,100,0));HunterData.learnReward(p,WildHunt.GODLY.get());
+        var i=SkillAPI.getSkillsFrom(p).getSkill(WildHunt.GODLY.get()).orElseThrow();WildHunt.GODLY.get().onToggleOn(i,p);
+        var near=tank(h,p.position().add(2,0,0));var far=tank(h,p.position().add(12,0,0));
+        h.runAfterDelay(6,()->{
+            // Fake players do not tick, so explicitly run the caster at a five-tick aura boundary.
+            h.runAtTickTime(h.getTick()+(5-h.getLevel().getGameTime()%5)%5,()->{
+                WildHunt.GODLY.get().tickActive(i,p);
+                var id=WildHunt.id("causal_dilation");var a=near.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MOVEMENT_SPEED).getModifier(id);var b=far.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MOVEMENT_SPEED).getModifier(id);
+                h.assertTrue(a!=null && b!=null && a.amount()<b.amount(),"Proximity dilation did not strengthen toward the caster");
+                WildHunt.GODLY.get().onToggleOff(i,p);
+                h.runAfterDelay(11,()->{GodlySkill.tickSlow(near);GodlySkill.tickSlow(far);h.assertTrue(near.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MOVEMENT_SPEED).getModifier(id)==null && far.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MOVEMENT_SPEED).getModifier(id)==null,"Slow survived its short lease");h.succeed();});
+            });
+        });
+    }
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void horizonPullsOutsideItsDamagingCore(GameTestHelper h) {
+        var p=player(h);p.setPos(p.position().add(0,100,0));HunterData.learnReward(p,WildHunt.GODLY.get());var i=SkillAPI.getSkillsFrom(p).getSkill(WildHunt.GODLY.get()).orElseThrow();
+        var center=p.position().add(0,1,0);var target=tank(h,center.add(18,0,0));
+        ApexArts.point(i.getOrCreateTag(),"horizon",center);i.getOrCreateTag().putString("dimension",p.level().dimension().location().toString());i.getOrCreateTag().putLong("horizon_until",p.level().getGameTime()+200);
+        WildHunt.GODLY.get().tickActive(i,p);
+        h.assertTrue(target.getDeltaMovement().x<0 && target.getHealth()==1024,"Outer Horizon failed to pull without damage");h.succeed();
+    }
+    private static String evolveSecondary(net.minecraft.server.level.ServerPlayer p,net.minecraft.resources.ResourceLocation id) {
+        EnergyHelper.setBaseMaxEP(p,DuoSystem.secondaryEvolutionEP(p));return DuoSystem.evolve(p,id);
+    }
+    private static net.minecraft.world.entity.monster.Zombie tank(GameTestHelper h,net.minecraft.world.phys.Vec3 pos) {
+        h.getLevel().getChunk(net.minecraft.core.BlockPos.containing(pos));var z=h.spawnWithNoFreeWill(EntityType.ZOMBIE,2,1,2);z.setPos(pos);z.setNoGravity(true);
+        z.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH).setBaseValue(1024);z.setHealth(1024);return z;
     }
 }

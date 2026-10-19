@@ -1,6 +1,6 @@
 package dev.wildhunt.myths;
 
-/** Energy weights are additive, not renormalized: a second lineage is a real gain. */
+/** A second lineage adds ten percent growth without changing energy proportions. */
 public final class DuoRules {
     private DuoRules() {}
     public record Gains(double aura, double magicules) {
@@ -8,7 +8,7 @@ public final class DuoRules {
             if (!Double.isFinite(aura) || !Double.isFinite(magicules) || aura <= 0 || magicules <= 0)
                 throw new IllegalArgumentException("Energy gains must be positive and finite");
         }
-        public Gains plusHalf(Gains secondary) { return new Gains(aura + secondary.aura * .5, magicules + secondary.magicules * .5); }
+        public Gains withDuoBonus() { return new Gains(aura * 1.1, magicules * 1.1); }
         public double auraFor(double nativeBase) { return aura * nativeBase; }
         public double magiculesFor(double nativeBase) { return magicules * nativeBase; }
     }

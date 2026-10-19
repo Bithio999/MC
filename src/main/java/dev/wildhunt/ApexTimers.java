@@ -53,7 +53,7 @@ public final class ApexTimers {
     }
     public static void onEntityTick(EntityTickEvent.Post event) {
         if (!(event.getEntity() instanceof LivingEntity entity) || entity.level().isClientSide()) return;
-        AuraRegenerationSkill.tick(entity);
+        AuraRegenerationSkill.tick(entity);GodlySkill.tickSlow(entity);
         var data = entity.getPersistentData().getCompound("wildhunt");
         // Legacy marks no longer affect any attack and can be discarded on load.
         if (data.contains("oil_stacks") || data.contains("rime_stacks"))

@@ -43,13 +43,16 @@ public final class MythsEvolutionScreen extends EvolutionScreen {
         if(state.getBoolean("converged"))return false;
         if(convergence)return selectedEvolution!=null && state.getBoolean("primary_final") && state.getBoolean("secondary_final") && state.getBoolean("awakened") && state.getDouble("ep")>=state.getDouble("convergence_ep");
         if(selectedEvolution==null)return false;
-        if(state.getString("choice_action").equals("evolve"))return row().getDouble("progress")>=100;
+        if(state.getString("choice_action").equals("evolve"))return row().getBoolean("requirements_met");
         return state.getBoolean("primary_final") && state.getBoolean("awakened") && state.getDouble("ep")>=state.getDouble("secondary_ep");
     }
     @Override protected void init() {
         super.init();
         // Remove only the native primary-race actions. Navigation, search and scrolling remain native.
         for(var child:List.copyOf(children()))if(child instanceof AbstractWidget w && w.getY()==guiTop+142 && (w.getX()==guiLeft+98 || w.getX()==guiLeft+160))removeWidget(w);
+        // Native Evolution uses the status tab as selected; replace it with our side tab.
+        for(var child:List.copyOf(children()))if(child instanceof AbstractWidget w && w.getX()==guiLeft+233 && w.getY()==guiTop+30+((convergence?6:5)-4)*26)removeWidget(w);
+        addRenderableWidget(new SimpleButton(guiLeft+233,guiTop+30,21,24,ScreenHelper.STATUS_TAB,null,ScreenHelper.getMenuName(4),b->ScreenHelper.openScreen(4)));
         var back=new SimpleButton(guiLeft+98,guiTop+142,43,13,BUTTON,Component.literal("Back"),Component.literal("Return to primary evolution"),b->minecraft.setScreen(new EvolutionScreen()));
         // Evolution's native return button opens Status; keep that same navigation here.
         addRenderableWidget(back);
@@ -66,12 +69,13 @@ public final class MythsEvolutionScreen extends EvolutionScreen {
         String text=(confirming?"Confirm permanent ancestry: "+selectedEvolution.getName().getString()+"\n":"")+"Primary final: "+yes(state.getBoolean("primary_final"))+"\n";
         if(convergence)text+="Secondary final: "+yes(state.getBoolean("secondary_final"))+"\n";
         text+="True Hero / True Demon Lord: "+yes(state.getBoolean("awakened"))+"\nBase EP: "+String.format(Locale.ROOT,"%,.0f / %,.0f",state.getDouble("ep"),state.getDouble(convergence?"convergence_ep":"secondary_ep"));
-        return text+(convergence?"\nResult: "+state.getString("fusion_name")+"\nGrowth: "+state.getDouble("fusion_aura")+" aura / "+state.getDouble("fusion_magicules")+" magicules":"\n"+row().getString("detail"));
+        return text+(convergence?"\nResult: "+state.getString("fusion_name")+"\nGrowth: "+state.getDouble("fusion_aura")+" aura / "+state.getDouble("fusion_magicules")+" magicules, +10% EP gain":"\n"+row().getString("detail"));
     }
     private static String yes(boolean b){return b?"Yes":"No";}
     @Override public void renderBackground(GuiGraphics g,int mx,int my,float partial) {
         g.blit(BACKGROUND,guiLeft,guiTop,0,0,imageWidth,imageHeight);
-        ScreenHelper.renderTabIcon(g,this,4,guiLeft,guiTop,mx,my);
+        g.drawString(font,Component.literal(convergence?"Awakening":"Secondary Race"),guiLeft+105,guiTop+10,0xffffff);
+        ScreenHelper.renderTabIcon(g,this,convergence?6:5,guiLeft,guiTop,mx,my);
         float size=player.getScale()>1?1/player.getScale():1;
         RenderHelper.renderEntityInInventoryFollowsMouse(g,guiLeft+6,guiTop+55,guiLeft+54,guiTop+126,30*size,mx,my,false,player);
         renderPlayerStats(g,mx,my);renderScrollBar(g,mx,my);renderEvolutionsList(g,mx,my);
@@ -81,7 +85,7 @@ public final class MythsEvolutionScreen extends EvolutionScreen {
         boolean hover=mx>=guiLeft+97 && mx<guiLeft+204 && my>=guiTop+105 && my<guiTop+136;
         RenderHelper.drawScrollableTextInAreaSetHighlight(g,font,lines,guiLeft+97,guiTop+105,107,31,1,textStartIndex,Math.min(textStartIndex+3,lines.size()),hover,0xffffff,863042);
         if(hover)setTooltipForNextRenderPass(description);
-        int fill=ready()?58:0;if(fill>0)g.blit(BACKGROUND,guiLeft+213,guiTop+93,13,164,6,fill);
+        int fill=!convergence && state.getString("choice_action").equals("evolve")?Math.clamp((int)Math.round(58*row().getDouble("progress")/100),0,58):ready()?58:0;if(fill>0)g.blit(BACKGROUND,guiLeft+213,guiTop+93,13,164,6,fill);
         if(!state.getString("message").isEmpty())setTooltipForNextRenderPass(Component.literal(state.getString("message")));
         renderWidgets(g,mx,my,partial);
     }

@@ -141,7 +141,7 @@ presets and carries its longest remaining cooldown to every new mode.
 Duo state stores independent native `ManasRaceInstance` NBT under the existing
 player-persistent addon data. It records both chosen ancestries and survives
 ordinary death through a deep clone. Secondary evolution uses the instance's
-native next stages and requirement progress. Shared secondary attribute
+native next stages and requirement progress, plus a server-side cumulative EP gate measured from selection. Each stage needs another configured 2.5M base EP; the origin and completed count persist across death and reload. Older independent secondary saves begin their next growth interval on the first new progression check. Shared secondary attribute
 modifiers have distinct IDs and half the native stage's amount; primary body,
 size and energy caps are retained. Secondary intrinsic skills use native
 learning. Racial hurt/effect/attack reactions and one-second native ticks are
@@ -152,8 +152,7 @@ duration, cooldowns and suppression rules. It starts unbound.
 `DuoEnergyMixin` changes only the alignment weight operands inside native
 `DeathHandler.gainEPEntity`. It does not award a second kill, replace gain
 attributes, or bypass the native caps and PvP penalties. Unfused growth is the
-current primary race's alignment plus half the **selected secondary base**
-ancestry's alignment. Fused growth is its registered pair profile. Existing
+native current alignment with a flat 1.1 multiplier on both weights. Fused growth uses its registered pair profile with the same inherited 1.1 multiplier. No secondary ancestry weights are added. Existing
 energy is not redistributed when choosing or evolving a secondary.
 
 Convergence calls native `RaceStorage.setRace` to install one of 105 actual
@@ -172,18 +171,16 @@ requirements or stat values. All changes run on the server thread; menu data is
 a server snapshot. Common registration does not load client screen classes.
 The server configuration is `serverconfig/tensura-myths-server.toml` in the world.
 Aion transient checkpoints and delayed attacks clear on login, dimension change
-and respawn. Reversal preserves energy, inventory, SHP and cooldowns and rejects
+and respawn. Reversal preserves energy, inventory and cooldowns while restoring recorded HP/SHP and rejects
 an obstructed recorded destination before charging the return cast.
 
-## Native menu integration in 0.9.0
+## Native menu integration
 
-The standalone Myths panel is removed. The six native skill categories are no
-longer cancelled or redrawn by the addon: a tail injection only appends the
-native-styled Godly entry. Godly selection and ascension both use the native
+The standalone Myths panel is removed. The six native skill category buttons retain their original 32px textures and hover behavior. A tail injection arranges them in three columns and appends a matching original 32px Godly icon. The left panel reuses a clean strip of native blue artwork to fit seven buttons without the old six socket positions showing through. No base-mod artwork is bundled. Godly selection and ascension both use the native
 `AbilitySelectionScreen`. Ascension filters owned Myths Ultimates and exposes an
 explicit native action; the regular Godly page lists learned Godly skills.
 
-Native Evolution navigation exposes Race, Secondary and Awaken pages.
+Native `ScreenHelper` right-side slots 5 and 6 open Secondary Race and Convergent Awakening on all screens that use its menu tabs. They use native blank right-tab frames and original 16px glyphs. Evolution header navigation is removed. Status replaces only the race-name rendering with a bounded scrolling `Primary/Secondary` label and full hover text; convergence displays the unified native race name. Read-only silent snapshots refresh Status without opening another screen.
 `MythsEvolutionScreen` extends native `EvolutionScreen`, retaining its background,
 character renderer, widgets, search, list selection and scrolling behavior. It
 removes only the primary evolution/track actions and supplies server-authorized
@@ -193,7 +190,8 @@ sent by the server, including actual registry IDs for candidate icons. The
 
 Aion uses separate synchronized visual entities for its gravity domain, anchor,
 Verdict telegraph and impacts, plus native Gravity, Space and Recovery circles.
-Consuming a Horizon discards its owned geometry and circle immediately. Echo
-victims are bounded to eight UUIDs, recheck range/visibility/protection, and clear
-with other transient effects on relog, death/dimension changes or forgetting.
-Native damage cooldowns, space damage defenses and friendly/PvP rules still apply.
+Consuming a Horizon discards its owned geometry and circle immediately. Its pull radius is 24 blocks while damage remains within 10. The visual carries both radii.
+
+Worldline Sever uses native ManasCore press/held/release callbacks. A server-owned six-second window, aim ray, half-second pulse schedule and paid magicule costs prevent continuing damage after release or exhaustion. Cooldown starts when the channel ends. Its visual entity updates position/end vector over native entity synchronization; relog, death, suppression and dimension change stop it. Legacy echo victims are discarded.
+
+Aion costs magicules throughout, including passive upkeep and channel pulses. The native pre-calculation event adds a single 35% outgoing bonus against targets without a Godly-tagged skill. Scoped hooks in `ResistSkill.isResistanceBypass` / `isNullificationBypass` and `DamagingHandler.applyResistanceAttributes` remove resistance protection only for an active Aion caster's attacks. They never remove, retoggle or alter learned defenses or their mastery. Armor, barriers, other authority/skill checks and PvP rules remain native. A short-lived, non-stacking transient movement modifier slows eligible enemies in a 16-block aura by proximity; its ten-tick lease expires after leaving or toggle-off.

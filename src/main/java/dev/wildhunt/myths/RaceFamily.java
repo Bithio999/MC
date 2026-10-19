@@ -2,7 +2,6 @@ package dev.wildhunt.myths;
 
 import io.github.manasmods.manascore.race.api.ManasRace;
 import io.github.manasmods.manascore.race.api.RaceAPI;
-import io.github.manasmods.tensura.race.TensuraRace;
 import net.minecraft.resources.ResourceLocation;
 import java.util.*;
 
@@ -32,10 +31,6 @@ public enum RaceFamily {
     public String key() { return name().toLowerCase(Locale.ROOT); }
     public ManasRace baseRace() { return RaceAPI.getRaceRegistry().get(ResourceLocation.fromNamespaceAndPath("tensura", base)); }
     public ManasRace finalRace() { return RaceAPI.getRaceRegistry().get(ResourceLocation.fromNamespaceAndPath("tensura", terminal)); }
-    public DuoRules.Gains baseGains() {
-        var a=((TensuraRace)baseRace()).getAlignment();
-        return new DuoRules.Gains(a.getAuraGainMultiplier(), a.getMagiculeGainMultiplier());
-    }
     public static Optional<RaceFamily> from(ManasRace race) {
         var id=race.getRegistryName();
         if(id==null) return Optional.empty();

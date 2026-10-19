@@ -32,6 +32,7 @@ public final class MythsNetwork {
         registrar.playToServer(Request.TYPE,Request.CODEC,(payload,context)->context.enqueueWork(()->{
             if(!(context.player() instanceof ServerPlayer p))return;
             if(java.util.Set.of("race_press","race_hold","race_release").contains(payload.action())) {SecondaryAbility.input(p,payload.action());return;}
+            if(payload.action().equals("sync")){var sync=DuoSystem.data(p);long time=p.level().getGameTime();if(sync.contains("sync_time") && time-sync.getLong("sync_time")<10)return;sync.putLong("sync_time",time);var snapshot=snapshot(p,"");snapshot.putBoolean("silent",true);PacketDistributor.sendToPlayer(p,new State(snapshot));return;}
             long now=p.serverLevel().getGameTime(); var d=DuoSystem.data(p);
             if(d.contains("request_time") && now-d.getLong("request_time")<3)return;
             d.putLong("request_time",now);
@@ -62,14 +63,15 @@ public final class MythsNetwork {
         var choices=new ListTag();
         if(DuoSystem.secondary(p).isEmpty() && !DuoSystem.converged(p)) {
             for(var family:RaceFamily.values())if(!DuoSystem.primaryFamily(p).equals(java.util.Optional.of(family))) {
-                var row=new CompoundTag();row.putString("id",family.key());row.putString("race",family.baseRace().getRegistryName().toString());row.putString("name",family.title);row.putString("detail","Choose permanent secondary ancestry. EP weights +"+family.baseGains().aura()*.5+" aura / +"+family.baseGains().magicules()*.5+" magicules.");choices.add(row);
+                var row=new CompoundTag();row.putString("id",family.key());row.putString("race",family.baseRace().getRegistryName().toString());row.putString("name",family.title);row.putString("detail","Choose permanent secondary ancestry. +10% EP gain, retaining your primary energy split. Inherited by Convergent Awakening.");choices.add(row);
             }
             tag.putString("choice_action","select");
         } else if(!DuoSystem.converged(p)) {
             var secondary=DuoSystem.secondary(p).orElseThrow();
             for(var next:DuoSystem.options(p,secondary)) {
                 var row=new CompoundTag();row.putString("id",next.getRegistryName().toString());row.putString("race",next.getRegistryName().toString());row.putString("name",next.getName().getString());
-                float progress=secondary.getEvolutionProgress(p,next);row.putDouble("progress",progress);row.putString("detail",String.format(java.util.Locale.ROOT,"Native requirements: %.0f%%",progress));
+                double required=DuoSystem.secondaryEvolutionEP(p);
+                float progress=(float)Math.min(secondary.getEvolutionProgress(p,next),Math.min(100,EnergyHelper.getBaseMaxEP(p)/required*100));row.putDouble("progress",progress);row.putBoolean("requirements_met",secondary.getEvolutionProgress(p,next)>=100 && EnergyHelper.getBaseMaxEP(p)>=required && Double.isFinite(EnergyHelper.getBaseMaxEP(p)));row.putString("detail",String.format(java.util.Locale.ROOT,"Requirements: %.0f%%; secondary evolution base EP: %,.0f / %,.0f",progress,EnergyHelper.getBaseMaxEP(p),required));
                 if(next instanceof io.github.manasmods.tensura.race.TensuraRace race) {
                     var lines=new StringBuilder();
                     race.getEvolutionRequirements(secondary,p).forEach((requirement,weight)->lines.append(requirement.getRequirementComponent(secondary,p).getString()).append("; "));

@@ -6,7 +6,7 @@
 
 ## Obtaining
 
-Open Tensura’s **Evolution** menu and select **Awaken**. Both lineages must be at a final stage with no further native evolution. You must also be a **True Hero or True Demon Lord** and have at least **10,000,000 base EP**. A base or partially evolved secondary cannot awaken.
+Open Tensura’s menu and select the **Convergent Awakening tab on the right**, below the Secondary Race tab. Both lineages must be at a final stage with no further native evolution. You must also be a **True Hero or True Demon Lord** and have at least **10,000,000 base EP**. A base or partially evolved secondary cannot awaken.
 
 The primary becomes the actual fused native race. Its predecessor state and the secondary’s native state are saved for inherited reactions and ticks. The fusion has no next evolution. The independent secondary racial key stops operating; the normal racial key uses **Concordance Pulse** instead.
 
@@ -17,7 +17,7 @@ The primary becomes the actual fused native race. Its predecessor state and the 
 - A new intrinsic list drawn from both native final ancestral races, subject to native learning rules, with previously learned skills retained.
 - Native race tags drawn from both final ancestral races.
 - A fused attribute profile derived from 65% of both native final stages, plus 80 HP, 1,500 SHP and a pair-dependent attack bonus; the total racial HP bonus is capped at 1,000.
-- A distinct future EP growth profile, replacing the Duo formula.
+- A distinct future EP growth profile with the inherited **10% EP gain bonus**.
 
 Shared racial action: **Concordance Pulse** heals 10% maximum HP up to 80 and pushes nearby enemies. It costs 1,500 aura, has a 30-second cooldown and renders the pair's ancestral colors. The 105 races share this action; they do not each add a separate combat kit.
 
@@ -25,7 +25,7 @@ Native final-stage attributes depend on Tensura’s server race configuration. T
 
 ## Race catalog
 
-Weights multiply the same baseline used by native aura/magicule gain attributes. Every profile totals six, twice the default single-race growth budget of three. This does not bypass native EP caps. The individual pages show an example at a baseline of three.
+Weights multiply the same baseline used by native aura/magicule gain attributes. Every unboosted profile totals six, twice the default single-race growth budget of three. The inherited 10% bonus multiplies both weights by 1.1 without changing their ratio. This does not bypass native EP caps. The individual pages show an example at a baseline of three, including that bonus.
 
 | Ancestral pair | Convergent race | Aura weight | Magicule weight |
 | --- | --- | ---: | ---: |
@@ -141,6 +141,6 @@ Weights multiply the same baseline used by native aura/magicule gain attributes.
 
 ## Configuration
 
-The world’s `serverconfig/tensura-myths-server.toml` controls `secondaryRaceEP` (5M), `convergenceEP` (10M), `godlyEP` (12M) and `convergenceEnergyMultiplier` (1.25). Server requirements are checked again when a request arrives. Client button state is not authoritative.
+The world’s `serverconfig/tensura-myths-server.toml` controls `secondaryRaceEP` (5M), `secondaryEvolutionEPStep` (2.5M new EP per stage), `convergenceEP` (10M), `godlyEP` (12M) and `convergenceEnergyMultiplier` (1.25). Server requirements are checked again when a request arrives. Client button state is not authoritative.
 
 Ordinary death and relogging retain the fused race and ancestry data. Reincarnation or an external replacement of the primary race resets the previous Duo life. There is no normal menu action to swap an existing secondary or repeatedly claim the awakening bonus.

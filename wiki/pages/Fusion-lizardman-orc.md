@@ -14,7 +14,7 @@
 | Alignment | Chaos |
 | Aura gain weight | 4.04 |
 | Magicule gain weight | 1.96 |
-| Growth at a baseline of 3 | 12.12 aura / 5.88 magicules |
+| Growth at a baseline of 3, including +10% | 13.332 aura / 6.468 magicules |
 | Racial action | Concordance Pulse |
 | Registry ID | `wildhunt:convergence/lizardman_orc` |
 | **Evolution** | |
@@ -41,7 +41,7 @@ This action is shared by Convergent races; their ancestry-derived traits, icons 
 
 ## EP growth
 
-Future native kill awards use **4.04 aura weight / 1.96 magicule weight**. This profile replaces the earlier primary-plus-half-secondary formula. Native gain attributes, penalties and caps still apply. Reversing the primary and secondary order produces this same race and growth profile.
+Future native kill awards use **4.04 aura weight / 1.96 magicule weight**. The inherited **10% EP gain bonus** multiplies both weights by 1.1 without changing their proportions. Native gain attributes, penalties and caps still apply. Reversing the primary and secondary order produces this same race and growth profile.
 
 ## Obtaining
 

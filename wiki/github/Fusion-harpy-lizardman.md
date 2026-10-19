@@ -14,7 +14,7 @@
 | Alignment | Chaos |
 | Aura gain weight | 3.83 |
 | Magicule gain weight | 2.17 |
-| Growth at a baseline of 3 | 11.49 aura / 6.51 magicules |
+| Growth at a baseline of 3, including +10% | 12.639 aura / 7.161 magicules |
 | Racial action | Concordance Pulse |
 | Registry ID | `wildhunt:convergence/harpy_lizardman` |
 | **Evolution** | |
@@ -41,7 +41,7 @@ This action is shared by Convergent races; their ancestry-derived traits, icons 
 
 ## EP growth
 
-Future native kill awards use **3.83 aura weight / 2.17 magicule weight**. This profile replaces the earlier primary-plus-half-secondary formula. Native gain attributes, penalties and caps still apply. Reversing the primary and secondary order produces this same race and growth profile.
+Future native kill awards use **3.83 aura weight / 2.17 magicule weight**. The inherited **10% EP gain bonus** multiplies both weights by 1.1 without changing their proportions. Native gain attributes, penalties and caps still apply. Reversing the primary and secondary order produces this same race and growth profile.
 
 ## Obtaining
 

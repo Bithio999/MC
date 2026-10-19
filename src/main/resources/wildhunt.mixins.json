@@ -7,7 +7,9 @@
     "ReincarnationSkillPoolMixin",
     "AuraHealingMixin",
     "DuoEnergyMixin",
-    "DuoRaceMixin"
+    "DuoRaceMixin",
+    "GodlyResistanceMixin",
+    "GodlyResistanceAttributesMixin"
   ],
   "injectors": {
     "defaultRequire": 1
@@ -15,6 +17,7 @@
   "client": [
     "client.MythsCategoryMixin",
     "client.MythsUltimateFilterMixin",
-    "client.MythsEvolutionMenuMixin"
+    "client.MythsTabsMixin",
+    "client.MythsStatusMixin"
   ]
 }

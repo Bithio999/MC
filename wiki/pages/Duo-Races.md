@@ -6,7 +6,7 @@
 
 ## Obtaining
 
-Open Tensura’s **Evolution** menu and select **Secondary**. `/myths` is an optional shortcut to that native page. All of these conditions are required:
+Open Tensura’s menu and select the **Secondary Race tab on the right**, directly below Status. `/myths` is an optional shortcut to that native page. All of these conditions are required:
 
 | Requirement | Default |
 | --- | --- |
@@ -22,7 +22,14 @@ The supported native families are **Beastfolk, Harpy, Ogre, Goblin, Giant, Orc, 
 
 ## Secondary evolution
 
-The secondary starts at its native base race. Select its next stage under **Evolution → Secondary**, inspect the native requirements in the tooltip, and choose **Evolve**. Native EP, awakening, mastery and other conditions are evaluated by the server. Scroll or hover the native requirements box for longer details.
+The secondary starts at its native base race. Select its next stage from the **Secondary Race right-side tab**, inspect the native requirements in the tooltip, and choose **Evolve**. Native EP, awakening, mastery and other conditions are evaluated by the server. Scroll or hover the native requirements box for longer details.
+
+Each secondary stage additionally requires **2,500,000 new base EP per evolution**, measured from the EP held when selecting the secondary. The requirement is:
+
+**Required base EP = EP at selection + 2,500,000 × (completed secondary evolutions + 1)**
+
+Selecting at 5M EP therefore needs 7.5M for the first evolution, 10M for the second and 12.5M for the third. Selecting at 20M instead needs 22.5M, 25M and 27.5M. Native requirements must also be met; higher EP alone does not bypass awakening, mastery or other conditions. The menu shows the exact EP threshold. `secondaryEvolutionEPStep` configures the increment.
+
 
 Native branching remains available. If a chosen Goblin branch becomes an Oni, its recorded secondary ancestry remains Goblin for the eventual fusion. Secondary Human can also follow the hunter branch and earn its distinct boss credits.
 
@@ -32,23 +39,23 @@ Assign **Secondary racial ability** under **Controls → Key Binds → Tensura M
 
 ## EP gains
 
-The formula applies to native kill EP awards before their existing caps and penalties:
+A secondary lineage grants **10% extra native kill EP gain**, preserving the current primary race’s aura/magicule proportions. Native gain attributes, caps and penalties still apply. The bonus and primary split remain the same as the secondary evolves. Saved energy is unchanged.
 
-**Duo aura weight = current primary aura weight + ½ secondary base aura weight**
+| Example | Before secondary | With secondary |
+| --- | --- | --- |
+| Default Human / Hunter | 6 aura / 3 magicules | **6.6 aura / 3.3 magicules** |
+| Holy Divine Human | 3 aura / 6 magicules | **3.3 aura / 6.6 magicules** |
 
-**Duo magicule weight = current primary magicule weight + ½ secondary base magicule weight**
+Convergent Awakening **inherits the 10% bonus**, applied to the fused race’s own growth profile.
 
-These contributions are additive; they are not normalized back to the previous total. The secondary contribution always uses the chosen **base ancestry**, even after it evolves.
+## Status display
 
-| Example | Aura weight | Magicule weight | Gains at a baseline of 3 |
-| --- | ---: | ---: | --- |
-| Default Human / Hunter | 2 | 1 | 6 aura / 3 magicules |
-| Slime base | 1 | 2 | 3 aura / 6 magicules |
-| Human / Hunter + secondary Slime | 2.5 | 2 | **7.5 aura / 6 magicules** |
-| Holy Divine Human + secondary Slime | 1.5 | 3 | 4.5 aura / 9 magicules |
+The native Status menu shows the current independent lineages as **Primary Race/Secondary Race**, for example **Sovereign Hunter/Slime**. Long labels scroll within the original race-name area and show their complete text on hover. After convergence, Status displays the unified race’s own name.
 
-Advanced native Human stages can have Holy alignment. Their current primary split is preserved; the default Human/Hunter example does not override it. Gaining a secondary does not retroactively redistribute saved energy.
+## Gallery
+
+![Primary and secondary race names in the native Status menu](../media/duo-status.png)
 
 ## Awakening
 
-Once **both** races finish evolving, follow [Convergent Awakening](Convergent-Awakening.md). The new fused race replaces the Duo growth formula with its own profile.
+Once **both** races finish evolving, follow [Convergent Awakening](Convergent-Awakening.md). The new fused race uses its own EP profile and retains the 10% growth bonus.

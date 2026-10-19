@@ -14,7 +14,7 @@
 | Alignment | Chaos |
 | Aura gain weight | 3.96 |
 | Magicule gain weight | 2.04 |
-| Growth at a baseline of 3 | 11.88 aura / 6.12 magicules |
+| Growth at a baseline of 3, including +10% | 13.068 aura / 6.732 magicules |
 | Racial action | Concordance Pulse |
 | Registry ID | `wildhunt:convergence/goblin_human` |
 | **Evolution** | |
@@ -41,7 +41,7 @@ This action is shared by Convergent races; their ancestry-derived traits, icons 
 
 ## EP growth
 
-Future native kill awards use **3.96 aura weight / 2.04 magicule weight**. This profile replaces the earlier primary-plus-half-secondary formula. Native gain attributes, penalties and caps still apply. Reversing the primary and secondary order produces this same race and growth profile.
+Future native kill awards use **3.96 aura weight / 2.04 magicule weight**. The inherited **10% EP gain bonus** multiplies both weights by 1.1 without changing their proportions. Native gain attributes, penalties and caps still apply. Reversing the primary and secondary order produces this same race and growth profile.
 
 ## Obtaining
 

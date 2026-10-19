@@ -2,7 +2,6 @@ package dev.wildhunt.myths;
 
 import dev.wildhunt.*;
 import io.github.manasmods.manascore.race.api.*;
-import io.github.manasmods.tensura.race.TensuraRace;
 import io.github.manasmods.tensura.registry.attribute.TensuraAttributes;
 import io.github.manasmods.tensura.storage.TensuraStorages;
 import io.github.manasmods.tensura.util.EnergyHelper;
@@ -45,6 +44,8 @@ public final class DuoSystem {
             return "Selection requires a final primary evolution, True Hero or True Demon Lord awakening, "+Math.round(MythsConfig.SECONDARY_EP.get())+" base EP, and an empty secondary slot.";
         if(primaryFamily(p).get()==family)return "Choose a different ancestral race family.";
         var instance=family.baseRace().createDefaultInstance();
+        data(p).putDouble("secondary_ep_origin",EnergyHelper.getBaseMaxEP(p));
+        data(p).putInt("secondary_stage",0);
         data(p).putString("primary_race",first.get().getRaceId().toString());
         data(p).putString("primary_family",primaryFamily(p).get().key());
         data(p).putString("secondary_family",family.key()); saveSecondary(p,instance);
@@ -63,8 +64,10 @@ public final class DuoSystem {
         var current=secondary(p); if(current.isEmpty() || converged(p))return "No independent secondary race to evolve.";
         var target=options(p,current.get()).stream().filter(r->targetId.equals(r.getRegistryName())).findFirst();
         if(target.isEmpty())return "That is not a valid next secondary evolution.";
+        if(!Double.isFinite(EnergyHelper.getBaseMaxEP(p)) || EnergyHelper.getBaseMaxEP(p)<secondaryEvolutionEP(p))return "Secondary evolution requires "+Math.round(secondaryEvolutionEP(p))+" base EP, including new growth since selecting this lineage.";
         if(current.get().getEvolutionProgress(p,target.get())<100)return "The native secondary evolution requirements are not met.";
         var next=target.get().createDefaultInstance(); next.deserialize(current.get().serialize(new CompoundTag()));
+        data(p).putInt("secondary_stage",data(p).getInt("secondary_stage")+1);
         saveSecondary(p,next); removeSecondary(p); applySecondary(p,next); next.learnIntrinsicSkills(p); saveSecondary(p,next);
         ((io.github.manasmods.manascore.storage.api.StorageHolder)p).manasCore$sync(); return "Secondary race evolved into "+target.get().getName().getString()+".";
     }
@@ -94,13 +97,15 @@ public final class DuoSystem {
     }
     public static DuoRules.Gains gains(LivingEntity p,double nativeAura,double nativeMagicule) {
         var current=primary(p);
-        if(current.isPresent() && current.get().getRace() instanceof FusionRace fusion)return fusion.profile.gains();
-        var second=secondaryFamily(p);
-        if(second.isEmpty() || secondary(p).isEmpty())return new DuoRules.Gains(nativeAura,nativeMagicule);
-        // The primary race's alignment, plus half the SECONDARY BASE race's weights.
-        var first=current.filter(r->r.getRace() instanceof TensuraRace).map(r->((TensuraRace)r.getRace()).getAlignment());
-        var base=first.map(a->new DuoRules.Gains(a.getAuraGainMultiplier(),a.getMagiculeGainMultiplier())).orElse(new DuoRules.Gains(nativeAura,nativeMagicule));
-        return base.plusHalf(second.get().baseGains());
+        if(current.isPresent() && current.get().getRace() instanceof FusionRace fusion)return fusion.profile.gains().withDuoBonus();
+        var nativeGains=new DuoRules.Gains(nativeAura,nativeMagicule);
+        return secondary(p).isPresent()?nativeGains.withDuoBonus():nativeGains;
+    }
+    public static double secondaryEvolutionEP(LivingEntity p) {
+        var d=data(p);
+        // Older saves retain their current stage; subsequent evolutions need fresh growth.
+        if(!d.contains("secondary_ep_origin"))d.putDouble("secondary_ep_origin",Math.max(MythsConfig.SECONDARY_EP.get(),EnergyHelper.getBaseMaxEP(p)));
+        return d.getDouble("secondary_ep_origin")+MythsConfig.SECONDARY_EVOLUTION_STEP.get()*(d.getInt("secondary_stage")+1);
     }
     public static boolean sharedAttribute(Holder<Attribute> h) {
         return Set.of(Attributes.MAX_HEALTH,Attributes.ATTACK_DAMAGE,Attributes.ARMOR,Attributes.ARMOR_TOUGHNESS,Attributes.MOVEMENT_SPEED,Attributes.KNOCKBACK_RESISTANCE,TensuraAttributes.MAX_SPIRITUAL_HEALTH).contains(h);

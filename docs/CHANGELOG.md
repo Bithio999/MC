@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.10.0
+
+- Restore native-sized icon buttons for all seven skill categories, including Godly, and fit their blue background to the grid.
+- Move secondary race and convergence navigation into the unused native right-side tabs; remove the added Evolution header tabs.
+- Show independent lineages as Primary/Secondary in native Status with bounded scrolling and hover text.
+- Replace added secondary ancestry EP weights with a flat 10% native growth bonus, inherited by fused profiles.
+- Require 2.5M additional base EP per secondary evolution, measured cumulatively from selection; preserve native requirements and existing stages.
+- Turn Worldline Sever into an aimed six-second channel: 220 damage per half second, 800 magicules to start and 400 per additional pulse; cooldown begins on ending.
+- Expand Event Horizon pull to 24 blocks while keeping its damaging core at 10 blocks and show both areas.
+- Switch Aion active and passive costs to magicules. Add 35% damage against non-Godly owners, attack-scoped resistance/nullification degradation, and a temporary proximity slowing aura.
+- Refresh gameplay articles, all 105 fused growth examples, mirrored GitHub wiki pages, screenshots and offline bundle.
+
+
 
 This page records **Tensura Myths version history**, including gameplay changes, compatibility notes, and visual corrections.
 

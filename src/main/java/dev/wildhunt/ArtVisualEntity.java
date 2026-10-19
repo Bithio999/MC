@@ -40,6 +40,7 @@ public final class ArtVisualEntity extends Entity {
         builder.define(KIND, LASH); builder.define(LIFETIME, 16);
         builder.define(END_X, 0f); builder.define(END_Y, 0f); builder.define(END_Z, 0f);
     }
+    public void updateVector(Vec3 start,Vec3 delta) {setPos(start);entityData.set(END_X,(float)delta.x);entityData.set(END_Y,(float)delta.y);entityData.set(END_Z,(float)delta.z);}
     public int kind() { return entityData.get(KIND); }
     public int lifetime() { return entityData.get(LIFETIME); }
     public Vec3 end() { return new Vec3(entityData.get(END_X), entityData.get(END_Y), entityData.get(END_Z)); }
