@@ -2,6 +2,8 @@
 
 Status: feasibility research and proposed design, **not implemented**. Inspected 2026-10-19 against Minecraft 1.21.1, NeoForge 21.1.209, Tensura: Reincarnated 2.0.1.3 and ManasCore skill module 4.0.0.2. This report belongs outside the gameplay wiki.
 
+Follow-up: [Nightmares Ultimate classes](NIGHTMARES_ULTIMATE_CLASSES.md) examines a released addon that implements Lord / King / God classifications inside native Ultimate, with Dragon skills as a separate branch. It confirms the compatibility route and shows that a seventh top-level category is optional.
+
 ## Conclusion
 
 A separate, usable tier above Ultimate can be added to Wild Hunt and integrated into Tensura's current menus. The practical addon approach is to define the new tier in our own metadata and gameplay rules, expose it as a separate category, and retain `SkillType.ULTIMATE` as the native compatibility classification. It can have separate skill IDs, evolution, costs, mastery, abilities and colors; it need not be just a renamed Ultimate.
