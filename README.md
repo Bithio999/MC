@@ -76,8 +76,11 @@ modes; Ultimates add a third signature: Heaven’s Thunder, Crimson Ocean,
 Black Sun Caldera, or Heavenfall Glacier.
 
 Read the [Wild Hunt Wiki](wiki/README.md) for all eight skill pages, exact costs,
-combos, race infoboxes, commands and mechanics. An offline visual edition is
-included at `wiki/index.html`; open it after downloading the repository. The
+combos, race infoboxes, commands and mechanics.
+**[Download the styled offline wiki](releases/wild-hunt-wiki-0.7.2.zip)**, extract
+the ZIP, and open `index.html`. It includes a wiki-style portal, mobile navigation,
+infoboxes, and offline search. GitHub shows HTML source; download the edition to
+see its styling. It is also included at `wiki/index.html` in the repository. The
 [earlier balance comparison](docs/BALANCE.md) preserves the Tensura benchmarks.
 
 Skills use Tensura elemental damage, resistances, aura, mastery, native storage,

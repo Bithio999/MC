@@ -32,7 +32,11 @@ Grow through 100K / 400K / 2M base EP and 1 / 3 / 5 distinct boss types. Soverei
 
 Pages use skill/race infoboxes, acquisition sections, mode tables, progression links and mechanics notes inspired by the organization of the official Tensura wiki. All text here describes the addon and is original. This is not the official Tensura or Monster Hunter wiki.
 
-Read these Markdown pages directly on GitHub, or open `wiki/index.html` locally for the offline sidebar-and-infobox edition. The HTML edition is included in Git; no hosting or login is required to open it. GitHub displays HTML source unless it is downloaded or separately hosted.
+Read these Markdown pages directly on GitHub, or **[download the styled wiki ZIP](../releases/wild-hunt-wiki-0.7.2.zip)**, extract it, and open `index.html` in your browser. The portable edition includes every article, original portraits, screenshots, and offline search. No server or login is required.
+
+The visual edition uses a wiki.gg / MediaWiki inspired portal, grouped sidebar, article tabs, numbered contents, infoboxes, and related-page navigation. It adapts to phones with a collapsible navigation menu. GitHub displays HTML source rather than the styled page; use the ZIP to view the design, or open `wiki/index.html` after downloading the repository.
+
+The official Tensura wiki returned HTTP 403 during this redesign, so this is an original approximation of its wiki-style organization rather than a verified copy of its current theme.
 
 [Download the addon](../releases/tensura-wild-hunt-0.7.2.jar) · [Repository README](../README.md) · [Official Tensura wiki](https://tensura.wiki.gg/wiki/Tensura:_Reincarnated_Wiki)
 
