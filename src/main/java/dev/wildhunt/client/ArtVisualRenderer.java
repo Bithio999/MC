@@ -30,6 +30,8 @@ public final class ArtVisualRenderer extends EntityRenderer<ArtVisualEntity> {
         if (entity.kind() == ArtVisualEntity.LASH) {
             double extent = Math.clamp(age / 4, 0, 1) * Math.clamp((entity.lifetime() - age) / 6, 0, 1);
             tentacle(poses.last(), buffers, entity.end(), extent, age, light);
+        } else if (entity.kind() == ArtVisualEntity.CAUSAL_SPHERE || entity.kind() == ArtVisualEntity.CAUSAL_RAY) {
+            causal(poses.last(), buffers.getBuffer(RenderType.debugQuads()), entity.end(), age, entity.lifetime(), entity.kind() == ArtVisualEntity.CAUSAL_RAY);
         } else if (entity.kind() == ArtVisualEntity.TIDAL_WAVE) {
             tidalWave(poses.last(), buffers.getBuffer(RenderType.debugQuads()), entity.end(), age, entity.lifetime());
         } else if (entity.kind() == ArtVisualEntity.WHIRLPOOL) {
@@ -46,6 +48,34 @@ public final class ArtVisualRenderer extends EntityRenderer<ArtVisualEntity> {
             crystal(poses.last(), buffers.getBuffer(RenderType.entityTranslucent(ICE)), base, height, light);
         }
         super.render(entity, yaw, partial, poses, buffers, light);
+    }
+    /** Concentric orbit rings, a rotating clock dial, and a luminous spatial cut. */
+    private static void causal(PoseStack.Pose pose, VertexConsumer mesh, Vec3 data, float age, int life, boolean ray) {
+        double fade=Math.min(1,age/4d)*Math.min(1,(life-age)/8d);
+        if(ray) {
+            Vec3 axis=data.normalize();
+            Vec3 side=axis.cross(Math.abs(axis.y)>.99?new Vec3(1,0,0):new Vec3(0,1,0)).normalize().scale(.08*fade);
+            for(int n=0;n<3;n++) {
+                Vec3 offset=new Vec3(0,(n-1)*.11,0);
+                colorQuad(pose,mesh,offset.add(side),offset.subtract(side),data.subtract(side).add(offset),data.add(side).add(offset),n==1?0xffffffff:0xffd8b166);
+            }
+            return;
+        }
+        double radius=data.x*fade;
+        for(int ring=0;ring<3;ring++)for(int n=0;n<96;n++) {
+            double a=n*Math.PI/48+age*.012*(ring==1?-1:1),b=a+Math.PI/48;
+            double r=radius*(ring==2?.62:1); double w=.035+(data.y>0?.025:0);
+            Vec3[] points=new Vec3[4]; int k=0;
+            for(double[] pair:new double[][]{{a,r-w},{a,r+w},{b,r+w},{b,r-w}}) {
+                double x=Math.cos(pair[0])*pair[1],y=Math.sin(pair[0])*pair[1];
+                points[k++]=ring==0?new Vec3(x,.15,y):ring==1?new Vec3(x,y,0):new Vec3(0,y,x);
+            }
+            colorQuad(pose,mesh,points[0],points[1],points[2],points[3],ring==1?0xeec8a4ff:0xeef4d98c);
+        }
+        for(int n=0;n<12;n++) {
+            double a=n*Math.PI/6-age*.02; Vec3 p=new Vec3(Math.cos(a)*radius,.16,Math.sin(a)*radius),q=p.scale(.88).add(0,.02,0),side=new Vec3(-Math.sin(a)*.04,0,Math.cos(a)*.04);
+            colorQuad(pose,mesh,p.add(side),p.subtract(side),q.subtract(side),q.add(side),0xfff6e9c0);
+        }
     }
     private static void colorQuad(PoseStack.Pose pose, VertexConsumer mesh, Vec3 a, Vec3 b, Vec3 c, Vec3 d, int color) {
         for (Vec3 p : new Vec3[]{a,b,c,d,d,c,b,a}) mesh.addVertex(pose, (float)p.x, (float)p.y, (float)p.z).setColor(color);

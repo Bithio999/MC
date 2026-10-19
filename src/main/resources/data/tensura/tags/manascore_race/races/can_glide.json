@@ -1,0 +1,32 @@
+{
+  "replace": false,
+  "values": [
+    "wildhunt:convergence/beastfolk_harpy",
+    "wildhunt:convergence/beastfolk_lizardman",
+    "wildhunt:convergence/harpy_ogre",
+    "wildhunt:convergence/goblin_harpy",
+    "wildhunt:convergence/giant_harpy",
+    "wildhunt:convergence/harpy_orc",
+    "wildhunt:convergence/harpy_lizardman",
+    "wildhunt:convergence/harpy_merfolk",
+    "wildhunt:convergence/elf_harpy",
+    "wildhunt:convergence/harpy_human",
+    "wildhunt:convergence/dwarf_harpy",
+    "wildhunt:convergence/harpy_slime",
+    "wildhunt:convergence/harpy_vampire",
+    "wildhunt:convergence/harpy_wight",
+    "wildhunt:convergence/daemon_harpy",
+    "wildhunt:convergence/lizardman_ogre",
+    "wildhunt:convergence/goblin_lizardman",
+    "wildhunt:convergence/giant_lizardman",
+    "wildhunt:convergence/lizardman_orc",
+    "wildhunt:convergence/lizardman_merfolk",
+    "wildhunt:convergence/elf_lizardman",
+    "wildhunt:convergence/human_lizardman",
+    "wildhunt:convergence/dwarf_lizardman",
+    "wildhunt:convergence/lizardman_slime",
+    "wildhunt:convergence/lizardman_vampire",
+    "wildhunt:convergence/lizardman_wight",
+    "wildhunt:convergence/daemon_lizardman"
+  ]
+}

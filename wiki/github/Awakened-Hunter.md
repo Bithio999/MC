@@ -60,4 +60,4 @@ Boss credit survives death. [Commands](https://github.com/Bithio999/MC/wiki/Comm
 
 ---
 
-**Categories:** Tensura: Wild Hunt
+**Categories:** Tensura Myths

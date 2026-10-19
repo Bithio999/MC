@@ -25,4 +25,8 @@ Mastery improves damage by up to 50%; Ultimates use a 3× base multiplier. Damag
 
 ---
 
-**Categories:** Tensura: Wild Hunt
+**Categories:** Tensura Myths
+
+## Godly Skills
+
+[Aion, God of Causality](Aion.md) evolves from any mastered Myths Ultimate after True Hero or True Demon Lord awakening and 12M base EP. See [Godly Skills](Godly.md) for classification, menu access and progression.

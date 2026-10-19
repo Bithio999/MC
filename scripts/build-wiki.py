@@ -28,7 +28,7 @@ lines = [
 ]
 groups = [
     ("Navigation", [("", "Main Page"), ("Getting-Started", "Getting started")]),
-    ("Gameplay", [("Skills", "Skills"), ("Evolution", "Human evolution"), ("Mechanics", "Combat mechanics"), ("Aura-Regeneration", "Aura regeneration")]),
+    ("Gameplay", [("Godly", "Godly skills"), ("Duo-Races", "Duo Races"), ("Convergent-Awakening", "Convergent races"), ("Skills", "Skills"), ("Evolution", "Human evolution"), ("Mechanics", "Combat mechanics"), ("Aura-Regeneration", "Aura regeneration")]),
     ("Apex skills", [(row[1], titles[row[1]]) for row in lines]),
     ("Otherworlders", [("Alma", "Alma"), ("Gemma", "Gemma")]),
     ("Tools", [("Commands", "Commands")]),
@@ -38,8 +38,10 @@ textures = ROOT / "src/main/resources/assets/wildhunt/textures"
 for directory in ("skill", "race", "entity/otherworlder"):
     target = WIKI / "assets" / directory
     target.mkdir(parents=True, exist_ok=True)
-    for source in sorted((textures / directory).glob("*.png")):
-        shutil.copyfile(source, target / source.name)
+    for source in sorted((textures / directory).rglob("*.png")):
+        destination = target / source.relative_to(textures / directory)
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(source, destination)
 
 
 def link(slug, prefix=""):
@@ -51,14 +53,15 @@ def portal():
     links = "".join(f'<a href="{link(slug)}">{label}</a>' for slug, label in [
         ("Skills", "Abilities"), ("Evolution", "Races"), ("Alma", "Otherworlders"),
         ("Aura-Regeneration", "Aura regeneration"), ("Commands", "Commands"), ("Mechanics", "Mechanics"),
-        ("Getting-Started", "Getting started"), ("Gemma", "Gemma")])
+        ("Godly", "Godly skills"), ("Duo-Races", "Duo Races"), ("Convergent-Awakening", "Convergent races"), ("Getting-Started", "Getting started"), ("Gemma", "Gemma")])
     rows = "".join(f'<tr><td><img src="assets/skill/{icon}.png" width="48" height="48" alt=""> {monster}</td><td><a href="{link(unique)}">{titles[unique]}</a></td><td><a href="{link(ultimate)}">{titles[ultimate]}</a></td><td>{role}</td></tr>' for monster, unique, ultimate, icon, role in lines)
-    return f'''<section class="welcome portal-panel"><div class="welcome-wordmark" aria-label="Tensura: Wild Hunt"><small>TENSURA: REINCARNATED ADDON</small><strong>WILD HUNT</strong><span>THE HUNTER'S FIELD GUIDE</span></div><h2>Welcome to the Tensura: Wild Hunt Wiki!</h2><div class="panel-body"><p>An unofficial reference for the Monster Hunter inspired addon to <strong>Tensura: Reincarnated</strong>.</p><div class="welcome-portraits">{icons}</div><p>We currently document <strong>{len(catalog)} articles</strong>, covering four apex skill lines, three hunter evolutions, aura recovery, and otherworlders.</p><p><strong>Wild Hunt 0.7.2 · Minecraft 1.21.1 · NeoForge</strong></p></div></section>
+    return f'''<section class="welcome portal-panel"><div class="welcome-wordmark" aria-label="Tensura Myths"><small>TENSURA: REINCARNATED ADDON</small><strong>TENSURA MYTHS</strong><span>SKILLS · RACES · AWAKENING</span></div><h2>Welcome to the Tensura Myths Wiki!</h2><div class="panel-body"><p>An unofficial reference for the skills and progression addon to <strong>Tensura: Reincarnated</strong>.</p><div class="welcome-portraits">{icons}</div><p>We currently document <strong>{len(catalog)} articles</strong>, covering Godly skills, Duo Races, 105 Convergent races, hunter evolutions, apex abilities and otherworlders.</p><p><strong>Tensura Myths 0.8.0 · Minecraft 1.21.1 · NeoForge</strong></p></div></section>
 <section class="portal-panel"><h2>About the addon</h2><div class="panel-body"><p>Follow a human-looking hunter evolution branch and wield abilities inspired by Rey Dau, Uth Duna, Nu Udra, and Jin Dahaad. Each apex Unique Skill evolves into an Ultimate with its own signature art.</p><p>Build around aura, native barriers, regeneration, and movement. Meet Alma and Gemma through Tensura's otherworlder system. Start with <a href="{link('Getting-Started')}">Getting started</a> for installation and your first steps.</p></div></section>
 <section class="portal-panel"><h2>Links</h2><nav class="portal-links" aria-label="Wiki topics">{links}</nav></section>
+<section class="portal-panel"><h2>Myths progression</h2><div class="panel-body"><p>Ascend a mastered Ultimate into <a href="{link('Aion')}">Aion, God of Causality</a>, a <a href="{link('Godly')}">Godly skill</a> with four causal arts. Choose a <a href="{link('Duo-Races')}">secondary race</a> after reaching your primary final evolution, then finish both paths for <a href="{link('Convergent-Awakening')}">Convergent Awakening</a>.</p><p>Every one of the 105 ancestral pairs has a named race, an original icon, and its own EP growth profile. The old hunter paths, skills and otherworlders remain available.</p></div></section>
 <section class="portal-panel"><h2>Apex abilities</h2><div class="panel-body table-scroll"><table><thead><tr><th>Inspiration</th><th>Unique Skill</th><th>Ultimate Skill</th><th>Combat identity</th></tr></thead><tbody>{rows}</tbody></table></div></section>
 <section class="portal-panel"><h2>Hunter evolution</h2><div class="panel-body"><p class="evolution-path">Human → <a href="{link('Awakened-Hunter')}">Awakened Hunter</a> → <a href="{link('Apex-Hunter')}">Apex Hunter</a> → <a href="{link('Sovereign-Hunter')}">Sovereign Hunter</a></p><p>Progress through 100K / 400K / 2M base EP and 1 / 3 / 5 distinct boss types. Sovereign Hunter also requires mastery of an apex Unique. Each stage grants an <a href="{link('Aura-Regeneration')}">aura regeneration Extra Skill</a>. See <a href="{link('Evolution')}">Human evolution</a> for full requirements and vitality bonuses.</p></div></section>
-<section class="portal-panel"><h2>Contribute to the wiki</h2><div class="panel-body"><p>Report missing details, suggest corrections, or improve the Markdown articles in the <a href="https://github.com/Bithio999/MC/tree/main/wiki/pages">repository</a>. Please include the addon version when reporting a gameplay difference.</p><p><a href="https://github.com/Bithio999/MC/wiki">GitHub Wiki</a> · <a href="https://github.com/Bithio999/MC/blob/main/releases/wild-hunt-wiki-0.7.2.zip">Download the offline wiki</a> · <a href="https://tensura.wiki.gg/wiki/Tensura:_Reincarnated_Wiki">Base mod wiki</a></p><p>This is an unofficial fan addon, not the official Tensura or Monster Hunter wiki.</p></div></section>'''
+<section class="portal-panel"><h2>Contribute to the wiki</h2><div class="panel-body"><p>Report missing details, suggest corrections, or improve the Markdown articles in the <a href="https://github.com/Bithio999/MC/tree/main/wiki/pages">repository</a>. Please include the addon version when reporting a gameplay difference.</p><p><a href="https://github.com/Bithio999/MC/wiki">GitHub Wiki</a> · <a href="https://github.com/Bithio999/MC/blob/main/releases/tensura-myths-wiki-0.8.0.zip">Download the offline wiki</a> · <a href="https://tensura.wiki.gg/wiki/Tensura:_Reincarnated_Wiki">Base mod wiki</a></p><p>This is an unofficial fan addon, not the official Tensura or Monster Hunter wiki.</p></div></section>'''
 
 
 def data_infobox(title, portrait, data, category):
@@ -124,7 +127,12 @@ def render(source, destination, home=False):
                 portrait = '<div class="infobox-portrait">' + match[0] + '</div>'
                 content = content[:match.start()] + content[match.end():]
         elif category == "Races":
-            portrait = f'<div class="infobox-portrait"><img src="../assets/race/{slug.lower().replace("-", "_")}.png" width="128" height="128" alt="{html.escape(title)} race icon"></div>'
+            match = re.search(r'<p><img [^>]*src="../assets/race/[^>]+></p>', content)
+            if match:
+                portrait = '<div class="infobox-portrait">' + match[0] + '</div>'
+                content = content[:match.start()] + content[match.end():]
+            else:
+                portrait = f'<div class="infobox-portrait"><img src="../assets/race/{slug.lower().replace("-", "_")}.png" width="128" height="128" alt="{html.escape(title)} race icon"></div>'
         elif category == "Otherworlders":
             portrait = f'<div class="infobox-portrait"><div class="npc-face {slug.lower()}" role="img" aria-label="{title} in-game face"></div></div>'
         infobox = data_infobox(title, portrait, data, category)
@@ -144,33 +152,33 @@ def render(source, destination, home=False):
         content = re.sub(r'<p>(\[(?:Active|Passive)[^]]*\])', r'<p class="ability-label">\1', content)
         content = re.sub(r"(<table>.*?</table>)", r'<div class="article-table">\1</div>', content, flags=re.S)
     if category == "Skills":
-        related_groups = [("Unique Skills", [row[1] for row in lines]), ("Ultimate Skills", [row[2] for row in lines]), ("Extra Skills", ["Aura-Regeneration"])]
+        related_groups = [("Unique Skills", [row[1] for row in lines]), ("Ultimate Skills", [row[2] for row in lines]), ("Godly Skills", ["Godly", "Aion"]), ("Extra Skills", ["Aura-Regeneration"])]
     elif category == "Races":
-        related_groups = [("Human / Hunter", ["Evolution", "Awakened-Hunter", "Apex-Hunter", "Sovereign-Hunter"])]
+        related_groups = [("Race systems", ["Duo-Races", "Convergent-Awakening"]), ("Human / Hunter", ["Evolution", "Awakened-Hunter", "Apex-Hunter", "Sovereign-Hunter"])]
     elif category == "Otherworlders":
         related_groups = [("Otherworlders", ["Alma", "Gemma"]), ("Race", ["Awakened-Hunter"])]
     else:
-        related_groups = [("Reference", ["Getting-Started", "Skills", "Evolution", "Mechanics", "Commands"])]
+        related_groups = [("Reference", ["Getting-Started", "Skills", "Godly", "Duo-Races", "Convergent-Awakening", "Evolution", "Mechanics", "Commands"])]
     related = ""
     for group, slugs in related_groups:
         anchors = "".join(f'<a href="{link(key, prefix)}"' + (' aria-current="page"' if key == slug else '') + f'>{html.escape(titles[key])}</a>' for key in slugs)
         related += f'<div class="navbox-row"><strong>{group}</strong><div>{anchors}</div></div>'
-    navbox = f'<nav class="related-box" aria-label="Related {category.lower()}"><strong>Wild Hunt · {category}</strong>{related}</nav>' if not home else ""
+    navbox = f'<nav class="related-box" aria-label="Related {category.lower()}"><strong>Tensura Myths · {category}</strong>{related}</nav>' if not home else ""
     page = f'''<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="{html.escape(title)} — the unofficial Tensura: Wild Hunt addon reference.">
-<title>{html.escape(title)} — Wild Hunt Wiki</title><link rel="stylesheet" href="{skin}wiki.css">
+<meta name="description" content="{html.escape(title)} — the unofficial Tensura Myths addon reference.">
+<title>{html.escape(title)} — Tensura Myths Wiki</title><link rel="stylesheet" href="{skin}wiki.css">
 <script defer src="{skin}search-index.js"></script><script defer src="{skin}search.js"></script></head>
 <body data-root="{prefix}"><a class="skip" href="#article">Skip to article</a>
-<div class="global-bar"><span>TENSURA: WILD HUNT</span><div><a href="https://tensura.wiki.gg/wiki/Tensura:_Reincarnated_Wiki">Base mod wiki</a><a href="https://github.com/Bithio999/MC">GitHub</a></div></div>
-<header class="masthead"><a class="brand" href="{prefix}index.html"><span class="brand-mark" aria-hidden="true">W</span><span>WILD HUNT<small>Tensura: Reincarnated addon wiki</small></span></a>
-<div class="search"><label for="wiki-search">Search Wild Hunt Wiki</label><input id="wiki-search" type="search" placeholder="Search skills, races, characters…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="search-results" aria-expanded="false"><div id="search-results" role="listbox" aria-label="Search results" hidden></div><span id="search-status" class="sr-only" aria-live="polite"></span></div></header>
-<div class="layout"><button id="navigation-toggle" aria-controls="wiki-navigation" aria-expanded="false">☰ Wiki navigation</button><nav id="wiki-navigation" class="sidebar" aria-label="Wiki navigation">{nav}<div class="sidebar-version">Wild Hunt <strong>0.7.2</strong><br>Minecraft 1.21.1 · NeoForge<br><span>Offline reference edition</span></div></nav>
+<div class="global-bar"><span>TENSURA MYTHS</span><div><a href="https://tensura.wiki.gg/wiki/Tensura:_Reincarnated_Wiki">Base mod wiki</a><a href="https://github.com/Bithio999/MC">GitHub</a></div></div>
+<header class="masthead"><a class="brand" href="{prefix}index.html"><span class="brand-mark" aria-hidden="true">M</span><span>TENSURA MYTHS<small>Tensura: Reincarnated addon wiki</small></span></a>
+<div class="search"><label for="wiki-search">Search Tensura Myths Wiki</label><input id="wiki-search" type="search" placeholder="Search skills, races, characters…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="search-results" aria-expanded="false"><div id="search-results" role="listbox" aria-label="Search results" hidden></div><span id="search-status" class="sr-only" aria-live="polite"></span></div></header>
+<div class="layout"><button id="navigation-toggle" aria-controls="wiki-navigation" aria-expanded="false">☰ Wiki navigation</button><nav id="wiki-navigation" class="sidebar" aria-label="Wiki navigation">{nav}<div class="sidebar-version">Tensura Myths <strong>0.8.0</strong><br>Minecraft 1.21.1 · NeoForge<br><span>Offline reference edition</span></div></nav>
 <main id="article" class="{'main-page' if home else 'article-page'}"><div class="page-tabs"><span aria-current="page">{'Main Page' if home else 'Article'}</span><a href="{'README.md' if home else '../pages/' + source.name}">Read Markdown</a><a href="https://github.com/Bithio999/MC/blob/main/docs/CHANGELOG.md">Changelog</a></div>
-<div class="article-heading"><div class="breadcrumbs"><a href="{prefix}index.html">Wild Hunt Wiki</a>{' / ' + category if not home else ''}</div><h1>{html.escape(title)}</h1><p class="subtitle">From the unofficial Tensura: Wild Hunt Wiki</p></div>
+<div class="article-heading"><div class="breadcrumbs"><a href="{prefix}index.html">Tensura Myths Wiki</a>{' / ' + category if not home else ''}</div><h1>{html.escape(title)}</h1><p class="subtitle">From the unofficial Tensura Myths Wiki</p></div>
 <div class="article-content">{introduction}{infobox}{toc}{content}</div>{navbox}
-<div class="categories">Categories: <a href="{prefix}index.html">Tensura: Wild Hunt</a> · {category if not home else 'Main Page'}</div>
-<footer>Unofficial fan addon. Original documentation and portraits. Not affiliated with Capcom or ManasMods.<br>Wild Hunt 0.7.2 · Offline edition · No external services required.</footer></main></div></body></html>'''
+<div class="categories">Categories: <a href="{prefix}index.html">Tensura Myths</a> · {category if not home else 'Main Page'}</div>
+<footer>Unofficial fan addon. Original documentation and portraits. Not affiliated with Capcom or ManasMods.<br>Tensura Myths 0.8.0 · Offline edition · No external services required.</footer></main></div></body></html>'''
     destination.write_text(page)
 
 
@@ -182,7 +190,7 @@ for item in catalog:
 (SITE / "search-index.js").write_text("window.WIKI_PAGES = " + json.dumps(catalog) + ";\n")
 subprocess.run([sys.executable, str(ROOT / "scripts/export-github-wiki.py")], check=True)
 # Fixed timestamps and sorted entries keep this documentation bundle reproducible.
-archive = ROOT / "releases/wild-hunt-wiki-0.7.2.zip"
+archive = ROOT / "releases/tensura-myths-wiki-0.8.0.zip"
 with zipfile.ZipFile(archive, "w", zipfile.ZIP_DEFLATED) as bundle:
     for path in sorted(WIKI.rglob("*")):
         if path.is_file():

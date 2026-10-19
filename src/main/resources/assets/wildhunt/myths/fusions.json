@@ -1,0 +1,842 @@
+[
+  {
+    "first": "beastfolk",
+    "second": "harpy",
+    "name": "Gryphon Sovereign",
+    "aura": 3.74,
+    "magicules": 2.26,
+    "trait": "Beastfolk vitality and Harpy spirit form a single stable lineage."
+  },
+  {
+    "first": "beastfolk",
+    "second": "ogre",
+    "name": "Rakshasa",
+    "aura": 3.745,
+    "magicules": 2.255,
+    "trait": "Beastfolk vitality and Ogre spirit form a single stable lineage."
+  },
+  {
+    "first": "beastfolk",
+    "second": "goblin",
+    "name": "Briar Monarch",
+    "aura": 3.75,
+    "magicules": 2.25,
+    "trait": "Beastfolk vitality and Goblin spirit form a single stable lineage."
+  },
+  {
+    "first": "beastfolk",
+    "second": "giant",
+    "name": "Fenrir Colossus",
+    "aura": 3.755,
+    "magicules": 2.245,
+    "trait": "Beastfolk vitality and Giant spirit form a single stable lineage."
+  },
+  {
+    "first": "beastfolk",
+    "second": "orc",
+    "name": "Calydonian King",
+    "aura": 3.76,
+    "magicules": 2.24,
+    "trait": "Beastfolk vitality and Orc spirit form a single stable lineage."
+  },
+  {
+    "first": "beastfolk",
+    "second": "lizardman",
+    "name": "Chimera Wyrm",
+    "aura": 3.765,
+    "magicules": 2.235,
+    "trait": "Beastfolk vitality and Lizardman spirit form a single stable lineage."
+  },
+  {
+    "first": "beastfolk",
+    "second": "merfolk",
+    "name": "Leviathan Beast",
+    "aura": 3.77,
+    "magicules": 2.23,
+    "trait": "Beastfolk vitality and Merfolk spirit form a single stable lineage."
+  },
+  {
+    "first": "beastfolk",
+    "second": "elf",
+    "name": "Sylvan Sphinx",
+    "aura": 3.775,
+    "magicules": 2.225,
+    "trait": "Beastfolk vitality and Elf spirit form a single stable lineage."
+  },
+  {
+    "first": "beastfolk",
+    "second": "human",
+    "name": "Primal Paragon",
+    "aura": 3.78,
+    "magicules": 2.22,
+    "trait": "Beastfolk vitality and Human spirit form a single stable lineage."
+  },
+  {
+    "first": "beastfolk",
+    "second": "dwarf",
+    "name": "Adamant Manticore",
+    "aura": 3.785,
+    "magicules": 2.215,
+    "trait": "Beastfolk vitality and Dwarf spirit form a single stable lineage."
+  },
+  {
+    "first": "beastfolk",
+    "second": "slime",
+    "name": "Amorphous Behemoth",
+    "aura": 2.79,
+    "magicules": 3.21,
+    "trait": "Beastfolk vitality and Slime spirit form a single stable lineage."
+  },
+  {
+    "first": "beastfolk",
+    "second": "vampire",
+    "name": "Bloodmoon Lycan",
+    "aura": 2.795,
+    "magicules": 3.205,
+    "trait": "Beastfolk vitality and Vampire spirit form a single stable lineage."
+  },
+  {
+    "first": "beastfolk",
+    "second": "wight",
+    "name": "Ossuary Fenrir",
+    "aura": 2.8,
+    "magicules": 3.2,
+    "trait": "Beastfolk vitality and Wight spirit form a single stable lineage."
+  },
+  {
+    "first": "beastfolk",
+    "second": "daemon",
+    "name": "Abyssal Chimera",
+    "aura": 2.805,
+    "magicules": 3.195,
+    "trait": "Beastfolk vitality and Daemon spirit form a single stable lineage."
+  },
+  {
+    "first": "harpy",
+    "second": "ogre",
+    "name": "Garuda Oni",
+    "aura": 3.81,
+    "magicules": 2.19,
+    "trait": "Harpy vitality and Ogre spirit form a single stable lineage."
+  },
+  {
+    "first": "harpy",
+    "second": "goblin",
+    "name": "Thornwing Archon",
+    "aura": 3.815,
+    "magicules": 2.185,
+    "trait": "Harpy vitality and Goblin spirit form a single stable lineage."
+  },
+  {
+    "first": "harpy",
+    "second": "giant",
+    "name": "Storm Titan",
+    "aura": 3.82,
+    "magicules": 2.18,
+    "trait": "Harpy vitality and Giant spirit form a single stable lineage."
+  },
+  {
+    "first": "harpy",
+    "second": "orc",
+    "name": "Tempest Juggernaut",
+    "aura": 3.825,
+    "magicules": 2.175,
+    "trait": "Harpy vitality and Orc spirit form a single stable lineage."
+  },
+  {
+    "first": "harpy",
+    "second": "lizardman",
+    "name": "Quetzal Sovereign",
+    "aura": 3.83,
+    "magicules": 2.17,
+    "trait": "Harpy vitality and Lizardman spirit form a single stable lineage."
+  },
+  {
+    "first": "harpy",
+    "second": "merfolk",
+    "name": "Siren Seraph",
+    "aura": 3.835,
+    "magicules": 2.165,
+    "trait": "Harpy vitality and Merfolk spirit form a single stable lineage."
+  },
+  {
+    "first": "harpy",
+    "second": "elf",
+    "name": "Zephyr Oracle",
+    "aura": 3.84,
+    "magicules": 2.16,
+    "trait": "Harpy vitality and Elf spirit form a single stable lineage."
+  },
+  {
+    "first": "harpy",
+    "second": "human",
+    "name": "Celestial Valkyrie",
+    "aura": 3.845,
+    "magicules": 2.155,
+    "trait": "Harpy vitality and Human spirit form a single stable lineage."
+  },
+  {
+    "first": "harpy",
+    "second": "dwarf",
+    "name": "Runewing Artisan",
+    "aura": 3.85,
+    "magicules": 2.15,
+    "trait": "Harpy vitality and Dwarf spirit form a single stable lineage."
+  },
+  {
+    "first": "harpy",
+    "second": "slime",
+    "name": "Cloudborn Protean",
+    "aura": 2.855,
+    "magicules": 3.145,
+    "trait": "Harpy vitality and Slime spirit form a single stable lineage."
+  },
+  {
+    "first": "harpy",
+    "second": "vampire",
+    "name": "Nocturne Strix",
+    "aura": 2.86,
+    "magicules": 3.14,
+    "trait": "Harpy vitality and Vampire spirit form a single stable lineage."
+  },
+  {
+    "first": "harpy",
+    "second": "wight",
+    "name": "Pale Thunderbird",
+    "aura": 2.865,
+    "magicules": 3.135,
+    "trait": "Harpy vitality and Wight spirit form a single stable lineage."
+  },
+  {
+    "first": "harpy",
+    "second": "daemon",
+    "name": "Fallen Simurgh",
+    "aura": 2.87,
+    "magicules": 3.13,
+    "trait": "Harpy vitality and Daemon spirit form a single stable lineage."
+  },
+  {
+    "first": "ogre",
+    "second": "goblin",
+    "name": "Thorncrown Asura",
+    "aura": 3.875,
+    "magicules": 2.125,
+    "trait": "Ogre vitality and Goblin spirit form a single stable lineage."
+  },
+  {
+    "first": "ogre",
+    "second": "giant",
+    "name": "Indra Colossus",
+    "aura": 3.88,
+    "magicules": 2.12,
+    "trait": "Ogre vitality and Giant spirit form a single stable lineage."
+  },
+  {
+    "first": "ogre",
+    "second": "orc",
+    "name": "Warborn Ravager",
+    "aura": 3.885,
+    "magicules": 2.115,
+    "trait": "Ogre vitality and Orc spirit form a single stable lineage."
+  },
+  {
+    "first": "ogre",
+    "second": "lizardman",
+    "name": "Ryuujin",
+    "aura": 3.89,
+    "magicules": 2.11,
+    "trait": "Ogre vitality and Lizardman spirit form a single stable lineage."
+  },
+  {
+    "first": "ogre",
+    "second": "merfolk",
+    "name": "Tidal Susanoo",
+    "aura": 3.895,
+    "magicules": 2.105,
+    "trait": "Ogre vitality and Merfolk spirit form a single stable lineage."
+  },
+  {
+    "first": "ogre",
+    "second": "elf",
+    "name": "Moonlit Kensei",
+    "aura": 3.9,
+    "magicules": 2.1,
+    "trait": "Ogre vitality and Elf spirit form a single stable lineage."
+  },
+  {
+    "first": "ogre",
+    "second": "human",
+    "name": "Heavenly Asura",
+    "aura": 3.905,
+    "magicules": 2.095,
+    "trait": "Ogre vitality and Human spirit form a single stable lineage."
+  },
+  {
+    "first": "ogre",
+    "second": "dwarf",
+    "name": "Vajra Forgemaster",
+    "aura": 3.91,
+    "magicules": 2.09,
+    "trait": "Ogre vitality and Dwarf spirit form a single stable lineage."
+  },
+  {
+    "first": "ogre",
+    "second": "slime",
+    "name": "Protean Kishin",
+    "aura": 2.915,
+    "magicules": 3.085,
+    "trait": "Ogre vitality and Slime spirit form a single stable lineage."
+  },
+  {
+    "first": "ogre",
+    "second": "vampire",
+    "name": "Crimson Yaksha",
+    "aura": 2.92,
+    "magicules": 3.08,
+    "trait": "Ogre vitality and Vampire spirit form a single stable lineage."
+  },
+  {
+    "first": "ogre",
+    "second": "wight",
+    "name": "Gravebound Kishin",
+    "aura": 2.925,
+    "magicules": 3.075,
+    "trait": "Ogre vitality and Wight spirit form a single stable lineage."
+  },
+  {
+    "first": "ogre",
+    "second": "daemon",
+    "name": "Abyssal Rakshasa",
+    "aura": 2.93,
+    "magicules": 3.07,
+    "trait": "Ogre vitality and Daemon spirit form a single stable lineage."
+  },
+  {
+    "first": "goblin",
+    "second": "giant",
+    "name": "Bramble Titan",
+    "aura": 3.935,
+    "magicules": 2.065,
+    "trait": "Goblin vitality and Giant spirit form a single stable lineage."
+  },
+  {
+    "first": "goblin",
+    "second": "orc",
+    "name": "Verdant Warlord",
+    "aura": 3.94,
+    "magicules": 2.06,
+    "trait": "Goblin vitality and Orc spirit form a single stable lineage."
+  },
+  {
+    "first": "goblin",
+    "second": "lizardman",
+    "name": "Basilisk Regent",
+    "aura": 3.945,
+    "magicules": 2.055,
+    "trait": "Goblin vitality and Lizardman spirit form a single stable lineage."
+  },
+  {
+    "first": "goblin",
+    "second": "merfolk",
+    "name": "Reef Trickster",
+    "aura": 3.95,
+    "magicules": 2.05,
+    "trait": "Goblin vitality and Merfolk spirit form a single stable lineage."
+  },
+  {
+    "first": "goblin",
+    "second": "elf",
+    "name": "Thornsong Sovereign",
+    "aura": 3.955,
+    "magicules": 2.045,
+    "trait": "Goblin vitality and Elf spirit form a single stable lineage."
+  },
+  {
+    "first": "goblin",
+    "second": "human",
+    "name": "Emerald Exemplar",
+    "aura": 3.96,
+    "magicules": 2.04,
+    "trait": "Goblin vitality and Human spirit form a single stable lineage."
+  },
+  {
+    "first": "goblin",
+    "second": "dwarf",
+    "name": "Gremlin Artificer",
+    "aura": 3.965,
+    "magicules": 2.035,
+    "trait": "Goblin vitality and Dwarf spirit form a single stable lineage."
+  },
+  {
+    "first": "goblin",
+    "second": "slime",
+    "name": "Briar Protean",
+    "aura": 2.97,
+    "magicules": 3.03,
+    "trait": "Goblin vitality and Slime spirit form a single stable lineage."
+  },
+  {
+    "first": "goblin",
+    "second": "vampire",
+    "name": "Sanguine Puck",
+    "aura": 2.975,
+    "magicules": 3.025,
+    "trait": "Goblin vitality and Vampire spirit form a single stable lineage."
+  },
+  {
+    "first": "goblin",
+    "second": "wight",
+    "name": "Ossuary Trickster",
+    "aura": 2.98,
+    "magicules": 3.02,
+    "trait": "Goblin vitality and Wight spirit form a single stable lineage."
+  },
+  {
+    "first": "goblin",
+    "second": "daemon",
+    "name": "Infernal Goblin King",
+    "aura": 2.985,
+    "magicules": 3.015,
+    "trait": "Goblin vitality and Daemon spirit form a single stable lineage."
+  },
+  {
+    "first": "giant",
+    "second": "orc",
+    "name": "Worldbreaker",
+    "aura": 3.99,
+    "magicules": 2.01,
+    "trait": "Giant vitality and Orc spirit form a single stable lineage."
+  },
+  {
+    "first": "giant",
+    "second": "lizardman",
+    "name": "Jormungandr",
+    "aura": 3.995,
+    "magicules": 2.005,
+    "trait": "Giant vitality and Lizardman spirit form a single stable lineage."
+  },
+  {
+    "first": "giant",
+    "second": "merfolk",
+    "name": "Oceanus",
+    "aura": 4.0,
+    "magicules": 2.0,
+    "trait": "Giant vitality and Merfolk spirit form a single stable lineage."
+  },
+  {
+    "first": "giant",
+    "second": "elf",
+    "name": "Yggdrasil Guardian",
+    "aura": 4.005,
+    "magicules": 1.995,
+    "trait": "Giant vitality and Elf spirit form a single stable lineage."
+  },
+  {
+    "first": "giant",
+    "second": "human",
+    "name": "Atlas Ascendant",
+    "aura": 4.01,
+    "magicules": 1.99,
+    "trait": "Giant vitality and Human spirit form a single stable lineage."
+  },
+  {
+    "first": "giant",
+    "second": "dwarf",
+    "name": "Hecatoncheir",
+    "aura": 4.015,
+    "magicules": 1.985,
+    "trait": "Giant vitality and Dwarf spirit form a single stable lineage."
+  },
+  {
+    "first": "giant",
+    "second": "slime",
+    "name": "Primordial Colossus",
+    "aura": 3.02,
+    "magicules": 2.98,
+    "trait": "Giant vitality and Slime spirit form a single stable lineage."
+  },
+  {
+    "first": "giant",
+    "second": "vampire",
+    "name": "Bloodforge Titan",
+    "aura": 3.025,
+    "magicules": 2.975,
+    "trait": "Giant vitality and Vampire spirit form a single stable lineage."
+  },
+  {
+    "first": "giant",
+    "second": "wight",
+    "name": "Ossuary Colossus",
+    "aura": 3.03,
+    "magicules": 2.97,
+    "trait": "Giant vitality and Wight spirit form a single stable lineage."
+  },
+  {
+    "first": "giant",
+    "second": "daemon",
+    "name": "Typhon",
+    "aura": 3.035,
+    "magicules": 2.965,
+    "trait": "Giant vitality and Daemon spirit form a single stable lineage."
+  },
+  {
+    "first": "orc",
+    "second": "lizardman",
+    "name": "Ironhide Wyrm",
+    "aura": 4.04,
+    "magicules": 1.96,
+    "trait": "Orc vitality and Lizardman spirit form a single stable lineage."
+  },
+  {
+    "first": "orc",
+    "second": "merfolk",
+    "name": "Abyssal Cetus",
+    "aura": 4.045,
+    "magicules": 1.955,
+    "trait": "Orc vitality and Merfolk spirit form a single stable lineage."
+  },
+  {
+    "first": "orc",
+    "second": "elf",
+    "name": "Verdant Juggernaut",
+    "aura": 4.05,
+    "magicules": 1.95,
+    "trait": "Orc vitality and Elf spirit form a single stable lineage."
+  },
+  {
+    "first": "orc",
+    "second": "human",
+    "name": "Adamant Warlord",
+    "aura": 4.055,
+    "magicules": 1.945,
+    "trait": "Orc vitality and Human spirit form a single stable lineage."
+  },
+  {
+    "first": "orc",
+    "second": "dwarf",
+    "name": "Vulcan Behemoth",
+    "aura": 4.06,
+    "magicules": 1.94,
+    "trait": "Orc vitality and Dwarf spirit form a single stable lineage."
+  },
+  {
+    "first": "orc",
+    "second": "slime",
+    "name": "Voracious Protean",
+    "aura": 3.065,
+    "magicules": 2.935,
+    "trait": "Orc vitality and Slime spirit form a single stable lineage."
+  },
+  {
+    "first": "orc",
+    "second": "vampire",
+    "name": "Sanguine Behemoth",
+    "aura": 3.07,
+    "magicules": 2.93,
+    "trait": "Orc vitality and Vampire spirit form a single stable lineage."
+  },
+  {
+    "first": "orc",
+    "second": "wight",
+    "name": "Gravehide Colossus",
+    "aura": 3.075,
+    "magicules": 2.925,
+    "trait": "Orc vitality and Wight spirit form a single stable lineage."
+  },
+  {
+    "first": "orc",
+    "second": "daemon",
+    "name": "Maw of Tartarus",
+    "aura": 3.08,
+    "magicules": 2.92,
+    "trait": "Orc vitality and Daemon spirit form a single stable lineage."
+  },
+  {
+    "first": "lizardman",
+    "second": "merfolk",
+    "name": "Azure Leviathan",
+    "aura": 4.085,
+    "magicules": 1.915,
+    "trait": "Lizardman vitality and Merfolk spirit form a single stable lineage."
+  },
+  {
+    "first": "lizardman",
+    "second": "elf",
+    "name": "Elder Starwyrm",
+    "aura": 4.09,
+    "magicules": 1.91,
+    "trait": "Lizardman vitality and Elf spirit form a single stable lineage."
+  },
+  {
+    "first": "lizardman",
+    "second": "human",
+    "name": "Dragonheart Exemplar",
+    "aura": 4.095,
+    "magicules": 1.905,
+    "trait": "Lizardman vitality and Human spirit form a single stable lineage."
+  },
+  {
+    "first": "lizardman",
+    "second": "dwarf",
+    "name": "Runebound Fafnir",
+    "aura": 4.1,
+    "magicules": 1.9,
+    "trait": "Lizardman vitality and Dwarf spirit form a single stable lineage."
+  },
+  {
+    "first": "lizardman",
+    "second": "slime",
+    "name": "Mercurial Ouroboros",
+    "aura": 3.105,
+    "magicules": 2.895,
+    "trait": "Lizardman vitality and Slime spirit form a single stable lineage."
+  },
+  {
+    "first": "lizardman",
+    "second": "vampire",
+    "name": "Sanguine Wyrm",
+    "aura": 3.11,
+    "magicules": 2.89,
+    "trait": "Lizardman vitality and Vampire spirit form a single stable lineage."
+  },
+  {
+    "first": "lizardman",
+    "second": "wight",
+    "name": "Ossuary Dragon",
+    "aura": 3.115,
+    "magicules": 2.885,
+    "trait": "Lizardman vitality and Wight spirit form a single stable lineage."
+  },
+  {
+    "first": "lizardman",
+    "second": "daemon",
+    "name": "Tiamat Scion",
+    "aura": 3.12,
+    "magicules": 2.88,
+    "trait": "Lizardman vitality and Daemon spirit form a single stable lineage."
+  },
+  {
+    "first": "merfolk",
+    "second": "elf",
+    "name": "Nereid Oracle",
+    "aura": 4.125,
+    "magicules": 1.875,
+    "trait": "Merfolk vitality and Elf spirit form a single stable lineage."
+  },
+  {
+    "first": "merfolk",
+    "second": "human",
+    "name": "Thalassic Exemplar",
+    "aura": 4.13,
+    "magicules": 1.87,
+    "trait": "Merfolk vitality and Human spirit form a single stable lineage."
+  },
+  {
+    "first": "merfolk",
+    "second": "dwarf",
+    "name": "Runic Triton",
+    "aura": 4.135,
+    "magicules": 1.865,
+    "trait": "Merfolk vitality and Dwarf spirit form a single stable lineage."
+  },
+  {
+    "first": "merfolk",
+    "second": "slime",
+    "name": "Abyssal Undine",
+    "aura": 3.14,
+    "magicules": 2.86,
+    "trait": "Merfolk vitality and Slime spirit form a single stable lineage."
+  },
+  {
+    "first": "merfolk",
+    "second": "vampire",
+    "name": "Sanguine Siren",
+    "aura": 3.145,
+    "magicules": 2.855,
+    "trait": "Merfolk vitality and Vampire spirit form a single stable lineage."
+  },
+  {
+    "first": "merfolk",
+    "second": "wight",
+    "name": "Ossuary Mariner",
+    "aura": 3.15,
+    "magicules": 2.85,
+    "trait": "Merfolk vitality and Wight spirit form a single stable lineage."
+  },
+  {
+    "first": "merfolk",
+    "second": "daemon",
+    "name": "Abyssal Scylla",
+    "aura": 3.155,
+    "magicules": 2.845,
+    "trait": "Merfolk vitality and Daemon spirit form a single stable lineage."
+  },
+  {
+    "first": "elf",
+    "second": "human",
+    "name": "Astral Exemplar",
+    "aura": 4.16,
+    "magicules": 1.84,
+    "trait": "Elf vitality and Human spirit form a single stable lineage."
+  },
+  {
+    "first": "elf",
+    "second": "dwarf",
+    "name": "Aetherforged Oracle",
+    "aura": 4.165,
+    "magicules": 1.835,
+    "trait": "Elf vitality and Dwarf spirit form a single stable lineage."
+  },
+  {
+    "first": "elf",
+    "second": "slime",
+    "name": "Sylvan Protean",
+    "aura": 3.17,
+    "magicules": 2.83,
+    "trait": "Elf vitality and Slime spirit form a single stable lineage."
+  },
+  {
+    "first": "elf",
+    "second": "vampire",
+    "name": "Crimson Sidhe",
+    "aura": 3.175,
+    "magicules": 2.825,
+    "trait": "Elf vitality and Vampire spirit form a single stable lineage."
+  },
+  {
+    "first": "elf",
+    "second": "wight",
+    "name": "Pale Star Oracle",
+    "aura": 3.18,
+    "magicules": 2.82,
+    "trait": "Elf vitality and Wight spirit form a single stable lineage."
+  },
+  {
+    "first": "elf",
+    "second": "daemon",
+    "name": "Twilight Seraph",
+    "aura": 3.185,
+    "magicules": 2.815,
+    "trait": "Elf vitality and Daemon spirit form a single stable lineage."
+  },
+  {
+    "first": "human",
+    "second": "dwarf",
+    "name": "Runic Exemplar",
+    "aura": 4.19,
+    "magicules": 1.81,
+    "trait": "Human vitality and Dwarf spirit form a single stable lineage."
+  },
+  {
+    "first": "human",
+    "second": "slime",
+    "name": "Aeonic Protean",
+    "aura": 3.195,
+    "magicules": 2.805,
+    "trait": "Human vitality and Slime spirit form a single stable lineage."
+  },
+  {
+    "first": "human",
+    "second": "vampire",
+    "name": "Eclipse Sovereign",
+    "aura": 3.2,
+    "magicules": 2.8,
+    "trait": "Human vitality and Vampire spirit form a single stable lineage."
+  },
+  {
+    "first": "human",
+    "second": "wight",
+    "name": "Deathless Exemplar",
+    "aura": 3.205,
+    "magicules": 2.795,
+    "trait": "Human vitality and Wight spirit form a single stable lineage."
+  },
+  {
+    "first": "human",
+    "second": "daemon",
+    "name": "Empyrean Adversary",
+    "aura": 3.21,
+    "magicules": 2.79,
+    "trait": "Human vitality and Daemon spirit form a single stable lineage."
+  },
+  {
+    "first": "dwarf",
+    "second": "slime",
+    "name": "Quicksilver Artificer",
+    "aura": 3.215,
+    "magicules": 2.785,
+    "trait": "Dwarf vitality and Slime spirit form a single stable lineage."
+  },
+  {
+    "first": "dwarf",
+    "second": "vampire",
+    "name": "Bloodrune Patriarch",
+    "aura": 3.22,
+    "magicules": 2.78,
+    "trait": "Dwarf vitality and Vampire spirit form a single stable lineage."
+  },
+  {
+    "first": "dwarf",
+    "second": "wight",
+    "name": "Ossuary Runesmith",
+    "aura": 3.225,
+    "magicules": 2.775,
+    "trait": "Dwarf vitality and Wight spirit form a single stable lineage."
+  },
+  {
+    "first": "dwarf",
+    "second": "daemon",
+    "name": "Infernal Forgemaster",
+    "aura": 3.23,
+    "magicules": 2.77,
+    "trait": "Dwarf vitality and Daemon spirit form a single stable lineage."
+  },
+  {
+    "first": "slime",
+    "second": "vampire",
+    "name": "Sanguine Protean",
+    "aura": 2.235,
+    "magicules": 3.765,
+    "trait": "Slime vitality and Vampire spirit form a single stable lineage."
+  },
+  {
+    "first": "slime",
+    "second": "wight",
+    "name": "Ossuary Protean",
+    "aura": 2.24,
+    "magicules": 3.76,
+    "trait": "Slime vitality and Wight spirit form a single stable lineage."
+  },
+  {
+    "first": "slime",
+    "second": "daemon",
+    "name": "Abyssal Progenitor",
+    "aura": 2.245,
+    "magicules": 3.755,
+    "trait": "Slime vitality and Daemon spirit form a single stable lineage."
+  },
+  {
+    "first": "vampire",
+    "second": "wight",
+    "name": "Nocturne Revenant",
+    "aura": 2.25,
+    "magicules": 3.75,
+    "trait": "Vampire vitality and Wight spirit form a single stable lineage."
+  },
+  {
+    "first": "vampire",
+    "second": "daemon",
+    "name": "Sanguine Archfiend",
+    "aura": 2.255,
+    "magicules": 3.745,
+    "trait": "Vampire vitality and Daemon spirit form a single stable lineage."
+  },
+  {
+    "first": "wight",
+    "second": "daemon",
+    "name": "Erebus Sovereign",
+    "aura": 2.26,
+    "magicules": 3.74,
+    "trait": "Wight vitality and Daemon spirit form a single stable lineage."
+  }
+]

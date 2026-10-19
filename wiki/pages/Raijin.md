@@ -20,7 +20,7 @@
 | Registry ID | `wildhunt:raijin` |
 | **Evolution** | |
 | Previous | [Storm Crown](Storm-Crown.md) |
-| Evolution | — |
+| Evolution | [Aion, God of Causality](Aion.md) |
 | **Obtaining** | |
 | Method | Ascend the matching mastered Unique |
 
@@ -90,4 +90,8 @@ A missed initial ray cannot start a ricochet. Bounces pass through walls but can
 
 ---
 
-**Categories:** Tensura: Wild Hunt
+**Categories:** Tensura Myths
+
+## Godly evolution
+
+At mastery, True Hero or True Demon Lord awakening, and 12M base EP, use `/myths` to evolve this Ultimate into [Aion, God of Causality](Aion.md). It replaces the selected Ultimate while preserving presets and remaining cooldowns.

@@ -24,4 +24,19 @@ Be Sovereign Hunter, retain at least two million base EP, own the matching Uniqu
 
 ---
 
-**Categories:** Tensura: Wild Hunt
+**Categories:** Tensura Myths
+
+## Myths progression
+
+| Command | Purpose |
+| --- | --- |
+| `/myths` | Open the Duo Race / Godly progression menu |
+| `/myths status` | Show primary and secondary status and open the menu |
+| `/myths secondary <family>` | Choose a permanent secondary ancestry after meeting all gates |
+| `/myths evolve_secondary <race_id>` | Evolve the secondary through native requirements |
+| `/myths awaken` | Perform Convergent Awakening after both races reach final evolution |
+| `/myths godly <ultimate_id>` | Ascend the selected mastered Myths Ultimate into Aion |
+
+These commands are available to players and enforce the same server-side requirements as the menu. Valid secondary keys: `beastfolk`, `harpy`, `ogre`, `goblin`, `giant`, `orc`, `lizardman`, `merfolk`, `elf`, `human`, `dwarf`, `slime`, `vampire`, `wight`, `daemon`.
+
+Aion is `wildhunt:aion`. Fused race IDs follow `wildhunt:convergence/<sorted_family_pair>`; the [catalog](Convergent-Awakening.md#race-catalog) links to each exact ID.

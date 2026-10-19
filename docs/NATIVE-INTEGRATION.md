@@ -127,3 +127,50 @@ native server GameTests pass with the corrected registration path.
 
 Fresh Minecraft client loading and frontal/angled views also pass in 0.7.2. The
 front-view screenshot is in `wiki/media/alma-front-hairline-072.png`.
+
+## Tensura Myths 0.8.0
+
+The display name and archive change; registry namespace `wildhunt` remains stable.
+`GodlySkill` stays native `SkillType.ULTIMATE`, with additive
+`wildhunt:godly_skills` and explicit native Ultimate tag membership. The client
+adds a seventh category and reuses `AbilitySelectionScreen` for skill details,
+slots, presets and toggles. The ordinary Ultimate category excludes Godly
+entries. Ascension replaces only a successfully learned source, remaps all nine
+presets and carries its longest remaining cooldown to every new mode.
+
+Duo state stores independent native `ManasRaceInstance` NBT under the existing
+player-persistent addon data. It records both chosen ancestries and survives
+ordinary death through a deep clone. Secondary evolution uses the instance's
+native next stages and requirement progress. Shared secondary attribute
+modifiers have distinct IDs and half the native stage's amount; primary body,
+size and energy caps are retained. Secondary intrinsic skills use native
+learning. Racial hurt/effect/attack reactions and one-second native ticks are
+forwarded to the stored instance. The configurable secondary racial key invokes
+native press/hold/release callbacks, activation/release events, server-measured
+duration, cooldowns and suppression rules. It starts unbound.
+
+`DuoEnergyMixin` changes only the alignment weight operands inside native
+`DeathHandler.gainEPEntity`. It does not award a second kill, replace gain
+attributes, or bypass the native caps and PvP penalties. Unfused growth is the
+current primary race's alignment plus half the **selected secondary base**
+ancestry's alignment. Fused growth is its registered pair profile. Existing
+energy is not redistributed when choosing or evolving a secondary.
+
+Convergence calls native `RaceStorage.setRace` to install one of 105 actual
+registered `FusionRace` entries. Each profile has a name, icon, registry ID and
+unique EP split. Native tag files combine the final ancestral traits. Fused
+attributes are derived from native configured final-stage attributes; original
+race instances remain archived for reactions and ticking. The independent
+secondary action ends and the native racial action becomes Concordance Pulse.
+The one-time energy multiplier runs only after the native race change succeeds.
+Both lineages must be terminal, and true awakening and configured base EP are
+revalidated on the server. Changing the primary outside this flow clears the
+previous Duo life.
+
+`MythsNetwork` accepts bounded intent rather than client-provided race data,
+requirements or stat values. All changes run on the server thread; menu data is
+a server snapshot. Common registration does not load client screen classes.
+The server configuration is `serverconfig/tensura-myths-server.toml` in the world.
+Aion transient checkpoints and delayed attacks clear on login, dimension change
+and respawn. Reversal preserves energy, inventory, SHP and cooldowns and rejects
+an obstructed recorded destination before charging the return cast.

@@ -33,7 +33,20 @@ public final class WildHunt {
             ULTIMATE.put(apex, SKILLS.register(id(apex.ultimateId), () -> new ApexSkill(apex, true)));
         }
     }
-    public WildHunt() {
+    public static final RegistrySupplier<GodlySkill> GODLY = SKILLS.register(id("aion"), GodlySkill::new);
+    public WildHunt(net.neoforged.bus.api.IEventBus modBus, net.neoforged.fml.ModContainer container) {
+        container.registerConfig(net.neoforged.fml.config.ModConfig.Type.SERVER,dev.wildhunt.myths.MythsConfig.SPEC,"tensura-myths-server.toml");
+        dev.wildhunt.myths.FusionCatalog.init();
+        modBus.addListener(dev.wildhunt.myths.MythsNetwork::register);
+        NeoForge.EVENT_BUS.addListener(dev.wildhunt.myths.DuoSystem::tick);
+        NeoForge.EVENT_BUS.addListener(dev.wildhunt.myths.DuoSystem::login);
+        NeoForge.EVENT_BUS.addListener(dev.wildhunt.myths.MythsCommands::register);
+        NeoForge.EVENT_BUS.addListener(GodlySkill::damaged);
+        NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent e)->GodlySkill.clearTransient(e.getEntity()));
+        NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerChangedDimensionEvent e)->GodlySkill.clearTransient(e.getEntity()));
+        NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerRespawnEvent e)->GodlySkill.clearTransient(e.getEntity()));
+        NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerChangedDimensionEvent e)->{if(e.getEntity() instanceof net.minecraft.server.level.ServerPlayer p)dev.wildhunt.myths.SecondaryAbility.clear(p);});
+        NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerRespawnEvent e)->{if(e.getEntity() instanceof net.minecraft.server.level.ServerPlayer p)dev.wildhunt.myths.SecondaryAbility.clear(p);});
         // ManasCore owns these custom registrars, as it does for Tensura itself.
         // Avoid looking them up through Architectury's cross-mod constructor map.
         ArtVisualEntity.register(); HunterOtherworlders.register();

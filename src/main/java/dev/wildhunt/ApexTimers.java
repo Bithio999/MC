@@ -64,6 +64,9 @@ public final class ApexTimers {
             if (instance.getSkill() instanceof ApexSkill skill) {
                 active |= skill.tickActive(instance, entity);
                 if (instance.isDirty()) storage.checkAndMarkDirty(instance);
+            } else if (instance.getSkill() instanceof GodlySkill skill) {
+                active |= skill.tickActive(instance,entity);
+                if(instance.isDirty()) storage.checkAndMarkDirty(instance);
             }
         }
         if (!active) data.remove("active_skills");

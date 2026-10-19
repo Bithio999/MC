@@ -42,4 +42,4 @@ Use `/summon wildhunt:alma` or `/give @s wildhunt:alma_spawn_egg` for a direct c
 
 ---
 
-**Categories:** Tensura: Wild Hunt · Otherworlders
+**Categories:** Tensura Myths · Otherworlders

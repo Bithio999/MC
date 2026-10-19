@@ -89,4 +89,4 @@ In-game example of the active art.
 
 ---
 
-**Categories:** Tensura: Wild Hunt
+**Categories:** Tensura Myths

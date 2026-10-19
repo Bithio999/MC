@@ -83,4 +83,4 @@ A missed initial ray cannot start a ricochet. Bounces pass through walls but can
 
 ---
 
-**Categories:** Tensura: Wild Hunt
+**Categories:** Tensura Myths

@@ -1,4 +1,4 @@
-# Tensura: Wild Hunt
+# Tensura Myths
 
 [Home](https://github.com/Bithio999/MC/wiki)
 
@@ -23,6 +23,13 @@
 - [Varuna, Lord of Tides](https://github.com/Bithio999/MC/wiki/Varuna)
 - [Agni, Lord of the Black Flame](https://github.com/Bithio999/MC/wiki/Agni)
 - [Ymir, Lord of Winter](https://github.com/Bithio999/MC/wiki/Ymir)
+
+### Myths progression
+
+- [Godly Skills](https://github.com/Bithio999/MC/wiki/Godly)
+- [Aion, God of Causality](https://github.com/Bithio999/MC/wiki/Aion)
+- [Duo Races](https://github.com/Bithio999/MC/wiki/Duo-Races)
+- [Convergent Awakening](https://github.com/Bithio999/MC/wiki/Convergent-Awakening)
 
 ### Races
 

@@ -2,6 +2,18 @@
   "required": true,
   "package": "dev.wildhunt.mixin",
   "compatibilityLevel": "JAVA_21",
-  "mixins": ["HumanEvolutionMixin", "ReincarnationSkillPoolMixin", "AuraHealingMixin"],
-  "injectors": {"defaultRequire": 1}
+  "mixins": [
+    "HumanEvolutionMixin",
+    "ReincarnationSkillPoolMixin",
+    "AuraHealingMixin",
+    "DuoEnergyMixin",
+    "DuoRaceMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "client": [
+    "client.MythsCategoryMixin",
+    "client.MythsUltimateFilterMixin"
+  ]
 }

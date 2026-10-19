@@ -480,7 +480,8 @@ public final class IntegrationGameTests {
     }
     @GameTest(template = "empty", timeoutTicks = 100)
     public static void railboltReachesTwelveBlockHopsAndStopsBeyondThem(GameTestHelper helper) {
-        var player=combatPlayer(helper); player.setPos(player.position().add(0,160,0));
+        // This long-range fixture must not chain through entities from adjacent tests.
+        var player=combatPlayer(helper); player.setPos(player.position().add(512,160,512));
         var targets=new java.util.ArrayList<net.minecraft.world.entity.monster.Zombie>();
         for(int z:new int[]{0,11,24}) {
             helper.getLevel().getChunk(net.minecraft.core.BlockPos.containing(player.position().add(3,0,z)));

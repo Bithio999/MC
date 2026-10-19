@@ -1,0 +1,687 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Convergent Awakening — the unofficial Tensura Myths addon reference.">
+<title>Convergent Awakening — Tensura Myths Wiki</title><link rel="stylesheet" href="wiki.css">
+<script defer src="search-index.js"></script><script defer src="search.js"></script></head>
+<body data-root="../"><a class="skip" href="#article">Skip to article</a>
+<div class="global-bar"><span>TENSURA MYTHS</span><div><a href="https://tensura.wiki.gg/wiki/Tensura:_Reincarnated_Wiki">Base mod wiki</a><a href="https://github.com/Bithio999/MC">GitHub</a></div></div>
+<header class="masthead"><a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">M</span><span>TENSURA MYTHS<small>Tensura: Reincarnated addon wiki</small></span></a>
+<div class="search"><label for="wiki-search">Search Tensura Myths Wiki</label><input id="wiki-search" type="search" placeholder="Search skills, races, characters…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="search-results" aria-expanded="false"><div id="search-results" role="listbox" aria-label="Search results" hidden></div><span id="search-status" class="sr-only" aria-live="polite"></span></div></header>
+<div class="layout"><button id="navigation-toggle" aria-controls="wiki-navigation" aria-expanded="false">☰ Wiki navigation</button><nav id="wiki-navigation" class="sidebar" aria-label="Wiki navigation"><section><h2>Navigation</h2><a href="../index.html">Main Page</a><a href="../site/Getting-Started.html">Getting started</a></section><section><h2>Gameplay</h2><a href="../site/Godly.html">Godly skills</a><a href="../site/Duo-Races.html">Duo Races</a><a href="../site/Convergent-Awakening.html" aria-current="page">Convergent races</a><a href="../site/Skills.html">Skills</a><a href="../site/Evolution.html">Human evolution</a><a href="../site/Mechanics.html">Combat mechanics</a><a href="../site/Aura-Regeneration.html">Aura regeneration</a></section><section><h2>Apex skills</h2><a href="../site/Storm-Crown.html">Storm Crown</a><a href="../site/Scarlet-Deluge.html">Scarlet Deluge</a><a href="../site/Black-Flame.html">Black Flame</a><a href="../site/Frostbound-Colossus.html">Frostbound Colossus</a></section><section><h2>Otherworlders</h2><a href="../site/Alma.html">Alma</a><a href="../site/Gemma.html">Gemma</a></section><section><h2>Tools</h2><a href="../site/Commands.html">Commands</a></section><div class="sidebar-version">Tensura Myths <strong>0.8.0</strong><br>Minecraft 1.21.1 · NeoForge<br><span>Offline reference edition</span></div></nav>
+<main id="article" class="article-page"><div class="page-tabs"><span aria-current="page">Article</span><a href="../pages/Convergent-Awakening.md">Read Markdown</a><a href="https://github.com/Bithio999/MC/blob/main/docs/CHANGELOG.md">Changelog</a></div>
+<div class="article-heading"><div class="breadcrumbs"><a href="../index.html">Tensura Myths Wiki</a> / Guides</div><h1>Convergent Awakening</h1><p class="subtitle">From the unofficial Tensura Myths Wiki</p></div>
+<div class="article-content"><div class="article-intro"><p><strong>Convergent Awakening</strong> unites two fully evolved lineages into a single registered race. There are <strong>105 unique pairs</strong> among the fifteen supported ancestral families. Every pair has its own name, original pixel icon, registry ID and EP growth profile. Reversing the pair produces the same fused race.</p></div><details class="contents" open><summary>Contents</summary><div class="toc">
+<ul>
+<li><a href="#obtaining">Obtaining</a></li>
+<li><a href="#awakening-rewards">Awakening rewards</a></li>
+<li><a href="#race-catalog">Race catalog</a></li>
+<li><a href="#gallery">Gallery</a></li>
+<li><a href="#configuration">Configuration</a></li>
+</ul>
+</div>
+</details>
+<h2 id="obtaining">Obtaining</h2>
+<p>Open <code>/myths</code> or the <strong>Tensura Myths</strong> button in Tensura’s status/evolution menu. Both lineages must be at a final stage with no further native evolution. You must also be a <strong>True Hero or True Demon Lord</strong> and have at least <strong>10,000,000 base EP</strong>. A base or partially evolved secondary cannot awaken.</p>
+<p>The primary becomes the actual fused native race. Its predecessor state and the secondary’s native state are saved for inherited reactions and ticks. The fusion has no next evolution. The independent secondary racial key stops operating; the normal racial key uses <strong>Concordance Pulse</strong> instead.</p>
+<h2 id="awakening-rewards">Awakening rewards</h2>
+<ul>
+<li>A one-time <strong>25% increase to each base aura and magicule cap</strong>, preserving their existing proportions.</li>
+<li>Full HP, SHP and energy recovery on the successful awakening.</li>
+<li>A new intrinsic list drawn from both native final ancestral races, subject to native learning rules, with previously learned skills retained.</li>
+<li>Native race tags drawn from both final ancestral races.</li>
+<li>A fused attribute profile derived from 65% of both native final stages, plus 80 HP, 1,500 SHP and a pair-dependent attack bonus; the total racial HP bonus is capped at 1,000.</li>
+<li>A distinct future EP growth profile, replacing the Duo formula.</li>
+</ul>
+<p>Shared racial action: <strong>Concordance Pulse</strong> heals 10% maximum HP up to 80 and pushes nearby enemies. It costs 1,500 aura, has a 30-second cooldown and renders the pair's ancestral colors. The 105 races share this action; they do not each add a separate combat kit.</p>
+<p>Native final-stage attributes depend on Tensura’s server race configuration. These bonuses replace the former primary and secondary race modifiers. They are not stacked on top indefinitely. Appearance retains the player's skin; these are not custom monster models.</p>
+<h2 id="race-catalog">Race catalog</h2>
+<p>Weights multiply the same baseline used by native aura/magicule gain attributes. Every profile totals six, twice the default single-race growth budget of three. This does not bypass native EP caps. The individual pages show an example at a baseline of three.</p>
+<div class="article-table"><table>
+<thead>
+<tr>
+<th>Ancestral pair</th>
+<th>Convergent race</th>
+<th style="text-align: right;">Aura weight</th>
+<th style="text-align: right;">Magicule weight</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Beastfolk + Harpy</td>
+<td><a href="Fusion-beastfolk-harpy.html">Gryphon Sovereign</a></td>
+<td style="text-align: right;">3.74</td>
+<td style="text-align: right;">2.26</td>
+</tr>
+<tr>
+<td>Beastfolk + Ogre</td>
+<td><a href="Fusion-beastfolk-ogre.html">Rakshasa</a></td>
+<td style="text-align: right;">3.745</td>
+<td style="text-align: right;">2.255</td>
+</tr>
+<tr>
+<td>Beastfolk + Goblin</td>
+<td><a href="Fusion-beastfolk-goblin.html">Briar Monarch</a></td>
+<td style="text-align: right;">3.75</td>
+<td style="text-align: right;">2.25</td>
+</tr>
+<tr>
+<td>Beastfolk + Giant</td>
+<td><a href="Fusion-beastfolk-giant.html">Fenrir Colossus</a></td>
+<td style="text-align: right;">3.755</td>
+<td style="text-align: right;">2.245</td>
+</tr>
+<tr>
+<td>Beastfolk + Orc</td>
+<td><a href="Fusion-beastfolk-orc.html">Calydonian King</a></td>
+<td style="text-align: right;">3.76</td>
+<td style="text-align: right;">2.24</td>
+</tr>
+<tr>
+<td>Beastfolk + Lizardman</td>
+<td><a href="Fusion-beastfolk-lizardman.html">Chimera Wyrm</a></td>
+<td style="text-align: right;">3.765</td>
+<td style="text-align: right;">2.235</td>
+</tr>
+<tr>
+<td>Beastfolk + Merfolk</td>
+<td><a href="Fusion-beastfolk-merfolk.html">Leviathan Beast</a></td>
+<td style="text-align: right;">3.77</td>
+<td style="text-align: right;">2.23</td>
+</tr>
+<tr>
+<td>Beastfolk + Elf</td>
+<td><a href="Fusion-beastfolk-elf.html">Sylvan Sphinx</a></td>
+<td style="text-align: right;">3.775</td>
+<td style="text-align: right;">2.225</td>
+</tr>
+<tr>
+<td>Beastfolk + Human</td>
+<td><a href="Fusion-beastfolk-human.html">Primal Paragon</a></td>
+<td style="text-align: right;">3.78</td>
+<td style="text-align: right;">2.22</td>
+</tr>
+<tr>
+<td>Beastfolk + Dwarf</td>
+<td><a href="Fusion-beastfolk-dwarf.html">Adamant Manticore</a></td>
+<td style="text-align: right;">3.785</td>
+<td style="text-align: right;">2.215</td>
+</tr>
+<tr>
+<td>Beastfolk + Slime</td>
+<td><a href="Fusion-beastfolk-slime.html">Amorphous Behemoth</a></td>
+<td style="text-align: right;">2.79</td>
+<td style="text-align: right;">3.21</td>
+</tr>
+<tr>
+<td>Beastfolk + Vampire</td>
+<td><a href="Fusion-beastfolk-vampire.html">Bloodmoon Lycan</a></td>
+<td style="text-align: right;">2.795</td>
+<td style="text-align: right;">3.205</td>
+</tr>
+<tr>
+<td>Beastfolk + Wight</td>
+<td><a href="Fusion-beastfolk-wight.html">Ossuary Fenrir</a></td>
+<td style="text-align: right;">2.8</td>
+<td style="text-align: right;">3.2</td>
+</tr>
+<tr>
+<td>Beastfolk + Daemon</td>
+<td><a href="Fusion-beastfolk-daemon.html">Abyssal Chimera</a></td>
+<td style="text-align: right;">2.805</td>
+<td style="text-align: right;">3.195</td>
+</tr>
+<tr>
+<td>Harpy + Ogre</td>
+<td><a href="Fusion-harpy-ogre.html">Garuda Oni</a></td>
+<td style="text-align: right;">3.81</td>
+<td style="text-align: right;">2.19</td>
+</tr>
+<tr>
+<td>Harpy + Goblin</td>
+<td><a href="Fusion-goblin-harpy.html">Thornwing Archon</a></td>
+<td style="text-align: right;">3.815</td>
+<td style="text-align: right;">2.185</td>
+</tr>
+<tr>
+<td>Harpy + Giant</td>
+<td><a href="Fusion-giant-harpy.html">Storm Titan</a></td>
+<td style="text-align: right;">3.82</td>
+<td style="text-align: right;">2.18</td>
+</tr>
+<tr>
+<td>Harpy + Orc</td>
+<td><a href="Fusion-harpy-orc.html">Tempest Juggernaut</a></td>
+<td style="text-align: right;">3.825</td>
+<td style="text-align: right;">2.175</td>
+</tr>
+<tr>
+<td>Harpy + Lizardman</td>
+<td><a href="Fusion-harpy-lizardman.html">Quetzal Sovereign</a></td>
+<td style="text-align: right;">3.83</td>
+<td style="text-align: right;">2.17</td>
+</tr>
+<tr>
+<td>Harpy + Merfolk</td>
+<td><a href="Fusion-harpy-merfolk.html">Siren Seraph</a></td>
+<td style="text-align: right;">3.835</td>
+<td style="text-align: right;">2.165</td>
+</tr>
+<tr>
+<td>Harpy + Elf</td>
+<td><a href="Fusion-elf-harpy.html">Zephyr Oracle</a></td>
+<td style="text-align: right;">3.84</td>
+<td style="text-align: right;">2.16</td>
+</tr>
+<tr>
+<td>Harpy + Human</td>
+<td><a href="Fusion-harpy-human.html">Celestial Valkyrie</a></td>
+<td style="text-align: right;">3.845</td>
+<td style="text-align: right;">2.155</td>
+</tr>
+<tr>
+<td>Harpy + Dwarf</td>
+<td><a href="Fusion-dwarf-harpy.html">Runewing Artisan</a></td>
+<td style="text-align: right;">3.85</td>
+<td style="text-align: right;">2.15</td>
+</tr>
+<tr>
+<td>Harpy + Slime</td>
+<td><a href="Fusion-harpy-slime.html">Cloudborn Protean</a></td>
+<td style="text-align: right;">2.855</td>
+<td style="text-align: right;">3.145</td>
+</tr>
+<tr>
+<td>Harpy + Vampire</td>
+<td><a href="Fusion-harpy-vampire.html">Nocturne Strix</a></td>
+<td style="text-align: right;">2.86</td>
+<td style="text-align: right;">3.14</td>
+</tr>
+<tr>
+<td>Harpy + Wight</td>
+<td><a href="Fusion-harpy-wight.html">Pale Thunderbird</a></td>
+<td style="text-align: right;">2.865</td>
+<td style="text-align: right;">3.135</td>
+</tr>
+<tr>
+<td>Harpy + Daemon</td>
+<td><a href="Fusion-daemon-harpy.html">Fallen Simurgh</a></td>
+<td style="text-align: right;">2.87</td>
+<td style="text-align: right;">3.13</td>
+</tr>
+<tr>
+<td>Ogre + Goblin</td>
+<td><a href="Fusion-goblin-ogre.html">Thorncrown Asura</a></td>
+<td style="text-align: right;">3.875</td>
+<td style="text-align: right;">2.125</td>
+</tr>
+<tr>
+<td>Ogre + Giant</td>
+<td><a href="Fusion-giant-ogre.html">Indra Colossus</a></td>
+<td style="text-align: right;">3.88</td>
+<td style="text-align: right;">2.12</td>
+</tr>
+<tr>
+<td>Ogre + Orc</td>
+<td><a href="Fusion-ogre-orc.html">Warborn Ravager</a></td>
+<td style="text-align: right;">3.885</td>
+<td style="text-align: right;">2.115</td>
+</tr>
+<tr>
+<td>Ogre + Lizardman</td>
+<td><a href="Fusion-lizardman-ogre.html">Ryuujin</a></td>
+<td style="text-align: right;">3.89</td>
+<td style="text-align: right;">2.11</td>
+</tr>
+<tr>
+<td>Ogre + Merfolk</td>
+<td><a href="Fusion-merfolk-ogre.html">Tidal Susanoo</a></td>
+<td style="text-align: right;">3.895</td>
+<td style="text-align: right;">2.105</td>
+</tr>
+<tr>
+<td>Ogre + Elf</td>
+<td><a href="Fusion-elf-ogre.html">Moonlit Kensei</a></td>
+<td style="text-align: right;">3.9</td>
+<td style="text-align: right;">2.1</td>
+</tr>
+<tr>
+<td>Ogre + Human</td>
+<td><a href="Fusion-human-ogre.html">Heavenly Asura</a></td>
+<td style="text-align: right;">3.905</td>
+<td style="text-align: right;">2.095</td>
+</tr>
+<tr>
+<td>Ogre + Dwarf</td>
+<td><a href="Fusion-dwarf-ogre.html">Vajra Forgemaster</a></td>
+<td style="text-align: right;">3.91</td>
+<td style="text-align: right;">2.09</td>
+</tr>
+<tr>
+<td>Ogre + Slime</td>
+<td><a href="Fusion-ogre-slime.html">Protean Kishin</a></td>
+<td style="text-align: right;">2.915</td>
+<td style="text-align: right;">3.085</td>
+</tr>
+<tr>
+<td>Ogre + Vampire</td>
+<td><a href="Fusion-ogre-vampire.html">Crimson Yaksha</a></td>
+<td style="text-align: right;">2.92</td>
+<td style="text-align: right;">3.08</td>
+</tr>
+<tr>
+<td>Ogre + Wight</td>
+<td><a href="Fusion-ogre-wight.html">Gravebound Kishin</a></td>
+<td style="text-align: right;">2.925</td>
+<td style="text-align: right;">3.075</td>
+</tr>
+<tr>
+<td>Ogre + Daemon</td>
+<td><a href="Fusion-daemon-ogre.html">Abyssal Rakshasa</a></td>
+<td style="text-align: right;">2.93</td>
+<td style="text-align: right;">3.07</td>
+</tr>
+<tr>
+<td>Goblin + Giant</td>
+<td><a href="Fusion-giant-goblin.html">Bramble Titan</a></td>
+<td style="text-align: right;">3.935</td>
+<td style="text-align: right;">2.065</td>
+</tr>
+<tr>
+<td>Goblin + Orc</td>
+<td><a href="Fusion-goblin-orc.html">Verdant Warlord</a></td>
+<td style="text-align: right;">3.94</td>
+<td style="text-align: right;">2.06</td>
+</tr>
+<tr>
+<td>Goblin + Lizardman</td>
+<td><a href="Fusion-goblin-lizardman.html">Basilisk Regent</a></td>
+<td style="text-align: right;">3.945</td>
+<td style="text-align: right;">2.055</td>
+</tr>
+<tr>
+<td>Goblin + Merfolk</td>
+<td><a href="Fusion-goblin-merfolk.html">Reef Trickster</a></td>
+<td style="text-align: right;">3.95</td>
+<td style="text-align: right;">2.05</td>
+</tr>
+<tr>
+<td>Goblin + Elf</td>
+<td><a href="Fusion-elf-goblin.html">Thornsong Sovereign</a></td>
+<td style="text-align: right;">3.955</td>
+<td style="text-align: right;">2.045</td>
+</tr>
+<tr>
+<td>Goblin + Human</td>
+<td><a href="Fusion-goblin-human.html">Emerald Exemplar</a></td>
+<td style="text-align: right;">3.96</td>
+<td style="text-align: right;">2.04</td>
+</tr>
+<tr>
+<td>Goblin + Dwarf</td>
+<td><a href="Fusion-dwarf-goblin.html">Gremlin Artificer</a></td>
+<td style="text-align: right;">3.965</td>
+<td style="text-align: right;">2.035</td>
+</tr>
+<tr>
+<td>Goblin + Slime</td>
+<td><a href="Fusion-goblin-slime.html">Briar Protean</a></td>
+<td style="text-align: right;">2.97</td>
+<td style="text-align: right;">3.03</td>
+</tr>
+<tr>
+<td>Goblin + Vampire</td>
+<td><a href="Fusion-goblin-vampire.html">Sanguine Puck</a></td>
+<td style="text-align: right;">2.975</td>
+<td style="text-align: right;">3.025</td>
+</tr>
+<tr>
+<td>Goblin + Wight</td>
+<td><a href="Fusion-goblin-wight.html">Ossuary Trickster</a></td>
+<td style="text-align: right;">2.98</td>
+<td style="text-align: right;">3.02</td>
+</tr>
+<tr>
+<td>Goblin + Daemon</td>
+<td><a href="Fusion-daemon-goblin.html">Infernal Goblin King</a></td>
+<td style="text-align: right;">2.985</td>
+<td style="text-align: right;">3.015</td>
+</tr>
+<tr>
+<td>Giant + Orc</td>
+<td><a href="Fusion-giant-orc.html">Worldbreaker</a></td>
+<td style="text-align: right;">3.99</td>
+<td style="text-align: right;">2.01</td>
+</tr>
+<tr>
+<td>Giant + Lizardman</td>
+<td><a href="Fusion-giant-lizardman.html">Jormungandr</a></td>
+<td style="text-align: right;">3.995</td>
+<td style="text-align: right;">2.005</td>
+</tr>
+<tr>
+<td>Giant + Merfolk</td>
+<td><a href="Fusion-giant-merfolk.html">Oceanus</a></td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr>
+<td>Giant + Elf</td>
+<td><a href="Fusion-elf-giant.html">Yggdrasil Guardian</a></td>
+<td style="text-align: right;">4.005</td>
+<td style="text-align: right;">1.995</td>
+</tr>
+<tr>
+<td>Giant + Human</td>
+<td><a href="Fusion-giant-human.html">Atlas Ascendant</a></td>
+<td style="text-align: right;">4.01</td>
+<td style="text-align: right;">1.99</td>
+</tr>
+<tr>
+<td>Giant + Dwarf</td>
+<td><a href="Fusion-dwarf-giant.html">Hecatoncheir</a></td>
+<td style="text-align: right;">4.015</td>
+<td style="text-align: right;">1.985</td>
+</tr>
+<tr>
+<td>Giant + Slime</td>
+<td><a href="Fusion-giant-slime.html">Primordial Colossus</a></td>
+<td style="text-align: right;">3.02</td>
+<td style="text-align: right;">2.98</td>
+</tr>
+<tr>
+<td>Giant + Vampire</td>
+<td><a href="Fusion-giant-vampire.html">Bloodforge Titan</a></td>
+<td style="text-align: right;">3.025</td>
+<td style="text-align: right;">2.975</td>
+</tr>
+<tr>
+<td>Giant + Wight</td>
+<td><a href="Fusion-giant-wight.html">Ossuary Colossus</a></td>
+<td style="text-align: right;">3.03</td>
+<td style="text-align: right;">2.97</td>
+</tr>
+<tr>
+<td>Giant + Daemon</td>
+<td><a href="Fusion-daemon-giant.html">Typhon</a></td>
+<td style="text-align: right;">3.035</td>
+<td style="text-align: right;">2.965</td>
+</tr>
+<tr>
+<td>Orc + Lizardman</td>
+<td><a href="Fusion-lizardman-orc.html">Ironhide Wyrm</a></td>
+<td style="text-align: right;">4.04</td>
+<td style="text-align: right;">1.96</td>
+</tr>
+<tr>
+<td>Orc + Merfolk</td>
+<td><a href="Fusion-merfolk-orc.html">Abyssal Cetus</a></td>
+<td style="text-align: right;">4.045</td>
+<td style="text-align: right;">1.955</td>
+</tr>
+<tr>
+<td>Orc + Elf</td>
+<td><a href="Fusion-elf-orc.html">Verdant Juggernaut</a></td>
+<td style="text-align: right;">4.05</td>
+<td style="text-align: right;">1.95</td>
+</tr>
+<tr>
+<td>Orc + Human</td>
+<td><a href="Fusion-human-orc.html">Adamant Warlord</a></td>
+<td style="text-align: right;">4.055</td>
+<td style="text-align: right;">1.945</td>
+</tr>
+<tr>
+<td>Orc + Dwarf</td>
+<td><a href="Fusion-dwarf-orc.html">Vulcan Behemoth</a></td>
+<td style="text-align: right;">4.06</td>
+<td style="text-align: right;">1.94</td>
+</tr>
+<tr>
+<td>Orc + Slime</td>
+<td><a href="Fusion-orc-slime.html">Voracious Protean</a></td>
+<td style="text-align: right;">3.065</td>
+<td style="text-align: right;">2.935</td>
+</tr>
+<tr>
+<td>Orc + Vampire</td>
+<td><a href="Fusion-orc-vampire.html">Sanguine Behemoth</a></td>
+<td style="text-align: right;">3.07</td>
+<td style="text-align: right;">2.93</td>
+</tr>
+<tr>
+<td>Orc + Wight</td>
+<td><a href="Fusion-orc-wight.html">Gravehide Colossus</a></td>
+<td style="text-align: right;">3.075</td>
+<td style="text-align: right;">2.925</td>
+</tr>
+<tr>
+<td>Orc + Daemon</td>
+<td><a href="Fusion-daemon-orc.html">Maw of Tartarus</a></td>
+<td style="text-align: right;">3.08</td>
+<td style="text-align: right;">2.92</td>
+</tr>
+<tr>
+<td>Lizardman + Merfolk</td>
+<td><a href="Fusion-lizardman-merfolk.html">Azure Leviathan</a></td>
+<td style="text-align: right;">4.085</td>
+<td style="text-align: right;">1.915</td>
+</tr>
+<tr>
+<td>Lizardman + Elf</td>
+<td><a href="Fusion-elf-lizardman.html">Elder Starwyrm</a></td>
+<td style="text-align: right;">4.09</td>
+<td style="text-align: right;">1.91</td>
+</tr>
+<tr>
+<td>Lizardman + Human</td>
+<td><a href="Fusion-human-lizardman.html">Dragonheart Exemplar</a></td>
+<td style="text-align: right;">4.095</td>
+<td style="text-align: right;">1.905</td>
+</tr>
+<tr>
+<td>Lizardman + Dwarf</td>
+<td><a href="Fusion-dwarf-lizardman.html">Runebound Fafnir</a></td>
+<td style="text-align: right;">4.1</td>
+<td style="text-align: right;">1.9</td>
+</tr>
+<tr>
+<td>Lizardman + Slime</td>
+<td><a href="Fusion-lizardman-slime.html">Mercurial Ouroboros</a></td>
+<td style="text-align: right;">3.105</td>
+<td style="text-align: right;">2.895</td>
+</tr>
+<tr>
+<td>Lizardman + Vampire</td>
+<td><a href="Fusion-lizardman-vampire.html">Sanguine Wyrm</a></td>
+<td style="text-align: right;">3.11</td>
+<td style="text-align: right;">2.89</td>
+</tr>
+<tr>
+<td>Lizardman + Wight</td>
+<td><a href="Fusion-lizardman-wight.html">Ossuary Dragon</a></td>
+<td style="text-align: right;">3.115</td>
+<td style="text-align: right;">2.885</td>
+</tr>
+<tr>
+<td>Lizardman + Daemon</td>
+<td><a href="Fusion-daemon-lizardman.html">Tiamat Scion</a></td>
+<td style="text-align: right;">3.12</td>
+<td style="text-align: right;">2.88</td>
+</tr>
+<tr>
+<td>Merfolk + Elf</td>
+<td><a href="Fusion-elf-merfolk.html">Nereid Oracle</a></td>
+<td style="text-align: right;">4.125</td>
+<td style="text-align: right;">1.875</td>
+</tr>
+<tr>
+<td>Merfolk + Human</td>
+<td><a href="Fusion-human-merfolk.html">Thalassic Exemplar</a></td>
+<td style="text-align: right;">4.13</td>
+<td style="text-align: right;">1.87</td>
+</tr>
+<tr>
+<td>Merfolk + Dwarf</td>
+<td><a href="Fusion-dwarf-merfolk.html">Runic Triton</a></td>
+<td style="text-align: right;">4.135</td>
+<td style="text-align: right;">1.865</td>
+</tr>
+<tr>
+<td>Merfolk + Slime</td>
+<td><a href="Fusion-merfolk-slime.html">Abyssal Undine</a></td>
+<td style="text-align: right;">3.14</td>
+<td style="text-align: right;">2.86</td>
+</tr>
+<tr>
+<td>Merfolk + Vampire</td>
+<td><a href="Fusion-merfolk-vampire.html">Sanguine Siren</a></td>
+<td style="text-align: right;">3.145</td>
+<td style="text-align: right;">2.855</td>
+</tr>
+<tr>
+<td>Merfolk + Wight</td>
+<td><a href="Fusion-merfolk-wight.html">Ossuary Mariner</a></td>
+<td style="text-align: right;">3.15</td>
+<td style="text-align: right;">2.85</td>
+</tr>
+<tr>
+<td>Merfolk + Daemon</td>
+<td><a href="Fusion-daemon-merfolk.html">Abyssal Scylla</a></td>
+<td style="text-align: right;">3.155</td>
+<td style="text-align: right;">2.845</td>
+</tr>
+<tr>
+<td>Elf + Human</td>
+<td><a href="Fusion-elf-human.html">Astral Exemplar</a></td>
+<td style="text-align: right;">4.16</td>
+<td style="text-align: right;">1.84</td>
+</tr>
+<tr>
+<td>Elf + Dwarf</td>
+<td><a href="Fusion-dwarf-elf.html">Aetherforged Oracle</a></td>
+<td style="text-align: right;">4.165</td>
+<td style="text-align: right;">1.835</td>
+</tr>
+<tr>
+<td>Elf + Slime</td>
+<td><a href="Fusion-elf-slime.html">Sylvan Protean</a></td>
+<td style="text-align: right;">3.17</td>
+<td style="text-align: right;">2.83</td>
+</tr>
+<tr>
+<td>Elf + Vampire</td>
+<td><a href="Fusion-elf-vampire.html">Crimson Sidhe</a></td>
+<td style="text-align: right;">3.175</td>
+<td style="text-align: right;">2.825</td>
+</tr>
+<tr>
+<td>Elf + Wight</td>
+<td><a href="Fusion-elf-wight.html">Pale Star Oracle</a></td>
+<td style="text-align: right;">3.18</td>
+<td style="text-align: right;">2.82</td>
+</tr>
+<tr>
+<td>Elf + Daemon</td>
+<td><a href="Fusion-daemon-elf.html">Twilight Seraph</a></td>
+<td style="text-align: right;">3.185</td>
+<td style="text-align: right;">2.815</td>
+</tr>
+<tr>
+<td>Human + Dwarf</td>
+<td><a href="Fusion-dwarf-human.html">Runic Exemplar</a></td>
+<td style="text-align: right;">4.19</td>
+<td style="text-align: right;">1.81</td>
+</tr>
+<tr>
+<td>Human + Slime</td>
+<td><a href="Fusion-human-slime.html">Aeonic Protean</a></td>
+<td style="text-align: right;">3.195</td>
+<td style="text-align: right;">2.805</td>
+</tr>
+<tr>
+<td>Human + Vampire</td>
+<td><a href="Fusion-human-vampire.html">Eclipse Sovereign</a></td>
+<td style="text-align: right;">3.2</td>
+<td style="text-align: right;">2.8</td>
+</tr>
+<tr>
+<td>Human + Wight</td>
+<td><a href="Fusion-human-wight.html">Deathless Exemplar</a></td>
+<td style="text-align: right;">3.205</td>
+<td style="text-align: right;">2.795</td>
+</tr>
+<tr>
+<td>Human + Daemon</td>
+<td><a href="Fusion-daemon-human.html">Empyrean Adversary</a></td>
+<td style="text-align: right;">3.21</td>
+<td style="text-align: right;">2.79</td>
+</tr>
+<tr>
+<td>Dwarf + Slime</td>
+<td><a href="Fusion-dwarf-slime.html">Quicksilver Artificer</a></td>
+<td style="text-align: right;">3.215</td>
+<td style="text-align: right;">2.785</td>
+</tr>
+<tr>
+<td>Dwarf + Vampire</td>
+<td><a href="Fusion-dwarf-vampire.html">Bloodrune Patriarch</a></td>
+<td style="text-align: right;">3.22</td>
+<td style="text-align: right;">2.78</td>
+</tr>
+<tr>
+<td>Dwarf + Wight</td>
+<td><a href="Fusion-dwarf-wight.html">Ossuary Runesmith</a></td>
+<td style="text-align: right;">3.225</td>
+<td style="text-align: right;">2.775</td>
+</tr>
+<tr>
+<td>Dwarf + Daemon</td>
+<td><a href="Fusion-daemon-dwarf.html">Infernal Forgemaster</a></td>
+<td style="text-align: right;">3.23</td>
+<td style="text-align: right;">2.77</td>
+</tr>
+<tr>
+<td>Slime + Vampire</td>
+<td><a href="Fusion-slime-vampire.html">Sanguine Protean</a></td>
+<td style="text-align: right;">2.235</td>
+<td style="text-align: right;">3.765</td>
+</tr>
+<tr>
+<td>Slime + Wight</td>
+<td><a href="Fusion-slime-wight.html">Ossuary Protean</a></td>
+<td style="text-align: right;">2.24</td>
+<td style="text-align: right;">3.76</td>
+</tr>
+<tr>
+<td>Slime + Daemon</td>
+<td><a href="Fusion-daemon-slime.html">Abyssal Progenitor</a></td>
+<td style="text-align: right;">2.245</td>
+<td style="text-align: right;">3.755</td>
+</tr>
+<tr>
+<td>Vampire + Wight</td>
+<td><a href="Fusion-vampire-wight.html">Nocturne Revenant</a></td>
+<td style="text-align: right;">2.25</td>
+<td style="text-align: right;">3.75</td>
+</tr>
+<tr>
+<td>Vampire + Daemon</td>
+<td><a href="Fusion-daemon-vampire.html">Sanguine Archfiend</a></td>
+<td style="text-align: right;">2.255</td>
+<td style="text-align: right;">3.745</td>
+</tr>
+<tr>
+<td>Wight + Daemon</td>
+<td><a href="Fusion-daemon-wight.html">Erebus Sovereign</a></td>
+<td style="text-align: right;">2.26</td>
+<td style="text-align: right;">3.74</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="gallery">Gallery</h2>
+<p><img alt="Completed Human/Slime convergence with its own growth profile" src="../media/convergent-awakening.png" /></p>
+<h2 id="configuration">Configuration</h2>
+<p>The world’s <code>serverconfig/tensura-myths-server.toml</code> controls <code>secondaryRaceEP</code> (5M), <code>convergenceEP</code> (10M), <code>godlyEP</code> (12M) and <code>convergenceEnergyMultiplier</code> (1.25). Server requirements are checked again when a request arrives. Client button state is not authoritative.</p>
+<p>Ordinary death and relogging retain the fused race and ancestry data. Reincarnation or an external replacement of the primary race resets the previous Duo life. There is no normal menu action to swap an existing secondary or repeatedly claim the awakening bonus.</p></div><nav class="related-box" aria-label="Related guides"><strong>Tensura Myths · Guides</strong><div class="navbox-row"><strong>Reference</strong><div><a href="../site/Getting-Started.html">Getting started</a><a href="../site/Skills.html">Skills</a><a href="../site/Godly.html">Godly Skills</a><a href="../site/Duo-Races.html">Duo Races</a><a href="../site/Convergent-Awakening.html" aria-current="page">Convergent Awakening</a><a href="../site/Evolution.html">Human evolution</a><a href="../site/Mechanics.html">Combat mechanics</a><a href="../site/Commands.html">Commands</a></div></div></nav>
+<div class="categories">Categories: <a href="../index.html">Tensura Myths</a> · Guides</div>
+<footer>Unofficial fan addon. Original documentation and portraits. Not affiliated with Capcom or ManasMods.<br>Tensura Myths 0.8.0 · Offline edition · No external services required.</footer></main></div></body></html>

@@ -2,18 +2,18 @@
 
 [Main Page](https://github.com/Bithio999/MC/wiki/Home) · [Skills](https://github.com/Bithio999/MC/wiki/Skills) · [Evolution](https://github.com/Bithio999/MC/wiki/Evolution) · [Mechanics](https://github.com/Bithio999/MC/wiki/Mechanics) · [Commands](https://github.com/Bithio999/MC/wiki/Commands)
 
-This guide covers installing **Tensura: Wild Hunt**, rolling an apex skill, and beginning the Human hunter evolution branch.
+This guide covers installing **Tensura Myths**, rolling an apex skill, and beginning the Human hunter evolution branch.
 
 ## Requirements
 
 - Minecraft 1.21.1 and Java 21.
 - NeoForge 21.1.209 or newer in the 21.1 line.
 - Tensura: Reincarnated 2.0.1.3, ManasCore 4.0.0.2, Architectury and Tensura’s required GeckoLib, SmartBrainLib and TerraBlender dependencies.
-- Wild Hunt 0.7.2 installed on both client and server.
+- Tensura Myths 0.8.0 installed on both client and server.
 
 ## Installation
 
-Download the 0.7.2 addon from the repository’s `releases` directory. Replace older Wild Hunt jars; do not load two versions together. The addon jar is not a complete modpack.
+Download the 0.8.0 addon from the repository’s `releases` directory. Replace older Wild Hunt / Tensura Myths jars; do not load two versions together. The addon jar is not a complete modpack.
 
 ## First reincarnation
 
@@ -35,4 +35,8 @@ Each skill has a separate toggleable passive in Tensura’s Ability Selection. T
 
 ---
 
-**Categories:** Tensura: Wild Hunt
+**Categories:** Tensura Myths
+
+## Beyond the hunter path
+
+Open `/myths` for [Duo Races](https://github.com/Bithio999/MC/wiki/Duo-Races), [Convergent Awakening](https://github.com/Bithio999/MC/wiki/Convergent-Awakening), and [Godly Skills](https://github.com/Bithio999/MC/wiki/Godly). See [Aion](https://github.com/Bithio999/MC/wiki/Aion) for its four active arts and barrier passive.

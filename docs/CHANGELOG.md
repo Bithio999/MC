@@ -1,7 +1,19 @@
 # Changelog
 
 
-This page records **Wild Hunt version history**, including gameplay changes, compatibility notes, and visual corrections.
+This page records **Tensura Myths version history**, including gameplay changes, compatibility notes, and visual corrections.
+
+## 0.8.0 — Tensura Myths
+
+- Rebranded the addon while preserving its `wildhunt` registry namespace and all previous content.
+- Added Godly as an additional skill classification and a seventh native skill category, retaining Ultimate compatibility.
+- Added Aion, God of Causality: spatial piercing ray, placed gravity field, safe personal HP/position rewind, three-pulse field collapse, and a recovering native barrier passive. Damage uses mastery rather than EP.
+- Added server-authoritative Duo selection, native secondary evolution, half-strength shared racial attributes, inherited reactions and ticks, and a separate configurable press/hold/release racial key binding.
+- Native kill EP gains add half the secondary base ancestry's weights to the current primary's weights.
+- Added Convergent Awakening requiring both final evolutions, True Hero/True Demon Lord and 10M base EP by default. Registered all 105 native ancestral pairs with individual names, icons and EP profiles. Awakening grants a configurable one-time 25% base energy increase.
+- Added a progression screen, player commands, configurable server gates, native Ultimate/Godly tags, and save/death persistence.
+- Expanded both wiki editions with Godly, Aion, Duo progression and individual pages for every fused race.
+- Isolated the existing long-range Railbolt GameTest from neighboring fixtures; gameplay range and targeting are unchanged.
 
 ## 0.7.2 — Alma front hairline
 

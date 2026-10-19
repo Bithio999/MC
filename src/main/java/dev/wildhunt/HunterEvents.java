@@ -15,7 +15,8 @@ public final class HunterEvents {
     public static void onKill(LivingDeathEvent event) {
         if (event.isCanceled() || !(event.getSource().getEntity() instanceof ServerPlayer player)
                 || !event.getEntity().getType().is(PROGRESSION_BOSSES) || player.isAlliedTo(event.getEntity())) return;
-        if (!HunterData.human(player) && HunterData.stage(player) <= 0) return;
+        if (!HunterData.human(player) && HunterData.stage(player) <= 0
+                && dev.wildhunt.myths.DuoSystem.secondaryFamily(player).orElse(null) != dev.wildhunt.myths.RaceFamily.HUMAN) return;
         var id = net.minecraft.core.registries.BuiltInRegistries.ENTITY_TYPE.getKey(event.getEntity().getType());
         if (HunterData.recordBossKill(player, id)) {
             player.sendSystemMessage(Component.literal("New boss defeated: ").append(event.getEntity().getType().getDescription())

@@ -1,0 +1,19 @@
+{
+  "replace": false,
+  "values": [
+    "wildhunt:convergence/beastfolk_merfolk",
+    "wildhunt:convergence/harpy_merfolk",
+    "wildhunt:convergence/merfolk_ogre",
+    "wildhunt:convergence/goblin_merfolk",
+    "wildhunt:convergence/giant_merfolk",
+    "wildhunt:convergence/merfolk_orc",
+    "wildhunt:convergence/lizardman_merfolk",
+    "wildhunt:convergence/elf_merfolk",
+    "wildhunt:convergence/human_merfolk",
+    "wildhunt:convergence/dwarf_merfolk",
+    "wildhunt:convergence/merfolk_slime",
+    "wildhunt:convergence/merfolk_vampire",
+    "wildhunt:convergence/merfolk_wight",
+    "wildhunt:convergence/daemon_merfolk"
+  ]
+}

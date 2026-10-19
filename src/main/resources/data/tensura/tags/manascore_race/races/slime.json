@@ -1,0 +1,19 @@
+{
+  "replace": false,
+  "values": [
+    "wildhunt:convergence/beastfolk_slime",
+    "wildhunt:convergence/harpy_slime",
+    "wildhunt:convergence/ogre_slime",
+    "wildhunt:convergence/goblin_slime",
+    "wildhunt:convergence/giant_slime",
+    "wildhunt:convergence/orc_slime",
+    "wildhunt:convergence/lizardman_slime",
+    "wildhunt:convergence/merfolk_slime",
+    "wildhunt:convergence/elf_slime",
+    "wildhunt:convergence/human_slime",
+    "wildhunt:convergence/dwarf_slime",
+    "wildhunt:convergence/slime_vampire",
+    "wildhunt:convergence/slime_wight",
+    "wildhunt:convergence/daemon_slime"
+  ]
+}

@@ -43,7 +43,7 @@ def export(output):
             # The Wiki page describes reading and contributing; publishing mechanics
             # remain in the repository's authoring guide.
             text = text.split('## Open the visual edition')[0]
-            text += '\n[Download the styled offline edition](' + REPO + '/blob/main/releases/wild-hunt-wiki-0.7.2.zip)\n'
+            text += '\n[Download the styled offline edition](' + REPO + '/blob/main/releases/tensura-myths-wiki-0.8.0.zip)\n'
         text = re.sub(r'(!?\[[^\]]*\]\()([^\s)]+)(\))', lambda m: m[1] + url(m[2]) + m[3], text)
         text = re.sub(r'(src=")([^"]+)(")', lambda m: m[1] + url(m[2]) + m[3], text)
         text = text.replace('improve the Markdown articles in `wiki/pages`', 'improve the [Markdown articles](' + REPO + '/tree/main/wiki/pages)')
@@ -51,11 +51,12 @@ def export(output):
 
     for source in sources:
         (output / (pages[source.resolve()] + '.md')).write_text(convert(source))
-    sidebar = '# Tensura: Wild Hunt\n\n[Home](' + WIKI_URL + ')\n\n'
+    sidebar = '# Tensura Myths\n\n[Home](' + WIKI_URL + ')\n\n'
     for heading, slugs in [
         ('Start here', ['Getting-Started', 'Skills', 'Evolution', 'Mechanics', 'Aura-Regeneration']),
         ('Unique Skills', ['Storm-Crown', 'Scarlet-Deluge', 'Black-Flame', 'Frostbound-Colossus']),
         ('Ultimate Skills', ['Raijin', 'Varuna', 'Agni', 'Ymir']),
+        ('Myths progression', ['Godly', 'Aion', 'Duo-Races', 'Convergent-Awakening']),
         ('Races', ['Awakened-Hunter', 'Apex-Hunter', 'Sovereign-Hunter']),
         ('Otherworlders', ['Alma', 'Gemma']), ('Reference', ['Commands'])]:
         sidebar += '### ' + heading + '\n\n'
@@ -64,7 +65,7 @@ def export(output):
             sidebar += f'- [{title}]({WIKI_URL}/{slug})\n'
         sidebar += '\n'
     (output / '_Sidebar.md').write_text(sidebar)
-    (output / '_Footer.md').write_text(f'**Tensura: Wild Hunt 0.7.2** · Minecraft 1.21.1 · NeoForge\n\n[Home]({WIKI_URL}) · [Source]({REPO}) · [Base mod wiki](https://tensura.wiki.gg/wiki/Tensura:_Reincarnated_Wiki)\n\nUnofficial fan addon. Original documentation and portraits. Not affiliated with Capcom or ManasMods.\n')
+    (output / '_Footer.md').write_text(f'**Tensura Myths 0.8.0** · Minecraft 1.21.1 · NeoForge\n\n[Home]({WIKI_URL}) · [Source]({REPO}) · [Base mod wiki](https://tensura.wiki.gg/wiki/Tensura:_Reincarnated_Wiki)\n\nUnofficial fan addon. Original documentation and portraits. Not affiliated with Capcom or ManasMods.\n')
     print(f'Exported {len(sources)} GitHub Wiki pages, sidebar, and footer to {output.relative_to(ROOT) if output.is_relative_to(ROOT) else output}.')
 
 
@@ -81,7 +82,7 @@ def publish(output):
         subprocess.run(['git', '-C', str(checkout), 'add', '--', *files], check=True)
         if subprocess.run(['git', '-C', str(checkout), 'diff', '--cached', '--quiet']).returncode == 0:
             print('GitHub Wiki already matches the documentation.'); return
-        subprocess.run(['git', '-C', str(checkout), '-c', 'user.name=Wild Hunt Documentation', '-c', 'user.email=docs@users.noreply.github.com', 'commit', '-m', 'Update Wild Hunt wiki documentation and navigation'], check=True)
+        subprocess.run(['git', '-C', str(checkout), '-c', 'user.name=Tensura Myths Documentation', '-c', 'user.email=docs@users.noreply.github.com', 'commit', '-m', 'Update Tensura Myths wiki documentation and navigation'], check=True)
         subprocess.run(['git', '-C', str(checkout), 'push', 'origin', 'HEAD'], check=True)
         print('Published ' + WIKI_URL)
 

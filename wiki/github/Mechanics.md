@@ -94,4 +94,4 @@ Race HP bonuses are +100 / +500 / +1,000; native SHP bonuses are +400 / +3,200 /
 
 ---
 
-**Categories:** Tensura: Wild Hunt
+**Categories:** Tensura Myths

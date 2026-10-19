@@ -74,5 +74,441 @@
   {
     "slug": "Ymir",
     "title": "Ymir, Lord of Winter"
+  },
+  {
+    "slug": "Godly",
+    "title": "Godly Skills"
+  },
+  {
+    "slug": "Aion",
+    "title": "Aion, God of Causality"
+  },
+  {
+    "slug": "Duo-Races",
+    "title": "Duo Races"
+  },
+  {
+    "slug": "Convergent-Awakening",
+    "title": "Convergent Awakening"
+  },
+  {
+    "slug": "Fusion-beastfolk-harpy",
+    "title": "Gryphon Sovereign"
+  },
+  {
+    "slug": "Fusion-beastfolk-ogre",
+    "title": "Rakshasa"
+  },
+  {
+    "slug": "Fusion-beastfolk-goblin",
+    "title": "Briar Monarch"
+  },
+  {
+    "slug": "Fusion-beastfolk-giant",
+    "title": "Fenrir Colossus"
+  },
+  {
+    "slug": "Fusion-beastfolk-orc",
+    "title": "Calydonian King"
+  },
+  {
+    "slug": "Fusion-beastfolk-lizardman",
+    "title": "Chimera Wyrm"
+  },
+  {
+    "slug": "Fusion-beastfolk-merfolk",
+    "title": "Leviathan Beast"
+  },
+  {
+    "slug": "Fusion-beastfolk-elf",
+    "title": "Sylvan Sphinx"
+  },
+  {
+    "slug": "Fusion-beastfolk-human",
+    "title": "Primal Paragon"
+  },
+  {
+    "slug": "Fusion-beastfolk-dwarf",
+    "title": "Adamant Manticore"
+  },
+  {
+    "slug": "Fusion-beastfolk-slime",
+    "title": "Amorphous Behemoth"
+  },
+  {
+    "slug": "Fusion-beastfolk-vampire",
+    "title": "Bloodmoon Lycan"
+  },
+  {
+    "slug": "Fusion-beastfolk-wight",
+    "title": "Ossuary Fenrir"
+  },
+  {
+    "slug": "Fusion-beastfolk-daemon",
+    "title": "Abyssal Chimera"
+  },
+  {
+    "slug": "Fusion-harpy-ogre",
+    "title": "Garuda Oni"
+  },
+  {
+    "slug": "Fusion-goblin-harpy",
+    "title": "Thornwing Archon"
+  },
+  {
+    "slug": "Fusion-giant-harpy",
+    "title": "Storm Titan"
+  },
+  {
+    "slug": "Fusion-harpy-orc",
+    "title": "Tempest Juggernaut"
+  },
+  {
+    "slug": "Fusion-harpy-lizardman",
+    "title": "Quetzal Sovereign"
+  },
+  {
+    "slug": "Fusion-harpy-merfolk",
+    "title": "Siren Seraph"
+  },
+  {
+    "slug": "Fusion-elf-harpy",
+    "title": "Zephyr Oracle"
+  },
+  {
+    "slug": "Fusion-harpy-human",
+    "title": "Celestial Valkyrie"
+  },
+  {
+    "slug": "Fusion-dwarf-harpy",
+    "title": "Runewing Artisan"
+  },
+  {
+    "slug": "Fusion-harpy-slime",
+    "title": "Cloudborn Protean"
+  },
+  {
+    "slug": "Fusion-harpy-vampire",
+    "title": "Nocturne Strix"
+  },
+  {
+    "slug": "Fusion-harpy-wight",
+    "title": "Pale Thunderbird"
+  },
+  {
+    "slug": "Fusion-daemon-harpy",
+    "title": "Fallen Simurgh"
+  },
+  {
+    "slug": "Fusion-goblin-ogre",
+    "title": "Thorncrown Asura"
+  },
+  {
+    "slug": "Fusion-giant-ogre",
+    "title": "Indra Colossus"
+  },
+  {
+    "slug": "Fusion-ogre-orc",
+    "title": "Warborn Ravager"
+  },
+  {
+    "slug": "Fusion-lizardman-ogre",
+    "title": "Ryuujin"
+  },
+  {
+    "slug": "Fusion-merfolk-ogre",
+    "title": "Tidal Susanoo"
+  },
+  {
+    "slug": "Fusion-elf-ogre",
+    "title": "Moonlit Kensei"
+  },
+  {
+    "slug": "Fusion-human-ogre",
+    "title": "Heavenly Asura"
+  },
+  {
+    "slug": "Fusion-dwarf-ogre",
+    "title": "Vajra Forgemaster"
+  },
+  {
+    "slug": "Fusion-ogre-slime",
+    "title": "Protean Kishin"
+  },
+  {
+    "slug": "Fusion-ogre-vampire",
+    "title": "Crimson Yaksha"
+  },
+  {
+    "slug": "Fusion-ogre-wight",
+    "title": "Gravebound Kishin"
+  },
+  {
+    "slug": "Fusion-daemon-ogre",
+    "title": "Abyssal Rakshasa"
+  },
+  {
+    "slug": "Fusion-giant-goblin",
+    "title": "Bramble Titan"
+  },
+  {
+    "slug": "Fusion-goblin-orc",
+    "title": "Verdant Warlord"
+  },
+  {
+    "slug": "Fusion-goblin-lizardman",
+    "title": "Basilisk Regent"
+  },
+  {
+    "slug": "Fusion-goblin-merfolk",
+    "title": "Reef Trickster"
+  },
+  {
+    "slug": "Fusion-elf-goblin",
+    "title": "Thornsong Sovereign"
+  },
+  {
+    "slug": "Fusion-goblin-human",
+    "title": "Emerald Exemplar"
+  },
+  {
+    "slug": "Fusion-dwarf-goblin",
+    "title": "Gremlin Artificer"
+  },
+  {
+    "slug": "Fusion-goblin-slime",
+    "title": "Briar Protean"
+  },
+  {
+    "slug": "Fusion-goblin-vampire",
+    "title": "Sanguine Puck"
+  },
+  {
+    "slug": "Fusion-goblin-wight",
+    "title": "Ossuary Trickster"
+  },
+  {
+    "slug": "Fusion-daemon-goblin",
+    "title": "Infernal Goblin King"
+  },
+  {
+    "slug": "Fusion-giant-orc",
+    "title": "Worldbreaker"
+  },
+  {
+    "slug": "Fusion-giant-lizardman",
+    "title": "Jormungandr"
+  },
+  {
+    "slug": "Fusion-giant-merfolk",
+    "title": "Oceanus"
+  },
+  {
+    "slug": "Fusion-elf-giant",
+    "title": "Yggdrasil Guardian"
+  },
+  {
+    "slug": "Fusion-giant-human",
+    "title": "Atlas Ascendant"
+  },
+  {
+    "slug": "Fusion-dwarf-giant",
+    "title": "Hecatoncheir"
+  },
+  {
+    "slug": "Fusion-giant-slime",
+    "title": "Primordial Colossus"
+  },
+  {
+    "slug": "Fusion-giant-vampire",
+    "title": "Bloodforge Titan"
+  },
+  {
+    "slug": "Fusion-giant-wight",
+    "title": "Ossuary Colossus"
+  },
+  {
+    "slug": "Fusion-daemon-giant",
+    "title": "Typhon"
+  },
+  {
+    "slug": "Fusion-lizardman-orc",
+    "title": "Ironhide Wyrm"
+  },
+  {
+    "slug": "Fusion-merfolk-orc",
+    "title": "Abyssal Cetus"
+  },
+  {
+    "slug": "Fusion-elf-orc",
+    "title": "Verdant Juggernaut"
+  },
+  {
+    "slug": "Fusion-human-orc",
+    "title": "Adamant Warlord"
+  },
+  {
+    "slug": "Fusion-dwarf-orc",
+    "title": "Vulcan Behemoth"
+  },
+  {
+    "slug": "Fusion-orc-slime",
+    "title": "Voracious Protean"
+  },
+  {
+    "slug": "Fusion-orc-vampire",
+    "title": "Sanguine Behemoth"
+  },
+  {
+    "slug": "Fusion-orc-wight",
+    "title": "Gravehide Colossus"
+  },
+  {
+    "slug": "Fusion-daemon-orc",
+    "title": "Maw of Tartarus"
+  },
+  {
+    "slug": "Fusion-lizardman-merfolk",
+    "title": "Azure Leviathan"
+  },
+  {
+    "slug": "Fusion-elf-lizardman",
+    "title": "Elder Starwyrm"
+  },
+  {
+    "slug": "Fusion-human-lizardman",
+    "title": "Dragonheart Exemplar"
+  },
+  {
+    "slug": "Fusion-dwarf-lizardman",
+    "title": "Runebound Fafnir"
+  },
+  {
+    "slug": "Fusion-lizardman-slime",
+    "title": "Mercurial Ouroboros"
+  },
+  {
+    "slug": "Fusion-lizardman-vampire",
+    "title": "Sanguine Wyrm"
+  },
+  {
+    "slug": "Fusion-lizardman-wight",
+    "title": "Ossuary Dragon"
+  },
+  {
+    "slug": "Fusion-daemon-lizardman",
+    "title": "Tiamat Scion"
+  },
+  {
+    "slug": "Fusion-elf-merfolk",
+    "title": "Nereid Oracle"
+  },
+  {
+    "slug": "Fusion-human-merfolk",
+    "title": "Thalassic Exemplar"
+  },
+  {
+    "slug": "Fusion-dwarf-merfolk",
+    "title": "Runic Triton"
+  },
+  {
+    "slug": "Fusion-merfolk-slime",
+    "title": "Abyssal Undine"
+  },
+  {
+    "slug": "Fusion-merfolk-vampire",
+    "title": "Sanguine Siren"
+  },
+  {
+    "slug": "Fusion-merfolk-wight",
+    "title": "Ossuary Mariner"
+  },
+  {
+    "slug": "Fusion-daemon-merfolk",
+    "title": "Abyssal Scylla"
+  },
+  {
+    "slug": "Fusion-elf-human",
+    "title": "Astral Exemplar"
+  },
+  {
+    "slug": "Fusion-dwarf-elf",
+    "title": "Aetherforged Oracle"
+  },
+  {
+    "slug": "Fusion-elf-slime",
+    "title": "Sylvan Protean"
+  },
+  {
+    "slug": "Fusion-elf-vampire",
+    "title": "Crimson Sidhe"
+  },
+  {
+    "slug": "Fusion-elf-wight",
+    "title": "Pale Star Oracle"
+  },
+  {
+    "slug": "Fusion-daemon-elf",
+    "title": "Twilight Seraph"
+  },
+  {
+    "slug": "Fusion-dwarf-human",
+    "title": "Runic Exemplar"
+  },
+  {
+    "slug": "Fusion-human-slime",
+    "title": "Aeonic Protean"
+  },
+  {
+    "slug": "Fusion-human-vampire",
+    "title": "Eclipse Sovereign"
+  },
+  {
+    "slug": "Fusion-human-wight",
+    "title": "Deathless Exemplar"
+  },
+  {
+    "slug": "Fusion-daemon-human",
+    "title": "Empyrean Adversary"
+  },
+  {
+    "slug": "Fusion-dwarf-slime",
+    "title": "Quicksilver Artificer"
+  },
+  {
+    "slug": "Fusion-dwarf-vampire",
+    "title": "Bloodrune Patriarch"
+  },
+  {
+    "slug": "Fusion-dwarf-wight",
+    "title": "Ossuary Runesmith"
+  },
+  {
+    "slug": "Fusion-daemon-dwarf",
+    "title": "Infernal Forgemaster"
+  },
+  {
+    "slug": "Fusion-slime-vampire",
+    "title": "Sanguine Protean"
+  },
+  {
+    "slug": "Fusion-slime-wight",
+    "title": "Ossuary Protean"
+  },
+  {
+    "slug": "Fusion-daemon-slime",
+    "title": "Abyssal Progenitor"
+  },
+  {
+    "slug": "Fusion-vampire-wight",
+    "title": "Nocturne Revenant"
+  },
+  {
+    "slug": "Fusion-daemon-vampire",
+    "title": "Sanguine Archfiend"
+  },
+  {
+    "slug": "Fusion-daemon-wight",
+    "title": "Erebus Sovereign"
   }
 ]

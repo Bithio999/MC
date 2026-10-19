@@ -99,4 +99,4 @@ The Unique passive’s native shield counter. Its Ultimate uses a higher capacit
 
 ---
 
-**Categories:** Tensura: Wild Hunt
+**Categories:** Tensura Myths

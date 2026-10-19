@@ -1,0 +1,19 @@
+{
+  "replace": false,
+  "values": [
+    "wildhunt:convergence/beastfolk_harpy",
+    "wildhunt:convergence/beastfolk_ogre",
+    "wildhunt:convergence/beastfolk_goblin",
+    "wildhunt:convergence/beastfolk_giant",
+    "wildhunt:convergence/beastfolk_orc",
+    "wildhunt:convergence/beastfolk_lizardman",
+    "wildhunt:convergence/beastfolk_merfolk",
+    "wildhunt:convergence/beastfolk_elf",
+    "wildhunt:convergence/beastfolk_human",
+    "wildhunt:convergence/beastfolk_dwarf",
+    "wildhunt:convergence/beastfolk_slime",
+    "wildhunt:convergence/beastfolk_vampire",
+    "wildhunt:convergence/beastfolk_wight",
+    "wildhunt:convergence/beastfolk_daemon"
+  ]
+}

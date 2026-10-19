@@ -1,16 +1,20 @@
-# Tensura: Wild Hunt Wiki
+# Tensura Myths Wiki
 
-<p align="center"><strong>TENSURA: REINCARNATED ADDON<br>W I L D &nbsp; H U N T</strong><br>The hunter's field guide</p>
+<p align="center"><strong>TENSURA: REINCARNATED ADDON<br>T E N S U R A &nbsp; M Y T H S</strong><br>Skills · Races · Awakening</p>
 
-## Welcome to the Tensura: Wild Hunt Wiki!
+## Welcome to the Tensura Myths Wiki!
 
-An unofficial reference for the Monster Hunter inspired addon to **Tensura: Reincarnated**.
+An unofficial reference for the skills and progression addon to **Tensura: Reincarnated**.
 
 <p align="center"><img src="https://github.com/Bithio999/MC/blob/main/wiki/assets/skill/storm_crown.png?raw=true" width="64" height="64" alt="Rey Dau"> <img src="https://github.com/Bithio999/MC/blob/main/wiki/assets/skill/scarlet_deluge.png?raw=true" width="64" height="64" alt="Uth Duna"> <img src="https://github.com/Bithio999/MC/blob/main/wiki/assets/skill/black_flame.png?raw=true" width="64" height="64" alt="Nu Udra"> <img src="https://github.com/Bithio999/MC/blob/main/wiki/assets/skill/frostbound_colossus.png?raw=true" width="64" height="64" alt="Jin Dahaad"></p>
 
-We currently document **19 articles**, covering four apex skill lines, three hunter evolutions, aura recovery, and otherworlders.
+We currently document **128 articles**, covering Godly skills, Duo Races, all 105 Convergent races, apex abilities, hunter evolutions and otherworlders.
 
-**Wild Hunt 0.7.2 · Minecraft 1.21.1 · NeoForge**
+**Tensura Myths 0.8.0 · Minecraft 1.21.1 · NeoForge**
+
+## Myths progression
+
+[Aion, God of Causality](https://github.com/Bithio999/MC/wiki/Aion) introduces the [Godly skill tier](https://github.com/Bithio999/MC/wiki/Godly). Build a [Duo Race](https://github.com/Bithio999/MC/wiki/Duo-Races), finish both evolution paths, and undergo [Convergent Awakening](https://github.com/Bithio999/MC/wiki/Convergent-Awakening). The catalog contains all 105 ancestral pairings with individual race articles, original icons and distinct EP growth profiles.
 
 ## About the addon
 
@@ -45,7 +49,7 @@ Progress through 100K / 400K / 2M base EP and 1 / 3 / 5 distinct boss types. Sov
 
 Report missing details, suggest corrections, or improve the [Markdown articles](https://github.com/Bithio999/MC/tree/main/wiki/pages). Please include the addon version when reporting a gameplay difference. See [Wiki publishing](https://github.com/Bithio999/MC/blob/main/docs/WIKI.md) for authoring and GitHub Wiki synchronization.
 
-[GitHub Wiki](https://github.com/Bithio999/MC/wiki) · [Download the addon](https://github.com/Bithio999/MC/blob/main/releases/tensura-wild-hunt-0.7.2.jar) · [Official Tensura wiki](https://tensura.wiki.gg/wiki/Tensura:_Reincarnated_Wiki)
+[GitHub Wiki](https://github.com/Bithio999/MC/wiki) · [Download the addon](https://github.com/Bithio999/MC/blob/main/releases/tensura-myths-0.8.0.jar) · [Official Tensura wiki](https://tensura.wiki.gg/wiki/Tensura:_Reincarnated_Wiki)
 
 
-[Download the styled offline edition](https://github.com/Bithio999/MC/blob/main/releases/wild-hunt-wiki-0.7.2.zip)
+[Download the styled offline edition](https://github.com/Bithio999/MC/blob/main/releases/tensura-myths-wiki-0.8.0.zip)

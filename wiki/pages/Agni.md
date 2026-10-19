@@ -20,7 +20,7 @@
 | Registry ID | `wildhunt:agni` |
 | **Evolution** | |
 | Previous | [Black Flame](Black-Flame.md) |
-| Evolution | — |
+| Evolution | [Aion, God of Causality](Aion.md) |
 | **Obtaining** | |
 | Method | Ascend the matching mastered Unique |
 
@@ -96,4 +96,8 @@ In-game example of the active art.
 
 ---
 
-**Categories:** Tensura: Wild Hunt
+**Categories:** Tensura Myths
+
+## Godly evolution
+
+At mastery, True Hero or True Demon Lord awakening, and 12M base EP, use `/myths` to evolve this Ultimate into [Aion, God of Causality](Aion.md). It replaces the selected Ultimate while preserving presets and remaining cooldowns.

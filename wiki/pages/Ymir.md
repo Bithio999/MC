@@ -20,7 +20,7 @@
 | Registry ID | `wildhunt:ymir` |
 | **Evolution** | |
 | Previous | [Frostbound Colossus](Frostbound-Colossus.md) |
-| Evolution | — |
+| Evolution | [Aion, God of Causality](Aion.md) |
 | **Obtaining** | |
 | Method | Ascend the matching mastered Unique |
 
@@ -106,4 +106,8 @@ The Unique passive’s native shield counter. Its Ultimate uses a higher capacit
 
 ---
 
-**Categories:** Tensura: Wild Hunt
+**Categories:** Tensura Myths
+
+## Godly evolution
+
+At mastery, True Hero or True Demon Lord awakening, and 12M base EP, use `/myths` to evolve this Ultimate into [Aion, God of Causality](Aion.md). It replaces the selected Ultimate while preserving presets and remaining cooldowns.

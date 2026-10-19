@@ -1,12 +1,24 @@
-# Tensura: Wild Hunt
+# Tensura Myths
 
-A Monster Hunter Wilds inspired addon for **Tensura 2.0.1.3**, **Minecraft
+An expanded progression and skills addon for **Tensura 2.0.1.3**, **Minecraft
 1.21.1**, **NeoForge 21.1.209+**, and **Java 21**.
 
 ## Download
 
-The built addon is included at [releases/tensura-wild-hunt-0.7.2.jar](releases/tensura-wild-hunt-0.7.2.jar).
+The built addon is included at [releases/tensura-myths-0.8.0.jar](releases/tensura-myths-0.8.0.jar).
 Install it alongside Tensura and its required dependencies on both client and server.
+
+## Godly skills and Duo Races
+
+**[Aion, God of Causality](wiki/pages/Aion.md)** introduces the **Godly** tier: a separate category in Tensura’s skill menu that retains native Ultimate classification. Master any one of this addon’s four Ultimates, become a True Hero or True Demon Lord, and reach **12M base EP** to ascend through `/myths`. Aion has four spatial/causal arts and an aura-powered native barrier passive. Ascension replaces the chosen Ultimate and preserves presets and cooldowns.
+
+**[Duo Races](wiki/pages/Duo-Races.md)** unlock at a final primary evolution, True Hero/True Demon Lord and **5M base EP**. Choose a permanent secondary ancestry from the other native race families and evolve it through native requirements. Its half-strength attributes, learned intrinsic skills and racial reactions complement the primary body. Assign **Secondary racial ability** in Controls to use its native press/hold/release action.
+
+After **both races reach their final evolution**, **[Convergent Awakening](wiki/pages/Convergent-Awakening.md)** unlocks at **10M base EP**. All **105 combinations** among the 15 native ancestral families have a named, registered fusion race, original icon and distinct EP growth profile. The awakening grants a one-time 25% increase to both base energy pools. Thresholds and the bonus are server configurable.
+
+Duo energy gain is additive: current primary weights + half the secondary **base race** weights. A default-alignment Human/Hunter with Slime gains **7.5 aura and 6 magicules** where the same baseline previously granted 6 aura and 3 magicules. The secondary’s evolution does not change that half-base contribution; the fused race then uses its own profile.
+
+The display name is now **Tensura Myths**. All previous hunter content remains; the `wildhunt` namespace is preserved for existing saves and datapacks.
 
 ## Human hunter progression
 
@@ -75,11 +87,11 @@ off immediately removes its attribute contributions. Uniques have two active
 modes; Ultimates add a third signature: Heaven’s Thunder, Crimson Ocean,
 Black Sun Caldera, or Heavenfall Glacier.
 
-Read the [Wild Hunt Wiki](wiki/README.md) for all eight skill pages, exact costs,
+Read the [Tensura Myths Wiki](wiki/README.md) for skill pages, exact costs,
 combos, race infoboxes, commands and mechanics. The [GitHub Wiki edition](wiki/github/Home.md)
 includes the prepared Home, articles, sidebar, and footer. See [publishing instructions](docs/WIKI.md)
 for syncing these to the separate [GitHub Wiki](https://github.com/Bithio999/MC/wiki).
-**[Download the styled offline wiki](releases/wild-hunt-wiki-0.7.2.zip)**, extract
+**[Download the styled offline wiki](releases/tensura-myths-wiki-0.8.0.zip)**, extract
 the ZIP, and open `index.html`. It includes a wiki-style portal, mobile navigation,
 infoboxes, and offline search. GitHub shows HTML source; download the edition to
 see its styling. It is also included at `wiki/index.html` in the repository. The
@@ -110,7 +122,7 @@ defined in Java.
 
 ### Updating from an earlier release
 
-Replace the old addon jar with 0.7.2; do not install both. Learned skills,
+Replace the old addon jar with 0.8.0; do not install both. Learned skills,
 mastery, distinct boss history and native passive toggle state are retained.
 Existing hunters get the stronger HP/SHP caps on login without free healing.
 Already-enabled water/ice passives receive their initial native HUD barrier.
@@ -146,7 +158,9 @@ vertical dashes, through-wall ricochets, momentum preservation, native shield
 breakage and timed recovery, HP/SHP evolution, aura regeneration and native NPC loadouts.
 `./gradlew runClient` starts a development client on a machine with graphics.
 
-Install `build/libs/tensura-wild-hunt-0.7.2.jar` on **both client and server**,
+The [0.8.0 validation report](docs/VALIDATION-0.8.0.md) covers the Godly/Duo additions, all 50 native GameTests and the actual client checks.
+
+Install `build/libs/tensura-myths-0.8.0.jar` on **both client and server**,
 alongside Tensura and its required dependencies. The addon jar is not a complete
 modpack. Additional development dependency versions are in `runtime-mods.lock.json`.
 
@@ -155,7 +169,7 @@ modpack. Additional development dependency versions are in `runtime-mods.lock.js
 An early playable implementation with original 64×64 pixel-art monster portraits
 and distinct elemental effects built with Tensura’s native APIs plus procedural
 tentacle and ice meshes. Custom monster mobs,
-equipment, animated 3D models, and a custom progression screen are not included.
+equipment and animated monster models are not included.
 Client visuals and balance require in-game playtesting.
 
 Portrait source art is in `art/apex-portraits.png`; optional regeneration uses
@@ -170,7 +184,3 @@ The official [Human wiki page](https://tensura.wiki.gg/wiki/Races/Human) informe
 the EP balancing reference.
 
 Water and ice toggles no longer emit constant custom particles. Their physical/magic barrier bonuses are reduced 10%; broken native multilayer barriers rearm automatically after ten seconds without a hit while the toggle stays funded. Undertow is placed along the crosshair ray within 24/36 blocks and renders rotating teal/coral water ribbons.
-
-Version 0.7.1 corrects Alma and Gemma’s top, side and rear hair textures while preserving their existing faces and outfits.
-
-0.7.2 fixes Alma’s front hairline, removing the large triangular forehead gap while preserving her glasses and lower face.

@@ -46,4 +46,4 @@ Hunter base evolution energy is split **2/3 aura and 1/3 magicules**. Tensura's 
 
 ---
 
-**Categories:** Tensura: Wild Hunt · Extra Skills
+**Categories:** Tensura Myths · Extra Skills

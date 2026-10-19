@@ -60,4 +60,4 @@ Boss credit survives death. [Commands](Commands.md) provide status and evolution
 
 ---
 
-**Categories:** Tensura: Wild Hunt
+**Categories:** Tensura Myths

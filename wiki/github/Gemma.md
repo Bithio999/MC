@@ -42,4 +42,4 @@ Use `/summon wildhunt:gemma` or `/give @s wildhunt:gemma_spawn_egg` for a direct
 
 ---
 
-**Categories:** Tensura: Wild Hunt · Otherworlders
+**Categories:** Tensura Myths · Otherworlders
