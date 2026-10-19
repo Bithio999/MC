@@ -7,7 +7,7 @@
 <div class="search"><label for="wiki-search">Search the wiki</label><input id="wiki-search" type="search" placeholder="Find a skill, race, or mechanic…" autocomplete="off"><div id="search-results" aria-live="polite"></div></div></header>
 <div class="layout"><nav class="sidebar" aria-label="Wiki navigation"><h2>Explore</h2><a href="../index.html">Main Page</a><a href="../site/Getting-Started.html">Getting started</a><a href="../site/Skills.html">Skills</a><a href="../site/Evolution.html">Human evolution</a><a href="../site/Mechanics.html">Combat mechanics</a><a href="../site/Aura-Regeneration.html">Aura regeneration</a><a href="../site/Alma.html">Alma</a><a href="../site/Gemma.html">Gemma</a><a href="../site/Commands.html">Commands</a><a href="../site/Version-History.html">Version history</a>
 <h2>Apex arts</h2><a href="../site/Storm-Crown.html">Storm Crown</a><a href="../site/Scarlet-Deluge.html">Scarlet Deluge</a><a href="../site/Black-Flame.html">Black Flame</a><a href="../site/Frostbound-Colossus.html">Frostbound Colossus</a>
-<p>Version 0.7.1<br>Minecraft 1.21.1<br>NeoForge</p></nav>
+<p>Version 0.7.2<br>Minecraft 1.21.1<br>NeoForge</p></nav>
 <main id="article"><div class="page-tabs"><span>Article</span><a href="../pages/Alma.md">Read Markdown</a></div>
 <h1>Alma</h1><p class="subtitle">From the Tensura: Wild Hunt Wiki</p>
 <aside class="infobox" aria-label="Page data"><p><img alt="Gemma and Alma in the Minecraft client" src="../media/alma-gemma.png" /></p><table>
@@ -44,6 +44,7 @@
 <li><a href="#character">Character</a></li>
 <li><a href="#tensura-abilities">Tensura abilities</a></li>
 <li><a href="#spawning-and-otherworlder-behavior">Spawning and otherworlder behavior</a></li>
+<li><a href="#front-hairline-correction-in-072">Front hairline correction in 0.7.2</a></li>
 <li><a href="#skin-correction-in-071">Skin correction in 0.7.1</a></li>
 <li><a href="#visual-reference-and-skin-provenance">Visual reference and skin provenance</a></li>
 </ul>
@@ -104,11 +105,14 @@
 <h2 id="spawning-and-otherworlder-behavior">Spawning and otherworlder behavior</h2>
 <p>Alma participates in Tensura's <strong>otherworlder spawn distribution</strong>, including its natural otherworlder replacement and summon selection. The eight regular native entries and these two hunters have equal 0.10 weights; the total remains 1. Special Shizu/Hinata rolls and the native overall spawn chance are unchanged. A datapack can override these distributions and loadouts.</p>
 <p>Use <code>/summon wildhunt:alma</code> or <code>/give @s wildhunt:alma_spawn_egg</code> for a direct check. Native otherworlder ownership, inventory, home handling, interaction menus and configured Unique-skill drops are inherited. Races, skills and equipment persist through native saving; loading never reinitializes them. Their native entity data supplies 160,000 aura / 80,000 magicules before any applicable modifiers.</p>
+<h2 id="front-hairline-correction-in-072">Front hairline correction in 0.7.2</h2>
+<p>Alma's front hairline now uses a short, even fringe above a narrow forehead. The large triangular gap on the front is removed. This correction changes only the top four pixel rows of the front head face; her glasses, eyes, nose, mouth, other head faces and outfit are preserved.</p>
+<p><img alt="Alma front hairline in Minecraft 0.7.2" src="../media/alma-front-hairline-072.png" /></p>
 <h2 id="skin-correction-in-071">Skin correction in 0.7.1</h2>
 <p>The top, side and rear head textures now use a separate opaque atlas. This removes Gemma's black patch and gives Alma a coherent swept-back hairstyle. The existing front faces, clothing and equipment pixels are preserved.</p>
 <p><img alt="Corrected rear head textures in Minecraft 0.7.1" src="../media/otherworlder-hair-rear-071.png" /></p>
 <h2 id="visual-reference-and-skin-provenance">Visual reference and skin provenance</h2>
 <p>Appearance reference: <a href="https://monsterhunterwilds.wiki.fextralife.com/Alma">Monster Hunter Wilds Alma page</a>. Common skin libraries blocked automated downloads during development, so this is an <strong>original generated and UV-packed interpretation</strong>, not a downloaded community skin or a ripped game texture. The character reference images are not redistributed in this repository. Source art and reproducible nearest-neighbor UV packing are in <code>art/</code> and <code>scripts/prepare-skins.py</code>.</p>
 <hr />
-<p><strong>Categories:</strong> Tensura: Wild Hunt · Otherworlders · Version 0.7.1</p>
+<p><strong>Categories:</strong> Tensura: Wild Hunt · Otherworlders · Version 0.7.2</p>
 <footer>Unofficial fan addon. Original documentation and portraits. Not affiliated with Capcom or ManasMods. Offline edition; no external services required.</footer></main></div></body></html>

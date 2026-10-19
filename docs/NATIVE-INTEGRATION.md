@@ -107,3 +107,23 @@ built successfully; all 8 existing unit tests passed. Pixel-difference checks
 confirmed that changes are confined to the five non-front head faces, and client
 views confirmed the repaired rear and side hair. Native NPC/gameplay code was
 unchanged from 0.7.0.
+
+## 0.7.2 front hairline and registry initialization
+
+Alma's 8x4 front hairline patch replaces only the upper four rows of the front
+head face. The deep triangular skin gap becomes an even hairline above a single
+forehead row. Pixel comparison against 0.7.1 confirms that only those 32 pixels
+changed: her glasses/eyes/nose/mouth, remaining head faces, body and all Gemma
+pixels are identical. Generated patch source and nearest-neighbor packing are
+retained in `art/alma-front-hairline.png` and `scripts/prepare-skins.py`.
+
+Client validation also exposed a constructor-time Architectury lookup failure
+for `manascore_race:races`. Registration now uses `RaceAPI.getRaceRegistry()` and
+`SkillAPI.getSkillRegistry()` directly with explicit `wildhunt` resource IDs,
+matching Tensura's own native registration approach. It no longer looks up a
+foreign custom registry through a separate DeferredRegister during construction.
+All IDs and saved race/skill data are preserved. The build, 8 unit tests and 38
+native server GameTests pass with the corrected registration path.
+
+Fresh Minecraft client loading and frontal/angled views also pass in 0.7.2. The
+front-view screenshot is in `wiki/media/alma-front-hairline-072.png`.

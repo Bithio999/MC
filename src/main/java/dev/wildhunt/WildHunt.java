@@ -1,6 +1,6 @@
 package dev.wildhunt;
 
-import dev.architectury.registry.registries.DeferredRegister;
+import dev.architectury.registry.registries.Registrar;
 import dev.architectury.registry.registries.RegistrySupplier;
 import io.github.manasmods.manascore.race.api.ManasRace;
 import io.github.manasmods.manascore.race.api.RaceAPI;
@@ -15,26 +15,28 @@ import java.util.List;
 @Mod(WildHunt.ID)
 public final class WildHunt {
     public static final String ID = "wildhunt";
-    private static final DeferredRegister<ManasRace> RACES = DeferredRegister.create(ID, RaceAPI.getRaceRegistryKey());
-    private static final DeferredRegister<ManasSkill> SKILLS = DeferredRegister.create(ID, SkillAPI.getSkillRegistryKey());
+    private static final Registrar<ManasRace> RACES = RaceAPI.getRaceRegistry();
+    private static final Registrar<ManasSkill> SKILLS = SkillAPI.getSkillRegistry();
     public static final List<RegistrySupplier<HunterRace>> HUNTERS = List.of(
-        RACES.register("awakened_hunter", () -> new HunterRace(1)),
-        RACES.register("apex_hunter", () -> new HunterRace(2)),
-        RACES.register("sovereign_hunter", () -> new HunterRace(3)));
+        RACES.register(id("awakened_hunter"), () -> new HunterRace(1)),
+        RACES.register(id("apex_hunter"), () -> new HunterRace(2)),
+        RACES.register(id("sovereign_hunter"), () -> new HunterRace(3)));
     public static final List<RegistrySupplier<AuraRegenerationSkill>> REGENERATION = List.of(
-        SKILLS.register("hunters_recovery", () -> new AuraRegenerationSkill(1)),
-        SKILLS.register("apex_renewal", () -> new AuraRegenerationSkill(2)),
-        SKILLS.register("sovereign_rebirth", () -> new AuraRegenerationSkill(3)));
+        SKILLS.register(id("hunters_recovery"), () -> new AuraRegenerationSkill(1)),
+        SKILLS.register(id("apex_renewal"), () -> new AuraRegenerationSkill(2)),
+        SKILLS.register(id("sovereign_rebirth"), () -> new AuraRegenerationSkill(3)));
     public static final EnumMap<Apex, RegistrySupplier<ApexSkill>> UNIQUE = new EnumMap<>(Apex.class);
     public static final EnumMap<Apex, RegistrySupplier<ApexSkill>> ULTIMATE = new EnumMap<>(Apex.class);
     static {
         for (Apex apex : Apex.values()) {
-            UNIQUE.put(apex, SKILLS.register(apex.uniqueId, () -> new ApexSkill(apex, false)));
-            ULTIMATE.put(apex, SKILLS.register(apex.ultimateId, () -> new ApexSkill(apex, true)));
+            UNIQUE.put(apex, SKILLS.register(id(apex.uniqueId), () -> new ApexSkill(apex, false)));
+            ULTIMATE.put(apex, SKILLS.register(id(apex.ultimateId), () -> new ApexSkill(apex, true)));
         }
     }
     public WildHunt() {
-        RACES.register(); SKILLS.register(); ArtVisualEntity.register(); HunterOtherworlders.register();
+        // ManasCore owns these custom registrars, as it does for Tensura itself.
+        // Avoid looking them up through Architectury's cross-mod constructor map.
+        ArtVisualEntity.register(); HunterOtherworlders.register();
         NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.LOWEST, HunterEvents::onKill);
         NeoForge.EVENT_BUS.addListener(HunterEvents::onClone);
         NeoForge.EVENT_BUS.addListener(HunterCommands::register);

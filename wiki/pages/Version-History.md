@@ -2,6 +2,13 @@
 
 [Main Page](../README.md) · [Skills](Skills.md) · [Evolution](Evolution.md) · [Mechanics](Mechanics.md) · [Commands](Commands.md)
 
+## 0.7.2 — Alma front hairline
+
+- Corrected Alma's front hairline: replaced the deep triangular exposed forehead with a short, even fringe and a narrow forehead.
+- Reused ManasCore's native race/skill registrars directly to prevent a constructor-time registry lookup failure.
+- Changed only the upper half of her front head texture. Her glasses, eyes, nose, mouth, remaining head faces, outfit, and Gemma's complete skin are preserved from 0.7.1.
+
+
 ## 0.7.1 — Otherworlder hair corrections
 
 - Replaced Gemma's side, top and back head textures to remove the black cutout artifact.

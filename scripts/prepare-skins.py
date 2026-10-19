@@ -36,8 +36,8 @@ for name,parts in crops.items():
    # JPEG-like island edge transparency is inappropriate for a base skin face.
    tile.putalpha(255);skin.paste(tile,dest)
  # Head correction atlas: six equal panels, top/bottom/right/front/left/back.
- # Preserve the exact existing front face (glasses, eyes and expression), body,
- # and equipment. Only the five other head faces are replaced.
+ # Replace the five non-front head faces; the front is corrected separately
+ # for Alma below. Clothing and equipment stay unchanged.
  head=Image.open(root/f'art/{name}-head-tiles.png').convert('RGBA')
  for index,dest in enumerate(faces(0,0,8,8,8)):
   if index == 3: continue
@@ -50,6 +50,14 @@ for name,parts in crops.items():
   if tile.getchannel('A').getextrema()[0] != 255:
    raise ValueError(f'{name}: head atlas contains a transparent cutout')
   skin.paste(tile,dest)
+ # Alma's corrected hairline replaces only the top four rows of the front.
+ # Keep her existing glasses, eyes, nose and mouth in the lower four rows.
+ if name == 'alma':
+  fringe=Image.open(root/'art/alma-front-hairline.png').convert('RGBA')
+  fringe=fringe.resize((8,4),Image.Resampling.NEAREST)
+  if fringe.getchannel('A').getextrema()[0] != 255:
+   raise ValueError('Alma front hairline must be opaque')
+  skin.paste(fringe,(8,8))
  # The 8x8 face must not be hidden by another full face on the outer layer.
  # Hair is conveyed by the base wrap, with goggles/glasses baked into the face.
  skin.save(out/f'{name}.png')

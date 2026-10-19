@@ -36,6 +36,12 @@ Alma participates in Tensura's **otherworlder spawn distribution**, including it
 
 Use `/summon wildhunt:alma` or `/give @s wildhunt:alma_spawn_egg` for a direct check. Native otherworlder ownership, inventory, home handling, interaction menus and configured Unique-skill drops are inherited. Races, skills and equipment persist through native saving; loading never reinitializes them. Their native entity data supplies 160,000 aura / 80,000 magicules before any applicable modifiers.
 
+## Front hairline correction in 0.7.2
+
+Alma's front hairline now uses a short, even fringe above a narrow forehead. The large triangular gap on the front is removed. This correction changes only the top four pixel rows of the front head face; her glasses, eyes, nose, mouth, other head faces and outfit are preserved.
+
+![Alma front hairline in Minecraft 0.7.2](../media/alma-front-hairline-072.png)
+
 ## Skin correction in 0.7.1
 
 The top, side and rear head textures now use a separate opaque atlas. This removes Gemma's black patch and gives Alma a coherent swept-back hairstyle. The existing front faces, clothing and equipment pixels are preserved.
@@ -48,4 +54,4 @@ Appearance reference: [Monster Hunter Wilds Alma page](https://monsterhunterwild
 
 ---
 
-**Categories:** Tensura: Wild Hunt · Otherworlders · Version 0.7.1
+**Categories:** Tensura: Wild Hunt · Otherworlders · Version 0.7.2
