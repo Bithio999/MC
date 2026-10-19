@@ -100,4 +100,4 @@ In-game example of the active art.
 
 ## Godly evolution
 
-At mastery, True Hero or True Demon Lord awakening, and 12M base EP, use `/myths` to evolve this Ultimate into [Aion, God of Causality](https://github.com/Bithio999/MC/wiki/Aion). It replaces the selected Ultimate while preserving presets and remaining cooldowns.
+At mastery, True Hero or True Demon Lord awakening, and 12M base EP, use **Skills → Godly → Ascension** to evolve this Ultimate into [Aion, God of Causality](https://github.com/Bithio999/MC/wiki/Aion). It replaces the selected Ultimate while preserving presets and remaining cooldowns.

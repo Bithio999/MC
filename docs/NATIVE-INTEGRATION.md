@@ -174,3 +174,26 @@ The server configuration is `serverconfig/tensura-myths-server.toml` in the worl
 Aion transient checkpoints and delayed attacks clear on login, dimension change
 and respawn. Reversal preserves energy, inventory, SHP and cooldowns and rejects
 an obstructed recorded destination before charging the return cast.
+
+## Native menu integration in 0.9.0
+
+The standalone Myths panel is removed. The six native skill categories are no
+longer cancelled or redrawn by the addon: a tail injection only appends the
+native-styled Godly entry. Godly selection and ascension both use the native
+`AbilitySelectionScreen`. Ascension filters owned Myths Ultimates and exposes an
+explicit native action; the regular Godly page lists learned Godly skills.
+
+Native Evolution navigation exposes Race, Secondary and Awaken pages.
+`MythsEvolutionScreen` extends native `EvolutionScreen`, retaining its background,
+character renderer, widgets, search, list selection and scrolling behavior. It
+removes only the primary evolution/track actions and supplies server-authorized
+secondary or convergence actions. Requirements, candidates and completion are
+sent by the server, including actual registry IDs for candidate icons. The
+`/myths` command remains an optional shortcut to the same native page.
+
+Aion uses separate synchronized visual entities for its gravity domain, anchor,
+Verdict telegraph and impacts, plus native Gravity, Space and Recovery circles.
+Consuming a Horizon discards its owned geometry and circle immediately. Echo
+victims are bounded to eight UUIDs, recheck range/visibility/protection, and clear
+with other transient effects on relog, death/dimension changes or forgetting.
+Native damage cooldowns, space damage defenses and friendly/PvP rules still apply.

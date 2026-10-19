@@ -6,7 +6,7 @@
 
 ## Obtaining
 
-Open `/myths` or the **Tensura Myths** button in Tensura’s status/evolution menu. Both lineages must be at a final stage with no further native evolution. You must also be a **True Hero or True Demon Lord** and have at least **10,000,000 base EP**. A base or partially evolved secondary cannot awaken.
+Open Tensura’s **Evolution** menu and select **Awaken**. Both lineages must be at a final stage with no further native evolution. You must also be a **True Hero or True Demon Lord** and have at least **10,000,000 base EP**. A base or partially evolved secondary cannot awaken.
 
 The primary becomes the actual fused native race. Its predecessor state and the secondary’s native state are saved for inherited reactions and ticks. The fusion has no next evolution. The independent secondary racial key stops operating; the normal racial key uses **Concordance Pulse** instead.
 

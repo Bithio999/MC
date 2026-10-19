@@ -6,7 +6,7 @@
 
 ## Obtaining
 
-Open **Tensura Myths** from Tensura’s status or evolution screen, or enter `/myths`. All of these conditions are required:
+Open Tensura’s **Evolution** menu and select **Secondary**. `/myths` is an optional shortcut to that native page. All of these conditions are required:
 
 | Requirement | Default |
 | --- | --- |
@@ -22,7 +22,7 @@ The supported native families are **Beastfolk, Harpy, Ogre, Goblin, Giant, Orc, 
 
 ## Secondary evolution
 
-The secondary starts at its native base race. Select its next stage in the same menu, inspect the native requirements in the tooltip, and choose **Evolve secondary**. Native EP, awakening, mastery and other conditions are evaluated by the server. Scroll the right column for longer details.
+The secondary starts at its native base race. Select its next stage under **Evolution → Secondary**, inspect the native requirements in the tooltip, and choose **Evolve**. Native EP, awakening, mastery and other conditions are evaluated by the server. Scroll or hover the native requirements box for longer details.
 
 Native branching remains available. If a chosen Goblin branch becomes an Oni, its recorded secondary ancestry remains Goblin for the eventual fusion. Secondary Human can also follow the hunter branch and earn its distinct boss credits.
 

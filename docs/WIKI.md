@@ -15,7 +15,7 @@ This generates:
 
 - `wiki/index.html` and `wiki/site/*.html`: the styled visual edition.
 - `wiki/github/*.md`: the actual GitHub Wiki edition, including `Home.md`, all 128 gameplay articles, `_Sidebar.md`, and `_Footer.md`.
-- `releases/tensura-myths-wiki-0.8.0.zip`: the self-contained offline edition.
+- `releases/tensura-myths-wiki-0.9.0.zip`: the self-contained offline edition.
 
 GitHub Wiki uses GitHub's own theme and strips custom CSS and scripts. Its pages mirror the visual edition's structure, original portraits, topic tables, navigation, and article content. The ZIP provides the full custom theme and search.
 

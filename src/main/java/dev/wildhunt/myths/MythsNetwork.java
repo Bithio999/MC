@@ -62,14 +62,14 @@ public final class MythsNetwork {
         var choices=new ListTag();
         if(DuoSystem.secondary(p).isEmpty() && !DuoSystem.converged(p)) {
             for(var family:RaceFamily.values())if(!DuoSystem.primaryFamily(p).equals(java.util.Optional.of(family))) {
-                var row=new CompoundTag();row.putString("id",family.key());row.putString("name",family.title);row.putString("detail","Choose permanent secondary ancestry. EP weights +"+family.baseGains().aura()*.5+" aura / +"+family.baseGains().magicules()*.5+" magicules.");choices.add(row);
+                var row=new CompoundTag();row.putString("id",family.key());row.putString("race",family.baseRace().getRegistryName().toString());row.putString("name",family.title);row.putString("detail","Choose permanent secondary ancestry. EP weights +"+family.baseGains().aura()*.5+" aura / +"+family.baseGains().magicules()*.5+" magicules.");choices.add(row);
             }
             tag.putString("choice_action","select");
         } else if(!DuoSystem.converged(p)) {
             var secondary=DuoSystem.secondary(p).orElseThrow();
             for(var next:DuoSystem.options(p,secondary)) {
-                var row=new CompoundTag();row.putString("id",next.getRegistryName().toString());row.putString("name",next.getName().getString());
-                float progress=secondary.getEvolutionProgress(p,next);row.putString("detail",String.format(java.util.Locale.ROOT,"Native requirements: %.0f%%",progress));
+                var row=new CompoundTag();row.putString("id",next.getRegistryName().toString());row.putString("race",next.getRegistryName().toString());row.putString("name",next.getName().getString());
+                float progress=secondary.getEvolutionProgress(p,next);row.putDouble("progress",progress);row.putString("detail",String.format(java.util.Locale.ROOT,"Native requirements: %.0f%%",progress));
                 if(next instanceof io.github.manasmods.tensura.race.TensuraRace race) {
                     var lines=new StringBuilder();
                     race.getEvolutionRequirements(secondary,p).forEach((requirement,weight)->lines.append(requirement.getRequirementComponent(secondary,p).getString()).append("; "));
@@ -82,7 +82,7 @@ public final class MythsNetwork {
         tag.put("choices",choices);
         var first=RaceFamily.byKey(DuoSystem.data(p).getString("primary_family"));var second=DuoSystem.secondaryFamily(p);
         if(first.isPresent() && second.isPresent() && first.get()!=second.get()) {
-            var fusion=FusionCatalog.profile(first.get(),second.get());tag.putString("fusion_name",fusion.name());tag.putString("fusion_description",fusion.description());tag.putDouble("fusion_aura",fusion.aura());tag.putDouble("fusion_magicules",fusion.magicules());
+            var fusion=FusionCatalog.profile(first.get(),second.get());tag.putString("fusion_id",WildHunt.id("convergence/"+fusion.key()).toString());tag.putString("fusion_name",fusion.name());tag.putString("fusion_description",fusion.description());tag.putDouble("fusion_aura",fusion.aura());tag.putDouble("fusion_magicules",fusion.magicules());
         }
         var ascensions=new ListTag();
         for(var entry:WildHunt.ULTIMATE.values())SkillAPI.getSkillsFrom(p).getSkill(entry.get()).ifPresent(i->{

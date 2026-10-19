@@ -3,6 +3,16 @@
 
 This page records **Tensura Myths version history**, including gameplay changes, compatibility notes, and visual corrections.
 
+## 0.9.0 — Native progression menus and Aion rework
+
+- Restored all six original skill category buttons and positions. Godly is a native-styled button labeled only “Godly”.
+- Replaced the separate Myths panel with native Evolution pages for Secondary and Awaken, plus a native skill-selection Ascension page. Preserved native navigation, character preview, search, scrolling and presets.
+- Worldline Sever becomes an 80-block eight-target cleave with 900 opening damage and two 300-damage echoes; cooldown falls to four seconds.
+- Event Horizon becomes a ten-block, ten-second gravity domain dealing 120 damage per second and curving hostile projectiles toward its core.
+- Reversal gains recorded SHP recovery, a twenty-second checkpoint window and a shorter return cooldown.
+- Verdict can be cast independently; consuming Horizon empowers its final strike and expands the area. Three warned pulses replace the previous low-damage burst.
+- Added solid gravity cores, accretion bands, clockwork anchors, fracture fronts, thicker cleaves and native Gravity / Space / Recovery circles. Passive barriers rise to 45 physical / 45 magic and 1,200 multilayer, with funded recovery and ownership-safe cleanup retained.
+
 ## 0.8.0 — Tensura Myths
 
 - Rebranded the addon while preserving its `wildhunt` registry namespace and all previous content.

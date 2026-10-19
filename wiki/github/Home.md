@@ -10,7 +10,7 @@ An unofficial reference for the skills and progression addon to **Tensura: Reinc
 
 We currently document **128 articles**, covering Godly skills, Duo Races, all 105 Convergent races, apex abilities, hunter evolutions and otherworlders.
 
-**Tensura Myths 0.8.0 · Minecraft 1.21.1 · NeoForge**
+**Tensura Myths 0.9.0 · Minecraft 1.21.1 · NeoForge**
 
 ## Myths progression
 
@@ -49,7 +49,7 @@ Progress through 100K / 400K / 2M base EP and 1 / 3 / 5 distinct boss types. Sov
 
 Report missing details, suggest corrections, or improve the [Markdown articles](https://github.com/Bithio999/MC/tree/main/wiki/pages). Please include the addon version when reporting a gameplay difference. See [Wiki publishing](https://github.com/Bithio999/MC/blob/main/docs/WIKI.md) for authoring and GitHub Wiki synchronization.
 
-[GitHub Wiki](https://github.com/Bithio999/MC/wiki) · [Download the addon](https://github.com/Bithio999/MC/blob/main/releases/tensura-myths-0.8.0.jar) · [Official Tensura wiki](https://tensura.wiki.gg/wiki/Tensura:_Reincarnated_Wiki)
+[GitHub Wiki](https://github.com/Bithio999/MC/wiki) · [Download the addon](https://github.com/Bithio999/MC/blob/main/releases/tensura-myths-0.9.0.jar) · [Official Tensura wiki](https://tensura.wiki.gg/wiki/Tensura:_Reincarnated_Wiki)
 
 
-[Download the styled offline edition](https://github.com/Bithio999/MC/blob/main/releases/tensura-myths-wiki-0.8.0.zip)
+[Download the styled offline edition](https://github.com/Bithio999/MC/blob/main/releases/tensura-myths-wiki-0.9.0.zip)

@@ -30,7 +30,9 @@ public final class ArtVisualRenderer extends EntityRenderer<ArtVisualEntity> {
         if (entity.kind() == ArtVisualEntity.LASH) {
             double extent = Math.clamp(age / 4, 0, 1) * Math.clamp((entity.lifetime() - age) / 6, 0, 1);
             tentacle(poses.last(), buffers, entity.end(), extent, age, light);
-        } else if (entity.kind() == ArtVisualEntity.CAUSAL_SPHERE || entity.kind() == ArtVisualEntity.CAUSAL_RAY) {
+        } else if(entity.kind()>=ArtVisualEntity.CAUSAL_DOMAIN || entity.kind()==ArtVisualEntity.CAUSAL_RAY) {
+            GodlyGeometry.render(poses.last(),buffers.getBuffer(RenderType.debugQuads()),entity.kind(),entity.end(),age,entity.lifetime());
+        } else if (entity.kind() == ArtVisualEntity.CAUSAL_SPHERE) {
             causal(poses.last(), buffers.getBuffer(RenderType.debugQuads()), entity.end(), age, entity.lifetime(), entity.kind() == ArtVisualEntity.CAUSAL_RAY);
         } else if (entity.kind() == ArtVisualEntity.TIDAL_WAVE) {
             tidalWave(poses.last(), buffers.getBuffer(RenderType.debugQuads()), entity.end(), age, entity.lifetime());

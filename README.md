@@ -5,12 +5,12 @@ An expanded progression and skills addon for **Tensura 2.0.1.3**, **Minecraft
 
 ## Download
 
-The built addon is included at [releases/tensura-myths-0.8.0.jar](releases/tensura-myths-0.8.0.jar).
+The built addon is included at [releases/tensura-myths-0.9.0.jar](releases/tensura-myths-0.9.0.jar).
 Install it alongside Tensura and its required dependencies on both client and server.
 
 ## Godly skills and Duo Races
 
-**[Aion, God of Causality](wiki/pages/Aion.md)** introduces the **Godly** tier: a separate category in Tensura’s skill menu that retains native Ultimate classification. Master any one of this addon’s four Ultimates, become a True Hero or True Demon Lord, and reach **12M base EP** to ascend through `/myths`. Aion has four spatial/causal arts and an aura-powered native barrier passive. Ascension replaces the chosen Ultimate and preserves presets and cooldowns.
+**[Aion, God of Causality](wiki/pages/Aion.md)** introduces the **Godly** tier: a separate category in Tensura’s skill menu that retains native Ultimate classification. Master any one of this addon’s four Ultimates, become a True Hero or True Demon Lord, and reach **12M base EP** to ascend through **Skills → Godly → Ascension**. Aion has four spatial/causal arts and an aura-powered native barrier passive. Ascension replaces the chosen Ultimate and preserves presets and cooldowns.
 
 **[Duo Races](wiki/pages/Duo-Races.md)** unlock at a final primary evolution, True Hero/True Demon Lord and **5M base EP**. Choose a permanent secondary ancestry from the other native race families and evolve it through native requirements. Its half-strength attributes, learned intrinsic skills and racial reactions complement the primary body. Assign **Secondary racial ability** in Controls to use its native press/hold/release action.
 
@@ -91,7 +91,7 @@ Read the [Tensura Myths Wiki](wiki/README.md) for skill pages, exact costs,
 combos, race infoboxes, commands and mechanics. The [GitHub Wiki edition](wiki/github/Home.md)
 includes the prepared Home, articles, sidebar, and footer. See [publishing instructions](docs/WIKI.md)
 for syncing these to the separate [GitHub Wiki](https://github.com/Bithio999/MC/wiki).
-**[Download the styled offline wiki](releases/tensura-myths-wiki-0.8.0.zip)**, extract
+**[Download the styled offline wiki](releases/tensura-myths-wiki-0.9.0.zip)**, extract
 the ZIP, and open `index.html`. It includes a wiki-style portal, mobile navigation,
 infoboxes, and offline search. GitHub shows HTML source; download the edition to
 see its styling. It is also included at `wiki/index.html` in the repository. The
@@ -122,7 +122,7 @@ defined in Java.
 
 ### Updating from an earlier release
 
-Replace the old addon jar with 0.8.0; do not install both. Learned skills,
+Replace the old addon jar with 0.9.0; do not install both. Learned skills,
 mastery, distinct boss history and native passive toggle state are retained.
 Existing hunters get the stronger HP/SHP caps on login without free healing.
 Already-enabled water/ice passives receive their initial native HUD barrier.
@@ -158,9 +158,9 @@ vertical dashes, through-wall ricochets, momentum preservation, native shield
 breakage and timed recovery, HP/SHP evolution, aura regeneration and native NPC loadouts.
 `./gradlew runClient` starts a development client on a machine with graphics.
 
-The [0.8.0 validation report](docs/VALIDATION-0.8.0.md) covers the Godly/Duo additions, all 50 native GameTests and the actual client checks.
+The [0.9.0 validation report](docs/VALIDATION-0.9.0.md) covers the Godly/Duo additions, all 50 native GameTests and the actual client checks.
 
-Install `build/libs/tensura-myths-0.8.0.jar` on **both client and server**,
+Install `build/libs/tensura-myths-0.9.0.jar` on **both client and server**,
 alongside Tensura and its required dependencies. The addon jar is not a complete
 modpack. Additional development dependency versions are in `runtime-mods.lock.json`.
 

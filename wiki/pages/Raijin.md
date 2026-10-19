@@ -94,4 +94,4 @@ A missed initial ray cannot start a ricochet. Bounces pass through walls but can
 
 ## Godly evolution
 
-At mastery, True Hero or True Demon Lord awakening, and 12M base EP, use `/myths` to evolve this Ultimate into [Aion, God of Causality](Aion.md). It replaces the selected Ultimate while preserving presets and remaining cooldowns.
+At mastery, True Hero or True Demon Lord awakening, and 12M base EP, use **Skills → Godly → Ascension** to evolve this Ultimate into [Aion, God of Causality](Aion.md). It replaces the selected Ultimate while preserving presets and remaining cooldowns.

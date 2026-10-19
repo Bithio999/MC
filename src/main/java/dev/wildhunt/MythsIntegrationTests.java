@@ -108,7 +108,7 @@ public final class MythsIntegrationTests {
         double aura=TensuraStorages.getExistenceFrom(p).getAura();WildHunt.GODLY.get().onPressed(i,p,0,2);
         h.assertTrue(p.position().distanceTo(start)<.1,"Reversal did not return to safe anchor");
         h.assertTrue(TensuraStorages.getExistenceFrom(p).getAura()<aura,"Reversal restored or did not pay energy");
-        h.assertTrue(i.getCoolDown(2)==40,"Reversal bypasses its cooldown");h.succeed();
+        h.assertTrue(i.getCoolDown(2)==25,"Reversal bypasses its cooldown");h.succeed();
     }
 
     @GameTest(template="empty",timeoutTicks=100)
@@ -123,29 +123,32 @@ public final class MythsIntegrationTests {
         h.assertTrue(DuoSystem.secondaryFamily(p).orElseThrow()==RaceFamily.SLIME,"Death clone shares mutable Duo state");h.succeed();
     }
     @GameTest(template="empty",timeoutTicks=100)
-    public static void godlySeverPiercesFiveTargetsAndChargesAura(GameTestHelper h) {
+    public static void godlySeverPiercesEightTargetsAndChargesAura(GameTestHelper h) {
         var p=player(h);p.setPos(p.position().add(896,80,896));p.setYRot(-90);p.setXRot(0);
         var targets=new java.util.ArrayList<net.minecraft.world.entity.monster.Zombie>();
-        for(int n=0;n<6;n++) {
+        for(int n=0;n<9;n++) {
             var pos=p.position().add(3+n*3,0,0);h.getLevel().getChunk(net.minecraft.core.BlockPos.containing(pos));
             var z=h.spawnWithNoFreeWill(EntityType.ZOMBIE,2,1,2);z.setPos(pos);z.setNoGravity(true);
             z.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH).setBaseValue(1024);z.setHealth(1024);targets.add(z);
         }
         HunterData.learnReward(p,WildHunt.GODLY.get());var i=SkillAPI.getSkillsFrom(p).getSkill(WildHunt.GODLY.get()).orElseThrow();
         double aura=TensuraStorages.getExistenceFrom(p).getAura();WildHunt.GODLY.get().onPressed(i,p,0,0);
-        for(int n=0;n<5;n++)h.assertTrue(targets.get(n).getHealth()<1024,"Spatial ray missed pierced target "+n);
-        h.assertTrue(targets.get(5).getHealth()==1024,"Spatial ray exceeded its five-target cap");
-        h.assertTrue(Math.abs(aura-TensuraStorages.getExistenceFrom(p).getAura()-2500)<.01,"Spatial ray charged the wrong pool or cost");
-        h.assertTrue(i.getCoolDown(0)==6,"Spatial ray cooldown differs");h.succeed();
+        for(int n=0;n<8;n++)h.assertTrue(targets.get(n).getHealth()<1024,"Spatial ray missed pierced target "+n);
+        h.assertTrue(targets.get(8).getHealth()==1024,"Spatial ray exceeded its eight-target cap");
+        h.assertTrue(Math.abs(aura-TensuraStorages.getExistenceFrom(p).getAura()-3200)<.01,"Spatial ray charged the wrong pool or cost");
+        h.assertTrue(i.getCoolDown(0)==4,"Spatial ray cooldown differs");
+        h.assertTrue(i.getOrCreateTag().getList("sever_echoes",10).size()==8,"Sever did not record exactly eight echo victims");h.succeed();
     }
     @GameTest(template="empty",timeoutTicks=100)
-    public static void godlyVerdictRequiresAndConsumesItsField(GameTestHelper h) {
+    public static void godlyVerdictCanCastAloneAndConsumesItsFieldForEmpowerment(GameTestHelper h) {
         var p=player(h);HunterData.learnReward(p,WildHunt.GODLY.get());var i=SkillAPI.getSkillsFrom(p).getSkill(WildHunt.GODLY.get()).orElseThrow();
         double aura=TensuraStorages.getExistenceFrom(p).getAura();WildHunt.GODLY.get().onPressed(i,p,0,3);
-        h.assertTrue(TensuraStorages.getExistenceFrom(p).getAura()==aura && !i.onCoolDown(3),"Verdict charged a failed cast without a horizon");
+        h.assertTrue(TensuraStorages.getExistenceFrom(p).getAura()==aura-15000 && i.onCoolDown(3) && !i.getOrCreateTag().getBoolean("verdict_empowered"),"Standalone Verdict failed or received unearned empowerment");
+        i.setCoolDown(0,3);
         WildHunt.GODLY.get().onPressed(i,p,0,1);h.assertTrue(i.getOrCreateTag().contains("horizon_until"),"Horizon did not persist its center/lifetime");
         WildHunt.GODLY.get().onPressed(i,p,0,3);
         h.assertTrue(!i.getOrCreateTag().contains("horizon_until") && i.getOrCreateTag().contains("verdict_until"),"Verdict did not consume its own field");
+        h.assertTrue(i.getOrCreateTag().getBoolean("verdict_empowered"),"Consuming a Horizon did not empower Verdict");
         GodlySkill.clearTransient(p);h.assertTrue(!i.getOrCreateTag().contains("verdict_until"),"Dimension/relog cleanup left delayed damage active");h.succeed();
     }
     @GameTest(template="empty",timeoutTicks=100)
@@ -171,6 +174,50 @@ public final class MythsIntegrationTests {
             h.assertTrue(DuoSystem.secondary(p).orElseThrow().getOrCreateTag().getInt("chargeTick")==2,"Native Slime hold was not forwarded");
             SecondaryAbility.input(p,"race_release");
             h.assertTrue(!DuoSystem.data(p).contains("race_start") && p.getDeltaMovement().x>0,"Native Slime release did not launch the player or clear hold state");h.succeed();
+        });
+    }
+
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void reversalRestoresRecordedSpiritualHealthAndRejectsBlockedReturns(GameTestHelper h) {
+        var p=player(h);HunterData.learnReward(p,WildHunt.GODLY.get());var i=SkillAPI.getSkillsFrom(p).getSkill(WildHunt.GODLY.get()).orElseThrow();
+        var energy=TensuraStorages.getExistenceFrom(p);energy.setSpiritualHealth(500);
+        WildHunt.GODLY.get().onPressed(i,p,0,2);var anchor=p.blockPosition();i.setCoolDown(0,2);p.setPos(p.position().add(3,0,0));energy.setSpiritualHealth(100);
+        h.getLevel().setBlockAndUpdate(anchor,net.minecraft.world.level.block.Blocks.STONE.defaultBlockState());
+        double aura=energy.getAura();WildHunt.GODLY.get().onPressed(i,p,0,2);
+        h.assertTrue(energy.getAura()==aura && i.getOrCreateTag().contains("anchor_until"),"Blocked return charged energy or discarded a valid pending checkpoint");
+        h.getLevel().setBlockAndUpdate(anchor,net.minecraft.world.level.block.Blocks.AIR.defaultBlockState());WildHunt.GODLY.get().onPressed(i,p,0,2);
+        h.assertTrue(energy.getSpiritualHealth()==500 && energy.getAura()==aura-2400,"Reversal failed to restore recorded SHP or refunded energy");h.succeed();
+    }
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void horizonBendsHostileProjectilesButPreservesFriendlyShots(GameTestHelper h) {
+        var p=player(h);HunterData.learnReward(p,WildHunt.GODLY.get());var i=SkillAPI.getSkillsFrom(p).getSkill(WildHunt.GODLY.get()).orElseThrow();
+        var center=p.position().add(0,2,0);var tag=i.getOrCreateTag();ApexArts.point(tag,"horizon",center);tag.putLong("horizon_until",h.getLevel().getGameTime()+200);tag.putString("dimension",h.getLevel().dimension().location().toString());
+        var own=new net.minecraft.world.entity.projectile.Snowball(h.getLevel(),p);own.setPos(center);own.setDeltaMovement(1,0,0);h.getLevel().addFreshEntity(own);
+        var hostile=new net.minecraft.world.entity.projectile.Snowball(EntityType.SNOWBALL,h.getLevel());hostile.setPos(center.add(1,0,0));hostile.setDeltaMovement(1,0,0);h.getLevel().addFreshEntity(hostile);
+        WildHunt.GODLY.get().tickActive(i,p);
+        h.assertTrue(own.getDeltaMovement().x==1 && hostile.getDeltaMovement().x<.7,"Projectile velocities own="+own.getDeltaMovement()+" hostile="+hostile.getDeltaMovement()+" own owner="+own.getOwner()+" field="+tag.getLong("horizon_until")+" now="+h.getLevel().getGameTime());h.succeed();
+    }
+
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void consumedHorizonVisualsAndForgottenEffectsAreRemoved(GameTestHelper h) {
+        var p=player(h);HunterData.learnReward(p,WildHunt.GODLY.get());var i=SkillAPI.getSkillsFrom(p).getSkill(WildHunt.GODLY.get()).orElseThrow();
+        WildHunt.GODLY.get().onPressed(i,p,0,1);var tag=i.getOrCreateTag();var id=tag.getUUID("horizon_visual");var circle=tag.getUUID("horizon_circle");
+        WildHunt.GODLY.get().onPressed(i,p,0,3);
+        h.assertTrue((h.getLevel().getEntity(id)==null || h.getLevel().getEntity(id).isRemoved()) && (h.getLevel().getEntity(circle)==null || h.getLevel().getEntity(circle).isRemoved()),"Consumed Horizon left its old geometry or native circle active");
+        WildHunt.GODLY.get().onToggleOn(i,p);var verdict=tag.getUUID("verdict_visual");WildHunt.GODLY.get().onForgetSkill(i,p);
+        h.assertTrue(!i.isToggled() && !tag.contains("verdict_until") && (h.getLevel().getEntity(verdict)==null || h.getLevel().getEntity(verdict).isRemoved()),"Forgetting Aion left its passive or delayed visuals active");h.succeed();
+    }
+
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void severEchoesStrikeTwiceWithoutChargingAgain(GameTestHelper h) {
+        var p=player(h);p.setPos(p.position().add(0,100,0));p.setYRot(-90);p.setXRot(0);
+        var pos=p.position().add(3,0,0);h.getLevel().getChunk(net.minecraft.core.BlockPos.containing(pos));
+        var target=h.spawnWithNoFreeWill(EntityType.ZOMBIE,2,1,2);target.setPos(pos);target.setNoGravity(true);
+        target.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH).setBaseValue(1024);target.setHealth(1024);target.setInvulnerable(true);
+        HunterData.learnReward(p,WildHunt.GODLY.get());var i=SkillAPI.getSkillsFrom(p).getSkill(WildHunt.GODLY.get()).orElseThrow();WildHunt.GODLY.get().onPressed(i,p,0,0);target.setInvulnerable(false);
+        double aura=TensuraStorages.getExistenceFrom(p).getAura();
+        h.runAfterDelay(13,()->{WildHunt.GODLY.get().tickActive(i,p);h.assertTrue(target.getHealth()<1024 && i.getOrCreateTag().getInt("echo_count")==1,"First echo: hp="+target.getHealth()+" count="+i.getOrCreateTag().getInt("echo_count")+" due="+i.getOrCreateTag().getLong("echo_next")+" now="+h.getLevel().getGameTime()+" victims="+i.getOrCreateTag().getList("sever_echoes",10).size()+" exists="+(h.getLevel().getEntity(target.getUUID())!=null)+" los="+p.hasLineOfSight(target)+" alive="+target.isAlive()+" invul="+target.isInvulnerable()+" hurt="+target.invulnerableTime+" shp="+TensuraStorages.getExistenceFrom(target).getSpiritualHealth());float after=target.getHealth();
+            h.runAfterDelay(13,()->{WildHunt.GODLY.get().tickActive(i,p);h.assertTrue(target.getHealth()<after && !i.getOrCreateTag().contains("sever_echoes"),"Second causal echo did not strike or kept its victims active");h.assertTrue(TensuraStorages.getExistenceFrom(p).getAura()==aura,"Echoes charged aura again");h.succeed();});
         });
     }
 }

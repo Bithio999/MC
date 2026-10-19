@@ -30,8 +30,8 @@ Be Sovereign Hunter, retain at least two million base EP, own the matching Uniqu
 
 | Command | Purpose |
 | --- | --- |
-| `/myths` | Open the Duo Race / Godly progression menu |
-| `/myths status` | Show primary and secondary status and open the menu |
+| `/myths` | Open the native secondary evolution page |
+| `/myths status` | Show primary and secondary status and open native evolution |
 | `/myths secondary <family>` | Choose a permanent secondary ancestry after meeting all gates |
 | `/myths evolve_secondary <race_id>` | Evolve the secondary through native requirements |
 | `/myths awaken` | Perform Convergent Awakening after both races reach final evolution |

@@ -2,7 +2,7 @@
 
 [Main Page](https://github.com/Bithio999/MC/wiki/Home) · [Godly Skills](https://github.com/Bithio999/MC/wiki/Godly) · [Skills](https://github.com/Bithio999/MC/wiki/Skills) · [Mechanics](https://github.com/Bithio999/MC/wiki/Mechanics)
 
-**Aion, God of Causality** is a Godly skill built around spatial precision, battlefield control and a limited personal rewind. Its active arts use aura and space elemental damage. Its power grows with mastery, without EP damage scaling.
+**Aion, God of Causality** is a Godly skill built around spatial precision, battlefield control and a personal HP/SHP rewind with a safe recorded position. Its active arts use aura and space elemental damage. Its power grows with mastery, without EP damage scaling.
 
 ![Aion, God of Causality](https://github.com/Bithio999/MC/blob/main/src/main/resources/assets/wildhunt/textures/skill/aion.png?raw=true)
 
@@ -14,7 +14,7 @@
 | Damage ID | `tensura:space_elemental` |
 | Active modes | 4 |
 | Toggleable passive | Unbroken Continuum |
-| Passive upkeep | 120 aura / second |
+| Passive upkeep | 180 aura / second |
 | Mastery cap | 50,000 |
 | Registry ID | `wildhunt:aion` |
 | **Evolution** | |
@@ -29,36 +29,38 @@
 
 [Passive - Toggle] — **Unbroken Continuum**
 
-Adds **25 physical barrier**, **25 magic barrier**, **0.5 knockback resistance** and **600 native Multilayer Barrier** capacity. The latter uses Tensura’s existing barrier HUD. Its owned multilayer contribution rearms after **10 seconds without an incoming hit**, checked on the next upkeep tick. Upkeep does not repair it during combat. Turning the passive off removes its own contributions while preserving other barrier modifiers.
+Adds **45 physical barrier**, **45 magic barrier**, **0.75 knockback resistance** and **1,200 native Multilayer Barrier** capacity. The latter uses Tensura’s existing barrier HUD. Its owned multilayer contribution rearms after **10 seconds without an incoming hit**, checked on the next upkeep tick. Upkeep does not repair it during combat. Turning the passive off removes its own contributions while preserving other barrier modifiers.
 
-Enabling costs the first 120 aura, then 120 aura each second. It turns off when unfunded or suppressed. It emits no constant passive particle cloud.
+Enabling costs the first 180 aura, then 180 aura each second. It turns off when unfunded or suppressed. It emits no constant passive particle cloud.
 
 ### Active
 
 | Mode | Aura per cast | Cooldown | Range / area | Base damage |
 | --- | ---: | --- | --- | ---: |
-| Worldline Sever | 2,500 | 6 seconds | 64-block ray, up to 5 targets | 360 per target |
-| Event Horizon | 4,000 | 18 seconds | 40-block cursor placement, 7-block radius, 6 seconds | 36 per second |
-| Causal Reversal | 1,800 | 2 seconds to recast; 40 seconds after return or expiry | Personal checkpoint, 12-second window | — |
-| Genesis Verdict | 12,000 | 60 seconds | Existing Horizon center, 8-block radius | 3 × 140 |
+| Worldline Sever | 3,200 | 4 seconds | 80-block cleave, up to 8 targets | 900 + 2 × 300 echoes |
+| Event Horizon | 6,000 | 16 seconds | 64-block cursor placement, 10-block radius, 10 seconds | 120 per second |
+| Causal Reversal | 2,400 | 1 second to recast; 25 seconds after return or expiry | Personal checkpoint, 20-second window | — |
+| Genesis Verdict | 15,000 | 45 seconds | 64-block placement; 12 / 14-block radius | 700 + 700 + 1,400 / 2,100 |
 
 [Active - Mode 1] — **Worldline Sever**
 
-Fire a narrow gold and violet spatial beam through up to five enemies in a line. Blocks clip the beam. Damage is applied independently to each target instead of bouncing between them.
+Fire a broad gold-white spatial cleave through up to eight enemies in a line. Each struck enemy suffers two further causal echo cuts, 0.6 and 1.2 seconds later, while still alive, within 96 blocks and in line of sight. The ray stops at blocks. Echoes recheck friendly/PvP protection instead of dealing unavoidable damage after a target becomes protected.
 
 [Active - Mode 2] — **Event Horizon**
 
-Place a visible orbital field at the aimed location. It pulls enemies toward the center, with knockback resistance reducing the pull, and deals space damage each second. Projectiles belonging to others lose 15% of their velocity each tick inside the sphere. The caster’s own projectiles are unaffected.
+Place a gravity domain with a dark core, counter-rotating accretion bands and Tensura’s native **Gravity** magic circle. Enemies within ten blocks are pulled toward the core and take space damage each second. Knockback resistance reduces the pull. Hostile or unowned projectiles lose 35% velocity per tick and curve toward the center; the caster’s own and allied projectiles are preserved.
 
 [Active - Mode 3] — **Causal Reversal**
 
-The first press records position and HP. After the short recast delay, press again within twelve seconds to return and heal back toward the recorded HP, up to the current health cap. Both presses cost aura. The return clears momentum and requires an unobstructed destination within the same dimension and world border.
+The first press places a visible clockwork checkpoint and records position, HP and SHP. Press again after the one-second recast delay, within twenty seconds, to return and recover HP/SHP toward their recorded values, limited by current caps. Both casts cost aura. Native **Recovery** circle effects and spatial bursts mark the return.
 
-Reversal does not restore aura, magicules, items, cooldowns, SHP, buffs or lost lives. A blocked destination rejects the return without charging its cast cost. Death, relogging and dimension changes clear the checkpoint. Returning or allowing it to expire applies the full forty-second cooldown.
+Reversal does not restore aura, magicules, items, cooldowns, buffs or lost lives. The destination must remain unobstructed, inside the world border and in the same dimension. An unsafe return charges no aura. Returning or expiration applies the full twenty-five-second cooldown. Death, relogging and dimension changes clear the checkpoint.
 
 [Active - Mode 4] — **Genesis Verdict**
 
-Collapse your active Event Horizon into three expanding clock-ring pulses at one-second intervals after a one-second warning. The field is consumed; Verdict cannot be cast without it. Enemies can leave the marked area. The cast does not target a second cursor location.
+Place a warned spatial catastrophe at the cursor within 64 blocks. After one second of warning, three pulses strike at one-second intervals: **700, 700 and 1,400** base damage within twelve blocks.
+
+If your Event Horizon is active, Verdict consumes it, uses its existing center and expands to **fourteen blocks**, with the final strike raised to **2,100**. The old Horizon visual is removed when consumed. A contracting cage, rising spatial beams, native **Space** circle and expanding fracture fronts telegraph the strikes. Enemies can leave the area.
 
 ## Damage and interaction
 
@@ -66,8 +68,10 @@ The damage multiplier is **1 + 0.5 × mastery fraction**, capped at **1.5×**. A
 
 ## Obtaining
 
-Use the [Godly ascension](https://github.com/Bithio999/MC/wiki/Godly#obtaining) menu to replace one mastered Myths Ultimate after reaching the awakening and EP requirements. Equip Aion from the new Godly category in Tensura’s normal ability menu.
+Use **Skills → Godly → Ascension** to replace one mastered Myths Ultimate after reaching the awakening and EP requirements. Equip Aion from the new Godly category in Tensura’s normal ability menu.
 
 ## Gallery
 
 ![Aion in Tensura’s native Godly category](https://github.com/Bithio999/MC/blob/main/wiki/media/aion-godly-ui.png?raw=true)
+
+![Event Horizon’s gravity core, orbital bands and native Gravity circle](https://github.com/Bithio999/MC/blob/main/wiki/media/aion-event-horizon.png?raw=true)

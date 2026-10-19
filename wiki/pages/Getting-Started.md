@@ -9,11 +9,11 @@ This guide covers installing **Tensura Myths**, rolling an apex skill, and begin
 - Minecraft 1.21.1 and Java 21.
 - NeoForge 21.1.209 or newer in the 21.1 line.
 - Tensura: Reincarnated 2.0.1.3, ManasCore 4.0.0.2, Architectury and Tensura’s required GeckoLib, SmartBrainLib and TerraBlender dependencies.
-- Tensura Myths 0.8.0 installed on both client and server.
+- Tensura Myths 0.9.0 installed on both client and server.
 
 ## Installation
 
-Download the 0.8.0 addon from the repository’s `releases` directory. Replace older Wild Hunt / Tensura Myths jars; do not load two versions together. The addon jar is not a complete modpack.
+Download the 0.9.0 addon from the repository’s `releases` directory. Replace older Wild Hunt / Tensura Myths jars; do not load two versions together. The addon jar is not a complete modpack.
 
 ## First reincarnation
 
@@ -39,4 +39,4 @@ Each skill has a separate toggleable passive in Tensura’s Ability Selection. T
 
 ## Beyond the hunter path
 
-Open `/myths` for [Duo Races](Duo-Races.md), [Convergent Awakening](Convergent-Awakening.md), and [Godly Skills](Godly.md). See [Aion](Aion.md) for its four active arts and barrier passive.
+Use Tensura’s **Evolution → Secondary / Awaken** and **Skills → Godly → Ascension** menus for [Duo Races](Duo-Races.md), [Convergent Awakening](Convergent-Awakening.md), and [Godly Skills](Godly.md). See [Aion](Aion.md) for its four active arts and barrier passive.
