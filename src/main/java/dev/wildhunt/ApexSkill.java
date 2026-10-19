@@ -65,10 +65,10 @@ public final class ApexSkill extends Skill {
     }
     public String description() {
         return switch (apex) {
-            case REY_DAU -> "Railbolt ricochets between nearby enemies without revisiting a target. Thunder Step dashes through a clear path and shocks enemies along it. Toggle Storm Mantle for movement, attack speed and lightning power.";
-            case UTH_DUNA -> "A travelling tidal wave carries and drenches enemies. An aimed whirlpool gathers them. Toggle Water Veil for native physical and magic barriers and retaliation after health damage.";
+            case REY_DAU -> "Railbolt ricochets between enemies within twelve blocks without revisiting a target. Thunder Step follows your aim through a clear 3D path and shocks enemies along it. Toggle Storm Mantle for movement, attack speed and lightning power.";
+            case UTH_DUNA -> "A travelling tidal wave carries and drenches enemies. An aimed whirlpool gathers them. Toggle Water Veil for native physical, magic and HUD multilayer barriers and retaliation after health damage.";
             case NU_UDRA -> "Rendered tentacles lash and pull enemies, leaving owned oil pools. Ignition burns those locations directly, without oil stacks. Toggle Furnace Mantle for melee and flame power.";
-            case JIN_DAHAAD -> "Avalanche Crash erupts at your target and launches nearby enemies. Glacial Prison captures one target in native Frost. Toggle Colossus Carapace for physical and magic barriers and stability.";
+            case JIN_DAHAAD -> "Avalanche Crash erupts at your target and launches nearby enemies. Glacial Prison captures one target in native Frost. Toggle Colossus Carapace for physical, magic and HUD multilayer barriers and stability.";
         } + (ultimate ? " Ultimate: triple base damage and a third signature art." : " Damage improves with mastery, never with EP. Master this skill to unlock its Ultimate as Sovereign Hunter.");
     }
     @Override public MutableComponent getSkillDescription() { return Component.translatableWithFallback(key() + ".description", description()); }
@@ -96,11 +96,30 @@ public final class ApexSkill extends Skill {
     @Override public void onToggleOff(ManasSkillInstance instance, LivingEntity caster) {
         if (caster.level().isClientSide()) return;
         instance.setToggled(false); removePassive(caster);
-        instance.getOrCreateTag().remove("passive_next"); instance.markDirty();
+        instance.getOrCreateTag().remove("passive_next");
+        instance.getOrCreateTag().remove("hud_barrier_initialized"); instance.markDirty();
     }
     void restorePassive(ManasSkillInstance instance, LivingEntity caster) {
         if (!instance.isToggled()) return;
-        applyPassive(caster); HunterData.of(caster).putBoolean("active_skills", true);
+        applyPassive(caster);
+        if (barrierCapacity() > 0 && !instance.getOrCreateTag().getBoolean("hud_barrier_initialized")) {
+            var barrier = caster.getAttribute(TensuraAttributes.MULTILAYER_BARRIER);
+            if (barrier != null) {
+                // The native HUD and damage handler both read this attribute.
+                // Permanent modifiers persist a surviving barrier across relogs;
+                // native breaks remove it. Upkeep must never recreate a broken one.
+                barrier.addOrReplacePermanentModifier(new AttributeModifier(passiveId(), barrierCapacity(), AttributeModifier.Operation.ADD_VALUE));
+                instance.getOrCreateTag().putBoolean("hud_barrier_initialized", true); instance.markDirty();
+            }
+        }
+        HunterData.of(caster).putBoolean("active_skills", true);
+    }
+    public double barrierCapacity() {
+        return switch (apex) {
+            case UTH_DUNA -> ultimate ? 250 : 100;
+            case JIN_DAHAAD -> ultimate ? 350 : 150;
+            default -> 0;
+        };
     }
     @Override public void onPressed(ManasSkillInstance instance, LivingEntity caster, int slot, int mode) {
         if (!(caster.level() instanceof ServerLevel level) || mode < 0 || mode >= getModes(instance)) return;
@@ -212,7 +231,7 @@ public final class ApexSkill extends Skill {
     void removePassive(LivingEntity caster) {
         for (Holder<Attribute> attribute : java.util.List.of(boost(), Attributes.MOVEMENT_SPEED, Attributes.ATTACK_SPEED,
                 Attributes.ATTACK_DAMAGE, Attributes.ARMOR, Attributes.KNOCKBACK_RESISTANCE,
-                TensuraAttributes.MAGIC_BARRIER, TensuraAttributes.PHYSICAL_BARRIER)) {
+                TensuraAttributes.MAGIC_BARRIER, TensuraAttributes.PHYSICAL_BARRIER, TensuraAttributes.MULTILAYER_BARRIER)) {
             var value = caster.getAttribute(attribute);
             if (value != null) value.removeModifier(passiveId());
         }

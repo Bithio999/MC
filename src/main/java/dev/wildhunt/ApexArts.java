@@ -96,16 +96,17 @@ public final class ApexArts {
             visited.add(current.getUUID()); ApexVisuals.beam(level, skill.apex, from, current.getEyePosition(), skill.ultimate);
             skill.strike(level, instance, caster, current, skill.balance.primary() * (float)Math.pow(0.9, bounce), 0, false);
             LivingEntity previous = current; from = current.getEyePosition();
-            current = enemies(level, caster, previous.position(), 8).stream()
+            current = enemies(level, caster, previous.position(), 12).stream()
                 .filter(e -> !visited.contains(e.getUUID()) && previous.hasLineOfSight(e)).findFirst().orElse(null);
         }
     }
     static void thunderStep(ApexSkill skill, ServerLevel level, ManasSkillInstance instance, LivingEntity caster) {
-        Vec3 start = caster.position(), direction = forward(caster), end = start;
+        Vec3 start = caster.position(), direction = caster.getLookAngle().normalize(), end = start;
         // Sweep the body, not just the eyes: never dash through walls or low ceilings.
         for (double d = 0.5; d <= (skill.ultimate ? 12 : 8); d += 0.5) {
             Vec3 delta = direction.scale(d); AABB box = caster.getBoundingBox().move(delta);
-            if (!level.getWorldBorder().isWithinBounds(box) || !level.noCollision(caster, box)) break;
+            if (box.minY < level.getMinBuildHeight() || box.maxY > level.getMaxBuildHeight()
+                    || !level.getWorldBorder().isWithinBounds(box) || !level.noCollision(caster, box)) break;
             end = start.add(delta);
         }
         Vec3 segment = end.subtract(start); double length = segment.lengthSqr();

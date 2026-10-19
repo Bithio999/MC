@@ -7,7 +7,7 @@
 <div class="search"><label for="wiki-search">Search the wiki</label><input id="wiki-search" type="search" placeholder="Find a skill, race, or mechanic…" autocomplete="off"><div id="search-results" aria-live="polite"></div></div></header>
 <div class="layout"><nav class="sidebar" aria-label="Wiki navigation"><h2>Explore</h2><a href="../index.html">Main Page</a><a href="../site/Getting-Started.html">Getting started</a><a href="../site/Skills.html">Skills</a><a href="../site/Evolution.html">Human evolution</a><a href="../site/Mechanics.html">Combat mechanics</a><a href="../site/Commands.html">Commands</a><a href="../site/Version-History.html">Version history</a>
 <h2>Apex arts</h2><a href="../site/Storm-Crown.html">Storm Crown</a><a href="../site/Scarlet-Deluge.html">Scarlet Deluge</a><a href="../site/Black-Flame.html">Black Flame</a><a href="../site/Frostbound-Colossus.html">Frostbound Colossus</a>
-<p>Version 0.5.0<br>Minecraft 1.21.1<br>NeoForge</p></nav>
+<p>Version 0.6.0<br>Minecraft 1.21.1<br>NeoForge</p></nav>
 <main id="article"><div class="page-tabs"><span>Article</span><a href="../pages/Storm-Crown.md">Read Markdown</a></div>
 <h1>Storm Crown</h1><p class="subtitle">From the Tensura: Wild Hunt Wiki</p>
 <aside class="infobox" aria-label="Page data"><p><img alt="Storm Crown" src="../../src/main/resources/assets/wildhunt/textures/skill/storm_crown.png" /></p><table>
@@ -104,18 +104,18 @@
 </table>
 <p>Raw values already include the Ultimate’s 3× multiplier where applicable. Mastery adds up to 50%. <strong>Wild Hunt applies no EP damage scaling.</strong> Native elemental boosts, defenses, rank interactions and the listed situational modifiers still apply. EP requirements for race evolution and Ultimate ascension are unchanged.</p>
 <h3 id="railbolt">Railbolt</h3>
-<p>Aim the first hit along a block-clipped ray up to 36 blocks. The bolt then ricochets from its latest victim to the nearest eligible, visible enemy within eight blocks. It can hit up to 4 different targets, including the initial victim, and never revisits one. Each hop retains 90% of the preceding hop’s raw damage. Every hop checks both caster-to-target and victim-to-victim line of sight. Wet or drenched enemies take 30% extra lightning damage.</p>
+<p>Aim the first hit along a block-clipped ray up to 36 blocks. The bolt then ricochets from its latest victim to the nearest eligible, visible enemy within twelve blocks. It can hit up to 4 different targets, including the initial victim, and never revisits one. Each hop retains 90% of the preceding hop’s raw damage. Every hop checks both caster-to-target and victim-to-victim line of sight. Wet or drenched enemies take 30% extra lightning damage.</p>
 <h3 id="thunder-step">Thunder Step</h3>
-<p>Dash horizontally up to 8 blocks in your facing direction and shock enemies within 2.5 blocks of the travelled segment. The path sweeps the caster’s whole bounding box in half-block increments; walls, low ceilings, collisions and the world border stop it. It replaces Fulgurite Array completely and creates no persistent rods or charge.</p>
+<p>Dash along your full aim direction for up to 8 blocks, including upward and downward, and shock enemies within 2.5 blocks of the travelled segment. The path sweeps the caster’s whole bounding box in half-block increments; walls, low ceilings, collisions the world border and build-height limits stop it. It replaces Fulgurite Array completely and creates no persistent rods or charge.</p>
 <h2 id="toggleable-passive-storm-mantle">Toggleable passive: Storm Mantle</h2>
 <p>While toggled on, gain 6 armor, 35% movement, 25% attack speed and 50% lightning boost. Movement generates no resource.</p>
 <p>Enable or disable this through Tensura’s native <strong>Ability Selection</strong> skill toggle. It is separate from active mode cycling and has no fifteen/thirty-second duration. Upkeep is <strong>10 aura per second</strong>, with the first second paid on enabling. It turns off when aura is insufficient or activation requirements fail. Turning it off removes its own attribute modifiers immediately.</p>
 <h2 id="suggested-combo">Suggested combo</h2>
 <p>Use Thunder Step to find a clear angle → aim Railbolt at one edge of a group → let its successive hops reach enemies beyond the initial victim’s bounce radius.</p>
 <h2 id="strengths-and-limitations">Strengths and limitations</h2>
-<p>A missed initial ray cannot start a ricochet. Bounces cannot pass through walls or revisit an enemy. The dash follows a horizontal clear path and can carry you off a ledge; it is not flight.</p>
+<p>A missed initial ray cannot start a ricochet. Bounces cannot pass through walls or revisit an enemy. The dash follows a collision-checked 3D path and can carry you off a ledge or into the air. Normal gravity resumes afterward; it is not sustained flight.</p>
 <h2 id="related-pages">Related pages</h2>
 <p><a href="Skills.html">Skills</a> · <a href="Mechanics.html">Mechanics</a> · <a href="Evolution.html">Evolution</a> · <a href="Commands.html">Commands</a></p>
 <hr />
-<p><strong>Categories:</strong> Tensura: Wild Hunt · Version 0.5.0</p>
+<p><strong>Categories:</strong> Tensura: Wild Hunt · Version 0.6.0</p>
 <footer>Unofficial fan addon. Original documentation and portraits. Not affiliated with Capcom or ManasMods. Offline edition; no external services required.</footer></main></div></body></html>

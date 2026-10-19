@@ -9,7 +9,15 @@ import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 public final class ApexTimers {
     private ApexTimers() {}
     public static void onLogin(PlayerEvent.PlayerLoggedInEvent event) {
-        var player = event.getEntity(); var storage = SkillAPI.getSkillsFrom(player);
+        var player = event.getEntity();
+        // Native race modifiers are permanent, so refresh saved 0.5.0 bonuses too.
+        io.github.manasmods.manascore.race.api.RaceAPI.getRaceFrom(player).getRace().ifPresent(race -> {
+            if (race.getRace() instanceof HunterRace) {
+                float health = player.getHealth(); race.addAttributeModifiers(player);
+                player.setHealth(Math.min(health, player.getMaxHealth()));
+            }
+        });
+        var storage = SkillAPI.getSkillsFrom(player);
         for (var instance : storage.getLearnedSkills()) {
             if (!(instance.getSkill() instanceof ApexSkill skill)) continue;
             var tag = instance.getOrCreateTag();

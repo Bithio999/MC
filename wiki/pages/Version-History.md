@@ -2,6 +2,14 @@
 
 [Main Page](../README.md) · [Skills](Skills.md) · [Evolution](Evolution.md) · [Mechanics](Mechanics.md) · [Commands](Commands.md)
 
+## 0.6.0 — Aim, shield HUD and hunter vitality
+
+- Thunder Step now follows vertical aim as well as horizontal direction, retaining body collision and build-height checks.
+- Extended Railbolt’s hop distance from eight to twelve blocks.
+- Added real native Multilayer Barrier capacities to the water/ice passives so Tensura’s shield HUD counter appears. Native damage, magicule costs and break rules apply; upkeep does not repair a broken shield.
+- Increased hunter HP bonuses to +40 / +100 / +200 and added +20 / +60 / +120 native SHP.
+- Existing hunters receive the updated caps on login; existing enabled passives receive their initial HUD barrier without a reroll.
+
 ## 0.5.0 — Direct combat and toggleable passives
 
 - Removed Storm charge, oil stacks, rime stacks and EP damage scaling.
@@ -34,4 +42,4 @@ Added the human hunter branch and the eight skill registrations. Its ordinary-hu
 
 ---
 
-**Categories:** Tensura: Wild Hunt · Version 0.5.0
+**Categories:** Tensura: Wild Hunt · Version 0.6.0

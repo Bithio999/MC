@@ -45,6 +45,8 @@ Aim at one visible hostile within 20 blocks. Deal the listed hit damage, then ap
 
 While toggled on, gain 20 armor, 40 physical barrier, 15 magic barrier, one knockback resistance and 50% water-element boost. Tensura classifies ice under water for this boost. This uses the native barrier layer and damage rules, not absorption or the former projectile-deletion ward.
 
+The passive also arms a **150-capacity native Multilayer Barrier**, which appears in Tensura’s shield HUD counter when its Barrier decoration is enabled. The counter is a per-hit blocking capacity, not absorption hearts or a custom health bar. Native rules spend magicules on blocked damage and can break the barrier on overflow, insufficient magicules or stronger attacks. Upkeep does not silently rearm a broken barrier; turn the passive off and back on to arm it again. Surviving shields persist across relogs.
+
 Enable or disable this through Tensura’s native **Ability Selection** skill toggle. It is separate from active mode cycling and has no fifteen/thirty-second duration. Upkeep is **20 aura per second**, with the first second paid on enabling. It turns off when aura is insufficient or activation requirements fail. Turning it off removes its own attribute modifiers immediately.
 
 ## Suggested combo
@@ -61,10 +63,16 @@ Prison uses native Frost, so immunity, skill rank and stronger defensive effects
 
 Captured in the Minecraft 1.21.1 development client with Wild Hunt 0.5.0.
 
+## Native barrier HUD
+
+![Native shield HUD counter](../media/colossus-carapace-hud.png)
+
+The Unique passive’s native shield counter in Wild Hunt 0.6.0. Its Ultimate uses a higher capacity.
+
 ## Related pages
 
 [Skills](Skills.md) · [Mechanics](Mechanics.md) · [Evolution](Evolution.md) · [Commands](Commands.md)
 
 ---
 
-**Categories:** Tensura: Wild Hunt · Version 0.5.0
+**Categories:** Tensura: Wild Hunt · Version 0.6.0

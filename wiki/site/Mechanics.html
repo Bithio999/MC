@@ -7,7 +7,7 @@
 <div class="search"><label for="wiki-search">Search the wiki</label><input id="wiki-search" type="search" placeholder="Find a skill, race, or mechanic…" autocomplete="off"><div id="search-results" aria-live="polite"></div></div></header>
 <div class="layout"><nav class="sidebar" aria-label="Wiki navigation"><h2>Explore</h2><a href="../index.html">Main Page</a><a href="../site/Getting-Started.html">Getting started</a><a href="../site/Skills.html">Skills</a><a href="../site/Evolution.html">Human evolution</a><a href="../site/Mechanics.html">Combat mechanics</a><a href="../site/Commands.html">Commands</a><a href="../site/Version-History.html">Version history</a>
 <h2>Apex arts</h2><a href="../site/Storm-Crown.html">Storm Crown</a><a href="../site/Scarlet-Deluge.html">Scarlet Deluge</a><a href="../site/Black-Flame.html">Black Flame</a><a href="../site/Frostbound-Colossus.html">Frostbound Colossus</a>
-<p>Version 0.5.0<br>Minecraft 1.21.1<br>NeoForge</p></nav>
+<p>Version 0.6.0<br>Minecraft 1.21.1<br>NeoForge</p></nav>
 <main id="article"><div class="page-tabs"><span>Article</span><a href="../pages/Mechanics.md">Read Markdown</a></div>
 <h1>Combat mechanics</h1><p class="subtitle">From the Tensura: Wild Hunt Wiki</p>
 <details class="contents" open><summary>Contents</summary><div class="toc">
@@ -18,6 +18,8 @@
 <li><a href="#native-barriers">Native barriers</a></li>
 <li><a href="#aiming-and-movement">Aiming and movement</a></li>
 <li><a href="#visual-effects">Visual effects</a></li>
+<li><a href="#barrier-hud-examples">Barrier HUD examples</a></li>
+<li><a href="#hunter-vitality">Hunter vitality</a></li>
 <li><a href="#updating-saved-characters">Updating saved characters</a></li>
 </ul>
 </div>
@@ -71,16 +73,44 @@
 </table>
 <p>The first second is paid when enabling; upkeep is charged once every twenty game ticks while active. Passives stay on until disabled, unfunded or blocked by activation requirements. They do not expire after fifteen or thirty seconds. Attribute contributions use stable IDs, so refreshes cannot accumulate duplicate bonuses. Turning off or forgetting the skill removes its modifiers. Saved native toggle state is restored on login.</p>
 <h2 id="native-barriers">Native barriers</h2>
-<p>Water Veil and Colossus Carapace contribute to Tensura’s <code>PHYSICAL_BARRIER</code> and <code>MAGIC_BARRIER</code> attributes. Tensura handles their interaction with damage and renders its native barrier layer around the character. Wild Hunt adds no absorption hearts and does not implement a parallel shield-health pool. Other skills’ barrier contributions remain separate.</p>
+<p>Water Veil and Colossus Carapace contribute to Tensura’s <code>PHYSICAL_BARRIER</code> and <code>MAGIC_BARRIER</code> attributes and now arm <code>MULTILAYER_BARRIER</code>, which is the attribute read by its shield HUD counter. Tensura handles their interaction with damage and renders its native barrier layer around the character. Wild Hunt adds no absorption hearts and does not implement a parallel shield-health pool. Other skills’ barrier contributions remain separate.</p>
+<table>
+<thead>
+<tr>
+<th>Passive</th>
+<th style="text-align: right;">Unique capacity</th>
+<th style="text-align: right;">Ultimate capacity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Water Veil</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">250</td>
+</tr>
+<tr>
+<td>Colossus Carapace</td>
+<td style="text-align: right;">150</td>
+<td style="text-align: right;">350</td>
+</tr>
+</tbody>
+</table>
+<p>The displayed value is native per-hit blocking capacity. Tensura charges magicules for blocked damage. Overflow, inadequate magicules and native power interactions can break the shield. Upkeep refreshes the ordinary passive bonuses but never recreates a broken multilayer modifier. Toggle off and on to rearm it. The shield modifier is saved across relogs; turning off removes only this art’s contribution. Ensure Tensura’s <strong>Barrier</strong> HUD decoration is enabled if you have customized its HUD.</p>
 <p>Water Veil retains water breathing and an attacker-targeted retaliation after actual health damage. Furnace Mantle retains fire protection while enabled; both utility effects stop immediately on toggle-off without leftover timed potions. Furnace Mantle no longer oils melee victims. The old frost ward’s projectile deletion and interception budget are removed.</p>
 <h2 id="aiming-and-movement">Aiming and movement</h2>
-<p>Railbolt begins with a block-clipped aimed hit, then ricochets from the latest victim. Thunder Step sweeps the whole caster bounding box and stops at collisions. Water waves sweep continuous segments so targets cannot hide between movement updates. Oil Lash selects a limited forward fan and creates synced tentacle geometry. Avalanche Crash is an aimed area impact; Glacial Prison targets one enemy. Heavenfall Glacier warns fixed positions for half a second before impact.</p>
+<p>Railbolt begins with a block-clipped aimed hit, then ricochets from the latest victim. Thunder Step follows the full aim vector, including vertical pitch, and sweeps the whole caster bounding box. Collisions, build-height limits and the world border stop it. Railbolt bounces reach twelve blocks from the most recent victim. Water waves sweep continuous segments so targets cannot hide between movement updates. Oil Lash selects a limited forward fan and creates synced tentacle geometry. Avalanche Crash is an aimed area impact; Glacial Prison targets one enemy. Heavenfall Glacier warns fixed positions for half a second before impact.</p>
 <p>Attacks respect teams, owned pets, creative/spectator immunity, PvP settings and line of sight. Movement respects knockback resistance. Dimension changes invalidate anchored effects. Native status resistance and skill ranks can prevent Frost or Chill. No art destroys terrain or places permanent ice.</p>
 <h2 id="visual-effects">Visual effects</h2>
 <p>Oil Lash uses a synced procedural mesh with a dark tapered body, glowing orange bands, extension and recoil, including on a miss. Ice spires, prison bars and falling ice use rendered faceted crystals. Those visual entities deal no damage by themselves, have no collision and expire automatically; server skill logic owns targeting and damage.</p>
 <p>Tensura supplies elemental particles, shockwaves, native barrier rendering and animated magic circles. Its assets are used at runtime and are not copied into the addon.</p>
+<h2 id="barrier-hud-examples">Barrier HUD examples</h2>
+<p><img alt="Water Veil native HUD showing 100" src="../media/water-veil-hud.png" /></p>
+<p><img alt="Colossus Carapace native HUD showing 150" src="../media/colossus-carapace-hud.png" /></p>
+<p>Captured with the Unique passives enabled in the Minecraft development client, Wild Hunt 0.6.0.</p>
+<h2 id="hunter-vitality">Hunter vitality</h2>
+<p>Race HP bonuses are +40 / +100 / +200; native SHP bonuses are +20 / +60 / +120. These replace earlier hunter-stage bonuses. Existing saved hunters get the updated caps on login without being healed. See <a href="Evolution.html#hp-and-shp-growth">Human evolution</a>.</p>
 <h2 id="updating-saved-characters">Updating saved characters</h2>
-<p>Version 0.5.0 keeps learned skills, mastery and distinct boss history. It removes old transient combat timers and resources, drops the old buff mode, and moves the former fourth Ultimate mode into the third active slot while preserving/capping its cooldown. Equipped presets migrate with the mode list. Legacy toggle passives start off; no skill reroll is needed. A matching still-active legacy Water Veil absorption effect is cleared during migration.</p>
+<p>Version 0.5.0 introduced the mode migration and keeps learned skills, mastery and distinct boss history. It removes old transient combat timers and resources, drops the old buff mode, and moves the former fourth Ultimate mode into the third active slot while preserving/capping its cooldown. Equipped presets migrate with the mode list. When upgrading from pre-0.5.0 combat, legacy toggle passives start off; no skill reroll is needed. A matching still-active legacy Water Veil absorption effect is cleared during migration. Version 0.6.0 adds native HUD barriers to already-enabled passives on login and refreshes hunter HP/SHP modifiers; existing toggle state, mastery and boss history remain intact.</p>
 <hr />
-<p><strong>Categories:</strong> Tensura: Wild Hunt · Version 0.5.0</p>
+<p><strong>Categories:</strong> Tensura: Wild Hunt · Version 0.6.0</p>
 <footer>Unofficial fan addon. Original documentation and portraits. Not affiliated with Capcom or ManasMods. Offline edition; no external services required.</footer></main></div></body></html>

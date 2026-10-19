@@ -5,7 +5,7 @@ A Monster Hunter Wilds inspired addon for **Tensura 2.0.1.3**, **Minecraft
 
 ## Download
 
-The built addon is included at [releases/tensura-wild-hunt-0.5.0.jar](releases/tensura-wild-hunt-0.5.0.jar).
+The built addon is included at [releases/tensura-wild-hunt-0.6.0.jar](releases/tensura-wild-hunt-0.6.0.jar).
 Install it alongside Tensura and its required dependencies on both client and server.
 
 ## Human hunter progression
@@ -15,9 +15,9 @@ choices in Tensura's evolution menu.
 
 | Evolution | Requirements | Bonuses at this stage |
 | --- | --- | --- |
-| Awakened Hunter | Human; 100K base EP; 1 distinct boss type | +10 HP, +2 attack, +5% movement, +0.1 knockback resistance |
-| Apex Hunter | Awakened; 400K EP; 3 distinct boss types | +20 HP, +4 attack, +10% movement, +0.2 knockback resistance |
-| Sovereign Hunter | Apex; 2M EP; 5 distinct boss types; one mastered apex Unique | +30 HP, +6 attack, +15% movement, +0.3 knockback resistance |
+| Awakened Hunter | Human; 100K base EP; 1 distinct boss type | +40 HP, +20 SHP, +2 attack, +5% movement, +0.1 knockback resistance |
+| Apex Hunter | Awakened; 400K EP; 3 distinct boss types | +100 HP, +60 SHP, +4 attack, +10% movement, +0.2 knockback resistance |
+| Sovereign Hunter | Apex; 2M EP; 5 distinct boss types; one mastered apex Unique | +200 HP, +120 SHP, +6 attack, +15% movement, +0.3 knockback resistance |
 
 Bonuses replace the previous stage's bonuses. Boss credit is cumulative while
 Human or a hunter and keyed by **entity type**, not individual spawn: ten Wither
@@ -45,11 +45,13 @@ ability interface and key bindings.
 | Nu Udra | Black Flame → Agni, Lord of the Black Flame | Oil Lash; Blackflame Ignition | Furnace Mantle |
 | Jin Dahaad | Frostbound Colossus → Ymir, Lord of Winter | Avalanche Crash; Glacial Prison | Colossus Carapace |
 
-- **Rey Dau:** Railbolt ricochets sequentially through up to four enemies (six as
-  Raijin). Thunder Step replaces the rod array with a collision-checked dash.
+- **Rey Dau:** Railbolt ricochets through up to four enemies (six as Raijin), with
+  twelve-block hops. Thunder Step follows your full aim, including up and down,
+  while checking body collisions and build-height limits.
 - **Uth Duna:** moving waves and aimed whirlpools control enemies. Water Veil
   uses Tensura’s native physical and magic barriers and retaliates after health
-  damage. It adds no absorption hearts.
+  damage. Water and ice passives also arm native Multilayer Barriers for Tensura’s
+  shield HUD counter. They add no absorption hearts.
 - **Nu Udra:** Oil Lash draws solid animated tentacles that extend, curl and
   recoil, including on a miss. Pull enemies onto owned pools, then ignite them.
 - **Jin Dahaad:** a completely rebuilt kit: aimed avalanche impacts, single-target
@@ -97,12 +99,16 @@ defined in Java.
 
 ### Updating from an earlier release
 
-Replace the old addon jar with 0.5.0; do not install both. Learned skills,
-mastery and distinct boss history are retained. Login removes obsolete stack
-resources and combat timers, replaces the old buff mode, migrates equipped
-modes and moves each Ultimate’s fourth mode/cooldown into its third active slot.
-The new passives initially start off for legacy characters. Rerolling is not
-required. Centered monster portraits remain unchanged.
+Replace the old addon jar with 0.6.0; do not install both. Learned skills,
+mastery, distinct boss history and native passive toggle state are retained.
+Existing hunters get the stronger HP/SHP caps on login without free healing.
+Already-enabled water/ice passives receive their initial native HUD barrier.
+Intact barriers survive relogs; broken barriers are not automatically repaired.
+Rearm them by turning the passive off and back on. If your HUD is customized,
+ensure Tensura’s **Barrier** decoration is enabled.
+
+When upgrading from a version before 0.5.0, the earlier stack/mode migration
+also runs. Rerolling is not required. Centered portraits are unchanged.
 
 ## Build and test
 
@@ -124,10 +130,11 @@ verifies published SHA-512 hashes. Dependency jars are not bundled in the addon.
 `runGameTestServer` checks native registration/evolution, reincarnation rolls,
 boss history, ascension, all eight primary attacks and toggles, barrier attributes,
 legacy-save migration, ricochets, collision-safe dashes, travelling waves,
-oil pools, tentacle lifetime, native Frost capture, and dodgeable icefall marks.
+oil pools, tentacle lifetime, native Frost capture, dodgeable icefall marks,
+vertical dashes, extended ricochets, native shield breakage, and HP/SHP evolution.
 `./gradlew runClient` starts a development client on a machine with graphics.
 
-Install `build/libs/tensura-wild-hunt-0.5.0.jar` on **both client and server**,
+Install `build/libs/tensura-wild-hunt-0.6.0.jar` on **both client and server**,
 alongside Tensura and its required dependencies. The addon jar is not a complete
 modpack. Additional development dependency versions are in `runtime-mods.lock.json`.
 

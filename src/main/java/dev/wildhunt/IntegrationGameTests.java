@@ -460,4 +460,89 @@ public final class IntegrationGameTests {
         helper.succeed();
     }
 
+    @GameTest(template = "empty", timeoutTicks = 100)
+    public static void thunderStepFollowsUpwardAndDownwardAim(GameTestHelper helper) {
+        var caster=helper.spawnWithNoFreeWill(net.minecraft.world.entity.EntityType.PIG,1,140,1);
+        caster.setNoGravity(true); caster.setYRot(-90);
+        TensuraStorages.getExistenceFrom(caster).setAura(100_000);
+        var skill=WildHunt.UNIQUE.get(Apex.REY_DAU).get(); HunterData.learnReward(caster,skill);
+        var instance=SkillAPI.getSkillsFrom(caster).getSkill(skill).orElseThrow(); var origin=caster.position();
+        for (float pitch : new float[]{-45,45}) {
+            caster.setPos(origin); caster.setXRot(pitch); instance.setCoolDown(0,1);
+            for(int distance=0;distance<=10;distance++) helper.getLevel().getChunk(net.minecraft.core.BlockPos.containing(origin.add(caster.getLookAngle().scale(distance))));
+            skill.onPressed(instance,caster,0,1); var delta=caster.position().subtract(origin);
+            helper.assertTrue(delta.x>4 && (pitch<0 ? delta.y>4 : delta.y< -4), "Thunder Step ignored vertical aim: " + delta);
+            helper.assertTrue(Math.abs(delta.length()-8)<0.01, "Aimed dash changed its total range");
+        }
+        helper.succeed();
+    }
+    @GameTest(template = "empty", timeoutTicks = 100)
+    public static void railboltReachesTwelveBlockHopsAndStopsBeyondThem(GameTestHelper helper) {
+        var player=combatPlayer(helper); player.setPos(player.position().add(0,160,0));
+        var targets=new java.util.ArrayList<net.minecraft.world.entity.monster.Zombie>();
+        for(int z:new int[]{0,11,24}) {
+            helper.getLevel().getChunk(net.minecraft.core.BlockPos.containing(player.position().add(3,0,z)));
+            var enemy=durableTarget(helper); enemy.setNoGravity(true); enemy.setPos(player.position().add(3,0,z)); targets.add(enemy);
+        }
+        var skill=WildHunt.UNIQUE.get(Apex.REY_DAU).get(); HunterData.learnReward(player,skill);
+        var instance=SkillAPI.getSkillsFrom(player).getSkill(skill).orElseThrow(); skill.onPressed(instance,player,0,0);
+        helper.assertTrue(targets.get(0).getHealth()<1024 && targets.get(1).getHealth()<1024, "Railbolt did not reach a hop beyond the old eight-block radius");
+        helper.assertTrue(targets.get(2).getHealth()==1024, "Railbolt exceeded its twelve-block bounce radius");
+        helper.succeed();
+    }
+    @GameTest(template = "empty", timeoutTicks = 100)
+    public static void nativeHudBarriersBreakWithoutUpkeepRepairOrForeignCleanup(GameTestHelper helper) {
+        for(Apex apex:java.util.List.of(Apex.UTH_DUNA,Apex.JIN_DAHAAD)) for(boolean ultimate:new boolean[]{false,true}) {
+            var caster=helper.spawnWithNoFreeWill(net.minecraft.world.entity.EntityType.PIG,1,1,1);
+            caster.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH).setBaseValue(1024); caster.setHealth(1024);
+            var energy=TensuraStorages.getExistenceFrom(caster); energy.setAura(100_000); energy.setMagicule(100_000);
+            var skill=(ultimate?WildHunt.ULTIMATE:WildHunt.UNIQUE).get(apex).get(); HunterData.learnReward(caster,skill);
+            var instance=SkillAPI.getSkillsFrom(caster).getSkill(skill).orElseThrow(); instance.onToggleOn(caster);
+            var barrier=caster.getAttribute(io.github.manasmods.tensura.registry.attribute.TensuraAttributes.MULTILAYER_BARRIER);
+            helper.assertTrue(barrier.getValue()==skill.barrierCapacity(), "HUD's native attribute did not receive the shield capacity");
+            // Isolate the multilayer capacity from the separate armor/resistance bonuses.
+            var ownId=WildHunt.id((ultimate?apex.ultimateId:apex.uniqueId)+"_mantle");
+            for(var attr:java.util.List.of(net.minecraft.world.entity.ai.attributes.Attributes.ARMOR,
+                    io.github.manasmods.tensura.registry.attribute.TensuraAttributes.PHYSICAL_BARRIER,
+                    io.github.manasmods.tensura.registry.attribute.TensuraAttributes.MAGIC_BARRIER)) caster.getAttribute(attr).removeModifier(ownId);
+            float health=caster.getHealth(); caster.hurt(caster.damageSources().generic(),10);
+            helper.assertTrue(caster.getHealth()==health && barrier.getValue()==skill.barrierCapacity(), "Native shield did not block a below-capacity hit");
+            caster.invulnerableTime=0; caster.hurt(caster.damageSources().generic(),(float)skill.barrierCapacity()+50);
+            helper.assertTrue(caster.isAlive() && barrier.getValue()==0 && caster.getHealth()<health, "Native overflow failed to break the HUD barrier");
+            instance.getOrCreateTag().putLong("passive_next",helper.getLevel().getGameTime()); skill.tickActive(instance,caster);
+            helper.assertTrue(instance.isToggled() && barrier.getValue()==0, "Passive upkeep repaired a broken shield");
+            var foreign=WildHunt.id("test_foreign_barrier");
+            barrier.addPermanentModifier(new net.minecraft.world.entity.ai.attributes.AttributeModifier(foreign,7,net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE));
+            instance.onToggleOff(caster); helper.assertTrue(barrier.getValue()==7, "Disabling the passive removed another barrier source");
+            instance.onToggleOn(caster); helper.assertTrue(barrier.getValue()==7+skill.barrierCapacity(), "Re-enabling failed to rearm the native shield");
+            instance.onToggleOff(caster); caster.discard();
+        }
+        helper.succeed();
+    }
+    @GameTest(template = "empty", timeoutTicks = 100)
+    public static void hunterVitalsIncreaseByStageAndUpgradeSavedRaces(GameTestHelper helper) {
+        var player=combatPlayer(helper); var races=RaceAPI.getRaceFrom(player);
+        races.setRace(TensuraRaces.HUMAN.get(),false); EnergyHelper.setBaseMaxEP(player,2_000_000);
+        float baseHP=player.getMaxHealth(); double baseSHP=player.getAttributeValue(io.github.manasmods.tensura.registry.attribute.TensuraAttributes.MAX_SPIRITUAL_HEALTH);
+        for(int i=1;i<=5;i++) HunterData.recordBossKill(player,WildHunt.id("test_boss_"+i));
+        var skill=WildHunt.UNIQUE.get(Apex.REY_DAU).get(); HunterData.learnReward(player,skill);
+        var unique=SkillAPI.getSkillsFrom(player).getSkill(skill).orElseThrow(); unique.setMastery(unique.getMaxMastery());
+        for(int stage=1;stage<=3;stage++) {
+            helper.assertTrue(races.evolveRace(WildHunt.HUNTERS.get(stage-1).get()), "Native evolution rejected hunter stage "+stage);
+            helper.assertTrue(player.getMaxHealth()==baseHP+HunterProgression.HP_BONUS[stage], "Evolution HP bonus did not replace the previous stage");
+            helper.assertTrue(player.getAttributeValue(io.github.manasmods.tensura.registry.attribute.TensuraAttributes.MAX_SPIRITUAL_HEALTH)==baseSHP+HunterProgression.SHP_BONUS[stage], "Evolution did not increase native SHP");
+        }
+        // Emulate an already-saved Sovereign with the old +30 HP and no SHP modifier.
+        player.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH).addOrReplacePermanentModifier(
+            new net.minecraft.world.entity.ai.attributes.AttributeModifier(WildHunt.id("hunter_health"),30,net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE));
+        player.getAttribute(io.github.manasmods.tensura.registry.attribute.TensuraAttributes.MAX_SPIRITUAL_HEALTH).removeModifier(WildHunt.id("hunter_spiritual_health"));
+        player.setHealth(15); TensuraStorages.getExistenceFrom(player).setSpiritualHealth(11);
+        for(int login=0;login<2;login++) ApexTimers.onLogin(new net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent(player));
+        helper.assertTrue(player.getMaxHealth()==baseHP+200 && player.getAttributeValue(io.github.manasmods.tensura.registry.attribute.TensuraAttributes.MAX_SPIRITUAL_HEALTH)==baseSHP+120, "Saved hunter did not receive the new HP/SHP caps exactly once");
+        helper.assertTrue(player.getHealth()==15 && TensuraStorages.getExistenceFrom(player).getSpiritualHealth()==11, "Relogging provided an unintended heal");
+        races.setRace(TensuraRaces.HUMAN.get(),false);
+        helper.assertTrue(player.getMaxHealth()==baseHP && player.getAttributeValue(io.github.manasmods.tensura.registry.attribute.TensuraAttributes.MAX_SPIRITUAL_HEALTH)==baseSHP, "Leaving the hunter branch retained its vitality bonuses");
+        helper.succeed();
+    }
+
 }

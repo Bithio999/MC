@@ -35,11 +35,11 @@ Raw values already include the Ultimate’s 3× multiplier where applicable. Mas
 
 ### Railbolt
 
-Aim the first hit along a block-clipped ray up to 36 blocks. The bolt then ricochets from its latest victim to the nearest eligible, visible enemy within eight blocks. It can hit up to 4 different targets, including the initial victim, and never revisits one. Each hop retains 90% of the preceding hop’s raw damage. Every hop checks both caster-to-target and victim-to-victim line of sight. Wet or drenched enemies take 30% extra lightning damage.
+Aim the first hit along a block-clipped ray up to 36 blocks. The bolt then ricochets from its latest victim to the nearest eligible, visible enemy within twelve blocks. It can hit up to 4 different targets, including the initial victim, and never revisits one. Each hop retains 90% of the preceding hop’s raw damage. Every hop checks both caster-to-target and victim-to-victim line of sight. Wet or drenched enemies take 30% extra lightning damage.
 
 ### Thunder Step
 
-Dash horizontally up to 8 blocks in your facing direction and shock enemies within 2.5 blocks of the travelled segment. The path sweeps the caster’s whole bounding box in half-block increments; walls, low ceilings, collisions and the world border stop it. It replaces Fulgurite Array completely and creates no persistent rods or charge.
+Dash along your full aim direction for up to 8 blocks, including upward and downward, and shock enemies within 2.5 blocks of the travelled segment. The path sweeps the caster’s whole bounding box in half-block increments; walls, low ceilings, collisions the world border and build-height limits stop it. It replaces Fulgurite Array completely and creates no persistent rods or charge.
 
 ## Toggleable passive: Storm Mantle
 
@@ -53,7 +53,7 @@ Use Thunder Step to find a clear angle → aim Railbolt at one edge of a group �
 
 ## Strengths and limitations
 
-A missed initial ray cannot start a ricochet. Bounces cannot pass through walls or revisit an enemy. The dash follows a horizontal clear path and can carry you off a ledge; it is not flight.
+A missed initial ray cannot start a ricochet. Bounces cannot pass through walls or revisit an enemy. The dash follows a collision-checked 3D path and can carry you off a ledge or into the air. Normal gravity resumes afterward; it is not sustained flight.
 
 ## Related pages
 
@@ -61,4 +61,4 @@ A missed initial ray cannot start a ricochet. Bounces cannot pass through walls 
 
 ---
 
-**Categories:** Tensura: Wild Hunt · Version 0.5.0
+**Categories:** Tensura: Wild Hunt · Version 0.6.0

@@ -7,11 +7,12 @@
 <div class="search"><label for="wiki-search">Search the wiki</label><input id="wiki-search" type="search" placeholder="Find a skill, race, or mechanic…" autocomplete="off"><div id="search-results" aria-live="polite"></div></div></header>
 <div class="layout"><nav class="sidebar" aria-label="Wiki navigation"><h2>Explore</h2><a href="../index.html">Main Page</a><a href="../site/Getting-Started.html">Getting started</a><a href="../site/Skills.html">Skills</a><a href="../site/Evolution.html">Human evolution</a><a href="../site/Mechanics.html">Combat mechanics</a><a href="../site/Commands.html">Commands</a><a href="../site/Version-History.html">Version history</a>
 <h2>Apex arts</h2><a href="../site/Storm-Crown.html">Storm Crown</a><a href="../site/Scarlet-Deluge.html">Scarlet Deluge</a><a href="../site/Black-Flame.html">Black Flame</a><a href="../site/Frostbound-Colossus.html">Frostbound Colossus</a>
-<p>Version 0.5.0<br>Minecraft 1.21.1<br>NeoForge</p></nav>
+<p>Version 0.6.0<br>Minecraft 1.21.1<br>NeoForge</p></nav>
 <main id="article"><div class="page-tabs"><span>Article</span><a href="../pages/Evolution.md">Read Markdown</a></div>
 <h1>Human evolution</h1><p class="subtitle">From the Tensura: Wild Hunt Wiki</p>
 <details class="contents" open><summary>Contents</summary><div class="toc">
 <ul>
+<li><a href="#hp-and-shp-growth">HP and SHP growth</a></li>
 <li><a href="#distinct-boss-kills">Distinct boss kills</a></li>
 <li><a href="#evolving">Evolving</a></li>
 </ul>
@@ -52,11 +53,47 @@
 </tr>
 </tbody>
 </table>
+<h2 id="hp-and-shp-growth">HP and SHP growth</h2>
+<table>
+<thead>
+<tr>
+<th>Stage</th>
+<th style="text-align: right;">HP bonus</th>
+<th style="text-align: right;">SHP bonus</th>
+<th style="text-align: right;">HP gained from previous hunter stage</th>
+<th style="text-align: right;">SHP gained from previous hunter stage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Awakened Hunter</td>
+<td style="text-align: right;">+40</td>
+<td style="text-align: right;">+20</td>
+<td style="text-align: right;">+40</td>
+<td style="text-align: right;">+20</td>
+</tr>
+<tr>
+<td>Apex Hunter</td>
+<td style="text-align: right;">+100</td>
+<td style="text-align: right;">+60</td>
+<td style="text-align: right;">+60</td>
+<td style="text-align: right;">+40</td>
+</tr>
+<tr>
+<td>Sovereign Hunter</td>
+<td style="text-align: right;">+200</td>
+<td style="text-align: right;">+120</td>
+<td style="text-align: right;">+100</td>
+<td style="text-align: right;">+60</td>
+</tr>
+</tbody>
+</table>
+<p>These are bonuses to the underlying maximums, not total health values. They use native HP and <code>MAX_SPIRITUAL_HEALTH</code> attributes. Evolution replaces the previous race modifiers instead of stacking them. Login upgrades existing hunter maximums while preserving current HP and SHP; it does not refill them.</p>
 <h2 id="distinct-boss-kills">Distinct boss kills</h2>
 <p>The record counts <strong>boss entity types</strong>, not individual spawns. Ten Wither kills give one entry. Wither plus Ender Dragon gives two. Credit is cumulative, survives death and requires a player-attributed kill while Human or a hunter.</p>
 <p>Eligible types are listed in <code>wildhunt:progression_bosses</code>: the shared <code>c:bosses</code> tag (including Tensura’s bosses), Wither and Ender Dragon. Future Monster Hunter mobs can be added by datapack. Ordinary hostile mobs do not count.</p>
 <h2 id="evolving">Evolving</h2>
 <p>Use Tensura’s evolution menu or <code>/wildhunt evolve</code> after meeting the same gates. Check <code>/wildhunt status</code> for the recorded type IDs, base EP and mastery progress. Skill acquisition is independent: bosses never award the four Unique skills.</p>
 <hr />
-<p><strong>Categories:</strong> Tensura: Wild Hunt · Version 0.5.0</p>
+<p><strong>Categories:</strong> Tensura: Wild Hunt · Version 0.6.0</p>
 <footer>Unofficial fan addon. Original documentation and portraits. Not affiliated with Capcom or ManasMods. Offline edition; no external services required.</footer></main></div></body></html>

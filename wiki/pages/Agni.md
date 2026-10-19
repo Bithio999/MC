@@ -72,4 +72,4 @@ Captured in the Minecraft 1.21.1 development client with Wild Hunt 0.5.0.
 
 ---
 
-**Categories:** Tensura: Wild Hunt · Version 0.5.0
+**Categories:** Tensura: Wild Hunt · Version 0.6.0

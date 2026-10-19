@@ -4,6 +4,8 @@ package dev.wildhunt;
 public final class HunterProgression {
     private HunterProgression() {}
     public static final double[] EP = {0, 100_000, 400_000, 2_000_000};
+    public static final double[] HP_BONUS = {0, 40, 100, 200};
+    public static final double[] SHP_BONUS = {0, 20, 60, 120};
     public static final int[] BOSSES = {0, 1, 3, 5};
     public static boolean canEvolve(int currentStage, double ep, int bosses, int mastered) {
         if (currentStage < 0 || currentStage >= 3) return false;

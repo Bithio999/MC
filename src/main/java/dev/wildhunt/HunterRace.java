@@ -19,7 +19,9 @@ public final class HunterRace extends TensuraRace {
     public HunterRace(int stage) {
         super(Difficulty.HARD);
         this.stage = stage;
-        addAttributeModifier(Attributes.MAX_HEALTH, WildHunt.id("hunter_health"), 10 * stage, Operation.ADD_VALUE);
+        addAttributeModifier(Attributes.MAX_HEALTH, WildHunt.id("hunter_health"), HunterProgression.HP_BONUS[stage], Operation.ADD_VALUE);
+        addAttributeModifier(io.github.manasmods.tensura.registry.attribute.TensuraAttributes.MAX_SPIRITUAL_HEALTH,
+            WildHunt.id("hunter_spiritual_health"), HunterProgression.SHP_BONUS[stage], Operation.ADD_VALUE);
         addAttributeModifier(Attributes.ATTACK_DAMAGE, WildHunt.id("hunter_attack"), 2 * stage, Operation.ADD_VALUE);
         addAttributeModifier(Attributes.MOVEMENT_SPEED, WildHunt.id("hunter_speed"), 0.05 * stage, Operation.ADD_MULTIPLIED_BASE);
         addAttributeModifier(Attributes.KNOCKBACK_RESISTANCE, WildHunt.id("hunter_resolve"), 0.1 * stage, Operation.ADD_VALUE);

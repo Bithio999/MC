@@ -35,13 +35,20 @@ The first second is paid when enabling; upkeep is charged once every twenty game
 
 ## Native barriers
 
-Water Veil and Colossus Carapace contribute to Tensura’s `PHYSICAL_BARRIER` and `MAGIC_BARRIER` attributes. Tensura handles their interaction with damage and renders its native barrier layer around the character. Wild Hunt adds no absorption hearts and does not implement a parallel shield-health pool. Other skills’ barrier contributions remain separate.
+Water Veil and Colossus Carapace contribute to Tensura’s `PHYSICAL_BARRIER` and `MAGIC_BARRIER` attributes and now arm `MULTILAYER_BARRIER`, which is the attribute read by its shield HUD counter. Tensura handles their interaction with damage and renders its native barrier layer around the character. Wild Hunt adds no absorption hearts and does not implement a parallel shield-health pool. Other skills’ barrier contributions remain separate.
+
+| Passive | Unique capacity | Ultimate capacity |
+| --- | ---: | ---: |
+| Water Veil | 100 | 250 |
+| Colossus Carapace | 150 | 350 |
+
+The displayed value is native per-hit blocking capacity. Tensura charges magicules for blocked damage. Overflow, inadequate magicules and native power interactions can break the shield. Upkeep refreshes the ordinary passive bonuses but never recreates a broken multilayer modifier. Toggle off and on to rearm it. The shield modifier is saved across relogs; turning off removes only this art’s contribution. Ensure Tensura’s **Barrier** HUD decoration is enabled if you have customized its HUD.
 
 Water Veil retains water breathing and an attacker-targeted retaliation after actual health damage. Furnace Mantle retains fire protection while enabled; both utility effects stop immediately on toggle-off without leftover timed potions. Furnace Mantle no longer oils melee victims. The old frost ward’s projectile deletion and interception budget are removed.
 
 ## Aiming and movement
 
-Railbolt begins with a block-clipped aimed hit, then ricochets from the latest victim. Thunder Step sweeps the whole caster bounding box and stops at collisions. Water waves sweep continuous segments so targets cannot hide between movement updates. Oil Lash selects a limited forward fan and creates synced tentacle geometry. Avalanche Crash is an aimed area impact; Glacial Prison targets one enemy. Heavenfall Glacier warns fixed positions for half a second before impact.
+Railbolt begins with a block-clipped aimed hit, then ricochets from the latest victim. Thunder Step follows the full aim vector, including vertical pitch, and sweeps the whole caster bounding box. Collisions, build-height limits and the world border stop it. Railbolt bounces reach twelve blocks from the most recent victim. Water waves sweep continuous segments so targets cannot hide between movement updates. Oil Lash selects a limited forward fan and creates synced tentacle geometry. Avalanche Crash is an aimed area impact; Glacial Prison targets one enemy. Heavenfall Glacier warns fixed positions for half a second before impact.
 
 Attacks respect teams, owned pets, creative/spectator immunity, PvP settings and line of sight. Movement respects knockback resistance. Dimension changes invalidate anchored effects. Native status resistance and skill ranks can prevent Frost or Chill. No art destroys terrain or places permanent ice.
 
@@ -51,10 +58,22 @@ Oil Lash uses a synced procedural mesh with a dark tapered body, glowing orange 
 
 Tensura supplies elemental particles, shockwaves, native barrier rendering and animated magic circles. Its assets are used at runtime and are not copied into the addon.
 
+## Barrier HUD examples
+
+![Water Veil native HUD showing 100](../media/water-veil-hud.png)
+
+![Colossus Carapace native HUD showing 150](../media/colossus-carapace-hud.png)
+
+Captured with the Unique passives enabled in the Minecraft development client, Wild Hunt 0.6.0.
+
+## Hunter vitality
+
+Race HP bonuses are +40 / +100 / +200; native SHP bonuses are +20 / +60 / +120. These replace earlier hunter-stage bonuses. Existing saved hunters get the updated caps on login without being healed. See [Human evolution](Evolution.md#hp-and-shp-growth).
+
 ## Updating saved characters
 
-Version 0.5.0 keeps learned skills, mastery and distinct boss history. It removes old transient combat timers and resources, drops the old buff mode, and moves the former fourth Ultimate mode into the third active slot while preserving/capping its cooldown. Equipped presets migrate with the mode list. Legacy toggle passives start off; no skill reroll is needed. A matching still-active legacy Water Veil absorption effect is cleared during migration.
+Version 0.5.0 introduced the mode migration and keeps learned skills, mastery and distinct boss history. It removes old transient combat timers and resources, drops the old buff mode, and moves the former fourth Ultimate mode into the third active slot while preserving/capping its cooldown. Equipped presets migrate with the mode list. When upgrading from pre-0.5.0 combat, legacy toggle passives start off; no skill reroll is needed. A matching still-active legacy Water Veil absorption effect is cleared during migration. Version 0.6.0 adds native HUD barriers to already-enabled passives on login and refreshes hunter HP/SHP modifiers; existing toggle state, mastery and boss history remain intact.
 
 ---
 
-**Categories:** Tensura: Wild Hunt · Version 0.5.0
+**Categories:** Tensura: Wild Hunt · Version 0.6.0

@@ -24,12 +24,15 @@ Begin as Human. Reach 100,000 base EP and defeat 1 different eligible boss types
 
 | Attribute | Bonus at this stage |
 | --- | ---: |
-| Maximum health | +10 HP |
+| Maximum health | +40 HP |
+| Maximum spiritual health | +20 SHP |
 | Attack damage | +2 |
 | Movement speed | +5% |
 | Knockback resistance | +0.1 |
 
-These replace the previous hunter stage’s racial modifiers. They do not stack with earlier stages. Skill mantles have separate temporary modifiers and remain subject to attribute caps.
+These replace the previous hunter stage’s racial modifiers. They do not stack with earlier stages. Toggleable skill passives have separate modifiers and remain subject to attribute caps.
+
+The HP bonuses across the branch are +40 / +100 / +200; SHP bonuses are +20 / +60 / +120. Each stage replaces the previous stage’s bonus. Existing hunter characters receive the new maximums on login without free healing.
 
 ## Skills and progression
 
@@ -41,4 +44,4 @@ Boss credit survives death. Old ordinary-hunt counts from 0.1.0 are not converte
 
 ---
 
-**Categories:** Tensura: Wild Hunt · Version 0.5.0
+**Categories:** Tensura: Wild Hunt · Version 0.6.0
