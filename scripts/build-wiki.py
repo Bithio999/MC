@@ -6,6 +6,8 @@ import json
 import re
 import shutil
 import zipfile
+import subprocess
+import sys
 
 try:
     import markdown
@@ -45,15 +47,18 @@ def link(slug, prefix=""):
 
 
 def portal():
-    cards = ""
-    for monster, unique, ultimate, icon, role in lines:
-        cards += f'''<article class="apex-card"><a class="portrait-link" href="{link(unique)}"><img src="assets/skill/{icon}.png" width="96" height="96" alt="{monster}"></a><div><span class="eyebrow">{monster}</span><h3><a href="{link(unique)}">{titles[unique]}</a></h3><p>{role}</p><a class="evolution-link" href="{link(ultimate)}">{titles[ultimate]} →</a></div></article>'''
-    races = "".join(f'<a class="race-step" href="{link(slug)}"><img src="assets/race/{slug.lower().replace("-", "_")}.png" width="56" height="56" alt=""><span>{titles[slug]}<small>{ep} base EP · {kills} boss type{"s" if kills != 1 else ""}</small></span></a>' for slug, ep, kills in [("Awakened-Hunter", "100K", 1), ("Apex-Hunter", "400K", 3), ("Sovereign-Hunter", "2M", 5)])
-    return f'''<section class="welcome"><span class="eyebrow">The hunter's field guide</span><h2>Welcome to the Wild Hunt Wiki</h2><p>A guide to the Monster Hunter inspired addon for <strong>Tensura: Reincarnated</strong>. Explore apex skills, human evolution, aura regeneration, and otherworlders.</p><div class="welcome-links"><a class="button" href="{link('Getting-Started')}">Getting started</a><a href="{link('Skills')}">Browse all skills →</a></div><div class="wiki-stats"><span><strong>{len(catalog)}</strong> articles</span><span><strong>0.7.2</strong> addon version</span><span><strong>1.21.1</strong> Minecraft · NeoForge</span></div></section>
-<section class="portal-panel"><h2>Apex skills</h2><p class="panel-intro">Four apex inspirations. Four distinct combat styles. Each Unique Skill has an Ultimate evolution.</p><div class="apex-grid">{cards}</div></section>
-<div class="portal-columns"><section class="portal-panel"><h2>Human evolution</h2><p class="panel-intro">A human-looking hunter branch, earned through EP and distinct boss kills.</p><div class="race-path">{races}</div><p class="panel-foot"><a href="{link('Evolution')}">Requirements and race bonuses →</a></p></section>
-<section class="portal-panel"><h2>Explore the world</h2><div class="topic"><h3><a href="{link('Aura-Regeneration')}">Aura regeneration</a></h3><p>Three Extra Skills granted through hunter evolution. Recover health using aura.</p></div><div class="topic"><h3>Otherworlders</h3><p>Meet <a href="{link('Alma')}">Alma</a> and <a href="{link('Gemma')}">Gemma</a>, Awakened Hunters with their own native skill sets.</p></div><div class="topic"><h3><a href="{link('Mechanics')}">Combat mechanics</a></h3><p>Learn about barriers, damage, mastery, toggles, and the aura / magicule split.</p></div></section></div>
-<section class="portal-panel"><h2>Wiki information</h2><div class="info-columns"><p>This is an unofficial community-style reference for <strong>Tensura: Wild Hunt</strong>. The pages document the addon; the <a href="https://tensura.wiki.gg/wiki/Tensura:_Reincarnated_Wiki">Tensura: Reincarnated Wiki</a> covers the base mod.</p><p><a href="{link('Version-History')}">Version history</a> · <a href="{link('Commands')}">Commands</a><br><a href="https://github.com/Bithio999/MC/blob/main/releases/tensura-wild-hunt-0.7.2.jar">Download the addon</a><br>This edition works offline, including search.</p></div></section>'''
+    icons = "".join(f'<a href="{link(unique)}"><img src="assets/skill/{icon}.png" width="64" height="64" alt="{monster}"></a>' for monster, unique, ultimate, icon, role in lines)
+    links = "".join(f'<a href="{link(slug)}">{label}</a>' for slug, label in [
+        ("Skills", "Abilities"), ("Evolution", "Races"), ("Alma", "Otherworlders"),
+        ("Aura-Regeneration", "Aura regeneration"), ("Commands", "Commands"), ("Mechanics", "Mechanics"),
+        ("Getting-Started", "Getting started"), ("Version-History", "Version history"), ("Gemma", "Gemma")])
+    rows = "".join(f'<tr><td><img src="assets/skill/{icon}.png" width="48" height="48" alt=""> {monster}</td><td><a href="{link(unique)}">{titles[unique]}</a></td><td><a href="{link(ultimate)}">{titles[ultimate]}</a></td><td>{role}</td></tr>' for monster, unique, ultimate, icon, role in lines)
+    return f'''<section class="welcome portal-panel"><div class="welcome-wordmark" aria-label="Tensura: Wild Hunt"><small>TENSURA: REINCARNATED ADDON</small><strong>WILD HUNT</strong><span>THE HUNTER'S FIELD GUIDE</span></div><h2>Welcome to the Tensura: Wild Hunt Wiki!</h2><div class="panel-body"><p>An unofficial reference for the Monster Hunter inspired addon to <strong>Tensura: Reincarnated</strong>.</p><div class="welcome-portraits">{icons}</div><p>We currently document <strong>{len(catalog)} articles</strong>, covering four apex skill lines, three hunter evolutions, aura recovery, and otherworlders.</p><p><strong>Wild Hunt 0.7.2 · Minecraft 1.21.1 · NeoForge</strong></p></div></section>
+<section class="portal-panel"><h2>About the addon</h2><div class="panel-body"><p>Follow a human-looking hunter evolution branch and wield abilities inspired by Rey Dau, Uth Duna, Nu Udra, and Jin Dahaad. Each apex Unique Skill evolves into an Ultimate with its own signature art.</p><p>Build around aura, native barriers, regeneration, and movement. Meet Alma and Gemma through Tensura's otherworlder system. Start with <a href="{link('Getting-Started')}">Getting started</a> for installation and your first steps.</p></div></section>
+<section class="portal-panel"><h2>Links</h2><nav class="portal-links" aria-label="Wiki topics">{links}</nav></section>
+<section class="portal-panel"><h2>Apex abilities</h2><div class="panel-body table-scroll"><table><thead><tr><th>Inspiration</th><th>Unique Skill</th><th>Ultimate Skill</th><th>Combat identity</th></tr></thead><tbody>{rows}</tbody></table></div></section>
+<section class="portal-panel"><h2>Hunter evolution</h2><div class="panel-body"><p class="evolution-path">Human → <a href="{link('Awakened-Hunter')}">Awakened Hunter</a> → <a href="{link('Apex-Hunter')}">Apex Hunter</a> → <a href="{link('Sovereign-Hunter')}">Sovereign Hunter</a></p><p>Progress through 100K / 400K / 2M base EP and 1 / 3 / 5 distinct boss types. Sovereign Hunter also requires mastery of an apex Unique. Each stage grants an <a href="{link('Aura-Regeneration')}">aura regeneration Extra Skill</a>. See <a href="{link('Evolution')}">Human evolution</a> for full requirements and vitality bonuses.</p></div></section>
+<section class="portal-panel"><h2>Contribute to the wiki</h2><div class="panel-body"><p>Report missing details, suggest corrections, or improve the Markdown articles in the <a href="https://github.com/Bithio999/MC/tree/main/wiki/pages">repository</a>. Please include the addon version when reporting a gameplay difference.</p><p><a href="https://github.com/Bithio999/MC/wiki">GitHub Wiki</a> · <a href="https://github.com/Bithio999/MC/blob/main/releases/wild-hunt-wiki-0.7.2.zip">Download the offline wiki</a> · <a href="https://tensura.wiki.gg/wiki/Tensura:_Reincarnated_Wiki">Base mod wiki</a></p><p>This is an unofficial fan addon, not the official Tensura or Monster Hunter wiki.</p></div></section>'''
 
 
 def render(source, destination, home=False):
@@ -134,6 +139,7 @@ for item in catalog:
     render(source, SITE / (item["slug"] + ".html"))
     item["keywords"] = source.read_text().split("## Overview")[0]
 (SITE / "search-index.js").write_text("window.WIKI_PAGES = " + json.dumps(catalog) + ";\n")
+subprocess.run([sys.executable, str(ROOT / "scripts/export-github-wiki.py")], check=True)
 # Fixed timestamps and sorted entries keep this documentation bundle reproducible.
 archive = ROOT / "releases/wild-hunt-wiki-0.7.2.zip"
 with zipfile.ZipFile(archive, "w", zipfile.ZIP_DEFLATED) as bundle:

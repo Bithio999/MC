@@ -1,17 +1,32 @@
 # Tensura: Wild Hunt Wiki
 
-> Welcome to the unofficial addon wiki. **Minecraft 1.21.1 · NeoForge · Wild Hunt 0.7.2**
+<p align="center"><strong>TENSURA: REINCARNATED ADDON<br>W I L D &nbsp; H U N T</strong><br>The hunter's field guide</p>
 
-A field guide to four Monster Hunter Wilds inspired skill lines and a human hunter evolution branch for Tensura: Reincarnated.
+## Welcome to the Tensura: Wild Hunt Wiki!
 
-## Explore the wiki
+An unofficial reference for the Monster Hunter inspired addon to **Tensura: Reincarnated**.
 
-| Start here | Learn the systems | Reference |
+<p align="center"><img src="assets/skill/storm_crown.png" width="64" height="64" alt="Rey Dau"> <img src="assets/skill/scarlet_deluge.png" width="64" height="64" alt="Uth Duna"> <img src="assets/skill/black_flame.png" width="64" height="64" alt="Nu Udra"> <img src="assets/skill/frostbound_colossus.png" width="64" height="64" alt="Jin Dahaad"></p>
+
+We currently document **20 articles**, covering four apex skill lines, three hunter evolutions, aura recovery, and otherworlders.
+
+**Wild Hunt 0.7.2 · Minecraft 1.21.1 · NeoForge**
+
+## About the addon
+
+Follow a human-looking hunter evolution branch and wield abilities inspired by Rey Dau, Uth Duna, Nu Udra, and Jin Dahaad. Each apex Unique Skill evolves into an Ultimate with its own signature art.
+
+Build around aura, native barriers, regeneration, and movement. Meet Alma and Gemma through Tensura's otherworlder system. Start with [Getting started](pages/Getting-Started.md) for installation and your first steps.
+
+## Links
+
+| Abilities | World | Reference |
 | --- | --- | --- |
-| [Getting started](pages/Getting-Started.md) | [Unique and Ultimate skills](pages/Skills.md) | [Commands](pages/Commands.md) |
-| [Human evolution](pages/Evolution.md) | [Combat mechanics](pages/Mechanics.md) | [Version history](pages/Version-History.md) |
+| [Unique and Ultimate skills](pages/Skills.md) | [Human evolution](pages/Evolution.md) | [Getting started](pages/Getting-Started.md) |
+| [Aura regeneration](pages/Aura-Regeneration.md) | [Alma](pages/Alma.md) · [Gemma](pages/Gemma.md) | [Commands](pages/Commands.md) |
+| [Combat mechanics](pages/Mechanics.md) | [Race bonuses](pages/Evolution.md#hp-and-shp-growth) | [Version history](pages/Version-History.md) |
 
-## Apex arts
+## Apex abilities
 
 | Inspiration | Unique Skill | Ultimate Skill | Combat identity |
 | --- | --- | --- | --- |
@@ -20,34 +35,22 @@ A field guide to four Monster Hunter Wilds inspired skill lines and a human hunt
 | Nu Udra | [Black Flame](pages/Black-Flame.md) | [Agni, Lord of the Black Flame](pages/Agni.md) | Tentacle pulls / burning ground |
 | Jin Dahaad | [Frostbound Colossus](pages/Frostbound-Colossus.md) | [Ymir, Lord of Winter](pages/Ymir.md) | Avalanche impact / ice capture |
 
-Each line has two active arts and a separate native toggleable passive; Ultimates add a third signature art. Passive stack counters and addon EP damage scaling are removed.
-
 ## Hunter evolution
 
 **Human → [Awakened Hunter](pages/Awakened-Hunter.md) → [Apex Hunter](pages/Apex-Hunter.md) → [Sovereign Hunter](pages/Sovereign-Hunter.md)**
 
-Grow through 100K / 400K / 2M base EP and 1 / 3 / 5 distinct boss types. Sovereign Hunter also requires mastery of an apex Unique. Every stage stays human-looking.
+Progress through 100K / 400K / 2M base EP and 1 / 3 / 5 distinct boss types. Sovereign Hunter also requires mastery of an apex Unique. Each stage grants an [aura regeneration Extra Skill](pages/Aura-Regeneration.md). See [Human evolution](pages/Evolution.md) for full requirements and vitality bonuses.
 
-## About this wiki
+## Contribute to the wiki
 
-Pages use skill/race infoboxes, acquisition sections, mode tables, progression links and mechanics notes inspired by the organization of the official Tensura wiki. All text here describes the addon and is original. This is not the official Tensura or Monster Hunter wiki.
+Report missing details, suggest corrections, or improve the Markdown articles in `wiki/pages`. Please include the addon version when reporting a gameplay difference. See [Wiki publishing](../docs/WIKI.md) for authoring and GitHub Wiki synchronization.
 
-Read these Markdown pages directly on GitHub, or **[download the styled wiki ZIP](../releases/wild-hunt-wiki-0.7.2.zip)**, extract it, and open `index.html` in your browser. The portable edition includes every article, original portraits, screenshots, and offline search. No server or login is required.
+[GitHub Wiki](https://github.com/Bithio999/MC/wiki) · [Download the addon](../releases/tensura-wild-hunt-0.7.2.jar) · [Official Tensura wiki](https://tensura.wiki.gg/wiki/Tensura:_Reincarnated_Wiki)
 
-The visual edition uses a wiki.gg / MediaWiki inspired portal, grouped sidebar, article tabs, numbered contents, infoboxes, and related-page navigation. It adapts to phones with a collapsible navigation menu. GitHub displays HTML source rather than the styled page; use the ZIP to view the design, or open `wiki/index.html` after downloading the repository.
+## Open the visual edition
 
-The official Tensura wiki returned HTTP 403 during this redesign, so this is an original approximation of its wiki-style organization rather than a verified copy of its current theme.
+**[Download the styled wiki ZIP](../releases/wild-hunt-wiki-0.7.2.zip)**, extract it, and open `index.html`. It includes every article, original portraits, screenshots, and offline search. You can also open `wiki/index.html` after downloading this repository. GitHub displays HTML source rather than the styled page.
 
-[Download the addon](../releases/tensura-wild-hunt-0.7.2.jar) · [Repository README](../README.md) · [Official Tensura wiki](https://tensura.wiki.gg/wiki/Tensura:_Reincarnated_Wiki)
+The visual design references the official wiki's homepage and Human article: white content, blue borders, centered welcome and topic panels, serif headings, and data infoboxes. The text, branding, and assets remain original. GitHub Wiki uses GitHub's own theme; its version mirrors the article organization, tables, images, sidebar, and footer.
 
-## Aura skills and otherworlders
-
-[Aura regeneration](pages/Aura-Regeneration.md) · [Alma](pages/Alma.md) · [Gemma](pages/Gemma.md)
-
-0.7.0 introduced aura recovery, stronger hunter vitality, native otherworlder NPCs, quieter water/ice toggles, recovering barriers, a 10% damage adjustment, and the revised lightning movement and water visuals.
-
-![Alma and Gemma in Minecraft](media/alma-gemma.png)
-
-0.7.1 corrects Gemma’s black head patch and Alma’s hair wrapping. Faces and outfits are preserved.
-
-0.7.2 fixes Alma’s front hairline, removing the large triangular forehead gap while preserving her glasses and lower face.
+Unofficial fan addon. Not affiliated with Capcom or ManasMods.

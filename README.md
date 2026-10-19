@@ -76,7 +76,9 @@ modes; Ultimates add a third signature: Heaven’s Thunder, Crimson Ocean,
 Black Sun Caldera, or Heavenfall Glacier.
 
 Read the [Wild Hunt Wiki](wiki/README.md) for all eight skill pages, exact costs,
-combos, race infoboxes, commands and mechanics.
+combos, race infoboxes, commands and mechanics. The [GitHub Wiki edition](wiki/github/Home.md)
+includes the prepared Home, articles, sidebar, and footer. See [publishing instructions](docs/WIKI.md)
+for syncing these to the separate [GitHub Wiki](https://github.com/Bithio999/MC/wiki).
 **[Download the styled offline wiki](releases/wild-hunt-wiki-0.7.2.zip)**, extract
 the ZIP, and open `index.html`. It includes a wiki-style portal, mobile navigation,
 infoboxes, and offline search. GitHub shows HTML source; download the edition to
