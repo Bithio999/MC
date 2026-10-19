@@ -40,7 +40,7 @@ Shared additive attributes use **65% of each family's native final-stage bonus**
 
 **Damage type:** None — healing and knockback. **Damage ID:** —. The pulse does not call an attack damage source; its visual is not elemental damage.
 
-Heal **10% of maximum HP**, capped at **80 HP**, and push eligible enemies within seven blocks away. The pulse costs **1,500 aura** and has a **30-second cooldown**. Its visual combines the two ancestral colors. Native sleep and movement-control restrictions prevent activation.
+Restore **50% of maximum HP and 50% of maximum SHP**, with **no fixed healing-amount cap**, and push eligible enemies within seven blocks away. Healing stops at each pool’s current maximum. The pulse costs **1,500 aura** and has a **30-second cooldown**. Its visual combines the two ancestral colors. Native sleep and movement-control restrictions prevent activation.
 
 This action is shared by Convergent races; their ancestry-derived traits, icons and EP profiles distinguish each pair.
 

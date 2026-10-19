@@ -31,7 +31,7 @@ Server owners can configure the minimum with `convergenceEP` and the multiplier 
 
 **Damage type:** None — Concordance Pulse heals and applies knockback without an attack damage call.
 
-Shared racial action: **Concordance Pulse** heals 10% maximum HP up to 80 and pushes nearby enemies. It costs 1,500 aura, has a 30-second cooldown and renders the pair's ancestral colors. The 105 races share this action; they do not each add a separate combat kit.
+Shared racial action: **Concordance Pulse** restores **50% of maximum HP and 50% of maximum SHP**, with no fixed healing-amount cap. Neither pool exceeds its current maximum. It also pushes nearby enemies. It costs 1,500 aura, has a 30-second cooldown and renders the pair's ancestral colors. The 105 races share this action; they do not each add a separate combat kit.
 
 Native final-stage attributes depend on Tensura’s server race configuration. These bonuses replace the former primary and secondary race modifiers. They are not stacked on top indefinitely. Appearance retains the player's skin; these are not custom monster models.
 

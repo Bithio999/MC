@@ -5,7 +5,7 @@ An expanded progression and skills addon for **Tensura 2.0.1.3**, **Minecraft
 
 ## Download
 
-The built addon is included at [releases/tensura-myths-0.11.0.jar](releases/tensura-myths-0.11.0.jar).
+The built addon is included at [releases/tensura-myths-0.12.0.jar](releases/tensura-myths-0.12.0.jar).
 Install it alongside Tensura and its required dependencies on both client and server.
 
 ## Godly skills and Duo Races
@@ -91,7 +91,7 @@ Read the [Tensura Myths Wiki](wiki/README.md) for skill pages, exact costs,
 combos, race infoboxes, commands and mechanics. The [GitHub Wiki edition](wiki/github/Home.md)
 includes the prepared Home, articles, sidebar, and footer. See [publishing instructions](docs/WIKI.md)
 for syncing these to the separate [GitHub Wiki](https://github.com/Bithio999/MC/wiki).
-**[Download the styled offline wiki](releases/tensura-myths-wiki-0.11.0.zip)**, extract
+**[Download the styled offline wiki](releases/tensura-myths-wiki-0.12.0.zip)**, extract
 the ZIP, and open `index.html`. It includes a wiki-style portal, mobile navigation,
 infoboxes, and offline search. GitHub shows HTML source; download the edition to
 see its styling. It is also included at `wiki/index.html` in the repository. The
@@ -122,12 +122,17 @@ defined in Java.
 
 ### Updating from an earlier release
 
-Replace the old addon jar with 0.11.0; do not install both. Learned skills,
+Replace the old addon jar with 0.12.0; do not install both. Learned skills,
 mastery, distinct boss history and native passive toggle state are retained.
 Secondary lineages retain their recorded selection EP and stage. Saves predating
 0.10.0 initialize the fresh-growth origin at the first progression check.
 Aion uses magicules, including passive upkeep. Causal Reversal records aura and magicules
 **after** its initial cast payment, returns for free, and automatically returns at timeout.
+It preserves current HP, SHP, aura and magicules that exceed their recorded values.
+Worldline Sever steers smoothly and passes through fluids while solid blocks stop it.
+The Secondary Race tab now shows live weighted requirement details; Tensura’s
+“Be named” means receiving a name yourself. Concordance Pulse restores half of
+maximum HP and SHP without a fixed amount cap.
 Convergent Awakening now uses a lineage-dependent EP gate; already fused races remain fused.
 Existing hunters get the stronger HP/SHP caps on login without free healing.
 Already-enabled water/ice passives receive their initial native HUD barrier.
@@ -167,9 +172,9 @@ vertical dashes, through-wall ricochets, momentum preservation, native shield
 breakage and timed recovery, HP/SHP evolution, aura regeneration and native NPC loadouts.
 `./gradlew runClient` starts a development client on a machine with graphics.
 
-The [0.11.0 validation report](docs/VALIDATION-0.11.0.md) covers the Godly/Duo additions, all 64 native GameTests and the actual client checks.
+The [0.12.0 validation report](docs/VALIDATION-0.12.0.md) covers the Godly/Duo additions, all 70 native GameTests and the actual client checks.
 
-Install `build/libs/tensura-myths-0.11.0.jar` on **both client and server**,
+Install `build/libs/tensura-myths-0.12.0.jar` on **both client and server**,
 alongside Tensura and its required dependencies. The addon jar is not a complete
 modpack. Additional development dependency versions are in `runtime-mods.lock.json`.
 

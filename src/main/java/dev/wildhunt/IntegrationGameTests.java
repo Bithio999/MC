@@ -556,6 +556,7 @@ public final class IntegrationGameTests {
     @GameTest(template = "empty", timeoutTicks = 100)
     public static void railboltRicochetsThroughWallsButInitialShotStops(GameTestHelper helper) {
         var player=combatPlayer(helper); var start=player.position().add(0,180,0);
+        for(var pos:java.util.List.of(start.add(0,0,5),start.add(7,0,5))){var chunk=new net.minecraft.world.level.ChunkPos(net.minecraft.core.BlockPos.containing(pos));helper.getLevel().setChunkForced(chunk.x,chunk.z,true);}
         player.setPos(start); player.setYRot(0); player.setXRot(0);
         var first=durableTarget(helper); first.setPos(start.add(0,0,5)); first.setNoGravity(true);
         var second=durableTarget(helper); second.setPos(start.add(7,0,5)); second.setNoGravity(true);
@@ -563,13 +564,16 @@ public final class IntegrationGameTests {
         helper.assertTrue(!first.hasLineOfSight(second), "Test wall did not block the ricochet path");
         var skill=WildHunt.UNIQUE.get(Apex.REY_DAU).get(); HunterData.learnReward(player,skill);
         var instance=SkillAPI.getSkillsFrom(player).getSkill(skill).orElseThrow();
+        helper.runAfterDelay(5,()->{
+        first.setHealth(1024);second.setHealth(1024);
         ApexArts.ricochet(skill,helper.getLevel(),instance,player);
-        helper.assertTrue(first.getHealth()<1024 && second.getHealth()<1024,"Ricochet failed to pass through blocks");
+        helper.assertTrue(first.getHealth()<1024 && second.getHealth()<1024,"Ricochet targets: first="+first.getHealth()+" second="+second.getHealth()+" primary="+ApexArts.target(helper.getLevel(),player,36));
         first.setHealth(1024); second.setHealth(1024); first.invulnerableTime=0; second.invulnerableTime=0;
         for(int x=-1;x<=1;x++) for(int y=0;y<4;y++) helper.getLevel().setBlock(net.minecraft.core.BlockPos.containing(start.add(x,y,2)),net.minecraft.world.level.block.Blocks.STONE.defaultBlockState(),3);
         ApexArts.ricochet(skill,helper.getLevel(),instance,player);
         helper.assertTrue(first.getHealth()==1024 && second.getHealth()==1024,"Initial Railbolt passed through its blocking wall");
         helper.succeed();
+        });
     }
     @GameTest(template = "empty", timeoutTicks = 100)
     public static void extendedThunderStepPreservesAllMomentum(GameTestHelper helper) {

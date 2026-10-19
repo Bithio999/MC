@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.12.0
+
+- Add shared smooth steering for Worldline Sever’s server damage ray and local preview. Use solid-block collision on both sides so water and lava no longer stop the server ray.
+- Make Causal Reversal preserve any current HP, SHP, aura or magicules above the saved checkpoint, for both manual and automatic returns.
+- Audit native secondary evolution branches and Daemon naming requirements. Show native weighted contributions and the added EP gate in a live checklist, preserving native alternatives and UI scroll/search/confirmation state.
+- Clarify that receiving a native name satisfies “Be named”; mass-naming other entities does not. Verify Daemon Lord and Devil Lord evolution with real native naming.
+- Change Concordance Pulse to restore 50% maximum HP and SHP without a fixed healing-amount cap, retaining its aura cost, cooldown and knockback.
+- Update the gameplay wiki, all 105 fusion articles, exports and release bundle.
+
 ## 0.11.0
 
 - Render the caster’s Worldline Sever directly from local aim every frame; update server aim every held tick. Damage remains server-authoritative.

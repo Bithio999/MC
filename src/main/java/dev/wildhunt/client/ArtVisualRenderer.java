@@ -20,6 +20,8 @@ import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 @EventBusSubscriber(modid = WildHunt.ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public final class ArtVisualRenderer extends EntityRenderer<ArtVisualEntity> {
     private static final ResourceLocation ICE = ResourceLocation.withDefaultNamespace("textures/block/blue_ice.png");
+    private record AimFrame(Vec3 direction,long time) {}
+    private final java.util.Map<ArtVisualEntity,AimFrame> aimFrames=new java.util.WeakHashMap<>();
     public ArtVisualRenderer(EntityRendererProvider.Context context) { super(context); }
     @SubscribeEvent public static void register(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(ArtVisualEntity.TYPE.get(), ArtVisualRenderer::new);
@@ -37,10 +39,11 @@ public final class ArtVisualRenderer extends EntityRenderer<ArtVisualEntity> {
             Vec3 vector=entity.end();poses.pushPose();
             var player=net.minecraft.client.Minecraft.getInstance().player;
             if(entity.kind()==ArtVisualEntity.CAUSAL_RAY && entity.ownedBy(player)) {
-                // Predict only the local mesh. The server still owns hit detection, costs and channel duration.
-                Vec3 eye=player.getEyePosition(partial),facing=player.getViewVector(1),end=eye.add(facing.scale(80));
-                var hit=player.level().clip(new net.minecraft.world.level.ClipContext(eye,end,net.minecraft.world.level.ClipContext.Block.COLLIDER,net.minecraft.world.level.ClipContext.Fluid.NONE,player));
-                if(hit.getType()!=net.minecraft.world.phys.HitResult.Type.MISS)end=hit.getLocation();
+                // Smooth locally every frame using the same steering response and solid-only ray as the server.
+                long now=System.nanoTime();Vec3 wanted=player.getViewVector(1);var previous=aimFrames.get(entity);
+                Vec3 facing=previous==null?wanted:dev.wildhunt.WorldlineAim.approach(previous.direction(),wanted,Math.min(.1,(now-previous.time())/1e9));
+                aimFrames.put(entity,new AimFrame(facing,now));
+                Vec3 eye=player.getEyePosition(partial),end=dev.wildhunt.WorldlineAim.end(player,eye,facing);
                 Vec3 side=facing.cross(new Vec3(0,1,0)).normalize();if(side.lengthSqr()<.01)side=new Vec3(1,0,0);
                 Vec3 start=eye.add(facing.scale(Math.min(.9,eye.distanceTo(end)*.3))).add(side.scale(.35)).add(0,-.25,0);
                 Vec3 offset=start.subtract(entity.getPosition(partial));poses.translate(offset.x,offset.y,offset.z);vector=end.subtract(start);

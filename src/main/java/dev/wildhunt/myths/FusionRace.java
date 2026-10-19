@@ -73,7 +73,9 @@ public final class FusionRace extends TensuraRace {
     @Override public void onActivateAbility(ManasRaceInstance instance, LivingEntity entity) {
         if(!(entity.level() instanceof net.minecraft.server.level.ServerLevel level) || !canActivateAbility(instance,entity))return;
         if(io.github.manasmods.tensura.util.EnergyHelper.isOutOfEnergy(entity,1500,0))return;
-        entity.heal(Math.min(80,entity.getMaxHealth()*.1f));
+        entity.heal(entity.getMaxHealth()*.5f);
+        var existence=TensuraStorages.getExistenceFrom(entity);double maxSHP=entity.getAttributeValue(TensuraAttributes.MAX_SPIRITUAL_HEALTH);
+        existence.setSpiritualHealth(Math.min(maxSHP,existence.getSpiritualHealth()+maxSHP*.5));existence.markDirty();
         for(var target:level.getEntitiesOfClass(LivingEntity.class,entity.getBoundingBox().inflate(7),e->dev.wildhunt.HunterData.canHarm(entity,e))) {
             var delta=target.position().subtract(entity.position()).normalize().scale(.9); target.push(delta.x,.25,delta.z); target.hurtMarked=true;
         }

@@ -71,12 +71,9 @@ public final class MythsNetwork {
             for(var next:DuoSystem.options(p,secondary)) {
                 var row=new CompoundTag();row.putString("id",next.getRegistryName().toString());row.putString("race",next.getRegistryName().toString());row.putString("name",next.getName().getString());
                 double required=DuoSystem.secondaryEvolutionEP(p);
-                float progress=(float)Math.min(secondary.getEvolutionProgress(p,next),Math.min(100,EnergyHelper.getBaseMaxEP(p)/required*100));row.putDouble("progress",progress);row.putBoolean("requirements_met",secondary.getEvolutionProgress(p,next)>=100 && EnergyHelper.getBaseMaxEP(p)>=required && Double.isFinite(EnergyHelper.getBaseMaxEP(p)));row.putString("detail",String.format(java.util.Locale.ROOT,"Requirements: %.0f%%; secondary evolution base EP: %,.0f / %,.0f",progress,EnergyHelper.getBaseMaxEP(p),required));
-                if(next instanceof io.github.manasmods.tensura.race.TensuraRace race) {
-                    var lines=new StringBuilder();
-                    race.getEvolutionRequirements(secondary,p).forEach((requirement,weight)->lines.append(requirement.getRequirementComponent(secondary,p).getString()).append("; "));
-                    row.putString("detail",row.getString("detail")+" — "+lines);
-                }
+                float progress=(float)Math.min(DuoSystem.nativeProgress(p,secondary,next),Math.min(100,EnergyHelper.getBaseMaxEP(p)/required*100));
+                row.putDouble("progress",progress);row.putBoolean("requirements_met",DuoSystem.secondaryRequirementsMet(p,secondary,next));
+                row.putString("detail",String.format(java.util.Locale.ROOT,"Secondary evolution base EP: %,.0f / %,.0f\n",EnergyHelper.getBaseMaxEP(p),required)+DuoSystem.nativeRequirements(p,secondary,next));
                 choices.add(row);
             }
             tag.putString("choice_action","evolve");

@@ -50,6 +50,7 @@ public final class GodlySkill extends Skill {
         switch(mode) {
             case 0 -> {
                 tag.putLong("channel_until",now+120);tag.putLong("channel_heartbeat",now);
+                ApexArts.point(tag,"channel_aim",caster.getLookAngle());tag.putLong("channel_aim_time",now);
                 tag.putLong("channel_next",now+10);tag.putString("dimension",level.dimension().location().toString());
                 updateRay(level,i,caster,true);cooldown=0;
             }
@@ -94,6 +95,8 @@ public final class GodlySkill extends Skill {
         tag.putLong("channel_heartbeat",now);
         boolean pulse=now>=tag.getLong("channel_next");
         if(pulse && EnergyHelper.isOutOfEnergy(e,i,0,.5f)){stopChannel(i,e);return false;}
+        Vec3 facing=WorldlineAim.approach(ApexArts.point(tag,"channel_aim"),e.getLookAngle(),Math.max(0,now-tag.getLong("channel_aim_time"))/20d);
+        ApexArts.point(tag,"channel_aim",facing);tag.putLong("channel_aim_time",now);
         updateRay(level,i,e,pulse);
         if(pulse)tag.putLong("channel_next",now+10);
         i.markDirty();return true;
@@ -105,10 +108,10 @@ public final class GodlySkill extends Skill {
         if(e.level() instanceof ServerLevel level)removeVisual(level,tag,"channel_visual");
     }
     private void updateRay(ServerLevel level,ManasSkillInstance i,LivingEntity caster,boolean damage) {
-        Vec3 from=caster.getEyePosition(),end=ApexArts.cursorPlacement(level,caster,80);
-        var tag=i.getOrCreateTag();
+        var tag=i.getOrCreateTag();Vec3 facing=ApexArts.point(tag,"channel_aim").normalize();
+        Vec3 from=caster.getEyePosition(),end=WorldlineAim.end(caster,from,facing);
         // Begin beside and ahead of the eye so the caster can see the channel without sitting inside its core.
-        Vec3 facing=caster.getLookAngle(),side=facing.cross(new Vec3(0,1,0)).normalize();
+        Vec3 side=facing.cross(new Vec3(0,1,0)).normalize();
         if(side.lengthSqr()<.01)side=new Vec3(1,0,0);
         Vec3 visualFrom=from.add(facing.scale(Math.min(.9,from.distanceTo(end)*.3))).add(side.scale(.35)).add(0,-.25,0);
         if(tag.hasUUID("channel_visual") && level.getEntity(tag.getUUID("channel_visual")) instanceof ArtVisualEntity visual)visual.updateVector(visualFrom,end.subtract(visualFrom));
@@ -182,8 +185,8 @@ public final class GodlySkill extends Skill {
         var energy=TensuraStorages.getExistenceFrom(caster);
         energy.setSpiritualHealth(Math.max(energy.getSpiritualHealth(),Math.min(caster.getAttributeValue(TensuraAttributes.MAX_SPIRITUAL_HEALTH),tag.getDouble("anchor_shp"))));
         // Old checkpoints have no resource snapshot; never invent a refund for those saves.
-        if(tag.contains("anchor_aura"))energy.setAura(Math.clamp(tag.getDouble("anchor_aura"),0,EnergyHelper.getMaxAura(caster)));
-        if(tag.contains("anchor_magicules"))energy.setMagicule(Math.clamp(tag.getDouble("anchor_magicules"),0,EnergyHelper.getMaxMagicule(caster)));
+        if(tag.contains("anchor_aura"))energy.setAura(Math.max(energy.getAura(),Math.clamp(tag.getDouble("anchor_aura"),0,EnergyHelper.getMaxAura(caster))));
+        if(tag.contains("anchor_magicules"))energy.setMagicule(Math.max(energy.getMagicule(),Math.clamp(tag.getDouble("anchor_magicules"),0,EnergyHelper.getMaxMagicule(caster))));
         energy.markDirty();tag.remove("anchor_until");tag.remove("anchor_aura");tag.remove("anchor_magicules");removeVisual(level,tag,"anchor_visual");
         GodlyVisuals.impact(level,before.add(0,1,0),3);GodlyVisuals.impact(level,caster.position().add(0,1,0),3);
         GodlyVisuals.circle(level,caster,caster.position().add(0,.1,0),3,30,MagicCircleVariant.RECOVERY);

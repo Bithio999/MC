@@ -7,13 +7,17 @@
 <div class="global-bar"><span>TENSURA MYTHS</span><div><a href="https://tensura.wiki.gg/wiki/Tensura:_Reincarnated_Wiki">Base mod wiki</a><a href="https://github.com/Bithio999/MC">GitHub</a></div></div>
 <header class="masthead"><a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">M</span><span>TENSURA MYTHS<small>Tensura: Reincarnated addon wiki</small></span></a>
 <div class="search"><label for="wiki-search">Search Tensura Myths Wiki</label><input id="wiki-search" type="search" placeholder="Search skills, races, characters…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="search-results" aria-expanded="false"><div id="search-results" role="listbox" aria-label="Search results" hidden></div><span id="search-status" class="sr-only" aria-live="polite"></span></div></header>
-<div class="layout"><button id="navigation-toggle" aria-controls="wiki-navigation" aria-expanded="false">☰ Wiki navigation</button><nav id="wiki-navigation" class="sidebar" aria-label="Wiki navigation"><section><h2>Start here</h2><a href="../index.html">Main Page</a><a href="../site/Getting-Started.html">Getting started</a></section><section><h2>Skills</h2><a href="../site/Skills.html">Skill overview</a><a href="../site/Unique-Skills.html">Unique Skills</a><a href="../site/Ultimate-Skills.html">Ultimate Skills</a><a href="../site/Godly.html">Godly Skills</a><a href="../site/Aura-Regeneration.html">Extra Skills</a><a href="../site/Abilities.html">Ability index</a></section><section><h2>Races</h2><a href="../site/Races.html">Race directory</a><a href="../site/Evolution.html">Hunter evolution</a><a href="../site/Duo-Races.html" aria-current="page">Secondary races</a><a href="../site/Convergent-Awakening.html">Convergent Awakening</a></section><section><h2>Otherworlders</h2><a href="../site/Otherworlders.html">Character directory</a><a href="../site/Alma.html">Alma</a><a href="../site/Gemma.html">Gemma</a></section><section><h2>Reference</h2><a href="../site/Damage-Types.html">Damage types</a><a href="../site/Mechanics.html">Combat mechanics</a><a href="../site/Commands.html">Commands</a></section><div class="sidebar-version">Tensura Myths <strong>0.11.0</strong><br>Minecraft 1.21.1 · NeoForge<br><span>Offline reference edition</span></div></nav>
+<div class="layout"><button id="navigation-toggle" aria-controls="wiki-navigation" aria-expanded="false">☰ Wiki navigation</button><nav id="wiki-navigation" class="sidebar" aria-label="Wiki navigation"><section><h2>Start here</h2><a href="../index.html">Main Page</a><a href="../site/Getting-Started.html">Getting started</a></section><section><h2>Skills</h2><a href="../site/Skills.html">Skill overview</a><a href="../site/Unique-Skills.html">Unique Skills</a><a href="../site/Ultimate-Skills.html">Ultimate Skills</a><a href="../site/Godly.html">Godly Skills</a><a href="../site/Aura-Regeneration.html">Extra Skills</a><a href="../site/Abilities.html">Ability index</a></section><section><h2>Races</h2><a href="../site/Races.html">Race directory</a><a href="../site/Evolution.html">Hunter evolution</a><a href="../site/Duo-Races.html" aria-current="page">Secondary races</a><a href="../site/Convergent-Awakening.html">Convergent Awakening</a></section><section><h2>Otherworlders</h2><a href="../site/Otherworlders.html">Character directory</a><a href="../site/Alma.html">Alma</a><a href="../site/Gemma.html">Gemma</a></section><section><h2>Reference</h2><a href="../site/Damage-Types.html">Damage types</a><a href="../site/Mechanics.html">Combat mechanics</a><a href="../site/Commands.html">Commands</a></section><div class="sidebar-version">Tensura Myths <strong>0.12.0</strong><br>Minecraft 1.21.1 · NeoForge<br><span>Offline reference edition</span></div></nav>
 <main id="article" class="article-page"><div class="page-tabs"><span aria-current="page">Article</span><a href="../pages/Duo-Races.md">Read Markdown</a><a href="https://github.com/Bithio999/MC/blob/main/docs/CHANGELOG.md">Changelog</a></div>
 <div class="article-heading"><div class="breadcrumbs"><a href="../index.html">Tensura Myths Wiki</a> / <a href="../site/Races.html">Races</a></div><h1>Duo Races</h1><p class="subtitle">From the unofficial Tensura Myths Wiki</p></div>
 <div class="article-content"><div class="article-intro"><p><strong>Duo Races</strong> let an awakened player develop a second ancestral race alongside their primary race. The primary race retains the body, size and normal racial key. The secondary supplies half-strength shared attributes, its native intrinsic skills, racial reactions and a separate racial action.</p></div><details class="contents" open><summary>Contents</summary><div class="toc">
 <ul>
 <li><a href="#obtaining">Obtaining</a></li>
 <li><a href="#secondary-evolution">Secondary evolution</a></li>
+<li><a href="#evolution-requirement-checklist">Evolution requirement checklist</a><ul>
+<li><a href="#daemon-naming-requirements">Daemon naming requirements</a></li>
+</ul>
+</li>
 <li><a href="#ep-gains">EP gains</a></li>
 <li><a href="#status-display">Status display</a></li>
 <li><a href="#gallery">Gallery</a></li>
@@ -63,6 +67,33 @@
 <p>Native branching remains available. If a chosen Goblin branch becomes an Oni, its recorded secondary ancestry remains Goblin for the eventual fusion. Secondary Human can also follow the hunter branch and earn its distinct boss credits.</p>
 <p>Evolution replaces the secondary’s half-strength attribute contributions. It does not award a fresh starting energy pool. Shared attributes are HP, SHP, attack damage, armor, toughness, movement and knockback resistance. Energy caps, body size and appearance continue to belong to the primary until Convergent Awakening. Learned intrinsic skills use native skill storage; native learning rules can reject incompatible skills.</p>
 <p>Assign <strong>Secondary racial ability</strong> under <strong>Controls → Key Binds → Tensura Myths</strong>. It starts unbound to avoid conflicts. Pressing, holding and releasing invoke the secondary’s native racial action with server-measured duration, native cooldowns and energy costs. The normal Tensura racial key continues to use the primary race.</p>
+<h2 id="evolution-requirement-checklist">Evolution requirement checklist</h2>
+<p>The Secondary Race tab shows each candidate’s <strong>live native requirement contribution</strong>, whether it is met, and the additional base EP gate. The list updates while open without resetting the search, scroll position or a pending ancestry confirmation. The server checks the same native weighted progress when you choose Evolve.</p>
+<p>Native requirements are <strong>weighted</strong>, with <strong>100 points required</strong>. They are not always an all-of checklist. In particular, Tensura 2.0.1.3 assigns Daemon Lord three contributions of 50 points each, so any two supply the required 100. This preserves the base mod’s alternatives.</p>
+<h3 id="daemon-naming-requirements">Daemon naming requirements</h3>
+<p><strong>Be named</strong> means <strong>you have received a name through Tensura’s naming system</strong>. Naming other mobs, including mass-naming, does not satisfy it. A vanilla name tag or a display nickname also does not set the native name checked by this requirement. Receiving a native name counts for the secondary lineage without replacing the primary race.</p>
+<div class="article-table"><table>
+<thead>
+<tr>
+<th>Secondary evolution</th>
+<th>Native contributions</th>
+<th>Required native total</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Arch Daemon → Daemon Lord</td>
+<td>True Hero / True Demon Lord: 50; be named yourself: 50; physical body: 50</td>
+<td>100 — any two</td>
+</tr>
+<tr>
+<td>Daemon Lord → Devil Lord</td>
+<td>True Hero / True Demon Lord: 50; be named yourself: 25; physical body: 25</td>
+<td>100 — all three</td>
+</tr>
+</tbody>
+</table></div>
+<p>The physical-body check uses your actual body state; a spiritual form does not meet it. The added secondary EP gate is required separately. For a lineage selected at <strong>20M base EP</strong>, the default cumulative thresholds are <strong>22.5M</strong> for Greater Daemon, <strong>25M</strong> for Arch Daemon, <strong>27.5M</strong> for Daemon Lord, and <strong>30M</strong> for Devil Lord, together with the applicable native conditions.</p>
 <h2 id="ep-gains">EP gains</h2>
 <p>A secondary lineage grants <strong>10% extra native kill EP gain</strong>, preserving the current primary race’s aura/magicule proportions. Native gain attributes, caps and penalties still apply. The bonus and primary split remain the same as the secondary evolves. Saved energy is unchanged.</p>
 <div class="article-table"><table>
@@ -91,8 +122,9 @@
 <p>The native Status menu shows the current independent lineages as <strong>Primary Race/Secondary Race</strong>, for example <strong>Sovereign Hunter/Slime</strong>. Long labels scroll within the original race-name area and show their complete text on hover. After convergence, Status displays the unified race’s own name.</p>
 <h2 id="gallery">Gallery</h2>
 <p><img alt="Primary and secondary race names in the native Status menu" src="../media/duo-status.png" /></p>
+<p><img alt="Daemon secondary requirements with live native weighted progress and naming state" src="../media/secondary-requirements.png" /></p>
 <h2 id="awakening">Awakening</h2>
 <p>Once <strong>both</strong> races finish evolving, follow <a href="Convergent-Awakening.html">Convergent Awakening</a>. The <a href="Convergent-Awakening.html#ep-requirement">awakening EP requirement</a> scales with the preceding native and secondary evolution gates. The new fused race uses its own EP profile and retains the 10% growth bonus.</p>
 </div><nav class="related-box" aria-label="Related races"><strong>Tensura Myths · Races</strong><div class="navbox-row"><strong>Race directory</strong><div><a href="../site/Races.html">Race directory</a></div></div><div class="navbox-row"><strong>Race systems</strong><div><a href="../site/Duo-Races.html" aria-current="page">Duo Races</a><a href="../site/Convergent-Awakening.html">Convergent Awakening</a></div></div><div class="navbox-row"><strong>Human / Hunter</strong><div><a href="../site/Evolution.html">Human evolution</a><a href="../site/Awakened-Hunter.html">Awakened Hunter</a><a href="../site/Apex-Hunter.html">Apex Hunter</a><a href="../site/Sovereign-Hunter.html">Sovereign Hunter</a></div></div></nav>
 <div class="categories">Categories: <a href="../index.html">Tensura Myths</a> · <a href="../site/Races.html">Races</a></div>
-<footer>Unofficial fan addon. Original documentation and portraits. Not affiliated with Capcom or ManasMods.<br>Tensura Myths 0.11.0 · Offline edition · No external services required.</footer></main></div></body></html>
+<footer>Unofficial fan addon. Original documentation and portraits. Not affiliated with Capcom or ManasMods.<br>Tensura Myths 0.12.0 · Offline edition · No external services required.</footer></main></div></body></html>

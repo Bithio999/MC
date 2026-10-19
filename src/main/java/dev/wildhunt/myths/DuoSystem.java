@@ -65,12 +65,35 @@ public final class DuoSystem {
         var target=options(p,current.get()).stream().filter(r->targetId.equals(r.getRegistryName())).findFirst();
         if(target.isEmpty())return "That is not a valid next secondary evolution.";
         if(!Double.isFinite(EnergyHelper.getBaseMaxEP(p)) || EnergyHelper.getBaseMaxEP(p)<secondaryEvolutionEP(p))return "Secondary evolution requires "+Math.round(secondaryEvolutionEP(p))+" base EP, including new growth since selecting this lineage.";
-        if(current.get().getEvolutionProgress(p,target.get())<100)return "The native secondary evolution requirements are not met.";
+        if(nativeProgress(p,current.get(),target.get())<100)return "The native secondary evolution requirements are not met.\n"+nativeRequirements(p,current.get(),target.get());
         data(p).putDouble("secondary_last_evolution_ep",Math.max(secondaryEvolutionEP(p),lineageEvolutionEP(target.get().createDefaultInstance(),p,new HashSet<>())));
         var next=target.get().createDefaultInstance(); next.deserialize(current.get().serialize(new CompoundTag()));
         data(p).putInt("secondary_stage",data(p).getInt("secondary_stage")+1);
         saveSecondary(p,next); removeSecondary(p); applySecondary(p,next); next.learnIntrinsicSkills(p); saveSecondary(p,next);
         ((io.github.manasmods.manascore.storage.api.StorageHolder)p).manasCore$sync(); return "Secondary race evolved into "+target.get().getName().getString()+".";
+    }
+    public static float nativeProgress(LivingEntity p,ManasRaceInstance instance,ManasRace next) {
+        float value=instance.getEvolutionProgress(p,next);return Float.isNaN(value)?0:Math.clamp(value,0,100);
+    }
+    public static boolean secondaryRequirementsMet(LivingEntity p,ManasRaceInstance instance,ManasRace next) {
+        double ep=EnergyHelper.getBaseMaxEP(p);
+        return Double.isFinite(ep) && ep>=secondaryEvolutionEP(p) && nativeProgress(p,instance,next)>=100;
+    }
+    /** Native weights are intentional (Daemon Lord totals 150); do not turn alternatives into mandatory gates. */
+    public static String nativeRequirements(LivingEntity p,ManasRaceInstance instance,ManasRace next) {
+        var text=new StringBuilder(String.format(Locale.ROOT,"Native progress: %.0f / 100 weighted points (100 required).",nativeProgress(p,instance,next)));
+        if(next instanceof io.github.manasmods.tensura.race.TensuraRace race) {
+            var requirements=new ArrayList<>(race.getEvolutionRequirements(instance,p).entrySet());
+            requirements.sort(Comparator.comparing(entry->entry.getKey().getRequirementComponent(instance,p).getString()));
+            for(var entry:requirements) {
+                var requirement=entry.getKey();float progress=requirement.getProgress(instance,p);
+                progress=Float.isNaN(progress)?0:Math.clamp(progress,0,1);
+                String label=requirement instanceof io.github.manasmods.tensura.race.template.EvolutionRequirement.NamedRequirement
+                    ?"Be named yourself through Tensura (naming other mobs does not count)":requirement.getRequirementComponent(instance,p).getString();
+                text.append(String.format(Locale.ROOT,"\n%s: %s (+%.0f / %.0f points)",label,progress>=1?"Met":"Not met",progress*entry.getValue(),entry.getValue()));
+            }
+        }
+        return text.toString();
     }
     public static String convergence(ServerPlayer p) {
         var a=primary(p); var b=secondary(p);

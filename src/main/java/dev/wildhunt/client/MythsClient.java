@@ -22,7 +22,7 @@ public final class MythsClient {
     public static void open(String view) {requested=view;PacketDistributor.sendToServer(new MythsNetwork.Request("open",view));}
     @SubscribeEvent public static void setup(FMLClientSetupEvent event) {
         MythsNetwork.clientStateReceiver=tag->{
-            var mc=Minecraft.getInstance();if(mc.player==null)return;state=tag;if(tag.getBoolean("silent"))return;
+            var mc=Minecraft.getInstance();if(mc.player==null)return;state=tag;if(tag.getBoolean("silent")){if(mc.screen instanceof MythsEvolutionScreen screen)screen.refreshState(tag);return;}
             if(requested!=null){var view=requested;requested=null;mc.setScreen(view.equals("godly")?new GodlyAscensionScreen():new MythsEvolutionScreen(tag,view.equals("convergence")));}
             else if(mc.screen instanceof MythsEvolutionScreen screen)screen.update(tag);
             else if(mc.screen instanceof GodlyAscensionScreen screen){if(tag.getBoolean("has_godly"))mc.setScreen(new GodlySelectionScreen());else screen.refresh();}
@@ -38,7 +38,7 @@ public final class MythsClient {
             if(down!=held && mc.getConnection()!=null)PacketDistributor.sendToServer(new MythsNetwork.Request(down?"race_press":"race_release",""));
             if(down && ++heartbeat%10==0)PacketDistributor.sendToServer(new MythsNetwork.Request("race_hold",""));
             held=down;
-            if(mc.screen instanceof io.github.manasmods.tensura.client.screen.MainScreen && mc.player!=null && mc.player.tickCount%20==0)PacketDistributor.sendToServer(new MythsNetwork.Request("sync",""));
+            if((mc.screen instanceof io.github.manasmods.tensura.client.screen.MainScreen || mc.screen instanceof MythsEvolutionScreen) && mc.player!=null && mc.player.tickCount%20==0)PacketDistributor.sendToServer(new MythsNetwork.Request("sync",""));
         }
         @SubscribeEvent public static void init(ScreenEvent.Init.Post event) {
             var screen=event.getScreen();

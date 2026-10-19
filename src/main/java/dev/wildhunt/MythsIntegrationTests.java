@@ -225,15 +225,16 @@ public final class MythsIntegrationTests {
 
     @GameTest(template="empty",timeoutTicks=100)
     public static void channelTracksAimBillsPulsesAndStopsOnRelease(GameTestHelper h) {
-        var p=player(h);p.setPos(p.position().add(0,100,0));p.setYRot(-90);p.setXRot(0);
+        var p=player(h);p.setPos(p.position().add(0,260,0));p.setYRot(-90);p.setXRot(0);
         var first=tank(h,p.position().add(3,0,0));var second=tank(h,p.position().add(0,0,3));
+        for(var target:java.util.List.of(first,second)){var chunk=new net.minecraft.world.level.ChunkPos(target.blockPosition());h.getLevel().setChunkForced(chunk.x,chunk.z,true);}
         HunterData.learnReward(p,WildHunt.GODLY.get());var i=SkillAPI.getSkillsFrom(p).getSkill(WildHunt.GODLY.get()).orElseThrow();
         var energy=TensuraStorages.getExistenceFrom(p);double aura=energy.getAura();WildHunt.GODLY.get().onPressed(i,p,0,0);
         float after=first.getHealth();h.assertTrue(after<1024 && second.getHealth()==1024,"Channel opener did not follow initial aim");
         double mp=energy.getMagicule();p.setYRot(0);
         h.runAfterDelay(11,()->{
             h.assertTrue(WildHunt.GODLY.get().onHeld(i,p,11,0),"Native held callback did not continue channel");
-            h.assertTrue(second.getHealth()<1024 && first.getHealth()==after,"Channel pulse did not follow changed aim");
+            h.assertTrue(second.getHealth()<1024 && first.getHealth()==after,"Channel pulse: first="+first.getHealth()+" expected="+after+" second="+second.getHealth()+" aim="+ApexArts.point(i.getOrCreateTag(),"channel_aim"));
             h.assertTrue(energy.getMagicule()==mp-400 && energy.getAura()==aura,"Channel billed the wrong resource or pulse cost");
             WildHunt.GODLY.get().onRelease(i,p,11,0,0);
             h.assertTrue(!WildHunt.GODLY.get().onHeld(i,p,12,0) && !i.getOrCreateTag().hasUUID("channel_visual"),"Released channel retained a damaging beam");h.succeed();
@@ -292,11 +293,16 @@ public final class MythsIntegrationTests {
     }
     @GameTest(template="empty",timeoutTicks=100)
     public static void horizonPullsOutsideItsDamagingCore(GameTestHelper h) {
-        var p=player(h);p.setPos(p.position().add(0,100,0));HunterData.learnReward(p,WildHunt.GODLY.get());var i=SkillAPI.getSkillsFrom(p).getSkill(WildHunt.GODLY.get()).orElseThrow();
+        var p=player(h);p.setPos(p.position().add(0,340,0));HunterData.learnReward(p,WildHunt.GODLY.get());var i=SkillAPI.getSkillsFrom(p).getSkill(WildHunt.GODLY.get()).orElseThrow();
         var center=p.position().add(0,1,0);var target=tank(h,center.add(18,0,0));
         ApexArts.point(i.getOrCreateTag(),"horizon",center);i.getOrCreateTag().putString("dimension",p.level().dimension().location().toString());i.getOrCreateTag().putLong("horizon_until",p.level().getGameTime()+200);
+        var chunk=new net.minecraft.world.level.ChunkPos(target.blockPosition());h.getLevel().setChunkForced(chunk.x,chunk.z,true);
+        h.runAfterDelay(5,()->{
+        target.setDeltaMovement(net.minecraft.world.phys.Vec3.ZERO);target.setHealth(1024);
         WildHunt.GODLY.get().tickActive(i,p);
-        h.assertTrue(target.getDeltaMovement().x<=-.39 && target.getHealth()==1024,"Outer Horizon failed to pull without damage");h.succeed();
+        double expected=-.4*(1-Math.clamp(target.getAttributeValue(net.minecraft.world.entity.ai.attributes.Attributes.KNOCKBACK_RESISTANCE),0,1));
+        h.assertTrue(Math.abs(target.getDeltaMovement().x-expected)<.0001 && target.getHealth()==1024,"Outer Horizon pull="+target.getDeltaMovement().x+" expected="+expected+" health="+target.getHealth());h.succeed();
+        });
     }
     @GameTest(template="empty",timeoutTicks=100)
     public static void reversalTimeoutAutomaticallyReturnsOnceAndHonorsCurrentCaps(GameTestHelper h) {
@@ -373,6 +379,95 @@ public final class MythsIntegrationTests {
         WildHunt.GODLY.get().tickActive(i,p);h.assertTrue(i.getOrCreateTag().contains("anchor_until"),"Temporary suppression canceled a previously armed checkpoint");
         i.getOrCreateTag().putLong("anchor_until",h.getLevel().getGameTime());WildHunt.GODLY.get().tickActive(i,p);
         h.assertTrue(p.position().distanceTo(start)<.1 && energy.getMagicule()==97_600 && !i.getOrCreateTag().contains("anchor_until") && i.getCoolDown(2)==25,"Unfunded, suppressed checkpoint failed to return automatically");h.succeed();
+    }
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void worldlineSteersSmoothlyAndIndependentlyOfFrameRate(GameTestHelper h) {
+        var from=new net.minecraft.world.phys.Vec3(1,0,0);var target=new net.minecraft.world.phys.Vec3(0,0,1);
+        var first=WorldlineAim.approach(from,target,1/60d);h.assertTrue(first.x>0 && first.z>0 && first.distanceTo(target)>.1,"Beam snapped immediately to a new aim");
+        var fast=from;for(int n=0;n<6;n++)fast=WorldlineAim.approach(fast,target,1/60d);
+        var slow=from;for(int n=0;n<2;n++)slow=WorldlineAim.approach(slow,target,1/20d);
+        h.assertTrue(fast.distanceTo(slow)<.000001 && fast.distanceTo(target)<first.distanceTo(target),"Smoothing depends on frame rate or moves away from the aim");
+        var reverse=WorldlineAim.approach(from,from.scale(-1),1/60d);
+        h.assertTrue(Math.abs(reverse.length()-1)<.000001 && reverse.x>-.99,"Half-turn snapped or produced invalid beam geometry");h.succeed();
+    }
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void worldlinePassesThroughWaterAndLavaButStopsAtSolidBlocks(GameTestHelper h) {
+        var p=player(h);p.setPos(p.position().add(0,300,0));p.setYRot(-90);p.setXRot(0);
+        var eye=net.minecraft.core.BlockPos.containing(p.getEyePosition());
+        h.getLevel().setBlockAndUpdate(eye.offset(3,0,0),net.minecraft.world.level.block.Blocks.WATER.defaultBlockState());
+        h.getLevel().setBlockAndUpdate(eye.offset(5,0,0),net.minecraft.world.level.block.Blocks.LAVA.defaultBlockState());
+        h.getLevel().setBlockAndUpdate(eye.offset(10,0,0),net.minecraft.world.level.block.Blocks.STONE.defaultBlockState());
+        var wet=tank(h,p.position().add(8,0,0));var blocked=tank(h,p.position().add(13,0,0));
+        HunterData.learnReward(p,WildHunt.GODLY.get());var i=SkillAPI.getSkillsFrom(p).getSkill(WildHunt.GODLY.get()).orElseThrow();WildHunt.GODLY.get().onPressed(i,p,0,0);
+        h.assertTrue(wet.getHealth()<1024 && blocked.getHealth()==1024,"Fluid blocked the damage ray or solid blocks failed to stop it");
+        var end=WorldlineAim.end(p,p.getEyePosition(),p.getLookAngle());h.assertTrue(Math.abs(end.x-eye.getX()-10)<.001,"Beam did not terminate at the solid wall");
+        WildHunt.GODLY.get().onRelease(i,p,1,0,0);h.succeed();
+    }
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void reversalNeverLowersHealthSpiritualHealthOrEitherReserve(GameTestHelper h) {
+        var p=player(h);HunterData.learnReward(p,WildHunt.GODLY.get());var i=SkillAPI.getSkillsFrom(p).getSkill(WildHunt.GODLY.get()).orElseThrow();var energy=TensuraStorages.getExistenceFrom(p);
+        p.setHealth(100);energy.setSpiritualHealth(100);energy.setAura(100_000);energy.setMagicule(100_000);WildHunt.GODLY.get().onPressed(i,p,0,2);
+        p.setHealth(200);energy.setSpiritualHealth(200);energy.setAura(200_000);energy.setMagicule(200_000);i.setCoolDown(0,2);WildHunt.GODLY.get().onPressed(i,p,0,2);
+        h.assertTrue(p.getHealth()==200 && energy.getSpiritualHealth()==200 && energy.getAura()==200_000 && energy.getMagicule()==200_000,"Manual return reduced an improved stat");
+        i.setCoolDown(0,2);WildHunt.GODLY.get().onPressed(i,p,0,2);energy.setAura(300_000);energy.setMagicule(300_000);i.getOrCreateTag().putLong("anchor_until",h.getLevel().getGameTime());WildHunt.GODLY.get().tickActive(i,p);
+        h.assertTrue(energy.getAura()==300_000 && energy.getMagicule()==300_000,"Automatic return reduced an improved reserve");h.succeed();
+    }
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void concordancePulseRestoresHalfMaximumHPAndSHPWithoutAFixedCap(GameTestHelper h) {
+        var p=player(h);var race=FusionCatalog.RACES.get("human_slime").get();RaceAPI.getRaceFrom(p).setRace(race,false);var i=RaceAPI.getRaceFrom(p).getRace().orElseThrow();var energy=TensuraStorages.getExistenceFrom(p);
+        float hp=p.getMaxHealth();double shp=p.getAttributeValue(io.github.manasmods.tensura.registry.attribute.TensuraAttributes.MAX_SPIRITUAL_HEALTH);
+        h.assertTrue(hp*.5>80 && shp>1000,"Fixture does not exercise a large uncapped heal");p.setHealth(hp*.25f);energy.setSpiritualHealth(shp*.25);energy.setAura(100_000);
+        race.onActivateAbility(i,p);
+        h.assertTrue(Math.abs(p.getHealth()-hp*.75)<.001 && Math.abs(energy.getSpiritualHealth()-shp*.75)<.001,"Concordance failed to restore half maximum HP and SHP");
+        h.assertTrue(energy.getAura()==98_500 && i.getCooldown()==30,"Heal changed its aura cost or cooldown");race.onActivateAbility(i,p);
+        h.assertTrue(energy.getAura()==98_500 && Math.abs(p.getHealth()-hp*.75)<.001,"Cooldown allowed an additional heal");
+        i.setCooldown(0);p.setHealth(hp*.95f);energy.setSpiritualHealth(shp*.95);race.onActivateAbility(i,p);
+        h.assertTrue(p.getHealth()==hp && energy.getSpiritualHealth()==shp,"Concordance overhealed beyond a pool maximum");h.succeed();
+    }
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void daemonSecondaryUsesReceivingANameAndNativeWeightedAlternatives(GameTestHelper h) {
+        var p=player(h);DuoSystem.select(p,RaceFamily.DAEMON);
+        evolveSecondary(p,TensuraRaces.GREATER_DAEMON.getId());evolveSecondary(p,TensuraRaces.ARCH_DAEMON.getId());
+        var energy=TensuraStorages.getExistenceFrom(p);energy.setName(null);energy.setSpiritualForm(true);
+        EnergyHelper.setBaseMaxEP(p,DuoSystem.secondaryEvolutionEP(p));var secondary=DuoSystem.secondary(p).orElseThrow();
+        h.assertTrue(DuoSystem.nativeProgress(p,secondary,TensuraRaces.DAEMON_LORD.get())==50,"Daemon Lord's weighted awakening contribution changed");
+        p.setGameMode(net.minecraft.world.level.GameType.CREATIVE);
+        for(int n=0;n<3;n++) {
+            var mob=h.spawnWithNoFreeWill(EntityType.WOLF,3,1,2);
+            io.github.manasmods.tensura.network.c2s.RequestNamingMenuPacket.name(mob,p,io.github.manasmods.tensura.network.c2s.RequestNamingMenuPacket.NamingType.LOW,"Named Test "+n);
+            h.assertTrue(TensuraStorages.getExistenceFrom(mob).getName()!=null,"Native naming fixture failed");
+        }
+        h.assertTrue(energy.getName()==null && DuoSystem.nativeProgress(p,secondary,TensuraRaces.DAEMON_LORD.get())==50,"Naming other entities satisfied being named yourself");
+        DuoSystem.evolve(p,TensuraRaces.DAEMON_LORD.getId());h.assertTrue(DuoSystem.secondary(p).orElseThrow().getRace()==TensuraRaces.ARCH_DAEMON.get(),"Missing native points were bypassed");
+        io.github.manasmods.tensura.network.c2s.RequestNamingMenuPacket.name(p,null,io.github.manasmods.tensura.network.c2s.RequestNamingMenuPacket.NamingType.LOW,"Myths Named Hunter");
+        h.assertTrue(energy.getName()!=null && DuoSystem.nativeProgress(p,secondary,TensuraRaces.DAEMON_LORD.get())==100,"Receiving a native name did not satisfy the secondary requirement");
+        DuoSystem.evolve(p,TensuraRaces.DAEMON_LORD.getId());h.assertTrue(DuoSystem.secondary(p).orElseThrow().getRace()==TensuraRaces.DAEMON_LORD.get(),"Native two-of-three Daemon Lord alternatives were incorrectly made mandatory");
+        EnergyHelper.setBaseMaxEP(p,DuoSystem.secondaryEvolutionEP(p));secondary=DuoSystem.secondary(p).orElseThrow();
+        h.assertTrue(DuoSystem.nativeProgress(p,secondary,TensuraRaces.DEVIL_LORD.get())==75,"Devil Lord should still require a physical body");
+        DuoSystem.evolve(p,TensuraRaces.DEVIL_LORD.getId());h.assertTrue(DuoSystem.secondary(p).orElseThrow().getRace()==TensuraRaces.DAEMON_LORD.get(),"Devil Lord physical-body requirement was bypassed");
+        energy.setSpiritualForm(false);DuoSystem.evolve(p,TensuraRaces.DEVIL_LORD.getId());
+        h.assertTrue(DuoSystem.secondary(p).orElseThrow().getRace()==TensuraRaces.DEVIL_LORD.get() && DuoSystem.primary(p).orElseThrow().getRace()==WildHunt.HUNTERS.get(2).get(),"Daemon secondary failed its final evolution or changed the primary race");h.succeed();
+    }
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void everySecondaryBranchUsesTheSameNativeAndEPReadinessInItsMenu(GameTestHelper h) {
+        var p=player(h);var d=DuoSystem.data(p);d.putDouble("secondary_ep_origin",20_000_000);d.putInt("secondary_stage",0);
+        var seen=new java.util.HashSet<net.minecraft.resources.ResourceLocation>();var queue=new java.util.ArrayDeque<io.github.manasmods.manascore.race.api.ManasRace>();
+        for(var family:RaceFamily.values())queue.add(family.baseRace());int edges=0;
+        while(!queue.isEmpty()) {
+            var race=queue.removeFirst();if(!seen.add(race.getRegistryName()))continue;
+            var current=race.createDefaultInstance();DuoSystem.saveSecondary(p,current);EnergyHelper.setBaseMaxEP(p,22_500_000);
+            var snapshot=MythsNetwork.snapshot(p,"");var rows=snapshot.getList("choices",net.minecraft.nbt.Tag.TAG_COMPOUND);
+            var choices=DuoSystem.options(p,current);h.assertTrue(rows.size()==choices.size(),"Menu lost a native secondary option for "+race.getRegistryName());
+            for(var next:choices) {
+                edges++;queue.add(next);net.minecraft.nbt.CompoundTag row=null;
+                for(var raw:rows){var candidate=(net.minecraft.nbt.CompoundTag)raw;if(candidate.getString("id").equals(next.getRegistryName().toString()))row=candidate;}
+                h.assertTrue(row!=null && row.getBoolean("requirements_met")== (current.getEvolutionProgress(p,next)>=100),"Menu readiness differs from native weighted requirements: "+next.getRegistryName());
+                h.assertTrue(row.getString("detail").contains("weighted points") && row.getString("detail").contains("22,500,000"),"Evolution checklist omitted native points or the added EP gate");
+                EnergyHelper.setBaseMaxEP(p,22_499_999);h.assertTrue(!DuoSystem.secondaryRequirementsMet(p,current,next),"A secondary branch bypassed its added EP threshold");EnergyHelper.setBaseMaxEP(p,22_500_000);
+            }
+        }
+        System.out.println("[Myths secondary audit] "+seen.size()+" native stages and "+edges+" evolution branches across all 15 families");
+        h.assertTrue(seen.size()>=60 && edges>=50,"Too few native secondary stages were audited: "+seen.size()+" stages, "+edges+" branches");h.succeed();
     }
     private static String evolveSecondary(net.minecraft.server.level.ServerPlayer p,net.minecraft.resources.ResourceLocation id) {
         EnergyHelper.setBaseMaxEP(p,DuoSystem.secondaryEvolutionEP(p));return DuoSystem.evolve(p,id);

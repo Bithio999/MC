@@ -20,6 +20,10 @@ public final class MythsEvolutionScreen extends EvolutionScreen {
     private boolean confirming;
     public MythsEvolutionScreen(CompoundTag state,boolean convergence) {this.state=state;this.convergence=convergence;loadChoices();}
     public void update(CompoundTag state) {this.state=state;confirming=false;loadChoices();rebuildWidgets();}
+    public void refreshState(CompoundTag state) {
+        if(!this.state.getString("secondary").equals(state.getString("secondary")) || !this.state.getString("choice_action").equals(state.getString("choice_action")) || this.state.getBoolean("converged")!=state.getBoolean("converged"))update(state);
+        else this.state=state; // Preserve search, scroll position and pending confirmation during read-only updates.
+    }
     private void loadChoices() {
         evolutions=new ArrayList<>();
         if(convergence) {
