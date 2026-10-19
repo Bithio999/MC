@@ -58,7 +58,7 @@ The native Status menu shows the current independent lineages as **Primary Race/
 
 ## Awakening
 
-Once **both** races finish evolving, follow [Convergent Awakening](Convergent-Awakening.md). The new fused race uses its own EP profile and retains the 10% growth bonus.
+Once **both** races finish evolving, follow [Convergent Awakening](Convergent-Awakening.md). The [awakening EP requirement](Convergent-Awakening.md#ep-requirement) scales with the preceding native and secondary evolution gates. The new fused race uses its own EP profile and retains the 10% growth bonus.
 
 ---
 

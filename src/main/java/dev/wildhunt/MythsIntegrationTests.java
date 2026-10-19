@@ -70,7 +70,11 @@ public final class MythsIntegrationTests {
         var p=player(h);DuoSystem.select(p,RaceFamily.SLIME);
         DuoSystem.convergence(p);h.assertTrue(!(RaceAPI.getRaceFrom(p).getRace().orElseThrow().getRace() instanceof FusionRace),"Base secondary was allowed to fuse");
         evolveSecondary(p,TensuraRaces.DEMON_SLIME.getId());evolveSecondary(p,TensuraRaces.GOD_SLIME.getId());
-        double before=EnergyHelper.getBaseMaxEP(p);var result=DuoSystem.convergence(p);
+        double required=DuoSystem.convergenceEP(p);
+        h.assertTrue(required>EnergyHelper.getBaseMaxEP(p),"Awakening did not advance beyond the last secondary evolution gate");
+        DuoSystem.convergence(p);h.assertTrue(!DuoSystem.converged(p),"Lineage-dependent awakening EP gate was bypassed");
+        h.assertTrue(MythsNetwork.snapshot(p,"").getDouble("convergence_ep")==required,"Menu and server disagree on awakening EP");
+        EnergyHelper.setBaseMaxEP(p,required);double before=EnergyHelper.getBaseMaxEP(p);var result=DuoSystem.convergence(p);
         h.assertTrue(DuoSystem.converged(p),"Convergence rejected: "+result);
         h.assertTrue(RaceAPI.getRaceFrom(p).getRace().orElseThrow().getRace()==FusionCatalog.RACES.get("human_slime").get(),"Wrong unique fusion registered");
         h.assertTrue(Math.abs(EnergyHelper.getBaseMaxEP(p)-before*1.25)<1,"Awakening gain did not apply once");
@@ -107,14 +111,18 @@ public final class MythsIntegrationTests {
         h.assertTrue(SkillAPI.getSkillsFrom(p).getSkill(skill).isEmpty(),"Source Ultimate was duplicated");h.succeed();
     }
     @GameTest(template="empty",timeoutTicks=100)
-    public static void godlyReversalRecoversPositionWithoutResettingEnergy(GameTestHelper h) {
-        var p=player(h);HunterData.learnReward(p,WildHunt.GODLY.get());var i=SkillAPI.getSkillsFrom(p).getSkill(WildHunt.GODLY.get()).orElseThrow();
+    public static void godlyReversalRestoresReservesAfterCastPaymentAndReturnsForFree(GameTestHelper h) {
+        var p=tank(h,h.absolutePos(new net.minecraft.core.BlockPos(1,101,1)).getCenter());EnergyHelper.setBaseMaxEP(p,20_000_000);HunterData.learnReward(p,WildHunt.GODLY.get());var i=SkillAPI.getSkillsFrom(p).getSkill(WildHunt.GODLY.get()).orElseThrow();
+        var energy=TensuraStorages.getExistenceFrom(p);energy.setAura(100_000);energy.setMagicule(100_000);
         var start=p.position();WildHunt.GODLY.get().onPressed(i,p,0,2);
+        h.assertTrue(energy.getMagicule()==97_600 && i.getOrCreateTag().getDouble("anchor_magicules")==97_600,"Snapshot refunded or preceded the initial cast payment");
         h.assertTrue(i.getOrCreateTag().contains("anchor_until"),"Causal checkpoint was not set");
-        i.setCoolDown(0,2);p.teleportTo(start.x+2,start.y,start.z);p.setHealth(Math.max(1,p.getHealth()-20));
-        double aura=TensuraStorages.getExistenceFrom(p).getMagicule();WildHunt.GODLY.get().onPressed(i,p,0,2);
+        i.setCoolDown(0,2);p.setPos(start.add(2,0,0));p.setHealth(Math.max(1,p.getHealth()-20));
+        energy.setAura(1);energy.setMagicule(0);
+        h.assertTrue(WildHunt.GODLY.get().getMagiculeCost(p,i,2)==0,"Pending Reversal displays a recast cost");
+        WildHunt.GODLY.get().onPressed(i,p,0,2);
         h.assertTrue(p.position().distanceTo(start)<.1,"Reversal did not return to safe anchor");
-        h.assertTrue(TensuraStorages.getExistenceFrom(p).getMagicule()<aura,"Reversal restored or did not pay energy");
+        h.assertTrue(energy.getAura()==100_000 && energy.getMagicule()==97_600,"Free return did not restore recorded reserves after the cast payment");
         h.assertTrue(i.getCoolDown(2)==25,"Reversal bypasses its cooldown");h.succeed();
     }
 
@@ -187,13 +195,13 @@ public final class MythsIntegrationTests {
     @GameTest(template="empty",timeoutTicks=100)
     public static void reversalRestoresRecordedSpiritualHealthAndRejectsBlockedReturns(GameTestHelper h) {
         var p=player(h);HunterData.learnReward(p,WildHunt.GODLY.get());var i=SkillAPI.getSkillsFrom(p).getSkill(WildHunt.GODLY.get()).orElseThrow();
-        var energy=TensuraStorages.getExistenceFrom(p);energy.setSpiritualHealth(500);
+        var energy=TensuraStorages.getExistenceFrom(p);energy.setSpiritualHealth(500);energy.setMagicule(100_000);
         WildHunt.GODLY.get().onPressed(i,p,0,2);var anchor=p.blockPosition();i.setCoolDown(0,2);p.setPos(p.position().add(3,0,0));energy.setSpiritualHealth(100);
         h.getLevel().setBlockAndUpdate(anchor,net.minecraft.world.level.block.Blocks.STONE.defaultBlockState());
         double aura=energy.getMagicule();WildHunt.GODLY.get().onPressed(i,p,0,2);
         h.assertTrue(energy.getMagicule()==aura && i.getOrCreateTag().contains("anchor_until"),"Blocked return charged energy or discarded a valid pending checkpoint");
         h.getLevel().setBlockAndUpdate(anchor,net.minecraft.world.level.block.Blocks.AIR.defaultBlockState());WildHunt.GODLY.get().onPressed(i,p,0,2);
-        h.assertTrue(energy.getSpiritualHealth()==500 && energy.getMagicule()==aura-2400,"Reversal failed to restore recorded SHP or refunded energy");h.succeed();
+        h.assertTrue(energy.getSpiritualHealth()==500 && energy.getMagicule()==aura,"Free Reversal failed to restore recorded SHP or charged for returning");h.succeed();
     }
     @GameTest(template="empty",timeoutTicks=100)
     public static void horizonBendsHostileProjectilesButPreservesFriendlyShots(GameTestHelper h) {
@@ -288,7 +296,83 @@ public final class MythsIntegrationTests {
         var center=p.position().add(0,1,0);var target=tank(h,center.add(18,0,0));
         ApexArts.point(i.getOrCreateTag(),"horizon",center);i.getOrCreateTag().putString("dimension",p.level().dimension().location().toString());i.getOrCreateTag().putLong("horizon_until",p.level().getGameTime()+200);
         WildHunt.GODLY.get().tickActive(i,p);
-        h.assertTrue(target.getDeltaMovement().x<0 && target.getHealth()==1024,"Outer Horizon failed to pull without damage");h.succeed();
+        h.assertTrue(target.getDeltaMovement().x<=-.39 && target.getHealth()==1024,"Outer Horizon failed to pull without damage");h.succeed();
+    }
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void reversalTimeoutAutomaticallyReturnsOnceAndHonorsCurrentCaps(GameTestHelper h) {
+        var p=tank(h,h.absolutePos(new net.minecraft.core.BlockPos(1,101,1)).getCenter());EnergyHelper.setBaseMaxEP(p,20_000_000);HunterData.learnReward(p,WildHunt.GODLY.get());var i=SkillAPI.getSkillsFrom(p).getSkill(WildHunt.GODLY.get()).orElseThrow();
+        var energy=TensuraStorages.getExistenceFrom(p);energy.setAura(1_000_000);energy.setMagicule(1_000_000);
+        var start=p.position();WildHunt.GODLY.get().onPressed(i,p,0,2);p.setPos(start.add(3,0,0));energy.setAura(0);energy.setMagicule(0);
+        EnergyHelper.setMaxAura(p,50_000);EnergyHelper.setMaxMagicule(p,40_000);
+        i.getOrCreateTag().putLong("anchor_until",h.getLevel().getGameTime());WildHunt.GODLY.get().tickActive(i,p);
+        h.assertTrue(p.position().distanceTo(start)<.1 && energy.getAura()==EnergyHelper.getMaxAura(p) && energy.getMagicule()==EnergyHelper.getMaxMagicule(p),"Automatic return: position="+p.position()+" expected="+start+" aura="+energy.getAura()+"/"+EnergyHelper.getMaxAura(p)+" MP="+energy.getMagicule()+"/"+EnergyHelper.getMaxMagicule(p));
+        h.assertTrue(!i.getOrCreateTag().contains("anchor_until") && i.getCoolDown(2)==25,"Timeout failed to consume the checkpoint and start cooldown");
+        energy.setMagicule(1);WildHunt.GODLY.get().tickActive(i,p);h.assertTrue(energy.getMagicule()==1,"Timed-out Reversal recast more than once");h.succeed();
+    }
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void blockedTimeoutRestoresInPlaceAndLifecycleCannotRefund(GameTestHelper h) {
+        var p=player(h);HunterData.learnReward(p,WildHunt.GODLY.get());var i=SkillAPI.getSkillsFrom(p).getSkill(WildHunt.GODLY.get()).orElseThrow();
+        var energy=TensuraStorages.getExistenceFrom(p);energy.setMagicule(100_000);WildHunt.GODLY.get().onPressed(i,p,0,2);
+        var anchor=p.blockPosition();p.setPos(p.position().add(3,0,0));var before=p.position();energy.setMagicule(0);
+        h.getLevel().setBlockAndUpdate(anchor,net.minecraft.world.level.block.Blocks.STONE.defaultBlockState());i.getOrCreateTag().putLong("anchor_until",h.getLevel().getGameTime());
+        WildHunt.GODLY.get().tickActive(i,p);
+        h.assertTrue(p.position().equals(before) && energy.getMagicule()==97_600 && !i.getOrCreateTag().contains("anchor_until"),"Blocked timeout stranded a checkpoint or teleported into a wall");
+        i.setCoolDown(0,2);WildHunt.GODLY.get().onPressed(i,p,0,2);energy.setMagicule(0);GodlySkill.clearTransient(p);WildHunt.GODLY.get().tickActive(i,p);
+        h.assertTrue(energy.getMagicule()==0 && !i.getOrCreateTag().contains("anchor_until"),"Lifecycle cleanup rewound resources across a dimension/relog boundary");h.succeed();
+    }
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void auraDegradesStatusImmunityAndThirdPartyDamageWithoutErasingDefenses(GameTestHelper h) {
+        var p=player(h);p.setPos(p.position().add(0,120,0));HunterData.learnReward(p,WildHunt.GODLY.get());var i=SkillAPI.getSkillsFrom(p).getSkill(WildHunt.GODLY.get()).orElseThrow();
+        var target=h.spawnWithNoFreeWill(EntityType.COW,2,1,2);target.setPos(p.position().add(2,0,0));target.setNoGravity(true);
+        var poison=io.github.manasmods.tensura.registry.skill.ResistanceSkills.POISON_NULLIFICATION.get();var spatial=io.github.manasmods.tensura.registry.skill.ResistanceSkills.SPATIAL_ATTACK_NULLIFICATION.get();
+        HunterData.learnReward(target,poison);HunterData.learnReward(target,spatial);var pi=SkillAPI.getSkillsFrom(target).getSkill(poison).orElseThrow();var si=SkillAPI.getSkillsFrom(target).getSkill(spatial).orElseThrow();pi.setToggled(true);si.setToggled(true);
+        var effect=new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.POISON,200);
+        h.assertTrue(!target.addEffect(effect),"Native poison nullification did not initially reject the effect");
+        WildHunt.GODLY.get().onToggleOn(i,p);
+        h.runAtTickTime(h.getTick()+(5-h.getLevel().getGameTime()%5)%5,()->{
+            WildHunt.GODLY.get().tickActive(i,p);
+            h.assertTrue(GodlySkill.degraded(target) && target.addEffect(new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.POISON,200)),"Degradation still applies only to Aion attacks, not status immunity");
+            var attacker=player(h);var source=WildHunt.GODLY.get().createSource(i,attacker,io.github.manasmods.tensura.damage.TensuraDamageTypes.SPACE_ELEMENTAL,0);
+            h.assertTrue(spatial.onBeingDamaged(si,target,source,10),"Degraded enemy still nullifies another attacker's damage");
+            h.assertTrue(pi.toNBT().getBoolean("Toggled") && si.toNBT().getBoolean("Toggled"),"Suppression changed the saved native toggle flags");
+            target.removeEffect(net.minecraft.world.effect.MobEffects.POISON);WildHunt.GODLY.get().onToggleOff(i,p);
+            h.runAfterDelay(11,()->{h.assertTrue(pi.isToggled() && si.isToggled() && !target.addEffect(new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.POISON,200)),"Defenses were not restored after the aura ended");h.succeed();});
+        });
+    }
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void projectileDilationScalesByProximityWithoutCompoundingOrSlowingOwnShots(GameTestHelper h) {
+        var p=player(h);p.setPos(p.position().add(0,140,0));HunterData.learnReward(p,WildHunt.GODLY.get());var i=SkillAPI.getSkillsFrom(p).getSkill(WildHunt.GODLY.get()).orElseThrow();WildHunt.GODLY.get().onToggleOn(i,p);
+        var near=new net.minecraft.world.entity.projectile.Snowball(EntityType.SNOWBALL,h.getLevel());near.setPos(p.position().add(2,0,0));near.setDeltaMovement(1,0,0);h.getLevel().addFreshEntity(near);
+        var far=new net.minecraft.world.entity.projectile.Snowball(EntityType.SNOWBALL,h.getLevel());far.setPos(p.position().add(12,0,0));far.setDeltaMovement(1,0,0);h.getLevel().addFreshEntity(far);
+        var own=new net.minecraft.world.entity.projectile.Snowball(h.getLevel(),p);own.setPos(near.position());own.setDeltaMovement(1,0,0);h.getLevel().addFreshEntity(own);
+        WildHunt.GODLY.get().tickActive(i,p);GodlySkill.slowProjectile(near);GodlySkill.slowProjectile(far);GodlySkill.slowProjectile(own);
+        double speed=near.getDeltaMovement().x;
+        h.assertTrue(speed<far.getDeltaMovement().x && far.getDeltaMovement().x<1 && own.getDeltaMovement().x==1,"Projectile slow does not respect proximity or ownership");
+        GodlySkill.slowProjectile(near);h.assertTrue(near.getDeltaMovement().x==speed,"Repeated aura updates compound the projectile slow");
+        near.getPersistentData().putLong("myths_dilation_until",0);GodlySkill.slowProjectile(near);h.assertTrue(Math.abs(near.getDeltaMovement().x-1)<.00001,"Projectile never recovered its velocity outside the aura");h.succeed();
+    }
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void convergenceGateDependsOnNativeLineageAndCompletedGrowthNotCurrentEP(GameTestHelper h) {
+        var p=player(h);DuoSystem.select(p,RaceFamily.SLIME);evolveSecondary(p,TensuraRaces.DEMON_SLIME.getId());evolveSecondary(p,TensuraRaces.GOD_SLIME.getId());
+        double gate=DuoSystem.convergenceEP(p);h.assertTrue(gate==31_250_000,"Expected 125 percent of the 25M last evolution gate, got "+gate);
+        EnergyHelper.setBaseMaxEP(p,100_000_000);h.assertTrue(DuoSystem.convergenceEP(p)==gate,"Earning EP moved the awakening goalposts");
+        DuoSystem.data(p).remove("secondary_last_evolution_ep");h.assertTrue(DuoSystem.convergenceEP(p)==gate,"Existing Duo saves lost their completed evolution gate");
+        var config=io.github.manasmods.manascore.config.ConfigRegistry.getConfig(io.github.manasmods.tensura.config.race.SlimeConfig.class).GodSlime;
+        double original=config.epRequirement;
+        try {config.epRequirement=40_000_000;h.assertTrue(DuoSystem.convergenceEP(p)==50_000_000,"Higher native race evolution requirements did not raise awakening EP");}
+        finally {config.epRequirement=original;}
+        h.succeed();
+    }
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void armedReversalSurvivesTemporarySuppressionAndReturnsWhileUnfunded(GameTestHelper h) {
+        var p=tank(h,h.absolutePos(new net.minecraft.core.BlockPos(1,141,1)).getCenter());EnergyHelper.setBaseMaxEP(p,20_000_000);
+        HunterData.learnReward(p,WildHunt.GODLY.get());var i=SkillAPI.getSkillsFrom(p).getSkill(WildHunt.GODLY.get()).orElseThrow();var energy=TensuraStorages.getExistenceFrom(p);energy.setAura(100_000);energy.setMagicule(100_000);
+        var start=p.position();WildHunt.GODLY.get().onPressed(i,p,0,2);p.setPos(start.add(3,0,0));energy.setMagicule(0);
+        p.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MOVEMENT_SPEED).addOrUpdateTransientModifier(new net.minecraft.world.entity.ai.attributes.AttributeModifier(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("tensura","sleep"),-1,net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
+        h.assertTrue(!i.getSkill().canInteractSkill(i,p),"Fixture did not suppress native skill interaction");
+        WildHunt.GODLY.get().tickActive(i,p);h.assertTrue(i.getOrCreateTag().contains("anchor_until"),"Temporary suppression canceled a previously armed checkpoint");
+        i.getOrCreateTag().putLong("anchor_until",h.getLevel().getGameTime());WildHunt.GODLY.get().tickActive(i,p);
+        h.assertTrue(p.position().distanceTo(start)<.1 && energy.getMagicule()==97_600 && !i.getOrCreateTag().contains("anchor_until") && i.getCoolDown(2)==25,"Unfunded, suppressed checkpoint failed to return automatically");h.succeed();
     }
     private static String evolveSecondary(net.minecraft.server.level.ServerPlayer p,net.minecraft.resources.ResourceLocation id) {
         EnergyHelper.setBaseMaxEP(p,DuoSystem.secondaryEvolutionEP(p));return DuoSystem.evolve(p,id);

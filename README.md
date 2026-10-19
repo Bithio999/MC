@@ -5,16 +5,16 @@ An expanded progression and skills addon for **Tensura 2.0.1.3**, **Minecraft
 
 ## Download
 
-The built addon is included at [releases/tensura-myths-0.10.0.jar](releases/tensura-myths-0.10.0.jar).
+The built addon is included at [releases/tensura-myths-0.11.0.jar](releases/tensura-myths-0.11.0.jar).
 Install it alongside Tensura and its required dependencies on both client and server.
 
 ## Godly skills and Duo Races
 
-**[Aion, God of Causality](wiki/pages/Aion.md)** introduces the **Godly** tier: a separate category in Tensura’s skill menu that retains native Ultimate classification. Master any one of this addon’s four Ultimates, become a True Hero or True Demon Lord, and reach **12M base EP** to ascend through **Skills → Godly → Ascension**. Aion has four spatial/causal arts and a magicule-powered barrier, resistance-degrading attacks and proximity-slowing passive. Ascension replaces the chosen Ultimate and preserves presets and cooldowns.
+**[Aion, God of Causality](wiki/pages/Aion.md)** introduces the **Godly** tier: a separate category in Tensura’s skill menu that retains native Ultimate classification. Master any one of this addon’s four Ultimates, become a True Hero or True Demon Lord, and reach **12M base EP** to ascend through **Skills → Godly → Ascension**. Aion has four spatial/causal arts and a magicule-powered barrier, resistance/nullification suppression and a proximity aura that slows enemies and hostile projectiles. Ascension replaces the chosen Ultimate and preserves presets and cooldowns.
 
 **[Duo Races](wiki/pages/Duo-Races.md)** unlock at a final primary evolution, True Hero/True Demon Lord and **5M base EP**. Choose a permanent secondary ancestry from the other native race families and evolve it through native requirements plus 2.5M additional base EP per stage. Use the **right-side Secondary Race and Convergent Awakening tabs** in Tensura’s menu. Its half-strength attributes, learned intrinsic skills and racial reactions complement the primary body. Assign **Secondary racial ability** in Controls to use its native press/hold/release action.
 
-After **both races reach their final evolution**, **[Convergent Awakening](wiki/pages/Convergent-Awakening.md)** unlocks at **10M base EP**. All **105 combinations** among the 15 native ancestral families have a named, registered fusion race, original icon and distinct EP growth profile. The awakening grants a one-time 25% increase to both base energy pools. Thresholds and the bonus are server configurable.
+After **both races reach their final evolution**, **[Convergent Awakening](wiki/pages/Convergent-Awakening.md)** requires **125% of the highest preceding evolution EP gate, with a 10M base EP minimum**. All **105 combinations** among the 15 native ancestral families have a named, registered fusion race, original icon and distinct EP growth profile. The awakening grants a one-time 25% increase to both base energy pools. Thresholds and the bonus are server configurable.
 
 A secondary grants **+10% EP gain** while preserving the primary race’s aura/magicule split. Default Human/Hunter awards of 6 aura / 3 magicules become **6.6 aura / 3.3 magicules**. The awakened race keeps its unique growth profile and inherits the same 10% bonus. Status displays independent lineages as **Primary Race/Secondary Race**.
 
@@ -91,7 +91,7 @@ Read the [Tensura Myths Wiki](wiki/README.md) for skill pages, exact costs,
 combos, race infoboxes, commands and mechanics. The [GitHub Wiki edition](wiki/github/Home.md)
 includes the prepared Home, articles, sidebar, and footer. See [publishing instructions](docs/WIKI.md)
 for syncing these to the separate [GitHub Wiki](https://github.com/Bithio999/MC/wiki).
-**[Download the styled offline wiki](releases/tensura-myths-wiki-0.10.0.zip)**, extract
+**[Download the styled offline wiki](releases/tensura-myths-wiki-0.11.0.zip)**, extract
 the ZIP, and open `index.html`. It includes a wiki-style portal, mobile navigation,
 infoboxes, and offline search. GitHub shows HTML source; download the edition to
 see its styling. It is also included at `wiki/index.html` in the repository. The
@@ -122,11 +122,13 @@ defined in Java.
 
 ### Updating from an earlier release
 
-Replace the old addon jar with 0.10.0; do not install both. Learned skills,
+Replace the old addon jar with 0.11.0; do not install both. Learned skills,
 mastery, distinct boss history and native passive toggle state are retained.
-Existing secondary lineages retain their stage; their next evolution starts a fresh
-2.5M EP growth interval from the first progression check after upgrading.
-Aion now consumes magicules, including passive upkeep.
+Secondary lineages retain their recorded selection EP and stage. Saves predating
+0.10.0 initialize the fresh-growth origin at the first progression check.
+Aion uses magicules, including passive upkeep. Causal Reversal records aura and magicules
+**after** its initial cast payment, returns for free, and automatically returns at timeout.
+Convergent Awakening now uses a lineage-dependent EP gate; already fused races remain fused.
 Existing hunters get the stronger HP/SHP caps on login without free healing.
 Already-enabled water/ice passives receive their initial native HUD barrier.
 Intact barriers survive relogs; broken barriers recover automatically after ten
@@ -165,9 +167,9 @@ vertical dashes, through-wall ricochets, momentum preservation, native shield
 breakage and timed recovery, HP/SHP evolution, aura regeneration and native NPC loadouts.
 `./gradlew runClient` starts a development client on a machine with graphics.
 
-The [0.10.0 validation report](docs/VALIDATION-0.10.0.md) covers the Godly/Duo additions, all 58 native GameTests and the actual client checks.
+The [0.11.0 validation report](docs/VALIDATION-0.11.0.md) covers the Godly/Duo additions, all 64 native GameTests and the actual client checks.
 
-Install `build/libs/tensura-myths-0.10.0.jar` on **both client and server**,
+Install `build/libs/tensura-myths-0.11.0.jar` on **both client and server**,
 alongside Tensura and its required dependencies. The addon jar is not a complete
 modpack. Additional development dependency versions are in `runtime-mods.lock.json`.
 

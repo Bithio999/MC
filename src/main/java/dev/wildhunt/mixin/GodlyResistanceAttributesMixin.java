@@ -13,6 +13,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class GodlyResistanceAttributesMixin {
     @Inject(method="applyResistanceAttributes",at=@At("HEAD"),cancellable=true,remap=false)
     private static void myths$degrade(LivingEntity target,DamageSource source,Changeable<Float> amount,CallbackInfo ci) {
-        if(GodlySkill.passiveActive(source.getEntity()))ci.cancel();
+        if(GodlySkill.passiveActive(source.getEntity()) || GodlySkill.degraded(target))ci.cancel();
     }
 }

@@ -6,9 +6,19 @@
 
 ## Obtaining
 
-Open Tensura’s menu and select the **Convergent Awakening tab on the right**, below the Secondary Race tab. Both lineages must be at a final stage with no further native evolution. You must also be a **True Hero or True Demon Lord** and have at least **10,000,000 base EP**. A base or partially evolved secondary cannot awaken.
+Open Tensura’s menu and select the **Convergent Awakening tab on the right**, below the Secondary Race tab. Both lineages must be at a final stage with no further native evolution. You must also be a **True Hero or True Demon Lord** and meet the **lineage-dependent base EP requirement** shown in that tab. A base or partially evolved secondary cannot awaken.
 
 The primary becomes the actual fused native race. Its predecessor state and the secondary’s native state are saved for inherited reactions and ticks. The fusion has no next evolution. The independent secondary racial key stops operating; the normal racial key uses **Concordance Pulse** instead.
+
+## EP requirement
+
+By default, the requirement is **125% of the highest EP gate leading up to the awakening**, with a **10,000,000 base EP minimum**. This includes native EP requirements along both current lineage paths and the added cumulative EP gate of the last completed secondary evolution. It uses required EP, not the amount you happened to have when evolving; earning more EP does not move the goalposts.
+
+`Required base EP = max(10,000,000, ceil(highest preceding evolution EP gate × 1.25))`
+
+For example, selecting Slime at 20M EP and completing its two evolutions at the added 22.5M and 25M gates gives a **31.25M EP awakening requirement**, provided neither native lineage has a higher gate. A native evolution requiring 40M raises awakening to **50M** instead. Both races must still reach their final evolution, and the true awakening requirement remains.
+
+Server owners can configure the minimum with `convergenceEP` and the multiplier with `convergenceEvolutionEPFactor`. The menu and server checks use the same calculated threshold. Previously completed Convergent Awakenings remain complete.
 
 ## Awakening rewards
 

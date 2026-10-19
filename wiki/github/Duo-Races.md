@@ -58,7 +58,7 @@ The native Status menu shows the current independent lineages as **Primary Race/
 
 ## Awakening
 
-Once **both** races finish evolving, follow [Convergent Awakening](https://github.com/Bithio999/MC/wiki/Convergent-Awakening). The new fused race uses its own EP profile and retains the 10% growth bonus.
+Once **both** races finish evolving, follow [Convergent Awakening](https://github.com/Bithio999/MC/wiki/Convergent-Awakening). The [awakening EP requirement](https://github.com/Bithio999/MC/wiki/Convergent-Awakening#ep-requirement) scales with the preceding native and secondary evolution gates. The new fused race uses its own EP profile and retains the 10% growth bonus.
 
 ---
 

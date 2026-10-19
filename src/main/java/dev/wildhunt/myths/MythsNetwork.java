@@ -55,7 +55,7 @@ public final class MythsNetwork {
         tag.putString("primary",DuoSystem.primary(p).map(r->r.getDisplayName().getString()).orElse("No race"));
         tag.putString("secondary",DuoSystem.secondary(p).map(r->r.getDisplayName().getString()).orElse("Not selected"));
         tag.putBoolean("converged",DuoSystem.converged(p));tag.putBoolean("awakened",DuoSystem.awakened(p));
-        tag.putDouble("ep",EnergyHelper.getBaseMaxEP(p));tag.putDouble("secondary_ep",MythsConfig.SECONDARY_EP.get());tag.putDouble("convergence_ep",MythsConfig.CONVERGENCE_EP.get());tag.putDouble("godly_ep",MythsConfig.GODLY_EP.get());
+        tag.putDouble("ep",EnergyHelper.getBaseMaxEP(p));tag.putDouble("secondary_ep",MythsConfig.SECONDARY_EP.get());tag.putDouble("convergence_ep",DuoSystem.convergenceEP(p));tag.putDouble("godly_ep",MythsConfig.GODLY_EP.get());
         tag.putBoolean("primary_final",DuoSystem.primary(p).map(r->DuoSystem.terminal(r,p)).orElse(false));
         tag.putBoolean("secondary_final",DuoSystem.secondary(p).map(r->DuoSystem.terminal(r,p)).orElse(false));
         var alignment=io.github.manasmods.tensura.storage.TensuraStorages.getExistenceFrom(p).getAlignment();

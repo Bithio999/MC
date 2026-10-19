@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.11.0
+
+- Render the caster’s Worldline Sever directly from local aim every frame; update server aim every held tick. Damage remains server-authoritative.
+- Increase Event Horizon’s living-target pull by 25%.
+- Extend Unbroken Continuum to suppress nearby enemy Resistance/Nullification defenses against all damage and status sources without modifying their saved toggles. Slow hostile/unowned projectiles by proximity without compounding the speed reduction.
+- Make Causal Reversal’s return free and automatic at timeout. Snapshot aura/magicules after the cast payment, restore within current caps, and recover in place if the timed-out anchor is blocked. Armed checkpoints survive temporary suppression; lifecycle cancellation never refunds resources.
+- Derive Convergent Awakening EP from 125% of the highest preceding native/secondary evolution EP gate, retaining a configurable 10M minimum.
+- Move the native selected-tab frame to the active Secondary Race/Awakening tab.
+- Update gameplay reference, all 105 fusion requirements and offline/GitHub Wiki exports.
+
 ## Wiki organization for 0.10.0
 
 - Reorganize 137 articles into shared Skills, Races, Otherworlders and Reference navigation, with skill-tier breadcrumbs and ancestry-based race links.

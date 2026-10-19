@@ -73,7 +73,13 @@ public final class MythsEvolutionScreen extends EvolutionScreen {
     }
     private static String yes(boolean b){return b?"Yes":"No";}
     @Override public void renderBackground(GuiGraphics g,int mx,int my,float partial) {
-        g.blit(BACKGROUND,guiLeft,guiTop,0,0,imageWidth,imageHeight);
+        // Exclude the baked Status selection first; transparent pixels cannot erase an already drawn tab.
+        g.blit(BACKGROUND,guiLeft,guiTop,0,0,imageWidth,30);
+        g.blit(BACKGROUND,guiLeft,guiTop+30,0,30,230,24);
+        g.blit(BACKGROUND,guiLeft,guiTop+54,0,54,imageWidth,imageHeight-54);
+        g.blit(BACKGROUND,guiLeft+230,guiTop+30,230,56,26,24);
+        // Use the exact native connected frame, including the two columns of the panel's bevel.
+        g.blit(BACKGROUND,guiLeft+230,guiTop+30+((convergence?6:5)-4)*26,230,30,26,24);
         g.drawString(font,Component.literal(convergence?"Awakening":"Secondary Race"),guiLeft+105,guiTop+10,0xffffff);
         ScreenHelper.renderTabIcon(g,this,convergence?6:5,guiLeft,guiTop,mx,my);
         float size=player.getScale()>1?1/player.getScale():1;

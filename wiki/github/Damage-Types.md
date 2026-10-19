@@ -62,7 +62,7 @@ Black Flame and Agni’s ignition/pool and caldera hits can apply this status. O
 
 ## Non-damaging abilities
 
-Causal Reversal restores position/HP/SHP. Hunter’s Recovery, Apex Renewal and Sovereign Rebirth heal. Concordance Pulse heals and pushes enemies without a damage call. Most defensive passives add attributes or barriers; Water Veil is the exception with its typed retaliation. Aion’s slowing aura and resistance degradation do not themselves create periodic damage.
+Causal Reversal restores position, HP, SHP, aura and magicules. Hunter’s Recovery, Apex Renewal and Sovereign Rebirth heal. Concordance Pulse heals and pushes enemies without a damage call. Most defensive passives add attributes or barriers; Water Veil is the exception with its typed retaliation. Aion’s slowing aura and resistance degradation do not themselves create periodic damage.
 
 ## Armor, barriers and resistance
 

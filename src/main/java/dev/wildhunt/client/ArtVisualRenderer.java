@@ -25,13 +25,27 @@ public final class ArtVisualRenderer extends EntityRenderer<ArtVisualEntity> {
         event.registerEntityRenderer(ArtVisualEntity.TYPE.get(), ArtVisualRenderer::new);
     }
     @Override public ResourceLocation getTextureLocation(ArtVisualEntity entity) { return ICE; }
+    @Override public boolean shouldRender(ArtVisualEntity entity,net.minecraft.client.renderer.culling.Frustum frustum,double x,double y,double z) {
+        return entity.kind()==ArtVisualEntity.CAUSAL_RAY && entity.ownedBy(net.minecraft.client.Minecraft.getInstance().player) || super.shouldRender(entity,frustum,x,y,z);
+    }
     @Override public void render(ArtVisualEntity entity, float yaw, float partial, PoseStack poses, MultiBufferSource buffers, int light) {
         float age = entity.tickCount + partial;
         if (entity.kind() == ArtVisualEntity.LASH) {
             double extent = Math.clamp(age / 4, 0, 1) * Math.clamp((entity.lifetime() - age) / 6, 0, 1);
             tentacle(poses.last(), buffers, entity.end(), extent, age, light);
         } else if(entity.kind()>=ArtVisualEntity.CAUSAL_DOMAIN || entity.kind()==ArtVisualEntity.CAUSAL_RAY) {
-            GodlyGeometry.render(poses.last(),buffers.getBuffer(RenderType.debugQuads()),entity.kind(),entity.end(),age,entity.lifetime());
+            Vec3 vector=entity.end();poses.pushPose();
+            var player=net.minecraft.client.Minecraft.getInstance().player;
+            if(entity.kind()==ArtVisualEntity.CAUSAL_RAY && entity.ownedBy(player)) {
+                // Predict only the local mesh. The server still owns hit detection, costs and channel duration.
+                Vec3 eye=player.getEyePosition(partial),facing=player.getViewVector(1),end=eye.add(facing.scale(80));
+                var hit=player.level().clip(new net.minecraft.world.level.ClipContext(eye,end,net.minecraft.world.level.ClipContext.Block.COLLIDER,net.minecraft.world.level.ClipContext.Fluid.NONE,player));
+                if(hit.getType()!=net.minecraft.world.phys.HitResult.Type.MISS)end=hit.getLocation();
+                Vec3 side=facing.cross(new Vec3(0,1,0)).normalize();if(side.lengthSqr()<.01)side=new Vec3(1,0,0);
+                Vec3 start=eye.add(facing.scale(Math.min(.9,eye.distanceTo(end)*.3))).add(side.scale(.35)).add(0,-.25,0);
+                Vec3 offset=start.subtract(entity.getPosition(partial));poses.translate(offset.x,offset.y,offset.z);vector=end.subtract(start);
+            }
+            GodlyGeometry.render(poses.last(),buffers.getBuffer(RenderType.debugQuads()),entity.kind(),vector,age,entity.lifetime());poses.popPose();
         } else if (entity.kind() == ArtVisualEntity.CAUSAL_SPHERE) {
             causal(poses.last(), buffers.getBuffer(RenderType.debugQuads()), entity.end(), age, entity.lifetime(), entity.kind() == ArtVisualEntity.CAUSAL_RAY);
         } else if (entity.kind() == ArtVisualEntity.TIDAL_WAVE) {

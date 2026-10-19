@@ -25,7 +25,7 @@ public final class GodlySkill extends Skill {
     @Override public MutableComponent getName() { return Component.translatableWithFallback("wildhunt.skill.aion","Aion, God of Causality"); }
     @Override public MutableComponent getColoredName() { return getName().withColor(0xE8C56F); }
     @Override public ResourceLocation getSkillIcon() { return WildHunt.id("textures/skill/aion.png"); }
-    @Override public MutableComponent getSkillDescription() { return Component.literal("[Godly] Hold Worldline Sever to sweep an eight-target spatial beam along your aim. Event Horizon pulls from 24 blocks into a 10-block damaging core. Causal Reversal restores recorded HP, SHP and position. Genesis Verdict collapses a Horizon for an empowered finale. Unbroken Continuum grants recovering barriers, resistance/nullification degradation, 35% bonus damage against non-Godly foes, and a proximity slowing aura. Magicules only; mastery strengthens damage."); }
+    @Override public MutableComponent getSkillDescription() { return Component.literal("[Godly] Hold Worldline Sever to sweep an eight-target spatial beam along your aim. Event Horizon pulls from 24 blocks into a 10-block damaging core. Causal Reversal restores recorded HP, SHP, aura, magicules and position; the free return triggers automatically after 20 seconds. Genesis Verdict collapses a Horizon for an empowered finale. Unbroken Continuum grants recovering barriers, resistance/nullification degradation, 35% bonus damage against non-Godly foes, and a proximity slowing aura. Magicules only; mastery strengthens damage."); }
     @Override public int getMaxMastery() { return 50_000; }
     @Override public double getDefaultAcquiringMagiculeCost() { return 0; }
     @Override public int getModes(ManasSkillInstance i) { return 4; }
@@ -33,19 +33,19 @@ public final class GodlySkill extends Skill {
     @Override public Component getModeName(ManasSkillInstance i,int mode) { return Component.literal(switch(mode) {case 0->"Worldline Sever";case 1->"Event Horizon";case 2->"Causal Reversal";default->"Genesis Verdict";}); }
     @Override public int nextMode(LivingEntity e,ManasSkillInstance i,int mode,boolean reverse) { return Math.floorMod(mode+(reverse?-1:1),4); }
     @Override public double getAuraCost(LivingEntity e,ManasSkillInstance i,int mode) { return 0; }
-    @Override public double getMagiculeCost(LivingEntity e,ManasSkillInstance i,int mode) { return switch(mode) {case 0->800;case 1->6000;case 2->2400;default->15000;}; }
+    @Override public double getMagiculeCost(LivingEntity e,ManasSkillInstance i,int mode) { return switch(mode) {case 0->800;case 1->6000;case 2->i.getOrCreateTag().contains("anchor_until")?0:2400;default->15000;}; }
     @Override public boolean canBeToggled(ManasSkillInstance i,LivingEntity e) { return true; }
     @Override public boolean canTick(ManasSkillInstance i,LivingEntity e) { return false; }
     @Override public void onPressed(ManasSkillInstance i,LivingEntity caster,int slot,int mode) {
         if(!(caster.level() instanceof ServerLevel level) || mode<0 || mode>3 || i.onCoolDown(mode) || !canInteractSkill(i,caster) || !canActivateSkill(i,caster,mode))return;
         var tag=i.getOrCreateTag(); long now=level.getGameTime();
         if(mode==0 && tag.contains("channel_until"))return;
-        boolean returning=mode==2 && tag.getLong("anchor_until")>now;
+        boolean returning=mode==2 && tag.contains("anchor_until");
         Vec3 anchor=ApexArts.point(tag,"anchor");
         if(returning && (!sameDimension(i,caster) || !level.noCollision(caster,caster.getBoundingBox().move(anchor.subtract(caster.position()))) || !level.getWorldBorder().isWithinBounds(net.minecraft.core.BlockPos.containing(anchor)))) {
             message(caster,"Your recorded position is no longer safe."); return;
         }
-        if(EnergyHelper.isOutOfEnergy(caster,i,mode))return;
+        if(!returning && EnergyHelper.isOutOfEnergy(caster,i,mode))return;
         int cooldown;
         switch(mode) {
             case 0 -> {
@@ -61,15 +61,12 @@ public final class GodlySkill extends Skill {
             }
             case 2 -> {
                 if(returning) {
-                    Vec3 before=caster.position(); caster.teleportTo(anchor.x,anchor.y,anchor.z);
-                    caster.setDeltaMovement(Vec3.ZERO); caster.hurtMarked=true;
-                    caster.heal(Math.max(0,Math.min(caster.getMaxHealth(),tag.getFloat("anchor_hp"))-caster.getHealth()));
-                    var existence=TensuraStorages.getExistenceFrom(caster);
-                    existence.setSpiritualHealth(Math.max(existence.getSpiritualHealth(),Math.min(caster.getAttributeValue(TensuraAttributes.MAX_SPIRITUAL_HEALTH),tag.getDouble("anchor_shp"))));existence.markDirty();
-                    tag.remove("anchor_until");removeVisual(level,tag,"anchor_visual");GodlyVisuals.impact(level,before.add(0,1,0),3);GodlyVisuals.impact(level,anchor.add(0,1,0),3);
-                    GodlyVisuals.circle(level,caster,anchor.add(0,.1,0),3,30,MagicCircleVariant.RECOVERY);cooldown=25;
+                    reverse(level,i,caster,false);cooldown=25;
                 } else {
                     ApexArts.point(tag,"anchor",caster.position()); tag.putFloat("anchor_hp",caster.getHealth()); tag.putLong("anchor_until",now+400);tag.putDouble("anchor_shp",TensuraStorages.getExistenceFrom(caster).getSpiritualHealth());
+                    // Snapshot after the initial cast payment: returning never refunds the cast itself.
+                    var energy=TensuraStorages.getExistenceFrom(caster);
+                    tag.putDouble("anchor_aura",energy.getAura());tag.putDouble("anchor_magicules",energy.getMagicule());
                     tag.putString("dimension",level.dimension().location().toString());
                     tag.putUUID("anchor_visual",ArtVisualEntity.spawn(level,ArtVisualEntity.CAUSAL_ANCHOR,caster.position().add(0,.1,0),new Vec3(2.5,0,0),400).getUUID());cooldown=1;
                 }
@@ -97,7 +94,7 @@ public final class GodlySkill extends Skill {
         tag.putLong("channel_heartbeat",now);
         boolean pulse=now>=tag.getLong("channel_next");
         if(pulse && EnergyHelper.isOutOfEnergy(e,i,0,.5f)){stopChannel(i,e);return false;}
-        if(pulse || now%2==0)updateRay(level,i,e,pulse);
+        updateRay(level,i,e,pulse);
         if(pulse)tag.putLong("channel_next",now+10);
         i.markDirty();return true;
     }
@@ -115,7 +112,10 @@ public final class GodlySkill extends Skill {
         if(side.lengthSqr()<.01)side=new Vec3(1,0,0);
         Vec3 visualFrom=from.add(facing.scale(Math.min(.9,from.distanceTo(end)*.3))).add(side.scale(.35)).add(0,-.25,0);
         if(tag.hasUUID("channel_visual") && level.getEntity(tag.getUUID("channel_visual")) instanceof ArtVisualEntity visual)visual.updateVector(visualFrom,end.subtract(visualFrom));
-        else tag.putUUID("channel_visual",ArtVisualEntity.spawn(level,ArtVisualEntity.CAUSAL_RAY,visualFrom,end.subtract(visualFrom),120).getUUID());
+        else {
+            var visual=ArtVisualEntity.spawn(level,ArtVisualEntity.CAUSAL_RAY,visualFrom,end.subtract(visualFrom),120);
+            visual.setCaster(caster);tag.putUUID("channel_visual",visual.getUUID());
+        }
         if(!damage)return;
         var targets=level.getEntitiesOfClass(LivingEntity.class,new AABB(from,end).inflate(2),e->HunterData.canHarm(caster,e) && e.getBoundingBox().inflate(1.25).clip(from,end).isPresent());
         targets.sort(java.util.Comparator.comparingDouble(e->e.distanceToSqr(caster)));
@@ -133,7 +133,7 @@ public final class GodlySkill extends Skill {
     private static void slowNearby(ServerLevel level,LivingEntity caster) {
         for(var target:ApexArts.enemies(level,caster,caster.position(),16)) {
             double strength=.15+.65*(1-Math.clamp(target.distanceTo(caster)/16d,0,1));
-            var d=HunterData.of(target);var movement=target.getAttribute(Attributes.MOVEMENT_SPEED);if(movement==null)continue;
+            var d=HunterData.of(target);d.putLong("aion_degraded_until",level.getGameTime()+10);var movement=target.getAttribute(Attributes.MOVEMENT_SPEED);if(movement==null)continue;
             // One non-stacking modifier; the strongest overlapping aura wins until its short lease expires.
             var old=movement.getModifier(SLOW);
             if(old==null || -old.amount()<=strength || level.getGameTime()>=d.getLong("aion_slow_until")) {
@@ -141,6 +141,53 @@ public final class GodlySkill extends Skill {
                 d.putLong("aion_slow_until",level.getGameTime()+10);
             }
         }
+    }
+    /** Suppression is a short aura lease; the learned toggle flags themselves are never changed. */
+    public static boolean degraded(LivingEntity target) {
+        return target.isAlive() && target.getPersistentData().getCompound("wildhunt").getLong("aion_degraded_until")>target.level().getGameTime();
+    }
+    private static double dilation(double distance) {return .15+.65*(1-Math.clamp(distance/16,0,1));}
+    private static void slowProjectiles(ServerLevel level,LivingEntity caster) {
+        for(var projectile:level.getEntitiesOfClass(Projectile.class,caster.getBoundingBox().inflate(16),p->p.distanceToSqr(caster)<256 && p.getOwner()!=caster && (!(p.getOwner() instanceof LivingEntity owner) || HunterData.canHarm(caster,owner)))) {
+            var data=projectile.getPersistentData();double factor=1-dilation(projectile.distanceTo(caster));
+            if(data.getLong("myths_dilation_tick")!=level.getGameTime() || factor<data.getDouble("myths_dilation_factor"))data.putDouble("myths_dilation_factor",factor);
+            data.putLong("myths_dilation_tick",level.getGameTime());
+            data.putLong("myths_dilation_until",level.getGameTime()+2);
+        }
+    }
+    /** Change the velocity by the ratio of factors, so staying inside an aura never compounds the slow. */
+    public static void slowProjectile(Projectile projectile) {
+        var data=projectile.getPersistentData();
+        double before=data.contains("myths_dilation_applied")?data.getDouble("myths_dilation_applied"):1;
+        double factor=data.getLong("myths_dilation_until")>projectile.level().getGameTime()?data.getDouble("myths_dilation_factor"):1;
+        factor=Math.clamp(factor,.2,1);before=Math.clamp(before,.2,1);
+        if(Math.abs(before-factor)>.00001){projectile.setDeltaMovement(projectile.getDeltaMovement().scale(factor/before));projectile.hurtMarked=true;}
+        if(factor<1)data.putDouble("myths_dilation_applied",factor);
+        else {data.remove("myths_dilation_applied");data.remove("myths_dilation_until");data.remove("myths_dilation_factor");}
+    }
+    public static void projectileTick(net.neoforged.neoforge.event.tick.EntityTickEvent.Pre event) {
+        if(!event.getEntity().level().isClientSide() && event.getEntity() instanceof Projectile p)slowProjectile(p);
+    }
+    private static boolean safeAnchor(ServerLevel level,LivingEntity caster,Vec3 anchor) {
+        return level.getWorldBorder().isWithinBounds(net.minecraft.core.BlockPos.containing(anchor)) && level.noCollision(caster,caster.getBoundingBox().move(anchor.subtract(caster.position())));
+    }
+    private void reverse(ServerLevel level,ManasSkillInstance i,LivingEntity caster,boolean automatic) {
+        var tag=i.getOrCreateTag();Vec3 before=caster.position(),anchor=ApexArts.point(tag,"anchor");
+        // Manual blocked returns remain pending. On timeout restore in place rather than teleporting into a wall.
+        boolean safe=sameDimension(i,caster) && safeAnchor(level,caster,anchor);
+        if(!safe && !automatic)return;
+        if(safe){caster.teleportTo(anchor.x,anchor.y,anchor.z);caster.setDeltaMovement(Vec3.ZERO);caster.hurtMarked=true;}
+        else message(caster,"Your recorded position is blocked. Causal Reversal restored your condition in place.");
+        caster.heal(Math.max(0,Math.min(caster.getMaxHealth(),tag.getFloat("anchor_hp"))-caster.getHealth()));
+        var energy=TensuraStorages.getExistenceFrom(caster);
+        energy.setSpiritualHealth(Math.max(energy.getSpiritualHealth(),Math.min(caster.getAttributeValue(TensuraAttributes.MAX_SPIRITUAL_HEALTH),tag.getDouble("anchor_shp"))));
+        // Old checkpoints have no resource snapshot; never invent a refund for those saves.
+        if(tag.contains("anchor_aura"))energy.setAura(Math.clamp(tag.getDouble("anchor_aura"),0,EnergyHelper.getMaxAura(caster)));
+        if(tag.contains("anchor_magicules"))energy.setMagicule(Math.clamp(tag.getDouble("anchor_magicules"),0,EnergyHelper.getMaxMagicule(caster)));
+        energy.markDirty();tag.remove("anchor_until");tag.remove("anchor_aura");tag.remove("anchor_magicules");removeVisual(level,tag,"anchor_visual");
+        GodlyVisuals.impact(level,before.add(0,1,0),3);GodlyVisuals.impact(level,caster.position().add(0,1,0),3);
+        GodlyVisuals.circle(level,caster,caster.position().add(0,.1,0),3,30,MagicCircleVariant.RECOVERY);
+        i.setCoolDown(25,2);i.markDirty();
     }
     public static void tickSlow(LivingEntity target) {
         var d=target.getPersistentData().getCompound("wildhunt");
@@ -179,8 +226,12 @@ public final class GodlySkill extends Skill {
         if(!(e.level() instanceof ServerLevel level))return false;
         var tag=i.getOrCreateTag(); long now=level.getGameTime();
         if(!e.isAlive() || !canInteractSkill(i,e) || !sameDimension(i,e)) {
-            stopChannel(i,e);tag.remove("horizon_until"); tag.remove("verdict_until");tag.remove("sever_echoes");clearVisuals(level,tag);
-            if(tag.contains("anchor_until")) {tag.remove("anchor_until");i.setCoolDown(Math.max(25,i.getCoolDown(2)),2);}
+            stopChannel(i,e);tag.remove("horizon_until");tag.remove("verdict_until");tag.remove("sever_echoes");
+            for(var key:java.util.List.of("channel_visual","horizon_visual","horizon_circle","verdict_visual","verdict_circle"))removeVisual(level,tag,key);
+            // A checkpoint is already committed, not a fresh activation. Temporary suppression cannot cancel its scheduled recovery.
+            if((!e.isAlive() || !sameDimension(i,e)) && tag.contains("anchor_until")) {
+                tag.remove("anchor_until");removeVisual(level,tag,"anchor_visual");i.setCoolDown(Math.max(25,i.getCoolDown(2)),2);
+            }
         }
         if(i.isToggled()) {
             if(!e.isAlive() || !canInteractSkill(i,e))onToggleOff(i,e);
@@ -190,13 +241,16 @@ public final class GodlySkill extends Skill {
             }
         }
         if(tag.contains("channel_until") && (now>=tag.getLong("channel_until") || now-tag.getLong("channel_heartbeat")>2))stopChannel(i,e);
-        if(passiveActive(e) && now%5==0)slowNearby(level,e);
-        if(tag.contains("anchor_until") && now>=tag.getLong("anchor_until")) {tag.remove("anchor_until");removeVisual(level,tag,"anchor_visual");i.setCoolDown(Math.max(25,i.getCoolDown(2)),2);}
+        if(passiveActive(e)) {
+            slowProjectiles(level,e);
+            if(now%5==0)slowNearby(level,e);
+        }
+        if(tag.contains("anchor_until") && now>=tag.getLong("anchor_until"))reverse(level,i,e,true);
         if(tag.getLong("horizon_until")>now && sameDimension(i,e)) {
             Vec3 center=ApexArts.point(tag,"horizon");
             for(var target:ApexArts.enemies(level,e,center,24)) {
                 double resistance=1-Math.clamp(target.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE),0,1);
-                Vec3 pull=center.subtract(target.position()).normalize().scale(.32*resistance); target.push(pull.x,.01,pull.z); target.hurtMarked=true;
+                Vec3 pull=center.subtract(target.position()).normalize().scale(.4*resistance); target.push(pull.x,.01,pull.z); target.hurtMarked=true;
                 if(now%20==0 && target.distanceToSqr(center)<=100)hit(level,i,e,target,120,1);
             }
             for(var projectile:level.getEntitiesOfClass(Projectile.class,new AABB(center,center).inflate(24),p->p.getOwner()!=e && (!(p.getOwner() instanceof LivingEntity owner) || HunterData.canHarm(e,owner)) && p.distanceToSqr(center)<24*24)) {

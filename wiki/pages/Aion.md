@@ -2,7 +2,7 @@
 
 [Main Page](../README.md) · [Skills](Skills.md) · [Ability index](Abilities.md) · [Damage types](Damage-Types.md)
 
-**Aion, God of Causality** is a Godly skill built around spatial precision, battlefield control and a personal HP/SHP rewind with a safe recorded position. Its active arts use magicules and space elemental damage. Its power grows with mastery, without EP damage scaling.
+**Aion, God of Causality** is a Godly skill built around spatial precision, battlefield control and a personal HP/SHP/energy rewind with a safe recorded position. Its active arts use magicules and space elemental damage. Its power grows with mastery, without EP damage scaling.
 
 ![Aion, God of Causality](../../src/main/resources/assets/wildhunt/textures/skill/aion.png)
 
@@ -41,9 +41,9 @@ Enabling costs the first 180 magicules, then 180 magicules each second. It turns
 
 While active, the caster deals **35% additional damage** to eligible mobs and players that do not own a Godly skill. Owning a skill in the addon’s Godly tag counts even when that target has its passive off. The bonus applies to melee, projectiles and skills through native damage calculation.
 
-The caster’s attacks also degrade native **Resistance and Nullification skills to no protection**, and ignore native elemental/magic resistance attributes. This applies to the caster’s attacks only; learned skills, mastery and toggles are preserved. Turning the passive off restores their normal effectiveness. Armor, barriers, other skill defenses, authority and PvP protection continue to apply.
+The caster’s attacks degrade native **Resistance and Nullification skills to no protection** and ignore native elemental/magic resistance attributes. In addition, eligible enemies within the **16-block aura** have their resistance/nullification defenses suppressed against **all sources**, including other attackers, environmental damage and status effects. Poison, paralysis and other immunities granted by native Resistance/Nullification skills are included. Learned skills, mastery and saved toggle settings are preserved; protection returns within half a second after leaving the aura or the passive stopping. Armor, barriers, other skill defenses, authority and PvP protection continue to apply.
 
-Eligible enemies within **16 blocks** suffer causal time dilation. Movement reduction increases linearly from **15% at the edge** toward **80% at the caster**. It uses a temporary movement modifier, has no ambient particle cloud, does not stack between Aion users and expires within half a second after leaving the aura or the caster stopping it.
+Eligible enemies within **16 blocks** suffer causal time dilation. Movement reduction increases linearly from **15% at the edge** toward **80% at the caster**. It uses a temporary movement modifier, has no ambient particle cloud, does not stack between Aion users and expires within half a second after leaving the aura or the caster stopping it. Hostile and unowned **projectiles** are also slowed by proximity, using the same 15–80% reduction. Their speed is adjusted rather than repeatedly multiplied toward zero, and the aura’s speed reduction is removed after leaving. Own and allied shots are preserved. Native projectile collision, gravity and drag continue to operate.
 
 ### Active
 
@@ -51,7 +51,7 @@ Eligible enemies within **16 blocks** suffer causal time dilation. Movement redu
 | --- | ---: | --- | --- | ---: |
 | Worldline Sever | 800 to start; 400 per additional 0.5 seconds | 4 seconds after channel ends | 80-block beam, up to 8 targets per pulse, 6-second maximum | 220 per 0.5 seconds |
 | Event Horizon | 6,000 | 16 seconds | 64-block cursor placement; 24-block pull, 10-block damage radius; 10 seconds | 120 per second |
-| Causal Reversal | 2,400 | 1 second to recast; 25 seconds after return or expiry | Personal checkpoint, 20-second window | — |
+| Causal Reversal | 2,400 to record; free return | 1 second to recast; 25 seconds after manual or automatic return | Personal checkpoint, 20-second window | — |
 | Genesis Verdict | 15,000 | 45 seconds | 64-block placement; 12 / 14-block radius | 700 + 700 + 1,400 / 2,100 |
 
 #### Worldline Sever
@@ -63,7 +63,7 @@ Eligible enemies within **16 blocks** suffer causal time dilation. Movement redu
 | Damage type | [Space elemental](Damage-Types.md#space) |
 | Damage ID | `tensura:space_elemental` |
 
-Hold the assigned skill key to channel a gold-white spatial beam that follows the current crosshair direction. It pierces up to eight eligible enemies per pulse and stops at blocks. Damage pulses every half second; the opening pulse costs 800 magicules and each additional pulse costs 400. A full six-second channel has twelve pulses and costs 5,200 magicules before native cost modifiers.
+Hold the assigned skill key to channel a gold-white spatial beam that follows the current crosshair direction. The local beam visual follows aim every rendered frame; damage and resource use remain server-controlled. It pierces up to eight eligible enemies per pulse and stops at blocks. Damage pulses every half second; the opening pulse costs 800 magicules and each additional pulse costs 400. A full six-second channel has twelve pulses and costs 5,200 magicules before native cost modifiers.
 
 Releasing the key, exhausting magicules, suppression, death, dimension changes or reaching six seconds ends the beam and starts its four-second cooldown. The channel cannot keep damaging after release. Each pulse rechecks friendly/PvP protection.
 
@@ -76,7 +76,7 @@ Releasing the key, exhausting magicules, suppression, death, dimension changes o
 | Damage type | [Space elemental](Damage-Types.md#space) |
 | Damage ID | `tensura:space_elemental` |
 
-Place a gravity domain with a dark core, counter-rotating accretion bands and Tensura’s native **Gravity** magic circle. Enemies within **24 blocks** are pulled toward the core; only enemies within the **10-block inner radius** take space damage each second. A faint outer ring marks the pull range, while the bright inner circle marks the damage zone. Knockback resistance reduces the pull. Hostile or unowned projectiles lose 35% velocity per tick and curve toward the center; the caster’s own and allied projectiles are preserved.
+Place a gravity domain with a dark core, counter-rotating accretion bands and Tensura’s native **Gravity** magic circle. Enemies within **24 blocks** are pulled toward the core; only enemies within the **10-block inner radius** take space damage each second. A faint outer ring marks the pull range, while the bright inner circle marks the damage zone. Its inward pull adds 0.40 horizontal velocity per tick before knockback resistance, which reduces the pull. Hostile or unowned projectiles lose 35% velocity per tick and curve toward the center; the caster’s own and allied projectiles are preserved.
 
 #### Causal Reversal
 
@@ -87,9 +87,9 @@ Place a gravity domain with a dark core, counter-rotating accretion bands and Te
 | Damage type | None — recovery / repositioning |
 | Damage ID | — |
 
-The first press places a visible clockwork checkpoint and records position, HP and SHP. Press again after the one-second recast delay, within twenty seconds, to return and recover HP/SHP toward their recorded values, limited by current caps. Both casts cost magicules. Native **Recovery** circle effects and spatial bursts mark the return.
+The first press costs **2,400 magicules** and places a visible clockwork checkpoint, recording position, HP, SHP, aura and magicules **after paying that initial cast cost**. Press again after the one-second recast delay to return for **no cost**, even with no magicules remaining. If not used manually, it **automatically returns after twenty seconds**. HP/SHP recover toward their recorded values; aura and magicules return to their recorded amounts, all limited by current caps. The initial cast cost is never refunded. Native **Recovery** circle effects and spatial bursts mark the return.
 
-Reversal does not restore aura, magicules, items, cooldowns, buffs or lost lives. The destination must remain unobstructed, inside the world border and in the same dimension. An unsafe return charges no magicules. Returning or expiration applies the full twenty-five-second cooldown. Death, relogging and dimension changes clear the checkpoint.
+Reversal does not restore items, cooldowns, buffs or lost lives. The destination must remain unobstructed, inside the world border and in the same dimension. A blocked manual return keeps the pending checkpoint. If the destination is blocked at timeout, recovery happens **in place** instead of teleporting into a wall. A completed manual or automatic return consumes the checkpoint and starts the full twenty-five-second cooldown. An already-armed checkpoint still resolves while asleep or temporarily suppressed. Death, forgetting Aion, relogging and dimension changes clear it without restoring resources.
 
 #### Genesis Verdict
 

@@ -66,6 +66,7 @@ public final class DuoSystem {
         if(target.isEmpty())return "That is not a valid next secondary evolution.";
         if(!Double.isFinite(EnergyHelper.getBaseMaxEP(p)) || EnergyHelper.getBaseMaxEP(p)<secondaryEvolutionEP(p))return "Secondary evolution requires "+Math.round(secondaryEvolutionEP(p))+" base EP, including new growth since selecting this lineage.";
         if(current.get().getEvolutionProgress(p,target.get())<100)return "The native secondary evolution requirements are not met.";
+        data(p).putDouble("secondary_last_evolution_ep",Math.max(secondaryEvolutionEP(p),lineageEvolutionEP(target.get().createDefaultInstance(),p,new HashSet<>())));
         var next=target.get().createDefaultInstance(); next.deserialize(current.get().serialize(new CompoundTag()));
         data(p).putInt("secondary_stage",data(p).getInt("secondary_stage")+1);
         saveSecondary(p,next); removeSecondary(p); applySecondary(p,next); next.learnIntrinsicSkills(p); saveSecondary(p,next);
@@ -74,8 +75,8 @@ public final class DuoSystem {
     public static String convergence(ServerPlayer p) {
         var a=primary(p); var b=secondary(p);
         if(a.isEmpty() || b.isEmpty() || converged(p) || data(p).getBoolean("awakened"))return "Two independent lineages are required; Convergent Awakening can happen only once.";
-        if(!terminal(a.get(),p) || !terminal(b.get(),p) || !awakened(p) || !Double.isFinite(EnergyHelper.getBaseMaxEP(p)) || EnergyHelper.getBaseMaxEP(p)<MythsConfig.CONVERGENCE_EP.get())
-            return "Both races must reach their final evolution. True Hero or True Demon Lord and "+Math.round(MythsConfig.CONVERGENCE_EP.get())+" base EP are required.";
+        if(!terminal(a.get(),p) || !terminal(b.get(),p) || !awakened(p) || !Double.isFinite(EnergyHelper.getBaseMaxEP(p)) || EnergyHelper.getBaseMaxEP(p)<convergenceEP(p))
+            return "Both races must reach their final evolution. True Hero or True Demon Lord and "+Math.round(convergenceEP(p))+" base EP are required for these lineages.";
         var first=RaceFamily.byKey(data(p).getString("primary_family")); var second=secondaryFamily(p);
         if(first.isEmpty() || second.isEmpty() || first.equals(second))return "The lineage combination is invalid.";
         var profile=FusionCatalog.profile(first.get(),second.get()); var destination=FusionCatalog.RACES.get(profile.key()).get();
@@ -106,6 +107,28 @@ public final class DuoSystem {
         // Older saves retain their current stage; subsequent evolutions need fresh growth.
         if(!d.contains("secondary_ep_origin"))d.putDouble("secondary_ep_origin",Math.max(MythsConfig.SECONDARY_EP.get(),EnergyHelper.getBaseMaxEP(p)));
         return d.getDouble("secondary_ep_origin")+MythsConfig.SECONDARY_EVOLUTION_STEP.get()*(d.getInt("secondary_stage")+1);
+    }
+    /** Uses required EP, never the player's current EP, so earning EP cannot move the goalposts. */
+    public static double convergenceEP(LivingEntity p) {
+        var d=data(p);
+        double primaryGate=primary(p).filter(r->!(r.getRace() instanceof FusionRace)).map(r->lineageEvolutionEP(r,p,new HashSet<>())).orElse(0d);
+        double secondaryGate=secondary(p).map(r->lineageEvolutionEP(r,p,new HashSet<>())).orElse(0d);
+        double completed=d.contains("secondary_last_evolution_ep")?d.getDouble("secondary_last_evolution_ep"):
+            d.getInt("secondary_stage")>0?d.getDouble("secondary_ep_origin")+MythsConfig.SECONDARY_EVOLUTION_STEP.get()*d.getInt("secondary_stage"):0;
+        return Math.max(MythsConfig.CONVERGENCE_EP.get(),Math.ceil(Math.max(completed,Math.max(primaryGate,secondaryGate))*MythsConfig.CONVERGENCE_EP_FACTOR.get()));
+    }
+    private static double lineageEvolutionEP(ManasRaceInstance instance,LivingEntity p,Set<ResourceLocation> visited) {
+        if(!visited.add(instance.getRaceId()) || visited.size()>64)return 0;
+        var race=instance.getRace();var previous=race.getPreviousEvolutions(instance,p);double required=0;
+        if(race instanceof io.github.manasmods.tensura.race.TensuraRace nativeRace) {
+            var before=previous.isEmpty()?instance:previous.getFirst().createDefaultInstance();
+            required=nativeRace.getEvolutionRequirements(before,p).keySet().stream()
+                .filter(r->r instanceof io.github.manasmods.tensura.race.template.EvolutionRequirement.EPRequirement)
+                .mapToDouble(r->((io.github.manasmods.tensura.race.template.EvolutionRequirement.EPRequirement)r).getRequirement()).max().orElse(0);
+        }
+        // Walk backward so a lower final-stage gate cannot hide an earlier, higher gate.
+        for(var before:previous)required=Math.max(required,lineageEvolutionEP(before.createDefaultInstance(),p,visited));
+        return required;
     }
     public static boolean sharedAttribute(Holder<Attribute> h) {
         return Set.of(Attributes.MAX_HEALTH,Attributes.ATTACK_DAMAGE,Attributes.ARMOR,Attributes.ARMOR_TOUGHNESS,Attributes.MOVEMENT_SPEED,Attributes.KNOCKBACK_RESISTANCE,TensuraAttributes.MAX_SPIRITUAL_HEALTH).contains(h);

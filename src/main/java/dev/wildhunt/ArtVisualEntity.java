@@ -26,6 +26,7 @@ public final class ArtVisualEntity extends Entity {
     private static final EntityDataAccessor<Float> END_X = SynchedEntityData.defineId(ArtVisualEntity.class, EntityDataSerializers.FLOAT);
     private static final EntityDataAccessor<Float> END_Y = SynchedEntityData.defineId(ArtVisualEntity.class, EntityDataSerializers.FLOAT);
     private static final EntityDataAccessor<Float> END_Z = SynchedEntityData.defineId(ArtVisualEntity.class, EntityDataSerializers.FLOAT);
+    private static final EntityDataAccessor<java.util.Optional<java.util.UUID>> CASTER = SynchedEntityData.defineId(ArtVisualEntity.class, EntityDataSerializers.OPTIONAL_UUID);
     public static void register() { TYPES.register(); }
     public ArtVisualEntity(EntityType<? extends ArtVisualEntity> type, Level level) {
         super(type, level); noPhysics = true; setNoGravity(true);
@@ -37,10 +38,12 @@ public final class ArtVisualEntity extends Entity {
         level.addFreshEntity(entity); return entity;
     }
     @Override protected void defineSynchedData(SynchedEntityData.Builder builder) {
-        builder.define(KIND, LASH); builder.define(LIFETIME, 16);
+        builder.define(CASTER,java.util.Optional.empty());builder.define(KIND, LASH); builder.define(LIFETIME, 16);
         builder.define(END_X, 0f); builder.define(END_Y, 0f); builder.define(END_Z, 0f);
     }
     public void updateVector(Vec3 start,Vec3 delta) {setPos(start);entityData.set(END_X,(float)delta.x);entityData.set(END_Y,(float)delta.y);entityData.set(END_Z,(float)delta.z);}
+    public void setCaster(Entity caster) {entityData.set(CASTER,java.util.Optional.of(caster.getUUID()));}
+    public boolean ownedBy(Entity caster) {return caster!=null && entityData.get(CASTER).filter(caster.getUUID()::equals).isPresent();}
     public int kind() { return entityData.get(KIND); }
     public int lifetime() { return entityData.get(LIFETIME); }
     public Vec3 end() { return new Vec3(entityData.get(END_X), entityData.get(END_Y), entityData.get(END_Z)); }
