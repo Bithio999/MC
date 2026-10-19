@@ -30,9 +30,20 @@ public final class ApexArts {
         Vec3 from = caster.getEyePosition(), to = from.add(caster.getLookAngle().scale(range));
         return level.clip(new ClipContext(from, to, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, caster)).getLocation().subtract(0, 1.2, 0);
     }
+    /** Surface under the crosshair; a miss ends at the bounded ray endpoint. */
+    static Vec3 cursorPlacement(ServerLevel level, LivingEntity caster, double range) {
+        Vec3 eye = caster.getEyePosition(), end = eye.add(caster.getLookAngle().normalize().scale(range));
+        var hit = level.clip(new ClipContext(eye, end, ClipContext.Block.COLLIDER, ClipContext.Fluid.ANY, caster));
+        if (hit.getType() == net.minecraft.world.phys.HitResult.Type.BLOCK)
+            return hit.getLocation().add(Vec3.atLowerCornerOf(hit.getDirection().getNormal()).scale(0.05));
+        return end;
+    }
     static List<LivingEntity> enemies(ServerLevel level, LivingEntity caster, Vec3 center, double range) {
+        return enemies(level, caster, center, range, true);
+    }
+    static List<LivingEntity> enemies(ServerLevel level, LivingEntity caster, Vec3 center, double range, boolean lineOfSight) {
         var list = level.getEntitiesOfClass(LivingEntity.class, new AABB(center, center).inflate(range),
-            e -> HunterData.canHarm(caster, e) && e.position().distanceToSqr(center) <= range * range && caster.hasLineOfSight(e));
+            e -> HunterData.canHarm(caster, e) && e.position().distanceToSqr(center) <= range * range && (!lineOfSight || caster.hasLineOfSight(e)));
         list.sort(Comparator.comparingDouble(e -> e.position().distanceToSqr(center)));
         return list;
     }
@@ -59,6 +70,7 @@ public final class ApexArts {
                 Vec3 end = level.clip(new ClipContext(eye, eye.add(direction.scale(reach)), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, caster)).getLocation();
                 tag.putDouble("travel_reach", Math.min(reach, eye.distanceTo(end)));
                 tag.putString("travel_dimension", dimension(level)); tag.putLong("travel_until", now + 16); tag.putInt("travel_step", 0);
+                ApexVisuals.tidalWave(level, caster.position(), direction, tag.getDouble("travel_reach"), skill.ultimate ? 5 : 4);
                 tag.put("travel_hits", new ListTag()); advance(skill, level, instance, caster);
             }
             case NU_UDRA -> {
@@ -96,14 +108,14 @@ public final class ApexArts {
             visited.add(current.getUUID()); ApexVisuals.beam(level, skill.apex, from, current.getEyePosition(), skill.ultimate);
             skill.strike(level, instance, caster, current, skill.balance.primary() * (float)Math.pow(0.9, bounce), 0, false);
             LivingEntity previous = current; from = current.getEyePosition();
-            current = enemies(level, caster, previous.position(), 12).stream()
-                .filter(e -> !visited.contains(e.getUUID()) && previous.hasLineOfSight(e)).findFirst().orElse(null);
+            current = enemies(level, caster, previous.position(), 12, false).stream()
+                .filter(e -> !visited.contains(e.getUUID())).findFirst().orElse(null);
         }
     }
     static void thunderStep(ApexSkill skill, ServerLevel level, ManasSkillInstance instance, LivingEntity caster) {
         Vec3 start = caster.position(), direction = caster.getLookAngle().normalize(), end = start;
         // Sweep the body, not just the eyes: never dash through walls or low ceilings.
-        for (double d = 0.5; d <= (skill.ultimate ? 12 : 8); d += 0.5) {
+        for (double d = 0.5; d <= (skill.ultimate ? 24 : 16); d += 0.5) {
             Vec3 delta = direction.scale(d); AABB box = caster.getBoundingBox().move(delta);
             if (box.minY < level.getMinBuildHeight() || box.maxY > level.getMaxBuildHeight()
                     || !level.getWorldBorder().isWithinBounds(box) || !level.noCollision(caster, box)) break;
@@ -115,7 +127,11 @@ public final class ApexArts {
             if (enemy.position().distanceToSqr(start.add(segment.scale(t))) <= 2.5 * 2.5)
                 skill.strike(level, instance, caster, enemy, skill.balance.burst(), 1, false);
         }
+        Vec3 momentum = caster.getDeltaMovement();
         caster.teleportTo(end.x, end.y, end.z); caster.fallDistance = 0;
+        caster.setDeltaMovement(momentum); caster.hasImpulse = true; caster.hurtMarked = true;
+        if (caster instanceof net.minecraft.server.level.ServerPlayer player)
+            player.connection.send(new net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket(caster));
         ApexVisuals.beam(level, skill.apex, start.add(0, 0.8, 0), end.add(0, 0.8, 0), skill.ultimate);
         ApexVisuals.impact(level, skill.apex, end.add(0, 1, 0), skill.ultimate);
     }
@@ -124,9 +140,9 @@ public final class ApexArts {
         switch (skill.apex) {
             case REY_DAU -> thunderStep(skill, level, instance, caster);
             case UTH_DUNA -> {
-                Vec3 center = aim(level, caster, 6); point(tag, "field", center);
+                Vec3 center = cursorPlacement(level, caster, skill.ultimate ? 36 : 24); point(tag, "field", center);
                 tag.putLong("field_until", now + 120); tag.putLong("field_next", now + 20); tag.putString("field_dimension", dimension(level));
-                ApexVisuals.circle(level, caster, skill.apex, center.add(0, 0.1, 0), (float)skill.radius(), 120, false);
+                ApexVisuals.whirlpool(level, center, skill.radius(), 120);
                 skill.area(level, instance, caster, center, skill.radius(), skill.balance.burst(), 1, false);
             }
             case NU_UDRA -> {
@@ -312,6 +328,14 @@ public final class ApexArts {
         }
     }
     public static void onIncomingDamage(net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent event) {
+        if (!event.getEntity().level().isClientSide() && event.getAmount() > 0) {
+            for (var instance : SkillAPI.getSkillsFrom(event.getEntity()).getLearnedSkills()) {
+                if (instance.isToggled() && instance.getSkill() instanceof ApexSkill skill && skill.barrierCapacity() > 0) {
+                    instance.getOrCreateTag().putLong("barrier_ready", event.getEntity().level().getGameTime() + 200);
+                    instance.markDirty();
+                }
+            }
+        }
         if (event.getSource().is(net.minecraft.tags.DamageTypeTags.IS_FIRE) && passiveEnabled(event.getEntity(), Apex.NU_UDRA)) event.setCanceled(true);
     }
     public static void onDamage(LivingDamageEvent.Post event) {

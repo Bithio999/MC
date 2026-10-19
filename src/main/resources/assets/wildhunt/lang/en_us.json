@@ -1,12 +1,12 @@
 {
   "wildhunt.skill.storm_crown": "Storm Crown",
-  "wildhunt.skill.storm_crown.description": "Railbolt ricochets between enemies within twelve blocks without revisiting a target. Thunder Step follows your aim through a clear 3D path and shocks enemies along it. Toggle Storm Mantle for movement, attack speed and lightning power. Damage improves with mastery, never with EP. Master this skill to unlock its Ultimate as Sovereign Hunter.",
+  "wildhunt.skill.storm_crown.description": "Railbolt ricochets between enemies within twelve blocks through walls without revisiting a target. The initial shot needs a clear path. Thunder Step travels 16 blocks (24 Ultimate) along your aim, preserving momentum through a clear 3D path and shocks enemies along it. Toggle Storm Mantle for movement, attack speed and lightning power. Damage improves with mastery, never with EP. Master this skill to unlock its Ultimate as Sovereign Hunter.",
   "wildhunt.skill.raijin": "Raijin, Lord of Thunder",
-  "wildhunt.skill.raijin.description": "Railbolt ricochets between enemies within twelve blocks without revisiting a target. Thunder Step follows your aim through a clear 3D path and shocks enemies along it. Toggle Storm Mantle for movement, attack speed and lightning power. Ultimate: triple base damage and a third signature art.",
+  "wildhunt.skill.raijin.description": "Railbolt ricochets between enemies within twelve blocks through walls without revisiting a target. The initial shot needs a clear path. Thunder Step travels 16 blocks (24 Ultimate) along your aim, preserving momentum through a clear 3D path and shocks enemies along it. Toggle Storm Mantle for movement, attack speed and lightning power. Ultimate: triple base damage and a third signature art.",
   "wildhunt.skill.scarlet_deluge": "Scarlet Deluge",
-  "wildhunt.skill.scarlet_deluge.description": "A travelling tidal wave carries and drenches enemies. An aimed whirlpool gathers them. Toggle Water Veil for native physical, magic and HUD multilayer barriers and retaliation after health damage. Damage improves with mastery, never with EP. Master this skill to unlock its Ultimate as Sovereign Hunter.",
+  "wildhunt.skill.scarlet_deluge.description": "A travelling tidal wave carries and drenches enemies. A whirlpool placed at your crosshair within 24 blocks (36 Ultimate) gathers them. Toggle Water Veil for native physical, magic and HUD multilayer barriers and retaliation after health damage. Damage improves with mastery, never with EP. Master this skill to unlock its Ultimate as Sovereign Hunter.",
   "wildhunt.skill.varuna": "Varuna, Lord of Tides",
-  "wildhunt.skill.varuna.description": "A travelling tidal wave carries and drenches enemies. An aimed whirlpool gathers them. Toggle Water Veil for native physical, magic and HUD multilayer barriers and retaliation after health damage. Ultimate: triple base damage and a third signature art.",
+  "wildhunt.skill.varuna.description": "A travelling tidal wave carries and drenches enemies. A whirlpool placed at your crosshair within 24 blocks (36 Ultimate) gathers them. Toggle Water Veil for native physical, magic and HUD multilayer barriers and retaliation after health damage. Ultimate: triple base damage and a third signature art.",
   "wildhunt.skill.black_flame": "Black Flame",
   "wildhunt.skill.black_flame.description": "Rendered tentacles lash and pull enemies, leaving owned oil pools. Ignition burns those locations directly, without oil stacks. Toggle Furnace Mantle for melee and flame power. Damage improves with mastery, never with EP. Master this skill to unlock its Ultimate as Sovereign Hunter.",
   "wildhunt.skill.agni": "Agni, Lord of the Black Flame",
@@ -45,5 +45,12 @@
   "wildhunt.skill.ymir.mode_0": "Avalanche Crash",
   "wildhunt.skill.ymir.mode_1": "Glacial Prison",
   "wildhunt.skill.ymir.mode_2": "Heavenfall Glacier",
-  "wildhunt.skill.ymir.passive": "Colossus Carapace"
+  "wildhunt.skill.ymir.passive": "Colossus Carapace",
+  "wildhunt.skill.hunters_recovery": "Hunter's Recovery",
+  "wildhunt.skill.apex_renewal": "Apex Renewal",
+  "wildhunt.skill.sovereign_rebirth": "Sovereign Rebirth",
+  "entity.wildhunt.alma": "Alma",
+  "item.wildhunt.alma_spawn_egg": "Alma Spawn Egg",
+  "entity.wildhunt.gemma": "Gemma",
+  "item.wildhunt.gemma_spawn_egg": "Gemma Spawn Egg"
 }

@@ -45,7 +45,7 @@ public final class HunterData {
         }
         return count;
     }
-    public static boolean learnReward(LivingEntity entity, ApexSkill skill) {
+    public static boolean learnReward(LivingEntity entity, io.github.manasmods.manascore.skill.api.ManasSkill skill) {
         var instance = skill.createDefaultInstance();
         // Tensura's supported reward flag: granting an ascension reward must not also
         // consume permanent max magicules as if buying the skill from a menu.

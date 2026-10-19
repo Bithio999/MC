@@ -4,8 +4,16 @@
     "title": "Agni, Lord of the Black Flame"
   },
   {
+    "slug": "Alma",
+    "title": "Alma"
+  },
+  {
     "slug": "Apex-Hunter",
     "title": "Apex Hunter"
+  },
+  {
+    "slug": "Aura-Regeneration",
+    "title": "Aura regeneration"
   },
   {
     "slug": "Awakened-Hunter",
@@ -26,6 +34,10 @@
   {
     "slug": "Frostbound-Colossus",
     "title": "Frostbound Colossus"
+  },
+  {
+    "slug": "Gemma",
+    "title": "Gemma"
   },
   {
     "slug": "Getting-Started",

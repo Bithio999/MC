@@ -24,17 +24,22 @@ Begin as Human. Reach 100,000 base EP and defeat 1 different eligible boss types
 
 | Attribute | Bonus at this stage |
 | --- | ---: |
-| Maximum health | +40 HP |
-| Maximum spiritual health | +20 SHP |
+| Maximum health | +100 HP |
+| Maximum spiritual health | +400 SHP |
 | Attack damage | +2 |
 | Movement speed | +5% |
 | Knockback resistance | +0.1 |
 
 These replace the previous hunter stage’s racial modifiers. They do not stack with earlier stages. Toggleable skill passives have separate modifiers and remain subject to attribute caps.
 
-The HP bonuses across the branch are +40 / +100 / +200; SHP bonuses are +20 / +60 / +120. Each stage replaces the previous stage’s bonus. Existing hunter characters receive the new maximums on login without free healing.
+The HP bonuses across the branch are +100 / +500 / +1,000; SHP bonuses are +400 / +3,200 / +6,600. Each stage replaces the previous stage’s bonus. Existing hunter characters receive the new maximums on login without free healing.
 
 ## Skills and progression
+
+This stage grants **[Hunter's Recovery](Aura-Regeneration.md)** as a native Extra Skill, at no permanent magicule acquisition cost. Earlier recovery tiers remain learned, but only the strongest toggled tier heals. Native racial skill learning enables the new tier automatically.
+
+Base energy uses two thirds aura and one third magicules. Default-alignment kill EP retains Tensura’s native 2:1 split.
+
 
 Continue building a distinct-boss record toward the next stage. You can roll and use apex Unique skills before reaching this stage. Race evolution does not directly grant a Unique skill.
 
@@ -44,4 +49,4 @@ Boss credit survives death. Old ordinary-hunt counts from 0.1.0 are not converte
 
 ---
 
-**Categories:** Tensura: Wild Hunt · Version 0.6.0
+**Categories:** Tensura: Wild Hunt · Version 0.7.0

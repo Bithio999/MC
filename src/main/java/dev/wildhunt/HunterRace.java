@@ -26,8 +26,12 @@ public final class HunterRace extends TensuraRace {
         addAttributeModifier(Attributes.MOVEMENT_SPEED, WildHunt.id("hunter_speed"), 0.05 * stage, Operation.ADD_MULTIPLIED_BASE);
         addAttributeModifier(Attributes.KNOCKBACK_RESISTANCE, WildHunt.id("hunter_resolve"), 0.1 * stage, Operation.ADD_VALUE);
     }
-    @Override public Pair<Double, Double> getBaseAuraRange() { return Pair.of(8_000.0 * stage, 12_000.0 * stage); }
-    @Override public Pair<Double, Double> getBaseMagiculeRange() { return Pair.of(2_000.0 * stage, 4_000.0 * stage); }
+    @Override public Pair<Double, Double> getBaseAuraRange() { return Pair.of(baseEP() * 2 / 3, baseEP() * 2 / 3); }
+    @Override public Pair<Double, Double> getBaseMagiculeRange() { return Pair.of(baseEP() / 3, baseEP() / 3); }
+    private double baseEP() { return switch (stage) { case 1 -> 200_000; case 2 -> 800_000; default -> 2_000_000; }; }
+    @Override public List<io.github.manasmods.manascore.skill.api.ManasSkill> getIntrinsicSkills(ManasRaceInstance instance, LivingEntity entity) {
+        return java.util.stream.IntStream.range(0, stage).mapToObj(i -> (io.github.manasmods.manascore.skill.api.ManasSkill)WildHunt.REGENERATION.get(i).get()).toList();
+    }
     @Override public MutableComponent getName() {
         return Component.literal(switch(stage) { case 1 -> "Awakened Hunter"; case 2 -> "Apex Hunter"; default -> "Sovereign Hunter"; });
     }

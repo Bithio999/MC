@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Aura regeneration — Wild Hunt Wiki</title><link rel="stylesheet" href="wiki.css">
+<script defer src="search-index.js"></script><script defer src="search.js"></script></head>
+<body data-root="../"><a class="skip" href="#article">Skip to article</a>
+<header><a class="brand" href="../index.html"><span>WILD HUNT</span><small>Tensura: Reincarnated addon wiki</small></a>
+<div class="search"><label for="wiki-search">Search the wiki</label><input id="wiki-search" type="search" placeholder="Find a skill, race, or mechanic…" autocomplete="off"><div id="search-results" aria-live="polite"></div></div></header>
+<div class="layout"><nav class="sidebar" aria-label="Wiki navigation"><h2>Explore</h2><a href="../index.html">Main Page</a><a href="../site/Getting-Started.html">Getting started</a><a href="../site/Skills.html">Skills</a><a href="../site/Evolution.html">Human evolution</a><a href="../site/Mechanics.html">Combat mechanics</a><a href="../site/Aura-Regeneration.html">Aura regeneration</a><a href="../site/Alma.html">Alma</a><a href="../site/Gemma.html">Gemma</a><a href="../site/Commands.html">Commands</a><a href="../site/Version-History.html">Version history</a>
+<h2>Apex arts</h2><a href="../site/Storm-Crown.html">Storm Crown</a><a href="../site/Scarlet-Deluge.html">Scarlet Deluge</a><a href="../site/Black-Flame.html">Black Flame</a><a href="../site/Frostbound-Colossus.html">Frostbound Colossus</a>
+<p>Version 0.7.0<br>Minecraft 1.21.1<br>NeoForge</p></nav>
+<main id="article"><div class="page-tabs"><span>Article</span><a href="../pages/Aura-Regeneration.md">Read Markdown</a></div>
+<h1>Aura regeneration</h1><p class="subtitle">From the Tensura: Wild Hunt Wiki</p>
+<aside class="infobox" aria-label="Page data"><table>
+<thead>
+<tr>
+<th>Skill data</th>
+<th>Hunter recovery Extra Skills</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Category</td>
+<td>Extra</td>
+</tr>
+<tr>
+<td>Acquisition</td>
+<td>Hunter race evolution; no permanent magicule acquisition cost</td>
+</tr>
+<tr>
+<td>Activation</td>
+<td>Native toggle; new racial tier enabled automatically</td>
+</tr>
+<tr>
+<td>Resource</td>
+<td>Aura only</td>
+</tr>
+<tr>
+<td>Idle cost</td>
+<td>None at full applicable health</td>
+</tr>
+</tbody>
+</table></aside><details class="contents" open><summary>Contents</summary><div class="toc">
+<ul>
+<li><a href="#recovery-tiers">Recovery tiers</a></li>
+<li><a href="#native-integration-and-limits">Native integration and limits</a></li>
+<li><a href="#energy-split">Energy split</a></li>
+</ul>
+</div>
+</details><p><a href="../index.html">Main Page</a> · <a href="Skills.html">Skills</a> · <a href="Evolution.html">Evolution</a> · <a href="Mechanics.html">Mechanics</a> · <a href="Commands.html">Commands</a></p>
+
+<h2 id="recovery-tiers">Recovery tiers</h2>
+<table>
+<thead>
+<tr>
+<th>Extra Skill</th>
+<th>Race</th>
+<th>Native inspiration</th>
+<th>Healing</th>
+<th>Aura cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Hunter's Recovery</td>
+<td>Awakened Hunter</td>
+<td>Self Regeneration</td>
+<td>4 HP/second; 8 mastered</td>
+<td>20 per HP</td>
+</tr>
+<tr>
+<td>Apex Renewal</td>
+<td>Apex Hunter</td>
+<td>Ultraspeed Regeneration</td>
+<td>Missing HP every half second</td>
+<td>30 per HP; 20 mastered</td>
+</tr>
+<tr>
+<td>Sovereign Rebirth</td>
+<td>Sovereign Hunter</td>
+<td>Infinite Regeneration</td>
+<td>Missing HP and SHP every half second</td>
+<td>30 per HP / 10 per SHP; 20 / 5 mastered</td>
+</tr>
+</tbody>
+</table>
+<p>Registry IDs: <code>wildhunt:hunters_recovery</code>, <code>wildhunt:apex_renewal</code>, <code>wildhunt:sovereign_rebirth</code>.</p>
+<p>Only the strongest <strong>toggled</strong> aura recovery tier works. Earlier skills stay learned and can be used if you turn a stronger one off. Recovery uses only available aura and heals proportionately if you cannot afford all missing health. HP is funded before SHP. Full health costs nothing. Mastery increases only on a funded recovery, and existing skill mastery is preserved.</p>
+<h2 id="native-integration-and-limits">Native integration and limits</h2>
+<p>All three are native Extra Skills, granted through Tensura's racial skill learning system. Their icons reference native regeneration icons at runtime. They do not apply native regeneration effects that would charge magicules on a later tick.</p>
+<p>Healing respects native severance maximum HP and interaction suppression. Hunter's Recovery and Apex Renewal also respect native healing suppression such as Frost and Curse. Like native Infinite Regeneration, Sovereign Rebirth can recover through ordinary Curse, Frost and strong Black Burn, but Infinite Imprisonment prevents it.</p>
+<p>Sovereign Rebirth can stop an ordinary lethal hit by paying 30 aura (20 mastered) to preserve 1 HP; subsequent half-second recovery pays for the remaining healing. It cannot stop invulnerability-bypassing damage, barrier bypass level 1.75 or higher, complete severance, spiritual-health depletion, suppressed interactions or an unfunded recovery. It does not grant free immortality or spend magicules. Repeated lethal hits must each be funded.</p>
+<h2 id="energy-split">Energy split</h2>
+<p>Hunter base evolution energy is split <strong>2/3 aura and 1/3 magicules</strong>. Tensura's default alignment also gives kill EP in that 2:1 ratio; native gain bonuses, penalties and server caps still apply. Spending aura does not transfer EP, change maximum magicules, or alter the allocation of later gains.</p>
+<hr />
+<p><strong>Categories:</strong> Tensura: Wild Hunt · Extra Skills · Version 0.7.0</p>
+<footer>Unofficial fan addon. Original documentation and portraits. Not affiliated with Capcom or ManasMods. Offline edition; no external services required.</footer></main></div></body></html>

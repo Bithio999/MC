@@ -29,18 +29,18 @@ Evolve [Storm Crown](Storm-Crown.md) as Sovereign Hunter with 2,000,000 base EP 
 | Mode | Aura | Cooldown | Raw opening damage |
 | --- | ---: | ---: | ---: |
 | 1. Railbolt | 800 | 3 s | 270 |
-| 2. Thunder Step | 2,400 | 7 s | 240 |
+| 2. Thunder Step | 2,400 | 4 s | 240 |
 | 3. Heaven’s Thunder | 6,000 | 60 s | See signature below |
 
-Raw values already include the Ultimate’s 3× multiplier where applicable. Mastery adds up to 50%. **Wild Hunt applies no EP damage scaling.** Native elemental boosts, defenses, rank interactions and the listed situational modifiers still apply. EP requirements for race evolution and Ultimate ascension are unchanged.
+**0.7.0 damage adjustment:** multiply every raw damage value below by **0.90**. This applies to direct hits, ricochets, fields, counters and signature pulses. Raw values already include the Ultimate’s 3× multiplier where applicable. Mastery adds up to 50%. **Wild Hunt applies no EP damage scaling.** Native elemental boosts, defenses, rank interactions and the listed situational modifiers still apply. EP requirements for race evolution and Ultimate ascension are unchanged.
 
 ### Railbolt
 
-Aim the first hit along a block-clipped ray up to 56 blocks. The bolt then ricochets from its latest victim to the nearest eligible, visible enemy within twelve blocks. It can hit up to 6 different targets, including the initial victim, and never revisits one. Each hop retains 90% of the preceding hop’s raw damage. Every hop checks both caster-to-target and victim-to-victim line of sight. Wet or drenched enemies take 30% extra lightning damage.
+Aim the first hit along a block-clipped ray up to 56 blocks. The bolt then ricochets from its latest victim to the nearest eligible enemy within twelve blocks. It can hit up to 6 different targets, including the initial victim, and never revisits one. Each hop retains 90% of the preceding hop’s raw damage. Ricochets ignore blocks and line of sight; the initial aimed shot still stops at blocks. Wet or drenched enemies take 30% extra lightning damage.
 
 ### Thunder Step
 
-Dash along your full aim direction for up to 12 blocks, including upward and downward, and shock enemies within 2.5 blocks of the travelled segment. The path sweeps the caster’s whole bounding box in half-block increments; walls, low ceilings, collisions the world border and build-height limits stop it. It replaces Fulgurite Array completely and creates no persistent rods or charge.
+Dash along your full aim direction for up to 24 blocks, including upward and downward, and shock enemies within 2.5 blocks of the travelled segment. The path sweeps the caster’s whole bounding box in half-block increments; walls, low ceilings, collisions the world border and build-height limits stop it. The teleport preserves your current horizontal and vertical velocity and syncs it to the client. It replaces Fulgurite Array completely and creates no persistent rods or charge.
 
 ### Heaven’s Thunder
 
@@ -58,7 +58,7 @@ Use Thunder Step to find a clear angle → aim Railbolt at one edge of a group �
 
 ## Strengths and limitations
 
-A missed initial ray cannot start a ricochet. Bounces cannot pass through walls or revisit an enemy. The dash follows a collision-checked 3D path and can carry you off a ledge or into the air. Normal gravity resumes afterward; it is not sustained flight.
+A missed initial ray cannot start a ricochet. Bounces pass through walls but cannot revisit an enemy. The dash follows a collision-checked 3D path and can carry you off a ledge or into the air. Normal gravity resumes afterward; it is not sustained flight.
 
 ## Related pages
 
@@ -66,4 +66,4 @@ A missed initial ray cannot start a ricochet. Bounces cannot pass through walls 
 
 ---
 
-**Categories:** Tensura: Wild Hunt · Version 0.6.0
+**Categories:** Tensura: Wild Hunt · Version 0.7.0

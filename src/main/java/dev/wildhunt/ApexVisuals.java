@@ -75,12 +75,15 @@ public final class ApexVisuals {
             for (int i = 0; i <= 30; i++) dot(level, TensuraParticleUtils.getWaterBubble(), from.add(delta.scale(i / 30.0)));
         }
     }
+    public static void tidalWave(ServerLevel level, Vec3 origin, Vec3 direction, double reach, double width) {
+        ArtVisualEntity.spawn(level, ArtVisualEntity.TIDAL_WAVE, origin, new Vec3(direction.x * reach, width, direction.z * reach), 16);
+    }
+    public static void whirlpool(ServerLevel level, Vec3 center, double radius, int ticks) {
+        ArtVisualEntity.spawn(level, ArtVisualEntity.WHIRLPOOL, center, new Vec3(radius, 0, 0), ticks);
+    }
     public static void wave(ServerLevel level, Vec3 center, Vec3 right, double width) {
-        for (int i = -12; i <= 12; i++) {
-            Vec3 p = center.add(right.scale(width * i / 12.0));
-            for (int h = 0; h < 3; h++) dot(level, TensuraParticleUtils.getWaterBubble(), p.add(0, h * 0.55, 0));
-        }
-        dot(level, TensuraParticleUtils.getBlueWave(0.85f, 2, 0, false), center.add(0, 0.7, 0));
+        // A small foam wake complements the synced travelling water mesh.
+        level.sendParticles(ParticleTypes.SPLASH, center.x, center.y + 0.2, center.z, 8, width * 0.5, 0.15, 0.3, 0.03);
     }
     public static void crystal(ServerLevel level, Vec3 center, double height) {
         for (int i = 0; i < 8; i++) {
@@ -110,19 +113,12 @@ public final class ApexVisuals {
                 dot(level, TensuraParticleUtils.getGoldAura(0.8f, 1.2f, 0), p.add(0, 0.8, 0));
                 dot(level, element(apex), p.add(Math.sin(level.getGameTime()) * 0.7, 1.4, 0));
             }
-            case UTH_DUNA -> {
-                for (int i = 0; i < 12; i++) {
-                    double angle = i * Math.PI / 6 + level.getGameTime() * 0.1;
-                    dot(level, TensuraParticleUtils.getWaterBubble(), p.add(Math.cos(angle), 0.4 + (i % 3) * 0.6, Math.sin(angle)));
-                }
-            }
+            case UTH_DUNA -> {}
             case NU_UDRA -> {
                 dot(level, TensuraParticleUtils.getBlackAura(0.6f, 1.3f, 0), p.add(0, 0.8, 0));
                 level.sendParticles(element(apex), p.x, p.y + 0.5, p.z, 6, 0.7, 0.4, 0.7, 0.02);
             }
-            case JIN_DAHAAD -> {
-                crystal(level, p.add(-0.7, 0, 0), 1.2); crystal(level, p.add(0.7, 0, 0), 1.2);
-            }
+            case JIN_DAHAAD -> {}
         }
     }
     public static void domain(ServerLevel level, Apex apex, Vec3 center, double radius) {

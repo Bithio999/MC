@@ -45,7 +45,7 @@ def render(source, destination, home=False):
     infobox = ""
     # Each race/skill article begins with its data table. Keep mode tables inline.
     table = re.search(r"<table>.*?</table>", content, flags=re.S)
-    if table and ("Skill data" in table[0] or "Race data" in table[0]):
+    if table and ("Skill data" in table[0] or "Race data" in table[0] or "NPC data" in table[0]):
         infobox = table[0]
         content = content[:table.start()] + content[table.end():]
         portrait = re.search(r'<p><img [^>]+></p>', content)
@@ -57,7 +57,7 @@ def render(source, destination, home=False):
     skin = "site/" if home else ""
     navigation = [("Main Page", "index.html"), ("Getting started", "site/Getting-Started.html"),
                   ("Skills", "site/Skills.html"), ("Human evolution", "site/Evolution.html"),
-                  ("Combat mechanics", "site/Mechanics.html"), ("Commands", "site/Commands.html"),
+                  ("Combat mechanics", "site/Mechanics.html"), ("Aura regeneration", "site/Aura-Regeneration.html"), ("Alma", "site/Alma.html"), ("Gemma", "site/Gemma.html"), ("Commands", "site/Commands.html"),
                   ("Version history", "site/Version-History.html")]
     links = "".join(f'<a href="{prefix}{url}">{label}</a>' for label, url in navigation)
     toc = '<details class="contents" open><summary>Contents</summary>' + renderer.toc + '</details>' if renderer.toc_tokens else ""
@@ -70,7 +70,7 @@ def render(source, destination, home=False):
 <div class="search"><label for="wiki-search">Search the wiki</label><input id="wiki-search" type="search" placeholder="Find a skill, race, or mechanic…" autocomplete="off"><div id="search-results" aria-live="polite"></div></div></header>
 <div class="layout"><nav class="sidebar" aria-label="Wiki navigation"><h2>Explore</h2>{links}
 <h2>Apex arts</h2>{''.join(f'<a href="{prefix}site/{slug}.html">{label}</a>' for label,slug in [('Storm Crown','Storm-Crown'),('Scarlet Deluge','Scarlet-Deluge'),('Black Flame','Black-Flame'),('Frostbound Colossus','Frostbound-Colossus')])}
-<p>Version 0.6.0<br>Minecraft 1.21.1<br>NeoForge</p></nav>
+<p>Version 0.7.0<br>Minecraft 1.21.1<br>NeoForge</p></nav>
 <main id="article"><div class="page-tabs"><span>Article</span><a href="{'README.md' if home else '../pages/' + source.name}">Read Markdown</a></div>
 <h1>{html.escape(title)}</h1><p class="subtitle">From the Tensura: Wild Hunt Wiki</p>
 {infobox}{toc}{content}

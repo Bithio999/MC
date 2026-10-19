@@ -32,7 +32,7 @@ Evolve [Frostbound Colossus](Frostbound-Colossus.md) as Sovereign Hunter with 2,
 | 2. Glacial Prison | 2,600 | 7 s | 165 |
 | 3. Heavenfall Glacier | 6,000 | 60 s | See signature below |
 
-Raw values already include the Ultimate’s 3× multiplier where applicable. Mastery adds up to 50%. **Wild Hunt applies no EP damage scaling.** Native elemental boosts, defenses, rank interactions and the listed situational modifiers still apply. EP requirements for race evolution and Ultimate ascension are unchanged.
+**0.7.0 damage adjustment:** multiply every raw damage value below by **0.90**. This applies to direct hits, ricochets, fields, counters and signature pulses. Raw values already include the Ultimate’s 3× multiplier where applicable. Mastery adds up to 50%. **Wild Hunt applies no EP damage scaling.** Native elemental boosts, defenses, rank interactions and the listed situational modifiers still apply. EP requirements for race evolution and Ultimate ascension are unchanged.
 
 ### Avalanche Crash
 
@@ -48,11 +48,13 @@ Anchor an ice siege at the selected enemy’s position within twenty-four blocks
 
 ## Toggleable passive: Colossus Carapace
 
-While toggled on, gain 40 armor, 80 physical barrier, 40 magic barrier, one knockback resistance and 100% water-element boost. Tensura classifies ice under water for this boost. This uses the native barrier layer and damage rules, not absorption or the former projectile-deletion ward.
+While toggled on, gain 40 armor, 72 physical barrier, 36 magic barrier, one knockback resistance and 100% water-element boost. Tensura classifies ice under water for this boost. This uses the native barrier layer and damage rules, not absorption or the former projectile-deletion ward.
 
-The passive also arms a **350-capacity native Multilayer Barrier**, which appears in Tensura’s shield HUD counter when its Barrier decoration is enabled. The counter is a per-hit blocking capacity, not absorption hearts or a custom health bar. Native rules spend magicules on blocked damage and can break the barrier on overflow, insufficient magicules or stronger attacks. Upkeep does not silently rearm a broken barrier; turn the passive off and back on to arm it again. Surviving shields persist across relogs.
+The passive also arms a **350-capacity native Multilayer Barrier**, which appears in Tensura’s shield HUD counter when its Barrier decoration is enabled. The counter is a per-hit blocking capacity, not absorption hearts or a custom health bar. Native rules spend magicules on blocked damage and can break the barrier on overflow, insufficient magicules or stronger attacks. While still toggled on, a broken barrier automatically rearms on the first paid upkeep after **ten seconds without an incoming hit**. Any new hit restarts the delay, including hits completely blocked by a surviving shield. Retoggling does not bypass the delay. Surviving shields persist across relogs.
 
 Enable or disable this through Tensura’s native **Ability Selection** skill toggle. It is separate from active mode cycling and has no fifteen/thirty-second duration. Upkeep is **80 aura per second**, with the first second paid on enabling. It turns off when aura is insufficient or activation requirements fail. Turning it off removes its own attribute modifiers immediately.
+
+The toggle no longer emits constant frost crystals. Native barrier rendering and the HUD remain.
 
 ## Suggested combo
 
@@ -80,4 +82,4 @@ The Unique passive’s native shield counter in Wild Hunt 0.6.0. Its Ultimate us
 
 ---
 
-**Categories:** Tensura: Wild Hunt · Version 0.6.0
+**Categories:** Tensura: Wild Hunt · Version 0.7.0

@@ -1,0 +1,17 @@
+{
+  "type": "wildhunt:gemma",
+  "abilities": [
+    "tensura:godly_craftsman",
+    "tensura:analytical_appraisal",
+    "tensura:all_seeing_eye",
+    "tensura:strengthen_body",
+    "tensura:steel_strength",
+    "tensura:flame_manipulation",
+    "tensura:ultraspeed_regeneration"
+  ],
+  "min_aura": 160000,
+  "max_aura": 160000,
+  "min_magicule": 80000,
+  "max_magicule": 80000,
+  "spiritualHealth": 20
+}

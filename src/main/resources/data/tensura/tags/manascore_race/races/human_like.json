@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "wildhunt:awakened_hunter",
+    "wildhunt:apex_hunter",
+    "wildhunt:sovereign_hunter"
+  ]
+}

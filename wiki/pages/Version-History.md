@@ -2,6 +2,17 @@
 
 [Main Page](../README.md) · [Skills](Skills.md) · [Evolution](Evolution.md) · [Mechanics](Mechanics.md) · [Commands](Commands.md)
 
+## 0.7.0
+
+- Railbolt ricochets ignore blocks after the initial block-clipped shot. Horns and portrait gutters are corrected; each icon is isolated and centered.
+- Thunder Step reaches 16/24 blocks, keeps player momentum, and has 5/4 second cooldowns.
+- All art hits, fields, counters and signatures receive a 10% damage reduction. Physical/magic barrier bonuses fall 10%. Native multilayer barriers recover after ten seconds without a hit while funded and enabled; retoggling cannot bypass recovery.
+- Water and ice toggles stop emitting constant custom particles. Crushing Current gets a curled water mesh; Undertow gets rotating spiral geometry and crosshair placement within 24/36 blocks.
+- Hunter HP bonuses become +100/+500/+1,000; SHP +400/+3,200/+6,600, benchmarked against Enlightened Human/Human Saint/Divine Human.
+- Three race-granted aura regeneration Extra Skills preserve the native 2:1 aura/magicule EP gain split.
+- Alma and Gemma join the native otherworlder distribution as Awakened Hunters, with seven character-fitting Tensura abilities each, native humanoid AI and bundled original skins based on online visual references.
+
+
 ## 0.6.0 — Aim, shield HUD and hunter vitality
 
 - Thunder Step now follows vertical aim as well as horizontal direction, retaining body collision and build-height checks.
@@ -42,4 +53,4 @@ Added the human hunter branch and the eight skill registrations. Its ordinary-hu
 
 ---
 
-**Categories:** Tensura: Wild Hunt · Version 0.6.0
+**Categories:** Tensura: Wild Hunt · Version 0.7.0

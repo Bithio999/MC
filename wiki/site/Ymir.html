@@ -5,9 +5,9 @@
 <body data-root="../"><a class="skip" href="#article">Skip to article</a>
 <header><a class="brand" href="../index.html"><span>WILD HUNT</span><small>Tensura: Reincarnated addon wiki</small></a>
 <div class="search"><label for="wiki-search">Search the wiki</label><input id="wiki-search" type="search" placeholder="Find a skill, race, or mechanic…" autocomplete="off"><div id="search-results" aria-live="polite"></div></div></header>
-<div class="layout"><nav class="sidebar" aria-label="Wiki navigation"><h2>Explore</h2><a href="../index.html">Main Page</a><a href="../site/Getting-Started.html">Getting started</a><a href="../site/Skills.html">Skills</a><a href="../site/Evolution.html">Human evolution</a><a href="../site/Mechanics.html">Combat mechanics</a><a href="../site/Commands.html">Commands</a><a href="../site/Version-History.html">Version history</a>
+<div class="layout"><nav class="sidebar" aria-label="Wiki navigation"><h2>Explore</h2><a href="../index.html">Main Page</a><a href="../site/Getting-Started.html">Getting started</a><a href="../site/Skills.html">Skills</a><a href="../site/Evolution.html">Human evolution</a><a href="../site/Mechanics.html">Combat mechanics</a><a href="../site/Aura-Regeneration.html">Aura regeneration</a><a href="../site/Alma.html">Alma</a><a href="../site/Gemma.html">Gemma</a><a href="../site/Commands.html">Commands</a><a href="../site/Version-History.html">Version history</a>
 <h2>Apex arts</h2><a href="../site/Storm-Crown.html">Storm Crown</a><a href="../site/Scarlet-Deluge.html">Scarlet Deluge</a><a href="../site/Black-Flame.html">Black Flame</a><a href="../site/Frostbound-Colossus.html">Frostbound Colossus</a>
-<p>Version 0.6.0<br>Minecraft 1.21.1<br>NeoForge</p></nav>
+<p>Version 0.7.0<br>Minecraft 1.21.1<br>NeoForge</p></nav>
 <main id="article"><div class="page-tabs"><span>Article</span><a href="../pages/Ymir.md">Read Markdown</a></div>
 <h1>Ymir, Lord of Winter</h1><p class="subtitle">From the Tensura: Wild Hunt Wiki</p>
 <aside class="infobox" aria-label="Page data"><p><img alt="Ymir, Lord of Winter" src="../../src/main/resources/assets/wildhunt/textures/skill/ymir.png" /></p><table>
@@ -111,7 +111,7 @@
 </tr>
 </tbody>
 </table>
-<p>Raw values already include the Ultimate’s 3× multiplier where applicable. Mastery adds up to 50%. <strong>Wild Hunt applies no EP damage scaling.</strong> Native elemental boosts, defenses, rank interactions and the listed situational modifiers still apply. EP requirements for race evolution and Ultimate ascension are unchanged.</p>
+<p><strong>0.7.0 damage adjustment:</strong> multiply every raw damage value below by <strong>0.90</strong>. This applies to direct hits, ricochets, fields, counters and signature pulses. Raw values already include the Ultimate’s 3× multiplier where applicable. Mastery adds up to 50%. <strong>Wild Hunt applies no EP damage scaling.</strong> Native elemental boosts, defenses, rank interactions and the listed situational modifiers still apply. EP requirements for race evolution and Ultimate ascension are unchanged.</p>
 <h3 id="avalanche-crash">Avalanche Crash</h3>
 <p>Aim at a visible enemy up to 24 blocks away, or at the endpoint if no enemy is selected. Erupt eight rendered ice spires around the impact. Damage enemies in a 6-block radius and launch them upward and outward, respecting knockback resistance. This is an immediate aimed impact, not the old travelling fissure. It neither builds nor consumes rime.</p>
 <h3 id="glacial-prison">Glacial Prison</h3>
@@ -119,9 +119,10 @@
 <h3 id="heavenfall-glacier">Heavenfall Glacier</h3>
 <p>Anchor an ice siege at the selected enemy’s position within twenty-four blocks, or at the aim endpoint. For ten seconds, select up to three enemies within ten blocks of that anchor each second. Mark their current positions with circles and falling ice. Each mark explodes after ten ticks (half a second), striking a 2.5-block radius. Opening raw damage is 300 per impact; later impacts use 135, before mastery and native modifiers. Overlapping marks cannot strike one victim twice in the same resolution tick. Enemies can leave the marked locations before impact.</p>
 <h2 id="toggleable-passive-colossus-carapace">Toggleable passive: Colossus Carapace</h2>
-<p>While toggled on, gain 40 armor, 80 physical barrier, 40 magic barrier, one knockback resistance and 100% water-element boost. Tensura classifies ice under water for this boost. This uses the native barrier layer and damage rules, not absorption or the former projectile-deletion ward.</p>
-<p>The passive also arms a <strong>350-capacity native Multilayer Barrier</strong>, which appears in Tensura’s shield HUD counter when its Barrier decoration is enabled. The counter is a per-hit blocking capacity, not absorption hearts or a custom health bar. Native rules spend magicules on blocked damage and can break the barrier on overflow, insufficient magicules or stronger attacks. Upkeep does not silently rearm a broken barrier; turn the passive off and back on to arm it again. Surviving shields persist across relogs.</p>
+<p>While toggled on, gain 40 armor, 72 physical barrier, 36 magic barrier, one knockback resistance and 100% water-element boost. Tensura classifies ice under water for this boost. This uses the native barrier layer and damage rules, not absorption or the former projectile-deletion ward.</p>
+<p>The passive also arms a <strong>350-capacity native Multilayer Barrier</strong>, which appears in Tensura’s shield HUD counter when its Barrier decoration is enabled. The counter is a per-hit blocking capacity, not absorption hearts or a custom health bar. Native rules spend magicules on blocked damage and can break the barrier on overflow, insufficient magicules or stronger attacks. While still toggled on, a broken barrier automatically rearms on the first paid upkeep after <strong>ten seconds without an incoming hit</strong>. Any new hit restarts the delay, including hits completely blocked by a surviving shield. Retoggling does not bypass the delay. Surviving shields persist across relogs.</p>
 <p>Enable or disable this through Tensura’s native <strong>Ability Selection</strong> skill toggle. It is separate from active mode cycling and has no fifteen/thirty-second duration. Upkeep is <strong>80 aura per second</strong>, with the first second paid on enabling. It turns off when aura is insufficient or activation requirements fail. Turning it off removes its own attribute modifiers immediately.</p>
+<p>The toggle no longer emits constant frost crystals. Native barrier rendering and the HUD remain.</p>
 <h2 id="suggested-combo">Suggested combo</h2>
 <p>Capture an enemy with Glacial Prison → aim Avalanche Crash at the captive and nearby foes. As Ymir, use the prison to hold a target within Heavenfall Glacier’s warning circles.</p>
 <h2 id="strengths-and-limitations">Strengths and limitations</h2>
@@ -135,5 +136,5 @@
 <h2 id="related-pages">Related pages</h2>
 <p><a href="Skills.html">Skills</a> · <a href="Mechanics.html">Mechanics</a> · <a href="Evolution.html">Evolution</a> · <a href="Commands.html">Commands</a></p>
 <hr />
-<p><strong>Categories:</strong> Tensura: Wild Hunt · Version 0.6.0</p>
+<p><strong>Categories:</strong> Tensura: Wild Hunt · Version 0.7.0</p>
 <footer>Unofficial fan addon. Original documentation and portraits. Not affiliated with Capcom or ManasMods. Offline edition; no external services required.</footer></main></div></body></html>

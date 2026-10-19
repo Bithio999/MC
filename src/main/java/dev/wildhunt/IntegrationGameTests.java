@@ -61,7 +61,7 @@ public final class IntegrationGameTests {
         double p = physical.getValue(), m = magic.getValue(), aura = TensuraStorages.getExistenceFrom(player).getAura();
         instance.setToggled(true); instance.onToggleOn(player);
         helper.assertTrue(instance.isToggled() && instance.canBeToggled(player), "Native passive toggle rejected");
-        helper.assertTrue(physical.getValue() == p + 20 && magic.getValue() == m + 20, "Native barriers were not applied");
+        helper.assertTrue(physical.getValue() == p + 18 && magic.getValue() == m + 18, "Native barriers were not applied");
         helper.assertTrue(!player.hasEffect(MobEffects.ABSORPTION) && player.getAbsorptionAmount() == 0, "Passive still uses absorption hearts");
         helper.assertTrue(TensuraStorages.getExistenceFrom(player).getAura() == aura - skill.balance.upkeep(false), "Initial passive upkeep not consumed");
         instance.setToggled(false); instance.onToggleOff(player);
@@ -100,6 +100,8 @@ public final class IntegrationGameTests {
         var skill = WildHunt.UNIQUE.get(Apex.UTH_DUNA).get();
         HunterData.learnReward(player, skill);
         var instance = SkillAPI.getSkillsFrom(player).getSkill(skill).orElseThrow();
+        var placement = ApexArts.cursorPlacement(helper.getLevel(), player, 24);
+        zombie.setPos(placement.add(1, 0, 0));
         skill.onPressed(instance, player, 0, 1);
         helper.assertTrue(zombie.getHealth() < health, "Water damage did not reach the enemy");
         helper.assertTrue(HunterData.of(zombie).getLong("drenched_until") > helper.getLevel().getGameTime(), "Drench mark missing");
@@ -472,7 +474,7 @@ public final class IntegrationGameTests {
             for(int distance=0;distance<=10;distance++) helper.getLevel().getChunk(net.minecraft.core.BlockPos.containing(origin.add(caster.getLookAngle().scale(distance))));
             skill.onPressed(instance,caster,0,1); var delta=caster.position().subtract(origin);
             helper.assertTrue(delta.x>4 && (pitch<0 ? delta.y>4 : delta.y< -4), "Thunder Step ignored vertical aim: " + delta);
-            helper.assertTrue(Math.abs(delta.length()-8)<0.01, "Aimed dash changed its total range");
+            helper.assertTrue(Math.abs(delta.length()-16)<0.01, "Aimed dash changed its total range");
         }
         helper.succeed();
     }
@@ -514,7 +516,11 @@ public final class IntegrationGameTests {
             var foreign=WildHunt.id("test_foreign_barrier");
             barrier.addPermanentModifier(new net.minecraft.world.entity.ai.attributes.AttributeModifier(foreign,7,net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE));
             instance.onToggleOff(caster); helper.assertTrue(barrier.getValue()==7, "Disabling the passive removed another barrier source");
-            instance.onToggleOn(caster); helper.assertTrue(barrier.getValue()==7+skill.barrierCapacity(), "Re-enabling failed to rearm the native shield");
+            instance.onToggleOn(caster); helper.assertTrue(barrier.getValue()==7, "Retoggling bypassed recovery delay");
+            instance.getOrCreateTag().putLong("barrier_ready",helper.getLevel().getGameTime());
+            instance.getOrCreateTag().putLong("passive_next",helper.getLevel().getGameTime());
+            skill.tickActive(instance,caster);
+            helper.assertTrue(barrier.getValue()==7+skill.barrierCapacity(), "Out-of-combat recovery failed to rearm the shield");
             instance.onToggleOff(caster); caster.discard();
         }
         helper.succeed();
@@ -531,6 +537,7 @@ public final class IntegrationGameTests {
             helper.assertTrue(races.evolveRace(WildHunt.HUNTERS.get(stage-1).get()), "Native evolution rejected hunter stage "+stage);
             helper.assertTrue(player.getMaxHealth()==baseHP+HunterProgression.HP_BONUS[stage], "Evolution HP bonus did not replace the previous stage");
             helper.assertTrue(player.getAttributeValue(io.github.manasmods.tensura.registry.attribute.TensuraAttributes.MAX_SPIRITUAL_HEALTH)==baseSHP+HunterProgression.SHP_BONUS[stage], "Evolution did not increase native SHP");
+            helper.assertTrue(SkillAPI.getSkillsFrom(player).getSkill(WildHunt.REGENERATION.get(stage-1).get()).isPresent(), "Native evolution omitted its new Extra Skill");
         }
         // Emulate an already-saved Sovereign with the old +30 HP and no SHP modifier.
         player.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH).addOrReplacePermanentModifier(
@@ -538,10 +545,195 @@ public final class IntegrationGameTests {
         player.getAttribute(io.github.manasmods.tensura.registry.attribute.TensuraAttributes.MAX_SPIRITUAL_HEALTH).removeModifier(WildHunt.id("hunter_spiritual_health"));
         player.setHealth(15); TensuraStorages.getExistenceFrom(player).setSpiritualHealth(11);
         for(int login=0;login<2;login++) ApexTimers.onLogin(new net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent(player));
-        helper.assertTrue(player.getMaxHealth()==baseHP+200 && player.getAttributeValue(io.github.manasmods.tensura.registry.attribute.TensuraAttributes.MAX_SPIRITUAL_HEALTH)==baseSHP+120, "Saved hunter did not receive the new HP/SHP caps exactly once");
+        helper.assertTrue(player.getMaxHealth()==baseHP+HunterProgression.HP_BONUS[3] && player.getAttributeValue(io.github.manasmods.tensura.registry.attribute.TensuraAttributes.MAX_SPIRITUAL_HEALTH)==baseSHP+HunterProgression.SHP_BONUS[3], "Saved hunter did not receive the new HP/SHP caps exactly once");
         helper.assertTrue(player.getHealth()==15 && TensuraStorages.getExistenceFrom(player).getSpiritualHealth()==11, "Relogging provided an unintended heal");
         races.setRace(TensuraRaces.HUMAN.get(),false);
         helper.assertTrue(player.getMaxHealth()==baseHP && player.getAttributeValue(io.github.manasmods.tensura.registry.attribute.TensuraAttributes.MAX_SPIRITUAL_HEALTH)==baseSHP, "Leaving the hunter branch retained its vitality bonuses");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty", timeoutTicks = 100)
+    public static void railboltRicochetsThroughWallsButInitialShotStops(GameTestHelper helper) {
+        var player=combatPlayer(helper); var start=player.position().add(0,180,0);
+        player.setPos(start); player.setYRot(0); player.setXRot(0);
+        var first=durableTarget(helper); first.setPos(start.add(0,0,5)); first.setNoGravity(true);
+        var second=durableTarget(helper); second.setPos(start.add(7,0,5)); second.setNoGravity(true);
+        for(int y=0;y<4;y++) for(int z=2;z<9;z++) helper.getLevel().setBlock(net.minecraft.core.BlockPos.containing(start.add(3,y,z)),net.minecraft.world.level.block.Blocks.STONE.defaultBlockState(),3);
+        helper.assertTrue(!first.hasLineOfSight(second), "Test wall did not block the ricochet path");
+        var skill=WildHunt.UNIQUE.get(Apex.REY_DAU).get(); HunterData.learnReward(player,skill);
+        var instance=SkillAPI.getSkillsFrom(player).getSkill(skill).orElseThrow();
+        ApexArts.ricochet(skill,helper.getLevel(),instance,player);
+        helper.assertTrue(first.getHealth()<1024 && second.getHealth()<1024,"Ricochet failed to pass through blocks");
+        first.setHealth(1024); second.setHealth(1024); first.invulnerableTime=0; second.invulnerableTime=0;
+        for(int x=-1;x<=1;x++) for(int y=0;y<4;y++) helper.getLevel().setBlock(net.minecraft.core.BlockPos.containing(start.add(x,y,2)),net.minecraft.world.level.block.Blocks.STONE.defaultBlockState(),3);
+        ApexArts.ricochet(skill,helper.getLevel(),instance,player);
+        helper.assertTrue(first.getHealth()==1024 && second.getHealth()==1024,"Initial Railbolt passed through its blocking wall");
+        helper.succeed();
+    }
+    @GameTest(template = "empty", timeoutTicks = 100)
+    public static void extendedThunderStepPreservesAllMomentum(GameTestHelper helper) {
+        for(boolean ultimate:new boolean[]{false,true}) {
+            var caster=helper.spawnWithNoFreeWill(net.minecraft.world.entity.EntityType.PIG,1,1,1);
+            var start=caster.position().add(0,200,0); caster.setPos(start); caster.setNoGravity(true); caster.setYRot(0); caster.setXRot(-20);
+            var motion=new net.minecraft.world.phys.Vec3(0.42,-0.18,0.73); caster.setDeltaMovement(motion);
+            var skill=(ultimate?WildHunt.ULTIMATE:WildHunt.UNIQUE).get(Apex.REY_DAU).get(); HunterData.learnReward(caster,skill);
+            ApexArts.thunderStep(skill,helper.getLevel(),SkillAPI.getSkillsFrom(caster).getSkill(skill).orElseThrow(),caster);
+            helper.assertTrue(Math.abs(caster.position().distanceTo(start)-(ultimate?24:16))<0.01,"Extended teleport range incorrect");
+            helper.assertTrue(caster.getDeltaMovement().distanceToSqr(motion)<0.000001,"Teleport changed momentum");
+            helper.assertTrue(skill.balance.cooldown(1,ultimate)==(ultimate?4:5),"Teleport cooldown was not reduced"); caster.discard();
+        }
+        helper.succeed();
+    }
+    @GameTest(template = "empty", timeoutTicks = 100)
+    public static void undertowFollowsCrosshairAndRendersVortex(GameTestHelper helper) {
+        var player=combatPlayer(helper); var start=player.position().add(0,220,0); player.setPos(start); player.setYRot(0); player.setXRot(0);
+        for(int x=-1;x<=1;x++) for(int y=0;y<4;y++) helper.getLevel().setBlock(net.minecraft.core.BlockPos.containing(start.add(x,y,18)),net.minecraft.world.level.block.Blocks.STONE.defaultBlockState(),3);
+        for(boolean ultimate:new boolean[]{false,true}) {
+            var skill=(ultimate?WildHunt.ULTIMATE:WildHunt.UNIQUE).get(Apex.UTH_DUNA).get(); HunterData.learnReward(player,skill);
+            var instance=SkillAPI.getSkillsFrom(player).getSkill(skill).orElseThrow(); ApexArts.secondary(skill,helper.getLevel(),instance,player);
+            var center=ApexArts.point(instance.getOrCreateTag(),"field");
+            helper.assertTrue(center.distanceTo(player.getEyePosition())>17 && center.distanceTo(player.getEyePosition())<18.1,"Undertow was not placed on the crosshair's surface");
+            helper.assertTrue(helper.getLevel().getEntitiesOfClass(ArtVisualEntity.class,new net.minecraft.world.phys.AABB(center,center).inflate(1),e->e.kind()==ArtVisualEntity.WHIRLPOOL).size()>0,"Undertow mesh missing");
+        }
+        player.setYRot(180);
+        helper.assertTrue(Math.abs(ApexArts.cursorPlacement(helper.getLevel(),player,24).distanceTo(player.getEyePosition())-24)<0.01,"Cursor miss exceeded its placement limit");
+        helper.succeed();
+    }
+    @GameTest(template = "empty", timeoutTicks = 100)
+    public static void hunterRegenerationIsGrantedByEvolutionAndOnlyStrongestHeals(GameTestHelper helper) {
+        var player=combatPlayer(helper); var races=RaceAPI.getRaceFrom(player);
+        for(int stage=1;stage<=3;stage++) {
+            races.setRace(WildHunt.HUNTERS.get(stage-1).get(),false);
+            for(int tier=1;tier<=stage;tier++) helper.assertTrue(SkillAPI.getSkillsFrom(player).getSkill(WildHunt.REGENERATION.get(tier-1).get()).isPresent(),"Race failed to grant regeneration tier "+tier);
+        }
+        var energy=TensuraStorages.getExistenceFrom(player); energy.setAura(10000); energy.setMagicule(5000);
+        energy.setSpiritualHealth(player.getAttributeValue(io.github.manasmods.tensura.registry.attribute.TensuraAttributes.MAX_SPIRITUAL_HEALTH)-10);
+        player.setHealth(player.getMaxHealth()-20); player.tickCount=20;
+        AuraRegenerationSkill.tick(player);
+        helper.assertTrue(player.getHealth()==player.getMaxHealth(),"Infinite-equivalent recovery did not restore HP");
+        helper.assertTrue(energy.getSpiritualHealth()==player.getAttributeValue(io.github.manasmods.tensura.registry.attribute.TensuraAttributes.MAX_SPIRITUAL_HEALTH),"Infinite-equivalent recovery did not restore SHP");
+        helper.assertTrue(energy.getAura()==9300 && energy.getMagicule()==5000,"Regeneration stacked or consumed magicules");
+        AuraRegenerationSkill.tick(player); helper.assertTrue(energy.getAura()==9300,"Full health regeneration spent aura");
+        helper.succeed();
+    }
+    @GameTest(template = "empty", timeoutTicks = 100)
+    public static void regenerationTiersSpendOnlyAvailableAura(GameTestHelper helper) {
+        for(int tier=1;tier<=3;tier++) {
+            var caster=helper.spawnWithNoFreeWill(net.minecraft.world.entity.EntityType.PIG,1,1,1);
+            caster.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH).setBaseValue(100); caster.setHealth(80);
+            var energy=TensuraStorages.getExistenceFrom(caster); energy.setAura(10000); energy.setMagicule(1234);
+            var skill=WildHunt.REGENERATION.get(tier-1).get();
+            helper.assertTrue(skill.getColoredName().getString().equals(AuraRegenerationSkill.NAMES[tier-1]),"Regeneration name exposed a localization key");
+            HunterData.learnReward(caster,skill);
+            var instance=SkillAPI.getSkillsFrom(caster).getSkill(skill).orElseThrow(); instance.setToggled(true);
+            skill.regenerate(instance,caster);
+            helper.assertTrue(caster.getHealth()==(tier==1?84:100),"Regeneration speed mismatch at tier "+tier);
+            helper.assertTrue(energy.getAura()==(tier==1?9920:9400) && energy.getMagicule()==1234,"Incorrect recovery resource at tier "+tier);
+            caster.setHealth(80); energy.setAura(15); skill.regenerate(instance,caster);
+            helper.assertTrue(energy.getAura()>=0 && energy.getAura()<0.001 && energy.getMagicule()==1234,"Recovery overdrew aura or used MP");
+            helper.assertTrue(caster.getHealth()>80 && caster.getHealth()<81,"Limited aura was not converted into partial recovery"); caster.discard();
+        }
+        helper.succeed();
+    }
+    @GameTest(template = "empty", timeoutTicks = 100)
+    public static void hunterEpGainsAndRaceEnergyKeepTwoToOneSplit(GameTestHelper helper) {
+        var player=combatPlayer(helper); var target=durableTarget(helper);
+        for(int stage=1;stage<=3;stage++) {
+            RaceAPI.getRaceFrom(player).setRace(WildHunt.HUNTERS.get(stage-1).get(),false);
+            var race=WildHunt.HUNTERS.get(stage-1).get();
+            helper.assertTrue(Math.abs(race.getMinBaseAura()-2*race.getMinBaseMagicule())<0.001,"Race base EP split changed");
+            var a=player.getAttribute(io.github.manasmods.tensura.registry.attribute.TensuraAttributes.MAX_AURA);
+            var m=player.getAttribute(io.github.manasmods.tensura.registry.attribute.TensuraAttributes.MAX_MAGICULE);
+            double oldA=a.getBaseValue(),oldM=m.getBaseValue();
+            io.github.manasmods.tensura.handler.DeathHandler.gainEPEntity(player,target,900);
+            double aura=a.getBaseValue()-oldA,mp=m.getBaseValue()-oldM;
+            helper.assertTrue(aura>0 && mp>0 && Math.abs(aura-2*mp)<0.001,"Actual native kill EP did not split 2/3 aura, 1/3 magicules");
+        }
+        helper.succeed();
+    }
+    @GameTest(template = "empty", timeoutTicks = 100)
+    public static void hunterOtherworldersUseNativeSpawnDataAndPersistRace(GameTestHelper helper) {
+        for(var type:java.util.List.of(HunterOtherworlders.ALMA.get(),HunterOtherworlders.GEMMA.get())) {
+            var npc=type.spawn(helper.getLevel(),helper.absolutePos(new net.minecraft.core.BlockPos(2,1,2)),net.minecraft.world.entity.MobSpawnType.COMMAND);
+            helper.assertTrue(npc!=null,"Otherworlder could not spawn"); npc.setNoAi(true);
+            helper.assertTrue(npc instanceof io.github.manasmods.tensura.entity.template.subclass.IOtherworlder,"NPC is not a native otherworlder");
+            helper.assertTrue(HunterData.stage(npc)==1,"Otherworlder did not receive Awakened Hunter race");
+            var registry=helper.getLevel().registryAccess().registryOrThrow(io.github.manasmods.tensura.registry.data.TensuraCustomData.ENTITY_EXISTENCE);
+            var data=registry.get(net.minecraft.core.registries.BuiltInRegistries.ENTITY_TYPE.getKey(type));
+            helper.assertTrue(data!=null && data.abilities().orElseThrow().size()==7,"Native existence loadout is missing seven Tensura abilities");
+            for(var id:data.abilities().orElseThrow()) helper.assertTrue(SkillAPI.getSkillsFrom(npc).getSkill(SkillAPI.getSkillRegistry().get(id)).isPresent(),"Native spawn omitted ability "+id);
+            var saved=new net.minecraft.nbt.CompoundTag(); npc.saveWithoutId(saved);
+            var loaded=type.create(helper.getLevel()); loaded.load(saved);
+            helper.assertTrue(HunterData.stage(loaded)==1,"Otherworlder lost its race on save/load");
+            helper.assertTrue(loaded.getTextureLocation().getNamespace().equals("wildhunt"),"NPC does not have a bundled skin"); npc.discard(); loaded.discard();
+        }
+        var registry=helper.getLevel().registryAccess().registryOrThrow(io.github.manasmods.tensura.registry.data.TensuraCustomData.OTHERWORLDER_SPAWN_DISTRIBUTION);
+        double chance=0;
+        for(var entry:registry) chance+=entry.chance();
+        helper.assertTrue(Math.abs(chance-1)<0.000001,"Otherworlder spawn distribution is not normalized");
+        helper.assertTrue(registry.get(WildHunt.id("alma"))!=null && registry.get(WildHunt.id("gemma"))!=null,"Native random otherworlder pool omits hunters");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty", timeoutTicks = 100)
+    public static void sovereignRegenerationStopsFundedOrdinaryDeathOnly(GameTestHelper helper) {
+        var caster=helper.spawnWithNoFreeWill(net.minecraft.world.entity.EntityType.PIG,1,1,1);
+        var energy=TensuraStorages.getExistenceFrom(caster); energy.setAura(10000); energy.setMagicule(1234);
+        var skill=WildHunt.REGENERATION.get(2).get(); HunterData.learnReward(caster,skill);
+        var instance=SkillAPI.getSkillsFrom(caster).getSkill(skill).orElseThrow(); instance.setToggled(true);
+        caster.hurt(caster.damageSources().generic(),10000);
+        helper.assertTrue(caster.isAlive() && caster.getHealth()==1,"Funded Sovereign Rebirth did not avert ordinary death");
+        helper.assertTrue(energy.getAura()==9970 && energy.getMagicule()==1234,"Death prevention used the wrong resource");
+        energy.setAura(0); caster.invulnerableTime=0; caster.hurt(caster.damageSources().generic(),10000);
+        helper.assertTrue(!caster.isAlive(),"Unfunded Sovereign Rebirth gave free immortality");
+        helper.succeed();
+    }
+    @GameTest(template = "empty", timeoutTicks = 360)
+    public static void brokenBarrierRecoversAfterRealNoHitDelay(GameTestHelper helper) {
+        var caster=helper.spawnWithNoFreeWill(net.minecraft.world.entity.EntityType.PIG,1,1,1);
+        caster.setNoGravity(true); caster.setPos(caster.position().add(0,240,0));
+        caster.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH).setBaseValue(1024);caster.setHealth(1024);
+        EnergyHelper.setBaseMaxEP(caster,300000);
+        var energy=TensuraStorages.getExistenceFrom(caster);energy.setAura(100000);energy.setMagicule(100000);
+        caster.getAttribute(io.github.manasmods.tensura.registry.attribute.TensuraAttributes.MAX_SPIRITUAL_HEALTH).setBaseValue(100000);energy.setSpiritualHealth(100000);
+        var skill=WildHunt.UNIQUE.get(Apex.UTH_DUNA).get();HunterData.learnReward(caster,skill);
+        var instance=SkillAPI.getSkillsFrom(caster).getSkill(skill).orElseThrow();instance.onToggleOn(caster);
+        var barrier=caster.getAttribute(io.github.manasmods.tensura.registry.attribute.TensuraAttributes.MULTILAYER_BARRIER);
+        caster.hurt(caster.damageSources().generic(),300);
+        helper.assertTrue(caster.isAlive() && barrier.getValue()==0,"Test hit did not leave a living unshielded caster: HP="+caster.getHealth()+" SHP="+energy.getSpiritualHealth());
+        helper.runAfterDelay(100,()->{
+            helper.assertTrue(barrier.getValue()==0,"Shield recovered before the no-hit delay");
+            // Another hit, including a small hit, restarts the full recovery timer.
+            caster.invulnerableTime=0;caster.hurt(caster.damageSources().generic(),1);
+        });
+        helper.runAfterDelay(210,()->helper.assertTrue(barrier.getValue()==0,"A later hit failed to postpone recovery"));
+        helper.runAfterDelay(321,()->{helper.assertTrue(instance.isToggled() && barrier.getValue()==skill.barrierCapacity(),"Shield did not automatically recover: toggled="+instance.isToggled()+" value="+barrier.getValue()+" active="+HunterData.of(caster).getBoolean("active_skills")+" ready="+instance.getOrCreateTag().getLong("barrier_ready")+" now="+helper.getLevel().getGameTime()+" next="+instance.getOrCreateTag().getLong("passive_next")+" ticks="+caster.tickCount+" aura="+energy.getAura());helper.succeed();});
+    }
+
+    @GameTest(template = "empty", timeoutTicks = 100)
+    public static void auraInfiniteRecoveryUsesNativeHealingGateWithoutMpDrain(GameTestHelper helper) {
+        for(int tier:new int[]{2,3}) {
+            var caster=helper.spawnWithNoFreeWill(net.minecraft.world.entity.EntityType.PIG,1,1,1);
+            caster.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH).setBaseValue(100);caster.setHealth(80);
+            var energy=TensuraStorages.getExistenceFrom(caster);energy.setAura(10000);energy.setMagicule(1234);
+            var skill=WildHunt.REGENERATION.get(tier-1).get();HunterData.learnReward(caster,skill);
+            var instance=SkillAPI.getSkillsFrom(caster).getSkill(skill).orElseThrow();instance.setToggled(true);
+            var frost=io.github.manasmods.tensura.registry.effect.TensuraMobEffects.getReference(io.github.manasmods.tensura.registry.effect.TensuraMobEffects.FROST);
+            caster.addEffect(new net.minecraft.world.effect.MobEffectInstance(frost,200));
+            helper.assertTrue(caster.hasEffect(frost),"Healing suppression fixture was not applied");
+            skill.regenerate(instance,caster);
+            helper.assertTrue(caster.getHealth()==(tier==3?100:80),"Aura recovery disagrees with native healing suppression");
+            helper.assertTrue(energy.getMagicule()==1234,"Healing gate correction charged native regeneration MP");
+            if(tier==2) helper.assertTrue(energy.getAura()==10000,"Suppressed regeneration spent aura");
+            else {
+                caster.setHealth(80);
+                var prison=io.github.manasmods.tensura.registry.effect.TensuraMobEffects.getReference(io.github.manasmods.tensura.registry.effect.TensuraMobEffects.INFINITE_IMPRISONMENT);
+                caster.addEffect(new net.minecraft.world.effect.MobEffectInstance(prison,200));
+                double aura=energy.getAura();skill.regenerate(instance,caster);
+                helper.assertTrue(caster.getHealth()==80 && energy.getAura()==aura,"Infinite Imprisonment did not suppress Sovereign Rebirth");
+            }
+            caster.discard();
+        }
         helper.succeed();
     }
 

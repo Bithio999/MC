@@ -5,9 +5,9 @@
 <body data-root="../"><a class="skip" href="#article">Skip to article</a>
 <header><a class="brand" href="../index.html"><span>WILD HUNT</span><small>Tensura: Reincarnated addon wiki</small></a>
 <div class="search"><label for="wiki-search">Search the wiki</label><input id="wiki-search" type="search" placeholder="Find a skill, race, or mechanic…" autocomplete="off"><div id="search-results" aria-live="polite"></div></div></header>
-<div class="layout"><nav class="sidebar" aria-label="Wiki navigation"><h2>Explore</h2><a href="../index.html">Main Page</a><a href="../site/Getting-Started.html">Getting started</a><a href="../site/Skills.html">Skills</a><a href="../site/Evolution.html">Human evolution</a><a href="../site/Mechanics.html">Combat mechanics</a><a href="../site/Commands.html">Commands</a><a href="../site/Version-History.html">Version history</a>
+<div class="layout"><nav class="sidebar" aria-label="Wiki navigation"><h2>Explore</h2><a href="../index.html">Main Page</a><a href="../site/Getting-Started.html">Getting started</a><a href="../site/Skills.html">Skills</a><a href="../site/Evolution.html">Human evolution</a><a href="../site/Mechanics.html">Combat mechanics</a><a href="../site/Aura-Regeneration.html">Aura regeneration</a><a href="../site/Alma.html">Alma</a><a href="../site/Gemma.html">Gemma</a><a href="../site/Commands.html">Commands</a><a href="../site/Version-History.html">Version history</a>
 <h2>Apex arts</h2><a href="../site/Storm-Crown.html">Storm Crown</a><a href="../site/Scarlet-Deluge.html">Scarlet Deluge</a><a href="../site/Black-Flame.html">Black Flame</a><a href="../site/Frostbound-Colossus.html">Frostbound Colossus</a>
-<p>Version 0.6.0<br>Minecraft 1.21.1<br>NeoForge</p></nav>
+<p>Version 0.7.0<br>Minecraft 1.21.1<br>NeoForge</p></nav>
 <main id="article"><div class="page-tabs"><span>Article</span><a href="../pages/Scarlet-Deluge.md">Read Markdown</a></div>
 <h1>Scarlet Deluge</h1><p class="subtitle">From the Tensura: Wild Hunt Wiki</p>
 <aside class="infobox" aria-label="Page data"><p><img alt="Scarlet Deluge" src="../../src/main/resources/assets/wildhunt/textures/skill/scarlet_deluge.png" /></p><table>
@@ -67,6 +67,7 @@
 <li><a href="#toggleable-passive-water-veil">Toggleable passive: Water Veil</a></li>
 <li><a href="#suggested-combo">Suggested combo</a></li>
 <li><a href="#strengths-and-limitations">Strengths and limitations</a></li>
+<li><a href="#active-visuals">Active visuals</a></li>
 <li><a href="#native-barrier-hud">Native barrier HUD</a></li>
 <li><a href="#related-pages">Related pages</a></li>
 </ul>
@@ -103,24 +104,29 @@
 </tr>
 </tbody>
 </table>
-<p>Raw values already include the Ultimate’s 3× multiplier where applicable. Mastery adds up to 50%. <strong>Wild Hunt applies no EP damage scaling.</strong> Native elemental boosts, defenses, rank interactions and the listed situational modifiers still apply. EP requirements for race evolution and Ultimate ascension are unchanged.</p>
+<p><strong>0.7.0 damage adjustment:</strong> multiply every raw damage value below by <strong>0.90</strong>. This applies to direct hits, ricochets, fields, counters and signature pulses. Raw values already include the Ultimate’s 3× multiplier where applicable. Mastery adds up to 50%. <strong>Wild Hunt applies no EP damage scaling.</strong> Native elemental boosts, defenses, rank interactions and the listed situational modifiers still apply. EP requirements for race evolution and Ultimate ascension are unchanged.</p>
 <h3 id="crushing-current">Crushing Current</h3>
 <p>Send a broad wave up to 18 blocks over about sixteen game ticks. It carries and drenches each enemy it reaches, damaging a given entity at most once per wave. Its front is 4 blocks wide on either side. Previously drenched enemies take 50% extra primary damage. Drenched is a single twelve-second mark, never a stack counter.</p>
 <h3 id="scarlet-undertow">Scarlet Undertow</h3>
-<p>Place a six-second whirlpool at the aim point, up to six blocks away. The radius is 9 blocks. It hits immediately and once per second, with a gentle inward current between pulses. Raw pulse damage is 18; the table lists opening damage.</p>
+<p>Place a six-second whirlpool at the aim point, up to 24 blocks away along the crosshair ray. The radius is 9 blocks. A block or water surface under the crosshair sets the position; a miss places it at the bounded ray endpoint. It hits immediately and once per second, with a gentle inward current between pulses. Raw pulse damage is 18; the table lists opening damage.</p>
 <h2 id="toggleable-passive-water-veil">Toggleable passive: Water Veil</h2>
-<p>While toggled on, gain 10 armor, 20 physical barrier, 20 magic barrier and 50% water boost. These native attributes participate in Tensura’s damage handling and visible barrier layer. Water breathing remains active while toggled on. No absorption hearts are added. A hostile hit that removes health triggers a 25-raw water counter (75 as Varuna) against a visible attacker within twelve blocks, with a 3-second cooldown.</p>
-<p>The passive also arms a <strong>100-capacity native Multilayer Barrier</strong>, which appears in Tensura’s shield HUD counter when its Barrier decoration is enabled. The counter is a per-hit blocking capacity, not absorption hearts or a custom health bar. Native rules spend magicules on blocked damage and can break the barrier on overflow, insufficient magicules or stronger attacks. Upkeep does not silently rearm a broken barrier; turn the passive off and back on to arm it again. Surviving shields persist across relogs.</p>
+<p>While toggled on, gain 10 armor, 18 physical barrier, 18 magic barrier and 50% water boost. These native attributes participate in Tensura’s damage handling and visible barrier layer. Water breathing remains active while toggled on. No absorption hearts are added. A hostile hit that removes health triggers a 25-raw water counter (75 as Varuna) against a visible attacker within twelve blocks, with a 3-second cooldown.</p>
+<p>The passive also arms a <strong>100-capacity native Multilayer Barrier</strong>, which appears in Tensura’s shield HUD counter when its Barrier decoration is enabled. The counter is a per-hit blocking capacity, not absorption hearts or a custom health bar. Native rules spend magicules on blocked damage and can break the barrier on overflow, insufficient magicules or stronger attacks. While still toggled on, a broken barrier automatically rearms on the first paid upkeep after <strong>ten seconds without an incoming hit</strong>. Any new hit restarts the delay, including hits completely blocked by a surviving shield. Retoggling does not bypass the delay. Surviving shields persist across relogs.</p>
 <p>Enable or disable this through Tensura’s native <strong>Ability Selection</strong> skill toggle. It is separate from active mode cycling and has no fifteen/thirty-second duration. Upkeep is <strong>10 aura per second</strong>, with the first second paid on enabling. It turns off when aura is insufficient or activation requirements fail. Turning it off removes its own attribute modifiers immediately.</p>
+<p>No constant bubble orbit is emitted while the passive is enabled. Native barrier rendering and the shield HUD remain. Active waves use a curled teal water mesh with foam, and Undertow uses rotating teal/coral spiral ribbons.</p>
 <h2 id="suggested-combo">Suggested combo</h2>
 <p>Place Scarlet Undertow to gather enemies → send Crushing Current through the drenched group. Toggle Water Veil when you need sustained defense.</p>
 <h2 id="strengths-and-limitations">Strengths and limitations</h2>
 <p>The veil must remain funded. Native barriers follow Tensura’s rules and do not guarantee immunity to stronger attacks. Its retaliation requires health damage, a hostile living attacker and line of sight. Knockback resistance reduces tides and wave carrying.</p>
+<h2 id="active-visuals">Active visuals</h2>
+<p><img alt="Crushing Current foam crest" src="../media/crushing-current.png" /></p>
+<p><img alt="Scarlet Undertow spiral ribbons" src="../media/scarlet-undertow.png" /></p>
+<p>Captured in the 0.7.0 Minecraft client. These are short-lived active arts, not ambient toggle effects.</p>
 <h2 id="native-barrier-hud">Native barrier HUD</h2>
 <p><img alt="Native shield HUD counter" src="../media/water-veil-hud.png" /></p>
 <p>The Unique passive’s native shield counter in Wild Hunt 0.6.0. Its Ultimate uses a higher capacity.</p>
 <h2 id="related-pages">Related pages</h2>
 <p><a href="Skills.html">Skills</a> · <a href="Mechanics.html">Mechanics</a> · <a href="Evolution.html">Evolution</a> · <a href="Commands.html">Commands</a></p>
 <hr />
-<p><strong>Categories:</strong> Tensura: Wild Hunt · Version 0.6.0</p>
+<p><strong>Categories:</strong> Tensura: Wild Hunt · Version 0.7.0</p>
 <footer>Unofficial fan addon. Original documentation and portraits. Not affiliated with Capcom or ManasMods. Offline edition; no external services required.</footer></main></div></body></html>

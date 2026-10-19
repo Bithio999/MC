@@ -65,8 +65,8 @@ public final class ApexSkill extends Skill {
     }
     public String description() {
         return switch (apex) {
-            case REY_DAU -> "Railbolt ricochets between enemies within twelve blocks without revisiting a target. Thunder Step follows your aim through a clear 3D path and shocks enemies along it. Toggle Storm Mantle for movement, attack speed and lightning power.";
-            case UTH_DUNA -> "A travelling tidal wave carries and drenches enemies. An aimed whirlpool gathers them. Toggle Water Veil for native physical, magic and HUD multilayer barriers and retaliation after health damage.";
+            case REY_DAU -> "Railbolt ricochets between enemies within twelve blocks through walls without revisiting a target. The initial shot needs a clear path. Thunder Step travels 16 blocks (24 Ultimate) along your aim, preserving momentum through a clear 3D path and shocks enemies along it. Toggle Storm Mantle for movement, attack speed and lightning power.";
+            case UTH_DUNA -> "A travelling tidal wave carries and drenches enemies. A whirlpool placed at your crosshair within 24 blocks (36 Ultimate) gathers them. Toggle Water Veil for native physical, magic and HUD multilayer barriers and retaliation after health damage.";
             case NU_UDRA -> "Rendered tentacles lash and pull enemies, leaving owned oil pools. Ignition burns those locations directly, without oil stacks. Toggle Furnace Mantle for melee and flame power.";
             case JIN_DAHAAD -> "Avalanche Crash erupts at your target and launches nearby enemies. Glacial Prison captures one target in native Frost. Toggle Colossus Carapace for physical, magic and HUD multilayer barriers and stability.";
         } + (ultimate ? " Ultimate: triple base damage and a third signature art." : " Damage improves with mastery, never with EP. Master this skill to unlock its Ultimate as Sovereign Hunter.");
@@ -102,12 +102,13 @@ public final class ApexSkill extends Skill {
     void restorePassive(ManasSkillInstance instance, LivingEntity caster) {
         if (!instance.isToggled()) return;
         applyPassive(caster);
-        if (barrierCapacity() > 0 && !instance.getOrCreateTag().getBoolean("hud_barrier_initialized")) {
+        if (barrierCapacity() > 0) {
             var barrier = caster.getAttribute(TensuraAttributes.MULTILAYER_BARRIER);
-            if (barrier != null) {
+            if (barrier != null && (caster.level().getGameTime() >= instance.getOrCreateTag().getLong("barrier_ready")
+                    && (barrier.getModifier(passiveId()) == null || !instance.getOrCreateTag().getBoolean("hud_barrier_initialized")))) {
                 // The native HUD and damage handler both read this attribute.
                 // Permanent modifiers persist a surviving barrier across relogs;
-                // native breaks remove it. Upkeep must never recreate a broken one.
+                // native breaks remove it. Rebuild only after ten seconds without a hit.
                 barrier.addOrReplacePermanentModifier(new AttributeModifier(passiveId(), barrierCapacity(), AttributeModifier.Operation.ADD_VALUE));
                 instance.getOrCreateTag().putBoolean("hud_barrier_initialized", true); instance.markDirty();
             }
@@ -148,9 +149,9 @@ public final class ApexSkill extends Skill {
             if (!caster.isAlive() || !canInteractSkill(instance, caster) || !canActivateSkill(instance, caster, 0)) onToggleOff(instance, caster);
             else if (now >= tag.getLong("passive_next")) {
                 if (EnergyHelper.isOutOfEnergy(caster, balance.upkeep(ultimate), 0)) onToggleOff(instance, caster);
-                else { applyPassive(caster); tag.putLong("passive_next", now + 20); instance.markDirty(); }
+                else { restorePassive(instance, caster); tag.putLong("passive_next", now + 20); instance.markDirty(); }
             }
-            if (instance.isToggled() && now % 8 == 0) ApexVisuals.mantle(level, apex, caster.position(), ultimate);
+            if (instance.isToggled() && apex != Apex.UTH_DUNA && apex != Apex.JIN_DAHAAD && now % 8 == 0) ApexVisuals.mantle(level, apex, caster.position(), ultimate);
         }
         return ApexArts.tick(this, level, instance, caster) | instance.isToggled();
     }
@@ -163,7 +164,7 @@ public final class ApexSkill extends Skill {
     }
     boolean strike(ServerLevel level, ManasSkillInstance instance, LivingEntity caster, LivingEntity target,
                    float raw, int mode, boolean pulse) {
-        float damage = raw; var data = HunterData.of(target); long now = level.getGameTime();
+        float damage = raw * 0.9f; var data = HunterData.of(target); long now = level.getGameTime();
         if (apex == Apex.REY_DAU && (target.isInWaterOrRain() || data.getLong("drenched_until") > now)) damage *= 1.3f;
         if (apex == Apex.UTH_DUNA && mode == 0 && data.getLong("drenched_until") > now) damage *= 1.5f;
         var type = switch (apex) {
@@ -213,8 +214,8 @@ public final class ApexSkill extends Skill {
             }
             case UTH_DUNA -> {
                 modify(caster, Attributes.ARMOR, ultimate ? 25 : 10, add);
-                modify(caster, TensuraAttributes.PHYSICAL_BARRIER, ultimate ? 40 : 20, add);
-                modify(caster, TensuraAttributes.MAGIC_BARRIER, ultimate ? 40 : 20, add);
+                modify(caster, TensuraAttributes.PHYSICAL_BARRIER, ultimate ? 36 : 18, add);
+                modify(caster, TensuraAttributes.MAGIC_BARRIER, ultimate ? 36 : 18, add);
             }
             case NU_UDRA -> {
                 modify(caster, Attributes.ATTACK_DAMAGE, ultimate ? 1 : 0.5, multiply);
@@ -223,8 +224,8 @@ public final class ApexSkill extends Skill {
             case JIN_DAHAAD -> {
                 modify(caster, Attributes.ARMOR, ultimate ? 40 : 20, add);
                 modify(caster, Attributes.KNOCKBACK_RESISTANCE, 1, add);
-                modify(caster, TensuraAttributes.PHYSICAL_BARRIER, ultimate ? 80 : 40, add);
-                modify(caster, TensuraAttributes.MAGIC_BARRIER, ultimate ? 40 : 15, add);
+                modify(caster, TensuraAttributes.PHYSICAL_BARRIER, ultimate ? 72 : 36, add);
+                modify(caster, TensuraAttributes.MAGIC_BARRIER, ultimate ? 36 : 13.5, add);
             }
         }
     }

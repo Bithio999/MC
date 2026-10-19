@@ -25,4 +25,4 @@ Mastery improves damage by up to 50%; Ultimates use a 3× base multiplier. Wild 
 
 ---
 
-**Categories:** Tensura: Wild Hunt · Version 0.6.0
+**Categories:** Tensura: Wild Hunt · Version 0.7.0

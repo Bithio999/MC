@@ -31,7 +31,7 @@ Roll through Tensura’s normal reincarnation system. These Uniques join the con
 | 1. Oil Lash | 160 | 3 s | 70 |
 | 2. Blackflame Ignition | 800 | 8 s | 90 |
 
-Raw values already include the Ultimate’s 3× multiplier where applicable. Mastery adds up to 50%. **Wild Hunt applies no EP damage scaling.** Native elemental boosts, defenses, rank interactions and the listed situational modifiers still apply. EP requirements for race evolution and Ultimate ascension are unchanged.
+**0.7.0 damage adjustment:** multiply every raw damage value below by **0.90**. This applies to direct hits, ricochets, fields, counters and signature pulses. Raw values already include the Ultimate’s 3× multiplier where applicable. Mastery adds up to 50%. **Wild Hunt applies no EP damage scaling.** Native elemental boosts, defenses, rank interactions and the listed situational modifiers still apply. EP requirements for race evolution and Ultimate ascension are unchanged.
 
 ### Oil Lash
 
@@ -67,4 +67,4 @@ Captured in the Minecraft 1.21.1 development client with Wild Hunt 0.5.0.
 
 ---
 
-**Categories:** Tensura: Wild Hunt · Version 0.6.0
+**Categories:** Tensura: Wild Hunt · Version 0.7.0

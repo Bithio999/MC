@@ -30,6 +30,10 @@ public final class ArtVisualRenderer extends EntityRenderer<ArtVisualEntity> {
         if (entity.kind() == ArtVisualEntity.LASH) {
             double extent = Math.clamp(age / 4, 0, 1) * Math.clamp((entity.lifetime() - age) / 6, 0, 1);
             tentacle(poses.last(), buffers, entity.end(), extent, age, light);
+        } else if (entity.kind() == ArtVisualEntity.TIDAL_WAVE) {
+            tidalWave(poses.last(), buffers.getBuffer(RenderType.debugQuads()), entity.end(), age, entity.lifetime());
+        } else if (entity.kind() == ArtVisualEntity.WHIRLPOOL) {
+            whirlpool(poses.last(), buffers.getBuffer(RenderType.debugQuads()), entity.end().x, age, entity.lifetime());
         } else {
             Vec3 base = Vec3.ZERO; double height = entity.end().y;
             if (entity.kind() == ArtVisualEntity.FALLING_ICE) {
@@ -42,6 +46,47 @@ public final class ArtVisualRenderer extends EntityRenderer<ArtVisualEntity> {
             crystal(poses.last(), buffers.getBuffer(RenderType.entityTranslucent(ICE)), base, height, light);
         }
         super.render(entity, yaw, partial, poses, buffers, light);
+    }
+    private static void colorQuad(PoseStack.Pose pose, VertexConsumer mesh, Vec3 a, Vec3 b, Vec3 c, Vec3 d, int color) {
+        for (Vec3 p : new Vec3[]{a,b,c,d,d,c,b,a}) mesh.addVertex(pose, (float)p.x, (float)p.y, (float)p.z).setColor(color);
+    }
+    /** A curled, scalloped wall of teal water with a pale foaming crest. */
+    private static void tidalWave(PoseStack.Pose pose, VertexConsumer mesh, Vec3 data, float age, int life) {
+        Vec3 travel = new Vec3(data.x, 0, data.z), direction = travel.normalize(), right = direction.yRot((float)(Math.PI / 2));
+        Vec3 center = travel.scale(Math.clamp(age / life, 0, 1));
+        double rise = Math.min(1, age / 2.0) * Math.min(1, (life - age) / 3.0);
+        for (int x = 0; x < 24; x++) for (int y = 0; y < 10; y++) {
+            Vec3[] q = new Vec3[4]; int j=0;
+            for (int[] corner : new int[][]{{x,y},{x+1,y},{x+1,y+1},{x,y+1}}) {
+                double across = (corner[0] / 12.0 - 1) * data.y, t = corner[1] / 10.0;
+                double height = (2.2 + Math.cos(across * 1.5 + age * 0.2) * 0.2) * Math.sin(t * Math.PI * 0.64) * rise;
+                double curl = (Math.cos(t * Math.PI * 0.95) - 1) * 0.7;
+                q[j++] = center.add(right.scale(across)).add(direction.scale(curl)).add(0,height,0);
+            }
+            int color = y >= 8 ? (x % 3 == 0 ? 0xfff2fff7 : 0xffb1e9df) : y >= 5 ? 0xff48c0b7 : y >= 2 ? 0xff278eac : 0xff214f7d;
+            colorQuad(pose,mesh,q[0],q[1],q[2],q[3],color);
+        }
+    }
+    /** Three rotating tapered spiral ribbons with coral fins and foam tips. */
+    private static void whirlpool(PoseStack.Pose pose, VertexConsumer mesh, double radius, float age, int life) {
+        double grow = Math.min(1, age / 6.0) * Math.min(1, (life-age) / 8.0);
+        for (int arm = 0; arm < 3; arm++) for (int i=0; i<64; i++) {
+            Vec3[] q = new Vec3[4]; int j=0;
+            for (int[] corner : new int[][]{{i,0},{i+1,0},{i+1,1},{i,1}}) {
+                double t = corner[0] / 64.0, a = arm * Math.PI*2/3 + t*Math.PI*3 - age*0.12;
+                double r = (0.5 + t*(radius-0.5)) * grow;
+                double thickness = 0.12 + t*0.45;
+                r += corner[1]*thickness;
+                q[j++] = new Vec3(Math.cos(a)*r,0.12+Math.sin(t*Math.PI)*0.25+corner[1]*0.12,Math.sin(a)*r);
+            }
+            int color = i > 57 ? 0xffdefff1 : arm == 1 && i > 35 ? 0xffcd6878 : (i%8<4 ? 0xff32b5b8 : 0xff236b9b);
+            colorQuad(pose,mesh,q[0],q[1],q[2],q[3],color);
+        }
+        for (int i=0; i<16; i++) {
+            double a=i*Math.PI/8+age*0.035,r=radius*grow;
+            Vec3 p = new Vec3(Math.cos(a)*r,0.1,Math.sin(a)*r), tangent = new Vec3(-Math.sin(a),0,Math.cos(a)).scale(0.35);
+            colorQuad(pose,mesh,p.subtract(tangent),p.add(tangent),p.add(tangent.scale(0.5)).add(0,0.6,0),p.subtract(tangent.scale(0.5)).add(0,0.6,0),0xffdf8192);
+        }
     }
     private static Vec3 curve(Vec3 end, double t, float age) {
         Vec3 side = end.cross(new Vec3(0, 1, 0)).normalize();

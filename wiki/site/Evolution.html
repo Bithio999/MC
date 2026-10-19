@@ -5,14 +5,16 @@
 <body data-root="../"><a class="skip" href="#article">Skip to article</a>
 <header><a class="brand" href="../index.html"><span>WILD HUNT</span><small>Tensura: Reincarnated addon wiki</small></a>
 <div class="search"><label for="wiki-search">Search the wiki</label><input id="wiki-search" type="search" placeholder="Find a skill, race, or mechanic…" autocomplete="off"><div id="search-results" aria-live="polite"></div></div></header>
-<div class="layout"><nav class="sidebar" aria-label="Wiki navigation"><h2>Explore</h2><a href="../index.html">Main Page</a><a href="../site/Getting-Started.html">Getting started</a><a href="../site/Skills.html">Skills</a><a href="../site/Evolution.html">Human evolution</a><a href="../site/Mechanics.html">Combat mechanics</a><a href="../site/Commands.html">Commands</a><a href="../site/Version-History.html">Version history</a>
+<div class="layout"><nav class="sidebar" aria-label="Wiki navigation"><h2>Explore</h2><a href="../index.html">Main Page</a><a href="../site/Getting-Started.html">Getting started</a><a href="../site/Skills.html">Skills</a><a href="../site/Evolution.html">Human evolution</a><a href="../site/Mechanics.html">Combat mechanics</a><a href="../site/Aura-Regeneration.html">Aura regeneration</a><a href="../site/Alma.html">Alma</a><a href="../site/Gemma.html">Gemma</a><a href="../site/Commands.html">Commands</a><a href="../site/Version-History.html">Version history</a>
 <h2>Apex arts</h2><a href="../site/Storm-Crown.html">Storm Crown</a><a href="../site/Scarlet-Deluge.html">Scarlet Deluge</a><a href="../site/Black-Flame.html">Black Flame</a><a href="../site/Frostbound-Colossus.html">Frostbound Colossus</a>
-<p>Version 0.6.0<br>Minecraft 1.21.1<br>NeoForge</p></nav>
+<p>Version 0.7.0<br>Minecraft 1.21.1<br>NeoForge</p></nav>
 <main id="article"><div class="page-tabs"><span>Article</span><a href="../pages/Evolution.md">Read Markdown</a></div>
 <h1>Human evolution</h1><p class="subtitle">From the Tensura: Wild Hunt Wiki</p>
 <details class="contents" open><summary>Contents</summary><div class="toc">
 <ul>
 <li><a href="#hp-and-shp-growth">HP and SHP growth</a></li>
+<li><a href="#balance-reference">Balance reference</a></li>
+<li><a href="#aura-recovery-and-ep">Aura recovery and EP</a></li>
 <li><a href="#distinct-boss-kills">Distinct boss kills</a></li>
 <li><a href="#evolving">Evolving</a></li>
 </ul>
@@ -67,33 +69,38 @@
 <tbody>
 <tr>
 <td>Awakened Hunter</td>
-<td style="text-align: right;">+40</td>
-<td style="text-align: right;">+20</td>
-<td style="text-align: right;">+40</td>
-<td style="text-align: right;">+20</td>
+<td style="text-align: right;">+100</td>
+<td style="text-align: right;">+400</td>
+<td style="text-align: right;">+100</td>
+<td style="text-align: right;">+400</td>
 </tr>
 <tr>
 <td>Apex Hunter</td>
-<td style="text-align: right;">+100</td>
-<td style="text-align: right;">+60</td>
-<td style="text-align: right;">+60</td>
-<td style="text-align: right;">+40</td>
+<td style="text-align: right;">+500</td>
+<td style="text-align: right;">+3,200</td>
+<td style="text-align: right;">+400</td>
+<td style="text-align: right;">+2,800</td>
 </tr>
 <tr>
 <td>Sovereign Hunter</td>
-<td style="text-align: right;">+200</td>
-<td style="text-align: right;">+120</td>
-<td style="text-align: right;">+100</td>
-<td style="text-align: right;">+60</td>
+<td style="text-align: right;">+1,000</td>
+<td style="text-align: right;">+6,600</td>
+<td style="text-align: right;">+500</td>
+<td style="text-align: right;">+3,400</td>
 </tr>
 </tbody>
 </table>
 <p>These are bonuses to the underlying maximums, not total health values. They use native HP and <code>MAX_SPIRITUAL_HEALTH</code> attributes. Evolution replaces the previous race modifiers instead of stacking them. Login upgrades existing hunter maximums while preserving current HP and SHP; it does not refill them.</p>
+<h2 id="balance-reference">Balance reference</h2>
+<p>Tensura 2.0.1.3 defaults give Enlightened Human +80 HP/+300 SHP at 100K EP, Human Saint +480/+3,000 at 400K EP plus four boss kills, and Divine Human +980/+6,000 at 2M EP. Hunters keep the same EP gates but require distinct boss types (and mastery at the final stage). Their bonuses stay near this curve, with a modest premium for those constraints. Sovereign's 1,020 base total HP stays below Minecraft's default 1,024 attribute cap.</p>
+<h2 id="aura-recovery-and-ep">Aura recovery and EP</h2>
+<p>Each stage automatically grants a new <a href="Aura-Regeneration.html">aura regeneration Extra Skill</a>: Hunter's Recovery → Apex Renewal → Sovereign Rebirth. Only the strongest toggled tier heals; earlier ones remain in the ability menu.</p>
+<p>Native evolution energy floors are 200K / 800K / 2M total EP, split <strong>2/3 aura, 1/3 magicules</strong>. Default alignment already has a 2× aura and 1× magicule kill-EP multiplier; this addon preserves that native calculation, gain bonuses, player penalties and server caps. It does not convert existing saved magicules into aura or touch unrelated races.</p>
 <h2 id="distinct-boss-kills">Distinct boss kills</h2>
 <p>The record counts <strong>boss entity types</strong>, not individual spawns. Ten Wither kills give one entry. Wither plus Ender Dragon gives two. Credit is cumulative, survives death and requires a player-attributed kill while Human or a hunter.</p>
 <p>Eligible types are listed in <code>wildhunt:progression_bosses</code>: the shared <code>c:bosses</code> tag (including Tensura’s bosses), Wither and Ender Dragon. Future Monster Hunter mobs can be added by datapack. Ordinary hostile mobs do not count.</p>
 <h2 id="evolving">Evolving</h2>
 <p>Use Tensura’s evolution menu or <code>/wildhunt evolve</code> after meeting the same gates. Check <code>/wildhunt status</code> for the recorded type IDs, base EP and mastery progress. Skill acquisition is independent: bosses never award the four Unique skills.</p>
 <hr />
-<p><strong>Categories:</strong> Tensura: Wild Hunt · Version 0.6.0</p>
+<p><strong>Categories:</strong> Tensura: Wild Hunt · Version 0.7.0</p>
 <footer>Unofficial fan addon. Original documentation and portraits. Not affiliated with Capcom or ManasMods. Offline edition; no external services required.</footer></main></div></body></html>

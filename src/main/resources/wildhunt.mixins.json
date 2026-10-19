@@ -2,6 +2,6 @@
   "required": true,
   "package": "dev.wildhunt.mixin",
   "compatibilityLevel": "JAVA_21",
-  "mixins": ["HumanEvolutionMixin", "ReincarnationSkillPoolMixin"],
+  "mixins": ["HumanEvolutionMixin", "ReincarnationSkillPoolMixin", "AuraHealingMixin"],
   "injectors": {"defaultRequire": 1}
 }

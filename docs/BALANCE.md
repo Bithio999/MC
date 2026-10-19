@@ -1,3 +1,8 @@
+> **0.7.0:** All art damage is multiplied by 0.90; current costs, native barriers,
+> recovery, Human vitality benchmarks and aura regeneration are in the
+> [wiki](../wiki/README.md) and [native integration notes](NATIVE-INTEGRATION.md).
+> The tables below retain their historical version labels.
+
 # 0.3.0: comparison and rebalance of all four skill lines
 
 > Historical 0.3.0 comparison. The 0.6.0 [wiki](../wiki/README.md) documents

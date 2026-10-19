@@ -21,6 +21,10 @@ public final class WildHunt {
         RACES.register("awakened_hunter", () -> new HunterRace(1)),
         RACES.register("apex_hunter", () -> new HunterRace(2)),
         RACES.register("sovereign_hunter", () -> new HunterRace(3)));
+    public static final List<RegistrySupplier<AuraRegenerationSkill>> REGENERATION = List.of(
+        SKILLS.register("hunters_recovery", () -> new AuraRegenerationSkill(1)),
+        SKILLS.register("apex_renewal", () -> new AuraRegenerationSkill(2)),
+        SKILLS.register("sovereign_rebirth", () -> new AuraRegenerationSkill(3)));
     public static final EnumMap<Apex, RegistrySupplier<ApexSkill>> UNIQUE = new EnumMap<>(Apex.class);
     public static final EnumMap<Apex, RegistrySupplier<ApexSkill>> ULTIMATE = new EnumMap<>(Apex.class);
     static {
@@ -30,12 +34,13 @@ public final class WildHunt {
         }
     }
     public WildHunt() {
-        RACES.register(); SKILLS.register(); ArtVisualEntity.register();
+        RACES.register(); SKILLS.register(); ArtVisualEntity.register(); HunterOtherworlders.register();
         NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.LOWEST, HunterEvents::onKill);
         NeoForge.EVENT_BUS.addListener(HunterEvents::onClone);
         NeoForge.EVENT_BUS.addListener(HunterCommands::register);
         NeoForge.EVENT_BUS.addListener(ApexTimers::onEntityTick);
         NeoForge.EVENT_BUS.addListener(ApexTimers::onLogin);
+        NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.HIGHEST, (net.neoforged.neoforge.event.entity.living.LivingDeathEvent event) -> AuraRegenerationSkill.onDeath(event));
         NeoForge.EVENT_BUS.addListener(ApexArts::onDamage);
         NeoForge.EVENT_BUS.addListener(ApexArts::onBreathe);
         NeoForge.EVENT_BUS.addListener(ApexArts::onIncomingDamage);

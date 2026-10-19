@@ -14,6 +14,7 @@ public final class ApexTimers {
         io.github.manasmods.manascore.race.api.RaceAPI.getRaceFrom(player).getRace().ifPresent(race -> {
             if (race.getRace() instanceof HunterRace) {
                 float health = player.getHealth(); race.addAttributeModifiers(player);
+                race.getRace().learnIntrinsicSkills(race, player);
                 player.setHealth(Math.min(health, player.getMaxHealth()));
             }
         });
@@ -52,6 +53,7 @@ public final class ApexTimers {
     }
     public static void onEntityTick(EntityTickEvent.Post event) {
         if (!(event.getEntity() instanceof LivingEntity entity) || entity.level().isClientSide()) return;
+        AuraRegenerationSkill.tick(entity);
         var data = entity.getPersistentData().getCompound("wildhunt");
         // Legacy marks no longer affect any attack and can be discarded on load.
         if (data.contains("oil_stacks") || data.contains("rime_stacks"))

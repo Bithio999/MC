@@ -1,0 +1,17 @@
+{
+  "type": "wildhunt:alma",
+  "abilities": [
+    "tensura:analyst",
+    "tensura:observer",
+    "tensura:analytical_appraisal",
+    "tensura:thought_acceleration",
+    "tensura:danger_sense",
+    "tensura:magic_sense",
+    "tensura:multilayer_barrier"
+  ],
+  "min_aura": 160000,
+  "max_aura": 160000,
+  "min_magicule": 80000,
+  "max_magicule": 80000,
+  "spiritualHealth": 20
+}
