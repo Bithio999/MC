@@ -2,6 +2,8 @@
 
 [Main Page](https://github.com/Bithio999/MC/wiki/Home) · [Skills](https://github.com/Bithio999/MC/wiki/Skills) · [Evolution](https://github.com/Bithio999/MC/wiki/Evolution) · [Mechanics](https://github.com/Bithio999/MC/wiki/Mechanics) · [Commands](https://github.com/Bithio999/MC/wiki/Commands)
 
+This page records **Wild Hunt version history**, including gameplay changes, compatibility notes, and visual corrections.
+
 ## 0.7.2 — Alma front hairline
 
 - Corrected Alma's front hairline: replaced the deep triangular exposed forehead with a short, even fringe and a narrow forehead.

@@ -61,6 +61,27 @@ def portal():
 <section class="portal-panel"><h2>Contribute to the wiki</h2><div class="panel-body"><p>Report missing details, suggest corrections, or improve the Markdown articles in the <a href="https://github.com/Bithio999/MC/tree/main/wiki/pages">repository</a>. Please include the addon version when reporting a gameplay difference.</p><p><a href="https://github.com/Bithio999/MC/wiki">GitHub Wiki</a> · <a href="https://github.com/Bithio999/MC/blob/main/releases/wild-hunt-wiki-0.7.2.zip">Download the offline wiki</a> · <a href="https://tensura.wiki.gg/wiki/Tensura:_Reincarnated_Wiki">Base mod wiki</a></p><p>This is an unofficial fan addon, not the official Tensura or Monster Hunter wiki.</p></div></section>'''
 
 
+def data_infobox(title, portrait, data, category):
+    """Render the article data in the reference wiki's grouped label/value style."""
+    groups = []
+    heading, rows = "Information", []
+    for row in re.findall(r"<tr>(.*?)</tr>", data, re.S):
+        cells = re.findall(r"<td[^>]*>(.*?)</td>", row, re.S)
+        if len(cells) != 2:
+            continue
+        label, value = cells
+        if re.fullmatch(r"<strong>[^<]+</strong>", label.strip()) and not value.strip():
+            if rows:
+                groups.append((heading, rows))
+            heading, rows = re.sub(r"</?strong>", "", label), []
+        else:
+            rows.append(f'<tr><th scope="row">{label}</th><td>{value}</td></tr>')
+    if rows:
+        groups.append((heading, rows))
+    sections = "".join('<section class="infobox-section"><h3>' + label + '</h3><table aria-label="' + html.escape(label) + '"><tbody>' + "".join(rows) + '</tbody></table></section>' for label, rows in groups)
+    return f'<aside class="infobox" aria-label="{html.escape(title)} {category.lower()} data"><h2>{html.escape(title)}</h2>{portrait}{sections}</aside>'
+
+
 def render(source, destination, home=False):
     title, body = source.read_text().split("\n", 1)
     title = "Main Page" if home else title.removeprefix("# ").strip()
@@ -106,15 +127,35 @@ def render(source, destination, home=False):
             portrait = f'<div class="infobox-portrait"><img src="../assets/race/{slug.lower().replace("-", "_")}.png" width="128" height="128" alt="{html.escape(title)} race icon"></div>'
         elif category == "Otherworlders":
             portrait = f'<div class="infobox-portrait"><div class="npc-face {slug.lower()}" role="img" aria-label="{title} in-game face"></div></div>'
-        infobox = f'<aside class="infobox" aria-label="{category} data"><div class="infobox-kind">{category}</div><h2>{html.escape(title)}</h2>{portrait}{data}</aside>'
+        infobox = data_infobox(title, portrait, data, category)
     nav = ""
     for group, entries in groups:
         nav += f'<section><h2>{group}</h2>' + ''.join(f'<a href="{link(key, prefix)}"' + (' aria-current="page"' if key == slug else '') + f'>{label}</a>' for key, label in entries) + '</section>'
     toc = '<details class="contents" open><summary>Contents</summary>' + renderer.toc + '</details>' if renderer.toc_tokens and not home else ""
     if home:
         content = portal()
-    related = "".join(f'<a href="{link(item["slug"], prefix)}"' + (' aria-current="page"' if item['slug'] == slug else '') + f'>{html.escape(item["title"])}</a>' for item in catalog if (category == "Skills" and item['slug'] in [v for row in lines for v in row[1:3]] + ["Aura-Regeneration"]) or (category == "Races" and item['slug'].endswith("-Hunter")) or (category == "Otherworlders" and item['slug'] in ("Alma", "Gemma")))
-    navbox = f'<nav class="related-box" aria-label="Related {category.lower()}"><strong>Wild Hunt · {category}</strong><div>{related}</div></nav>' if related else ""
+    # Put the article introduction before its contents, as on skill/race pages.
+    introduction = ""
+    if not home:
+        lead = re.match(r"\s*(<p>.*?</p>)", content, re.S)
+        if lead:
+            introduction = '<div class="article-intro">' + lead[1] + '</div>'
+            content = content[lead.end():]
+        content = re.sub(r'<p>(\[(?:Active|Passive)[^]]*\])', r'<p class="ability-label">\1', content)
+        content = re.sub(r"(<table>.*?</table>)", r'<div class="article-table">\1</div>', content, flags=re.S)
+    if category == "Skills":
+        related_groups = [("Unique Skills", [row[1] for row in lines]), ("Ultimate Skills", [row[2] for row in lines]), ("Extra Skills", ["Aura-Regeneration"])]
+    elif category == "Races":
+        related_groups = [("Human / Hunter", ["Evolution", "Awakened-Hunter", "Apex-Hunter", "Sovereign-Hunter"])]
+    elif category == "Otherworlders":
+        related_groups = [("Otherworlders", ["Alma", "Gemma"]), ("Race", ["Awakened-Hunter"])]
+    else:
+        related_groups = [("Reference", ["Getting-Started", "Skills", "Evolution", "Mechanics", "Commands", "Version-History"])]
+    related = ""
+    for group, slugs in related_groups:
+        anchors = "".join(f'<a href="{link(key, prefix)}"' + (' aria-current="page"' if key == slug else '') + f'>{html.escape(titles[key])}</a>' for key in slugs)
+        related += f'<div class="navbox-row"><strong>{group}</strong><div>{anchors}</div></div>'
+    navbox = f'<nav class="related-box" aria-label="Related {category.lower()}"><strong>Wild Hunt · {category}</strong>{related}</nav>' if not home else ""
     page = f'''<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="{html.escape(title)} — the unofficial Tensura: Wild Hunt addon reference.">
@@ -127,7 +168,7 @@ def render(source, destination, home=False):
 <div class="layout"><button id="navigation-toggle" aria-controls="wiki-navigation" aria-expanded="false">☰ Wiki navigation</button><nav id="wiki-navigation" class="sidebar" aria-label="Wiki navigation">{nav}<div class="sidebar-version">Wild Hunt <strong>0.7.2</strong><br>Minecraft 1.21.1 · NeoForge<br><span>Offline reference edition</span></div></nav>
 <main id="article" class="{'main-page' if home else 'article-page'}"><div class="page-tabs"><span aria-current="page">{'Main Page' if home else 'Article'}</span><a href="{'README.md' if home else '../pages/' + source.name}">Read Markdown</a><a href="{link('Version-History', prefix)}">Version history</a></div>
 <div class="article-heading"><div class="breadcrumbs"><a href="{prefix}index.html">Wild Hunt Wiki</a>{' / ' + category if not home else ''}</div><h1>{html.escape(title)}</h1><p class="subtitle">From the unofficial Tensura: Wild Hunt Wiki</p></div>
-<div class="article-content">{infobox}{toc}{content}</div>{navbox}
+<div class="article-content">{introduction}{infobox}{toc}{content}</div>{navbox}
 <div class="categories">Categories: <a href="{prefix}index.html">Tensura: Wild Hunt</a> · {category if not home else 'Main Page'}</div>
 <footer>Unofficial fan addon. Original documentation and portraits. Not affiliated with Capcom or ManasMods.<br>Wild Hunt 0.7.2 · Offline edition · No external services required.</footer></main></div></body></html>'''
     destination.write_text(page)
@@ -137,7 +178,7 @@ render(WIKI / "README.md", WIKI / "index.html", True)
 for item in catalog:
     source = WIKI / "pages" / (item["slug"] + ".md")
     render(source, SITE / (item["slug"] + ".html"))
-    item["keywords"] = source.read_text().split("## Overview")[0]
+    item["keywords"] = source.read_text().split("## Usage")[0].split("## Racial Ability")[0]
 (SITE / "search-index.js").write_text("window.WIKI_PAGES = " + json.dumps(catalog) + ";\n")
 subprocess.run([sys.executable, str(ROOT / "scripts/export-github-wiki.py")], check=True)
 # Fixed timestamps and sorted entries keep this documentation bundle reproducible.

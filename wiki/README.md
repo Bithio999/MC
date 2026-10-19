@@ -51,6 +51,8 @@ Report missing details, suggest corrections, or improve the Markdown articles in
 
 **[Download the styled wiki ZIP](../releases/wild-hunt-wiki-0.7.2.zip)**, extract it, and open `index.html`. It includes every article, original portraits, screenshots, and offline search. You can also open `wiki/index.html` after downloading this repository. GitHub displays HTML source rather than the styled page.
 
+Article previews: [Storm Crown skill page](media/skill-article-preview.png) · [Awakened Hunter race page](media/race-article-preview.png).
+
 The visual design references the official wiki's homepage and Human article: white content, blue borders, centered welcome and topic panels, serif headings, and data infoboxes. The text, branding, and assets remain original. GitHub Wiki uses GitHub's own theme; its version mirrors the article organization, tables, images, sidebar, and footer.
 
 Unofficial fan addon. Not affiliated with Capcom or ManasMods.

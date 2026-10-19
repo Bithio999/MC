@@ -2,6 +2,8 @@
 
 [Main Page](https://github.com/Bithio999/MC/wiki/Home) · [Skills](https://github.com/Bithio999/MC/wiki/Skills) · [Evolution](https://github.com/Bithio999/MC/wiki/Evolution) · [Mechanics](https://github.com/Bithio999/MC/wiki/Mechanics) · [Commands](https://github.com/Bithio999/MC/wiki/Commands)
 
+This page explains **Wild Hunt combat mechanics**, including native barriers, skill toggles, damage modifiers, and aura consumption.
+
 ## Damage and mastery
 
 Wild Hunt’s damage multiplier is:

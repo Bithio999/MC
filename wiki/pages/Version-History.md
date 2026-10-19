@@ -2,6 +2,8 @@
 
 [Main Page](../README.md) · [Skills](Skills.md) · [Evolution](Evolution.md) · [Mechanics](Mechanics.md) · [Commands](Commands.md)
 
+This page records **Wild Hunt version history**, including gameplay changes, compatibility notes, and visual corrections.
+
 ## 0.7.2 — Alma front hairline
 
 - Corrected Alma's front hairline: replaced the deep triangular exposed forehead with a short, even fringe and a narrow forehead.

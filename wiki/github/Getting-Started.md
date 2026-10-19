@@ -2,6 +2,8 @@
 
 [Main Page](https://github.com/Bithio999/MC/wiki/Home) · [Skills](https://github.com/Bithio999/MC/wiki/Skills) · [Evolution](https://github.com/Bithio999/MC/wiki/Evolution) · [Mechanics](https://github.com/Bithio999/MC/wiki/Mechanics) · [Commands](https://github.com/Bithio999/MC/wiki/Commands)
 
+This guide covers installing **Tensura: Wild Hunt**, rolling an apex skill, and beginning the Human hunter evolution branch.
+
 ## Requirements
 
 - Minecraft 1.21.1 and Java 21.

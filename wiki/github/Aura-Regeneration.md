@@ -2,15 +2,25 @@
 
 [Main Page](https://github.com/Bithio999/MC/wiki/Home) · [Skills](https://github.com/Bithio999/MC/wiki/Skills) · [Evolution](https://github.com/Bithio999/MC/wiki/Evolution) · [Mechanics](https://github.com/Bithio999/MC/wiki/Mechanics) · [Commands](https://github.com/Bithio999/MC/wiki/Commands)
 
+**Aura regeneration** is a line of three toggleable Extra Skills granted by the hunter race branch. Each tier recovers health using aura instead of magicules.
+
 | Skill data | Hunter recovery Extra Skills |
 | --- | --- |
-| Category | Extra |
+| **Information** | |
+| Type | Extra |
+| **Obtaining** | |
 | Acquisition | Hunter race evolution; no permanent magicule acquisition cost |
 | Activation | Native toggle; new racial tier enabled automatically |
 | Resource | Aura only |
 | Idle cost | None at full applicable health |
 
-## Recovery tiers
+## Usage
+
+### Passive
+
+[Passive - Toggle] — Only the strongest enabled recovery tier heals.
+
+### Recovery tiers
 
 | Extra Skill | Race | Native inspiration | Healing | Aura cost |
 | --- | --- | --- | --- | --- |

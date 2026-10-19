@@ -10,46 +10,24 @@
 <div class="layout"><button id="navigation-toggle" aria-controls="wiki-navigation" aria-expanded="false">☰ Wiki navigation</button><nav id="wiki-navigation" class="sidebar" aria-label="Wiki navigation"><section><h2>Navigation</h2><a href="../index.html">Main Page</a><a href="../site/Getting-Started.html">Getting started</a><a href="../site/Version-History.html">Version history</a></section><section><h2>Gameplay</h2><a href="../site/Skills.html">Skills</a><a href="../site/Evolution.html">Human evolution</a><a href="../site/Mechanics.html">Combat mechanics</a><a href="../site/Aura-Regeneration.html" aria-current="page">Aura regeneration</a></section><section><h2>Apex skills</h2><a href="../site/Storm-Crown.html">Storm Crown</a><a href="../site/Scarlet-Deluge.html">Scarlet Deluge</a><a href="../site/Black-Flame.html">Black Flame</a><a href="../site/Frostbound-Colossus.html">Frostbound Colossus</a></section><section><h2>Otherworlders</h2><a href="../site/Alma.html">Alma</a><a href="../site/Gemma.html">Gemma</a></section><section><h2>Tools</h2><a href="../site/Commands.html">Commands</a></section><div class="sidebar-version">Wild Hunt <strong>0.7.2</strong><br>Minecraft 1.21.1 · NeoForge<br><span>Offline reference edition</span></div></nav>
 <main id="article" class="article-page"><div class="page-tabs"><span aria-current="page">Article</span><a href="../pages/Aura-Regeneration.md">Read Markdown</a><a href="../site/Version-History.html">Version history</a></div>
 <div class="article-heading"><div class="breadcrumbs"><a href="../index.html">Wild Hunt Wiki</a> / Skills</div><h1>Aura regeneration</h1><p class="subtitle">From the unofficial Tensura: Wild Hunt Wiki</p></div>
-<div class="article-content"><aside class="infobox" aria-label="Skills data"><div class="infobox-kind">Skills</div><h2>Aura regeneration</h2><table>
-<thead>
-<tr>
-<th>Skill data</th>
-<th>Hunter recovery Extra Skills</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Category</td>
-<td>Extra</td>
-</tr>
-<tr>
-<td>Acquisition</td>
-<td>Hunter race evolution; no permanent magicule acquisition cost</td>
-</tr>
-<tr>
-<td>Activation</td>
-<td>Native toggle; new racial tier enabled automatically</td>
-</tr>
-<tr>
-<td>Resource</td>
-<td>Aura only</td>
-</tr>
-<tr>
-<td>Idle cost</td>
-<td>None at full applicable health</td>
-</tr>
-</tbody>
-</table></aside><details class="contents" open><summary>Contents</summary><div class="toc">
+<div class="article-content"><div class="article-intro"><p><strong>Aura regeneration</strong> is a line of three toggleable Extra Skills granted by the hunter race branch. Each tier recovers health using aura instead of magicules.</p></div><aside class="infobox" aria-label="Aura regeneration skills data"><h2>Aura regeneration</h2><section class="infobox-section"><h3>Information</h3><table aria-label="Information"><tbody><tr><th scope="row">Type</th><td>Extra</td></tr></tbody></table></section><section class="infobox-section"><h3>Obtaining</h3><table aria-label="Obtaining"><tbody><tr><th scope="row">Acquisition</th><td>Hunter race evolution; no permanent magicule acquisition cost</td></tr><tr><th scope="row">Activation</th><td>Native toggle; new racial tier enabled automatically</td></tr><tr><th scope="row">Resource</th><td>Aura only</td></tr><tr><th scope="row">Idle cost</th><td>None at full applicable health</td></tr></tbody></table></section></aside><details class="contents" open><summary>Contents</summary><div class="toc">
 <ul>
+<li><a href="#usage">Usage</a><ul>
+<li><a href="#passive">Passive</a></li>
 <li><a href="#recovery-tiers">Recovery tiers</a></li>
+</ul>
+</li>
 <li><a href="#native-integration-and-limits">Native integration and limits</a></li>
 <li><a href="#energy-split">Energy split</a></li>
 </ul>
 </div>
 </details>
 
-<h2 id="recovery-tiers">Recovery tiers</h2>
-<table>
+<h2 id="usage">Usage</h2>
+<h3 id="passive">Passive</h3>
+<p class="ability-label">[Passive - Toggle] — Only the strongest enabled recovery tier heals.</p>
+<h3 id="recovery-tiers">Recovery tiers</h3>
+<div class="article-table"><table>
 <thead>
 <tr>
 <th>Extra Skill</th>
@@ -82,7 +60,7 @@
 <td>30 per HP / 10 per SHP; 20 / 5 mastered</td>
 </tr>
 </tbody>
-</table>
+</table></div>
 <p>Registry IDs: <code>wildhunt:hunters_recovery</code>, <code>wildhunt:apex_renewal</code>, <code>wildhunt:sovereign_rebirth</code>.</p>
 <p>Only the strongest <strong>toggled</strong> aura recovery tier works. Earlier skills stay learned and can be used if you turn a stronger one off. Recovery uses only available aura and heals proportionately if you cannot afford all missing health. HP is funded before SHP. Full health costs nothing. Mastery increases only on a funded recovery, and existing skill mastery is preserved.</p>
 <h2 id="native-integration-and-limits">Native integration and limits</h2>
@@ -91,6 +69,6 @@
 <p>Sovereign Rebirth can stop an ordinary lethal hit by paying 30 aura (20 mastered) to preserve 1 HP; subsequent half-second recovery pays for the remaining healing. It cannot stop invulnerability-bypassing damage, barrier bypass level 1.75 or higher, complete severance, spiritual-health depletion, suppressed interactions or an unfunded recovery. It does not grant free immortality or spend magicules. Repeated lethal hits must each be funded.</p>
 <h2 id="energy-split">Energy split</h2>
 <p>Hunter base evolution energy is split <strong>2/3 aura and 1/3 magicules</strong>. Tensura's default alignment also gives kill EP in that 2:1 ratio; native gain bonuses, penalties and server caps still apply. Spending aura does not transfer EP, change maximum magicules, or alter the allocation of later gains.</p>
-</div><nav class="related-box" aria-label="Related skills"><strong>Wild Hunt · Skills</strong><div><a href="../site/Agni.html">Agni, Lord of the Black Flame</a><a href="../site/Aura-Regeneration.html" aria-current="page">Aura regeneration</a><a href="../site/Black-Flame.html">Black Flame</a><a href="../site/Frostbound-Colossus.html">Frostbound Colossus</a><a href="../site/Raijin.html">Raijin, Lord of Thunder</a><a href="../site/Scarlet-Deluge.html">Scarlet Deluge</a><a href="../site/Storm-Crown.html">Storm Crown</a><a href="../site/Varuna.html">Varuna, Lord of Tides</a><a href="../site/Ymir.html">Ymir, Lord of Winter</a></div></nav>
+</div><nav class="related-box" aria-label="Related skills"><strong>Wild Hunt · Skills</strong><div class="navbox-row"><strong>Unique Skills</strong><div><a href="../site/Storm-Crown.html">Storm Crown</a><a href="../site/Scarlet-Deluge.html">Scarlet Deluge</a><a href="../site/Black-Flame.html">Black Flame</a><a href="../site/Frostbound-Colossus.html">Frostbound Colossus</a></div></div><div class="navbox-row"><strong>Ultimate Skills</strong><div><a href="../site/Raijin.html">Raijin, Lord of Thunder</a><a href="../site/Varuna.html">Varuna, Lord of Tides</a><a href="../site/Agni.html">Agni, Lord of the Black Flame</a><a href="../site/Ymir.html">Ymir, Lord of Winter</a></div></div><div class="navbox-row"><strong>Extra Skills</strong><div><a href="../site/Aura-Regeneration.html" aria-current="page">Aura regeneration</a></div></div></nav>
 <div class="categories">Categories: <a href="../index.html">Tensura: Wild Hunt</a> · Skills</div>
 <footer>Unofficial fan addon. Original documentation and portraits. Not affiliated with Capcom or ManasMods.<br>Wild Hunt 0.7.2 · Offline edition · No external services required.</footer></main></div></body></html>

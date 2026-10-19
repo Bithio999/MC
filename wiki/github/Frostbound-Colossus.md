@@ -2,46 +2,31 @@
 
 [Main Page](https://github.com/Bithio999/MC/wiki/Home) · [Skills](https://github.com/Bithio999/MC/wiki/Skills) · [Evolution](https://github.com/Bithio999/MC/wiki/Evolution) · [Mechanics](https://github.com/Bithio999/MC/wiki/Mechanics) · [Commands](https://github.com/Bithio999/MC/wiki/Commands)
 
+**Frostbound Colossus** is a Unique Skill inspired by **Jin Dahaad**. It combines avalanche impacts, ice capture, and a defensive carapace.
+
 ![Frostbound Colossus](https://github.com/Bithio999/MC/blob/main/src/main/resources/assets/wildhunt/textures/skill/frostbound_colossus.png?raw=true)
 
 | Skill data | Frostbound Colossus |
 | --- | --- |
-| Category | Unique Skill |
+| **Information** | |
+| Type | Unique Skill |
 | Inspiration | Jin Dahaad |
 | Combat role | Avalanche impact / capture / ice siege |
 | Active modes | 2 |
 | Toggleable passive | Colossus Carapace |
 | Passive upkeep | 20 aura / second |
 | Registry ID | `wildhunt:frostbound_colossus` |
+| **Evolution** | |
 | Previous | — |
 | Evolution | [Ymir, Lord of Winter](https://github.com/Bithio999/MC/wiki/Ymir) |
+| **Obtaining** | |
+| Method | Reincarnation / starting skill roll |
 
-## Overview
+## Usage
 
-A complete replacement for the former rime/fissure/ward kit. Aim a heavy avalanche impact, capture a single foe in an ice prison, and sustain a native barrier carapace. Ymir’s signature rains telegraphed ice onto fixed positions.
+### Passive
 
-## Acquisition
-
-Roll through Tensura’s normal reincarnation system. These Uniques join the configured primary pool; no particular roll is guaranteed. There are no skill trials, boss-awarded skills or race requirements to roll.
-
-## Active modes
-
-| Mode | Aura | Cooldown | Raw opening damage |
-| --- | ---: | ---: | ---: |
-| 1. Avalanche Crash | 200 | 4 s | 100 |
-| 2. Glacial Prison | 650 | 8 s | 55 |
-
-**0.7.0 damage adjustment:** multiply every raw damage value below by **0.90**. This applies to direct hits, ricochets, fields, counters and signature pulses. Raw values already include the Ultimate’s 3× multiplier where applicable. Mastery adds up to 50%. **Wild Hunt applies no EP damage scaling.** Native elemental boosts, defenses, rank interactions and the listed situational modifiers still apply. EP requirements for race evolution and Ultimate ascension are unchanged.
-
-### Avalanche Crash
-
-Aim at a visible enemy up to 16 blocks away, or at the endpoint if no enemy is selected. Erupt eight rendered ice spires around the impact. Damage enemies in a 4-block radius and launch them upward and outward, respecting knockback resistance. This is an immediate aimed impact, not the old travelling fissure. It neither builds nor consumes rime.
-
-### Glacial Prison
-
-Aim at one visible hostile within 20 blocks. Deal the listed hit damage, then apply Tensura’s native Frost effect for up to 4 seconds, subject to its rank and resistance checks. Six rendered spires and an Ice magic circle mark the prison. The visual cage places no blocks and adds no separate collision wall. There is no projectile-interception budget.
-
-## Toggleable passive: Colossus Carapace
+[Passive - Toggle] — **Colossus Carapace**
 
 While toggled on, gain 20 armor, 36 physical barrier, 13.5 magic barrier, one knockback resistance and 50% water-element boost. Tensura classifies ice under water for this boost. This uses the native barrier layer and damage rules, not absorption or the former projectile-deletion ward.
 
@@ -50,6 +35,39 @@ The passive also arms a **150-capacity native Multilayer Barrier**, which appear
 Enable or disable this through Tensura’s native **Ability Selection** skill toggle. It is separate from active mode cycling and has no fifteen/thirty-second duration. Upkeep is **20 aura per second**, with the first second paid on enabling. It turns off when aura is insufficient or activation requirements fail. Turning it off removes its own attribute modifiers immediately.
 
 The toggle no longer emits constant frost crystals. Native barrier rendering and the HUD remain.
+
+### Active
+
+| Mode | Aura | Cooldown | Raw opening damage |
+| --- | ---: | ---: | ---: |
+| 1. Avalanche Crash | 200 | 4 s | 100 |
+| 2. Glacial Prison | 650 | 8 s | 55 |
+
+**0.7.0 damage adjustment:** multiply every raw damage value below by **0.90**. This applies to direct hits, ricochets, fields, counters and signature pulses. Raw values already include the Ultimate’s 3× multiplier where applicable. Mastery adds up to 50%. **Wild Hunt applies no EP damage scaling.** Native elemental boosts, defenses, rank interactions and the listed situational modifiers still apply. EP requirements for race evolution and Ultimate ascension are unchanged.
+
+#### Avalanche Crash
+
+[Active - Press] — **Avalanche Crash**
+
+Aim at a visible enemy up to 16 blocks away, or at the endpoint if no enemy is selected. Erupt eight rendered ice spires around the impact. Damage enemies in a 4-block radius and launch them upward and outward, respecting knockback resistance. This is an immediate aimed impact, not the old travelling fissure. It neither builds nor consumes rime.
+
+#### Glacial Prison
+
+[Active - Press] — **Glacial Prison**
+
+Aim at one visible hostile within 20 blocks. Deal the listed hit damage, then apply Tensura’s native Frost effect for up to 4 seconds, subject to its rank and resistance checks. Six rendered spires and an Ice magic circle mark the prison. The visual cage places no blocks and adds no separate collision wall. There is no projectile-interception budget.
+
+## Obtaining
+
+Roll through Tensura’s normal reincarnation system. These Uniques join the configured primary pool; no particular roll is guaranteed. There are no skill trials, boss-awarded skills or race requirements to roll.
+
+## Evolution
+
+| Unique Skill | Ultimate Skill | Requirements |
+| --- | --- | --- |
+| Frostbound Colossus | [Ymir, Lord of Winter](https://github.com/Bithio999/MC/wiki/Ymir) | Sovereign Hunter; 2,000,000 base EP; matching Unique mastered |
+
+Ascension replaces only the matching Unique. The Ultimate starts with its own mastery.
 
 ## Suggested combo
 

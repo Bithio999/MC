@@ -2,6 +2,8 @@
 
 [Main Page](../README.md) · [Skills](Skills.md) · [Evolution](Evolution.md) · [Mechanics](Mechanics.md) · [Commands](Commands.md)
 
+This guide covers installing **Tensura: Wild Hunt**, rolling an apex skill, and beginning the Human hunter evolution branch.
+
 ## Requirements
 
 - Minecraft 1.21.1 and Java 21.

@@ -2,6 +2,8 @@
 
 [Main Page](../README.md) · [Skills](Skills.md) · [Evolution](Evolution.md) · [Mechanics](Mechanics.md) · [Commands](Commands.md)
 
+This page explains **Wild Hunt combat mechanics**, including native barriers, skill toggles, damage modifiers, and aura consumption.
+
 ## Damage and mastery
 
 Wild Hunt’s damage multiplier is:

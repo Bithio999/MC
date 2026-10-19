@@ -2,6 +2,8 @@
 
 [Main Page](../README.md) · [Skills](Skills.md) · [Evolution](Evolution.md) · [Mechanics](Mechanics.md) · [Commands](Commands.md)
 
+**Human evolution** is the alternate hunter race branch. It progresses through Awakened Hunter, Apex Hunter, and Sovereign Hunter while preserving the player’s Human appearance.
+
 The alternate branch is **Human → Awakened Hunter → Apex Hunter → Sovereign Hunter**. Every stage keeps a human appearance. The base Human’s original Tensura evolution choices remain available.
 
 | Stage | Previous | Base EP | Distinct bosses | Additional requirement |

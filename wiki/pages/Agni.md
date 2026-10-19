@@ -2,29 +2,37 @@
 
 [Main Page](../README.md) · [Skills](Skills.md) · [Evolution](Evolution.md) · [Mechanics](Mechanics.md) · [Commands](Commands.md)
 
+**Agni, Lord of the Black Flame** is a Ultimate Skill inspired by **Nu Udra**. It uses visible oil tentacles to pull targets into burning ground.
+
 ![Agni, Lord of the Black Flame](../../src/main/resources/assets/wildhunt/textures/skill/agni.png)
 
 | Skill data | Agni, Lord of the Black Flame |
 | --- | --- |
-| Category | Ultimate Skill |
+| **Information** | |
+| Type | Ultimate Skill |
 | Inspiration | Nu Udra |
 | Combat role | Tentacle pulls / burning ground |
 | Active modes | 3 |
 | Toggleable passive | Furnace Mantle |
 | Passive upkeep | 60 aura / second |
 | Registry ID | `wildhunt:agni` |
+| **Evolution** | |
 | Previous | [Black Flame](Black-Flame.md) |
 | Evolution | — |
+| **Obtaining** | |
+| Method | Ascend the matching mastered Unique |
 
-## Overview
+## Usage
 
-A location-based fire kit. Oil Lash draws animated, solid tentacles, pulls enemies, and places oil on the ground. Ignition burns those locations directly; neither lashes nor melee attacks create oil stacks.
+### Passive
 
-## Acquisition
+[Passive - Toggle] — **Furnace Mantle**
 
-Evolve [Black Flame](Black-Flame.md) as Sovereign Hunter with 2,000,000 base EP and mastery of that Unique. Use `/wildhunt ascend nu_udra`. It replaces only the matching Unique; the Ultimate starts with its own mastery.
+While toggled on, gain 18 armor, 100% melee attack and 100% flame boost. Fire-tagged damage is resisted while the passive is enabled, preserving its fire-protection utility without a lingering potion. Melee attacks do not coat targets or accumulate oil. This is an offensive passive, not an extra ignition step.
 
-## Active modes
+Enable or disable this through Tensura’s native **Ability Selection** skill toggle. It is separate from active mode cycling and has no fifteen/thirty-second duration. Upkeep is **60 aura per second**, with the first second paid on enabling. It turns off when aura is insufficient or activation requirements fail. Turning it off removes its own attribute modifiers immediately.
+
+### Active
 
 | Mode | Aura | Cooldown | Raw opening damage |
 | --- | ---: | ---: | ---: |
@@ -34,23 +42,35 @@ Evolve [Black Flame](Black-Flame.md) as Sovereign Hunter with 2,000,000 base EP 
 
 **0.7.0 damage adjustment:** multiply every raw damage value below by **0.90**. This applies to direct hits, ricochets, fields, counters and signature pulses. Raw values already include the Ultimate’s 3× multiplier where applicable. Mastery adds up to 50%. **Wild Hunt applies no EP damage scaling.** Native elemental boosts, defenses, rank interactions and the listed situational modifiers still apply. EP requirements for race evolution and Ultimate ascension are unchanged.
 
-### Oil Lash
+#### Oil Lash
+
+[Active - Press] — **Oil Lash**
 
 Lash up to 6 enemies in a forward fan within 22 blocks and pull them toward you. Each lash has a synced three-dimensional tapered tentacle with a dark body and glowing orange bands. It extends, curls and recoils over sixteen ticks. A missed cast still shows a tentacle sweep. Leave a pool at the final victim’s location, or at the aim point about ten blocks away on a miss. Maintain up to 5 pools; the oldest is replaced first.
 
-### Blackflame Ignition
+#### Blackflame Ignition
+
+[Active - Press] — **Blackflame Ignition**
 
 Ignite valid owned pools for six seconds. Each affects a 4-block radius; overlapping pools cannot damage one enemy twice in a pulse. Opening damage is immediate and fixed, with no oil-stack multiplier. Later pulses deal 72 raw damage once per second and apply native Black Burn. If no valid controllable pool exists, place a fallback pool at the aim point up to six blocks away.
 
-### Black Sun Caldera
+#### Black Sun Caldera
+
+[Active - Press] — **Black Sun Caldera**
 
 Create five burning pools in a ring six blocks around the caster. The ten-second caldera pulses through those owned locations. Opening raw damage is 270; later pulses use 108, before mastery and native modifiers. Existing secondary pulses pause during the domain to avoid duplicate scheduling.
 
-## Toggleable passive: Furnace Mantle
+## Obtaining
 
-While toggled on, gain 18 armor, 100% melee attack and 100% flame boost. Fire-tagged damage is resisted while the passive is enabled, preserving its fire-protection utility without a lingering potion. Melee attacks do not coat targets or accumulate oil. This is an offensive passive, not an extra ignition step.
+Evolve [Black Flame](Black-Flame.md) as Sovereign Hunter with 2,000,000 base EP and mastery of that Unique. Use `/wildhunt ascend nu_udra`. It replaces only the matching Unique; the Ultimate starts with its own mastery.
 
-Enable or disable this through Tensura’s native **Ability Selection** skill toggle. It is separate from active mode cycling and has no fifteen/thirty-second duration. Upkeep is **60 aura per second**, with the first second paid on enabling. It turns off when aura is insufficient or activation requirements fail. Turning it off removes its own attribute modifiers immediately.
+## Evolution
+
+| Unique Skill | Ultimate Skill | Requirements |
+| --- | --- | --- |
+| [Black Flame](Black-Flame.md) | Agni, Lord of the Black Flame | Sovereign Hunter; 2,000,000 base EP; matching Unique mastered |
+
+Ascension replaces only the matching Unique. The Ultimate starts with its own mastery.
 
 ## Suggested combo
 

@@ -2,15 +2,25 @@
 
 [Main Page](../README.md) · [Skills](Skills.md) · [Evolution](Evolution.md) · [Mechanics](Mechanics.md) · [Commands](Commands.md)
 
+**Aura regeneration** is a line of three toggleable Extra Skills granted by the hunter race branch. Each tier recovers health using aura instead of magicules.
+
 | Skill data | Hunter recovery Extra Skills |
 | --- | --- |
-| Category | Extra |
+| **Information** | |
+| Type | Extra |
+| **Obtaining** | |
 | Acquisition | Hunter race evolution; no permanent magicule acquisition cost |
 | Activation | Native toggle; new racial tier enabled automatically |
 | Resource | Aura only |
 | Idle cost | None at full applicable health |
 
-## Recovery tiers
+## Usage
+
+### Passive
+
+[Passive - Toggle] — Only the strongest enabled recovery tier heals.
+
+### Recovery tiers
 
 | Extra Skill | Race | Native inspiration | Healing | Aura cost |
 | --- | --- | --- | --- | --- |

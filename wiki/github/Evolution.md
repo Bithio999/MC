@@ -2,6 +2,8 @@
 
 [Main Page](https://github.com/Bithio999/MC/wiki/Home) · [Skills](https://github.com/Bithio999/MC/wiki/Skills) · [Evolution](https://github.com/Bithio999/MC/wiki/Evolution) · [Mechanics](https://github.com/Bithio999/MC/wiki/Mechanics) · [Commands](https://github.com/Bithio999/MC/wiki/Commands)
 
+**Human evolution** is the alternate hunter race branch. It progresses through Awakened Hunter, Apex Hunter, and Sovereign Hunter while preserving the player’s Human appearance.
+
 The alternate branch is **Human → Awakened Hunter → Apex Hunter → Sovereign Hunter**. Every stage keeps a human appearance. The base Human’s original Tensura evolution choices remain available.
 
 | Stage | Previous | Base EP | Distinct bosses | Additional requirement |

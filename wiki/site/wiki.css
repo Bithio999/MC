@@ -165,3 +165,35 @@ hr { border: 0; border-top: 1px solid #a2a9b1; }
   .infobox { break-inside: avoid; }
   .table-scroll table { min-width: 0; }
 }
+/* Individual articles follow the reference's Druid infobox and Usage layout. */
+.article-intro { margin-bottom: 20px; }
+.article-intro p { margin-top: 0; }
+.article-page .infobox { border: 4px solid var(--line); border-radius: 3px; width: 308px; background: #fff; }
+.article-page .infobox h2 { background: #5d74ac; color: #fff; padding: 4px 8px; font: bold 21px/1.4 Arial, sans-serif; }
+.article-page .infobox-portrait { padding: 14px; }
+.article-page .infobox-portrait img { width: 192px; height: 192px; }
+.infobox-section h3 { text-align: center; font-size: 17px; line-height: 1.5; font-weight: normal; background: #5d74ac; color: #fff; padding: 2px 6px; margin: 0; }
+.infobox-section table { margin: 0; width: 100%; font-size: 12px; }
+.infobox-section tr:nth-child(even) { background: #fff; }
+.infobox-section th, .infobox-section td { border: 0; padding: 4px 6px; }
+.infobox-section th { width: 48%; text-align: right; background: #fbfbfb; font-weight: bold; }
+.infobox-section td { width: 52%; text-align: left; background: #fff; }
+.infobox-section code { font-size: 10px; padding: 0 2px; }
+.article-content>h2, .article-content>h3 { overflow: hidden; }
+.article-content h4 { font-size: 14px; margin: 21px 0 6px; }
+.article-content .ability-label { color: #304b80; margin: 8px 0; font-size: 13px; }
+.article-table { display: flow-root; overflow-x: auto; margin: 16px 0; }
+.article-table table { margin: 0; width: 100%; }
+.related-box>.navbox-row { display: grid; grid-template-columns: 135px minmax(0,1fr); gap: 0; padding: 0; border-top: 1px solid #cfdbf0; }
+.navbox-row>strong { background: #edf1fa; padding: 8px; display: flex; align-items: center; justify-content: center; }
+.navbox-row>div { display: flex; flex-wrap: wrap; gap: 4px 14px; padding: 8px 12px; justify-content: center; align-items: center; }
+@media (max-width: 1050px) and (min-width: 561px) {
+  .article-page .infobox { width: 265px; }
+}
+@media (max-width: 560px) {
+  .article-page .infobox { width: 100%; }
+  .article-table table { min-width: 460px; }
+  .article-content>.article-table:has(table td:nth-child(5)) table { min-width: 640px; }
+  .related-box>.navbox-row { grid-template-columns: 1fr; }
+  .navbox-row>strong { padding: 5px 8px; }
+}

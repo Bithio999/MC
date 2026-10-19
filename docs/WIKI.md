@@ -40,6 +40,11 @@ The current Codex integration can push the main repository, but GitHub refused i
 The redesign was checked against these public pages on 2026-10-19:
 
 - [Tensura: Reincarnated Wiki home](https://tensura.wiki.gg/wiki/Tensura:_Reincarnated_Wiki): centered welcome, About, Links and Contribute panels; a three-column topic grid; blue panel boundaries.
+- [Great Sage](https://tensura.wiki.gg/wiki/Great_Sage) and [Predator](https://tensura.wiki.gg/wiki/Predator): short introductions, sectioned Information / Evolution / Obtaining infoboxes, Usage divided into Passive and Active, and categorized skill navboxes.
 - [Human](https://tensura.wiki.gg/wiki/Races/Human): serif article headings, compact contents, right-hand data infobox with labels and values, evolution references.
 
 The reference's light-theme colors include white content, `#006ee6` borders, `#274690` accents, and `#0645ad` links. This repository implements its own styles and uses only original addon branding and images; no Tensura logos, backgrounds, fonts, or article text are copied.
+
+## Individual article layout
+
+Skill articles use a lead summary, grouped data table, Usage with Passive / Active subsections and labeled arts, Obtaining, Evolution, then strategy and reference notes. Race articles group information, vitality bonuses, evolution and obtaining in their infobox, with Racial Ability, Traits and Evolution in the body. NPC pages put abilities and spawning before the screenshot gallery. The renderer turns the same Markdown data into a sectioned right-hand infobox; GitHub readers retain an ordinary data table. No gameplay values are changed by this layout.
