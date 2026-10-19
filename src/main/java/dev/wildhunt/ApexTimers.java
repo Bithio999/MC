@@ -18,6 +18,7 @@ public final class ApexTimers {
                 player.setHealth(Math.min(health, player.getMaxHealth()));
             }
         });
+        MythicEvolution.migrate(player);
         var storage = SkillAPI.getSkillsFrom(player);
         for (var instance : storage.getLearnedSkills()) {
             if (!(instance.getSkill() instanceof ApexSkill skill)) continue;
@@ -53,7 +54,8 @@ public final class ApexTimers {
     }
     public static void onEntityTick(EntityTickEvent.Post event) {
         if (!(event.getEntity() instanceof LivingEntity entity) || entity.level().isClientSide()) return;
-        AuraRegenerationSkill.tick(entity);GodlySkill.tickSlow(entity);
+        AuraRegenerationSkill.tick(entity);GodlySkill.tickSlow(entity);MythicArts.tickTarget(entity);
+        if(entity.tickCount%20==0)MythicEvolution.migrate(entity);
         var data = entity.getPersistentData().getCompound("wildhunt");
         // Legacy marks no longer affect any attack and can be discarded on load.
         if (data.contains("oil_stacks") || data.contains("rime_stacks"))
@@ -64,6 +66,9 @@ public final class ApexTimers {
             if (instance.getSkill() instanceof ApexSkill skill) {
                 active |= skill.tickActive(instance, entity);
                 if (instance.isDirty()) storage.checkAndMarkDirty(instance);
+            } else if(instance.getSkill() instanceof MythicSkill skill) {
+                active |= skill.tickActive(instance,entity);
+                if(instance.isDirty())storage.checkAndMarkDirty(instance);
             } else if (instance.getSkill() instanceof GodlySkill skill) {
                 active |= skill.tickActive(instance,entity);
                 if(instance.isDirty()) storage.checkAndMarkDirty(instance);

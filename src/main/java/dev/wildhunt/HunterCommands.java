@@ -19,22 +19,22 @@ public final class HunterCommands {
             .then(Commands.literal("status").executes(HunterCommands::status))
             .then(Commands.literal("evolve").executes(HunterCommands::evolve));
         var ascend = Commands.literal("ascend");
-        for (Apex apex : Apex.values()) ascend.then(Commands.literal(apex.id()).executes(ctx -> ascend(ctx, apex)));
+        for (var kind : MythicEvolution.ultimates()) ascend.then(Commands.literal(kind.id()).executes(ctx -> {var p=ctx.getSource().getPlayerOrException();p.sendSystemMessage(Component.literal(MythicEvolution.synthesize(p,kind.id())));return 1;}));
         root.then(ascend);
         event.getDispatcher().register(root);
     }
     private static int guide(CommandContext<CommandSourceStack> ctx) {
         ctx.getSource().sendSuccess(() -> Component.literal("Wild Hunt — Human → Awakened Hunter → Apex Hunter → Sovereign Hunter\n"
-            + "Awakened: 100K EP + 1 distinct boss. Apex: 400K EP + 3 distinct bosses. Sovereign: 2M EP + 5 distinct bosses + mastery of an apex skill.\n"
+            + "Awakened: 100K EP + 1 distinct boss. Apex: 400K EP + 3 distinct bosses. Sovereign: 2M EP + 5 distinct bosses + mastery of a Unique skill.\n"
             + "Repeated kills of one boss type count once. Apex Unique skills are rollable through normal Tensura reincarnation.\n"
-            + "Equip skills and toggle passives in Tensura's ability menu. Use /wildhunt status, /wildhunt evolve, and /wildhunt ascend <apex>. Each Ultimate requires mastery of its own Unique skill."), false);
+            + "Equip skills and toggle passives in Tensura's ability menu. Use /wildhunt status, /wildhunt evolve, and /wildhunt ascend <vritra|demeter|janus>. Use Skills → Ultimate → Synthesis to combine two mastered Uniques."), false);
         return Command.SINGLE_SUCCESS;
     }
     private static int status(CommandContext<CommandSourceStack> ctx) throws com.mojang.brigadier.exceptions.CommandSyntaxException {
         var player = ctx.getSource().getPlayerOrException();
         ctx.getSource().sendSuccess(() -> Component.literal("Wild Hunt | Stage " + HunterData.stage(player)
             + "/3 | EP " + (long) EnergyHelper.getBaseMaxEP(player) + " | Distinct bosses " + HunterData.bossKills(player).size()
-            + " | Mastered " + HunterData.mastered(player) + "/4"), false);
+            + " | Mastered " + HunterData.mastered(player) + "/8"), false);
         ctx.getSource().sendSuccess(() -> Component.literal("Defeated: " + String.join(", ", HunterData.bossKills(player))), false);
         for (Apex apex : Apex.values()) {
             for (var instance : SkillAPI.getSkillsFrom(player).getLearnedSkills()) {
@@ -56,22 +56,5 @@ public final class HunterCommands {
             return 0;
         }
         return RaceAPI.getRaceFrom(player).evolveRace(WildHunt.HUNTERS.get(stage).get()) ? 1 : 0;
-    }
-    private static int ascend(CommandContext<CommandSourceStack> ctx, Apex apex) throws com.mojang.brigadier.exceptions.CommandSyntaxException {
-        var player = ctx.getSource().getPlayerOrException();
-        var skills = SkillAPI.getSkillsFrom(player);
-        var unique = skills.getSkill(WildHunt.UNIQUE.get(apex).get());
-        var ultimate = WildHunt.ULTIMATE.get(apex).get();
-        if (skills.getSkill(ultimate).isPresent() || !HunterProgression.canAscend(HunterData.stage(player),
-                unique.map(s -> s.isMastered(player)).orElse(false),
-                EnergyHelper.getBaseMaxEP(player))) {
-            ctx.getSource().sendFailure(Component.literal("Ascension requires Sovereign Hunter, 2M EP, a mastered matching Unique skill."));
-            return 0;
-        }
-        // Only remove the source skill after the native skill storage accepts its replacement.
-        if (!HunterData.learnReward(player, ultimate)) return 0;
-        skills.forgetSkill(unique.orElseThrow());
-        player.sendSystemMessage(Component.literal("Your soul has awakened " + apex.ultimateName + "!"));
-        return Command.SINGLE_SUCCESS;
     }
 }

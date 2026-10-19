@@ -32,7 +32,12 @@ public final class ArtVisualRenderer extends EntityRenderer<ArtVisualEntity> {
     }
     @Override public void render(ArtVisualEntity entity, float yaw, float partial, PoseStack poses, MultiBufferSource buffers, int light) {
         float age = entity.tickCount + partial;
-        if (entity.kind() == ArtVisualEntity.LASH) {
+        if(entity.kind()>=ArtVisualEntity.THREAD_LINE) {
+            poses.pushPose();
+            if(entity.kind()==ArtVisualEntity.TWIN_GATE)poses.mulPose(com.mojang.math.Axis.YP.rotation((float)entity.end().z));
+            MythicGeometry.render(poses.last(),buffers.getBuffer(RenderType.debugQuads()),entity.kind(),entity.end(),age,entity.lifetime());
+            poses.popPose();
+        } else if (entity.kind() == ArtVisualEntity.LASH) {
             double extent = Math.clamp(age / 4, 0, 1) * Math.clamp((entity.lifetime() - age) / 6, 0, 1);
             tentacle(poses.last(), buffers, entity.end(), extent, age, light);
         } else if(entity.kind()>=ArtVisualEntity.CAUSAL_DOMAIN || entity.kind()==ArtVisualEntity.CAUSAL_RAY) {

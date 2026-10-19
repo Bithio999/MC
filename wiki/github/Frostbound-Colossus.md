@@ -20,7 +20,7 @@
 | Registry ID | `wildhunt:frostbound_colossus` |
 | **Evolution** | |
 | Previous | — |
-| Evolution | [Ymir, Lord of Winter](https://github.com/Bithio999/MC/wiki/Ymir) |
+| Evolution | [Demeter](https://github.com/Bithio999/MC/wiki/Demeter), with mastered Verdant Keeper |
 | **Obtaining** | |
 | Method | Reincarnation / starting skill roll |
 
@@ -53,7 +53,7 @@ The toggle uses native barrier rendering and the shield HUD.
 | 1. Avalanche Crash | 200 | 4 s | 100 |
 | 2. Glacial Prison | 650 | 8 s | 55 |
 
-**Damage calculation:** multiply the listed base values by **0.90**, then by the mastery multiplier (up to **1.50**). Ultimate table values already include their 3× base multiplier. Elemental boosts, defenses, barriers, and situational modifiers also apply. EP does not multiply damage.
+**Damage calculation:** multiply the listed base values by **0.90**, then by the mastery multiplier (up to **1.50**). Elemental boosts, defenses, barriers, and situational modifiers also apply. EP does not multiply damage.
 
 #### Avalanche Crash
 
@@ -85,15 +85,11 @@ Roll through Tensura’s normal reincarnation system. These Uniques join the con
 
 ## Evolution
 
-| Unique Skill | Ultimate Skill | Requirements |
-| --- | --- | --- |
-| Frostbound Colossus | [Ymir, Lord of Winter](https://github.com/Bithio999/MC/wiki/Ymir) | Sovereign Hunter; 2,000,000 base EP; matching Unique mastered |
-
-Ascension replaces only the matching Unique. The Ultimate starts with its own mastery.
+Combine the mastered skill with a mastered **Verdant Keeper** at **2M base EP** to create [Demeter](https://github.com/Bithio999/MC/wiki/Demeter), using **Skills → Ultimate → Synthesis**. Both ingredients are replaced and presets/cooldowns carry over. No race requirement applies.
 
 ## Suggested combo
 
-Capture an enemy with Glacial Prison → aim Avalanche Crash at the captive and nearby foes. As Ymir, use the prison to hold a target within Heavenfall Glacier’s warning circles.
+Capture an enemy with Glacial Prison → aim Avalanche Crash at the captive and nearby foes.
 
 ## Strengths and limitations
 

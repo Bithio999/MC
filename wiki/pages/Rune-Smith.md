@@ -1,0 +1,97 @@
+# Rune Smith
+
+[Main Page](../README.md) · [Skills](Skills.md) · [Ability index](Abilities.md) · [Damage types](Damage-Types.md)
+
+**Rune Smith** is a Unique Skill focused on **armed proximity trap and remote demolition**.
+
+![Rune Smith](../../src/main/resources/assets/wildhunt/textures/skill/rune_smith.png)
+
+| Skill data | Rune Smith |
+| --- | --- |
+| **Information** | |
+| Type | Unique Skill |
+| Combat role | Armed proximity trap and remote demolition |
+| Active modes | 2 |
+| Resource | Aura |
+| Toggleable passive | Runic Circuit |
+| Passive upkeep | 20 aura / second |
+| Registry ID | `wildhunt:rune_smith` |
+| **Obtaining** | |
+| Method | Reincarnation starting-skill roll |
+| **Evolution** | |
+| Evolution | [Synthesis](Skill-Synthesis.md) |
+
+## Usage
+
+### Passive
+
+[Passive - Toggle] — **Runic Circuit**
+
+| Ability information | Value |
+| --- | --- |
+| Damage type | None — support / defense |
+| Damage ID | — |
+| Upkeep | 20 aura / second |
+
+Gain 30% Earth, Flame and Lightning boost through native attributes. No passive stacks are accumulated.
+
+Enable the native skill toggle in Ability Selection. The first second is paid on enabling; upkeep is paid every twenty game ticks. It turns off when unfunded or blocked by native activation rules. Turning it off removes only its own modifiers. It is separate from active mode cycling.
+
+### Active
+
+| Mode | Aura | Cooldown | Raw damage |
+| --- | ---: | ---: | --- |
+| 1. Runic Mine | 350 | 8 s | 160 on trigger |
+| 2. Command Detonation | 400 | 5 s | 230 |
+
+Damage listed here is before native combat handling and uses **1 + 0.5 × mastery fraction**, capped at **1.5×**. These new kits do not use the apex skills’ 0.90 multiplier or the former 3× Ultimate multiplier. EP never multiplies their damage. Native elemental boosts, authority, resistances, barriers and hit immunity apply.
+
+#### Runic Mine
+
+[Active - Press] — **Runic Mine**
+
+| Ability information | Value |
+| --- | --- |
+| Damage type | Earth elemental |
+| Damage ID | `tensura:earth_elemental` |
+| Resource cost | 350 aura |
+| Cooldown | 8 seconds |
+| Raw damage | 160 on trigger |
+
+Place one rune at your crosshair within 28 blocks, using a visible target or bounded surface/endpoint. It arms after one second and lasts fifteen seconds. An eligible enemy entering its three-block radius triggers one Earth blast against up to eight enemies. Placing another rune replaces the previous one. The mine checks your line of sight to victims and does not edit terrain.
+
+#### Command Detonation
+
+[Active - Press] — **Command Detonation**
+
+| Ability information | Value |
+| --- | --- |
+| Damage type | Earth elemental |
+| Damage ID | `tensura:earth_elemental` |
+| Resource cost | 400 aura |
+| Cooldown | 5 seconds |
+| Raw damage | 230 |
+
+Detonate your existing rune within 48 blocks, expanding its blast radius to six blocks and raising its raw damage to 230. You can detonate before proximity arming completes. No live rune means no resource charge, mastery or cooldown.
+
+## Obtaining
+
+Roll through Tensura’s normal reincarnation pool alongside the other seven Myths Uniques and configured native candidates. The roll is random; no particular skill is guaranteed. There is no race, trial or boss-kill requirement to roll.
+
+## Suggested combo
+
+Place a rune at a choke point → wait for proximity activation or manually detonate early to cover a wider group.
+
+## Strengths and limitations
+
+Only one live rune is retained. A consumed rune cannot trigger again. Command Detonation costs its own aura in addition to the original inscription.
+
+Attacks respect teams, owned pets, creative/spectator immunity and server PvP settings. Native status resistances apply. World effects are bounded, expire automatically and do not damage terrain. Anchored effects do not persist across death, relog or dimension changes.
+
+## Related pages
+
+[Skills](Skills.md) · [Skill synthesis](Skill-Synthesis.md) · [Damage types](Damage-Types.md) · [Mechanics](Mechanics.md)
+
+---
+
+**Categories:** Tensura Myths · Skills

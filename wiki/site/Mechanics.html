@@ -7,14 +7,13 @@
 <div class="global-bar"><span>TENSURA MYTHS</span><div><a href="https://tensura.wiki.gg/wiki/Tensura:_Reincarnated_Wiki">Base mod wiki</a><a href="https://github.com/Bithio999/MC">GitHub</a></div></div>
 <header class="masthead"><a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">M</span><span>TENSURA MYTHS<small>Tensura: Reincarnated addon wiki</small></span></a>
 <div class="search"><label for="wiki-search">Search Tensura Myths Wiki</label><input id="wiki-search" type="search" placeholder="Search skills, races, characters…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="search-results" aria-expanded="false"><div id="search-results" role="listbox" aria-label="Search results" hidden></div><span id="search-status" class="sr-only" aria-live="polite"></span></div></header>
-<div class="layout"><button id="navigation-toggle" aria-controls="wiki-navigation" aria-expanded="false">☰ Wiki navigation</button><nav id="wiki-navigation" class="sidebar" aria-label="Wiki navigation"><section><h2>Start here</h2><a href="../index.html">Main Page</a><a href="../site/Getting-Started.html">Getting started</a></section><section><h2>Skills</h2><a href="../site/Skills.html">Skill overview</a><a href="../site/Unique-Skills.html">Unique Skills</a><a href="../site/Ultimate-Skills.html">Ultimate Skills</a><a href="../site/Godly.html">Godly Skills</a><a href="../site/Aura-Regeneration.html">Extra Skills</a><a href="../site/Abilities.html">Ability index</a></section><section><h2>Races</h2><a href="../site/Races.html">Race directory</a><a href="../site/Evolution.html">Hunter evolution</a><a href="../site/Duo-Races.html">Secondary races</a><a href="../site/Convergent-Awakening.html">Convergent Awakening</a></section><section><h2>Otherworlders</h2><a href="../site/Otherworlders.html">Character directory</a><a href="../site/Alma.html">Alma</a><a href="../site/Gemma.html">Gemma</a></section><section><h2>Reference</h2><a href="../site/Damage-Types.html">Damage types</a><a href="../site/Mechanics.html" aria-current="page">Combat mechanics</a><a href="../site/Commands.html">Commands</a></section><div class="sidebar-version">Tensura Myths <strong>0.12.0</strong><br>Minecraft 1.21.1 · NeoForge<br><span>Offline reference edition</span></div></nav>
+<div class="layout"><button id="navigation-toggle" aria-controls="wiki-navigation" aria-expanded="false">☰ Wiki navigation</button><nav id="wiki-navigation" class="sidebar" aria-label="Wiki navigation"><section><h2>Start here</h2><a href="../index.html">Main Page</a><a href="../site/Getting-Started.html">Getting started</a></section><section><h2>Skills</h2><a href="../site/Skills.html">Skill overview</a><a href="../site/Unique-Skills.html">Unique Skills</a><a href="../site/Ultimate-Skills.html">Ultimate Skills</a><a href="../site/Skill-Synthesis.html">Skill synthesis</a><a href="../site/Godly.html">Godly Skills</a><a href="../site/Aura-Regeneration.html">Extra Skills</a><a href="../site/Abilities.html">Ability index</a></section><section><h2>Races</h2><a href="../site/Races.html">Race directory</a><a href="../site/Evolution.html">Hunter evolution</a><a href="../site/Duo-Races.html">Secondary races</a><a href="../site/Convergent-Awakening.html">Convergent Awakening</a></section><section><h2>Otherworlders</h2><a href="../site/Otherworlders.html">Character directory</a><a href="../site/Alma.html">Alma</a><a href="../site/Gemma.html">Gemma</a></section><section><h2>Reference</h2><a href="../site/Damage-Types.html">Damage types</a><a href="../site/Mechanics.html" aria-current="page">Combat mechanics</a><a href="../site/Commands.html">Commands</a></section><div class="sidebar-version">Tensura Myths <strong>0.13.0</strong><br>Minecraft 1.21.1 · NeoForge<br><span>Offline reference edition</span></div></nav>
 <main id="article" class="article-page"><div class="page-tabs"><span aria-current="page">Article</span><a href="../pages/Mechanics.md">Read Markdown</a><a href="https://github.com/Bithio999/MC/blob/main/docs/CHANGELOG.md">Changelog</a></div>
 <div class="article-heading"><div class="breadcrumbs"><a href="../index.html">Tensura Myths Wiki</a> / <a href="../site/Mechanics.html">Reference</a></div><h1>Combat mechanics</h1><p class="subtitle">From the unofficial Tensura Myths Wiki</p></div>
 <div class="article-content"><div class="article-intro"><p>This page explains <strong>Tensura Myths combat mechanics</strong>, including native barriers, skill toggles, damage modifiers, and aura consumption.</p></div><details class="contents" open><summary>Contents</summary><div class="toc">
 <ul>
 <li><a href="#damage-types">Damage types</a></li>
 <li><a href="#damage-and-mastery">Damage and mastery</a></li>
-<li><a href="#aions-damage">Aion’s damage</a></li>
 <li><a href="#world-effects">World effects</a></li>
 <li><a href="#toggleable-passives">Toggleable passives</a></li>
 <li><a href="#native-barriers">Native barriers</a></li>
@@ -27,125 +26,104 @@
 </div>
 </details>
 <h2 id="damage-types">Damage types</h2>
-<div class="article-table"><table>
-<thead>
-<tr>
-<th>Skill line</th>
-<th>Unique / Ultimate</th>
-<th>Native damage type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Rey Dau</td>
-<td>Storm Crown / Raijin</td>
-<td>Lightning — <code>tensura:lightning_elemental</code></td>
-</tr>
-<tr>
-<td>Uth Duna</td>
-<td>Scarlet Deluge / Varuna</td>
-<td>Water — <code>tensura:water_elemental</code></td>
-</tr>
-<tr>
-<td>Nu Udra</td>
-<td>Black Flame / Agni</td>
-<td>Fire — <code>tensura:fire_elemental</code></td>
-</tr>
-<tr>
-<td>Jin Dahaad</td>
-<td>Frostbound Colossus / Ymir</td>
-<td>Ice — <code>tensura:ice_elemental</code></td>
-</tr>
-<tr>
-<td>Causality</td>
-<td>Aion</td>
-<td>Space — <code>tensura:space_elemental</code></td>
-</tr>
-</tbody>
-</table></div>
-<p>Every damaging active, area pulse, signature, and Water Veil retaliation uses its line's listed element. The <a href="Abilities.html">ability index</a> records each art separately. Oil Lash deals fire elemental damage; Avalanche Crash and Glacial Prison deal ice elemental damage despite their physical-looking animations. Unique and Ultimate versions retain the same element.</p>
-<p>Aura and magicules are skill resources, not separate damage types. These attacks use Tensura's native skill damage source, elemental boosts, resistance rules, and barriers. In Tensura 2.0.1.3's bundled damage tags, all five listed types bypass ordinary armor; that does not imply bypassing native barriers or elemental resistances. Nu Udra's ignition hits also apply the native Black Burn status, whose ticking source is <code>tensura:black_flame</code>, separate from the direct <code>tensura:fire_elemental</code> hit. See <a href="Damage-Types.html#black-burn">Damage types</a>.</p>
+<p>The <a href="Abilities.html">ability index</a> and <a href="Damage-Types.html">damage reference</a> distinguish every direct elemental source, native status and non-damaging utility. Vritra and Thoth use multiple elements within one skill; each strike keeps its own native damage source. Reflection preserves the projectile’s own type. Healing, gates, resource conversion and barriers do not invent attack damage.</p>
 <h2 id="damage-and-mastery">Damage and mastery</h2>
-<p>The four apex lines’ damage multiplier is:</p>
-<pre><code class="language-text">0.90 × (1 + 0.5 × clamp(masteryFraction, 0, 1)) × (Ultimate ? 3 : 1)
-</code></pre>
-<p><strong>EP does not multiply damage.</strong> A mastered Unique uses 1.35× its raw base value; a mastered Ultimate uses 4.05× the corresponding Unique raw base. The reduction also covers every area pulse, counter and signature impact. Skill-page tables already include the Ultimate’s 3× multiplier. Native Tensura elemental boosts, global combat rules, rank interactions, barriers and resistances still apply; raw values do not promise the same health damage against every enemy.</p>
-<p>EP remains a requirement for race evolution and Ultimate ascension. Those progression gates do not increase these attacks’ raw damage.</p>
-<h2 id="aions-damage">Aion’s damage</h2>
-<p>Aion uses space elemental damage and a <strong>1 + 0.5 × mastery fraction</strong> multiplier, capped at 1.5×, without the apex lines’ 0.90 reduction or Ultimate 3× base multiplier. While Unbroken Continuum is active, eligible attacks against non-Godly owners gain another 35%; the passive preserves the attack’s original damage type. Causal Reversal and the slowing aura do not deal damage. <a href="Aion.html">Aion</a> lists the individual arts and passive defense rules.</p>
+<p>The original four apex Uniques use <strong>0.90 × (1 + 0.5 × mastery fraction)</strong>. The four additional Uniques, combination Ultimates, Aion and Thoth use <strong>1 + 0.5 × mastery fraction</strong>. Mastery fractions are clamped to 0–1, giving a maximum of 1.5× before native modifiers. Each new kit has its own raw damage values; there is no shared Ultimate 3× multiplier.</p>
+<p><strong>EP never multiplies damage.</strong> It is a fixed progression requirement. Native elemental boosts, skill authority, barriers, resistance/nullification, hit immunity and server rules still determine actual health loss. Overlapping warnings do not reset vanilla/native hit immunity to force multiple full hits.</p>
+<p>Aion’s active passive adds 35% damage against non-Godly owners while preserving the original attack type. Thoth’s elemental boosts and native magic-efficiency attributes are separate from Aion’s resistance suppression.</p>
 <h2 id="world-effects">World effects</h2>
 <p>Oil pools occupy finite world locations. Drenched is a timed water mark that supports the water/lightning interactions described on the skill pages.</p>
 <h2 id="toggleable-passives">Toggleable passives</h2>
-<p>Each skill has two active modes (three for an Ultimate) plus a separate native skill toggle in Tensura’s Ability Selection.</p>
+<p>Unique skills have two active modes, combination Ultimates three, and Godly skills four, with a separate native skill toggle in Tensura’s Ability Selection.</p>
 <div class="article-table"><table>
 <thead>
 <tr>
-<th>Line</th>
-<th>Passive</th>
-<th style="text-align: right;">Unique aura / second</th>
-<th style="text-align: right;">Ultimate aura / second</th>
+<th>Skill</th>
+<th style="text-align: right;">Upkeep per second</th>
+<th style="text-align: right;">Native multilayer capacity</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Rey Dau</td>
-<td>Storm Mantle</td>
-<td style="text-align: right;">10</td>
-<td style="text-align: right;">40</td>
+<td>Storm Crown</td>
+<td style="text-align: right;">10 aura</td>
+<td style="text-align: right;">—</td>
 </tr>
 <tr>
-<td>Uth Duna</td>
-<td>Water Veil</td>
-<td style="text-align: right;">10</td>
-<td style="text-align: right;">40</td>
+<td>Scarlet Deluge</td>
+<td style="text-align: right;">10 aura</td>
+<td style="text-align: right;">100</td>
 </tr>
 <tr>
-<td>Nu Udra</td>
-<td>Furnace Mantle</td>
-<td style="text-align: right;">15</td>
-<td style="text-align: right;">60</td>
+<td>Black Flame</td>
+<td style="text-align: right;">15 aura</td>
+<td style="text-align: right;">—</td>
 </tr>
 <tr>
-<td>Jin Dahaad</td>
-<td>Colossus Carapace</td>
-<td style="text-align: right;">20</td>
-<td style="text-align: right;">80</td>
+<td>Frostbound Colossus</td>
+<td style="text-align: right;">20 aura</td>
+<td style="text-align: right;">150</td>
+</tr>
+<tr>
+<td>Threadweaver</td>
+<td style="text-align: right;">15 aura</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr>
+<td>Rune Smith</td>
+<td style="text-align: right;">20 aura</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr>
+<td>Verdant Keeper</td>
+<td style="text-align: right;">20 aura</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr>
+<td>Mirrorbound</td>
+<td style="text-align: right;">15 aura</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr>
+<td>Vritra</td>
+<td style="text-align: right;">80 aura</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr>
+<td>Demeter</td>
+<td style="text-align: right;">70 aura</td>
+<td style="text-align: right;">500</td>
+</tr>
+<tr>
+<td>Janus</td>
+<td style="text-align: right;">70 aura</td>
+<td style="text-align: right;">300</td>
+</tr>
+<tr>
+<td>Aion</td>
+<td style="text-align: right;">180 magicules</td>
+<td style="text-align: right;">1,200</td>
+</tr>
+<tr>
+<td>Thoth</td>
+<td style="text-align: right;">180 magicules</td>
+<td style="text-align: right;">1,000</td>
 </tr>
 </tbody>
 </table></div>
 <p>The first second is paid when enabling; upkeep is charged once every twenty game ticks while active. Passives stay on until disabled, unfunded or blocked by activation requirements. They do not expire after fifteen or thirty seconds. Attribute contributions use stable IDs, so refreshes cannot accumulate duplicate bonuses. Turning off or forgetting the skill removes its modifiers. Saved native toggle state is restored on login.</p>
 <h2 id="native-barriers">Native barriers</h2>
 <p>Water Veil and Colossus Carapace contribute to Tensura’s <code>PHYSICAL_BARRIER</code> and <code>MAGIC_BARRIER</code> attributes and arm <code>MULTILAYER_BARRIER</code>, which is the attribute read by its shield HUD counter. Tensura handles their interaction with damage and renders its native barrier layer around the character. Wild Hunt adds no separate absorption-heart pool. Other skills’ barrier contributions remain separate.</p>
-<div class="article-table"><table>
-<thead>
-<tr>
-<th>Passive</th>
-<th style="text-align: right;">Unique capacity</th>
-<th style="text-align: right;">Ultimate capacity</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Water Veil</td>
-<td style="text-align: right;">100</td>
-<td style="text-align: right;">250</td>
-</tr>
-<tr>
-<td>Colossus Carapace</td>
-<td style="text-align: right;">150</td>
-<td style="text-align: right;">350</td>
-</tr>
-</tbody>
-</table></div>
+<p>Demeter, Janus, Aion and Thoth also use native recovering personal multilayer barriers. Crystal Bulwark lends an additional six-second, 250-capacity ward to eligible allies; that ward expires rather than regenerating, and owns separate modifiers for each caster.</p>
 <p>The displayed value is native per-hit blocking capacity. Tensura charges magicules for blocked damage. Overflow, inadequate magicules and native power interactions can break the shield. A broken multilayer barrier automatically rearms at the first paid upkeep after ten seconds without a hit (normally 10–11 seconds). Hits, including fully blocked hits, restart recovery. Retoggling cannot skip this delay. The shield modifier is saved across relogs; turning off removes only this art’s contribution. Ensure Tensura’s <strong>Barrier</strong> HUD decoration is enabled if you have customized its HUD.</p>
 <p>Water Veil retains water breathing and an attacker-targeted retaliation after actual health damage. Furnace Mantle retains fire protection while enabled; both utility effects stop immediately on toggle-off without leftover timed potions.</p>
 <h2 id="aiming-and-movement">Aiming and movement</h2>
-<p>Railbolt begins with a block-clipped aimed hit, then ricochets from the latest victim. Thunder Step follows the full aim vector, including vertical pitch, and sweeps the whole caster bounding box. Collisions, build-height limits and the world border stop it. Railbolt bounces reach twelve blocks through walls from the most recent victim. Thunder Step reaches 16/24 blocks with a 5/4 second cooldown and preserves all three components of player momentum. Undertow is placed on the crosshair ray within 24/36 blocks, using the hit surface or bounded endpoint. Water waves sweep continuous segments so targets cannot hide between movement updates. Oil Lash selects a limited forward fan and creates synced tentacle geometry. Avalanche Crash is an aimed area impact; Glacial Prison targets one enemy. Heavenfall Glacier warns fixed positions for half a second before impact.</p>
+<p>Railbolt begins with a block-clipped aimed hit, then ricochets from the latest victim. Thunder Step follows the full aim vector, including vertical pitch, and sweeps the whole caster bounding box. Collisions, build-height limits and the world border stop it. Railbolt bounces reach twelve blocks through walls from the most recent victim. Thunder Step reaches 16 blocks with a 5-second cooldown and preserves all three components of player momentum. Undertow is placed on the crosshair ray within 24 blocks, using the hit surface or bounded endpoint. Water waves sweep continuous segments so targets cannot hide between movement updates. Oil Lash selects a limited forward fan and creates synced tentacle geometry. Avalanche Crash is an aimed area impact; Glacial Prison targets one enemy. Winter Harvest warns fixed crystal blooms for 1.2 seconds; Parallax Snare warns a spatial convergence for 0.8 seconds.</p>
 <p>Attacks respect teams, owned pets, creative/spectator immunity and PvP settings. They check line of sight except for Railbolt ricochets after the initial hit. Movement respects knockback resistance. Dimension changes invalidate anchored effects. Native status resistance and skill ranks can prevent Frost or Chill. No art destroys terrain or places permanent ice.</p>
 <h2 id="aura-regeneration">Aura regeneration</h2>
 <p>See <a href="Aura-Regeneration.html">Aura regeneration</a> for the three race-granted Extra Skills, healing speed, aura costs, suppression and death-prevention limits. They never charge magicules. Default native EP gain stays split two thirds aura and one third magicules.</p>
 <h2 id="visual-effects">Visual effects</h2>
-<p>Water waves render a broad curled mesh with a foam crest; Undertow renders rotating teal and coral spiral ribbons. Water and ice toggles emit no constant custom particles. Oil Lash uses a synced procedural mesh with a dark tapered body, glowing orange bands, extension and recoil, including on a miss. Ice spires, prison bars and falling ice use rendered faceted crystals. Those visual entities deal no damage by themselves, have no collision and expire automatically; server skill logic owns targeting and damage.</p>
+<p>Water waves render a broad curled mesh with a foam crest; Undertow renders rotating teal and coral spiral ribbons. Water and ice toggles emit no constant custom particles. Oil Lash uses a synced procedural mesh with a dark tapered body, glowing orange bands, extension and recoil, including on a miss. Ice spires and prison bars use rendered faceted crystals. New kits add silk strands, inscribed mines, growing briars and crystal trees, orbiting mirrors, plasma conduits, architectural gates, closing spatial blades and open orbiting spellbooks. Those visual entities deal no damage by themselves, have no collision and expire automatically; server skill logic owns targeting and damage.</p>
 <p>Tensura supplies elemental particles, shockwaves, native barrier rendering and animated magic circles. Its assets are used at runtime and are not copied into the addon.</p>
 <h2 id="barrier-hud-examples">Barrier HUD examples</h2>
 <p><img alt="Water Veil native HUD showing 100" src="../media/water-veil-hud.png" /></p>
@@ -157,4 +135,4 @@
 <p>Race HP bonuses are +100 / +500 / +1,000; native SHP bonuses are +400 / +3,200 / +6,600. These replace earlier hunter-stage bonuses. See <a href="Evolution.html#hp-and-shp-growth">Human evolution</a>.</p>
 </div><nav class="related-box" aria-label="Related reference"><strong>Tensura Myths · Reference</strong><div class="navbox-row"><strong>Reference</strong><div><a href="../site/Getting-Started.html">Getting started</a><a href="../site/Skills.html">Skills</a><a href="../site/Abilities.html">Ability index</a><a href="../site/Damage-Types.html">Damage types</a><a href="../site/Races.html">Race directory</a><a href="../site/Otherworlders.html">Otherworlders</a><a href="../site/Mechanics.html" aria-current="page">Combat mechanics</a><a href="../site/Commands.html">Commands</a></div></div></nav>
 <div class="categories">Categories: <a href="../index.html">Tensura Myths</a> · <a href="../site/Mechanics.html">Reference</a></div>
-<footer>Unofficial fan addon. Original documentation and portraits. Not affiliated with Capcom or ManasMods.<br>Tensura Myths 0.12.0 · Offline edition · No external services required.</footer></main></div></body></html>
+<footer>Unofficial fan addon. Original documentation and portraits. Not affiliated with Capcom or ManasMods.<br>Tensura Myths 0.13.0 · Offline edition · No external services required.</footer></main></div></body></html>

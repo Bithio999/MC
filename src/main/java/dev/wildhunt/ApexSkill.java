@@ -21,7 +21,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.phys.Vec3;
 
 /** Two active arts, a native skill toggle, and an Ultimate-only third active. */
-public final class ApexSkill extends Skill {
+public class ApexSkill extends Skill {
     public final Apex apex;
     public final boolean ultimate;
     public final ApexBalance balance;
@@ -69,7 +69,7 @@ public final class ApexSkill extends Skill {
             case UTH_DUNA -> "A travelling tidal wave carries and drenches enemies. A whirlpool placed at your crosshair within 24 blocks (36 Ultimate) gathers them. Toggle Water Veil for native physical, magic and HUD multilayer barriers and retaliation after health damage.";
             case NU_UDRA -> "Rendered tentacles lash and pull enemies, leaving owned oil pools. Ignition burns those locations directly, without oil stacks. Toggle Furnace Mantle for melee and flame power.";
             case JIN_DAHAAD -> "Avalanche Crash erupts at your target and launches nearby enemies. Glacial Prison captures one target in native Frost. Toggle Colossus Carapace for physical, magic and HUD multilayer barriers and stability.";
-        } + (ultimate ? " Ultimate: triple base damage and a third signature art." : " Damage improves with mastery, never with EP. Master this skill to unlock its Ultimate as Sovereign Hunter.");
+        } + (ultimate ? " Ultimate: triple base damage and a third signature art." : " Damage improves with mastery, never with EP. Master Unique skills to unlock combination Ultimates through Synthesis.");
     }
     @Override public MutableComponent getSkillDescription() { return Component.translatableWithFallback(key() + ".description", description()); }
     @Override public double getDefaultAcquiringMagiculeCost() { return ultimate ? 1_000_000 : 25_000; }

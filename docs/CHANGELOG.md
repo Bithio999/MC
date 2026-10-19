@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.13.0 — Combination skills and fixed progression gates
+
+- Secondary evolution uses `secondaryRaceEP + secondaryEvolutionEPStep × stage`; neither current EP nor selection EP changes its requirements. Convergence uses the fixed completed-stage gates and native lineage requirements, ignoring old selection/evolution EP snapshots.
+- Added four rollable Unique Skills: Threadweaver, Rune Smith, Verdant Keeper and Mirrorbound. Their mechanics are silk leashes, armed runes, allied healing/roots, and light splitting/projectile reflection respectively.
+- Replaced the four original Ultimates with three two-Unique synthesis recipes: Storm Crown + Black Flame → Vritra; Verdant Keeper + Frostbound Colossus → Demeter; Threadweaver + Mirrorbound → Janus. Any race can synthesize at 2M base EP when both ingredients are mastered.
+- Added Thoth, God of Magic: three-chapter elemental Lexicon, Spellbreak disruption/drain, 2:1 aura-to-magicule conversion, autonomous mobile Astral Library and Arcane Sovereignty. Ascend a mastered combination Ultimate and mastered Rune Smith at true awakening / 12M base EP. Native Ultimate classification plus the Godly tag is retained.
+- Added Synthesis to the native Ultimate skill page and Aion/Thoth destination selection to native Godly Ascension. Replacement preserves all nine presets and carries the longest remaining source cooldown. The native Ultimate page title fits its new header control.
+- Existing Raijin/Agni migrate to Vritra; Varuna/Ymir migrate to Demeter. Mastery fractions and cooldowns merge without downgrading an owned destination. Retired IDs remain decode-only and cannot cast, toggle, roll or appear in the playable Ultimate list. Their old passive/barrier modifiers are removed.
+- Added eight centered original 64×64 icons, procedural silk/runes/briars/mirrors/plasma/trees/portals/open-book effects, and native elemental magic circles. Gates preserve player momentum and send native movement synchronization.
+- Reorganized the gameplay wiki around the new recipes, with 142 articles and 50 indexed active/passive/racial entries. Every new ability includes its native damage type, costs, cooldowns and targeting limits; release history remains here.
+- Validation: 90 native GameTests, 11 JUnit tests, real-client synthesis/ascension/gate checks and responsive wiki verification. See `VALIDATION-0.13.0.md`.
+
 ## 0.12.0
 
 - Add shared smooth steering for Worldline Sever’s server damage ray and local preview. Use solid-block collision on both sides so water and lava no longer stop the server ray.

@@ -9,15 +9,15 @@ This guide covers installing **Tensura Myths**, rolling an apex skill, and begin
 - Minecraft 1.21.1 and Java 21.
 - NeoForge 21.1.209 or newer in the 21.1 line.
 - Tensura: Reincarnated 2.0.1.3, ManasCore 4.0.0.2, Architectury and Tensura’s required GeckoLib, SmartBrainLib and TerraBlender dependencies.
-- Tensura Myths 0.12.0 installed on both client and server.
+- Tensura Myths 0.13.0 installed on both client and server.
 
 ## Installation
 
-Download the 0.12.0 addon from the repository’s `releases` directory. Replace older Wild Hunt / Tensura Myths jars; do not load two versions together. The addon jar is not a complete modpack.
+Download the 0.13.0 addon from the repository’s `releases` directory. Replace older Wild Hunt / Tensura Myths jars; do not load two versions together. The addon jar is not a complete modpack.
 
 ## First reincarnation
 
-Complete Tensura’s ordinary reincarnation flow. The four apex Uniques are eligible starting rolls alongside the server’s configured pool. A particular apex skill is not guaranteed. Existing rolled skills remain valid after upgrading.
+Complete Tensura’s ordinary reincarnation flow. All eight Myths Uniques are eligible starting rolls alongside the server’s configured pool. A particular apex skill is not guaranteed. Existing rolled skills remain valid after upgrading.
 
 ## First hunter evolution
 
@@ -36,7 +36,7 @@ Each skill has a separate toggleable passive in Tensura’s Ability Selection. T
 
 ## Beyond the hunter path
 
-Use Tensura’s **right-side Secondary Race / Convergent Awakening tabs** and **Skills → Godly → Ascension** menus for [Duo Races](Duo-Races.md), [Convergent Awakening](Convergent-Awakening.md), and [Godly Skills](Godly.md). See [Aion](Aion.md) for its four active arts and barrier passive.
+Use Tensura’s **right-side Secondary Race / Convergent Awakening tabs** and **Skills → Godly → Ascension** menus for [Duo Races](Duo-Races.md), [Convergent Awakening](Convergent-Awakening.md), and [Godly Skills](Godly.md). Use **Skills → Ultimate → Synthesis** for combination Ultimates. [Aion](Aion.md) and [Thoth](Thoth.md) each have four active arts and a separate passive.
 
 ---
 

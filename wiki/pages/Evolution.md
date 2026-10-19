@@ -10,7 +10,7 @@ The alternate branch is **Human → Awakened Hunter → Apex Hunter → Sovereig
 | --- | --- | ---: | ---: | --- |
 | [Awakened Hunter](Awakened-Hunter.md) | Human | 100,000 | 1 | — |
 | [Apex Hunter](Apex-Hunter.md) | Awakened Hunter | 400,000 | 3 | — |
-| [Sovereign Hunter](Sovereign-Hunter.md) | Apex Hunter | 2,000,000 | 5 | Master one apex Unique skill |
+| [Sovereign Hunter](Sovereign-Hunter.md) | Apex Hunter | 2,000,000 | 5 | Master one Myths Unique skill |
 
 ## HP and SHP growth
 
@@ -36,7 +36,7 @@ Eligible types are listed in `wildhunt:progression_bosses`: the shared `c:bosses
 
 ## Evolving
 
-Use Tensura’s evolution menu or `/wildhunt evolve` after meeting the same gates. Check `/wildhunt status` for the recorded type IDs, base EP and mastery progress. Skill acquisition is independent: bosses never award the four Unique skills.
+Use Tensura’s evolution menu or `/wildhunt evolve` after meeting the same gates. Check `/wildhunt status` for the recorded type IDs, base EP and mastery progress. Skill acquisition is independent: bosses never award Unique skills.
 
 ---
 

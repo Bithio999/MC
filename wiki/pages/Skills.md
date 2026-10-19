@@ -2,35 +2,34 @@
 
 [Main Page](../README.md) · [Skills](Skills.md) · [Ability index](Abilities.md) · [Damage types](Damage-Types.md)
 
-**Skills** are organized by tier and acquisition method. The addon provides four Unique Skills, four Ultimate Skills, one Godly skill and three aura recovery Extra Skills.
+**Tensura Myths** provides **eight Unique Skills, three combination Ultimates, two Godly Skills and three aura recovery Extra Skills**.
 
 ## Skill tiers
 
 | Tier | Skills | Obtaining | Resource |
 | --- | --- | --- | --- |
-| [Unique](Unique-Skills.md) | Storm Crown, Scarlet Deluge, Black Flame, Frostbound Colossus | Reincarnation starting-skill rolls | Aura |
-| [Ultimate](Ultimate-Skills.md) | Raijin, Varuna, Agni, Ymir | Matching mastered Unique; Sovereign Hunter; 2M base EP | Aura |
-| [Godly](Godly.md) | Aion, God of Causality | Mastered Myths Ultimate; True Hero / True Demon Lord; 12M base EP | Magicules |
+| [Unique](Unique-Skills.md) | Storm Crown, Scarlet Deluge, Black Flame, Frostbound Colossus, Threadweaver, Rune Smith, Verdant Keeper, Mirrorbound | Reincarnation rolls | Aura |
+| [Ultimate](Ultimate-Skills.md) | Vritra, Demeter, Janus | Two specific mastered Uniques; 2M base EP; [Synthesis](Skill-Synthesis.md) | Aura |
+| [Godly](Godly.md) | Aion, Thoth | Mastered combination Ultimate; true awakening; 12M base EP; Thoth also combines mastered Rune Smith | Magicules |
 | [Extra](Aura-Regeneration.md) | Hunter’s Recovery, Apex Renewal, Sovereign Rebirth | Hunter race evolution | Aura |
-
-## Individual abilities
-
-The [ability index](Abilities.md) lists every active art, toggleable passive and shared racial action, with a link to its description and its damage type. Healing and utility arts are labeled **None**. [Damage types](Damage-Types.md) explains direct elemental hits, status damage, armor and barriers.
 
 ## Using skills
 
-Equip active modes and cycle them through Tensura’s native ability interface. Passives use the native toggle. Each apex Unique has two active modes; its Ultimate has three. Aion has four active modes and a separate passive. Recovery Extra Skills are passive-only.
+Equip and cycle active modes through Tensura’s native Ability Selection and key bindings. The separate native toggle activates each skill’s passive. Uniques have two active modes, Ultimates have three, and each Godly Skill has four. Recovery Extra Skills are passive-only.
 
 ## Skill evolution
 
-| Unique | Ultimate | Godly |
+| Ingredients | Ultimate | Further evolution |
 | --- | --- | --- |
-| [Storm Crown](Storm-Crown.md) | [Raijin](Raijin.md) | [Aion](Aion.md) |
-| [Scarlet Deluge](Scarlet-Deluge.md) | [Varuna](Varuna.md) | [Aion](Aion.md) |
-| [Black Flame](Black-Flame.md) | [Agni](Agni.md) | [Aion](Aion.md) |
-| [Frostbound Colossus](Frostbound-Colossus.md) | [Ymir](Ymir.md) | [Aion](Aion.md) |
+| Storm Crown + Black Flame | [Vritra](Vritra.md) | [Aion](Aion.md), or [Thoth](Thoth.md) with mastered Rune Smith |
+| Verdant Keeper + Frostbound Colossus | [Demeter](Demeter.md) | Aion, or Thoth with mastered Rune Smith |
+| Threadweaver + Mirrorbound | [Janus](Janus.md) | Aion, or Thoth with mastered Rune Smith |
 
-Ascension replaces the chosen source skill. Read each skill’s Obtaining and Evolution sections for exact requirements.
+[Scarlet Deluge](Scarlet-Deluge.md) remains a standalone water/control Unique. The [synthesis reference](Skill-Synthesis.md) explains exact acquisition and replacement behavior.
+
+## Ability reference
+
+The [ability index](Abilities.md) records every move’s damage type. Healing, barriers and utility list **None**; reflected shots retain their projectile’s own damage. [Damage types](Damage-Types.md) explains native damage sources and status damage.
 
 ---
 

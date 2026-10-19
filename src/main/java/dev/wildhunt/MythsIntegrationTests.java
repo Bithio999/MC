@@ -38,15 +38,16 @@ public final class MythsIntegrationTests {
         h.succeed();
     }
     @GameTest(template="empty",timeoutTicks=100)
-    public static void secondRaceRequiresNewEPAndKeepsPrimarySplit(GameTestHelper h) {
+    public static void secondaryUsesFixedStageEPAndKeepsPrimarySplit(GameTestHelper h) {
         var p=player(h);DuoSystem.select(p,RaceFamily.SLIME);
         h.assertTrue(DuoSystem.secondary(p).orElseThrow().getRace()==TensuraRaces.SLIME.get(),"Secondary did not start at base Slime");
         var gains=DuoSystem.gains(p,2,1);h.assertTrue(Math.abs(gains.aura()-2.2)<1e-9 && Math.abs(gains.magicules()-1.1)<1e-9,"Secondary bonus changed the native primary split");
+        EnergyHelper.setBaseMaxEP(p,7_499_999);
         var blocked=DuoSystem.evolve(p,TensuraRaces.DEMON_SLIME.getId());
-        h.assertTrue(DuoSystem.secondary(p).orElseThrow().getRace()==TensuraRaces.SLIME.get(),"High existing EP bypassed fresh-growth requirement: "+blocked);
-        h.assertTrue(DuoSystem.secondaryEvolutionEP(p)==22_500_000,"First secondary stage threshold did not use selection EP");
+        h.assertTrue(DuoSystem.secondary(p).orElseThrow().getRace()==TensuraRaces.SLIME.get(),"Below-threshold evolution was allowed: "+blocked);
+        h.assertTrue(DuoSystem.secondaryEvolutionEP(p)==7_500_000,"First secondary stage threshold is not fixed");
         var message=evolveSecondary(p,TensuraRaces.DEMON_SLIME.getId());
-        h.assertTrue(DuoSystem.secondaryEvolutionEP(p)==25_000_000,"Second stage did not raise the EP gate");
+        h.assertTrue(DuoSystem.secondaryEvolutionEP(p)==10_000_000,"Second stage did not raise the EP gate");
         h.assertTrue(DuoSystem.secondary(p).orElseThrow().getRace()==TensuraRaces.DEMON_SLIME.get(),"Native awakened evolution failed: "+message);
         evolveSecondary(p,TensuraRaces.GOD_SLIME.getId());
         h.assertTrue(DuoSystem.secondary(p).orElseThrow().getRace()==TensuraRaces.GOD_SLIME.get(),"Secondary never reaches final evolution");
@@ -97,7 +98,7 @@ public final class MythsIntegrationTests {
     }
     @GameTest(template="empty",timeoutTicks=100)
     public static void godlyAscensionRetainsUltimateCompatibilityAndPresets(GameTestHelper h) {
-        var p=player(h);var skill=WildHunt.ULTIMATE.get(Apex.REY_DAU).get();HunterData.learnReward(p,skill);
+        var p=player(h);var skill=WildHunt.MYTHIC.get(MythicKind.VRITRA).get();HunterData.learnReward(p,skill);
         var original=SkillAPI.getSkillsFrom(p).getSkill(skill).orElseThrow();original.setMastery(skill.getMaxMastery());original.setCoolDown(19,0);
         var abilities=TensuraStorages.getAbilityFrom(p);abilities.setAbilitySlot(8,2,skill,1);
         var result=MythsProgression.ascend(p,skill.getRegistryName().toString());
@@ -282,7 +283,7 @@ public final class MythsIntegrationTests {
         var near=tank(h,p.position().add(2,0,0));var far=tank(h,p.position().add(12,0,0));
         h.runAfterDelay(6,()->{
             // Fake players do not tick, so explicitly run the caster at a five-tick aura boundary.
-            h.runAtTickTime(h.getTick()+(5-h.getLevel().getGameTime()%5)%5,()->{
+            h.runAtTickTime(h.getTick()+(5-h.getLevel().getGameTime()%5),()->{
                 WildHunt.GODLY.get().tickActive(i,p);
                 var id=WildHunt.id("causal_dilation");var a=near.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MOVEMENT_SPEED).getModifier(id);var b=far.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MOVEMENT_SPEED).getModifier(id);
                 h.assertTrue(a!=null && b!=null && a.amount()<b.amount(),"Proximity dilation did not strengthen toward the caster");
@@ -335,7 +336,7 @@ public final class MythsIntegrationTests {
         var effect=new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.POISON,200);
         h.assertTrue(!target.addEffect(effect),"Native poison nullification did not initially reject the effect");
         WildHunt.GODLY.get().onToggleOn(i,p);
-        h.runAtTickTime(h.getTick()+(5-h.getLevel().getGameTime()%5)%5,()->{
+        h.runAtTickTime(h.getTick()+(5-h.getLevel().getGameTime()%5),()->{
             WildHunt.GODLY.get().tickActive(i,p);
             h.assertTrue(GodlySkill.degraded(target) && target.addEffect(new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.POISON,200)),"Degradation still applies only to Aion attacks, not status immunity");
             var attacker=player(h);var source=WildHunt.GODLY.get().createSource(i,attacker,io.github.manasmods.tensura.damage.TensuraDamageTypes.SPACE_ELEMENTAL,0);
@@ -360,9 +361,9 @@ public final class MythsIntegrationTests {
     @GameTest(template="empty",timeoutTicks=100)
     public static void convergenceGateDependsOnNativeLineageAndCompletedGrowthNotCurrentEP(GameTestHelper h) {
         var p=player(h);DuoSystem.select(p,RaceFamily.SLIME);evolveSecondary(p,TensuraRaces.DEMON_SLIME.getId());evolveSecondary(p,TensuraRaces.GOD_SLIME.getId());
-        double gate=DuoSystem.convergenceEP(p);h.assertTrue(gate==31_250_000,"Expected 125 percent of the 25M last evolution gate, got "+gate);
+        double gate=DuoSystem.convergenceEP(p);h.assertTrue(gate==12_500_000,"Expected 125 percent of the fixed 10M last evolution gate, got "+gate);
         EnergyHelper.setBaseMaxEP(p,100_000_000);h.assertTrue(DuoSystem.convergenceEP(p)==gate,"Earning EP moved the awakening goalposts");
-        DuoSystem.data(p).remove("secondary_last_evolution_ep");h.assertTrue(DuoSystem.convergenceEP(p)==gate,"Existing Duo saves lost their completed evolution gate");
+        DuoSystem.data(p).putDouble("secondary_ep_origin",100_000_000);DuoSystem.data(p).putDouble("secondary_last_evolution_ep",999_000_000);h.assertTrue(DuoSystem.convergenceEP(p)==gate,"Existing Duo saves lost their completed evolution gate");
         var config=io.github.manasmods.manascore.config.ConfigRegistry.getConfig(io.github.manasmods.tensura.config.race.SlimeConfig.class).GodSlime;
         double original=config.epRequirement;
         try {config.epRequirement=40_000_000;h.assertTrue(DuoSystem.convergenceEP(p)==50_000_000,"Higher native race evolution requirements did not raise awakening EP");}
@@ -455,15 +456,15 @@ public final class MythsIntegrationTests {
         for(var family:RaceFamily.values())queue.add(family.baseRace());int edges=0;
         while(!queue.isEmpty()) {
             var race=queue.removeFirst();if(!seen.add(race.getRegistryName()))continue;
-            var current=race.createDefaultInstance();DuoSystem.saveSecondary(p,current);EnergyHelper.setBaseMaxEP(p,22_500_000);
+            var current=race.createDefaultInstance();DuoSystem.saveSecondary(p,current);EnergyHelper.setBaseMaxEP(p,7_500_000);
             var snapshot=MythsNetwork.snapshot(p,"");var rows=snapshot.getList("choices",net.minecraft.nbt.Tag.TAG_COMPOUND);
             var choices=DuoSystem.options(p,current);h.assertTrue(rows.size()==choices.size(),"Menu lost a native secondary option for "+race.getRegistryName());
             for(var next:choices) {
                 edges++;queue.add(next);net.minecraft.nbt.CompoundTag row=null;
                 for(var raw:rows){var candidate=(net.minecraft.nbt.CompoundTag)raw;if(candidate.getString("id").equals(next.getRegistryName().toString()))row=candidate;}
                 h.assertTrue(row!=null && row.getBoolean("requirements_met")== (current.getEvolutionProgress(p,next)>=100),"Menu readiness differs from native weighted requirements: "+next.getRegistryName());
-                h.assertTrue(row.getString("detail").contains("weighted points") && row.getString("detail").contains("22,500,000"),"Evolution checklist omitted native points or the added EP gate");
-                EnergyHelper.setBaseMaxEP(p,22_499_999);h.assertTrue(!DuoSystem.secondaryRequirementsMet(p,current,next),"A secondary branch bypassed its added EP threshold");EnergyHelper.setBaseMaxEP(p,22_500_000);
+                h.assertTrue(row.getString("detail").contains("weighted points") && row.getString("detail").contains("7,500,000"),"Evolution checklist omitted native points or the added EP gate");
+                EnergyHelper.setBaseMaxEP(p,7_499_999);h.assertTrue(!DuoSystem.secondaryRequirementsMet(p,current,next),"A secondary branch bypassed its added EP threshold");EnergyHelper.setBaseMaxEP(p,7_500_000);
             }
         }
         System.out.println("[Myths secondary audit] "+seen.size()+" native stages and "+edges+" evolution branches across all 15 families");
@@ -473,7 +474,7 @@ public final class MythsIntegrationTests {
         EnergyHelper.setBaseMaxEP(p,DuoSystem.secondaryEvolutionEP(p));return DuoSystem.evolve(p,id);
     }
     private static net.minecraft.world.entity.monster.Zombie tank(GameTestHelper h,net.minecraft.world.phys.Vec3 pos) {
-        h.getLevel().getChunk(net.minecraft.core.BlockPos.containing(pos));var z=h.spawnWithNoFreeWill(EntityType.ZOMBIE,2,1,2);z.setPos(pos);z.setNoGravity(true);
+        var chunk=net.minecraft.core.BlockPos.containing(pos);h.getLevel().getChunk(chunk);h.getLevel().setChunkForced(chunk.getX()>>4,chunk.getZ()>>4,true);var z=h.spawnWithNoFreeWill(EntityType.ZOMBIE,2,1,2);z.setPos(pos);z.setNoGravity(true);
         z.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH).setBaseValue(1024);z.setHealth(1024);return z;
     }
 }

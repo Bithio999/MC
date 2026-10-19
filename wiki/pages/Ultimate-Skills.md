@@ -2,24 +2,27 @@
 
 [Main Page](../README.md) · [Skills](Skills.md) · [Ability index](Abilities.md) · [Damage types](Damage-Types.md)
 
-**Ultimate Skills** are one of the addon’s skill tiers. Each Ultimate evolves from the matching mastered Unique as Sovereign Hunter at 2M base EP.
+**Ultimate Skills** combine two mastered Uniques at **2M base EP**, through **Skills → Ultimate → Synthesis**. The addon provides three distinct kits; any race can synthesize them.
 
 ## Skills
 
-| Skill | Direct damage type | Active arts | Passive |
-| --- | --- | --- | --- |
-| [Raijin, Lord of Thunder](Raijin.md) | [Lightning elemental](Damage-Types.md#lightning) | Railbolt, Thunder Step, Heaven’s Thunder | Storm Mantle |
-| [Varuna, Lord of Tides](Varuna.md) | [Water elemental](Damage-Types.md#water) | Crushing Current, Scarlet Undertow, Crimson Ocean | Water Veil |
-| [Agni, Lord of the Black Flame](Agni.md) | [Fire elemental](Damage-Types.md#fire) | Oil Lash, Blackflame Ignition, Black Sun Caldera | Furnace Mantle |
-| [Ymir, Lord of Winter](Ymir.md) | [Ice elemental](Damage-Types.md#ice) | Avalanche Crash, Glacial Prison, Heavenfall Glacier | Colossus Carapace |
+| Ultimate | Mastered ingredients | Direct damage types | Active arts | Passive |
+| --- | --- | --- | --- | --- |
+| [Vritra, Lord of Cataclysm](Vritra.md) | Storm Crown + Black Flame | Lightning / Fire | Plasma Bore; Thunderhead Crucible; Cataclysm Front | Catastrophe Engine |
+| [Demeter, Lady of Sanctuary](Demeter.md) | Verdant Keeper + Frostbound Colossus | Ice; support arts deal no damage | Winter Orchard; Crystal Bulwark; Winter Harvest | Evergreen Sanctuary |
+| [Janus, Lord of Crossroads](Janus.md) | Threadweaver + Mirrorbound | Space; gates deal no damage | Twin Gates; Parallax Snare; Crossroads Edict | Threshold Dominion |
+
+## Obtaining
+
+See [Skill synthesis](Skill-Synthesis.md) for the recipes and menu. Both mastered ingredients are combined. Unrelated skills are retained; presets and the longest remaining cooldown carry over. Synthesis does not spend EP or require Sovereign Hunter.
 
 ## Usage
 
-Active modes consume aura. Toggleable passives consume ongoing aura and are separate from mode cycling. Each skill article lists costs, cooldowns, individual damage types, effects and limits.
+Three active modes use aura; the separate native toggle charges aura upkeep. Damage uses a mastery multiplier up to 1.5×, never EP. These skills do not reuse their ingredients’ active modes. Each article lists raw damage and native damage IDs per ability.
 
-## Related pages
+## Evolution
 
-[Skill overview](Skills.md) · [Ability index](Abilities.md) · [Godly Skills](Godly.md) · [Extra Skills](Aura-Regeneration.md)
+Master one of these Ultimates, become a True Hero or True Demon Lord and reach 12M base EP to obtain [Aion](Aion.md), or additionally combine a mastered [Rune Smith](Rune-Smith.md) for [Thoth](Thoth.md).
 
 ---
 

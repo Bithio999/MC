@@ -41,7 +41,8 @@ public final class MythsNetwork {
                 case "select" -> RaceFamily.byKey(payload.argument()).map(f->DuoSystem.select(p,f)).orElse("Unknown secondary lineage.");
                 case "evolve" -> {var id=ResourceLocation.tryParse(payload.argument()); yield id==null?"Invalid race ID.":DuoSystem.evolve(p,id);}
                 case "awaken" -> DuoSystem.convergence(p);
-                case "godly" -> MythsProgression.ascend(p,payload.argument());
+                case "godly" -> {var parts=payload.argument().split("\\|",2);yield MythsProgression.ascend(p,parts[0],parts.length==2?parts[1]:"aion");}
+                case "synthesize" -> MythicEvolution.synthesize(p,payload.argument());
                 default -> "Unknown Myths action.";
             };
             if(!result.isEmpty())p.sendSystemMessage(Component.literal(result));
@@ -84,10 +85,17 @@ public final class MythsNetwork {
             var fusion=FusionCatalog.profile(first.get(),second.get());tag.putString("fusion_id",WildHunt.id("convergence/"+fusion.key()).toString());tag.putString("fusion_name",fusion.name());tag.putString("fusion_description",fusion.description());tag.putDouble("fusion_aura",fusion.aura());tag.putDouble("fusion_magicules",fusion.magicules());
         }
         var ascensions=new ListTag();
-        for(var entry:WildHunt.ULTIMATE.values())SkillAPI.getSkillsFrom(p).getSkill(entry.get()).ifPresent(i->{
+        for(var kind:MythicEvolution.ultimates()){var entry=WildHunt.MYTHIC.get(kind);SkillAPI.getSkillsFrom(p).getSkill(entry.get()).ifPresent(i->{
             var row=new CompoundTag();row.putString("id",entry.getId().toString());row.putString("name",entry.get().getName().getString());row.putBoolean("mastered",i.isMastered(p));ascensions.add(row);
-        });
+        });}
         tag.put("ascensions",ascensions);tag.putBoolean("has_godly",SkillAPI.getSkillsFrom(p).getSkill(WildHunt.GODLY.get()).isPresent());
+        tag.putBoolean("has_thoth",SkillAPI.getSkillsFrom(p).getSkill(WildHunt.MYTHIC.get(MythicKind.THOTH).get()).isPresent());
+        tag.putBoolean("rune_mastered",SkillAPI.getSkillsFrom(p).getSkill(WildHunt.MYTHIC.get(MythicKind.RUNE_SMITH).get()).map(i->i.isMastered(p)).orElse(false));
+        tag.putDouble("synthesis_ep",MythicEvolution.SYNTHESIS_EP);
+        var recipes=new ListTag();for(var result:MythicEvolution.ultimates()){
+            var row=new CompoundTag();row.putString("id",result.id());row.putString("name",result.title);row.putBoolean("ready",MythicEvolution.ready(p,result));
+            row.putString("ingredients",MythicEvolution.ingredients(result).stream().map(k->k.getName().getString()+": "+SkillAPI.getSkillsFrom(p).getSkill(k).map(i->i.isMastered(p)?"Mastered":"Not mastered").orElse("Not learned")).collect(java.util.stream.Collectors.joining("\n")));recipes.add(row);
+        }tag.put("recipes",recipes);
         return tag;
     }
     private MythsNetwork() {}

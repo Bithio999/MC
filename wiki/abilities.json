@@ -30,46 +30,6 @@
     "anchor": "thunder-step"
   },
   {
-    "skill": "Raijin",
-    "name": "Storm Mantle",
-    "tier": "Ultimate",
-    "kind": "Passive",
-    "damage": "None",
-    "damage_id": null,
-    "secondary_damage_id": null,
-    "anchor": "passive"
-  },
-  {
-    "skill": "Raijin",
-    "name": "Railbolt",
-    "tier": "Ultimate",
-    "kind": "Active",
-    "damage": "Lightning elemental",
-    "damage_id": "tensura:lightning_elemental",
-    "secondary_damage_id": null,
-    "anchor": "railbolt"
-  },
-  {
-    "skill": "Raijin",
-    "name": "Thunder Step",
-    "tier": "Ultimate",
-    "kind": "Active",
-    "damage": "Lightning elemental",
-    "damage_id": "tensura:lightning_elemental",
-    "secondary_damage_id": null,
-    "anchor": "thunder-step"
-  },
-  {
-    "skill": "Raijin",
-    "name": "Heaven’s Thunder",
-    "tier": "Ultimate",
-    "kind": "Active",
-    "damage": "Lightning elemental",
-    "damage_id": "tensura:lightning_elemental",
-    "secondary_damage_id": null,
-    "anchor": "heavens-thunder"
-  },
-  {
     "skill": "Scarlet-Deluge",
     "name": "Water Veil",
     "tier": "Unique",
@@ -98,46 +58,6 @@
     "damage_id": "tensura:water_elemental",
     "secondary_damage_id": null,
     "anchor": "scarlet-undertow"
-  },
-  {
-    "skill": "Varuna",
-    "name": "Water Veil",
-    "tier": "Ultimate",
-    "kind": "Passive",
-    "damage": "Water elemental",
-    "damage_id": "tensura:water_elemental",
-    "secondary_damage_id": null,
-    "anchor": "passive"
-  },
-  {
-    "skill": "Varuna",
-    "name": "Crushing Current",
-    "tier": "Ultimate",
-    "kind": "Active",
-    "damage": "Water elemental",
-    "damage_id": "tensura:water_elemental",
-    "secondary_damage_id": null,
-    "anchor": "crushing-current"
-  },
-  {
-    "skill": "Varuna",
-    "name": "Scarlet Undertow",
-    "tier": "Ultimate",
-    "kind": "Active",
-    "damage": "Water elemental",
-    "damage_id": "tensura:water_elemental",
-    "secondary_damage_id": null,
-    "anchor": "scarlet-undertow"
-  },
-  {
-    "skill": "Varuna",
-    "name": "Crimson Ocean",
-    "tier": "Ultimate",
-    "kind": "Active",
-    "damage": "Water elemental",
-    "damage_id": "tensura:water_elemental",
-    "secondary_damage_id": null,
-    "anchor": "crimson-ocean"
   },
   {
     "skill": "Black-Flame",
@@ -170,46 +90,6 @@
     "anchor": "blackflame-ignition"
   },
   {
-    "skill": "Agni",
-    "name": "Furnace Mantle",
-    "tier": "Ultimate",
-    "kind": "Passive",
-    "damage": "None",
-    "damage_id": null,
-    "secondary_damage_id": null,
-    "anchor": "passive"
-  },
-  {
-    "skill": "Agni",
-    "name": "Oil Lash",
-    "tier": "Ultimate",
-    "kind": "Active",
-    "damage": "Fire elemental",
-    "damage_id": "tensura:fire_elemental",
-    "secondary_damage_id": null,
-    "anchor": "oil-lash"
-  },
-  {
-    "skill": "Agni",
-    "name": "Blackflame Ignition",
-    "tier": "Ultimate",
-    "kind": "Active",
-    "damage": "Fire elemental",
-    "damage_id": "tensura:fire_elemental",
-    "secondary_damage_id": "tensura:black_flame",
-    "anchor": "blackflame-ignition"
-  },
-  {
-    "skill": "Agni",
-    "name": "Black Sun Caldera",
-    "tier": "Ultimate",
-    "kind": "Active",
-    "damage": "Fire elemental",
-    "damage_id": "tensura:fire_elemental",
-    "secondary_damage_id": "tensura:black_flame",
-    "anchor": "black-sun-caldera"
-  },
-  {
     "skill": "Frostbound-Colossus",
     "name": "Colossus Carapace",
     "tier": "Unique",
@@ -238,46 +118,6 @@
     "damage_id": "tensura:ice_elemental",
     "secondary_damage_id": null,
     "anchor": "glacial-prison"
-  },
-  {
-    "skill": "Ymir",
-    "name": "Colossus Carapace",
-    "tier": "Ultimate",
-    "kind": "Passive",
-    "damage": "None",
-    "damage_id": null,
-    "secondary_damage_id": null,
-    "anchor": "passive"
-  },
-  {
-    "skill": "Ymir",
-    "name": "Avalanche Crash",
-    "tier": "Ultimate",
-    "kind": "Active",
-    "damage": "Ice elemental",
-    "damage_id": "tensura:ice_elemental",
-    "secondary_damage_id": null,
-    "anchor": "avalanche-crash"
-  },
-  {
-    "skill": "Ymir",
-    "name": "Glacial Prison",
-    "tier": "Ultimate",
-    "kind": "Active",
-    "damage": "Ice elemental",
-    "damage_id": "tensura:ice_elemental",
-    "secondary_damage_id": null,
-    "anchor": "glacial-prison"
-  },
-  {
-    "skill": "Ymir",
-    "name": "Heavenfall Glacier",
-    "tier": "Ultimate",
-    "kind": "Active",
-    "damage": "Ice elemental",
-    "damage_id": "tensura:ice_elemental",
-    "secondary_damage_id": null,
-    "anchor": "heavenfall-glacier"
   },
   {
     "skill": "Aion",
@@ -331,7 +171,7 @@
   },
   {
     "skill": "Hunters-Recovery",
-    "name": "Hunter’s Recovery",
+    "name": "Hunter\u2019s Recovery",
     "tier": "Extra",
     "kind": "Passive",
     "damage": "None",
@@ -368,5 +208,354 @@
     "damage_id": null,
     "secondary_damage_id": null,
     "anchor": "awakening-rewards"
+  },
+  {
+    "skill": "Threadweaver",
+    "name": "Silken Instinct",
+    "tier": "Unique",
+    "kind": "Passive",
+    "damage": "None",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "anchor": "passive"
+  },
+  {
+    "skill": "Threadweaver",
+    "name": "Loom Needle",
+    "tier": "Unique",
+    "kind": "Active",
+    "damage": "Space elemental",
+    "damage_id": "tensura:space_elemental",
+    "secondary_damage_id": null,
+    "damage_ids": [
+      "tensura:space_elemental"
+    ],
+    "anchor": "loom-needle"
+  },
+  {
+    "skill": "Threadweaver",
+    "name": "Sever Thread",
+    "tier": "Unique",
+    "kind": "Active",
+    "damage": "Space elemental",
+    "damage_id": "tensura:space_elemental",
+    "secondary_damage_id": null,
+    "damage_ids": [
+      "tensura:space_elemental"
+    ],
+    "anchor": "sever-thread"
+  },
+  {
+    "skill": "Rune-Smith",
+    "name": "Runic Circuit",
+    "tier": "Unique",
+    "kind": "Passive",
+    "damage": "None",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "anchor": "passive"
+  },
+  {
+    "skill": "Rune-Smith",
+    "name": "Runic Mine",
+    "tier": "Unique",
+    "kind": "Active",
+    "damage": "Earth elemental",
+    "damage_id": "tensura:earth_elemental",
+    "secondary_damage_id": null,
+    "damage_ids": [
+      "tensura:earth_elemental"
+    ],
+    "anchor": "runic-mine"
+  },
+  {
+    "skill": "Rune-Smith",
+    "name": "Command Detonation",
+    "tier": "Unique",
+    "kind": "Active",
+    "damage": "Earth elemental",
+    "damage_id": "tensura:earth_elemental",
+    "secondary_damage_id": null,
+    "damage_ids": [
+      "tensura:earth_elemental"
+    ],
+    "anchor": "command-detonation"
+  },
+  {
+    "skill": "Verdant-Keeper",
+    "name": "Verdant Heart",
+    "tier": "Unique",
+    "kind": "Passive",
+    "damage": "None",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "anchor": "passive"
+  },
+  {
+    "skill": "Verdant-Keeper",
+    "name": "Living Grove",
+    "tier": "Unique",
+    "kind": "Active",
+    "damage": "None",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "damage_ids": [],
+    "anchor": "living-grove"
+  },
+  {
+    "skill": "Verdant-Keeper",
+    "name": "Briar Grasp",
+    "tier": "Unique",
+    "kind": "Active",
+    "damage": "Earth elemental",
+    "damage_id": "tensura:earth_elemental",
+    "secondary_damage_id": null,
+    "damage_ids": [
+      "tensura:earth_elemental"
+    ],
+    "anchor": "briar-grasp"
+  },
+  {
+    "skill": "Mirrorbound",
+    "name": "Silvered Soul",
+    "tier": "Unique",
+    "kind": "Passive",
+    "damage": "None",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "anchor": "passive"
+  },
+  {
+    "skill": "Mirrorbound",
+    "name": "Prismatic Lance",
+    "tier": "Unique",
+    "kind": "Active",
+    "damage": "Light elemental",
+    "damage_id": "tensura:light_elemental",
+    "secondary_damage_id": null,
+    "damage_ids": [
+      "tensura:light_elemental"
+    ],
+    "anchor": "prismatic-lance"
+  },
+  {
+    "skill": "Mirrorbound",
+    "name": "Mirror Aegis",
+    "tier": "Unique",
+    "kind": "Active",
+    "damage": "None \u2014 reflected projectiles retain their own attack type",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "damage_ids": [],
+    "anchor": "mirror-aegis"
+  },
+  {
+    "skill": "Vritra",
+    "name": "Catastrophe Engine",
+    "tier": "Ultimate",
+    "kind": "Passive",
+    "damage": "None",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "anchor": "passive"
+  },
+  {
+    "skill": "Vritra",
+    "name": "Plasma Bore",
+    "tier": "Ultimate",
+    "kind": "Active",
+    "damage": "Lightning elemental + delayed Fire elemental",
+    "damage_id": "tensura:lightning_elemental",
+    "secondary_damage_id": "tensura:fire_elemental",
+    "damage_ids": [
+      "tensura:lightning_elemental",
+      "tensura:fire_elemental"
+    ],
+    "anchor": "plasma-bore"
+  },
+  {
+    "skill": "Vritra",
+    "name": "Thunderhead Crucible",
+    "tier": "Ultimate",
+    "kind": "Active",
+    "damage": "Lightning elemental + delayed Fire elemental",
+    "damage_id": "tensura:lightning_elemental",
+    "secondary_damage_id": "tensura:fire_elemental",
+    "damage_ids": [
+      "tensura:lightning_elemental",
+      "tensura:fire_elemental"
+    ],
+    "anchor": "thunderhead-crucible"
+  },
+  {
+    "skill": "Vritra",
+    "name": "Cataclysm Front",
+    "tier": "Ultimate",
+    "kind": "Active",
+    "damage": "Fire elemental",
+    "damage_id": "tensura:fire_elemental",
+    "secondary_damage_id": null,
+    "damage_ids": [
+      "tensura:fire_elemental"
+    ],
+    "anchor": "cataclysm-front"
+  },
+  {
+    "skill": "Demeter",
+    "name": "Evergreen Sanctuary",
+    "tier": "Ultimate",
+    "kind": "Passive",
+    "damage": "None",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "anchor": "passive"
+  },
+  {
+    "skill": "Demeter",
+    "name": "Winter Orchard",
+    "tier": "Ultimate",
+    "kind": "Active",
+    "damage": "Ice elemental against enemies; allied healing has no damage type",
+    "damage_id": "tensura:ice_elemental",
+    "secondary_damage_id": null,
+    "damage_ids": [
+      "tensura:ice_elemental"
+    ],
+    "anchor": "winter-orchard"
+  },
+  {
+    "skill": "Demeter",
+    "name": "Crystal Bulwark",
+    "tier": "Ultimate",
+    "kind": "Active",
+    "damage": "None",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "damage_ids": [],
+    "anchor": "crystal-bulwark"
+  },
+  {
+    "skill": "Demeter",
+    "name": "Winter Harvest",
+    "tier": "Ultimate",
+    "kind": "Active",
+    "damage": "Ice elemental",
+    "damage_id": "tensura:ice_elemental",
+    "secondary_damage_id": null,
+    "damage_ids": [
+      "tensura:ice_elemental"
+    ],
+    "anchor": "winter-harvest"
+  },
+  {
+    "skill": "Janus",
+    "name": "Threshold Dominion",
+    "tier": "Ultimate",
+    "kind": "Passive",
+    "damage": "None",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "anchor": "passive"
+  },
+  {
+    "skill": "Janus",
+    "name": "Twin Gates",
+    "tier": "Ultimate",
+    "kind": "Active",
+    "damage": "None",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "damage_ids": [],
+    "anchor": "twin-gates"
+  },
+  {
+    "skill": "Janus",
+    "name": "Parallax Snare",
+    "tier": "Ultimate",
+    "kind": "Active",
+    "damage": "Space elemental",
+    "damage_id": "tensura:space_elemental",
+    "secondary_damage_id": null,
+    "damage_ids": [
+      "tensura:space_elemental"
+    ],
+    "anchor": "parallax-snare"
+  },
+  {
+    "skill": "Janus",
+    "name": "Crossroads Edict",
+    "tier": "Ultimate",
+    "kind": "Active",
+    "damage": "Space elemental",
+    "damage_id": "tensura:space_elemental",
+    "secondary_damage_id": null,
+    "damage_ids": [
+      "tensura:space_elemental"
+    ],
+    "anchor": "crossroads-edict"
+  },
+  {
+    "skill": "Thoth",
+    "name": "Arcane Sovereignty",
+    "tier": "Godly",
+    "kind": "Passive",
+    "damage": "None",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "anchor": "passive"
+  },
+  {
+    "skill": "Thoth",
+    "name": "Lexicon of Ruin",
+    "tier": "Godly",
+    "kind": "Active",
+    "damage": "Fire elemental, then Ice elemental, then Lightning elemental",
+    "damage_id": "tensura:fire_elemental",
+    "secondary_damage_id": "tensura:ice_elemental",
+    "damage_ids": [
+      "tensura:fire_elemental",
+      "tensura:ice_elemental",
+      "tensura:lightning_elemental"
+    ],
+    "anchor": "lexicon-of-ruin"
+  },
+  {
+    "skill": "Thoth",
+    "name": "Spellbreak",
+    "tier": "Godly",
+    "kind": "Active",
+    "damage": "Generic magic",
+    "damage_id": "tensura:magic",
+    "secondary_damage_id": null,
+    "damage_ids": [
+      "tensura:magic"
+    ],
+    "anchor": "spellbreak"
+  },
+  {
+    "skill": "Thoth",
+    "name": "Mana Crucible",
+    "tier": "Godly",
+    "kind": "Active",
+    "damage": "None",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "damage_ids": [],
+    "anchor": "mana-crucible"
+  },
+  {
+    "skill": "Thoth",
+    "name": "Astral Library",
+    "tier": "Godly",
+    "kind": "Active",
+    "damage": "Rotating Fire, Ice and Lightning elemental",
+    "damage_id": "tensura:fire_elemental",
+    "secondary_damage_id": "tensura:ice_elemental",
+    "damage_ids": [
+      "tensura:fire_elemental",
+      "tensura:ice_elemental",
+      "tensura:lightning_elemental"
+    ],
+    "anchor": "astral-library"
   }
 ]

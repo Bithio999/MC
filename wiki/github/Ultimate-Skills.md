@@ -2,24 +2,27 @@
 
 [Main Page](https://github.com/Bithio999/MC/wiki/Home) · [Skills](https://github.com/Bithio999/MC/wiki/Skills) · [Ability index](https://github.com/Bithio999/MC/wiki/Abilities) · [Damage types](https://github.com/Bithio999/MC/wiki/Damage-Types)
 
-**Ultimate Skills** are one of the addon’s skill tiers. Each Ultimate evolves from the matching mastered Unique as Sovereign Hunter at 2M base EP.
+**Ultimate Skills** combine two mastered Uniques at **2M base EP**, through **Skills → Ultimate → Synthesis**. The addon provides three distinct kits; any race can synthesize them.
 
 ## Skills
 
-| Skill | Direct damage type | Active arts | Passive |
-| --- | --- | --- | --- |
-| [Raijin, Lord of Thunder](https://github.com/Bithio999/MC/wiki/Raijin) | [Lightning elemental](https://github.com/Bithio999/MC/wiki/Damage-Types#lightning) | Railbolt, Thunder Step, Heaven’s Thunder | Storm Mantle |
-| [Varuna, Lord of Tides](https://github.com/Bithio999/MC/wiki/Varuna) | [Water elemental](https://github.com/Bithio999/MC/wiki/Damage-Types#water) | Crushing Current, Scarlet Undertow, Crimson Ocean | Water Veil |
-| [Agni, Lord of the Black Flame](https://github.com/Bithio999/MC/wiki/Agni) | [Fire elemental](https://github.com/Bithio999/MC/wiki/Damage-Types#fire) | Oil Lash, Blackflame Ignition, Black Sun Caldera | Furnace Mantle |
-| [Ymir, Lord of Winter](https://github.com/Bithio999/MC/wiki/Ymir) | [Ice elemental](https://github.com/Bithio999/MC/wiki/Damage-Types#ice) | Avalanche Crash, Glacial Prison, Heavenfall Glacier | Colossus Carapace |
+| Ultimate | Mastered ingredients | Direct damage types | Active arts | Passive |
+| --- | --- | --- | --- | --- |
+| [Vritra, Lord of Cataclysm](https://github.com/Bithio999/MC/wiki/Vritra) | Storm Crown + Black Flame | Lightning / Fire | Plasma Bore; Thunderhead Crucible; Cataclysm Front | Catastrophe Engine |
+| [Demeter, Lady of Sanctuary](https://github.com/Bithio999/MC/wiki/Demeter) | Verdant Keeper + Frostbound Colossus | Ice; support arts deal no damage | Winter Orchard; Crystal Bulwark; Winter Harvest | Evergreen Sanctuary |
+| [Janus, Lord of Crossroads](https://github.com/Bithio999/MC/wiki/Janus) | Threadweaver + Mirrorbound | Space; gates deal no damage | Twin Gates; Parallax Snare; Crossroads Edict | Threshold Dominion |
+
+## Obtaining
+
+See [Skill synthesis](https://github.com/Bithio999/MC/wiki/Skill-Synthesis) for the recipes and menu. Both mastered ingredients are combined. Unrelated skills are retained; presets and the longest remaining cooldown carry over. Synthesis does not spend EP or require Sovereign Hunter.
 
 ## Usage
 
-Active modes consume aura. Toggleable passives consume ongoing aura and are separate from mode cycling. Each skill article lists costs, cooldowns, individual damage types, effects and limits.
+Three active modes use aura; the separate native toggle charges aura upkeep. Damage uses a mastery multiplier up to 1.5×, never EP. These skills do not reuse their ingredients’ active modes. Each article lists raw damage and native damage IDs per ability.
 
-## Related pages
+## Evolution
 
-[Skill overview](https://github.com/Bithio999/MC/wiki/Skills) · [Ability index](https://github.com/Bithio999/MC/wiki/Abilities) · [Godly Skills](https://github.com/Bithio999/MC/wiki/Godly) · [Extra Skills](https://github.com/Bithio999/MC/wiki/Aura-Regeneration)
+Master one of these Ultimates, become a True Hero or True Demon Lord and reach 12M base EP to obtain [Aion](https://github.com/Bithio999/MC/wiki/Aion), or additionally combine a mastered [Rune Smith](https://github.com/Bithio999/MC/wiki/Rune-Smith) for [Thoth](https://github.com/Bithio999/MC/wiki/Thoth).
 
 ---
 

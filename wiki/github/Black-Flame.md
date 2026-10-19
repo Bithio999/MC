@@ -21,7 +21,7 @@
 | Registry ID | `wildhunt:black_flame` |
 | **Evolution** | |
 | Previous | — |
-| Evolution | [Agni, Lord of the Black Flame](https://github.com/Bithio999/MC/wiki/Agni) |
+| Evolution | [Vritra](https://github.com/Bithio999/MC/wiki/Vritra), with mastered Storm Crown |
 | **Obtaining** | |
 | Method | Reincarnation / starting skill roll |
 
@@ -50,7 +50,7 @@ Enable or disable this through Tensura’s native **Ability Selection** skill to
 | 1. Oil Lash | 160 | 3 s | 70 |
 | 2. Blackflame Ignition | 800 | 8 s | 90 |
 
-**Damage calculation:** multiply the listed base values by **0.90**, then by the mastery multiplier (up to **1.50**). Ultimate table values already include their 3× base multiplier. Elemental boosts, defenses, barriers, and situational modifiers also apply. EP does not multiply damage.
+**Damage calculation:** multiply the listed base values by **0.90**, then by the mastery multiplier (up to **1.50**). Elemental boosts, defenses, barriers, and situational modifiers also apply. EP does not multiply damage.
 
 #### Oil Lash
 
@@ -85,11 +85,7 @@ Roll through Tensura’s normal reincarnation system. These Uniques join the con
 
 ## Evolution
 
-| Unique Skill | Ultimate Skill | Requirements |
-| --- | --- | --- |
-| Black Flame | [Agni, Lord of the Black Flame](https://github.com/Bithio999/MC/wiki/Agni) | Sovereign Hunter; 2,000,000 base EP; matching Unique mastered |
-
-Ascension replaces only the matching Unique. The Ultimate starts with its own mastery.
+Combine the mastered skill with a mastered **Storm Crown** at **2M base EP** to create [Vritra](https://github.com/Bithio999/MC/wiki/Vritra), using **Skills → Ultimate → Synthesis**. Both ingredients are replaced and presets/cooldowns carry over. No race requirement applies.
 
 ## Suggested combo
 

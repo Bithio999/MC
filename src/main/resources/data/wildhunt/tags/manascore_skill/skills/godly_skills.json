@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "wildhunt:aion"
+    "wildhunt:aion",
+    "wildhunt:thoth"
   ]
 }

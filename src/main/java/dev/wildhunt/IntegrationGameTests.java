@@ -49,7 +49,7 @@ public final class IntegrationGameTests {
         helper.assertTrue(HunterData.learnReward(player, unique), "Unique skill could not be learned");
         var instance = skills.getSkill(unique).orElseThrow();
         helper.assertTrue(instance.getModes() == 2, "Unique must have two active modes");
-        helper.assertTrue(WildHunt.ULTIMATE.get(Apex.UTH_DUNA).get().createDefaultInstance().getModes() == 3, "Ultimate must have three active modes");
+        helper.assertTrue(WildHunt.MYTHIC.get(MythicKind.DEMETER).get().createDefaultInstance().getModes() == 3, "Ultimate must have three active modes");
         helper.succeed();
     }
     @GameTest(template = "empty", timeoutTicks = 100)
@@ -69,20 +69,21 @@ public final class IntegrationGameTests {
         helper.succeed();
     }
     @GameTest(template = "empty", timeoutTicks = 100)
-    public static void ultimateAscensionReplacesOnlyMatchingUnique(GameTestHelper helper) throws Exception {
+    public static void combinationAscensionConsumesTwoMasteredUniquesAndKeepsOthers(GameTestHelper helper) throws Exception {
         var player = testPlayer(helper);
         var skills = SkillAPI.getSkillsFrom(player);
         RaceAPI.getRaceFrom(player).setRace(WildHunt.HUNTERS.get(2).get(), false);
         EnergyHelper.setBaseMaxEP(player, 2_000_000);
         var source = WildHunt.UNIQUE.get(Apex.REY_DAU).get();
         var other = WildHunt.UNIQUE.get(Apex.UTH_DUNA).get();
+        var second=WildHunt.UNIQUE.get(Apex.NU_UDRA).get();HunterData.learnReward(player,second);skills.getSkill(second).orElseThrow().setMastery(second.getMaxMastery());
         helper.assertTrue(HunterData.learnReward(player, source), "Source skill reward rejected");
         helper.assertTrue(HunterData.learnReward(player, other), "Other skill reward rejected");
         var instance = skills.getSkill(source).orElseThrow();
         instance.setMastery(instance.getMaxMastery());
         var commands = helper.getLevel().getServer().getCommands();
-        commands.getDispatcher().execute("wildhunt ascend rey_dau", player.createCommandSourceStack());
-        helper.assertTrue(skills.getSkill(WildHunt.ULTIMATE.get(Apex.REY_DAU).get()).isPresent(), "Ultimate not learned");
+        commands.getDispatcher().execute("wildhunt ascend vritra", player.createCommandSourceStack());
+        helper.assertTrue(skills.getSkill(WildHunt.MYTHIC.get(MythicKind.VRITRA).get()).isPresent(), "Ultimate not learned");
         helper.assertTrue(skills.getSkill(source).isEmpty(), "Source Unique was not replaced");
         helper.assertTrue(skills.getSkill(other).isPresent(), "Unrelated Unique was removed");
         helper.succeed();
@@ -137,7 +138,7 @@ public final class IntegrationGameTests {
         int number = config.skillNumber;
         double chance = config.additionalUniqueChance;
         try {
-            config.startingSkills = java.util.List.of("tensura:great_sage", "tensura:great_sage", "wildhunt:storm_crown");
+            config.startingSkills = java.util.List.of("tensura:great_sage", "tensura:great_sage", "wildhunt:storm_crown", "wildhunt:raijin");
             var pool = io.github.manasmods.tensura.menu.ReincarnationMenu.getSkillPool();
             helper.assertTrue(pool.contains(io.github.manasmods.tensura.registry.skill.UniqueSkills.GREAT_SAGE.get()), "Configured vanilla pool entry lost");
             helper.assertTrue(java.util.Collections.frequency(pool, io.github.manasmods.tensura.registry.skill.UniqueSkills.GREAT_SAGE.get()) == 2, "Configured base-pool weighting changed");
@@ -156,8 +157,7 @@ public final class IntegrationGameTests {
             var player = testPlayer(helper);
             RaceAPI.getRaceFrom(player).setRace(TensuraRaces.HUMAN.get(), false);
             io.github.manasmods.tensura.menu.ReincarnationMenu.randomUniqueSkill(player, true);
-            long count = java.util.Arrays.stream(Apex.values()).filter(apex ->
-                SkillAPI.getSkillsFrom(player).getSkill(WildHunt.UNIQUE.get(apex).get()).isPresent()).count();
+            long count = WildHunt.rollableUniques().stream().filter(skill -> SkillAPI.getSkillsFrom(player).getSkill(skill).isPresent()).count();
             helper.assertTrue(count == 1, "Native reincarnation did not grant exactly one rolled apex Unique");
         } finally {
             config.startingSkills = original; config.secondSkills = second;
@@ -198,7 +198,7 @@ public final class IntegrationGameTests {
     @GameTest(template = "empty", timeoutTicks = 100)
     public static void everySkillDisplaysNamesAndPrimaryAttacksWork(GameTestHelper helper) {
         var player = combatPlayer(helper);
-        for (Apex apex : Apex.values()) for (boolean ultimate : new boolean[]{false, true}) {
+        for (Apex apex : Apex.values()) for (boolean ultimate : new boolean[]{false}) {
             var target = durableTarget(helper);
             var skill = (ultimate ? WildHunt.ULTIMATE : WildHunt.UNIQUE).get(apex).get();
             HunterData.learnReward(player, skill);
@@ -235,10 +235,10 @@ public final class IntegrationGameTests {
         helper.succeed();
     }
     @GameTest(template = "empty", timeoutTicks = 100)
-    public static void allEightPassivesStayToggledAndCleanUp(GameTestHelper helper) {
+    public static void allFourApexPassivesStayToggledAndCleanUp(GameTestHelper helper) {
         var player = combatPlayer(helper); var armor = player.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.ARMOR);
         double baseline = armor.getValue();
-        for (Apex apex : Apex.values()) for (boolean ultimate : new boolean[]{false,true}) {
+        for (Apex apex : Apex.values()) for (boolean ultimate : new boolean[]{false}) {
             var skill = (ultimate ? WildHunt.ULTIMATE : WildHunt.UNIQUE).get(apex).get(); HunterData.learnReward(player, skill);
             var instance = SkillAPI.getSkillsFrom(player).getSkill(skill).orElseThrow(); instance.onToggleOn(player);
             helper.assertTrue(instance.isToggled() && armor.getValue() > baseline, "Passive failed to enable: " + apex);
@@ -251,31 +251,9 @@ public final class IntegrationGameTests {
         helper.succeed();
     }
     @GameTest(template = "empty", timeoutTicks = 100)
-    public static void domainUsesOneSecondScheduling(GameTestHelper helper) {
-        var player = combatPlayer(helper);
-        var skill = WildHunt.ULTIMATE.get(Apex.REY_DAU).get();
-        HunterData.learnReward(player, skill);
-        var instance = SkillAPI.getSkillsFrom(player).getSkill(skill).orElseThrow();
-        skill.onPressed(instance, player, 0, 2);
-        long initial = instance.getOrCreateTag().getLong("domain_next");
-        helper.runAfterDelay(21, () -> {
-            ApexTimers.onEntityTick(new net.neoforged.neoforge.event.tick.EntityTickEvent.Post(player));
-            long next = instance.getOrCreateTag().getLong("domain_next");
-            helper.assertTrue(next > initial && next == helper.getLevel().getGameTime() + 20, "Domain still waits for ManasCore's five-second tick");
-            ApexTimers.onEntityTick(new net.neoforged.neoforge.event.tick.EntityTickEvent.Post(player));
-            helper.assertTrue(instance.getOrCreateTag().getLong("domain_next") == next, "Domain pulsed twice in one tick");
-            helper.runAfterDelay(21, () -> {
-                ApexTimers.onEntityTick(new net.neoforged.neoforge.event.tick.EntityTickEvent.Post(player));
-                helper.assertTrue(instance.getOrCreateTag().getLong("domain_next") > next, "Second domain pulse was missed");
-                helper.succeed();
-            });
-        });
-    }
-
-    @GameTest(template = "empty", timeoutTicks = 100)
     public static void oldSavesMigrateModesCooldownsAndStacksOnLogin(GameTestHelper helper) {
         var player = combatPlayer(helper);
-        for (Apex apex : Apex.values()) for (boolean ultimate : new boolean[]{false,true}) {
+        for (Apex apex : Apex.values()) for (boolean ultimate : new boolean[]{false}) {
             var skill = (ultimate ? WildHunt.ULTIMATE : WildHunt.UNIQUE).get(apex).get(); HunterData.learnReward(player, skill);
             var instance = SkillAPI.getSkillsFrom(player).getSkill(skill).orElseThrow();
             instance.setMastery(100); instance.getOrCreateTag().putInt("combat_revision", 4);
@@ -284,9 +262,8 @@ public final class IntegrationGameTests {
         }
         var abilities = TensuraStorages.getAbilityFrom(player);
         abilities.setAbilitySlot(0, WildHunt.UNIQUE.get(Apex.REY_DAU).get(), 2);
-        abilities.setAbilitySlot(1, WildHunt.ULTIMATE.get(Apex.JIN_DAHAAD).get(), 3);
         ApexTimers.onLogin(new net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent(player));
-        helper.assertTrue(abilities.getAbilitySlot(0).getMode() == 0 && abilities.getAbilitySlot(1).getMode() == 2, "Equipped modes were not migrated");
+        helper.assertTrue(abilities.getAbilitySlot(0).getMode() == 0, "Equipped modes were not migrated");
         for (var instance : SkillAPI.getSkillsFrom(player).getLearnedSkills()) {
             if (instance.getSkill() instanceof ApexSkill skill) {
                 helper.assertTrue(instance.getCooldownList().size() == (skill.ultimate ? 3 : 2), "Old mode count survived migration");
@@ -362,25 +339,6 @@ public final class IntegrationGameTests {
         helper.assertTrue(target.hasEffect(io.github.manasmods.tensura.registry.effect.TensuraMobEffects.getReference(io.github.manasmods.tensura.registry.effect.TensuraMobEffects.FROST)), "Prison did not apply Tensura Frost");
         helper.assertTrue(helper.getLevel().getEntitiesOfClass(ArtVisualEntity.class,target.getBoundingBox().inflate(3)).stream().filter(e -> e.kind() == ArtVisualEntity.CRYSTAL && e.lifetime()==80).count()==6, "Prison has no six-spire cage");
         helper.assertTrue(!instance.getOrCreateTag().contains("ward_budget"), "Prison retained the old ward resource");
-        helper.succeed();
-    }
-    @GameTest(template = "empty", timeoutTicks = 100)
-    public static void heavenfallTelegraphsFixedPositionsAndCanBeDodged(GameTestHelper helper) {
-        var player = combatPlayer(helper); var target = durableTarget(helper);
-        var skill = WildHunt.ULTIMATE.get(Apex.JIN_DAHAAD).get(); HunterData.learnReward(player,skill);
-        var instance = SkillAPI.getSkillsFrom(player).getSkill(skill).orElseThrow(); float before = target.getHealth();
-        skill.onPressed(instance,player,0,2);
-        helper.assertTrue(target.getHealth()==before, "Icefall hit before its telegraph");
-        var marks=instance.getOrCreateTag().getList("icefalls",net.minecraft.nbt.Tag.TAG_COMPOUND);
-        helper.assertTrue(!marks.isEmpty(), "Icefall did not create warnings");
-        for (var mark: marks) ((net.minecraft.nbt.CompoundTag)mark).putLong("at",helper.getLevel().getGameTime());
-        ApexArts.resolveIcefalls(skill,helper.getLevel(),instance,player);
-        helper.assertTrue(target.getHealth()<before, "Icefall did not hit the warned location");
-        target.invulnerableTime=0; float after=target.getHealth(); ApexArts.pulseDomain(skill,helper.getLevel(),instance,player,false);
-        target.teleportTo(target.getX(),target.getY()+10,target.getZ());
-        for (var mark: instance.getOrCreateTag().getList("icefalls",net.minecraft.nbt.Tag.TAG_COMPOUND)) ((net.minecraft.nbt.CompoundTag)mark).putLong("at",helper.getLevel().getGameTime());
-        ApexArts.resolveIcefalls(skill,helper.getLevel(),instance,player);
-        helper.assertTrue(target.getHealth()==after, "Icefall followed an enemy that left its warning");
         helper.succeed();
     }
     @GameTest(template = "empty", timeoutTicks = 100)
@@ -495,7 +453,7 @@ public final class IntegrationGameTests {
     }
     @GameTest(template = "empty", timeoutTicks = 100)
     public static void nativeHudBarriersBreakWithoutUpkeepRepairOrForeignCleanup(GameTestHelper helper) {
-        for(Apex apex:java.util.List.of(Apex.UTH_DUNA,Apex.JIN_DAHAAD)) for(boolean ultimate:new boolean[]{false,true}) {
+        for(Apex apex:java.util.List.of(Apex.UTH_DUNA,Apex.JIN_DAHAAD)) for(boolean ultimate:new boolean[]{false}) {
             var caster=helper.spawnWithNoFreeWill(net.minecraft.world.entity.EntityType.PIG,1,1,1);
             caster.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH).setBaseValue(1024); caster.setHealth(1024);
             var energy=TensuraStorages.getExistenceFrom(caster); energy.setAura(100_000); energy.setMagicule(100_000);
@@ -577,7 +535,7 @@ public final class IntegrationGameTests {
     }
     @GameTest(template = "empty", timeoutTicks = 100)
     public static void extendedThunderStepPreservesAllMomentum(GameTestHelper helper) {
-        for(boolean ultimate:new boolean[]{false,true}) {
+        for(boolean ultimate:new boolean[]{false}) {
             var caster=helper.spawnWithNoFreeWill(net.minecraft.world.entity.EntityType.PIG,1,1,1);
             var start=caster.position().add(0,200,0); caster.setPos(start); caster.setNoGravity(true); caster.setYRot(0); caster.setXRot(-20);
             var motion=new net.minecraft.world.phys.Vec3(0.42,-0.18,0.73); caster.setDeltaMovement(motion);
@@ -593,7 +551,7 @@ public final class IntegrationGameTests {
     public static void undertowFollowsCrosshairAndRendersVortex(GameTestHelper helper) {
         var player=combatPlayer(helper); var start=player.position().add(0,220,0); player.setPos(start); player.setYRot(0); player.setXRot(0);
         for(int x=-1;x<=1;x++) for(int y=0;y<4;y++) helper.getLevel().setBlock(net.minecraft.core.BlockPos.containing(start.add(x,y,18)),net.minecraft.world.level.block.Blocks.STONE.defaultBlockState(),3);
-        for(boolean ultimate:new boolean[]{false,true}) {
+        for(boolean ultimate:new boolean[]{false}) {
             var skill=(ultimate?WildHunt.ULTIMATE:WildHunt.UNIQUE).get(Apex.UTH_DUNA).get(); HunterData.learnReward(player,skill);
             var instance=SkillAPI.getSkillsFrom(player).getSkill(skill).orElseThrow(); ApexArts.secondary(skill,helper.getLevel(),instance,player);
             var center=ApexArts.point(instance.getOrCreateTag(),"field");

@@ -23,9 +23,10 @@ public final class MythsClient {
     @SubscribeEvent public static void setup(FMLClientSetupEvent event) {
         MythsNetwork.clientStateReceiver=tag->{
             var mc=Minecraft.getInstance();if(mc.player==null)return;state=tag;if(tag.getBoolean("silent")){if(mc.screen instanceof MythsEvolutionScreen screen)screen.refreshState(tag);return;}
-            if(requested!=null){var view=requested;requested=null;mc.setScreen(view.equals("godly")?new GodlyAscensionScreen():new MythsEvolutionScreen(tag,view.equals("convergence")));}
+            if(requested!=null){var view=requested;requested=null;mc.setScreen(view.equals("godly")?new GodlyAscensionScreen():view.equals("synthesis")?new SkillSynthesisScreen():new MythsEvolutionScreen(tag,view.equals("convergence")));}
             else if(mc.screen instanceof MythsEvolutionScreen screen)screen.update(tag);
-            else if(mc.screen instanceof GodlyAscensionScreen screen){if(tag.getBoolean("has_godly"))mc.setScreen(new GodlySelectionScreen());else screen.refresh();}
+            else if(mc.screen instanceof GodlyAscensionScreen screen){if(screen.destinationOwned())mc.setScreen(new GodlySelectionScreen());else screen.refresh();}
+            else if(mc.screen instanceof SkillSynthesisScreen screen)screen.refresh();
             else if(mc.screen==null || mc.screen instanceof ChatScreen)mc.setScreen(new MythsEvolutionScreen(tag,false));
         };
     }
@@ -38,11 +39,16 @@ public final class MythsClient {
             if(down!=held && mc.getConnection()!=null)PacketDistributor.sendToServer(new MythsNetwork.Request(down?"race_press":"race_release",""));
             if(down && ++heartbeat%10==0)PacketDistributor.sendToServer(new MythsNetwork.Request("race_hold",""));
             held=down;
-            if((mc.screen instanceof io.github.manasmods.tensura.client.screen.MainScreen || mc.screen instanceof MythsEvolutionScreen) && mc.player!=null && mc.player.tickCount%20==0)PacketDistributor.sendToServer(new MythsNetwork.Request("sync",""));
+            if((mc.screen instanceof io.github.manasmods.tensura.client.screen.MainScreen || mc.screen instanceof MythsEvolutionScreen || mc.screen instanceof GodlyAscensionScreen || mc.screen instanceof SkillSynthesisScreen) && mc.player!=null && mc.player.tickCount%20==0)PacketDistributor.sendToServer(new MythsNetwork.Request("sync",""));
         }
         @SubscribeEvent public static void init(ScreenEvent.Init.Post event) {
             var screen=event.getScreen();
             if(screen instanceof io.github.manasmods.tensura.client.screen.templates.SimpleScreen)PacketDistributor.sendToServer(new MythsNetwork.Request("sync",""));
+            if(screen instanceof SkillSynthesisScreen){int left=(screen.width-254)/2-1,top=(screen.height-163)/2;addTab(event,left+164,top+8,59,"Ultimates",()->Minecraft.getInstance().setScreen(new io.github.manasmods.tensura.client.screen.AbilitySelectionScreen(io.github.manasmods.tensura.client.screen.AbilityCategoriesScreen.AbilityType.SKILL,io.github.manasmods.tensura.ability.skill.Skill.SkillType.ULTIMATE,null)));}
+            else if(screen instanceof io.github.manasmods.tensura.client.screen.AbilitySelectionScreen selection && selection.getClass()==io.github.manasmods.tensura.client.screen.AbilitySelectionScreen.class){
+                // Only the native Ultimate page exposes Synthesis; no permanent extra category or foreign panel.
+                if(((SkillMenuAccess)selection).myths$filter()==io.github.manasmods.tensura.ability.skill.Skill.SkillType.ULTIMATE){int left=(screen.width-254)/2-1,top=(screen.height-163)/2;addTab(event,left+164,top+8,59,"Synthesis",()->open("synthesis"));}
+            }
             if(screen instanceof io.github.manasmods.tensura.client.screen.AbilitySelectionScreen && (screen instanceof GodlySelectionScreen || screen instanceof GodlyAscensionScreen)) {
                 int left=(screen.width-254)/2-1,top=(screen.height-163)/2;
                 addTab(event,left+164,top+8,59,screen instanceof GodlyAscensionScreen?"Godly":"Ascension",()->{if(screen instanceof GodlyAscensionScreen)Minecraft.getInstance().setScreen(new GodlySelectionScreen());else open("godly");});

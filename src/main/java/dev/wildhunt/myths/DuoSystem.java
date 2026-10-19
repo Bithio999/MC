@@ -44,7 +44,6 @@ public final class DuoSystem {
             return "Selection requires a final primary evolution, True Hero or True Demon Lord awakening, "+Math.round(MythsConfig.SECONDARY_EP.get())+" base EP, and an empty secondary slot.";
         if(primaryFamily(p).get()==family)return "Choose a different ancestral race family.";
         var instance=family.baseRace().createDefaultInstance();
-        data(p).putDouble("secondary_ep_origin",EnergyHelper.getBaseMaxEP(p));
         data(p).putInt("secondary_stage",0);
         data(p).putString("primary_race",first.get().getRaceId().toString());
         data(p).putString("primary_family",primaryFamily(p).get().key());
@@ -64,9 +63,8 @@ public final class DuoSystem {
         var current=secondary(p); if(current.isEmpty() || converged(p))return "No independent secondary race to evolve.";
         var target=options(p,current.get()).stream().filter(r->targetId.equals(r.getRegistryName())).findFirst();
         if(target.isEmpty())return "That is not a valid next secondary evolution.";
-        if(!Double.isFinite(EnergyHelper.getBaseMaxEP(p)) || EnergyHelper.getBaseMaxEP(p)<secondaryEvolutionEP(p))return "Secondary evolution requires "+Math.round(secondaryEvolutionEP(p))+" base EP, including new growth since selecting this lineage.";
+        if(!Double.isFinite(EnergyHelper.getBaseMaxEP(p)) || EnergyHelper.getBaseMaxEP(p)<secondaryEvolutionEP(p))return "Secondary evolution requires "+Math.round(secondaryEvolutionEP(p))+" base EP for this secondary stage.";
         if(nativeProgress(p,current.get(),target.get())<100)return "The native secondary evolution requirements are not met.\n"+nativeRequirements(p,current.get(),target.get());
-        data(p).putDouble("secondary_last_evolution_ep",Math.max(secondaryEvolutionEP(p),lineageEvolutionEP(target.get().createDefaultInstance(),p,new HashSet<>())));
         var next=target.get().createDefaultInstance(); next.deserialize(current.get().serialize(new CompoundTag()));
         data(p).putInt("secondary_stage",data(p).getInt("secondary_stage")+1);
         saveSecondary(p,next); removeSecondary(p); applySecondary(p,next); next.learnIntrinsicSkills(p); saveSecondary(p,next);
@@ -126,18 +124,18 @@ public final class DuoSystem {
         return secondary(p).isPresent()?nativeGains.withDuoBonus():nativeGains;
     }
     public static double secondaryEvolutionEP(LivingEntity p) {
-        var d=data(p);
-        // Older saves retain their current stage; subsequent evolutions need fresh growth.
-        if(!d.contains("secondary_ep_origin"))d.putDouble("secondary_ep_origin",Math.max(MythsConfig.SECONDARY_EP.get(),EnergyHelper.getBaseMaxEP(p)));
-        return d.getDouble("secondary_ep_origin")+MythsConfig.SECONDARY_EVOLUTION_STEP.get()*(d.getInt("secondary_stage")+1);
+        return secondaryStageEP(data(p).getInt("secondary_stage")+1);
+    }
+    private static double secondaryStageEP(int stage) {
+        return MythsConfig.SECONDARY_EP.get()+MythsConfig.SECONDARY_EVOLUTION_STEP.get()*Math.max(0,stage);
     }
     /** Uses required EP, never the player's current EP, so earning EP cannot move the goalposts. */
     public static double convergenceEP(LivingEntity p) {
         var d=data(p);
         double primaryGate=primary(p).filter(r->!(r.getRace() instanceof FusionRace)).map(r->lineageEvolutionEP(r,p,new HashSet<>())).orElse(0d);
         double secondaryGate=secondary(p).map(r->lineageEvolutionEP(r,p,new HashSet<>())).orElse(0d);
-        double completed=d.contains("secondary_last_evolution_ep")?d.getDouble("secondary_last_evolution_ep"):
-            d.getInt("secondary_stage")>0?d.getDouble("secondary_ep_origin")+MythsConfig.SECONDARY_EVOLUTION_STEP.get()*d.getInt("secondary_stage"):0;
+        // Retired selection/current-EP snapshots must never affect a requirement, including old saves.
+        double completed=d.getInt("secondary_stage")>0?secondaryStageEP(d.getInt("secondary_stage")):0;
         return Math.max(MythsConfig.CONVERGENCE_EP.get(),Math.ceil(Math.max(completed,Math.max(primaryGate,secondaryGate))*MythsConfig.CONVERGENCE_EP_FACTOR.get()));
     }
     private static double lineageEvolutionEP(ManasRaceInstance instance,LivingEntity p,Set<ResourceLocation> visited) {

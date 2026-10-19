@@ -55,7 +55,7 @@ Continue building a distinct-boss record toward the next stage. You can roll and
 | --- | ---: | ---: | --- |
 | [Awakened Hunter](https://github.com/Bithio999/MC/wiki/Awakened-Hunter) | 100,000 | 1 | Human |
 | [Apex Hunter](https://github.com/Bithio999/MC/wiki/Apex-Hunter) | 400,000 | 3 | Awakened Hunter |
-| [Sovereign Hunter](https://github.com/Bithio999/MC/wiki/Sovereign-Hunter) | 2,000,000 | 5 | Apex Hunter; master an apex Unique |
+| [Sovereign Hunter](https://github.com/Bithio999/MC/wiki/Sovereign-Hunter) | 2,000,000 | 5 | Apex Hunter; master a Myths Unique |
 
 
 ## Notes

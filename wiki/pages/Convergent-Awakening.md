@@ -12,11 +12,11 @@ The primary becomes the actual fused native race. Its predecessor state and the 
 
 ## EP requirement
 
-By default, the requirement is **125% of the highest EP gate leading up to the awakening**, with a **10,000,000 base EP minimum**. This includes native EP requirements along both current lineage paths and the added cumulative EP gate of the last completed secondary evolution. It uses required EP, not the amount you happened to have when evolving; earning more EP does not move the goalposts.
+By default, the requirement is **125% of the highest EP gate leading up to the awakening**, with a **10,000,000 base EP minimum**. This includes native EP requirements along both current lineage paths and the added cumulative EP gate of the last completed secondary evolution. It uses fixed required EP, never current EP, EP at selection or saved EP at an earlier evolution. Choosing the lineage at a higher EP does not raise the requirement.
 
 `Required base EP = max(10,000,000, ceil(highest preceding evolution EP gate × 1.25))`
 
-For example, selecting Slime at 20M EP and completing its two evolutions at the added 22.5M and 25M gates gives a **31.25M EP awakening requirement**, provided neither native lineage has a higher gate. A native evolution requiring 40M raises awakening to **50M** instead. Both races must still reach their final evolution, and the true awakening requirement remains.
+For example, completing Slime’s two secondary evolutions at the fixed 7.5M and 10M gates gives a **12.5M EP awakening requirement**, provided neither native lineage has a higher gate. A native evolution requiring 40M raises awakening to **50M** instead. Both races must still reach their final evolution, and the true awakening requirement remains.
 
 Server owners can configure the minimum with `convergenceEP` and the multiplier with `convergenceEvolutionEPFactor`. The menu and server checks use the same calculated threshold. Previously completed Convergent Awakenings remain complete.
 

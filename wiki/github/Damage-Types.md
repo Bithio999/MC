@@ -6,59 +6,54 @@
 
 ## Direct damage
 
-| Element | Native damage ID | Addon skill lines |
+| Element / source | Native damage ID | Skills |
 | --- | --- | --- |
-| [Lightning](#lightning) | `tensura:lightning_elemental` | Storm Crown / Raijin |
-| [Water](#water) | `tensura:water_elemental` | Scarlet Deluge / Varuna |
-| [Fire](#fire) | `tensura:fire_elemental` | Black Flame / Agni |
-| [Ice](#ice) | `tensura:ice_elemental` | Frostbound Colossus / Ymir |
-| [Space](#space) | `tensura:space_elemental` | Aion |
+| [Lightning](#lightning) | `tensura:lightning_elemental` | Storm Crown, Vritra, Thoth |
+| [Water](#water) | `tensura:water_elemental` | Scarlet Deluge |
+| [Fire](#fire) | `tensura:fire_elemental` | Black Flame, Vritra, Thoth |
+| [Ice](#ice) | `tensura:ice_elemental` | Frostbound Colossus, Demeter, Thoth |
+| [Space](#space) | `tensura:space_elemental` | Threadweaver, Janus, Aion |
+| [Earth](#earth) | `tensura:earth_elemental` | Rune Smith, Verdant Keeper |
+| [Light](#light) | `tensura:light_elemental` | Mirrorbound |
+| [Generic magic](#generic-magic) | `tensura:magic` | Thoth: Spellbreak |
 
 ## Lightning
 
-**Damage ID:** `tensura:lightning_elemental`.
-
-Railbolt, Thunder Step and Heaven’s Thunder deal lightning damage, including ricochets and area hits.
-
-[Storm Crown](https://github.com/Bithio999/MC/wiki/Storm-Crown) · [Raijin, Lord of Thunder](https://github.com/Bithio999/MC/wiki/Raijin)
+**Damage ID:** `tensura:lightning_elemental`. Railbolt and Thunder Step use this source. Vritra’s Plasma Bore opening hit and Thunderhead strikes use it; their delayed fire fuses use a separate Fire source. Thoth’s third Lexicon chapter and every third Library chapter use Lightning.
 
 ## Water
 
-**Damage ID:** `tensura:water_elemental`.
-
-Crushing Current, Scarlet Undertow, Crimson Ocean and Water Veil retaliation deal water damage. The barrier itself does not deal damage.
-
-[Scarlet Deluge](https://github.com/Bithio999/MC/wiki/Scarlet-Deluge) · [Varuna, Lord of Tides](https://github.com/Bithio999/MC/wiki/Varuna)
+**Damage ID:** `tensura:water_elemental`. Crushing Current, Scarlet Undertow and Water Veil retaliation use Water. The barrier itself deals no damage.
 
 ## Fire
 
-**Damage ID:** `tensura:fire_elemental`.
-
-Oil Lash, ignition opening hits, burning-pool pulses and Black Sun Caldera direct hits deal fire elemental damage. Oil Lash is not a physical-damage attack. Ignition and caldera can additionally inflict native Black Burn.
-
-[Black Flame](https://github.com/Bithio999/MC/wiki/Black-Flame) · [Agni, Lord of the Black Flame](https://github.com/Bithio999/MC/wiki/Agni)
+**Damage ID:** `tensura:fire_elemental`. Black Flame’s Oil Lash and ignition/pool hits use Fire. Vritra’s delayed fuses, thunderhead fire bursts and Cataclysm Front eruptions use Fire. Thoth’s first Lexicon and Library chapters use Fire. Vritra/Thoth do not automatically inflict Black Burn.
 
 ## Ice
 
-**Damage ID:** `tensura:ice_elemental`.
-
-Avalanche Crash, Glacial Prison and Heavenfall Glacier impacts deal ice damage. Impact and falling-ice visuals do not change them into physical damage. Chill and Frost are additional effects.
-
-[Frostbound Colossus](https://github.com/Bithio999/MC/wiki/Frostbound-Colossus) · [Ymir, Lord of Winter](https://github.com/Bithio999/MC/wiki/Ymir)
+**Damage ID:** `tensura:ice_elemental`. Avalanche Crash, Glacial Prison, Winter Orchard’s hostile pulses and Winter Harvest blooms use Ice. Thoth’s second Lexicon and Library chapters use Ice. Healing in Winter Orchard has no damage source. Chill, Frost and Webbed are additional statuses, not names for the direct hit.
 
 ## Space
 
-**Damage ID:** `tensura:space_elemental`.
+**Damage ID:** `tensura:space_elemental`. Loom Needle, Sever Thread, Parallax Snare, Crossroads Edict, Worldline Sever, Event Horizon’s core and Genesis Verdict use Space. Gates and Causal Reversal do not deal damage. Aion’s bonus preserves the source type of the original attack.
 
-Worldline Sever, Event Horizon’s inner damage area and Genesis Verdict deal space damage. Causal Reversal does not deal damage. Unbroken Continuum’s bonus preserves the original type of the attack it strengthens.
+## Earth
 
-[Aion, God of Causality](https://github.com/Bithio999/MC/wiki/Aion)
+**Damage ID:** `tensura:earth_elemental`. Runic Mine, Command Detonation and Briar Grasp use Earth. Living Grove and Verdant Heart do not deal damage. Physical-looking branches or a hammer icon do not change the native damage ID.
+
+## Light
+
+**Damage ID:** `tensura:light_elemental`. Prismatic Lance and its secondary splits use Light. Mirror Aegis does no direct attack damage; a reflected arrow/fireball/etc. retains its own projectile damage type with ownership transferred to the defender.
+
+## Generic magic
+
+**Damage ID:** `tensura:magic`. Spellbreak uses native generic magic rather than an elemental source. Its drain, Silence and Magic Interference are separate effects. Godly owners still take the attack but are excluded from those additional disruption/drain effects.
 
 ## Black Burn
 
 Native **Black Burn** is separate from the direct fire elemental hit that applies it. In Tensura 2.0.1.3 its ticking source is **`tensura:black_flame`**, with the Flame element, passed through native split-elemental damage handling. Its damage and behavior use Tensura’s Black Flame configuration. The direct attack’s table value is not the combined damage of the attack plus its full status duration.
 
-Black Flame and Agni’s ignition/pool and caldera hits can apply this status. Oil Lash applies slowing instead of Black Burn.
+Black Flame’s ignition/pool hits can apply this status. Oil Lash applies slowing instead of Black Burn.
 
 ## Non-damaging abilities
 
@@ -66,7 +61,7 @@ Causal Reversal restores position, HP, SHP, aura and magicules. Hunter’s Recov
 
 ## Armor, barriers and resistance
 
-Tensura 2.0.1.3 places all five listed direct elemental damage IDs in the native **bypasses armor** tag. This does not make them barrier-bypassing, unresistable, physical, or generic magic damage. Native skill authority, elemental boosts, barriers, resistance/nullification skills and server data still govern the result. Datapacks can change native damage tags.
+Tensura 2.0.1.3 places the listed direct elemental damage IDs in the native **bypasses armor** tag. This does not make them barrier-bypassing, unresistable, physical, or generic magic damage. Native skill authority, elemental boosts, barriers, resistance/nullification skills and server data still govern the result. Datapacks can change native damage tags.
 
 Aion’s active passive adds its documented resistance/nullification degradation and non-Godly bonus. It does not convert every attack into space damage. See [Aion](https://github.com/Bithio999/MC/wiki/Aion#passive) for its exact scope and [combat mechanics](https://github.com/Bithio999/MC/wiki/Mechanics) for mastery and barrier behavior.
 

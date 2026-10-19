@@ -55,7 +55,7 @@ Continue building a distinct-boss record toward the next stage. You can roll and
 | --- | ---: | ---: | --- |
 | [Awakened Hunter](Awakened-Hunter.md) | 100,000 | 1 | Human |
 | [Apex Hunter](Apex-Hunter.md) | 400,000 | 3 | Awakened Hunter |
-| [Sovereign Hunter](Sovereign-Hunter.md) | 2,000,000 | 5 | Apex Hunter; master an apex Unique |
+| [Sovereign Hunter](Sovereign-Hunter.md) | 2,000,000 | 5 | Apex Hunter; master a Myths Unique |
 
 
 ## Notes

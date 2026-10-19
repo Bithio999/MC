@@ -17,8 +17,10 @@ public abstract class ReincarnationSkillPoolMixin {
     @Inject(method = "getSkillPool", at = @At("RETURN"), cancellable = true, remap = false)
     private static void wildhunt$addApexUniques(CallbackInfoReturnable<List<ManasSkill>> cir) {
         var pool = new ArrayList<>(cir.getReturnValue());
-        for (Apex apex : Apex.values()) {
-            var unique = WildHunt.UNIQUE.get(apex).get();
+        // Old server configs can still name a retired registry ID. It must never
+        // roll a decode-only adapter and thereby bypass synthesis on a new life.
+        pool.removeIf(dev.wildhunt.MythicEvolution::retired);
+        for (var unique : WildHunt.rollableUniques()) {
             if (!pool.contains(unique)) pool.add(unique);
         }
         cir.setReturnValue(List.copyOf(pool));

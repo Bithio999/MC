@@ -30,8 +30,14 @@ public final class WildHunt {
     static {
         for (Apex apex : Apex.values()) {
             UNIQUE.put(apex, SKILLS.register(id(apex.uniqueId), () -> new ApexSkill(apex, false)));
-            ULTIMATE.put(apex, SKILLS.register(id(apex.ultimateId), () -> new ApexSkill(apex, true)));
+            ULTIMATE.put(apex, SKILLS.register(id(apex.ultimateId), () -> new RetiredApexSkill(apex)));
         }
+    }
+    public static final EnumMap<MythicKind, RegistrySupplier<MythicSkill>> MYTHIC = new EnumMap<>(MythicKind.class);
+    static {for(var kind:MythicKind.values())MYTHIC.put(kind,SKILLS.register(id(kind.id()),()->new MythicSkill(kind)));}
+    public static java.util.List<io.github.manasmods.manascore.skill.api.ManasSkill> rollableUniques(){
+        var skills=new java.util.ArrayList<io.github.manasmods.manascore.skill.api.ManasSkill>();UNIQUE.values().forEach(s->skills.add(s.get()));
+        MYTHIC.forEach((kind,s)->{if(kind.unique())skills.add(s.get());});return java.util.List.copyOf(skills);
     }
     public static final RegistrySupplier<GodlySkill> GODLY = SKILLS.register(id("aion"), GodlySkill::new);
     public WildHunt(net.neoforged.bus.api.IEventBus modBus, net.neoforged.fml.ModContainer container) {
@@ -42,11 +48,12 @@ public final class WildHunt {
         NeoForge.EVENT_BUS.addListener(dev.wildhunt.myths.DuoSystem::login);
         NeoForge.EVENT_BUS.addListener(dev.wildhunt.myths.MythsCommands::register);
         NeoForge.EVENT_BUS.addListener(GodlySkill::damaged);
+        NeoForge.EVENT_BUS.addListener(MythicArts::damaged);
         NeoForge.EVENT_BUS.addListener(GodlySkill::projectileTick);
         io.github.manasmods.manascore.skill.api.SkillEvents.SKILL_DAMAGE_PRE_CALCULATION.register(GodlySkill::modifyDamage);
-        NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent e)->GodlySkill.clearTransient(e.getEntity()));
-        NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerChangedDimensionEvent e)->GodlySkill.clearTransient(e.getEntity()));
-        NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerRespawnEvent e)->GodlySkill.clearTransient(e.getEntity()));
+        NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent e)->{GodlySkill.clearTransient(e.getEntity());MythicArts.clearTransient(e.getEntity());});
+        NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerChangedDimensionEvent e)->{GodlySkill.clearTransient(e.getEntity());MythicArts.clearTransient(e.getEntity());});
+        NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerRespawnEvent e)->{GodlySkill.clearTransient(e.getEntity());MythicArts.clearTransient(e.getEntity());});
         NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerChangedDimensionEvent e)->{if(e.getEntity() instanceof net.minecraft.server.level.ServerPlayer p)dev.wildhunt.myths.SecondaryAbility.clear(p);});
         NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerRespawnEvent e)->{if(e.getEntity() instanceof net.minecraft.server.level.ServerPlayer p)dev.wildhunt.myths.SecondaryAbility.clear(p);});
         // ManasCore owns these custom registrars, as it does for Tensura itself.

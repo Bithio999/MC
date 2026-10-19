@@ -11,6 +11,7 @@
 - [Skill overview](https://github.com/Bithio999/MC/wiki/Skills)
 - [Unique Skills](https://github.com/Bithio999/MC/wiki/Unique-Skills)
 - [Ultimate Skills](https://github.com/Bithio999/MC/wiki/Ultimate-Skills)
+- [Skill synthesis](https://github.com/Bithio999/MC/wiki/Skill-Synthesis)
 - [Godly Skills](https://github.com/Bithio999/MC/wiki/Godly)
 - [Extra Skills](https://github.com/Bithio999/MC/wiki/Aura-Regeneration)
 - [Ability index](https://github.com/Bithio999/MC/wiki/Abilities)

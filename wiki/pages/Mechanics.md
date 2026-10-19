@@ -6,33 +6,15 @@ This page explains **Tensura Myths combat mechanics**, including native barriers
 
 ## Damage types
 
-| Skill line | Unique / Ultimate | Native damage type |
-| --- | --- | --- |
-| Rey Dau | Storm Crown / Raijin | Lightning — `tensura:lightning_elemental` |
-| Uth Duna | Scarlet Deluge / Varuna | Water — `tensura:water_elemental` |
-| Nu Udra | Black Flame / Agni | Fire — `tensura:fire_elemental` |
-| Jin Dahaad | Frostbound Colossus / Ymir | Ice — `tensura:ice_elemental` |
-| Causality | Aion | Space — `tensura:space_elemental` |
-
-Every damaging active, area pulse, signature, and Water Veil retaliation uses its line's listed element. The [ability index](Abilities.md) records each art separately. Oil Lash deals fire elemental damage; Avalanche Crash and Glacial Prison deal ice elemental damage despite their physical-looking animations. Unique and Ultimate versions retain the same element.
-
-Aura and magicules are skill resources, not separate damage types. These attacks use Tensura's native skill damage source, elemental boosts, resistance rules, and barriers. In Tensura 2.0.1.3's bundled damage tags, all five listed types bypass ordinary armor; that does not imply bypassing native barriers or elemental resistances. Nu Udra's ignition hits also apply the native Black Burn status, whose ticking source is `tensura:black_flame`, separate from the direct `tensura:fire_elemental` hit. See [Damage types](Damage-Types.md#black-burn).
+The [ability index](Abilities.md) and [damage reference](Damage-Types.md) distinguish every direct elemental source, native status and non-damaging utility. Vritra and Thoth use multiple elements within one skill; each strike keeps its own native damage source. Reflection preserves the projectile’s own type. Healing, gates, resource conversion and barriers do not invent attack damage.
 
 ## Damage and mastery
 
-The four apex lines’ damage multiplier is:
+The original four apex Uniques use **0.90 × (1 + 0.5 × mastery fraction)**. The four additional Uniques, combination Ultimates, Aion and Thoth use **1 + 0.5 × mastery fraction**. Mastery fractions are clamped to 0–1, giving a maximum of 1.5× before native modifiers. Each new kit has its own raw damage values; there is no shared Ultimate 3× multiplier.
 
-```text
-0.90 × (1 + 0.5 × clamp(masteryFraction, 0, 1)) × (Ultimate ? 3 : 1)
-```
+**EP never multiplies damage.** It is a fixed progression requirement. Native elemental boosts, skill authority, barriers, resistance/nullification, hit immunity and server rules still determine actual health loss. Overlapping warnings do not reset vanilla/native hit immunity to force multiple full hits.
 
-**EP does not multiply damage.** A mastered Unique uses 1.35× its raw base value; a mastered Ultimate uses 4.05× the corresponding Unique raw base. The reduction also covers every area pulse, counter and signature impact. Skill-page tables already include the Ultimate’s 3× multiplier. Native Tensura elemental boosts, global combat rules, rank interactions, barriers and resistances still apply; raw values do not promise the same health damage against every enemy.
-
-EP remains a requirement for race evolution and Ultimate ascension. Those progression gates do not increase these attacks’ raw damage.
-
-## Aion’s damage
-
-Aion uses space elemental damage and a **1 + 0.5 × mastery fraction** multiplier, capped at 1.5×, without the apex lines’ 0.90 reduction or Ultimate 3× base multiplier. While Unbroken Continuum is active, eligible attacks against non-Godly owners gain another 35%; the passive preserves the attack’s original damage type. Causal Reversal and the slowing aura do not deal damage. [Aion](Aion.md) lists the individual arts and passive defense rules.
+Aion’s active passive adds 35% damage against non-Godly owners while preserving the original attack type. Thoth’s elemental boosts and native magic-efficiency attributes are separate from Aion’s resistance suppression.
 
 ## World effects
 
@@ -40,14 +22,23 @@ Oil pools occupy finite world locations. Drenched is a timed water mark that sup
 
 ## Toggleable passives
 
-Each skill has two active modes (three for an Ultimate) plus a separate native skill toggle in Tensura’s Ability Selection.
+Unique skills have two active modes, combination Ultimates three, and Godly skills four, with a separate native skill toggle in Tensura’s Ability Selection.
 
-| Line | Passive | Unique aura / second | Ultimate aura / second |
-| --- | --- | ---: | ---: |
-| Rey Dau | Storm Mantle | 10 | 40 |
-| Uth Duna | Water Veil | 10 | 40 |
-| Nu Udra | Furnace Mantle | 15 | 60 |
-| Jin Dahaad | Colossus Carapace | 20 | 80 |
+| Skill | Upkeep per second | Native multilayer capacity |
+| --- | ---: | ---: |
+| Storm Crown | 10 aura | — |
+| Scarlet Deluge | 10 aura | 100 |
+| Black Flame | 15 aura | — |
+| Frostbound Colossus | 20 aura | 150 |
+| Threadweaver | 15 aura | — |
+| Rune Smith | 20 aura | — |
+| Verdant Keeper | 20 aura | — |
+| Mirrorbound | 15 aura | — |
+| Vritra | 80 aura | — |
+| Demeter | 70 aura | 500 |
+| Janus | 70 aura | 300 |
+| Aion | 180 magicules | 1,200 |
+| Thoth | 180 magicules | 1,000 |
 
 The first second is paid when enabling; upkeep is charged once every twenty game ticks while active. Passives stay on until disabled, unfunded or blocked by activation requirements. They do not expire after fifteen or thirty seconds. Attribute contributions use stable IDs, so refreshes cannot accumulate duplicate bonuses. Turning off or forgetting the skill removes its modifiers. Saved native toggle state is restored on login.
 
@@ -55,10 +46,7 @@ The first second is paid when enabling; upkeep is charged once every twenty game
 
 Water Veil and Colossus Carapace contribute to Tensura’s `PHYSICAL_BARRIER` and `MAGIC_BARRIER` attributes and arm `MULTILAYER_BARRIER`, which is the attribute read by its shield HUD counter. Tensura handles their interaction with damage and renders its native barrier layer around the character. Wild Hunt adds no separate absorption-heart pool. Other skills’ barrier contributions remain separate.
 
-| Passive | Unique capacity | Ultimate capacity |
-| --- | ---: | ---: |
-| Water Veil | 100 | 250 |
-| Colossus Carapace | 150 | 350 |
+Demeter, Janus, Aion and Thoth also use native recovering personal multilayer barriers. Crystal Bulwark lends an additional six-second, 250-capacity ward to eligible allies; that ward expires rather than regenerating, and owns separate modifiers for each caster.
 
 The displayed value is native per-hit blocking capacity. Tensura charges magicules for blocked damage. Overflow, inadequate magicules and native power interactions can break the shield. A broken multilayer barrier automatically rearms at the first paid upkeep after ten seconds without a hit (normally 10–11 seconds). Hits, including fully blocked hits, restart recovery. Retoggling cannot skip this delay. The shield modifier is saved across relogs; turning off removes only this art’s contribution. Ensure Tensura’s **Barrier** HUD decoration is enabled if you have customized its HUD.
 
@@ -66,7 +54,7 @@ Water Veil retains water breathing and an attacker-targeted retaliation after ac
 
 ## Aiming and movement
 
-Railbolt begins with a block-clipped aimed hit, then ricochets from the latest victim. Thunder Step follows the full aim vector, including vertical pitch, and sweeps the whole caster bounding box. Collisions, build-height limits and the world border stop it. Railbolt bounces reach twelve blocks through walls from the most recent victim. Thunder Step reaches 16/24 blocks with a 5/4 second cooldown and preserves all three components of player momentum. Undertow is placed on the crosshair ray within 24/36 blocks, using the hit surface or bounded endpoint. Water waves sweep continuous segments so targets cannot hide between movement updates. Oil Lash selects a limited forward fan and creates synced tentacle geometry. Avalanche Crash is an aimed area impact; Glacial Prison targets one enemy. Heavenfall Glacier warns fixed positions for half a second before impact.
+Railbolt begins with a block-clipped aimed hit, then ricochets from the latest victim. Thunder Step follows the full aim vector, including vertical pitch, and sweeps the whole caster bounding box. Collisions, build-height limits and the world border stop it. Railbolt bounces reach twelve blocks through walls from the most recent victim. Thunder Step reaches 16 blocks with a 5-second cooldown and preserves all three components of player momentum. Undertow is placed on the crosshair ray within 24 blocks, using the hit surface or bounded endpoint. Water waves sweep continuous segments so targets cannot hide between movement updates. Oil Lash selects a limited forward fan and creates synced tentacle geometry. Avalanche Crash is an aimed area impact; Glacial Prison targets one enemy. Winter Harvest warns fixed crystal blooms for 1.2 seconds; Parallax Snare warns a spatial convergence for 0.8 seconds.
 
 Attacks respect teams, owned pets, creative/spectator immunity and PvP settings. They check line of sight except for Railbolt ricochets after the initial hit. Movement respects knockback resistance. Dimension changes invalidate anchored effects. Native status resistance and skill ranks can prevent Frost or Chill. No art destroys terrain or places permanent ice.
 
@@ -76,7 +64,7 @@ See [Aura regeneration](Aura-Regeneration.md) for the three race-granted Extra S
 
 ## Visual effects
 
-Water waves render a broad curled mesh with a foam crest; Undertow renders rotating teal and coral spiral ribbons. Water and ice toggles emit no constant custom particles. Oil Lash uses a synced procedural mesh with a dark tapered body, glowing orange bands, extension and recoil, including on a miss. Ice spires, prison bars and falling ice use rendered faceted crystals. Those visual entities deal no damage by themselves, have no collision and expire automatically; server skill logic owns targeting and damage.
+Water waves render a broad curled mesh with a foam crest; Undertow renders rotating teal and coral spiral ribbons. Water and ice toggles emit no constant custom particles. Oil Lash uses a synced procedural mesh with a dark tapered body, glowing orange bands, extension and recoil, including on a miss. Ice spires and prison bars use rendered faceted crystals. New kits add silk strands, inscribed mines, growing briars and crystal trees, orbiting mirrors, plasma conduits, architectural gates, closing spatial blades and open orbiting spellbooks. Those visual entities deal no damage by themselves, have no collision and expire automatically; server skill logic owns targeting and damage.
 
 Tensura supplies elemental particles, shockwaves, native barrier rendering and animated magic circles. Its assets are used at runtime and are not copied into the addon.
 

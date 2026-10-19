@@ -24,11 +24,11 @@ The supported native families are **Beastfolk, Harpy, Ogre, Goblin, Giant, Orc, 
 
 The secondary starts at its native base race. Select its next stage from the **Secondary Race right-side tab**, inspect the native requirements in the tooltip, and choose **Evolve**. Native EP, awakening, mastery and other conditions are evaluated by the server. Scroll or hover the native requirements box for longer details.
 
-Each secondary stage additionally requires **2,500,000 new base EP per evolution**, measured from the EP held when selecting the secondary. The requirement is:
+Each secondary evolution has a **fixed stage threshold**, independent of the player’s current EP, EP at selection or EP when evolving:
 
-**Required base EP = EP at selection + 2,500,000 × (completed secondary evolutions + 1)**
+**Required base EP = secondaryRaceEP + secondaryEvolutionEPStep × (completed secondary evolutions + 1)**
 
-Selecting at 5M EP therefore needs 7.5M for the first evolution, 10M for the second and 12.5M for the third. Selecting at 20M instead needs 22.5M, 25M and 27.5M. Native requirements must also be met; higher EP alone does not bypass awakening, mastery or other conditions. The menu shows the exact EP threshold. `secondaryEvolutionEPStep` configures the increment.
+With defaults, the first evolution requires **7.5M**, the second **10M**, the third **12.5M**, and the fourth **15M** base EP. Choosing the secondary at 5M or 100M gives the same requirements. Native weighted evolution requirements must also be met. The menu and server share these fixed gates. Server owners can configure `secondaryRaceEP` and `secondaryEvolutionEPStep`.
 
 
 Native branching remains available. If a chosen Goblin branch becomes an Oni, its recorded secondary ancestry remains Goblin for the eventual fusion. Secondary Human can also follow the hunter branch and earn its distinct boss credits.
@@ -52,7 +52,7 @@ Native requirements are **weighted**, with **100 points required**. They are not
 | Arch Daemon → Daemon Lord | True Hero / True Demon Lord: 50; be named yourself: 50; physical body: 50 | 100 — any two |
 | Daemon Lord → Devil Lord | True Hero / True Demon Lord: 50; be named yourself: 25; physical body: 25 | 100 — all three |
 
-The physical-body check uses your actual body state; a spiritual form does not meet it. The added secondary EP gate is required separately. For a lineage selected at **20M base EP**, the default cumulative thresholds are **22.5M** for Greater Daemon, **25M** for Arch Daemon, **27.5M** for Daemon Lord, and **30M** for Devil Lord, together with the applicable native conditions.
+The physical-body check uses your actual body state; a spiritual form does not meet it. The added secondary EP gate is required separately. The fixed default thresholds are **7.5M** for Greater Daemon, **10M** for Arch Daemon, **12.5M** for Daemon Lord, and **15M** for Devil Lord, together with the applicable native conditions.
 
 ## EP gains
 
@@ -73,7 +73,7 @@ The native Status menu shows the current independent lineages as **Primary Race/
 
 ![Primary and secondary race names in the native Status menu](../media/duo-status.png)
 
-![Daemon secondary requirements with live native weighted progress and naming state](../media/secondary-requirements.png)
+![Arch Daemon’s fixed 12.5M next-stage gate for a player with 20M base EP](../media/secondary-requirements.png)
 
 ## Awakening
 

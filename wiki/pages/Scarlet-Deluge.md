@@ -20,7 +20,7 @@
 | Registry ID | `wildhunt:scarlet_deluge` |
 | **Evolution** | |
 | Previous | — |
-| Evolution | [Varuna, Lord of Tides](Varuna.md) |
+| Evolution | Standalone Unique |
 | **Obtaining** | |
 | Method | Reincarnation / starting skill roll |
 
@@ -38,7 +38,7 @@ All damaging arts in this skill use **water elemental damage**, including its ar
 | Damage ID | `tensura:water_elemental` |
 | Effect | Retaliation deals water elemental damage; the barrier itself deals none. |
 
-While toggled on, gain 10 armor, 18 physical barrier, 18 magic barrier and 50% water boost. These native attributes participate in Tensura’s damage handling and visible barrier layer. Water breathing remains active while toggled on. No absorption hearts are added. A hostile hit that removes health triggers a 25-raw water counter (75 as Varuna) against a visible attacker within twelve blocks, with a 3-second cooldown.
+While toggled on, gain 10 armor, 18 physical barrier, 18 magic barrier and 50% water boost. These native attributes participate in Tensura’s damage handling and visible barrier layer. Water breathing remains active while toggled on. No absorption hearts are added. A hostile hit that removes health triggers a 25-raw water counter against a visible attacker within twelve blocks, with a 3-second cooldown.
 
 The passive also arms a **100-capacity native Multilayer Barrier**, which appears in Tensura’s shield HUD counter when its Barrier decoration is enabled. The counter is a per-hit blocking capacity, not absorption hearts or a custom health bar. Native rules spend magicules on blocked damage and can break the barrier on overflow, insufficient magicules or stronger attacks. While still toggled on, a broken barrier automatically rearms on the first paid upkeep after **ten seconds without an incoming hit**. Any new hit restarts the delay, including hits completely blocked by a surviving shield. Retoggling does not bypass the delay. Surviving shields persist across relogs.
 
@@ -53,7 +53,7 @@ No constant bubble orbit is emitted while the passive is enabled. Native barrier
 | 1. Crushing Current | 160 | 3 s | 65 |
 | 2. Scarlet Undertow | 500 | 7 s | 45 |
 
-**Damage calculation:** multiply the listed base values by **0.90**, then by the mastery multiplier (up to **1.50**). Ultimate table values already include their 3× base multiplier. Elemental boosts, defenses, barriers, and situational modifiers also apply. EP does not multiply damage.
+**Damage calculation:** multiply the listed base values by **0.90**, then by the mastery multiplier (up to **1.50**). Elemental boosts, defenses, barriers, and situational modifiers also apply. EP does not multiply damage.
 
 #### Crushing Current
 
@@ -85,11 +85,7 @@ Roll through Tensura’s normal reincarnation system. These Uniques join the con
 
 ## Evolution
 
-| Unique Skill | Ultimate Skill | Requirements |
-| --- | --- | --- |
-| Scarlet Deluge | [Varuna, Lord of Tides](Varuna.md) | Sovereign Hunter; 2,000,000 base EP; matching Unique mastered |
-
-Ascension replaces only the matching Unique. The Ultimate starts with its own mastery.
+This skill remains a standalone Unique. It currently has no combination Ultimate recipe.
 
 ## Suggested combo
 

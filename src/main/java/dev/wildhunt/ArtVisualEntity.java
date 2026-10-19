@@ -17,6 +17,10 @@ import net.minecraft.world.phys.Vec3;
 /** Synced visual geometry only: cannot collide, hurt entities or edit blocks. */
 public final class ArtVisualEntity extends Entity {
     public static final int LASH = 0, CRYSTAL = 1, FALLING_ICE = 2, TIDAL_WAVE = 3, WHIRLPOOL = 4, CAUSAL_SPHERE = 5, CAUSAL_RAY = 6, CAUSAL_DOMAIN = 7, CAUSAL_ANCHOR = 8, CAUSAL_VERDICT = 9, CAUSAL_IMPACT = 10;
+    public static final int THREAD_LINE=11,RUNE_MINE=12,LIVING_GROVE=13,MIRROR_WARD=14,PRISM_RAY=15,PLASMA_LANCE=16,
+        THUNDERHEAD=17,CATACLYSM_FRONT=18,WINTER_ORCHARD=19,CRYSTAL_BULWARK=20,CRYSTAL_BLOOM=21,TWIN_GATE=22,
+        PARALLAX=23,CROSSROADS=24,LEXICON=25,SPELLBREAK=26,MANA_CRUCIBLE=27,ASTRAL_LIBRARY=28,SPELL_RAY=29,
+        BRIAR=30,RUNE_BURST=31,MIRROR_SHARD=32;
     private static final DeferredRegister<EntityType<?>> TYPES = DeferredRegister.create(WildHunt.ID, Registries.ENTITY_TYPE);
     public static final RegistrySupplier<EntityType<ArtVisualEntity>> TYPE = TYPES.register("art_visual", () ->
         EntityType.Builder.<ArtVisualEntity>of(ArtVisualEntity::new, MobCategory.MISC).sized(0.1f, 0.1f)
@@ -48,7 +52,7 @@ public final class ArtVisualEntity extends Entity {
     public int lifetime() { return entityData.get(LIFETIME); }
     public Vec3 end() { return new Vec3(entityData.get(END_X), entityData.get(END_Y), entityData.get(END_Z)); }
     @Override public void tick() { super.tick(); if (!level().isClientSide() && tickCount >= lifetime()) discard(); }
-    @Override public AABB getBoundingBoxForCulling() { return new AABB(position(), position().add(end())).inflate((kind() == WHIRLPOOL || kind() == CAUSAL_SPHERE || kind()>=CAUSAL_DOMAIN) ? end().x + 2 : kind() == TIDAL_WAVE ? end().y + 3 : 4); }
+    @Override public AABB getBoundingBoxForCulling() { return new AABB(position(), position().add(end())).inflate((kind() == WHIRLPOOL || kind() == CAUSAL_SPHERE || kind()>=CAUSAL_DOMAIN) ? Math.abs(end().x) + 12 : kind() == TIDAL_WAVE ? end().y + 3 : 4); }
     @Override public boolean shouldRenderAtSqrDistance(double distance) { return distance < 128 * 128; }
     @Override protected void readAdditionalSaveData(CompoundTag tag) {}
     @Override protected void addAdditionalSaveData(CompoundTag tag) {}

@@ -56,7 +56,7 @@ public final class HunterRace extends TensuraRace {
         Map<EvolutionRequirement, Float> gates = new LinkedHashMap<>();
         gates.put(new EvolutionRequirement.EPRequirement(HunterProgression.EP[stage]), 50f);
         gates.put(new Gate("Defeat " + HunterProgression.BOSSES[stage] + " distinct boss types", e -> (float) HunterData.bossKills(e).size() / HunterProgression.BOSSES[stage]), stage < 3 ? 50f : 25f);
-        if (stage >= 3) gates.put(new Gate("Master an apex Unique skill", e -> HunterData.mastered(e) > 0 ? 1f : 0f), 25f);
+        if (stage >= 3) gates.put(new Gate("Master a Myths Unique skill", e -> HunterData.mastered(e) > 0 ? 1f : 0f), 25f);
         return gates;
     }
     private static final class Gate extends EvolutionRequirement {

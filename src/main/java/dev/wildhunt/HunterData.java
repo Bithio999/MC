@@ -37,12 +37,9 @@ public final class HunterData {
         return true;
     }
     public static int mastered(LivingEntity entity) {
-        int count = 0;
-        for (Apex apex : Apex.values()) {
-            var skills = SkillAPI.getSkillsFrom(entity);
-            if (skills.getSkill(WildHunt.UNIQUE.get(apex).get()).map(s -> s.isMastered(entity)).orElse(false)
-                    || skills.getSkill(WildHunt.ULTIMATE.get(apex).get()).isPresent()) count++;
-        }
+        var skills=SkillAPI.getSkillsFrom(entity);
+        int count=(int)WildHunt.rollableUniques().stream().filter(s->skills.getSkill(s).map(i->i.isMastered(entity)).orElse(false)).count();
+        if(skills.getLearnedSkills().stream().anyMatch(i->i.getSkill() instanceof MythicSkill s && !s.kind.unique() || dev.wildhunt.myths.MythsTiers.isGodly(i.getSkill())))count=Math.max(count,1);
         return count;
     }
     public static boolean learnReward(LivingEntity entity, io.github.manasmods.manascore.skill.api.ManasSkill skill) {

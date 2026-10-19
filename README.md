@@ -5,147 +5,80 @@ An expanded progression and skills addon for **Tensura 2.0.1.3**, **Minecraft
 
 ## Download
 
-The built addon is included at [releases/tensura-myths-0.12.0.jar](releases/tensura-myths-0.12.0.jar).
+The built addon is included at [releases/tensura-myths-0.13.0.jar](releases/tensura-myths-0.13.0.jar).
 Install it alongside Tensura and its required dependencies on both client and server.
 
-## Godly skills and Duo Races
+## Skills
 
-**[Aion, God of Causality](wiki/pages/Aion.md)** introduces the **Godly** tier: a separate category in Tensura’s skill menu that retains native Ultimate classification. Master any one of this addon’s four Ultimates, become a True Hero or True Demon Lord, and reach **12M base EP** to ascend through **Skills → Godly → Ascension**. Aion has four spatial/causal arts and a magicule-powered barrier, resistance/nullification suppression and a proximity aura that slows enemies and hostile projectiles. Ascension replaces the chosen Ultimate and preserves presets and cooldowns.
+Eight Unique Skills are rollable through Tensura’s normal reincarnation pool. Equip active modes and toggle passives in its native Ability Selection menu.
 
-**[Duo Races](wiki/pages/Duo-Races.md)** unlock at a final primary evolution, True Hero/True Demon Lord and **5M base EP**. Choose a permanent secondary ancestry from the other native race families and evolve it through native requirements plus 2.5M additional base EP per stage. Use the **right-side Secondary Race and Convergent Awakening tabs** in Tensura’s menu. Its half-strength attributes, learned intrinsic skills and racial reactions complement the primary body. Assign **Secondary racial ability** in Controls to use its native press/hold/release action.
+| Unique | Role | Active arts |
+| --- | --- | --- |
+| [Storm Crown](wiki/pages/Storm-Crown.md) | Ricochet lightning and movement | Railbolt; Thunder Step |
+| [Scarlet Deluge](wiki/pages/Scarlet-Deluge.md) | Water control and native barriers | Crushing Current; Scarlet Undertow |
+| [Black Flame](wiki/pages/Black-Flame.md) | Tentacle pulls and owned oil pools | Oil Lash; Blackflame Ignition |
+| [Frostbound Colossus](wiki/pages/Frostbound-Colossus.md) | Aimed ice impacts and capture | Avalanche Crash; Glacial Prison |
+| [Threadweaver](wiki/pages/Threadweaver.md) | Fixed silk leash and spatial burst | Loom Needle; Sever Thread |
+| [Rune Smith](wiki/pages/Rune-Smith.md) | Proximity trap and remote detonation | Runic Mine; Command Detonation |
+| [Verdant Keeper](wiki/pages/Verdant-Keeper.md) | Allied HP/SHP grove and root control | Living Grove; Briar Grasp |
+| [Mirrorbound](wiki/pages/Mirrorbound.md) | Splitting light and missile reflection | Prismatic Lance; Mirror Aegis |
 
-After **both races reach their final evolution**, **[Convergent Awakening](wiki/pages/Convergent-Awakening.md)** requires **125% of the highest preceding evolution EP gate, with a 10M base EP minimum**. All **105 combinations** among the 15 native ancestral families have a named, registered fusion race, original icon and distinct EP growth profile. The awakening grants a one-time 25% increase to both base energy pools. Thresholds and the bonus are server configurable.
+**[Skill synthesis](wiki/pages/Skill-Synthesis.md)** combines two mastered Uniques at **2M base EP**, available to any race through **Skills → Ultimate → Synthesis**:
 
-A secondary grants **+10% EP gain** while preserving the primary race’s aura/magicule split. Default Human/Hunter awards of 6 aura / 3 magicules become **6.6 aura / 3.3 magicules**. The awakened race keeps its unique growth profile and inherits the same 10% bonus. Status displays independent lineages as **Primary Race/Secondary Race**.
+| Combination Ultimate | Mastered ingredients | New kit |
+| --- | --- | --- |
+| [Vritra, Lord of Cataclysm](wiki/pages/Vritra.md) | Storm Crown + Black Flame | Piercing plasma, delayed fire fuses, thunderhead furnace, advancing cataclysm |
+| [Demeter, Lady of Sanctuary](wiki/pages/Demeter.md) | Verdant Keeper + Frostbound Colossus | Allied ice orchard, shared native barriers, dodgeable crystal blooms |
+| [Janus, Lord of Crossroads](wiki/pages/Janus.md) | Threadweaver + Mirrorbound | Linked gates, opposing spatial blades, safe enemy displacement |
 
-The display name is now **Tensura Myths**. All previous hunter content remains; the `wildhunt` namespace is preserved for existing saves and datapacks.
+The result replaces both ingredients, preserves all nine presets and inherits the longest outstanding source cooldown. Unrelated skills remain learned. New Ultimates have three active arts and a separate toggle; their kits do not reuse their ingredients’ modes.
+
+**[Godly Skills](wiki/pages/Godly.md)** appear in their own native skill-menu category while retaining Ultimate classification for compatibility. Master a combination Ultimate, become a True Hero or True Demon Lord and reach **12M base EP**. In **Skills → Godly → Ascension**, choose:
+
+- **[Aion, God of Causality](wiki/pages/Aion.md):** smooth channelled Worldline Sever, Event Horizon, upward-only Causal Reversal and Genesis Verdict; recovering barriers, resistance/nullification suppression and proximity slowing.
+- **[Thoth, God of Magic](wiki/pages/Thoth.md):** three-element Lexicon, Spellbreak disruption/drain, aura-to-magicule conversion and an autonomous orbiting Astral Library. Also combines a mastered Rune Smith. Its passive strengthens elemental magic, native chanting and spell efficiency, with a recovering native barrier.
+
+Both Godly kits use **magicules**. All skills use native damage sources, authority, status rules and resource storage. **Damage never scales with EP.** Every ability’s costs, cooldowns, damage types and limitations are in the [wiki ability index](wiki/pages/Abilities.md).
 
 ## Human hunter progression
 
-Your appearance stays human. The new branch appears alongside Human's existing
-choices in Tensura's evolution menu.
+The hunter branch preserves the player’s appearance and appears alongside native Human evolution choices.
 
-| Evolution | Requirements | Bonuses at this stage |
+| Evolution | Requirements | Stage bonuses |
 | --- | --- | --- |
 | Awakened Hunter | Human; 100K base EP; 1 distinct boss type | +100 HP, +400 SHP, +2 attack, +5% movement, +0.1 knockback resistance |
 | Apex Hunter | Awakened; 400K EP; 3 distinct boss types | +500 HP, +3,200 SHP, +4 attack, +10% movement, +0.2 knockback resistance |
-| Sovereign Hunter | Apex; 2M EP; 5 distinct boss types; one mastered apex Unique | +1,000 HP, +6,600 SHP, +6 attack, +15% movement, +0.3 knockback resistance |
+| Sovereign Hunter | Apex; 2M EP; 5 distinct boss types; one mastered Myths Unique | +1,000 HP, +6,600 SHP, +6 attack, +15% movement, +0.3 knockback resistance |
 
-Bonuses replace the previous stage's bonuses. Boss credit is cumulative while
-Human or a hunter and keyed by **entity type**, not individual spawn: ten Wither
-kills count as one distinct boss. Progress survives death. Ordinary mobs do not
-count. A kill must be attributed to you, including through your skills.
+Bonuses replace earlier stages. Boss credit is cumulative, survives death and is keyed by entity type. Repeated kills of one boss type count once. The Wither, Ender Dragon and shared `c:bosses` tag qualify; extend `data/wildhunt/tags/entity_type/progression_bosses.json` in a datapack.
 
-Eligible bosses are the Wither, Ender Dragon, and the bosses included in the
-shared `c:bosses` tag (including Tensura's bosses). Add future Monster Hunter
-entities through `data/wildhunt/tags/entity_type/progression_bosses.json` in a
-datapack; no code changes are needed to extend the eligible list.
+Each stage grants an aura-only recovery Extra: **Hunter’s Recovery → Apex Renewal → Sovereign Rebirth**. Only the strongest enabled tier heals; idle recovery is free. [Recovery details](wiki/pages/Aura-Regeneration.md).
 
-## Aura recovery and otherworlders
+**[Alma](wiki/pages/Alma.md)** and **[Gemma](wiki/pages/Gemma.md)** spawn through Tensura’s native otherworlder distribution as Awakened Hunters with seven fitting native abilities each and bundled original skins.
 
-Each race stage grants a new native Extra Skill: **Hunter's Recovery → Apex Renewal → Sovereign Rebirth**. They mirror self, ultraspeed and infinite regeneration using **aura only**. Only the strongest toggled tier heals; idle recovery is free. Hunter base energy and normal default-alignment EP gains retain the **2/3 aura, 1/3 magicule** split. [Recovery costs and limits](wiki/pages/Aura-Regeneration.md).
+## Duo Races and Convergent Awakening
 
-**[Alma](wiki/pages/Alma.md)** and **[Gemma](wiki/pages/Gemma.md)** spawn through Tensura's native otherworlder distribution as Awakened Hunters, with seven fitting Tensura abilities each. They inherit native humanoid/subordinate behavior and use bundled original skins based on online character references. Spawn directly with `/summon wildhunt:alma` or `/summon wildhunt:gemma`; spawn eggs are available through `/give`.
+[Duo Races](wiki/pages/Duo-Races.md) unlock at a final primary evolution, True Hero/True Demon Lord and **5M base EP**. Choose another native ancestral family using the **Secondary Race tab on the right of Tensura’s menu**. Half-strength shared attributes, intrinsic skills and a separately bound racial action complement the primary. Status shows **Primary Race/Secondary Race**.
 
-## Apex skills
+Secondary evolution thresholds are fixed: **5M + 2.5M × stage** gives **7.5M, 10M, 12.5M, 15M…**. Native weighted requirements also apply. Your current EP, EP when selecting the race and saved past EP never raise a gate. “Be named” means receiving a Tensura name yourself, not naming other mobs.
 
-All four Unique skills are **rollable through Tensura's normal reincarnation
-system**. They join its configured primary skill pool without duplicate addon
-entries. Rolls remain random; an apex skill is not guaranteed. Tensura's starting
-skill count, additional-skill chances, and truly-unique rules still apply.
-Ultimates are not starting rolls. Equip and cycle modes through Tensura's normal
-ability interface and key bindings.
+Both lineages must finish evolving before [Convergent Awakening](wiki/pages/Convergent-Awakening.md), available in the next right-side tab. It requires **125% of the highest fixed preceding evolution gate**, with a **10M minimum**. A two-stage Slime secondary normally gives a **12.5M** awakening gate; a four-stage Daemon gives **18.75M**, unless a native lineage gate is higher. Server settings control the thresholds.
 
-| Inspiration | Unique → Ultimate | Two active arts | Toggleable passive |
-| --- | --- | --- | --- |
-| Rey Dau | Storm Crown → Raijin, Lord of Thunder | Railbolt; Thunder Step | Storm Mantle |
-| Uth Duna | Scarlet Deluge → Varuna, Lord of Tides | Crushing Current; Scarlet Undertow | Water Veil |
-| Nu Udra | Black Flame → Agni, Lord of the Black Flame | Oil Lash; Blackflame Ignition | Furnace Mantle |
-| Jin Dahaad | Frostbound Colossus → Ymir, Lord of Winter | Avalanche Crash; Glacial Prison | Colossus Carapace |
+All **105 ancestral combinations** have a registered fusion race, name, icon and EP profile. Awakening grants a one-time 25% increase to base aura and magicule caps. **Concordance Pulse** restores 50% maximum HP and SHP without a fixed healing cap, costs 1,500 aura and has a 30-second cooldown.
 
-- **Rey Dau:** Railbolt ricochets through up to four enemies (six as Raijin), with
-  twelve-block hops through walls after the block-clipped first hit. Thunder Step follows your full aim, including up and down,
-  while checking body collisions and build-height limits. Range is 16/24 blocks, cooldown 5/4 seconds, and momentum is preserved.
-- **Uth Duna:** moving waves and aimed whirlpools control enemies. Water Veil
-  uses Tensura’s native physical and magic barriers and retaliates after health
-  damage. Water and ice passives also arm native Multilayer Barriers for Tensura’s
-  shield HUD counter. They add no absorption hearts.
-- **Nu Udra:** Oil Lash draws solid animated tentacles that extend, curl and
-  recoil, including on a miss. Pull enemies onto owned pools, then ignite them.
-- **Jin Dahaad:** a completely rebuilt kit: aimed avalanche impacts, single-target
-  ice capture, a native barrier carapace, and Ymir’s telegraphed falling-ice siege.
+An independent secondary grants **10% extra native EP gain**, retaining the primary race’s aura/magicule proportions. Default Human/Hunter awards of 6 aura / 3 magicules become **6.6 / 3.3**. Fusion inherits the same bonus with its own growth profile. Human/Hunter retains the normal **2/3 aura, 1/3 magicule** split.
 
-**Charge, oil stacks, rime stacks and addon EP damage scaling are removed.**
-Version 0.7.0 reduces all raw art damage by 10%. Mastery adds up to 50% damage; Ultimates retain their 3× base multiplier. Native
-Tensura combat rules and elemental modifiers still apply. EP progression gates
-remain in place.
+## Updating
 
-Passives are separate native skill toggles in Tensura’s **Ability Selection**,
-not the last active mode. They stay enabled while funded, charging 10/10/15/20
-aura per second for the four Unique lines (4× as an Ultimate). Turning a passive
-off immediately removes its attribute contributions. Uniques have two active
-modes; Ultimates add a third signature: Heaven’s Thunder, Crimson Ocean,
-Black Sun Caldera, or Heavenfall Glacier.
+Replace the previous addon JAR with **0.13.0** on client and server. Install only one addon version. The `wildhunt` namespace remains stable for existing saves.
 
-Read the [Tensura Myths Wiki](wiki/README.md) for skill pages, exact costs,
-combos, race infoboxes, commands and mechanics. The [GitHub Wiki edition](wiki/github/Home.md)
-includes the prepared Home, articles, sidebar, and footer. See [publishing instructions](docs/WIKI.md)
-for syncing these to the separate [GitHub Wiki](https://github.com/Bithio999/MC/wiki).
-**[Download the styled offline wiki](releases/tensura-myths-wiki-0.12.0.zip)**, extract
-the ZIP, and open `index.html`. It includes a wiki-style portal, mobile navigation,
-infoboxes, and offline search. GitHub shows HTML source; download the edition to
-see its styling. It is also included at `wiki/index.html` in the repository. The
-[earlier balance comparison](docs/BALANCE.md) preserves the Tensura benchmarks.
+The four earlier Ultimates are retired from gameplay. Existing **Raijin/Agni** ownership migrates into **Vritra**, and **Varuna/Ymir** into **Demeter**. Mastery fraction, longest outstanding cooldown and all preset references are preserved; duplicate replacement ownership merges without downgrading the destination. Old passive/barrier contributions are removed. Existing Aion, Uniques, races and boss histories remain valid. Old selection-EP snapshots are ignored by the new fixed gates.
 
-Skills use Tensura elemental damage, resistances, aura, mastery, native storage,
-and cooldowns. Attacks check teams, PvP settings, owned pets, creative/spectator
-immunity, and line of sight. They do not destroy terrain.
+The [changelog](docs/CHANGELOG.md) records development changes separately from the gameplay wiki.
 
-Each Ultimate requires Sovereign Hunter, 2M base EP, and mastery of its matching
-Unique. There are no skill trials. It replaces only that Unique. All four lines can
-be earned and evolved.
+## Wiki
 
-```text
-/wildhunt guide
-/wildhunt status
-/wildhunt evolve
-/wildhunt ascend rey_dau
-/wildhunt ascend uth_duna
-/wildhunt ascend nu_udra
-/wildhunt ascend jin_dahaad
-```
-
-Commands affect only the issuing player and enforce requirements. No operator
-permission is needed. Actual Monster Hunter boss mobs are planned for later;
-existing eligible bosses provide progression now. Balance values are currently
-defined in Java.
-
-### Updating from an earlier release
-
-Replace the old addon jar with 0.12.0; do not install both. Learned skills,
-mastery, distinct boss history and native passive toggle state are retained.
-Secondary lineages retain their recorded selection EP and stage. Saves predating
-0.10.0 initialize the fresh-growth origin at the first progression check.
-Aion uses magicules, including passive upkeep. Causal Reversal records aura and magicules
-**after** its initial cast payment, returns for free, and automatically returns at timeout.
-It preserves current HP, SHP, aura and magicules that exceed their recorded values.
-Worldline Sever steers smoothly and passes through fluids while solid blocks stop it.
-The Secondary Race tab now shows live weighted requirement details; Tensura’s
-“Be named” means receiving a name yourself. Concordance Pulse restores half of
-maximum HP and SHP without a fixed amount cap.
-Convergent Awakening now uses a lineage-dependent EP gate; already fused races remain fused.
-Existing hunters get the stronger HP/SHP caps on login without free healing.
-Already-enabled water/ice passives receive their initial native HUD barrier.
-Intact barriers survive relogs; broken barriers recover automatically after ten
-seconds without a hit while the toggle stays enabled and funded. If your HUD is customized,
-ensure Tensura’s **Barrier** decoration is enabled.
-
-When upgrading from a version before 0.5.0, the earlier stack/mode migration
-also runs. Rerolling is not required. Portraits now keep Rey Dau’s full horns within their own centered tile.
-
-## Wiki reference
-
-The [wiki](wiki/README.md) organizes all gameplay reference by [skill tier](wiki/pages/Skills.md), [race ancestry](wiki/pages/Races.md), and [otherworlder](wiki/pages/Otherworlders.md). The [ability index](wiki/pages/Abilities.md) lists all 37 active/passive entries with damage types; [Damage types](wiki/pages/Damage-Types.md) separates direct hits, status damage and non-damaging utility.
+Read the [Tensura Myths Wiki](wiki/README.md) for individual skill/race articles, per-ability damage types, progression and commands. [Download the styled offline edition](releases/tensura-myths-wiki-0.13.0.zip), extract it and open `index.html` for the wiki layout, infoboxes, screenshots and offline search. The [GitHub Wiki edition](wiki/github/Home.md) is prepared for the separate Wiki when it is available; [publishing instructions](docs/WIKI.md).
 
 ## Build and test
 
@@ -165,16 +98,16 @@ verifies published SHA-512 hashes. Dependency jars are not bundled in the addon.
 
 `./gradlew test` checks progression, mastery-only damage multipliers and costs.
 `runGameTestServer` checks native registration/evolution, reincarnation rolls,
-boss history, ascension, all eight primary attacks and toggles, barrier attributes,
+boss history, ascension, all four apex attacks and toggles, barrier attributes,
 legacy-save migration, ricochets, collision-safe dashes, travelling waves,
 oil pools, tentacle lifetime, native Frost capture, dodgeable icefall marks,
 vertical dashes, through-wall ricochets, momentum preservation, native shield
 breakage and timed recovery, HP/SHP evolution, aura regeneration and native NPC loadouts.
 `./gradlew runClient` starts a development client on a machine with graphics.
 
-The [0.12.0 validation report](docs/VALIDATION-0.12.0.md) covers the Godly/Duo additions, all 70 native GameTests and the actual client checks.
+The [0.13.0 validation report](docs/VALIDATION-0.13.0.md) covers the new skill generation, fixed EP gates, the native GameTests and the actual client checks.
 
-Install `build/libs/tensura-myths-0.12.0.jar` on **both client and server**,
+Install `build/libs/tensura-myths-0.13.0.jar` on **both client and server**,
 alongside Tensura and its required dependencies. The addon jar is not a complete
 modpack. Additional development dependency versions are in `runtime-mods.lock.json`.
 
@@ -186,6 +119,8 @@ tentacle and ice meshes. Custom monster mobs,
 equipment and animated monster models are not included.
 Client visuals and balance require in-game playtesting.
 
+The eight additional skill sigils are in `art/mythic-sigils.png`; export their
+centered, padded textures with `python3 scripts/prepare-mythic-icons.py` (Pillow).
 Portrait source art is in `art/apex-portraits.png`; optional regeneration uses
 `python3 scripts/prepare-icons.py` with Pillow installed. Normal builds do not
 need Pillow. Rebuild the optional offline wiki with
@@ -196,5 +131,3 @@ with Capcom or ManasMods. No Monster Hunter or Tensura assets are redistributed.
 Get Tensura from its [official page](https://www.curseforge.com/minecraft/mc-mods/tensura-reincarnated).
 The official [Human wiki page](https://tensura.wiki.gg/wiki/Races/Human) informed
 the EP balancing reference.
-
-Water and ice toggles no longer emit constant custom particles. Their physical/magic barrier bonuses are reduced 10%; broken native multilayer barriers rearm automatically after ten seconds without a hit while the toggle stays funded. Undertow is placed along the crosshair ray within 24/36 blocks and renders rotating teal/coral water ribbons.

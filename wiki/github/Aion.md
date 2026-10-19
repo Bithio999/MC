@@ -18,7 +18,7 @@
 | Mastery cap | 50,000 |
 | Registry ID | `wildhunt:aion` |
 | **Evolution** | |
-| Previous | Raijin, Varuna, Agni or Ymir |
+| Previous | Vritra, Demeter or Janus |
 | Evolution | — |
 | **Obtaining** | |
 | Method | Mastered Myths Ultimate, True Hero or True Demon Lord, 12M base EP |
