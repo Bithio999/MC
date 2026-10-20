@@ -25,7 +25,7 @@ public final class GodlySkill extends Skill {
     @Override public MutableComponent getName() { return Component.translatableWithFallback("wildhunt.skill.aion","Aion, God of Causality"); }
     @Override public MutableComponent getColoredName() { return getName().withColor(0xE8C56F); }
     @Override public ResourceLocation getSkillIcon() { return WildHunt.id("textures/skill/aion.png"); }
-    @Override public MutableComponent getSkillDescription() { return Component.literal("[Godly] Hold Worldline Sever to sweep an eight-target spatial beam along your aim. Event Horizon pulls from 24 blocks into a 10-block damaging core. Causal Reversal restores recorded HP, SHP, aura, magicules and position; the free return triggers automatically after 20 seconds. Genesis Verdict collapses a Horizon for an empowered finale. Unbroken Continuum grants recovering barriers and a proximity slowing aura. Magicules only; mastery strengthens damage."+GodlyPassives.DESCRIPTION); }
+    @Override public MutableComponent getSkillDescription() { return Component.literal("[Godly] Hold Worldline Sever to sweep an eight-target spatial beam along your aim. Event Horizon pulls from 24 blocks into a 10-block damaging core. Causal Reversal restores recorded HP, SHP, aura, magicules and position; the free return triggers automatically after 20 seconds. Genesis Verdict suspends twenty miniature black holes around a target, then curves them inward in five explosive salvos; consume an Event Horizon to empower them. Unbroken Continuum grants recovering barriers and a proximity slowing aura. Magicules only; mastery strengthens damage."+GodlyPassives.DESCRIPTION); }
     @Override public int getMaxMastery() { return 50_000; }
     @Override public double getDefaultAcquiringMagiculeCost() { return 0; }
     @Override public int getModes(ManasSkillInstance i) { return 4; }
@@ -74,13 +74,8 @@ public final class GodlySkill extends Skill {
             }
             default -> {
                 boolean empowered=tag.getLong("horizon_until")>now && sameDimension(i,caster);
-                ApexArts.point(tag,"verdict",empowered?ApexArts.point(tag,"horizon"):ApexArts.cursorPlacement(level,caster,64).add(0,1,0));
-                tag.putBoolean("verdict_empowered",empowered);tag.putInt("verdict_pulse",0);tag.remove("horizon_until");
-                removeVisual(level,tag,"horizon_visual");removeVisual(level,tag,"horizon_circle");tag.putString("dimension",level.dimension().location().toString());
-                tag.putLong("verdict_until",now+61); tag.putLong("verdict_next",now+20);
-                var center=ApexArts.point(tag,"verdict");double radius=empowered?14:12;
-                tag.putUUID("verdict_visual",ArtVisualEntity.spawn(level,ArtVisualEntity.CAUSAL_VERDICT,center,new Vec3(radius,0,0),65).getUUID());
-                tag.putUUID("verdict_circle",GodlyVisuals.circle(level,caster,center.subtract(0,.9,0),(float)radius,65,MagicCircleVariant.SPACE).getUUID());cooldown=45;
+                SingularityBarrage.begin(level,i,caster,empowered);tag.remove("horizon_until");
+                removeVisual(level,tag,"horizon_visual");removeVisual(level,tag,"horizon_circle");tag.putString("dimension",level.dimension().location().toString());cooldown=45;
             }
         }
         i.setCoolDown(cooldown,mode); i.markDirty(); HunterData.of(caster).putBoolean("active_skills",true); addMasteryPoint(i,caster);
@@ -192,7 +187,7 @@ public final class GodlySkill extends Skill {
         }
     }
     private boolean sameDimension(ManasSkillInstance i,LivingEntity e) { return i.getOrCreateTag().getString("dimension").equals(e.level().dimension().location().toString()); }
-    private void hit(ServerLevel level,ManasSkillInstance i,LivingEntity caster,LivingEntity target,float damage,int mode) {
+    void hit(ServerLevel level,ManasSkillInstance i,LivingEntity caster,LivingEntity target,float damage,int mode) {
         if(!HunterData.canHarm(caster,target))return;
         float power=(float)(1+.5*Math.clamp(i.getMastery()/getMaxMastery(),0,1));
         if(target.hurt(createSource(i,caster,TensuraDamageTypes.SPACE_ELEMENTAL,mode),damage*power))level.sendParticles(ParticleTypes.END_ROD,target.getX(),target.getY()+1,target.getZ(),8,.3,.7,.3,.02);
@@ -222,7 +217,7 @@ public final class GodlySkill extends Skill {
         if(!(e.level() instanceof ServerLevel level))return false;
         var tag=i.getOrCreateTag(); long now=level.getGameTime();
         if(!e.isAlive() || !canInteractSkill(i,e) || !sameDimension(i,e)) {
-            stopChannel(i,e);tag.remove("horizon_until");tag.remove("verdict_until");tag.remove("sever_echoes");
+            SingularityBarrage.clear(level,i);stopChannel(i,e);tag.remove("horizon_until");tag.remove("verdict_until");tag.remove("sever_echoes");
             for(var key:java.util.List.of("channel_visual","horizon_visual","horizon_circle","verdict_visual","verdict_circle"))removeVisual(level,tag,key);
             // A checkpoint is already committed, not a fresh activation. Temporary suppression cannot cancel its scheduled recovery.
             if((!e.isAlive() || !sameDimension(i,e)) && tag.contains("anchor_until")) {
@@ -253,15 +248,7 @@ public final class GodlySkill extends Skill {
                 projectile.setDeltaMovement(projectile.getDeltaMovement().scale(.65).add(center.subtract(projectile.position()).normalize().scale(.025))); projectile.hurtMarked=true;
             }
         }
-        if(tag.getLong("verdict_until")>now && now>=tag.getLong("verdict_next") && sameDimension(i,e)) {
-            Vec3 center=ApexArts.point(tag,"verdict");
-            int pulse=tag.getInt("verdict_pulse");boolean empowered=tag.getBoolean("verdict_empowered");double radius=empowered?14:12;
-            for(var target:ApexArts.enemies(level,e,center,radius))hit(level,i,e,target,pulse<2?2400:empowered?7200:4800,3);
-            ArtVisualEntity.spawn(level,ArtVisualEntity.CAUSAL_IMPACT,center,new Vec3(radius,pulse+1,0),22);
-            level.sendParticles(ParticleTypes.END_ROD,center.x,center.y,center.z,60,radius*.45,2,radius*.45,.1);
-            tag.putInt("verdict_pulse",pulse+1);tag.putLong("verdict_next",now+20);
-            level.playSound(null,net.minecraft.core.BlockPos.containing(center),SoundEvents.AMETHYST_BLOCK_RESONATE,SoundSource.PLAYERS,1.5f,.5f);
-        }
+        SingularityBarrage.tick(this,level,i,e);
         tag.remove("sever_echoes"); // Retire old delayed worldline attacks on existing saves.
         boolean active=tag.contains("channel_until") || i.isToggled() || tag.getLong("horizon_until")>now || tag.getLong("verdict_until")>now || tag.contains("anchor_until");
         if(active)i.markDirty(); return active;
@@ -269,7 +256,7 @@ public final class GodlySkill extends Skill {
     @Override public void onForgetSkill(ManasSkillInstance i,LivingEntity entity) {
         stopChannel(i,entity);onToggleOff(i,entity);
         i.getOrCreateTag().remove("sever_echoes");i.getOrCreateTag().remove("horizon_until");i.getOrCreateTag().remove("verdict_until");i.getOrCreateTag().remove("anchor_until");
-        if(entity.level() instanceof ServerLevel level)clearVisuals(level,i.getOrCreateTag());
+        if(entity.level() instanceof ServerLevel level){SingularityBarrage.clear(level,i);clearVisuals(level,i.getOrCreateTag());}
         super.onForgetSkill(i,entity);
     }
     public static void clearTransient(LivingEntity entity) {
@@ -277,7 +264,7 @@ public final class GodlySkill extends Skill {
             var tag=i.getOrCreateTag();stopChannel(i,entity);
             if(tag.contains("anchor_until"))i.setCoolDown(Math.max(25,i.getCoolDown(2)),2);
             tag.remove("anchor_until");tag.remove("horizon_until");tag.remove("verdict_until");tag.remove("sever_echoes");
-            if(entity.level() instanceof ServerLevel level)clearVisuals(level,tag);i.markDirty();
+            if(entity.level() instanceof ServerLevel level){SingularityBarrage.clear(level,i);clearVisuals(level,tag);}i.markDirty();
             if(i.isToggled()) { HunterData.of(entity).putBoolean("active_skills",true); }
         });
     }

@@ -1,4 +1,4 @@
-# Current balance: 0.21.0
+# Current balance: 0.22.0
 
 This calibration applies the [external Unique audit](research/UNIQUE_PARITY_0.19.md).
 The largest cuts target repeatable direct damage; conditional burst receives
@@ -106,7 +106,7 @@ exceptions are added. Demeter still exceeds Grove's pulse, area and duration.
 
 | Godly | Raw combat budget | Magicule costs / cadence |
 | --- | --- | --- |
-| Aion | Worldline 1,200 per half-second; Horizon 700/s; Verdict 2,400 + 2,400 + 4,800, or 7,200 final when empowered | Worldline 2,400 opening + 1,200/pulse (15,600 full channel); Horizon 10K; Reversal 12K; Verdict 28K. Existing cooldowns and durations. |
+| Aion | Worldline 1,200 per half-second; Horizon 700/s; Verdict twenty 480-damage blasts, or 600 each when empowered; five four-hole salvos (9,600 / 12,000 total) | Worldline 2,400 opening + 1,200/pulse (15,600 full channel); Horizon 10K; Reversal 12K; Verdict 28K; 45-second finisher cooldown. Barrage impacts at 2.5–4.9 seconds; the visual tail ends at 6.1 seconds. |
 | Thoth | Lexicon 1,100/chapter; Spellbreak 900; Library 800/bolt | 12K / 6.5K / free Crucible / 24K. Existing 12 / 15 / 0 / 35 s cooldowns. |
 | Lugh | Origin arts 3,800 / 3,800 / 4,200; appraised raw bounded to 3,500–6,000; synthesis 1.6× each of three bound arts | 1.2K / 10K / 9K / 30K. 2 / 4 / 18 / 40 s cooldowns; library access, selection and binding are free. |
 

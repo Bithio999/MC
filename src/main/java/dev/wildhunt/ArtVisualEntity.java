@@ -37,6 +37,10 @@ public final class ArtVisualEntity extends Entity {
     private static final EntityDataAccessor<Float> END_Y = SynchedEntityData.defineId(ArtVisualEntity.class, EntityDataSerializers.FLOAT);
     private static final EntityDataAccessor<Float> END_Z = SynchedEntityData.defineId(ArtVisualEntity.class, EntityDataSerializers.FLOAT);
     private static final EntityDataAccessor<java.util.Optional<java.util.UUID>> CASTER = SynchedEntityData.defineId(ArtVisualEntity.class, EntityDataSerializers.OPTIONAL_UUID);
+    private static final EntityDataAccessor<CompoundTag> BARRAGE=SynchedEntityData.defineId(ArtVisualEntity.class,EntityDataSerializers.COMPOUND_TAG);
+    public void barrage(CompoundTag state){entityData.set(BARRAGE,state.copy());}
+    public CompoundTag barrage(){return entityData.get(BARRAGE);}
+    public float barrageAge(float partial){return (float)Math.max(0,level().getGameTime()-barrage().getLong("start"))+partial;}
     public static void register() { TYPES.register(); }
     public ArtVisualEntity(EntityType<? extends ArtVisualEntity> type, Level level) {
         super(type, level); noPhysics = true; setNoGravity(true);
@@ -48,7 +52,7 @@ public final class ArtVisualEntity extends Entity {
         level.addFreshEntity(entity); return entity;
     }
     @Override protected void defineSynchedData(SynchedEntityData.Builder builder) {
-        builder.define(CASTER,java.util.Optional.empty());builder.define(KIND, LASH); builder.define(LIFETIME, 16);builder.define(STYLE,0);builder.define(CASTER_ID,-1);
+        builder.define(BARRAGE,new CompoundTag());builder.define(CASTER,java.util.Optional.empty());builder.define(KIND, LASH); builder.define(LIFETIME, 16);builder.define(STYLE,0);builder.define(CASTER_ID,-1);
         builder.define(END_X, 0f); builder.define(END_Y, 0f); builder.define(END_Z, 0f);
     }
     public void updateVector(Vec3 start,Vec3 delta) {setPos(start);entityData.set(END_X,(float)delta.x);entityData.set(END_Y,(float)delta.y);entityData.set(END_Z,(float)delta.z);}
@@ -74,9 +78,15 @@ public final class ArtVisualEntity extends Entity {
                 if(!lease.hasUUID("visual") || !lease.getUUID("visual").equals(getUUID()) || lease.getLong("until")<=level().getGameTime())discard();
             }else discard();
         }
-        if (!level().isClientSide() && tickCount >= lifetime()) discard();
+        if(!level().isClientSide() && kind()==CAUSAL_VERDICT && !barrage().isEmpty()){
+            if(barrageAge(0)>=lifetime())discard();
+            if(tickCount>3 && caster() instanceof net.minecraft.world.entity.LivingEntity owner){
+                var skill=io.github.manasmods.manascore.skill.api.SkillAPI.getSkillsFrom(owner).getSkill(WildHunt.GODLY.get());
+                if(!owner.isAlive() || skill.isEmpty() || !skill.get().getOrCreateTag().hasUUID("verdict_visual") || !getUUID().equals(skill.get().getOrCreateTag().getUUID("verdict_visual")))discard();
+            }
+        }else if (!level().isClientSide() && tickCount >= lifetime()) discard();
     }
-    @Override public AABB getBoundingBoxForCulling() { return new AABB(position(), position().add(end())).inflate((kind() == WHIRLPOOL || kind() == CAUSAL_SPHERE || kind()>=CAUSAL_DOMAIN) ? Math.abs(end().x) + 12 : kind() == TIDAL_WAVE ? end().y + 3 : 4); }
+    @Override public AABB getBoundingBoxForCulling() { if(kind()==CAUSAL_VERDICT && !barrage().isEmpty())return new AABB(position(),position()).inflate(40);return new AABB(position(), position().add(end())).inflate((kind() == WHIRLPOOL || kind() == CAUSAL_SPHERE || kind()>=CAUSAL_DOMAIN) ? Math.abs(end().x) + 12 : kind() == TIDAL_WAVE ? end().y + 3 : 4); }
     @Override public boolean shouldRenderAtSqrDistance(double distance) { return distance < 128 * 128; }
     @Override protected void readAdditionalSaveData(CompoundTag tag) {}
     @Override protected void addAdditionalSaveData(CompoundTag tag) {}

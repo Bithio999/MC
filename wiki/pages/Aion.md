@@ -49,7 +49,7 @@ Eligible enemies within **16 blocks** suffer causal time dilation. Movement redu
 | Worldline Sever | 2,400 to start; 1,200 per additional 0.5 seconds | 4 seconds after channel ends | 80-block beam, up to 8 targets per pulse, 6-second maximum | 1,200 per 0.5 seconds |
 | Event Horizon | 10,000 | 16 seconds | 64-block cursor placement; 24-block pull, 10-block damage radius; 10 seconds | 700 per second |
 | Causal Reversal | 12,000 to record; free return | 1 second to recast; 25 seconds after manual or automatic return | Personal checkpoint, 20-second window | — |
-| Genesis Verdict | 28,000 | 45 seconds | 64-block placement; 12 / 14-block radius | 2,400 + 2,400 + 4,800 / 7,200 |
+| Genesis Verdict | 28,000 | 45 seconds | 64-block acquisition / placement; 20 blasts, 3.75 / 4.5-block radius each | 480 / 600 per hole; 9,600 / 12,000 total |
 
 #### Worldline Sever
 
@@ -97,9 +97,17 @@ Reversal does not restore items, cooldowns, buffs or lost lives. The destination
 | Damage type | [Space elemental](Damage-Types.md#space) |
 | Damage ID | `tensura:space_elemental` |
 
-Place a warned spatial catastrophe at the cursor within 64 blocks. After one second of warning, three pulses strike at one-second intervals: **2,400, 2,400 and 4,800** base damage within twelve blocks.
+Summon **twenty miniature black holes** at scattered airborne positions around the enemy under your crosshair, within **64 blocks**. If no enemy is acquired, the barrage forms around the cursor location instead. The holes materialise in a staggered formation, hover briefly, then accelerate inward along **twenty different curved paths**.
 
-If your Event Horizon is active, Verdict consumes it, uses its existing center and expands to **fourteen blocks**, with the final strike raised to **7,200**. The old Horizon visual is removed when consumed. A contracting cage, rising spatial beams, native **Space** circle and expanding fracture fronts telegraph the strikes. Enemies can leave the area.
+They arrive in **five salvos of four**, at **2.5, 3.1, 3.7, 4.3 and 4.9 seconds**. Each hole contributes **480 base space damage** to enemies within **3.75 blocks** of its individual detonation. All four overlapping explosions combine into **one native hit per recipient per salvo**, affecting up to **eight enemies**. A recipient inside all twenty blasts receives **9,600 raw damage** before mastery and native handling. The twelve-tick salvo spacing respects normal hit immunity.
+
+The barrage follows the selected enemy while they remain alive, eligible and within **24 blocks of the original formation center**. Each salvo locks its destination **six ticks before impact**, providing a brief chance to leave the blast. Later salvos can continue tracking. A lost target leaves the barrage aiming at its last valid position; it does not chase across dimensions or load distant chunks.
+
+If your **Event Horizon** is active, Verdict consumes it and empowers all twenty holes to **600 damage** and **4.5-block blast radii**, for **12,000 raw damage** when every explosion overlaps. An acquired enemy takes priority for placement; without one, the consumed Horizon’s center is used. The Horizon’s previous visual and circle disappear.
+
+The black cores have volume-preserving squash and stretch driven by their actual flight speed. Tilted accretion bands, thin photon rings, curved luminous wakes and rapid implosion-to-shock-front transitions distinguish the formation, flight and explosion phases. All clients receive the same seed, cast clock and locked destinations. Reduced particle settings remove decorative sparks rather than holes or their flight paths.
+
+The visual tail ends roughly **6.1 seconds** after casting. Death, suppression, forgetting Aion, relogging and dimension changes cancel the pending barrage. Terrain is not destroyed and native friendly/PvP protection is checked again for every damaging salvo.
 
 ## Damage and interaction
 
@@ -111,7 +119,17 @@ Use **Skills → Godly → Ascension** to replace one mastered Myths Ultimate af
 
 ## Visual effects
 
-Worldline Sever carries fine gold/violet helical strands and clock collars around its readable aim core. Event Horizon has a dark spherical core, tilted accretion optics, counter-rotating dials and a faint separate pull perimeter. Causal Reversal places a three-dimensional hourglass with flowing sand over its checkpoint clock. Genesis Verdict suspends mechanical dials above the field and releases timed vertical strikes.
+Worldline Sever carries fine gold/violet helical strands and clock collars around its readable aim core. Event Horizon has a dark spherical core, tilted accretion optics, counter-rotating dials and a faint separate pull perimeter. Causal Reversal places a three-dimensional hourglass with flowing sand over its checkpoint clock. Genesis Verdict suspends twenty black holes, draws them through curved trails and resolves them in layered spatial explosions.
+
+![Genesis Verdict's twenty-hole formation, curved flight and detonations](../media/aion-singularity-barrage.gif)
+
+[Watch the 720p in-game demonstration](../media/aion-singularity-barrage.mp4).
+
+![The suspended singularity formation](../media/aion-singularity-formation.png)
+
+![Curved flight and speed-driven deformation](../media/aion-singularity-flight.png)
+
+![The final detonation wave](../media/aion-singularity-impact.png)
 
 ![Event Horizon’s dark core and tilted clockwork optics](../media/visual-aion.png)
 

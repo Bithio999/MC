@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.22.0
+
+- Replace Aion’s Genesis Verdict with twenty suspended miniature black holes that fly along distinct seeded cubic curves and explode in five four-hole salvos. Track an aimed enemy within a bounded tether, then freeze each salvo’s aim six ticks before impact; retain cursor placement when no enemy is acquired.
+- Add anticipation, velocity-driven volume-preserving squash/stretch, layered accretion disks, projected photon rings, curved trails, implosion flashes and expanding shock fronts. Share one synchronized cast clock and seed across all clients; keep all twenty holes at reduced particle settings.
+- Preserve the 28K-MP / 45-second economy and 9,600 / 12,000 total raw damage budgets. Aggregate each salvo’s four overlapping blasts into one native hit per recipient, preserving hit immunity, mastery, damage typing and owner/PvP protections. Event Horizon still empowers the finisher.
+- Add native trajectory, target-lock, economy, damage-timing and cleanup checks, animation research notes, gameplay media and refreshed wiki editions.
+
 ## 0.21.0
 
 - Skill Appraisal now accumulates a persistent Lugh technique library instead of replacing an equipped art. Record source modes separately, refresh known techniques by stable ID, and preserve the old three-entry loadout on migration.

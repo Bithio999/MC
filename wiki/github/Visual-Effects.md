@@ -82,7 +82,11 @@ These in-game views show the geometry in an isolated development world. Some use
 
 ### Aion
 
-[Aion](https://github.com/Bithio999/MC/wiki/Aion) — Worldline Sever carries fine gold/violet helical strands and clock collars around its readable aim core. Event Horizon has a dark spherical core, tilted accretion optics, counter-rotating dials and a faint separate pull perimeter. Causal Reversal places a three-dimensional hourglass with flowing sand over its checkpoint clock. Genesis Verdict suspends mechanical dials above the field and releases timed vertical strikes.
+[Aion](https://github.com/Bithio999/MC/wiki/Aion) — Worldline Sever carries fine gold/violet helical strands and clock collars around its readable aim core. Event Horizon has a dark spherical core, tilted accretion optics, counter-rotating dials and a faint separate pull perimeter. Causal Reversal places a three-dimensional hourglass with flowing sand over its checkpoint clock. Genesis Verdict suspends twenty miniature black holes, bends each through a unique accelerating curve, and resolves them in five explosive salvos. Opaque dark cores, tilted accretion bands, projected photon rings, volume-preserving speed deformation and tapered wakes distinguish the phases.
+
+![Aion's twenty-singularity barrage](https://github.com/Bithio999/MC/blob/main/wiki/media/aion-singularity-barrage.gif)
+
+[720p native animation clip](https://github.com/Bithio999/MC/blob/main/wiki/media/aion-singularity-barrage.mp4).
 
 ![Event Horizon’s dark core and tilted clockwork optics](https://github.com/Bithio999/MC/blob/main/wiki/media/visual-aion.png?raw=true)
 

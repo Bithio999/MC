@@ -31,7 +31,8 @@ public final class ArtVisualRenderer extends EntityRenderer<ArtVisualEntity> {
     @Override public void render(ArtVisualEntity entity, float yaw, float partial, PoseStack poses, MultiBufferSource buffers, int light) {
         float age = entity.tickCount + partial;
         VfxMesh.begin(entity.getPosition(partial));batch.begin();
-        if(SovereignGeometry.handles(entity.kind())) {
+        if(entity.kind()==ArtVisualEntity.CAUSAL_VERDICT && !entity.barrage().isEmpty()){SingularityGeometry.render(entity,poses,batch,partial);}
+        else if(SovereignGeometry.handles(entity.kind())) {
             poses.pushPose();
             if((entity.kind()==ArtVisualEntity.PERENNIAL_SEED || entity.kind()==ArtVisualEntity.COUNTERMAND) && entity.caster()!=null){Vec3 offset=entity.caster().getPosition(partial).subtract(entity.getPosition(partial));poses.translate(offset.x,offset.y,offset.z);}
             SovereignGeometry.render(poses,batch,entity.kind(),entity.end(partial),age,entity.lifetime(),entity.style());poses.popPose();
