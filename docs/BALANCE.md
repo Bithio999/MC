@@ -1,4 +1,75 @@
-# Current balance: 0.19.0
+# Current balance: 0.20.0
+
+This calibration applies the [external Unique audit](research/UNIQUE_PARITY_0.19.md).
+The largest cuts target repeatable direct damage; conditional burst receives
+smaller reductions. Prices are adjusted individually rather than keeping the
+old higher bills on every reduced attack. The existing combination Ultimate and
+Godly budgets remain the tier anchors.
+
+| Unique | Raw active damage / support | Aura costs | Cooldowns |
+| --- | --- | --- | --- |
+| Storm Crown | Railbolt 300; Thunder Step 200 | 600 / 700 | 3 / 4 s |
+| Scarlet Deluge | Current 250, 312.5 when already drenched; Undertow 100 + 60 per later pulse | 500 / 1,200 | 3 / 6 s |
+| Black Flame | Lash 260; ignition 350 + 75 per later pulse | 550 / 1,600 | 3 / 7 s |
+| Frostbound Colossus | Avalanche 320; Prison 180 plus native Frost | 700 / 1,100 | 3 / 7 s |
+| Threadweaver | Needle 320; live-tether Sever 550 | 500 / 850 | 4 / 6 s |
+| Rune Smith | Proximity 300 or command 450 | 500 placement + 600 command | 6 / 4 s |
+| Verdant Keeper | Grove at most 7% HP / 6% SHP per second; Briar 300 | 600 placement + paid healing / 550 | 14 / 5 s |
+| Mirrorbound | Primary 320; two 180 splits; six-second reflection | 650 / 1,400 | 3 / 10 s |
+
+Raw attack reductions range from roughly 29% to 55%, with the largest reduction
+to Rune Smith's compact command and Frostbound's immediate area hit. Current's
+wet-target multiplier is now 1.25 rather than 1.5. Rain/drenched lightning
+synergy, ricochet paths and falloff, full-aim momentum-preserving Thunder Step,
+owned pools and deduplication, Frost, tether requirements, traps, reflection,
+passive bonuses and the two Unique barrier contributions retain their roles.
+All mastery remains 1–1.5×; damage never scales with EP. Ordinary elemental
+bonuses still use their strongest source, with Godly contributions separate.
+
+## Living Grove's healing economy
+
+Placement is 600 aura. Each pulse reserves its actual planned healing cost,
+then pays for restored HP/SHP across its eligible recipients. Rates improve
+smoothly with mastery:
+
+| Mastery | Aura / HP | Aura / SHP |
+| --- | ---: | ---: |
+| Zero | 40 | 60 |
+| Full | 30 | 40 |
+
+Full pools do not cost aura. Overheal, native cancellation and native reductions
+do not keep an unused reservation. Remaining aura is shared as a common
+proportion of each recipient's planned HP/SHP recovery, avoiding first-target
+priority on a starved pulse. No aura means no recovery that pulse; the original
+field window keeps running. Native healing suppression and its existing
+regeneration exceptions are respected. A scoped native heal-event quota keeps
+HP healing within the funded percentage allocation; unrelated healing is not
+capped. The owner pays for every recipient, including itself.
+
+For 1,000 maximum HP and 10,000 maximum SHP, a fully used pulse restores at most
+70 HP / 600 SHP. Its bill is 38,800 AP at zero mastery or 26,100 AP at full
+mastery, instead of getting the whole field's recovery for a fixed 1,600 AP.
+Eight fully used mastered pulses on one such recipient cost 208,800 AP plus the
+600-AP placement. Multiple recipients add their own bills. This is an example
+of scaling, not a guarantee of healing through current caps or suppression.
+
+## Evidence and limits
+
+The [0.19 audit](research/UNIQUE_PARITY_0.19.md) distinguishes actual native
+Uniques from Extra skills, ordinary damage from special damage, and prepared
+counters/support from repeatable attacks. Its original data remains versioned.
+The current validation includes actual native Musician and Healer comparisons,
+old/new damage trials for all eight Myths Uniques, and funded-healing tests.
+
+A narrower attack with ordinary Unique authority can reasonably hit harder
+than one carrying native penetration or a much larger area. Equal AP/MP prices
+are not equivalent for a 2:1 aura/magicule lineage. These points inform this
+calibration; no universal cross-addon PvP parity is claimed. See
+[validation](VALIDATION-0.20.0.md) and the individual [wiki articles](../wiki/README.md).
+
+---
+
+# Historical balance: 0.19.0
 
 > **External parity audit:** [native/addon Unique comparison](research/UNIQUE_PARITY_0.19.md)
 > identifies high repeatable damage and healing-economy concerns. These values

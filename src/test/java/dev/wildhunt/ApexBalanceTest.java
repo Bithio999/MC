@@ -22,8 +22,8 @@ class ApexBalanceTest {
     }
     @Test void apexUniquesHaveAffordableCombatOpeners() {
         for (Apex apex : Apex.values()) {
-            assertTrue(ApexBalance.of(apex).primary() >= 400);
-            assertTrue(ApexBalance.of(apex).aura(0, false) <= 800);
+            assertTrue(ApexBalance.of(apex).primary() >= 200);
+            assertTrue(ApexBalance.of(apex).aura(0, false) <= 700);
         }
     }
 }

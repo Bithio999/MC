@@ -43,8 +43,8 @@ Enable the native skill toggle in Ability Selection. The first second is paid on
 
 | Mode | Aura | Cooldown | Raw damage |
 | --- | ---: | ---: | --- |
-| 1. Runic Mine | 600 | 6 s | 650 on trigger |
-| 2. Command Detonation | 800 | 4 s | 1,000 |
+| 1. Runic Mine | 500 | 6 s | 300 on trigger |
+| 2. Command Detonation | 600 | 4 s | 450 |
 
 Damage listed here is before native combat handling and uses **1 + 0.5 × mastery fraction**, capped at **1.5×**. EP never multiplies their damage. Native elemental boosts, authority, resistances, barriers and hit immunity apply.
 
@@ -56,9 +56,9 @@ Damage listed here is before native combat handling and uses **1 + 0.5 × master
 | --- | --- |
 | Damage type | Earth elemental |
 | Damage ID | `tensura:earth_elemental` |
-| Resource cost | 600 aura |
+| Resource cost | 500 aura |
 | Cooldown | 6 seconds |
-| Raw damage | 650 on trigger |
+| Raw damage | 300 on trigger |
 
 Place one rune at your crosshair within 28 blocks, using a visible target or bounded surface/endpoint. It arms after one second and lasts fifteen seconds. An eligible enemy entering its three-block radius triggers one Earth blast against up to eight enemies. Placing another rune replaces the previous one. The mine checks your line of sight to victims and does not edit terrain.
 
@@ -70,11 +70,11 @@ Place one rune at your crosshair within 28 blocks, using a visible target or bou
 | --- | --- |
 | Damage type | Earth elemental |
 | Damage ID | `tensura:earth_elemental` |
-| Resource cost | 800 aura |
+| Resource cost | 600 aura |
 | Cooldown | 4 seconds |
-| Raw damage | 1,000 |
+| Raw damage | 450 |
 
-Detonate your existing rune within 48 blocks, expanding its blast radius to six blocks and raising its raw damage to 1,000. You can detonate before proximity arming completes. No live rune means no resource charge, mastery or cooldown.
+Detonate your existing rune within 48 blocks, expanding its blast radius to six blocks and raising its raw damage to 450. You can detonate before proximity arming completes. No live rune means no resource charge, mastery or cooldown.
 
 ## Obtaining
 

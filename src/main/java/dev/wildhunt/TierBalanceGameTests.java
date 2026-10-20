@@ -43,19 +43,19 @@ public final class TierBalanceGameTests {
     private static void opener(GameTestHelper h,Apex kind,float old){
         var p=player(h);var z=new CombatTarget(h,p.position().add(8,0,0));var i=apex(p,kind);var s=(ApexSkill)i.getSkill();
         afterTracking(h,List.of(z),()->{
-            s.strike(h.getLevel(),i,p,z,old*.9f,0,false);double previous=z.applied;z.reset();
+            s.strike(h.getLevel(),i,p,z,old,0,false);double previous=z.applied;z.reset();
             double aura=TensuraStorages.getExistenceFrom(p).getAura();cast(p,i,0);
             for(int n=0;n<16;n++)s.tickActive(i,p);double current=z.applied;
-            h.assertTrue(previous>0 && current>=previous*2.5,"Apex opener did not improve in native combat: "+kind+" old="+previous+" current="+current);
+            h.assertTrue(previous>0 && current>=previous*.4 && current<=previous*.66,"Apex adjustment left the audited reduction band: "+kind+" old="+previous+" current="+current);
             h.assertTrue(TensuraStorages.getExistenceFrom(p).getAura()==aura-s.balance.primaryAura(),"Apex opener charged the wrong aura budget: "+kind);
             z.reset();i.setCoolDown(0,0);EnergyHelper.setBaseMaxEP(p,40_000_000);cast(p,i,0);for(int n=0;n<16;n++)s.tickActive(i,p);
             h.assertTrue(Math.abs(z.applied-current)<.01,"Apex damage changed with EP: "+kind);h.succeed();
         });
     }
-    @GameTest(template="empty",timeoutTicks=100) public static void stormCrownBudgetUsesNativeDamageAndFixedEP(GameTestHelper h){opener(h,Apex.REY_DAU,160);}
-    @GameTest(template="empty",timeoutTicks=100) public static void scarletDelugeBudgetUsesNativeDamageAndFixedEP(GameTestHelper h){opener(h,Apex.UTH_DUNA,120);}
-    @GameTest(template="empty",timeoutTicks=100) public static void blackFlameBudgetUsesNativeDamageAndFixedEP(GameTestHelper h){opener(h,Apex.NU_UDRA,125);}
-    @GameTest(template="empty",timeoutTicks=100) public static void frostboundBudgetUsesNativeDamageAndFixedEP(GameTestHelper h){opener(h,Apex.JIN_DAHAAD,180);}
+    @GameTest(template="empty",timeoutTicks=100) public static void stormCrownBudgetUsesNativeDamageAndFixedEP(GameTestHelper h){opener(h,Apex.REY_DAU,550);}
+    @GameTest(template="empty",timeoutTicks=100) public static void scarletDelugeBudgetUsesNativeDamageAndFixedEP(GameTestHelper h){opener(h,Apex.UTH_DUNA,420);}
+    @GameTest(template="empty",timeoutTicks=100) public static void blackFlameBudgetUsesNativeDamageAndFixedEP(GameTestHelper h){opener(h,Apex.NU_UDRA,450);}
+    @GameTest(template="empty",timeoutTicks=100) public static void frostboundBudgetUsesNativeDamageAndFixedEP(GameTestHelper h){opener(h,Apex.JIN_DAHAAD,700);}
 
     private static void mythic(GameTestHelper h,MythicKind kind,float old){
         var p=player(h);var z=new CombatTarget(h,p.position().add(8,0,0));var i=learn(p,kind);i.setMastery(i.getMaxMastery());var s=(MythicSkill)i.getSkill();
@@ -64,7 +64,7 @@ public final class TierBalanceGameTests {
             var type=kind==MythicKind.THREADWEAVER?TensuraDamageTypes.SPACE_ELEMENTAL:kind==MythicKind.MIRRORBOUND?TensuraDamageTypes.LIGHT_ELEMENTAL:TensuraDamageTypes.EARTH_ELEMENTAL;
             MythicArts.hit(s,i,p,z,old,mode,type);double previous=z.applied;z.reset();
             double aura=TensuraStorages.getExistenceFrom(p).getAura();if(kind==MythicKind.RUNE_SMITH)cast(p,i,0);cast(p,i,mode);double current=z.applied;
-            h.assertTrue(previous>0 && current>=previous*2.3,"Unique art did not improve in native combat: "+kind+" old="+previous+" current="+current);
+            h.assertTrue(previous>0 && current>=previous*.4 && current<=previous*.75,"Unique adjustment left the audited reduction band: "+kind+" old="+previous+" current="+current);
             double cost=kind.costs[mode]+(kind==MythicKind.RUNE_SMITH?kind.costs[0]:0);
             h.assertTrue(TensuraStorages.getExistenceFrom(p).getAura()==aura-cost,"Unique art charged the wrong aura budget: "+kind);
             z.reset();for(int n=0;n<i.getModes();n++)i.setCoolDown(0,n);EnergyHelper.setBaseMaxEP(p,40_000_000);
@@ -72,10 +72,10 @@ public final class TierBalanceGameTests {
             h.assertTrue(Math.abs(z.applied-current)<.01,"Unique damage changed with EP: "+kind);h.succeed();
         });
     }
-    @GameTest(template="empty",timeoutTicks=100) public static void threadweaverBudgetUsesNativeDamageAndFixedEP(GameTestHelper h){mythic(h,MythicKind.THREADWEAVER,160);}
-    @GameTest(template="empty",timeoutTicks=100) public static void runeSmithBudgetUsesNativeDamageAndFixedEP(GameTestHelper h){mythic(h,MythicKind.RUNE_SMITH,420);}
-    @GameTest(template="empty",timeoutTicks=100) public static void verdantBudgetUsesNativeDamageAndFixedEP(GameTestHelper h){mythic(h,MythicKind.VERDANT_KEEPER,190);}
-    @GameTest(template="empty",timeoutTicks=100) public static void mirrorboundBudgetUsesNativeDamageAndFixedEP(GameTestHelper h){mythic(h,MythicKind.MIRRORBOUND,220);}
+    @GameTest(template="empty",timeoutTicks=100) public static void threadweaverBudgetUsesNativeDamageAndFixedEP(GameTestHelper h){mythic(h,MythicKind.THREADWEAVER,450);}
+    @GameTest(template="empty",timeoutTicks=100) public static void runeSmithBudgetUsesNativeDamageAndFixedEP(GameTestHelper h){mythic(h,MythicKind.RUNE_SMITH,1000);}
+    @GameTest(template="empty",timeoutTicks=100) public static void verdantBudgetUsesNativeDamageAndFixedEP(GameTestHelper h){mythic(h,MythicKind.VERDANT_KEEPER,500);}
+    @GameTest(template="empty",timeoutTicks=100) public static void mirrorboundBudgetUsesNativeDamageAndFixedEP(GameTestHelper h){mythic(h,MythicKind.MIRRORBOUND,600);}
 
     @GameTest(template="empty",timeoutTicks=100)
     public static void groveSustainImprovesButStaysBelowOrchard(GameTestHelper h){

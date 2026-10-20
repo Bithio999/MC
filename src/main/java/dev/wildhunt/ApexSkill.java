@@ -166,7 +166,7 @@ public class ApexSkill extends Skill {
                    float raw, int mode, boolean pulse) {
         float damage = raw * (ultimate ? 0.9f : 1f); var data = HunterData.of(target); long now = level.getGameTime();
         if (apex == Apex.REY_DAU && (target.isInWaterOrRain() || data.getLong("drenched_until") > now)) damage *= 1.3f;
-        if (apex == Apex.UTH_DUNA && mode == 0 && data.getLong("drenched_until") > now) damage *= 1.5f;
+        if (apex == Apex.UTH_DUNA && mode == 0 && data.getLong("drenched_until") > now) damage *= ultimate ? 1.5f : 1.25f;
         var type = switch (apex) {
             case REY_DAU -> TensuraDamageTypes.LIGHTNING_ELEMENTAL;
             case UTH_DUNA -> TensuraDamageTypes.WATER_ELEMENTAL;

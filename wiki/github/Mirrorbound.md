@@ -43,7 +43,7 @@ Enable the native skill toggle in Ability Selection. The first second is paid on
 
 | Mode | Aura | Cooldown | Raw damage |
 | --- | ---: | ---: | --- |
-| 1. Prismatic Lance | 750 | 3 s | 600 first hit; 350 each secondary hit |
+| 1. Prismatic Lance | 650 | 3 s | 320 first hit; 180 each secondary hit |
 | 2. Mirror Aegis | 1,400 | 10 s | — |
 
 Damage listed here is before native combat handling and uses **1 + 0.5 × mastery fraction**, capped at **1.5×**. EP never multiplies their damage. Native elemental boosts, authority, resistances, barriers and hit immunity apply.
@@ -56,9 +56,9 @@ Damage listed here is before native combat handling and uses **1 + 0.5 × master
 | --- | --- |
 | Damage type | Light elemental |
 | Damage ID | `tensura:light_elemental` |
-| Resource cost | 750 aura |
+| Resource cost | 650 aura |
 | Cooldown | 3 seconds |
-| Raw damage | 600 first hit; 350 each secondary hit |
+| Raw damage | 320 first hit; 180 each secondary hit |
 
 Aim a light lance up to 32 blocks. On an initial hit, split toward up to two additional enemies within eight blocks of that victim. You and the first victim must have line of sight to each secondary target. This is at most three distinct enemies; a missed initial lance has no secondary hits.
 

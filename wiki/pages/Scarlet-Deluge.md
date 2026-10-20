@@ -52,8 +52,8 @@ No constant bubble orbit is emitted while the passive is enabled. Native barrier
 
 | Mode | Aura | Cooldown | Raw opening damage |
 | --- | ---: | ---: | ---: |
-| 1. Crushing Current | 600 | 3 s | 420 |
-| 2. Scarlet Undertow | 1,600 | 6 s | 200 |
+| 1. Crushing Current | 500 | 3 s | 250 |
+| 2. Scarlet Undertow | 1,200 | 6 s | 100 |
 
 **Damage calculation:** multiply the listed base values by **1 + 0.5 × mastery fraction**, up to **1.50×**. Elemental boosts, defenses, barriers, and situational modifiers also apply. EP does not multiply damage.
 
@@ -67,7 +67,7 @@ No constant bubble orbit is emitted while the passive is enabled. Native barrier
 | Damage ID | `tensura:water_elemental` |
 | Effect | Direct hits use this native element. |
 
-Send a broad wave up to 18 blocks over about sixteen game ticks. It carries and drenches each enemy it reaches, damaging a given entity at most once per wave. Its front is 4 blocks wide on either side. Previously drenched enemies take 50% extra primary damage. Drenched is a single twelve-second mark, never a stack counter.
+Send a broad wave up to 18 blocks over about sixteen game ticks. It carries and drenches each enemy it reaches, damaging a given entity at most once per wave. Its front is 4 blocks wide on either side. Previously drenched enemies take 25% extra primary damage. Drenched is a single twelve-second mark, never a stack counter.
 
 #### Scarlet Undertow
 
@@ -79,7 +79,7 @@ Send a broad wave up to 18 blocks over about sixteen game ticks. It carries and 
 | Damage ID | `tensura:water_elemental` |
 | Effect | Direct hits use this native element. |
 
-Place a six-second whirlpool at the aim point, up to 24 blocks away along the crosshair ray. The radius is 9 blocks. A block or water surface under the crosshair sets the position; a miss places it at the bounded ray endpoint. It hits immediately and once per second, with a gentle inward current between pulses. Raw pulse damage is 110; the table lists opening damage.
+Place a six-second whirlpool at the aim point, up to 24 blocks away along the crosshair ray. The radius is 9 blocks. A block or water surface under the crosshair sets the position; a miss places it at the bounded ray endpoint. It hits immediately and once per second, with a gentle inward current between pulses. Raw pulse damage is 60; the table lists opening damage.
 
 ## Obtaining
 

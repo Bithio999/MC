@@ -3,13 +3,13 @@ package dev.wildhunt;
 /** Independent kits share native skill plumbing, never their combat behavior. */
 public enum MythicKind {
     THREADWEAVER("Threadweaver", 0xED82D1, "Loom Needle", "Sever Thread", "Silken Instinct",
-        new double[]{600,1000}, new int[]{4,6}, 25),
+        new double[]{500,850}, new int[]{4,6}, 25),
     RUNE_SMITH("Rune Smith", 0xF9BA60, "Runic Mine", "Command Detonation", "Runic Circuit",
-        new double[]{600,800}, new int[]{6,4}, 30),
+        new double[]{500,600}, new int[]{6,4}, 30),
     VERDANT_KEEPER("Verdant Keeper", 0x8EE5AE, "Living Grove", "Briar Grasp", "Verdant Heart",
-        new double[]{1600,700}, new int[]{14,5}, 35),
+        new double[]{600,550}, new int[]{14,5}, 35),
     MIRRORBOUND("Mirrorbound", 0xB2DDFB, "Prismatic Lance", "Mirror Aegis", "Silvered Soul",
-        new double[]{750,1400}, new int[]{3,10}, 25),
+        new double[]{650,1400}, new int[]{3,10}, 25),
     VRITRA("Vritra, Lord of Cataclysm", 0xFFAA59, "Plasma Bore", "Thunderhead Crucible", "Cataclysm Front", "Catastrophe Engine",
         new double[]{6000,15000,25000}, new int[]{5,16,26}, 120),
     DEMETER("Demeter, Lady of Sanctuary", 0xBCF4CE, "Winter Orchard", "Perennial Seed", "Winter Harvest", "Evergreen Sanctuary",
@@ -49,7 +49,7 @@ public enum MythicKind {
     public String description(){return switch(this){
         case THREADWEAVER -> "Pin a visible enemy to a six-second silk tether, then sever it for a spatial burst. The tether pulls only after the enemy leaves its three-block leash. Silken Instinct improves movement and attack speed.";
         case RUNE_SMITH -> "Inscribe one remotely armed rune. It erupts when an enemy approaches, or use Command Detonation for a stronger, wider blast. Runic Circuit improves elemental spell power. No passive stacks.";
-        case VERDANT_KEEPER -> "Grow an eight-second healing grove for yourself, owned pets and allies. Briar Grasp lashes and webs enemies in a forward fan. Verdant Heart strengthens natural SHP recovery. Healing never benefits hostile strangers.";
+        case VERDANT_KEEPER -> "Place an eight-second healing grove for yourself, owned pets and allies for 600 aura. Pulses cost 40 to 30 aura per HP and 60 to 40 aura per SHP restored as mastery improves. Limited aura proportionally funds all recipients. Briar Grasp lashes and webs enemies in a forward fan. Verdant Heart strengthens natural SHP recovery. Healing never benefits hostile strangers.";
         case MIRRORBOUND -> "Split a light lance across three visible enemies. Mirror Aegis turns approaching hostile projectiles back toward their sender for six seconds. Silvered Soul improves light power, attack speed and movement.";
         case VRITRA -> "Storm Crown + Black Flame. Plasma Bore leaves delayed fire fuses and refracts through your thunderhead for a second firing angle. Thunderhead Crucible calls eight seconds of lightning/fire strikes. Cataclysm Front consumes the storm for wider, stronger eruptions. Native resistance penetration; no EP damage scaling.";
         case DEMETER -> "Verdant Keeper + Frostbound Colossus. Winter Orchard restores allied HP/SHP and freezes approaches. Perennial Seed plants one-use rescue blooms on allies: when wounded below 35% HP, restore 40% HP/SHP and cleanse selected afflictions. Winter Harvest consumes the orchard into six warned crystal blooms and restores allies. No passive barrier.";

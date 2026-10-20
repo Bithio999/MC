@@ -67,6 +67,7 @@ public final class WildHunt {
         NeoForge.EVENT_BUS.addListener(ApexTimers::onEntityTick);
         NeoForge.EVENT_BUS.addListener(ApexTimers::onLogin);
         NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.HIGHEST, (net.neoforged.neoforge.event.entity.living.LivingDeathEvent event) -> AuraRegenerationSkill.onDeath(event));
+        NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.LOWEST,GroveHealing::limitHeal);
         NeoForge.EVENT_BUS.addListener(ApexArts::onDamage);
         NeoForge.EVENT_BUS.addListener(ApexArts::onBreathe);
         NeoForge.EVENT_BUS.addListener(ApexArts::onIncomingDamage);

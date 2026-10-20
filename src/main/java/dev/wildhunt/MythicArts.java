@@ -48,10 +48,10 @@ public final class MythicArts {
                 if(mode==0){
                     var target=ApexArts.target(l,e,28);t.putUUID("tether_target",target.getUUID());ApexArts.point(t,"tether_anchor",target.position());t.putLong("tether_until",time+120);
                     visual(l,t,"tether_visual",ArtVisualEntity.THREAD_LINE,e.getEyePosition(),target.getEyePosition().subtract(e.getEyePosition()),120);
-                    hit(s,i,e,target,450,0,TensuraDamageTypes.SPACE_ELEMENTAL);
+                    hit(s,i,e,target,320,0,TensuraDamageTypes.SPACE_ELEMENTAL);
                 } else {
                     var target=(LivingEntity)l.getEntity(t.getUUID("tether_target"));Vec3 center=target.position();
-                    area(s,l,i,e,center,4,800,1,TensuraDamageTypes.SPACE_ELEMENTAL,6);endVisual(l,t,"tether_visual");t.remove("tether_until");t.remove("tether_target");
+                    area(s,l,i,e,center,4,550,1,TensuraDamageTypes.SPACE_ELEMENTAL,6);endVisual(l,t,"tether_visual");t.remove("tether_until");t.remove("tether_target");
                     ArtVisualEntity.spawn(l,ArtVisualEntity.PARALLAX,center,new Vec3(4,0,0),18).style(1);
                 }
             }
@@ -63,7 +63,7 @@ public final class MythicArts {
                 if(mode==0){Vec3 p=location(l,e,24);field(l,t,"grove",p,160,ArtVisualEntity.LIVING_GROVE,7);}
                 else {
                     for(var target:ApexArts.enemies(l,e,e.position(),12).stream().filter(v->v.getEyePosition().subtract(e.getEyePosition()).normalize().dot(e.getLookAngle())>.4).limit(6).toList()){
-                        if(hit(s,i,e,target,500,1,TensuraDamageTypes.EARTH_ELEMENTAL))effect(s,i,e,target,TensuraMobEffects.WEBBED,70,0,1);
+                        if(hit(s,i,e,target,300,1,TensuraDamageTypes.EARTH_ELEMENTAL))effect(s,i,e,target,TensuraMobEffects.WEBBED,70,0,1);
                         ArtVisualEntity.spawn(l,ArtVisualEntity.BRIAR,target.position(),new Vec3(1.4,2,0),28);
                     }
                 }
@@ -72,9 +72,9 @@ public final class MythicArts {
                 if(mode==0){
                     var first=ApexArts.target(l,e,32);Vec3 end=first==null?ApexArts.cursorPlacement(l,e,32):first.getEyePosition();
                     ArtVisualEntity.spawn(l,ArtVisualEntity.PRISM_RAY,e.getEyePosition(),end.subtract(e.getEyePosition()),12);
-                    if(first!=null){hit(s,i,e,first,600,0,TensuraDamageTypes.LIGHT_ELEMENTAL);
+                    if(first!=null){hit(s,i,e,first,320,0,TensuraDamageTypes.LIGHT_ELEMENTAL);
                         for(var target:ApexArts.enemies(l,e,first.position(),8).stream().filter(v->v!=first && first.hasLineOfSight(v)).limit(2).toList()){
-                            ArtVisualEntity.spawn(l,ArtVisualEntity.PRISM_RAY,first.getEyePosition(),target.getEyePosition().subtract(first.getEyePosition()),12);hit(s,i,e,target,350,0,TensuraDamageTypes.LIGHT_ELEMENTAL);
+                            ArtVisualEntity.spawn(l,ArtVisualEntity.PRISM_RAY,first.getEyePosition(),target.getEyePosition().subtract(first.getEyePosition()),12);hit(s,i,e,target,180,0,TensuraDamageTypes.LIGHT_ELEMENTAL);
                         }
                     }
                 }else {t.putLong("aegis_until",time+120);visual(l,t,"aegis_visual",ArtVisualEntity.MIRROR_WARD,e.position().add(0,1,0),new Vec3(3.5,0,0),120);if(l.getEntity(t.getUUID("aegis_visual")) instanceof ArtVisualEntity v)v.setCaster(e);}
@@ -203,7 +203,7 @@ public final class MythicArts {
     static boolean friendly(LivingEntity e,LivingEntity target){return target==e || e.isAlliedTo(target) || target instanceof net.minecraft.world.entity.TamableAnimal pet && pet.isOwnedBy(e);}
     static List<LivingEntity> allies(ServerLevel l,LivingEntity e,Vec3 p,double radius,int cap){var list=new ArrayList<LivingEntity>();if(e.distanceToSqr(p)<=radius*radius)list.add(e);l.getEntitiesOfClass(LivingEntity.class,new AABB(p,p).inflate(radius),v->v!=e && v.isAlive() && friendly(e,v) && v.distanceToSqr(p)<=radius*radius && e.hasLineOfSight(v)).stream().sorted(Comparator.comparingDouble(v->v.distanceToSqr(p))).limit(Math.max(0,cap-list.size())).forEach(list::add);return list;}
     static void heal(LivingEntity e,double hp,double shp){e.heal((float)(e.getMaxHealth()*hp));var energy=TensuraStorages.getExistenceFrom(e);energy.setSpiritualHealth(Math.min(e.getAttributeValue(TensuraAttributes.MAX_SPIRITUAL_HEALTH),energy.getSpiritualHealth()+e.getAttributeValue(TensuraAttributes.MAX_SPIRITUAL_HEALTH)*shp));energy.markDirty();}
-    private static void detonate(MythicSkill s,ServerLevel l,ManasSkillInstance i,LivingEntity e,boolean commanded){var t=i.getOrCreateTag();Vec3 p=ApexArts.point(t,"mine");area(s,l,i,e,p,commanded?6:3,commanded?1000:650,commanded?1:0,TensuraDamageTypes.EARTH_ELEMENTAL,8);ArtVisualEntity.spawn(l,ArtVisualEntity.RUNE_BURST,p,new Vec3(commanded?6:3,0,0),22);t.remove("mine_until");endVisual(l,t,"mine_visual");}
+    private static void detonate(MythicSkill s,ServerLevel l,ManasSkillInstance i,LivingEntity e,boolean commanded){var t=i.getOrCreateTag();Vec3 p=ApexArts.point(t,"mine");area(s,l,i,e,p,commanded?6:3,commanded?450:300,commanded?1:0,TensuraDamageTypes.EARTH_ELEMENTAL,8);ArtVisualEntity.spawn(l,ArtVisualEntity.RUNE_BURST,p,new Vec3(commanded?6:3,0,0),22);t.remove("mine_until");endVisual(l,t,"mine_visual");}
     static boolean tick(MythicSkill s,ServerLevel l,ManasSkillInstance i,LivingEntity e){
         var t=i.getOrCreateTag();long time=now(e);
         if(live(t,"tether",time) && t.hasUUID("tether_target")){
@@ -214,7 +214,8 @@ public final class MythicArts {
         if(live(t,"mine",time) && time>=t.getLong("mine_armed") && !ApexArts.enemies(l,e,ApexArts.point(t,"mine"),3).isEmpty())detonate(s,l,i,e,false);
         for(String key:List.of("grove","orchard"))if(live(t,key,time) && time>=t.getLong(key+"_next")){
             boolean orchard=key.equals("orchard");Vec3 p=ApexArts.point(t,key);
-            for(var ally:allies(l,e,p,orchard?12:7,8))heal(ally,orchard?.1:.07,orchard?.1:.06);
+            if(orchard)for(var ally:allies(l,e,p,12,8))heal(ally,.1,.1);
+            else GroveHealing.pulse(i,e,allies(l,e,p,7,8));
             if(orchard)for(var target:ApexArts.enemies(l,e,p,12).stream().limit(8).toList()){hit(s,i,e,target,500,0,TensuraDamageTypes.ICE_ELEMENTAL);effect(s,i,e,target,TensuraMobEffects.CHILL,40,1,0);}
             t.putLong(key+"_next",time+20);
         }

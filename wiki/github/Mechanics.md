@@ -22,6 +22,8 @@ For each native elemental boost attribute, only the **strongest positive non-God
 
 Thoth’s **Godly** +75% elemental bonus applies separately. For example, +50% Rune Smith, +50% Furnace Mantle and +100% Vritra provide **2×**, rather than multiplying together. Adding Thoth gives **2 × 1.75 = 3.5×** before penalties. This policy affects elemental boost attributes only; it does not limit healing, mastery, attack speed or the shared Godly damage bonus. Native damage paths that do not use these attributes retain their own rules.
 
+Living Grove also spends aura for each recipient’s actual HP/SHP recovery, in addition to its placement payment. See [Verdant Keeper](https://github.com/Bithio999/MC/wiki/Verdant-Keeper#living-grove) for mastery rates, refunds and partial funding.
+
 ## World effects
 
 Oil pools occupy finite world locations. Drenched is a timed water mark that supports the water/lightning interactions described on the skill pages.

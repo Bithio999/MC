@@ -49,8 +49,8 @@ Enable or disable this through Tensura’s native **Ability Selection** skill to
 
 | Mode | Aura | Cooldown | Raw opening damage |
 | --- | ---: | ---: | ---: |
-| 1. Oil Lash | 650 | 3 s | 450 |
-| 2. Blackflame Ignition | 1,800 | 7 s | 650 |
+| 1. Oil Lash | 550 | 3 s | 260 |
+| 2. Blackflame Ignition | 1,600 | 7 s | 350 |
 
 **Damage calculation:** multiply the listed base values by **1 + 0.5 × mastery fraction**, up to **1.50×**. Elemental boosts, defenses, barriers, and situational modifiers also apply. EP does not multiply damage.
 
@@ -79,7 +79,7 @@ Lash up to 4 enemies in a forward fan within 14 blocks and pull them toward you.
 | Effect | Direct hits use this native element. |
 | Additional status damage | Black Burn: `tensura:black_flame` ([details](Damage-Types.md#black-burn)) |
 
-Ignite valid owned pools for six seconds. Each affects a 3-block radius; overlapping pools cannot damage one enemy twice in a pulse. Opening damage is immediate and fixed, with no oil-stack multiplier. Later pulses deal 150 raw damage once per second and apply native Black Burn. If no valid controllable pool exists, place a fallback pool at the aim point up to six blocks away.
+Ignite valid owned pools for six seconds. Each affects a 3-block radius; overlapping pools cannot damage one enemy twice in a pulse. Opening damage is immediate and fixed, with no oil-stack multiplier. Later pulses deal 75 raw damage once per second and apply native Black Burn. If no valid controllable pool exists, place a fallback pool at the aim point up to six blocks away.
 
 ## Obtaining
 

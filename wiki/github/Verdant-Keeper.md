@@ -41,8 +41,8 @@ Enable the native skill toggle in Ability Selection. The first second is paid on
 
 | Mode | Aura | Cooldown | Raw damage |
 | --- | ---: | ---: | --- |
-| 1. Living Grove | 1,600 | 14 s | — |
-| 2. Briar Grasp | 700 | 5 s | 500 |
+| 1. Living Grove | 600 + healing expenditure | 14 s | — |
+| 2. Briar Grasp | 550 | 5 s | 300 |
 
 Damage listed here is before native combat handling and uses **1 + 0.5 × mastery fraction**, capped at **1.5×**. EP never multiplies their damage. Native elemental boosts, authority, resistances, barriers and hit immunity apply.
 
@@ -54,11 +54,15 @@ Damage listed here is before native combat handling and uses **1 + 0.5 × master
 | --- | --- |
 | Damage type | None |
 | Damage ID | — |
-| Resource cost | 1,600 aura |
+| Resource cost | 600 aura to place; each pulse pays for HP/SHP restored |
 | Cooldown | 14 seconds |
 | Raw damage | — |
 
 Grow a stationary grove within 24 blocks. For eight seconds it restores 7% maximum HP and 6% maximum SHP each second to up to eight beneficiaries within seven blocks. Beneficiaries are yourself, teammates/allies and your owned pets; neutral strangers are excluded. Healing caps at each pool’s current maximum. Only one grove per owner; other allies need your line of sight.
+
+After the placement payment, each pulse spends the caster’s aura for the HP and SHP it restores to **each** recipient. At zero mastery the rates are **40 aura per HP** and **60 aura per SHP**; they improve smoothly to **30 aura per HP** and **40 aura per SHP** at full mastery. Full pools cost nothing. Canceled or reduced HP healing refunds the unused payment.
+
+If there is not enough aura for a full pulse, every eligible recipient receives the same proportion of their planned healing. At zero aura the field pauses healing and can resume on a later pulse when funded. The pulse cannot exceed its funded quota, including native HP-healing amplification. Native healing suppression and its regeneration-based exceptions still apply. Placement range, duration, ally rules and current pool caps remain in effect.
 
 #### Briar Grasp
 
@@ -68,9 +72,9 @@ Grow a stationary grove within 24 blocks. For eight seconds it restores 7% maxim
 | --- | --- |
 | Damage type | Earth elemental |
 | Damage ID | `tensura:earth_elemental` |
-| Resource cost | 700 aura |
+| Resource cost | 550 aura |
 | Cooldown | 5 seconds |
-| Raw damage | 500 |
+| Raw damage | 300 |
 
 Lash up to six visible enemies in a forward fan within twelve blocks. Successful hits attempt to apply native Webbed for 3.5 seconds. Animated briars erupt around the selected victims. Native resistance and rank rules still govern the status.
 

@@ -41,8 +41,8 @@ Enable the native skill toggle in Ability Selection. The first second is paid on
 
 | Mode | Aura | Cooldown | Raw damage |
 | --- | ---: | ---: | --- |
-| 1. Loom Needle | 600 | 4 s | 450 |
-| 2. Sever Thread | 1,000 | 6 s | 800 |
+| 1. Loom Needle | 500 | 4 s | 320 |
+| 2. Sever Thread | 850 | 6 s | 550 |
 
 Damage listed here is before native combat handling and uses **1 + 0.5 × mastery fraction**, capped at **1.5×**. EP never multiplies their damage. Native elemental boosts, authority, resistances, barriers and hit immunity apply.
 
@@ -54,9 +54,9 @@ Damage listed here is before native combat handling and uses **1 + 0.5 × master
 | --- | --- |
 | Damage type | Space elemental |
 | Damage ID | `tensura:space_elemental` |
-| Resource cost | 600 aura |
+| Resource cost | 500 aura |
 | Cooldown | 4 seconds |
-| Raw damage | 450 |
+| Raw damage | 320 |
 
 Aim at one visible enemy within 28 blocks. The hit pins a silk anchor at its current position for six seconds. The enemy moves freely within three blocks of that anchor; outside the leash it is pulled back, respecting knockback resistance. The tether breaks if the enemy dies, leaves 40 blocks from you or passes out of your line of sight. One tether per owner.
 
@@ -68,9 +68,9 @@ Aim at one visible enemy within 28 blocks. The hit pins a silk anchor at its cur
 | --- | --- |
 | Damage type | Space elemental |
 | Damage ID | `tensura:space_elemental` |
-| Resource cost | 1,000 aura |
+| Resource cost | 850 aura |
 | Cooldown | 6 seconds |
-| Raw damage | 800 |
+| Raw damage | 550 |
 
 Consume your live tether and burst around its current victim, hitting up to six eligible enemies in a four-block radius. The victim must remain within 40 blocks and visible. Casting without a valid tether is free and starts no cooldown.
 

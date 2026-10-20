@@ -52,8 +52,8 @@ The toggle uses native barrier rendering and the shield HUD.
 
 | Mode | Aura | Cooldown | Raw opening damage |
 | --- | ---: | ---: | ---: |
-| 1. Avalanche Crash | 800 | 3 s | 700 |
-| 2. Glacial Prison | 1,400 | 7 s | 300 |
+| 1. Avalanche Crash | 700 | 3 s | 320 |
+| 2. Glacial Prison | 1,100 | 7 s | 180 |
 
 **Damage calculation:** multiply the listed base values by **1 + 0.5 × mastery fraction**, up to **1.50×**. Elemental boosts, defenses, barriers, and situational modifiers also apply. EP does not multiply damage.
 

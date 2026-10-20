@@ -48,8 +48,8 @@ Enable or disable this through Tensura’s native **Ability Selection** skill to
 
 | Mode | Aura | Cooldown | Raw opening damage |
 | --- | ---: | ---: | ---: |
-| 1. Railbolt | 800 | 3 s | 550 |
-| 2. Thunder Step | 1,000 | 4 s | 350 |
+| 1. Railbolt | 600 | 3 s | 300 |
+| 2. Thunder Step | 700 | 4 s | 200 |
 
 **Damage calculation:** multiply the listed base values by **1 + 0.5 × mastery fraction**, up to **1.50×**. Elemental boosts, defenses, barriers, and situational modifiers also apply. EP does not multiply damage.
 

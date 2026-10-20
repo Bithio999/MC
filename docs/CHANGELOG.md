@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.20.0 — External Unique calibration and funded Grove healing
+
+- Apply the native Tensura / Mysticism / Nightmares Unique audit with individual damage and aura-cost adjustments across all eight Uniques. Make the largest cuts to repeatable attacks and compact detonation; keep the more constrained tether burst stronger relative to its former budget. Reduce Current's drenched bonus to 25%.
+- Change Living Grove from fixed-cost team recovery to a 600-aura placement plus aura for every HP/SHP restored to each recipient. Rates improve from 40/60 AP per HP/SHP to 30/40 with mastery. Partial funding is shared proportionally; full pools cost nothing and unused/canceled/reduced HP healing refunds its reservation. Native healing suppression and regeneration exceptions remain in effect.
+- Preserve the kits' targeting, movement, native barriers, reflection, fields and distinctive mechanics, with the existing combination Ultimate/Godly budgets and classification traits. Add native Musician/Healer comparisons and healing economy/regression coverage. Update individual wiki pages, release editions and balance documentation.
+
 ## 0.19.0 — Unique and Godly balance
 
 - Balance all eight Unique kits against the revised combination Ultimates: stronger fixed attacks and fields, higher aura budgets, improved Verdant sustain, and stronger Threadweaver / Rune Smith / Verdant / Mirrorbound utility passives. Remove the extra 0.90 damage penalty from the four playable apex Uniques. Keep their cooldowns, shapes, target rules and distinct mechanics.
