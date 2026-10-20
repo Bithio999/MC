@@ -20,7 +20,7 @@
 | Registry ID | `wildhunt:scarlet_deluge` |
 | **Evolution** | |
 | Previous | — |
-| Evolution | Standalone Unique |
+| Evolution | [Aegir](Aegir.md), with mastered Mirrorbound |
 | **Obtaining** | |
 | Method | Reincarnation / starting skill roll |
 
@@ -87,7 +87,7 @@ Roll through Tensura’s normal reincarnation system. These Uniques join the con
 
 ## Evolution
 
-This skill remains a standalone Unique. It currently has no combination Ultimate recipe.
+Combine mastered Scarlet Deluge and [Mirrorbound](Mirrorbound.md) at 2M base EP through [Skill synthesis](Skill-Synthesis.md) to obtain [Aegir, Lord of the Abyss](Aegir.md).
 
 ## Suggested combo
 
@@ -109,7 +109,7 @@ These visuals appear during active arts.
 
 ![Native shield HUD counter](../media/water-veil-hud.png)
 
-The Unique passive’s native shield counter. Its Ultimate uses a higher capacity.
+The Unique passive’s native shield counter. Aegir instead uses refraction and projectile control.
 
 ## Related pages
 

@@ -5,7 +5,7 @@ An expanded progression and skills addon for **Tensura 2.0.1.3**, **Minecraft
 
 ## Download
 
-The built addon is included at [releases/tensura-myths-0.17.0.jar](releases/tensura-myths-0.17.0.jar).
+The built addon is included at [releases/tensura-myths-0.18.0.jar](releases/tensura-myths-0.18.0.jar).
 Install it alongside Tensura and its required dependencies on both client and server.
 
 ## Skills
@@ -28,21 +28,24 @@ Eight Unique Skills are rollable through Tensura’s normal reincarnation pool. 
 | Combination Ultimate | Mastered ingredients | New kit |
 | --- | --- | --- |
 | [Vritra, Lord of Cataclysm](wiki/pages/Vritra.md) | Storm Crown + Black Flame | Piercing plasma, delayed fire fuses, thunderhead furnace, advancing cataclysm |
-| [Demeter, Lady of Sanctuary](wiki/pages/Demeter.md) | Verdant Keeper + Frostbound Colossus | Allied ice orchard, shared native barriers, dodgeable crystal blooms |
+| [Demeter, Lady of Sanctuary](wiki/pages/Demeter.md) | Verdant Keeper + Frostbound Colossus | Allied ice orchard, one-use rescue seeds, empowered crystal harvest |
 | [Janus, Lord of Crossroads](wiki/pages/Janus.md) | Threadweaver + Mirrorbound | Linked gates, opposing spatial blades, safe enemy displacement |
+| [Anansi, Lord of Schemes](wiki/pages/Anansi.md) | Threadweaver + Rune Smith | Three-anchor thread network, anchor traversal and triangular Checkmate |
+| [Aegir, Lord of the Abyss](wiki/pages/Aegir.md) | Scarlet Deluge + Mirrorbound | Mirrorsea refraction, water harpoons and an expanding tidal shock front |
 
 The result replaces both ingredients, preserves all nine presets and inherits the longest outstanding source cooldown. Unrelated skills remain learned. New Ultimates have three active arts and a separate toggle; their kits do not reuse their ingredients’ modes.
 
 **[Godly Skills](wiki/pages/Godly.md)** appear in their own native skill-menu category while retaining Ultimate classification for compatibility. Master a combination Ultimate, become a True Hero or True Demon Lord and reach **12M base EP**. In **Skills → Godly → Ascension**, choose:
 
 - **[Aion, God of Causality](wiki/pages/Aion.md):** smooth channelled Worldline Sever, Event Horizon, upward-only Causal Reversal and Genesis Verdict; recovering barriers and proximity slowing.
+- **[Lugh, God of Skills](wiki/pages/Lugh.md):** a three-entry technique archive, distinct reconstructed attack forms, temporary sealing of one recent non-Godly technique, and a combined Grand Synthesis. Starts with three usable techniques; also combines a mastered Threadweaver.
 - **[Thoth, God of Magic](wiki/pages/Thoth.md):** seven-element Lexicon, Spellbreak disruption/drain, a held, cooldown-free 2:1 aura-to-magicule channel and an autonomous orbiting Astral Library cycling the same seven elements. Also combines a mastered Rune Smith. Its passive strengthens elemental magic, native chanting and spell efficiency. Its original emissive seals, animated grimoires and chapter-colored spells require no shader pack.
 
 Owning any Godly skill automatically grants **+35% damage against non-Godly owners**, resistance/nullification bypass **for your own damage only**, and immunity to **non-Godly-origin Magic Interference**. These classification passives have no upkeep and do not stack. Skill-specific Godly attacks and toggles use **magicules**; held Mana Crucible trades aura for magicules. All skills use native damage sources, authority, status rules and resource storage. **Damage never scales with EP.** Every ability’s costs, cooldowns, damage types and limitations are in the [wiki ability index](wiki/pages/Abilities.md).
 
 ## Visuals
 
-Every kit has its own textured effects: branching lightning, curled caustic water, molten tentacles and black flames, veined ice, braided silk, rune circuitry, living groves, faceted mirrors, a storm forge, crystal orchards, architectural gates and Aion’s astronomical clockwork. Thoth retains its layered inscriptions and animated grimoires. No shader pack is required. Native particle settings reduce decoration, distance reduces curve detail, and rendering batches materials per effect. [In-game gallery](wiki/pages/Visual-Effects.md).
+Every kit has its own textured effects: branching lightning, curled caustic water, molten tentacles and black flames, veined ice, braided silk, rune circuitry, living groves, faceted mirrors, a storm forge, crystal orchards, architectural gates and Aion’s astronomical clockwork. Thoth retains its layered inscriptions and animated grimoires. Lugh has ivory/gold reconstructed armaments and rune tablets; Anansi uses articulated anchors and woven traps; Aegir uses caustic water and glass lenses. No shader pack is required. Native particle settings reduce decoration, distance reduces curve detail, and rendering batches materials per effect. [In-game gallery](wiki/pages/Visual-Effects.md).
 
 ## Human hunter progression
 
@@ -74,9 +77,9 @@ An independent secondary grants **10% extra native EP gain**, retaining the prim
 
 ## Updating
 
-Replace the previous addon JAR with **0.17.0** on client and server. Install only one addon version. The `wildhunt` namespace remains stable for existing saves.
+Replace the previous addon JAR with **0.18.0** on client and server. Install only one addon version. The `wildhunt` namespace remains stable for existing saves.
 
-Ordinary elemental attribute bonuses use the strongest source per element; Godly bonuses remain separate. Mirrorbound, Demeter, Janus and Thoth no longer give passive shields; old saved contributions are cleaned automatically. Water Veil, Colossus Carapace, active Crystal Bulwark and Aion retain their dedicated defenses.
+Ordinary elemental attribute bonuses use the strongest source per element; Godly bonuses remain separate. Mirrorbound, Demeter, Janus and Thoth no longer give passive shields; old saved contributions are cleaned automatically. Water Veil, Colossus Carapace and Aion retain their dedicated defenses. Demeter’s second mode is Perennial Seed: a one-use 40% HP/SHP rescue effect.
 
 The four earlier Ultimates are retired from gameplay. Existing **Raijin/Agni** ownership migrates into **Vritra**, and **Varuna/Ymir** into **Demeter**. Mastery fraction, longest outstanding cooldown and all preset references are preserved; duplicate replacement ownership merges without downgrading the destination. Old passive/barrier contributions are removed. Existing Aion, Uniques, races and boss histories remain valid. Old selection-EP snapshots are ignored by the new fixed gates.
 
@@ -84,7 +87,7 @@ The [changelog](docs/CHANGELOG.md) records development changes separately from t
 
 ## Wiki
 
-Read the [Tensura Myths Wiki](wiki/README.md) for individual skill/race articles, per-ability damage types, progression and commands. [Download the styled offline edition](releases/tensura-myths-wiki-0.17.0.zip), extract it and open `index.html` for the wiki layout, infoboxes, screenshots and offline search. The [GitHub Wiki edition](wiki/github/Home.md) is prepared for the separate Wiki when it is available; [publishing instructions](docs/WIKI.md).
+Read the [Tensura Myths Wiki](wiki/README.md) for individual skill/race articles, per-ability damage types, progression and commands. [Download the styled offline edition](releases/tensura-myths-wiki-0.18.0.zip), extract it and open `index.html` for the wiki layout, infoboxes, screenshots and offline search. The [GitHub Wiki edition](wiki/github/Home.md) is prepared for the separate Wiki when it is available; [publishing instructions](docs/WIKI.md).
 
 ## Build and test
 
@@ -111,9 +114,9 @@ vertical dashes, through-wall ricochets, momentum preservation, native shield
 breakage and timed recovery, HP/SHP evolution, aura regeneration and native NPC loadouts.
 `./gradlew runClient` starts a development client on a machine with graphics.
 
-The [0.17.0 validation report](docs/VALIDATION-0.17.0.md) covers 110 native GameTests, 11 JUnit tests, source-specific Godly traits and responsive wiki validation.
+The [0.18.0 validation report](docs/VALIDATION-0.18.0.md) covers 130 native GameTests, 11 JUnit tests, live-client skill/menu checks and responsive wiki validation.
 
-Install `build/libs/tensura-myths-0.17.0.jar` on **both client and server**,
+Install `build/libs/tensura-myths-0.18.0.jar` on **both client and server**,
 alongside Tensura and its required dependencies. The addon jar is not a complete
 modpack. Additional development dependency versions are in `runtime-mods.lock.json`.
 

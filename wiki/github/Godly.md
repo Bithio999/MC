@@ -12,13 +12,13 @@
 | Native skill type | Ultimate |
 | Native tag | `tensura:ultimate_skills` |
 | Additional tag | `wildhunt:godly_skills` |
-| Current skills | [Aion, God of Causality](https://github.com/Bithio999/MC/wiki/Aion); [Thoth, God of Magic](https://github.com/Bithio999/MC/wiki/Thoth) |
+| Current skills | [Aion, God of Causality](https://github.com/Bithio999/MC/wiki/Aion); [Thoth, God of Magic](https://github.com/Bithio999/MC/wiki/Thoth); [Lugh, God of Skills](https://github.com/Bithio999/MC/wiki/Lugh) |
 
 Godly skills appear in their own category instead of being duplicated in the ordinary Ultimate list. Other mods that only inspect the native type see an Ultimate. They do not automatically recognize the addon’s extra tier or grant it additional authority. The addon does not give Godly skills blanket immunity to other skills.
 
 ## Classification passives
 
-Owning **any Godly skill** grants all three passives automatically. They require **no toggle, upkeep, equipped mode or mastery threshold**. Aion, Thoth and skills classified through the `wildhunt:godly_skills` tag qualify. Owning multiple Godly skills grants each trait only once. Forgetting the last Godly skill removes the traits.
+Owning **any Godly skill** grants all three passives automatically. They require **no toggle, upkeep, equipped mode or mastery threshold**. Aion, Thoth, Lugh and skills classified through the `wildhunt:godly_skills` tag qualify. Owning multiple Godly skills grants each trait only once. Forgetting the last Godly skill removes the traits.
 
 ### Divine Authority
 
@@ -63,21 +63,23 @@ Learning a Godly skill also clears existing non-Godly interference on the next s
 
 ## Obtaining
 
-Master one of the addon’s [three combination Ultimates](https://github.com/Bithio999/MC/wiki/Ultimate-Skills), become a True Hero or True Demon Lord and reach **12,000,000 base EP**. Open **Skills → Godly → Ascension**, select your mastered Ultimate and choose **Aion** or **Thoth** with the destination button. Thoth additionally requires a mastered [Rune Smith](https://github.com/Bithio999/MC/wiki/Rune-Smith), which is combined into the result.
+Master one of the addon’s [five combination Ultimates](https://github.com/Bithio999/MC/wiki/Ultimate-Skills), become a True Hero or True Demon Lord and reach **12,000,000 base EP**. Open **Skills → Godly → Ascension**, select your mastered Ultimate and choose **Aion**, **Thoth** or **Lugh** with the destination button. Thoth additionally requires a mastered [Rune Smith](https://github.com/Bithio999/MC/wiki/Rune-Smith), which is combined into the result. Lugh instead combines a mastered [Threadweaver](https://github.com/Bithio999/MC/wiki/Threadweaver).
 
-The chosen Ultimate is replaced; Thoth also replaces Rune Smith. All nine presets retain references to the evolved skill; its longest remaining cooldown carries to the new modes, except Thoth’s cooldown-free Mana Crucible. Godly ascension is separate from Duo Races and does not require a fusion. It is not a reincarnation roll, does not consume EP and grants no free magicule or aura pool.
+The chosen Ultimate is replaced; Thoth also replaces Rune Smith, while Lugh also replaces Threadweaver. All nine presets retain references to the evolved skill; its longest remaining cooldown carries to the new modes, except Thoth’s cooldown-free Mana Crucible. Godly ascension is separate from Duo Races and does not require a fusion. It is not a reincarnation roll, does not consume EP and grants no free magicule or aura pool.
 
 ## Controls
 
 Open Tensura’s **Skills** categories and select **Godly**. Equip modes and toggle each skill’s own passive using the native Ability Selection interface. The three classification passives require no menu activation. The four active modes cycle with the normal Tensura controls.
 
-The server’s `godlyEP` setting controls the default EP gate. Registry IDs are `wildhunt:aion` and `wildhunt:thoth`. Owning either does not prevent earning the other with another valid source.
+The server’s `godlyEP` setting controls the default EP gate. Registry IDs are `wildhunt:aion`, `wildhunt:thoth` and `wildhunt:lugh`. Owning one does not prevent earning the others with separate valid sources.
 
 ## Gallery
 
 ![Tensura’s original six skill categories and the Godly entry](https://github.com/Bithio999/MC/blob/main/wiki/media/native-skill-categories.png?raw=true)
 
-![Aion and Thoth in the native Godly list](https://github.com/Bithio999/MC/blob/main/wiki/media/godly-magic.png?raw=true)
+![Aion, Lugh and Thoth in the native Godly list](https://github.com/Bithio999/MC/blob/main/wiki/media/godly-lugh-menu.png?raw=true)
+
+![Three Godly destinations and five eligible source Ultimates](https://github.com/Bithio999/MC/blob/main/wiki/media/godly-lugh-ascension.png?raw=true)
 
 ---
 

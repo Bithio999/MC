@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.18.0 — Lugh and Ultimate reconstruction
+
+- Add Lugh, God of Skills: a persistent three-entry technique archive with three immediately usable origin arts, bounded native-source reconstruction in Blade/Lance/Crown forms, a specific six-second non-Godly technique seal and a warned three-art Grand Synthesis. Add All-Skilled and the shared Godly classification traits. Ascension combines a mastered Ultimate and Threadweaver at the existing true-awakening/12M gate.
+- Rework Vritra with stronger plasma/fuses, a storm-created second firing angle and a storm-consuming finisher. Rework Demeter with stronger orchard support, one-use Perennial Seeds instead of its active barrier, and allied healing on empowered harvest. Rework Janus with 48-block/30-second gates, inexpensive recasts, opposite-gate snares and warned Edict cuts.
+- Add Anansi (Threadweaver + Rune Smith) with bounded anchors, crossing threads, momentum-preserving anchor exchange and a triangular two-phase finisher. Add Aegir (Scarlet Deluge + Mirrorbound) with three-angle water refraction, projectile redirection and an expanding once-per-victim tidal rim.
+- Reference released Nightmares code/defaults and version-labelled Mysticism documentation for role, damage-type, resource and utility budgets. Increase Ultimate combat costs and passives, attach native level-1 resistance penetration, retain native hit immunity and strongest-source elemental bonuses, and keep EP out of damage formulas. Research and version caveats are recorded separately from gameplay articles.
+- Extend native synthesis/ascension menus to five Ultimates and three Godly destinations, retaining their native layout and server validation. Preserve existing registry IDs, learned instances, presets, mastery and remaining cooldowns. Add original icons and distinct animated geometry; bound constructs and clear marker/attack leases on lifecycle cleanup.
+- Add 20 native tests for progression, actual source observation, archive persistence/selection, native sealing, form geometry/timing, trap networks, refraction, expanding waves, ally rescue partial penetration and cross-dimension cleanup. Update the individual wiki articles, damage directory, generated editions and offline bundle.
+
 ## 0.17.0 — Shared Godly classification passives
 
 - Move Aion’s +35% damage against non-Godly owners and native resistance/nullification bypass into always-active Godly ownership traits. Aion, Thoth and datapack-classified Godly skills qualify; multiple skills never stack the bonus. No toggle, upkeep or equipped mode is required.

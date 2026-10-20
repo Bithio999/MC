@@ -12,11 +12,13 @@ import java.util.*;
 public final class MythicEvolution {
     private MythicEvolution(){}
     public static final double SYNTHESIS_EP=2_000_000;
-    public static List<MythicKind> ultimates(){return List.of(MythicKind.VRITRA,MythicKind.DEMETER,MythicKind.JANUS);}
+    public static List<MythicKind> ultimates(){return List.of(MythicKind.VRITRA,MythicKind.DEMETER,MythicKind.JANUS,MythicKind.ANANSI,MythicKind.AEGIR);}
     public static List<ManasSkill> ingredients(MythicKind result){return switch(result){
         case VRITRA->List.of(WildHunt.UNIQUE.get(Apex.REY_DAU).get(),WildHunt.UNIQUE.get(Apex.NU_UDRA).get());
         case DEMETER->List.of(WildHunt.MYTHIC.get(MythicKind.VERDANT_KEEPER).get(),WildHunt.UNIQUE.get(Apex.JIN_DAHAAD).get());
         case JANUS->List.of(WildHunt.MYTHIC.get(MythicKind.THREADWEAVER).get(),WildHunt.MYTHIC.get(MythicKind.MIRRORBOUND).get());
+        case ANANSI->List.of(WildHunt.MYTHIC.get(MythicKind.THREADWEAVER).get(),WildHunt.MYTHIC.get(MythicKind.RUNE_SMITH).get());
+        case AEGIR->List.of(WildHunt.UNIQUE.get(Apex.UTH_DUNA).get(),WildHunt.MYTHIC.get(MythicKind.MIRRORBOUND).get());
         default->List.of();
     };}
     public static boolean ready(LivingEntity e,MythicKind result){
@@ -25,7 +27,7 @@ public final class MythicEvolution {
     }
     public static String synthesize(ServerPlayer p,String id){
         var kind=ultimates().stream().filter(k->id.equals(k.id()) || id.equals(WildHunt.id(k.id()).toString())).findFirst();
-        if(kind.isEmpty())return "Choose Vritra, Demeter or Janus.";
+        if(kind.isEmpty())return "Choose Vritra, Demeter, Janus, Anansi or Aegir.";
         var result=kind.get();
         if(!ready(p,result))return result.title+" requires 2M base EP and mastery of both "+ingredients(result).stream().map(s->s.getName().getString()).reduce((a,b)->a+" + "+b).orElse("")+". An owned result cannot be synthesized twice.";
         var skills=SkillAPI.getSkillsFrom(p);var sources=ingredients(result).stream().map(s->skills.getSkill(s).orElseThrow()).toList();

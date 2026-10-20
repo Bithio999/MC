@@ -31,7 +31,11 @@ public final class ArtVisualRenderer extends EntityRenderer<ArtVisualEntity> {
     @Override public void render(ArtVisualEntity entity, float yaw, float partial, PoseStack poses, MultiBufferSource buffers, int light) {
         float age = entity.tickCount + partial;
         VfxMesh.begin(entity.getPosition(partial));batch.begin();
-        if(ThothGeometry.handles(entity.kind())) {
+        if(SovereignGeometry.handles(entity.kind())) {
+            poses.pushPose();
+            if((entity.kind()==ArtVisualEntity.PERENNIAL_SEED || entity.kind()==ArtVisualEntity.COUNTERMAND) && entity.caster()!=null){Vec3 offset=entity.caster().getPosition(partial).subtract(entity.getPosition(partial));poses.translate(offset.x,offset.y,offset.z);}
+            SovereignGeometry.render(poses,batch,entity.kind(),entity.end(partial),age,entity.lifetime(),entity.style());poses.popPose();
+        } else if(ThothGeometry.handles(entity.kind())) {
             poses.pushPose();
             if((entity.kind()==ArtVisualEntity.ASTRAL_LIBRARY || entity.kind()==ArtVisualEntity.MANA_CRUCIBLE) && entity.caster()!=null){
                 Vec3 offset=entity.caster().getPosition(partial).add(0,entity.kind()==ArtVisualEntity.ASTRAL_LIBRARY?2.5:0,0).subtract(entity.getPosition(partial));poses.translate(offset.x,offset.y,offset.z);

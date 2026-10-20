@@ -1,6 +1,6 @@
 # Tensura Myths Wiki
 
-An unofficial reference for the **Tensura Myths** addon to **Tensura: Reincarnated**. Minecraft 1.21.1 · NeoForge · Addon 0.17.0.
+An unofficial reference for the **Tensura Myths** addon to **Tensura: Reincarnated**. Minecraft 1.21.1 · NeoForge · Addon 0.18.0.
 
 ## Start here
 
@@ -11,8 +11,8 @@ An unofficial reference for the **Tensura Myths** addon to **Tensura: Reincarnat
 | Tier | Directory | Obtaining |
 | --- | --- | --- |
 | Unique | [Eight reincarnation skills](https://github.com/Bithio999/MC/wiki/Unique-Skills) | Starting-skill rolls |
-| Ultimate | [Three combination skills](https://github.com/Bithio999/MC/wiki/Ultimate-Skills) | Two specific mastered Uniques, 2M base EP |
-| Godly | [Aion and Thoth](https://github.com/Bithio999/MC/wiki/Godly) | Mastered combination Ultimate, true awakening, 12M base EP; Thoth also uses Rune Smith |
+| Ultimate | [Five combination skills](https://github.com/Bithio999/MC/wiki/Ultimate-Skills) | Two specific mastered Uniques, 2M base EP |
+| Godly | [Aion, Thoth and Lugh](https://github.com/Bithio999/MC/wiki/Godly) | Mastered combination Ultimate, true awakening, 12M base EP; Thoth also uses Rune Smith; Lugh uses Threadweaver |
 | Extra | [Three aura recovery skills](https://github.com/Bithio999/MC/wiki/Aura-Regeneration) | Hunter evolution |
 
 [Skill overview](https://github.com/Bithio999/MC/wiki/Skills) · [Skill synthesis](https://github.com/Bithio999/MC/wiki/Skill-Synthesis) · [Every active and passive ability](https://github.com/Bithio999/MC/wiki/Abilities) · [Damage types](https://github.com/Bithio999/MC/wiki/Damage-Types)
@@ -36,4 +36,4 @@ An unofficial reference for the **Tensura Myths** addon to **Tensura: Reincarnat
 Ability articles separate direct elemental hits, additional status damage, healing and utility. Their data tables include damage types, resource costs, cooldowns and acquisition requirements.
 
 
-[Download the styled offline edition](https://github.com/Bithio999/MC/blob/main/releases/tensura-myths-wiki-0.17.0.zip)
+[Download the styled offline edition](https://github.com/Bithio999/MC/blob/main/releases/tensura-myths-wiki-0.18.0.zip)

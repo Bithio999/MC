@@ -31,11 +31,11 @@ Any race can synthesize at **2M base EP** with both specific ingredients mastere
 | `/myths evolve_secondary <race_id>` | Evolve the secondary through native requirements |
 | `/myths awaken` | Perform Convergent Awakening after both races reach final evolution |
 | `/myths synthesize <vritra/demeter/janus>` | Combine the required mastered Unique pair |
-| `/myths godly <ultimate_id> [aion/thoth]` | Ascend a mastered combination Ultimate; defaults to Aion. Thoth also combines mastered Rune Smith |
+| `/myths godly <ultimate_id> [aion/thoth/lugh]` | Ascend a mastered combination Ultimate; defaults to Aion. Thoth also combines mastered Rune Smith |
 
 These commands are available to players and enforce the same server-side requirements as the menu. Valid secondary keys: `beastfolk`, `harpy`, `ogre`, `goblin`, `giant`, `orc`, `lizardman`, `merfolk`, `elf`, `human`, `dwarf`, `slime`, `vampire`, `wight`, `daemon`.
 
-Godly IDs are `wildhunt:aion` and `wildhunt:thoth`. Fused race IDs follow `wildhunt:convergence/<sorted_family_pair>`; the [catalog](https://github.com/Bithio999/MC/wiki/Convergent-Awakening#race-catalog) links to each exact ID.
+Godly IDs are `wildhunt:aion`, `wildhunt:thoth` and `wildhunt:lugh`. Fused race IDs follow `wildhunt:convergence/<sorted_family_pair>`; the [catalog](https://github.com/Bithio999/MC/wiki/Convergent-Awakening#race-catalog) links to each exact ID.
 
 ---
 

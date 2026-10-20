@@ -425,14 +425,14 @@
   },
   {
     "skill": "Demeter",
-    "name": "Crystal Bulwark",
+    "name": "Perennial Seed",
     "tier": "Ultimate",
     "kind": "Active",
     "damage": "None",
     "damage_id": null,
     "secondary_damage_id": null,
     "damage_ids": [],
-    "anchor": "crystal-bulwark"
+    "anchor": "perennial-seed"
   },
   {
     "skill": "Demeter",
@@ -595,5 +595,135 @@
     "damage_id": null,
     "secondary_damage_id": null,
     "anchor": "interference-immunity"
+  },
+  {
+    "skill": "Anansi",
+    "name": "Schemer's Instinct",
+    "tier": "Ultimate",
+    "kind": "Passive",
+    "damage": "None",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "anchor": "passive"
+  },
+  {
+    "skill": "Anansi",
+    "name": "Fate Stitch",
+    "tier": "Ultimate",
+    "kind": "Active",
+    "damage": "Space elemental",
+    "damage_id": "tensura:space_elemental",
+    "secondary_damage_id": null,
+    "anchor": "fate-stitch"
+  },
+  {
+    "skill": "Anansi",
+    "name": "Puppet Passage",
+    "tier": "Ultimate",
+    "kind": "Active",
+    "damage": "None",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "anchor": "puppet-passage"
+  },
+  {
+    "skill": "Anansi",
+    "name": "Checkmate Loom",
+    "tier": "Ultimate",
+    "kind": "Active",
+    "damage": "Space elemental, then Earth elemental",
+    "damage_id": "tensura:space_elemental",
+    "secondary_damage_id": "tensura:earth_elemental",
+    "anchor": "checkmate-loom"
+  },
+  {
+    "skill": "Aegir",
+    "name": "Abyssal Majesty",
+    "tier": "Ultimate",
+    "kind": "Passive",
+    "damage": "None",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "anchor": "passive"
+  },
+  {
+    "skill": "Aegir",
+    "name": "Refracted Harpoon",
+    "tier": "Ultimate",
+    "kind": "Active",
+    "damage": "Water elemental",
+    "damage_id": "tensura:water_elemental",
+    "secondary_damage_id": null,
+    "anchor": "refracted-harpoon"
+  },
+  {
+    "skill": "Aegir",
+    "name": "Mirrorsea",
+    "tier": "Ultimate",
+    "kind": "Active",
+    "damage": "None — reflected projectiles retain their attack type",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "anchor": "mirrorsea"
+  },
+  {
+    "skill": "Aegir",
+    "name": "Sovereign Breaker",
+    "tier": "Ultimate",
+    "kind": "Active",
+    "damage": "Water elemental",
+    "damage_id": "tensura:water_elemental",
+    "secondary_damage_id": null,
+    "anchor": "sovereign-breaker"
+  },
+  {
+    "skill": "Lugh",
+    "name": "All-Skilled",
+    "tier": "Godly",
+    "kind": "Passive",
+    "damage": "None",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "anchor": "passive"
+  },
+  {
+    "skill": "Lugh",
+    "name": "Skill Appraisal",
+    "tier": "Godly",
+    "kind": "Active",
+    "damage": "None",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "anchor": "skill-appraisal"
+  },
+  {
+    "skill": "Lugh",
+    "name": "Reconstructed Art",
+    "tier": "Godly",
+    "kind": "Active",
+    "damage": "Variable normalised physical, elemental or generic magic",
+    "damage_id": "tensura:aura_slash",
+    "secondary_damage_id": "tensura:magic",
+    "anchor": "reconstructed-art"
+  },
+  {
+    "skill": "Lugh",
+    "name": "Countermand",
+    "tier": "Godly",
+    "kind": "Active",
+    "damage": "None",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "anchor": "countermand"
+  },
+  {
+    "skill": "Lugh",
+    "name": "Grand Synthesis",
+    "tier": "Godly",
+    "kind": "Active",
+    "damage": "Three archived normalised damage types",
+    "damage_id": "tensura:aura_slash",
+    "secondary_damage_id": "tensura:magic",
+    "anchor": "grand-synthesis"
   }
 ]

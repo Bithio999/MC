@@ -14,12 +14,12 @@
 | Active modes | 3 |
 | Resource | Aura |
 | Toggleable passive | Catastrophe Engine |
-| Passive upkeep | 80 aura / second |
+| Passive upkeep | 120 aura / second |
 | Registry ID | `wildhunt:vritra` |
 | **Obtaining** | |
 | Method | Synthesis: master both ingredients; 2M base EP |
 | **Evolution** | |
-| Evolution | [Aion](Aion.md) or [Thoth](Thoth.md) |
+| Evolution | [Aion](Aion.md), [Thoth](Thoth.md) or [Lugh](Lugh.md) |
 
 ## Usage
 
@@ -31,9 +31,9 @@
 | --- | --- |
 | Damage type | None — support / defense |
 | Damage ID | — |
-| Upkeep | 80 aura / second |
+| Upkeep | 120 aura / second |
 
-Gain 50% Flame boost, 50% Lightning boost and 25% attack damage.
+Gain 100% Flame boost, 100% Lightning boost and 50% attack damage.
 
 Elemental boosts use the [strongest ordinary source](Mechanics.md#elemental-bonus-sources); Godly bonuses apply separately.
 
@@ -43,11 +43,11 @@ Enable the native skill toggle in Ability Selection. The first second is paid on
 
 | Mode | Aura | Cooldown | Raw damage |
 | --- | ---: | ---: | --- |
-| 1. Plasma Bore | 1,400 | 4 s | 650 lightning; 350 per fire fuse |
-| 2. Thunderhead Crucible | 3,600 | 15 s | 260 lightning + 140 fire per pulse |
-| 3. Cataclysm Front | 6,000 | 24 s | 780 per eruption |
+| 1. Plasma Bore | 6,000 | 5 s | 1,500 lightning; 850 per fire fuse |
+| 2. Thunderhead Crucible | 15,000 | 16 s | 900 lightning + 500 fire per pulse |
+| 3. Cataclysm Front | 25,000 | 26 s | 1,800 per eruption; 2,400 when empowered |
 
-Damage listed here is before native combat handling and uses **1 + 0.5 × mastery fraction**, capped at **1.5×**. These new kits do not use the apex skills’ 0.90 multiplier or the former 3× Ultimate multiplier. EP never multiplies their damage. Native elemental boosts, authority, resistances, barriers and hit immunity apply.
+Damage listed here is before native combat handling and uses **1 + 0.5 × mastery fraction**, capped at **1.5×**. These new kits do not use the apex skills’ 0.90 multiplier or the former 3× Ultimate multiplier. EP never multiplies their damage. Ultimate art hits carry native **level-1 resistance penetration**. Native elemental boosts, authority, resistance attributes, nullification fallback rules, barriers and hit immunity remain relevant.
 
 #### Plasma Bore
 
@@ -57,11 +57,11 @@ Damage listed here is before native combat handling and uses **1 + 0.5 × master
 | --- | --- |
 | Damage type | Lightning elemental + delayed Fire elemental |
 | Damage ID | `tensura:lightning_elemental`; `tensura:fire_elemental` |
-| Resource cost | 1,400 aura |
-| Cooldown | 4 seconds |
-| Raw damage | 650 lightning; 350 per fire fuse |
+| Resource cost | 6,000 aura |
+| Cooldown | 5 seconds |
+| Raw damage | 1,500 lightning; 850 per fire fuse |
 
-Fire a solid-block-clipped plasma lance for 48 blocks, piercing up to eight visible enemies. Each struck location receives a fixed fire fuse: after 0.8 seconds it erupts in a three-block radius. The fuse remains at the marked position; a moving enemy can leave it. Native hit immunity may limit overlapping detonations.
+Fire a solid-block-clipped plasma lance for **64 blocks**, piercing up to eight visible enemies. While your thunderhead exists within 64 blocks, a **second lance** fires from its elevated center toward the same endpoint, clipped along its own route. Both rays share an eight-target set, so crossing both does not double-hit an enemy. Each struck location receives a fixed fire fuse: after 0.8 seconds it erupts in a 3.5-block radius. The fuse remains at the marked position; a moving enemy can leave it. Native hit immunity may limit overlapping detonations.
 
 #### Thunderhead Crucible
 
@@ -71,11 +71,11 @@ Fire a solid-block-clipped plasma lance for 48 blocks, piercing up to eight visi
 | --- | --- |
 | Damage type | Lightning elemental + delayed Fire elemental |
 | Damage ID | `tensura:lightning_elemental`; `tensura:fire_elemental` |
-| Resource cost | 3,600 aura |
-| Cooldown | 15 seconds |
-| Raw damage | 260 lightning + 140 fire per pulse |
+| Resource cost | 15,000 aura |
+| Cooldown | 16 seconds |
+| Raw damage | 900 lightning + 500 fire per pulse |
 
-Place a nine-block-radius storm furnace within 40 blocks for eight seconds. Once per second it strikes up to six visible enemies with lightning; each strike leaves a fire burst at that position after half a second, in a 2.5-block radius. One thunderhead per owner.
+Place an **eleven-block-radius** storm furnace within **48 blocks** for eight seconds. Once per second it strikes up to six visible enemies with lightning; each strike leaves a fire burst at that position after 0.6 seconds, in a three-block radius. One thunderhead per owner.
 
 #### Cataclysm Front
 
@@ -85,11 +85,11 @@ Place a nine-block-radius storm furnace within 40 blocks for eight seconds. Once
 | --- | --- |
 | Damage type | Fire elemental |
 | Damage ID | `tensura:fire_elemental` |
-| Resource cost | 6,000 aura |
-| Cooldown | 24 seconds |
-| Raw damage | 780 per eruption |
+| Resource cost | 25,000 aura |
+| Cooldown | 26 seconds |
+| Raw damage | 1,800 per eruption; 2,400 when empowered |
 
-Send seven warned eruptions forward at four-block spacing, reaching 28 blocks. Each covers a 4.5-block radius. The first erupts after 0.8 seconds and later eruptions follow every 0.2 seconds. A solid obstruction ends the advancing line. Targets can leave the warned circles; no terrain is destroyed.
+Send seven warned eruptions forward at four-block spacing, reaching 28 blocks. Each covers a 4.5-block radius. If Thunderhead Crucible is active, **consume it**, begin the advancing line from the storm’s center, increase each radius to **six blocks** and raise raw damage to **2,400**. The first erupts after 0.8 seconds and later eruptions follow every 0.2 seconds. A solid obstruction ends the advancing line. Targets can leave the warned circles; no terrain is destroyed.
 
 ## Obtaining
 

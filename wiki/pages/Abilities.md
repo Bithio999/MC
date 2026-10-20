@@ -1,8 +1,8 @@
 # Ability index
 
-[Main Page](../README.md) · [Skills](Skills.md) · [Ability index](Abilities.md) · [Damage types](Damage-Types.md)
+[Main Page](../README.md) · [Skills](Skills.md) · [Damage types](Damage-Types.md)
 
-**Ability index** lists every active art, classification passive, toggleable passive and shared racial action. Each entry links to its exact resource cost, targeting and damage-type table. Reflected projectiles retain their own damage source.
+**Ability index** lists active arts, toggleable passives, classification passives and shared racial actions. Each entry links to its exact resource costs, targeting and damage-type information. Reflected projectiles retain their original attack type.
 
 ## Unique abilities
 
@@ -43,22 +43,24 @@
 | [Cataclysm Front](Vritra.md#cataclysm-front) | [Vritra, Lord of Cataclysm](Vritra.md) | Active | Fire elemental — `tensura:fire_elemental` |
 | [Evergreen Sanctuary](Demeter.md#passive) | [Demeter, Lady of Sanctuary](Demeter.md) | Passive | None |
 | [Winter Orchard](Demeter.md#winter-orchard) | [Demeter, Lady of Sanctuary](Demeter.md) | Active | Ice elemental against enemies; allied healing has no damage type — `tensura:ice_elemental` |
-| [Crystal Bulwark](Demeter.md#crystal-bulwark) | [Demeter, Lady of Sanctuary](Demeter.md) | Active | None |
+| [Perennial Seed](Demeter.md#perennial-seed) | [Demeter, Lady of Sanctuary](Demeter.md) | Active | None |
 | [Winter Harvest](Demeter.md#winter-harvest) | [Demeter, Lady of Sanctuary](Demeter.md) | Active | Ice elemental — `tensura:ice_elemental` |
 | [Threshold Dominion](Janus.md#passive) | [Janus, Lord of Crossroads](Janus.md) | Passive | None |
 | [Twin Gates](Janus.md#twin-gates) | [Janus, Lord of Crossroads](Janus.md) | Active | None |
 | [Parallax Snare](Janus.md#parallax-snare) | [Janus, Lord of Crossroads](Janus.md) | Active | Space elemental — `tensura:space_elemental` |
 | [Crossroads Edict](Janus.md#crossroads-edict) | [Janus, Lord of Crossroads](Janus.md) | Active | Space elemental — `tensura:space_elemental` |
+| [Schemer's Instinct](Anansi.md#passive) | [Anansi, Lord of Schemes](Anansi.md) | Passive | None |
+| [Fate Stitch](Anansi.md#fate-stitch) | [Anansi, Lord of Schemes](Anansi.md) | Active | Space elemental — `tensura:space_elemental` |
+| [Puppet Passage](Anansi.md#puppet-passage) | [Anansi, Lord of Schemes](Anansi.md) | Active | None |
+| [Checkmate Loom](Anansi.md#checkmate-loom) | [Anansi, Lord of Schemes](Anansi.md) | Active | Space elemental, then Earth elemental — `tensura:space_elemental`, `tensura:earth_elemental` |
+| [Abyssal Majesty](Aegir.md#passive) | [Aegir, Lord of the Abyss](Aegir.md) | Passive | None |
+| [Refracted Harpoon](Aegir.md#refracted-harpoon) | [Aegir, Lord of the Abyss](Aegir.md) | Active | Water elemental — `tensura:water_elemental` |
+| [Mirrorsea](Aegir.md#mirrorsea) | [Aegir, Lord of the Abyss](Aegir.md) | Active | None — reflected projectiles retain their attack type |
+| [Sovereign Breaker](Aegir.md#sovereign-breaker) | [Aegir, Lord of the Abyss](Aegir.md) | Active | Water elemental — `tensura:water_elemental` |
 
 ## Godly abilities
 
-The three shared classification passives are granted by ownership of any Godly skill, require no toggle or upkeep and do not stack.
-
-| Classification passive | Parent system | Activation | Damage type |
-| --- | --- | --- | --- |
-| [Divine Authority](Godly.md#divine-authority) | [Godly](Godly.md) | Always active | Modifier — original attack type |
-| [Absolute Penetration](Godly.md#absolute-penetration) | [Godly](Godly.md) | Always active | Modifier — original attack type |
-| [Interference Immunity](Godly.md#interference-immunity) | [Godly](Godly.md) | Always active | None |
+The three Godly classification passives are always active, free and non-stacking. Individual skill toggles retain their own upkeep.
 
 | Ability | Parent skill / system | Activation | Damage type |
 | --- | --- | --- | --- |
@@ -68,10 +70,18 @@ The three shared classification passives are granted by ownership of any Godly s
 | [Causal Reversal](Aion.md#causal-reversal) | [Aion, God of Causality](Aion.md) | Active | None |
 | [Genesis Verdict](Aion.md#genesis-verdict) | [Aion, God of Causality](Aion.md) | Active | Space elemental — `tensura:space_elemental` |
 | [Arcane Sovereignty](Thoth.md#passive) | [Thoth, God of Magic](Thoth.md) | Passive | None |
-| [Lexicon of Ruin](Thoth.md#lexicon-of-ruin) | [Thoth, God of Magic](Thoth.md) | Active | Fire, Water, Lightning, Earth, Wind, Light and Space elemental — see the linked skill for all seven native IDs |
+| [Lexicon of Ruin](Thoth.md#lexicon-of-ruin) | [Thoth, God of Magic](Thoth.md) | Active | Fire, Water, Lightning, Earth, Wind, Light and Space elemental — `tensura:fire_elemental`, `tensura:water_elemental` |
 | [Spellbreak](Thoth.md#spellbreak) | [Thoth, God of Magic](Thoth.md) | Active | Generic magic — `tensura:magic` |
 | [Mana Crucible](Thoth.md#mana-crucible) | [Thoth, God of Magic](Thoth.md) | Active | None |
-| [Astral Library](Thoth.md#astral-library) | [Thoth, God of Magic](Thoth.md) | Active | Rotating Fire, Water, Lightning, Earth, Wind, Light and Space elemental — see the linked skill for all seven native IDs |
+| [Astral Library](Thoth.md#astral-library) | [Thoth, God of Magic](Thoth.md) | Active | Rotating Fire, Water, Lightning, Earth, Wind, Light and Space elemental — `tensura:fire_elemental`, `tensura:water_elemental` |
+| [Divine Authority](Godly.md#divine-authority) | [Godly Skills](Godly.md) | Always active | Modifier — original damage type |
+| [Absolute Penetration](Godly.md#absolute-penetration) | [Godly Skills](Godly.md) | Always active | Modifier — original damage type |
+| [Interference Immunity](Godly.md#interference-immunity) | [Godly Skills](Godly.md) | Always active | None |
+| [All-Skilled](Lugh.md#passive) | [Lugh, God of Skills](Lugh.md) | Passive | None |
+| [Skill Appraisal](Lugh.md#skill-appraisal) | [Lugh, God of Skills](Lugh.md) | Active | None |
+| [Reconstructed Art](Lugh.md#reconstructed-art) | [Lugh, God of Skills](Lugh.md) | Active | Variable normalised physical, elemental or generic magic — see the linked archive/source reference |
+| [Countermand](Lugh.md#countermand) | [Lugh, God of Skills](Lugh.md) | Active | None |
+| [Grand Synthesis](Lugh.md#grand-synthesis) | [Lugh, God of Skills](Lugh.md) | Active | Three archived normalised damage types — see the linked archive/source reference |
 
 ## Extra abilities
 
@@ -83,9 +93,9 @@ The three shared classification passives are granted by ownership of any Godly s
 
 ## Racial abilities
 
-| Ability | Parent system | Activation | Damage type |
+| Ability | Parent skill / system | Activation | Damage type |
 | --- | --- | --- | --- |
-| [Concordance Pulse](Convergent-Awakening.md#awakening-rewards) | [Convergent Awakening](Convergent-Awakening.md) | Active | None — healing and knockback |
+| [Concordance Pulse](Convergent-Awakening.md#awakening-rewards) | [Convergent Awakening](Convergent-Awakening.md) | Active | None |
 
 ---
 

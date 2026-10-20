@@ -90,6 +90,8 @@ public final class MythsNetwork {
         });}
         tag.put("ascensions",ascensions);tag.putBoolean("has_godly",SkillAPI.getSkillsFrom(p).getSkill(WildHunt.GODLY.get()).isPresent());
         tag.putBoolean("has_thoth",SkillAPI.getSkillsFrom(p).getSkill(WildHunt.MYTHIC.get(MythicKind.THOTH).get()).isPresent());
+        tag.putBoolean("has_lugh",SkillAPI.getSkillsFrom(p).getSkill(WildHunt.MYTHIC.get(MythicKind.LUGH).get()).isPresent());
+        tag.putBoolean("thread_mastered",SkillAPI.getSkillsFrom(p).getSkill(WildHunt.MYTHIC.get(MythicKind.THREADWEAVER).get()).map(i->i.isMastered(p)).orElse(false));
         tag.putBoolean("rune_mastered",SkillAPI.getSkillsFrom(p).getSkill(WildHunt.MYTHIC.get(MythicKind.RUNE_SMITH).get()).map(i->i.isMastered(p)).orElse(false));
         tag.putDouble("synthesis_ep",MythicEvolution.SYNTHESIS_EP);
         var recipes=new ListTag();for(var result:MythicEvolution.ultimates()){

@@ -80,6 +80,10 @@ Detonate your existing rune within 48 blocks, expanding its blast radius to six 
 
 Roll through Tensura’s normal reincarnation pool alongside the other seven Myths Uniques and configured native candidates. The roll is random; no particular skill is guaranteed. There is no race, trial or boss-kill requirement to roll.
 
+## Evolution
+
+Combine with mastered Threadweaver for [Anansi](https://github.com/Bithio999/MC/wiki/Anansi) through synthesis at 2M base EP. A mastered Rune Smith is also the additional ingredient for [Thoth](https://github.com/Bithio999/MC/wiki/Thoth).
+
 ## Suggested combo
 
 Place a rune at a choke point → wait for proximity activation or manually detonate early to cover a wider group.

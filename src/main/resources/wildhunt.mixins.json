@@ -10,7 +10,8 @@
     "DuoRaceMixin",
     "GodlyResistanceMixin",
     "GodlyResistanceAttributesMixin",
-    "ElementalBonusesMixin"
+    "ElementalBonusesMixin",
+    "LughCountermandMixin"
   ],
   "injectors": {
     "defaultRequire": 1

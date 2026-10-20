@@ -14,12 +14,12 @@
 | Active modes | 3 |
 | Resource | Aura |
 | Toggleable passive | Threshold Dominion |
-| Passive upkeep | 70 aura / second |
+| Passive upkeep | 110 aura / second |
 | Registry ID | `wildhunt:janus` |
 | **Obtaining** | |
 | Method | Synthesis: master both ingredients; 2M base EP |
 | **Evolution** | |
-| Evolution | [Aion](https://github.com/Bithio999/MC/wiki/Aion) or [Thoth](https://github.com/Bithio999/MC/wiki/Thoth) |
+| Evolution | [Aion](https://github.com/Bithio999/MC/wiki/Aion), [Thoth](https://github.com/Bithio999/MC/wiki/Thoth) or [Lugh](https://github.com/Bithio999/MC/wiki/Lugh) |
 
 ## Usage
 
@@ -31,9 +31,9 @@
 | --- | --- |
 | Damage type | None — support / defense |
 | Damage ID | — |
-| Upkeep | 70 aura / second |
+| Upkeep | 110 aura / second |
 
-Gain 35% movement speed, 30% attack speed, 0.5 knockback resistance and 60% Space boost. Threshold Dominion rewards movement and spatial offense.
+Gain 35% movement speed, 30% attack speed, 0.5 knockback resistance and 100% Space boost. Threshold Dominion rewards movement and spatial offense.
 
 Elemental boosts use the [strongest ordinary source](https://github.com/Bithio999/MC/wiki/Mechanics#elemental-bonus-sources); Godly bonuses apply separately.
 
@@ -43,11 +43,11 @@ Enable the native skill toggle in Ability Selection. The first second is paid on
 
 | Mode | Aura | Cooldown | Raw damage |
 | --- | ---: | ---: | --- |
-| 1. Twin Gates | 1,600 | 3 s | — |
-| 2. Parallax Snare | 2,200 | 7 s | 780 |
-| 3. Crossroads Edict | 4,500 | 18 s | 620 |
+| 1. Twin Gates | 4,000 placement / 400 transit | 2 s | — |
+| 2. Parallax Snare | 9,000 | 8 s | 1,900 |
+| 3. Crossroads Edict | 16,000 | 18 s | 1,700 |
 
-Damage listed here is before native combat handling and uses **1 + 0.5 × mastery fraction**, capped at **1.5×**. These new kits do not use the apex skills’ 0.90 multiplier or the former 3× Ultimate multiplier. EP never multiplies their damage. Native elemental boosts, authority, resistances, barriers and hit immunity apply.
+Damage listed here is before native combat handling and uses **1 + 0.5 × mastery fraction**, capped at **1.5×**. These new kits do not use the apex skills’ 0.90 multiplier or the former 3× Ultimate multiplier. EP never multiplies their damage. Damaging arts carry native **level-1 resistance penetration**; native elemental boosts, resistance attributes, nullification fallback, authority, barriers and hit immunity remain relevant.
 
 #### Twin Gates
 
@@ -57,11 +57,11 @@ Damage listed here is before native combat handling and uses **1 + 0.5 × master
 | --- | --- |
 | Damage type | None |
 | Damage ID | — |
-| Resource cost | 1,600 aura |
-| Cooldown | 3 seconds |
+| Resource cost | 4,000 aura placement / 400 aura transit |
+| Cooldown | 2 seconds |
 | Raw damage | — |
 
-First cast places a gate at your feet and a second safe point up to 36 blocks along the aimed route. The pair lasts twenty seconds. Recast within four blocks of either gate to travel to the other, preserving horizontal and vertical momentum. Each placement or successful transit costs 1,600 aura and has a three-second cooldown. A blocked destination or invalid placement is free and cannot teleport you into solid terrain.
+First cast costs **4,000 aura** and places a gate at your feet and a second safe point up to **48 blocks** along the aimed route. The pair lasts **thirty seconds**. Recast within four blocks of either gate to travel to the other, preserving horizontal and vertical momentum. Each successful transit costs **400 aura**; placement and transit share a **two-second cooldown**. A blocked destination or invalid placement is free and cannot teleport you into solid terrain.
 
 #### Parallax Snare
 
@@ -71,11 +71,13 @@ First cast places a gate at your feet and a second safe point up to 36 blocks al
 | --- | --- |
 | Damage type | Space elemental |
 | Damage ID | `tensura:space_elemental` |
-| Resource cost | 2,200 aura |
-| Cooldown | 7 seconds |
-| Raw damage | 780 |
+| Resource cost | 9,000 aura |
+| Cooldown | 8 seconds |
+| Raw damage | 1,900 |
 
-Mark a point within 36 blocks. Opposing spatial blades close around a six-block radius and strike after 0.8 seconds. The warning stays fixed; up to eight visible enemies can be hit.
+Mark a point within **48 blocks**. Opposing spatial blades close around a **seven-block radius** and strike after **0.8 seconds**, for 1,900 raw Space damage. The warning stays fixed; up to eight visible enemies can be hit.
+
+When cast within four blocks of a live gate, a second snare opens at the **opposite endpoint** if that endpoint is more than fourteen blocks from the first warning. This keeps the two targeting regions separate. Each snare has its own eight-enemy cap.
 
 #### Crossroads Edict
 
@@ -85,11 +87,11 @@ Mark a point within 36 blocks. Opposing spatial blades close around a six-block 
 | --- | --- |
 | Damage type | Space elemental |
 | Damage ID | `tensura:space_elemental` |
-| Resource cost | 4,500 aura |
+| Resource cost | 16,000 aura |
 | Cooldown | 18 seconds |
-| Raw damage | 620 |
+| Raw damage | 1,700 |
 
-Choose a field center within 32 blocks. Up to six visible enemies within ten blocks are displaced to their mirrored horizontal positions across the center. Each destination is checked against collision, build height and world border. An unsafe displacement leaves that enemy in place; the spatial hit still applies. Successful hits attempt native Movement Interference for 2.5 seconds.
+Choose a field center within 32 blocks. Up to six visible enemies within ten blocks are displaced to their mirrored horizontal positions across the center. Each destination is checked against collision, build height and world border. An unsafe displacement leaves that enemy in place. Each resulting position is then marked with a fixed **2.5-block-radius cut** that strikes after **0.6 seconds**, for **1,700 raw Space damage**. Enemies can leave the warning. Placement attempts native Movement Interference for **1.75 seconds**; its normal status protections apply.
 
 ## Obtaining
 

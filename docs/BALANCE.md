@@ -1,4 +1,40 @@
-# Current balance: 0.14.0
+# Current balance: 0.18.0
+
+The five combination Ultimates have distinct assault, sustain, spatial, trap and
+water-refraction roles. Acquisition remains two specific mastered Uniques and
+2M base EP. Godly skills retain the separate true-awakening/12M gate.
+
+| Ultimate | Combat budget before mastery / native modifiers | Costs / cooldowns |
+| --- | --- | --- |
+| Vritra | 1,500 Lightning + 850 Fire fuse; 900 Lightning + 500 Fire per storm pulse; 1,800 / 2,400 empowered eruptions | 6K / 15K / 25K aura; 5 / 16 / 26 s |
+| Demeter | 10% HP/SHP orchard healing + 500 Ice per second; one-use 40% HP/SHP rescue seeds; 1,400 / 2,200 harvest | 12K / 10K / 20K aura; 20 / 24 / 24 s |
+| Janus | 48-block safe gate; 1,900 Space snare with possible opposite-gate origin; 1,700 delayed Space Edict | 4K placement / 400 recast, 9K / 16K aura; 2 / 8 / 18 s |
+| Anansi | Three-anchor geometry; 1,300 thread contacts once per victim/second; 2,800 Space + 1,900 Earth finisher | 5K / 3.5K / 22K aura; 2 / 5 / 24 s |
+| Aegir | 1,600 / 2,200 refracted Water lance; projectile redirection; 2,100 / 3,000 empowered expanding Water rim | 7K / 12K / 20K aura; 5 / 16 / 24 s |
+
+Mastery remains 1–1.5×. Ultimate hits carry native level-1 resistance penetration;
+attribute defenses, barriers, nullification fallback, hit immunity, authority and
+PvP protections retain their independent rules. EP never multiplies damage.
+The ordinary elemental strongest-source policy and separate Godly bonuses remain.
+Demeter uses a threshold rescue effect rather than an active team barrier.
+
+[Lugh](../wiki/pages/Lugh.md) starts with three reconstruction forms. Observations
+produce 2K–4K bounded raw damage, with ordinary source normalization; its finisher
+snapshots three attacks at 1.8× each, sixteen ticks apart. Countermand blocks one
+recent non-Godly technique for six seconds without changing learned state.
+Its shared Godly traits require ownership, while its speed/mastery toggle has
+separate upkeep. No kit uses hit-count passive stacks or direct health assignment
+to bypass combat rules.
+
+[Addon reference research](research/ULTIMATE_BALANCE_0.18.md) documents the exact
+Nightmares release/defaults and Mysticism's legacy/current-version distinction.
+Those references inform utility, costs and penetration; they do not establish
+universal numerical parity across different servers and addon configurations.
+Current player-facing tables are in the [wiki](../wiki/README.md).
+
+---
+
+# Historical balance: 0.14.0
 
 All values below are fixed raw damage before native authority, defenses, elemental
 attributes and mastery. There is no EP damage multiplier. Costs remain unchanged.

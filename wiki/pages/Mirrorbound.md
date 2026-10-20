@@ -80,6 +80,10 @@ For six seconds, orbit mirror shards around yourself. Hostile or ownerless proje
 
 Roll through Tensura’s normal reincarnation pool alongside the other seven Myths Uniques and configured native candidates. The roll is random; no particular skill is guaranteed. There is no race, trial or boss-kill requirement to roll.
 
+## Evolution
+
+Combine with mastered Threadweaver for [Janus](Janus.md), or with mastered Scarlet Deluge for [Aegir](Aegir.md), through synthesis at 2M base EP.
+
 ## Suggested combo
 
 Use Prismatic Lance to pressure a formation → activate Mirror Aegis during incoming missile fire.

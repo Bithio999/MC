@@ -1,6 +1,6 @@
 package dev.wildhunt;
 
-/** The eight new kits share native skill plumbing, never their combat behavior. */
+/** Independent kits share native skill plumbing, never their combat behavior. */
 public enum MythicKind {
     THREADWEAVER("Threadweaver", 0xED82D1, "Loom Needle", "Sever Thread", "Silken Instinct",
         new double[]{220,500}, new int[]{4,6}, 15),
@@ -11,11 +11,17 @@ public enum MythicKind {
     MIRRORBOUND("Mirrorbound", 0xB2DDFB, "Prismatic Lance", "Mirror Aegis", "Silvered Soul",
         new double[]{280,600}, new int[]{3,10}, 15),
     VRITRA("Vritra, Lord of Cataclysm", 0xFFAA59, "Plasma Bore", "Thunderhead Crucible", "Cataclysm Front", "Catastrophe Engine",
-        new double[]{1400,3600,6000}, new int[]{4,15,24}, 80),
-    DEMETER("Demeter, Lady of Sanctuary", 0xBCF4CE, "Winter Orchard", "Crystal Bulwark", "Winter Harvest", "Evergreen Sanctuary",
-        new double[]{2200,1800,4000}, new int[]{18,16,20}, 70),
+        new double[]{6000,15000,25000}, new int[]{5,16,26}, 120),
+    DEMETER("Demeter, Lady of Sanctuary", 0xBCF4CE, "Winter Orchard", "Perennial Seed", "Winter Harvest", "Evergreen Sanctuary",
+        new double[]{12000,10000,20000}, new int[]{20,24,24}, 110),
     JANUS("Janus, Lord of Crossroads", 0xCAACFF, "Twin Gates", "Parallax Snare", "Crossroads Edict", "Threshold Dominion",
-        new double[]{1600,2200,4500}, new int[]{3,7,18}, 70),
+        new double[]{4000,9000,16000}, new int[]{2,8,18}, 110),
+    ANANSI("Anansi, Lord of Schemes", 0xD9A4FF, "Fate Stitch", "Puppet Passage", "Checkmate Loom", "Schemer's Instinct",
+        new double[]{5000,3500,22000}, new int[]{2,5,24}, 100),
+    AEGIR("Aegir, Lord of the Abyss", 0x65E4EC, "Refracted Harpoon", "Mirrorsea", "Sovereign Breaker", "Abyssal Majesty",
+        new double[]{7000,12000,20000}, new int[]{5,16,24}, 110),
+    LUGH("Lugh, God of Skills", 0xF4E7A1, "Skill Appraisal", "Reconstructed Art", "Countermand", "Grand Synthesis", "All-Skilled",
+        new double[]{1200,6500,9000,18000}, new int[]{2,4,18,40}, 240),
     THOTH("Thoth, God of Magic", 0x92E9F7, "Lexicon of Ruin", "Spellbreak", "Mana Crucible", "Astral Library", "Arcane Sovereignty",
         new double[]{5000,4000,0,9000}, new int[]{12,15,0,35}, 180);
 
@@ -39,15 +45,18 @@ public enum MythicKind {
     }
     public String id(){return name().toLowerCase(java.util.Locale.ROOT);}
     public boolean unique(){return ordinal()<VRITRA.ordinal();}
-    public boolean godly(){return this==THOTH;}
+    public boolean godly(){return this==THOTH || this==LUGH;}
     public String description(){return switch(this){
         case THREADWEAVER -> "Pin a visible enemy to a six-second silk tether, then sever it for a spatial burst. The tether pulls only after the enemy leaves its three-block leash. Silken Instinct improves movement and attack speed.";
         case RUNE_SMITH -> "Inscribe one remotely armed rune. It erupts when an enemy approaches, or use Command Detonation for a stronger, wider blast. Runic Circuit improves elemental spell power. No passive stacks.";
         case VERDANT_KEEPER -> "Grow an eight-second healing grove for yourself, owned pets and allies. Briar Grasp lashes and webs enemies in a forward fan. Verdant Heart strengthens natural SHP recovery. Healing never benefits hostile strangers.";
         case MIRRORBOUND -> "Split a light lance across three visible enemies. Mirror Aegis turns approaching hostile projectiles back toward their sender for six seconds. Silvered Soul improves light power, attack speed and movement.";
-        case VRITRA -> "Storm Crown + Black Flame. Bore a lightning lance through enemies and leave delayed fire detonations. Forge a fiery thunderhead, or send a telegraphed cataclysm front forward. Catastrophe Engine strengthens lightning, flame and melee.";
-        case DEMETER -> "Verdant Keeper + Frostbound Colossus. Winter Orchard restores allied HP/SHP and chills enemies. Crystal Bulwark lends native physical, magic and HUD barriers to allies. Winter Harvest consumes the orchard into six dodgeable crystal blooms. Evergreen Sanctuary strengthens natural SHP recovery and knockback resistance.";
-        case JANUS -> "Threadweaver + Mirrorbound. Link two safe gates and recast to traverse them without losing momentum. Parallax Snare closes opposing spatial blades around a marked location. Crossroads Edict safely displaces enemies across the field. Threshold Dominion strengthens spatial damage, attack speed and agility.";
+        case VRITRA -> "Storm Crown + Black Flame. Plasma Bore leaves delayed fire fuses and refracts through your thunderhead for a second firing angle. Thunderhead Crucible calls eight seconds of lightning/fire strikes. Cataclysm Front consumes the storm for wider, stronger eruptions. Native resistance penetration; no EP damage scaling.";
+        case DEMETER -> "Verdant Keeper + Frostbound Colossus. Winter Orchard restores allied HP/SHP and freezes approaches. Perennial Seed plants one-use rescue blooms on allies: when wounded below 35% HP, restore 40% HP/SHP and cleanse selected afflictions. Winter Harvest consumes the orchard into six warned crystal blooms and restores allies. No passive barrier.";
+        case JANUS -> "Threadweaver + Mirrorbound. Link safe gates and recast to traverse them without losing momentum. Parallax Snare also opens at your opposite gate when cast near an endpoint. Crossroads Edict mirrors enemies across a field, then closes its delayed spatial cut. Native resistance penetration; no EP damage scaling.";
+        case ANANSI -> "Threadweaver + Rune Smith. Place up to three armed anchors; their linking threads cut enemies that cross them. Puppet Passage traverses to the aimed anchor, moving that anchor to your former position. Checkmate Loom consumes the network into a warned triangular spatial collapse and delayed earth detonation. No passive stacks.";
+        case AEGIR -> "Scarlet Deluge + Mirrorbound. Refracted Harpoon fires a water lance; Mirrorsea adds two angled firing origins and redirects incoming hostile projectiles. Sovereign Breaker launches an expanding water shock front, consuming Mirrorsea to originate there with greater reach and force.";
+        case LUGH -> "[Godly] Appraise an enemy's recent damaging technique into a three-entry archive. Crouch + Reconstructed Art cycles its selected entry for free; press normally to reconstruct its damage type and attack form. Countermand seals a target's recent non-Godly technique for six seconds. Grand Synthesis weaves all three archived forms into a warned sequence. Three origin techniques are available immediately. All-Skilled strengthens attack speed, movement and native mastery gain. Magicules only; no EP damage scaling.";
         case THOTH -> "[Godly] Unleash a seven-chapter Fire, Water, Lightning, Earth, Wind, Light and Space spell sequence. Spellbreak disrupts non-Godly enemies and recovers part of drained magicules. Hold Mana Crucible to convert two aura into one magicule at 5% of maximum magicules per second, with no cast cost, cooldown or total cap. Astral Library follows you with orbiting books and autonomous seven-element spell fire. Arcane Sovereignty strengthens elemental magic, chanting and native magic efficiency. Offensive arts cost magicules; no EP damage scaling.";
     };}
 }

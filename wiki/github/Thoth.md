@@ -152,7 +152,7 @@ Attacks respect teams, owned pets, creative/spectator immunity and server PvP se
 
 [Watch Astral Library in motion](https://github.com/Bithio999/MC/blob/main/wiki/media/astral-library.mp4).
 
-![Aion and Thoth in the native Godly skill list](https://github.com/Bithio999/MC/blob/main/wiki/media/godly-magic.png?raw=true)
+![Aion, Lugh and Thoth in the native Godly list](https://github.com/Bithio999/MC/blob/main/wiki/media/godly-lugh-menu.png?raw=true)
 
 ---
 

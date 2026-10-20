@@ -20,7 +20,7 @@ import java.util.*;
 @PrefixGameTestTemplate(false)
 public final class MythicGameTests {
     private static final java.util.concurrent.atomic.AtomicInteger ARENAS=new java.util.concurrent.atomic.AtomicInteger();
-    private static ServerPlayer player(GameTestHelper h){
+    static ServerPlayer player(GameTestHelper h){
         // Follow the runner's fresh test region: fixed world coordinates can reload
         // mobs saved by a previous GameTest run and contaminate target-cap tests.
         var origin=h.absolutePos(BlockPos.ZERO);
@@ -29,18 +29,18 @@ public final class MythicGameTests {
         var e=net.neoforged.neoforge.common.util.FakePlayerFactory.get(h.getLevel(),new com.mojang.authlib.GameProfile(UUID.randomUUID(),"MythicTest"));e.setPos(p);e.setYRot(-90);e.setXRot(0);e.setGameMode(net.minecraft.world.level.GameType.SURVIVAL);
         RaceAPI.getRaceFrom(e).setRace(WildHunt.HUNTERS.get(2).get(),false);EnergyHelper.setBaseMaxEP(e,20_000_000);var energy=TensuraStorages.getExistenceFrom(e);energy.setTrueHero(true);energy.setAura(1_000_000);energy.setMagicule(1_000_000);return e;
     }
-    private static net.minecraft.world.entity.monster.Husk target(GameTestHelper h,Vec3 p){var z=new net.minecraft.world.entity.monster.Husk(net.minecraft.world.entity.EntityType.HUSK,h.getLevel());z.setPos(p);z.setNoAi(true);z.setNoGravity(true);z.getAttribute(Attributes.MAX_HEALTH).setBaseValue(1024);z.setHealth(1024);h.getLevel().addFreshEntity(z);return z;}
-    private static ManasSkillInstance learn(LivingEntity p,MythicKind k){var s=WildHunt.MYTHIC.get(k).get();HunterData.learnReward(p,s);return SkillAPI.getSkillsFrom(p).getSkill(s).orElseThrow();}
-    private static void afterTracking(GameTestHelper h,List<? extends LivingEntity> targets,Runnable checks){
+    static net.minecraft.world.entity.monster.Husk target(GameTestHelper h,Vec3 p){var z=new net.minecraft.world.entity.monster.Husk(net.minecraft.world.entity.EntityType.HUSK,h.getLevel());z.setPos(p);z.setNoAi(true);z.setNoGravity(true);z.getAttribute(Attributes.MAX_HEALTH).setBaseValue(1024);z.setHealth(1024);h.getLevel().addFreshEntity(z);return z;}
+    static ManasSkillInstance learn(LivingEntity p,MythicKind k){var s=WildHunt.MYTHIC.get(k).get();HunterData.learnReward(p,s);return SkillAPI.getSkillsFrom(p).getSkill(s).orElseThrow();}
+    static void afterTracking(GameTestHelper h,List<? extends LivingEntity> targets,Runnable checks){
         h.runAfterDelay(5,()->h.startSequence().thenWaitUntil(()->{
             for(var target:targets)h.assertTrue(h.getLevel().getEntitiesOfClass(LivingEntity.class,target.getBoundingBox().inflate(.1)).contains(target) && h.getLevel().getEntity(target.getUUID())==target,"Fixture target is not accessible in both entity indexes yet");
         }).thenExecute(checks));
     }
-    private static void cast(LivingEntity p,ManasSkillInstance i,int mode){i.getSkill().onPressed(i,p,0,mode);}
-    private static void tick(LivingEntity p,ManasSkillInstance i){((MythicSkill)i.getSkill()).tickActive(i,p);}
-    private static void due(ManasSkillInstance i,long time){for(var value:i.getOrCreateTag().getList("bursts",Tag.TAG_COMPOUND))((CompoundTag)value).putLong("at",time);}
+    static void cast(LivingEntity p,ManasSkillInstance i,int mode){i.getSkill().onPressed(i,p,0,mode);}
+    static void tick(LivingEntity p,ManasSkillInstance i){((MythicSkill)i.getSkill()).tickActive(i,p);}
+    static void due(ManasSkillInstance i,long time){for(var value:i.getOrCreateTag().getList("bursts",Tag.TAG_COMPOUND))((CompoundTag)value).putLong("at",time);}
     @GameTest(template="empty",timeoutTicks=100)
-    public static void eightNewKitsHaveNativeTiersNamesModesAndUniqueRolls(GameTestHelper h){
+    public static void allMythicKitsHaveNativeTiersNamesModesAndUniqueRolls(GameTestHelper h){
         var pool=io.github.manasmods.tensura.menu.ReincarnationMenu.getSkillPool();var names=new HashSet<String>();
         for(var kind:MythicKind.values()){
             var s=WildHunt.MYTHIC.get(kind).get();h.assertTrue(names.add(s.getName().getString()) && s.getName().getString().equals(kind.title),"Untranslated or duplicated name: "+kind);
@@ -107,7 +107,7 @@ public final class MythicGameTests {
     }
     @GameTest(template="empty",timeoutTicks=100)
     public static void plasmaBoreLeavesDelayedFireAndCataclysmIsTelegraphed(GameTestHelper h){
-        var p=player(h);var z=target(h,p.position().add(8,0,0));var i=learn(p,MythicKind.VRITRA);afterTracking(h,List.of(z),()->{
+        var p=player(h);var z=target(h,p.position().add(8,0,0));var i=learn(p,MythicKind.VRITRA);z.addEffect(new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.DAMAGE_RESISTANCE,200,3));afterTracking(h,List.of(z),()->{
             cast(p,i,0);h.assertTrue(z.getHealth()<1024 && !i.getOrCreateTag().getList("bursts",Tag.TAG_COMPOUND).isEmpty(),"Plasma failed: health="+z.getHealth()+" cooldown="+i.getCoolDown(0)+" look="+p.getLookAngle()+" tag="+i.getOrCreateTag());float first=z.getHealth();z.invulnerableTime=0;tick(p,i);h.assertTrue(z.getHealth()==first,"Fuse exploded before warning elapsed");due(i,h.getLevel().getGameTime());tick(p,i);h.assertTrue(z.getHealth()<first,"Delayed fire did not explode");
             cast(p,i,2);h.assertTrue(i.getOrCreateTag().getList("bursts",Tag.TAG_COMPOUND).size()==7,"Cataclysm did not create a bounded seven-step front");h.succeed();});
     }
@@ -303,7 +303,7 @@ public final class MythicGameTests {
     @GameTest(template="empty",timeoutTicks=100)
     public static void janusEdictDisplacesSafelyAndParallaxWaitsForItsWarning(GameTestHelper h){
         var p=player(h);var a=target(h,p.position().add(8,0,0));var b=target(h,p.position().add(8,0,3));var i=learn(p,MythicKind.JANUS);
-        afterTracking(h,List.of(a,b),()->{Vec3 before=b.position();cast(p,i,2);h.assertTrue(Math.abs(b.getZ()-p.getZ()+3)<.001 && b.getHealth()<1024,"Crossroads did not mirror target across its field center");
+        afterTracking(h,List.of(a,b),()->{Vec3 before=b.position();a.getAttribute(TensuraAttributes.SPACE_RESISTANCE).setBaseValue(.8);b.getAttribute(TensuraAttributes.SPACE_RESISTANCE).setBaseValue(.8);cast(p,i,2);h.assertTrue(Math.abs(b.getZ()-p.getZ()+3)<.001 && b.getHealth()==1024,"Crossroads did not mirror target across its field center");
             for(var v:List.of(a,b))v.invulnerableTime=0;float hp=a.getHealth();cast(p,i,1);tick(p,i);h.assertTrue(a.getHealth()==hp,"Parallax hit before warning elapsed");due(i,h.getLevel().getGameTime());tick(p,i);h.assertTrue(a.getHealth()<hp,"Parallax failed at warned position");h.succeed();});
     }
     @GameTest(template="empty",timeoutTicks=100)
@@ -316,7 +316,7 @@ public final class MythicGameTests {
     @GameTest(template="empty",timeoutTicks=100)
     public static void vritraFullComboKeepsAllTwentyOneDelayedExplosions(GameTestHelper h){
         var p=player(h);var targets=new ArrayList<net.minecraft.world.entity.monster.Husk>();
-        for(int n=0;n<8;n++)targets.add(target(h,p.position().add(8+n,0,0)));
+        for(int n=0;n<8;n++){var z=target(h,p.position().add(8+n,0,0));z.addEffect(new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.DAMAGE_RESISTANCE,200,3));targets.add(z);}
         var i=learn(p,MythicKind.VRITRA);
         afterTracking(h,targets,()->{
             cast(p,i,0);cast(p,i,1);tick(p,i);cast(p,i,2);
@@ -375,10 +375,11 @@ public final class MythicGameTests {
     }
 
     @GameTest(template="empty",timeoutTicks=100)
-    public static void crystalBulwarkKeepsDefenseAsAnActiveTeamSpecialty(GameTestHelper h){
-        var p=player(h);var i=learn(p,MythicKind.DEMETER);cast(p,i,1);var id=WildHunt.id("crystal_bulwark/"+p.getUUID());
-        h.assertTrue(p.getAttribute(TensuraAttributes.MULTILAYER_BARRIER).getModifier(id).amount()==500 && p.getAttribute(TensuraAttributes.PHYSICAL_BARRIER).getModifier(id).amount()==50 && p.getAttribute(TensuraAttributes.MAGIC_BARRIER).getModifier(id).amount()==50,"Dedicated Bulwark did not receive stronger native protection");
-        var lease=HunterData.of(p).getList("crystal_wards",Tag.TAG_COMPOUND).getCompound(0);h.assertTrue(lease.getLong("until")==h.getLevel().getGameTime()+160,"Bulwark duration is not eight seconds");h.succeed();
+    public static void perennialSeedReplacesBulwarkWithAOneUseRescue(GameTestHelper h){
+        var p=player(h);var i=learn(p,MythicKind.DEMETER);double barrier=p.getAttributeValue(TensuraAttributes.MULTILAYER_BARRIER);cast(p,i,1);
+        h.assertTrue(HunterData.of(p).getCompound("perennial_seed").getLong("until")==h.getLevel().getGameTime()+240 && p.getAttributeValue(TensuraAttributes.MULTILAYER_BARRIER)==barrier,"Seed did not replace the old ward with a 12-second rescue");
+        p.setHealth(p.getMaxHealth()*.3f);double hp=p.getHealth();var energy=TensuraStorages.getExistenceFrom(p);energy.setSpiritualHealth(10);SovereignArts.tickTarget(p);
+        h.assertTrue(Math.abs(p.getHealth()-hp-p.getMaxHealth()*.4)<.01 && energy.getSpiritualHealth()>10 && !HunterData.of(p).contains("perennial_seed"),"Seed failed its one-use 40% HP/SHP recovery");h.succeed();
     }
 
     @GameTest(template="empty",timeoutTicks=100)

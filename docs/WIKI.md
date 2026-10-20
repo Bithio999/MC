@@ -15,7 +15,7 @@ This generates:
 
 - `wiki/index.html` and `wiki/site/*.html`: the styled visual edition.
 - `wiki/github/*.md`: the actual GitHub Wiki edition, including `Home.md`, all 143 gameplay/reference articles, `_Sidebar.md`, and `_Footer.md`.
-- `releases/tensura-myths-wiki-0.17.0.zip`: the self-contained offline edition.
+- `releases/tensura-myths-wiki-0.18.0.zip`: the self-contained offline edition.
 
 GitHub Wiki uses GitHub's own theme and strips custom CSS and scripts. Its pages mirror the visual edition's structure, original portraits, topic tables, navigation, and article content. The ZIP provides the full custom theme and search.
 
@@ -56,3 +56,5 @@ Development history, save migration, and balancing references live separately in
 The shared sidebar is defined in `wiki/navigation.json`. `wiki/catalog.json` records article category and skill tier; both editions use these for a consistent hierarchy. Skills, Races, Otherworlders and Reference are the main entry points. The 105 fusion articles remain individually addressable and are indexed by ancestry.
 
 Each active/passive variant is listed in `wiki/abilities.json` and the Ability index. Under each skill's usage label, include an Ability information table with Damage type and Damage ID. Explicitly label utility/healing as None. Separate direct hits from native status damage such as Black Burn; never infer damage from an animation, skill name or resource. Update the ability index and metadata when adding an art. See [damage audit](WIKI-DAMAGE-AUDIT.md) for the inspected native paths.
+
+The wiki build regenerates `pages/Abilities.md` from `abilities.json` before rendering. Use `python3 scripts/build-ability-index.py` for a Markdown-only refresh; keep new records tied to their exact skill-page anchors.

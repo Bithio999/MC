@@ -5,6 +5,12 @@
     "category": "Reference"
   },
   {
+    "slug": "Aegir",
+    "title": "Aegir, Lord of the Abyss",
+    "category": "Skills",
+    "tier": "Ultimate"
+  },
+  {
     "slug": "Aion",
     "title": "Aion, God of Causality",
     "category": "Skills",
@@ -14,6 +20,12 @@
     "slug": "Alma",
     "title": "Alma",
     "category": "Otherworlders"
+  },
+  {
+    "slug": "Anansi",
+    "title": "Anansi, Lord of Schemes",
+    "category": "Skills",
+    "tier": "Ultimate"
   },
   {
     "slug": "Apex-Hunter",
@@ -621,7 +633,7 @@
   },
   {
     "slug": "Hunters-Recovery",
-    "title": "Hunter\u2019s Recovery",
+    "title": "Hunter’s Recovery",
     "category": "Skills",
     "tier": "Extra"
   },
@@ -630,6 +642,12 @@
     "title": "Janus, Lord of Crossroads",
     "category": "Skills",
     "tier": "Ultimate"
+  },
+  {
+    "slug": "Lugh",
+    "title": "Lugh, God of Skills",
+    "category": "Skills",
+    "tier": "Godly"
   },
   {
     "slug": "Mechanics",

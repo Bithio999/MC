@@ -1,8 +1,8 @@
 # Ability index
 
-[Main Page](https://github.com/Bithio999/MC/wiki/Home) · [Skills](https://github.com/Bithio999/MC/wiki/Skills) · [Ability index](https://github.com/Bithio999/MC/wiki/Abilities) · [Damage types](https://github.com/Bithio999/MC/wiki/Damage-Types)
+[Main Page](https://github.com/Bithio999/MC/wiki/Home) · [Skills](https://github.com/Bithio999/MC/wiki/Skills) · [Damage types](https://github.com/Bithio999/MC/wiki/Damage-Types)
 
-**Ability index** lists every active art, classification passive, toggleable passive and shared racial action. Each entry links to its exact resource cost, targeting and damage-type table. Reflected projectiles retain their own damage source.
+**Ability index** lists active arts, toggleable passives, classification passives and shared racial actions. Each entry links to its exact resource costs, targeting and damage-type information. Reflected projectiles retain their original attack type.
 
 ## Unique abilities
 
@@ -43,22 +43,24 @@
 | [Cataclysm Front](https://github.com/Bithio999/MC/wiki/Vritra#cataclysm-front) | [Vritra, Lord of Cataclysm](https://github.com/Bithio999/MC/wiki/Vritra) | Active | Fire elemental — `tensura:fire_elemental` |
 | [Evergreen Sanctuary](https://github.com/Bithio999/MC/wiki/Demeter#passive) | [Demeter, Lady of Sanctuary](https://github.com/Bithio999/MC/wiki/Demeter) | Passive | None |
 | [Winter Orchard](https://github.com/Bithio999/MC/wiki/Demeter#winter-orchard) | [Demeter, Lady of Sanctuary](https://github.com/Bithio999/MC/wiki/Demeter) | Active | Ice elemental against enemies; allied healing has no damage type — `tensura:ice_elemental` |
-| [Crystal Bulwark](https://github.com/Bithio999/MC/wiki/Demeter#crystal-bulwark) | [Demeter, Lady of Sanctuary](https://github.com/Bithio999/MC/wiki/Demeter) | Active | None |
+| [Perennial Seed](https://github.com/Bithio999/MC/wiki/Demeter#perennial-seed) | [Demeter, Lady of Sanctuary](https://github.com/Bithio999/MC/wiki/Demeter) | Active | None |
 | [Winter Harvest](https://github.com/Bithio999/MC/wiki/Demeter#winter-harvest) | [Demeter, Lady of Sanctuary](https://github.com/Bithio999/MC/wiki/Demeter) | Active | Ice elemental — `tensura:ice_elemental` |
 | [Threshold Dominion](https://github.com/Bithio999/MC/wiki/Janus#passive) | [Janus, Lord of Crossroads](https://github.com/Bithio999/MC/wiki/Janus) | Passive | None |
 | [Twin Gates](https://github.com/Bithio999/MC/wiki/Janus#twin-gates) | [Janus, Lord of Crossroads](https://github.com/Bithio999/MC/wiki/Janus) | Active | None |
 | [Parallax Snare](https://github.com/Bithio999/MC/wiki/Janus#parallax-snare) | [Janus, Lord of Crossroads](https://github.com/Bithio999/MC/wiki/Janus) | Active | Space elemental — `tensura:space_elemental` |
 | [Crossroads Edict](https://github.com/Bithio999/MC/wiki/Janus#crossroads-edict) | [Janus, Lord of Crossroads](https://github.com/Bithio999/MC/wiki/Janus) | Active | Space elemental — `tensura:space_elemental` |
+| [Schemer's Instinct](https://github.com/Bithio999/MC/wiki/Anansi#passive) | [Anansi, Lord of Schemes](https://github.com/Bithio999/MC/wiki/Anansi) | Passive | None |
+| [Fate Stitch](https://github.com/Bithio999/MC/wiki/Anansi#fate-stitch) | [Anansi, Lord of Schemes](https://github.com/Bithio999/MC/wiki/Anansi) | Active | Space elemental — `tensura:space_elemental` |
+| [Puppet Passage](https://github.com/Bithio999/MC/wiki/Anansi#puppet-passage) | [Anansi, Lord of Schemes](https://github.com/Bithio999/MC/wiki/Anansi) | Active | None |
+| [Checkmate Loom](https://github.com/Bithio999/MC/wiki/Anansi#checkmate-loom) | [Anansi, Lord of Schemes](https://github.com/Bithio999/MC/wiki/Anansi) | Active | Space elemental, then Earth elemental — `tensura:space_elemental`, `tensura:earth_elemental` |
+| [Abyssal Majesty](https://github.com/Bithio999/MC/wiki/Aegir#passive) | [Aegir, Lord of the Abyss](https://github.com/Bithio999/MC/wiki/Aegir) | Passive | None |
+| [Refracted Harpoon](https://github.com/Bithio999/MC/wiki/Aegir#refracted-harpoon) | [Aegir, Lord of the Abyss](https://github.com/Bithio999/MC/wiki/Aegir) | Active | Water elemental — `tensura:water_elemental` |
+| [Mirrorsea](https://github.com/Bithio999/MC/wiki/Aegir#mirrorsea) | [Aegir, Lord of the Abyss](https://github.com/Bithio999/MC/wiki/Aegir) | Active | None — reflected projectiles retain their attack type |
+| [Sovereign Breaker](https://github.com/Bithio999/MC/wiki/Aegir#sovereign-breaker) | [Aegir, Lord of the Abyss](https://github.com/Bithio999/MC/wiki/Aegir) | Active | Water elemental — `tensura:water_elemental` |
 
 ## Godly abilities
 
-The three shared classification passives are granted by ownership of any Godly skill, require no toggle or upkeep and do not stack.
-
-| Classification passive | Parent system | Activation | Damage type |
-| --- | --- | --- | --- |
-| [Divine Authority](https://github.com/Bithio999/MC/wiki/Godly#divine-authority) | [Godly](https://github.com/Bithio999/MC/wiki/Godly) | Always active | Modifier — original attack type |
-| [Absolute Penetration](https://github.com/Bithio999/MC/wiki/Godly#absolute-penetration) | [Godly](https://github.com/Bithio999/MC/wiki/Godly) | Always active | Modifier — original attack type |
-| [Interference Immunity](https://github.com/Bithio999/MC/wiki/Godly#interference-immunity) | [Godly](https://github.com/Bithio999/MC/wiki/Godly) | Always active | None |
+The three Godly classification passives are always active, free and non-stacking. Individual skill toggles retain their own upkeep.
 
 | Ability | Parent skill / system | Activation | Damage type |
 | --- | --- | --- | --- |
@@ -68,10 +70,18 @@ The three shared classification passives are granted by ownership of any Godly s
 | [Causal Reversal](https://github.com/Bithio999/MC/wiki/Aion#causal-reversal) | [Aion, God of Causality](https://github.com/Bithio999/MC/wiki/Aion) | Active | None |
 | [Genesis Verdict](https://github.com/Bithio999/MC/wiki/Aion#genesis-verdict) | [Aion, God of Causality](https://github.com/Bithio999/MC/wiki/Aion) | Active | Space elemental — `tensura:space_elemental` |
 | [Arcane Sovereignty](https://github.com/Bithio999/MC/wiki/Thoth#passive) | [Thoth, God of Magic](https://github.com/Bithio999/MC/wiki/Thoth) | Passive | None |
-| [Lexicon of Ruin](https://github.com/Bithio999/MC/wiki/Thoth#lexicon-of-ruin) | [Thoth, God of Magic](https://github.com/Bithio999/MC/wiki/Thoth) | Active | Fire, Water, Lightning, Earth, Wind, Light and Space elemental — see the linked skill for all seven native IDs |
+| [Lexicon of Ruin](https://github.com/Bithio999/MC/wiki/Thoth#lexicon-of-ruin) | [Thoth, God of Magic](https://github.com/Bithio999/MC/wiki/Thoth) | Active | Fire, Water, Lightning, Earth, Wind, Light and Space elemental — `tensura:fire_elemental`, `tensura:water_elemental` |
 | [Spellbreak](https://github.com/Bithio999/MC/wiki/Thoth#spellbreak) | [Thoth, God of Magic](https://github.com/Bithio999/MC/wiki/Thoth) | Active | Generic magic — `tensura:magic` |
 | [Mana Crucible](https://github.com/Bithio999/MC/wiki/Thoth#mana-crucible) | [Thoth, God of Magic](https://github.com/Bithio999/MC/wiki/Thoth) | Active | None |
-| [Astral Library](https://github.com/Bithio999/MC/wiki/Thoth#astral-library) | [Thoth, God of Magic](https://github.com/Bithio999/MC/wiki/Thoth) | Active | Rotating Fire, Water, Lightning, Earth, Wind, Light and Space elemental — see the linked skill for all seven native IDs |
+| [Astral Library](https://github.com/Bithio999/MC/wiki/Thoth#astral-library) | [Thoth, God of Magic](https://github.com/Bithio999/MC/wiki/Thoth) | Active | Rotating Fire, Water, Lightning, Earth, Wind, Light and Space elemental — `tensura:fire_elemental`, `tensura:water_elemental` |
+| [Divine Authority](https://github.com/Bithio999/MC/wiki/Godly#divine-authority) | [Godly Skills](https://github.com/Bithio999/MC/wiki/Godly) | Always active | Modifier — original damage type |
+| [Absolute Penetration](https://github.com/Bithio999/MC/wiki/Godly#absolute-penetration) | [Godly Skills](https://github.com/Bithio999/MC/wiki/Godly) | Always active | Modifier — original damage type |
+| [Interference Immunity](https://github.com/Bithio999/MC/wiki/Godly#interference-immunity) | [Godly Skills](https://github.com/Bithio999/MC/wiki/Godly) | Always active | None |
+| [All-Skilled](https://github.com/Bithio999/MC/wiki/Lugh#passive) | [Lugh, God of Skills](https://github.com/Bithio999/MC/wiki/Lugh) | Passive | None |
+| [Skill Appraisal](https://github.com/Bithio999/MC/wiki/Lugh#skill-appraisal) | [Lugh, God of Skills](https://github.com/Bithio999/MC/wiki/Lugh) | Active | None |
+| [Reconstructed Art](https://github.com/Bithio999/MC/wiki/Lugh#reconstructed-art) | [Lugh, God of Skills](https://github.com/Bithio999/MC/wiki/Lugh) | Active | Variable normalised physical, elemental or generic magic — see the linked archive/source reference |
+| [Countermand](https://github.com/Bithio999/MC/wiki/Lugh#countermand) | [Lugh, God of Skills](https://github.com/Bithio999/MC/wiki/Lugh) | Active | None |
+| [Grand Synthesis](https://github.com/Bithio999/MC/wiki/Lugh#grand-synthesis) | [Lugh, God of Skills](https://github.com/Bithio999/MC/wiki/Lugh) | Active | Three archived normalised damage types — see the linked archive/source reference |
 
 ## Extra abilities
 
@@ -83,9 +93,9 @@ The three shared classification passives are granted by ownership of any Godly s
 
 ## Racial abilities
 
-| Ability | Parent system | Activation | Damage type |
+| Ability | Parent skill / system | Activation | Damage type |
 | --- | --- | --- | --- |
-| [Concordance Pulse](https://github.com/Bithio999/MC/wiki/Convergent-Awakening#awakening-rewards) | [Convergent Awakening](https://github.com/Bithio999/MC/wiki/Convergent-Awakening) | Active | None — healing and knockback |
+| [Concordance Pulse](https://github.com/Bithio999/MC/wiki/Convergent-Awakening#awakening-rewards) | [Convergent Awakening](https://github.com/Bithio999/MC/wiki/Convergent-Awakening) | Active | None |
 
 ---
 

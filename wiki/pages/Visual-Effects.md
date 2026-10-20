@@ -70,7 +70,7 @@ These in-game views show the geometry in an isolated development world. Some use
 
 ### Demeter
 
-[Demeter](Demeter.md) — Winter Orchard grows an ice-veined grove with curved crystal branches, snowflake tips, roots and flowing restorative ripples. Crystal Bulwark uses six engraved faceted panels around its actual recipient. Winter Harvest first shows its frost warning, then opens into a large eight-petalled crystalline bloom at the strike.
+[Demeter](Demeter.md) — Winter Orchard grows an ice-veined grove with curved crystal branches, snowflake tips, roots and flowing restorative ripples. Perennial Seed marks its actual recipient with a quiet crystal flower and opens a crystalline recovery bloom when triggered. Winter Harvest first shows its frost warning, then opens into a large eight-petalled crystalline bloom at the strike.
 
 ![Winter Orchard’s luminous veins and crystal branches](../media/visual-demeter.png)
 
@@ -95,6 +95,26 @@ These in-game views show the geometry in an isolated development world. Some use
 ## Combat readability
 
 Bright cores mark beam paths, floor inscriptions preserve placed areas, and warned strikes build before their existing damage timings. Visual geometry has no collision and does not place terrain blocks. Server logic determines all hits, costs and cooldowns independently.
+
+### Anansi
+
+[Anansi](Anansi.md) uses articulated runic spider anchors and fine braided threads that match its placed network. Puppet Passage sends a woven transit along the route; Checkmate raises its fixed closing lattice and erupts along the consumed shape.
+
+![Anansi's three-anchor runic network](../media/anansi-network.png)
+
+### Aegir
+
+[Aegir](Aegir.md) builds a circular caustic Mirrorsea and six floating glass lenses. Refracted Harpoon shows each converging water spear; Sovereign Breaker's narrow crest expands with its actual damage rim.
+
+![Mirrorsea's caustic basin and glass lenses](../media/aegir-mirrorsea.png)
+
+![Sovereign Breaker's expanding crest](../media/aegir-breaker.png)
+
+### Lugh
+
+[Lugh](Lugh.md) assembles ivory/gold armaments from solid, recessed rune tablets. Blade arcs, travelling lances and a descending crown identify its three forms. Grand Synthesis visibly assembles its archived forms in sequence. Appraisal scans the target, while Countermand locks a single rune tablet rather than surrounding the victim with a barrier.
+
+![Lugh's three-technique synthesis formation](../media/lugh-synthesis.png)
 
 ---
 

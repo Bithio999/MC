@@ -78,6 +78,10 @@ Consume your live tether and burst around its current victim, hitting up to six 
 
 Roll through Tensura’s normal reincarnation pool alongside the other seven Myths Uniques and configured native candidates. The roll is random; no particular skill is guaranteed. There is no race, trial or boss-kill requirement to roll.
 
+## Evolution
+
+Combine with Mirrorbound for [Janus](https://github.com/Bithio999/MC/wiki/Janus), or with Rune Smith for [Anansi](https://github.com/Bithio999/MC/wiki/Anansi), at 2M base EP and mastery of both ingredients. A mastered Threadweaver can also be combined with a mastered Ultimate during [Lugh](https://github.com/Bithio999/MC/wiki/Lugh) ascension.
+
 ## Suggested combo
 
 Land Loom Needle → let an enemy strain against the fixed leash → Sever Thread when enemies cluster nearby.

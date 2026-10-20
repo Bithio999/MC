@@ -22,7 +22,9 @@ public final class ArtVisualEntity extends Entity {
     public static final int THREAD_LINE=11,RUNE_MINE=12,LIVING_GROVE=13,MIRROR_WARD=14,PRISM_RAY=15,PLASMA_LANCE=16,
         THUNDERHEAD=17,CATACLYSM_FRONT=18,WINTER_ORCHARD=19,CRYSTAL_BULWARK=20,CRYSTAL_BLOOM=21,TWIN_GATE=22,
         PARALLAX=23,CROSSROADS=24,LEXICON=25,SPELLBREAK=26,MANA_CRUCIBLE=27,ASTRAL_LIBRARY=28,SPELL_RAY=29,
-        BRIAR=30,RUNE_BURST=31,MIRROR_SHARD=32,RAILBOLT=33,THUNDER_STEP=34,ELEMENT_IMPACT=35,OIL_POOL=36,HEALING_PULSE=37,GATE_TRANSIT=38;
+        BRIAR=30,RUNE_BURST=31,MIRROR_SHARD=32,RAILBOLT=33,THUNDER_STEP=34,ELEMENT_IMPACT=35,OIL_POOL=36,HEALING_PULSE=37,GATE_TRANSIT=38,
+        FATE_ANCHOR=39,FATE_THREAD=40,LOOM_TRANSIT=41,CHECKMATE_EDGE=42,MIRRORSEA=43,REFRACTED_HARPOON=44,SOVEREIGN_BREAKER=45,WATER_REFRACTION=46,
+        PERENNIAL_SEED=47,REBIRTH_BLOOM=48,SKILL_APPRAISAL=49,ARTISAN_THREAD=50,COUNTERMAND=51,GRAND_SYNTHESIS=52,RECONSTRUCTED_BLADE=53,RECONSTRUCTED_LANCE=54,RECONSTRUCTED_CROWN=55;
     private static final DeferredRegister<EntityType<?>> TYPES = DeferredRegister.create(WildHunt.ID, Registries.ENTITY_TYPE);
     public static final RegistrySupplier<EntityType<ArtVisualEntity>> TYPE = TYPES.register("art_visual", () ->
         EntityType.Builder.<ArtVisualEntity>of(ArtVisualEntity::new, MobCategory.MISC).sized(0.1f, 0.1f)
@@ -57,7 +59,7 @@ public final class ArtVisualEntity extends Entity {
     public int kind() { return entityData.get(KIND); }
     public int lifetime() { return entityData.get(LIFETIME); }
     public int style(){return entityData.get(STYLE);}
-    public ArtVisualEntity style(int style){entityData.set(STYLE,Math.clamp(style,0,kind()==SPELL_RAY?ThothElement.COUNT-1:kind()==ASTRAL_LIBRARY?ThothElement.LIBRARY_DURATION/ThothElement.LIBRARY_INTERVAL:2));return this;}
+    public ArtVisualEntity style(int style){entityData.set(STYLE,Math.clamp(style,0,kind()==GRAND_SYNTHESIS?26:kind()==SPELL_RAY?ThothElement.COUNT-1:kind()==ASTRAL_LIBRARY?ThothElement.LIBRARY_DURATION/ThothElement.LIBRARY_INTERVAL:2));return this;}
     public Vec3 end() { return new Vec3(entityData.get(END_X), entityData.get(END_Y), entityData.get(END_Z)); }
     public Vec3 end(float partial) {return tickCount<=1?end():previousEnd.lerp(smoothedEnd,partial);}
     @Override public void lerpTo(double x,double y,double z,float yaw,float pitch,int steps) {
@@ -66,6 +68,12 @@ public final class ArtVisualEntity extends Entity {
     @Override public void tick() {
         previousEnd=smoothedEnd;smoothedEnd=tickCount<=1?end():smoothedEnd.lerp(end(),.65);super.tick();
         if(level().isClientSide() && interpolationSteps>0){setPos(position().lerp(interpolationTarget,1d/interpolationSteps));interpolationSteps--;}
+        if(!level().isClientSide() && (kind()==PERENNIAL_SEED || kind()==COUNTERMAND) && tickCount>2){
+            if(caster() instanceof net.minecraft.world.entity.LivingEntity target){
+                var lease=target.getPersistentData().getCompound("wildhunt").getCompound(kind()==PERENNIAL_SEED?"perennial_seed":"lugh_seal");
+                if(!lease.hasUUID("visual") || !lease.getUUID("visual").equals(getUUID()) || lease.getLong("until")<=level().getGameTime())discard();
+            }else discard();
+        }
         if (!level().isClientSide() && tickCount >= lifetime()) discard();
     }
     @Override public AABB getBoundingBoxForCulling() { return new AABB(position(), position().add(end())).inflate((kind() == WHIRLPOOL || kind() == CAUSAL_SPHERE || kind()>=CAUSAL_DOMAIN) ? Math.abs(end().x) + 12 : kind() == TIDAL_WAVE ? end().y + 3 : 4); }

@@ -92,5 +92,8 @@
   "wildhunt.skill.thoth.mode_1": "Spellbreak",
   "wildhunt.skill.thoth.mode_2": "Mana Crucible",
   "wildhunt.skill.thoth.mode_3": "Astral Library",
-  "wildhunt.skill.thoth.passive": "Arcane Sovereignty"
+  "wildhunt.skill.thoth.passive": "Arcane Sovereignty",
+  "wildhunt.skill.lugh": "Lugh, God of Skills",
+  "wildhunt.skill.anansi": "Anansi, Lord of Schemes",
+  "wildhunt.skill.aegir": "Aegir, Lord of the Abyss"
 }

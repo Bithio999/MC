@@ -10,17 +10,17 @@ The [ability index](https://github.com/Bithio999/MC/wiki/Abilities) and [damage 
 
 ## Damage and mastery
 
-The original four apex Uniques use **0.90 × (1 + 0.5 × mastery fraction)**. The four additional Uniques, combination Ultimates, Aion and Thoth use **1 + 0.5 × mastery fraction**. Mastery fractions are clamped to 0–1, giving a maximum of 1.5× before native modifiers. Each new kit has its own raw damage values; there is no shared Ultimate 3× multiplier.
+The original four apex Uniques use **0.90 × (1 + 0.5 × mastery fraction)**. The four additional Uniques, combination Ultimates, Aion, Thoth and Lugh use **1 + 0.5 × mastery fraction**. Mastery fractions are clamped to 0–1, giving a maximum of 1.5× before native modifiers. Each new kit has its own raw damage values; there is no shared Ultimate 3× multiplier.
 
 **EP never multiplies damage.** It is a fixed progression requirement. Native elemental boosts, skill authority, barriers, resistance/nullification, hit immunity and server rules still determine actual health loss. Overlapping warnings do not reset vanilla/native hit immunity to force multiple full hits.
 
-Owning any Godly skill grants [three shared classification passives](https://github.com/Bithio999/MC/wiki/Godly#classification-passives), independently of toggles and upkeep. Divine Authority adds 35% damage against non-Godly owners while preserving the original attack type. Absolute Penetration bypasses native resistance/nullification protection only for damage attributed to that owner; nearby allies and environmental damage receive no benefit. Interference Immunity rejects non-Godly-origin Magic Interference, using the originating skill rather than the caster’s tier. These traits never stack between Godly skills. Aion retains its separate barrier/slow toggle, and Thoth retains its elemental boosts and native magic-efficiency toggle.
+Owning any Godly skill grants [three shared classification passives](https://github.com/Bithio999/MC/wiki/Godly#classification-passives), independently of toggles and upkeep. Divine Authority adds 35% damage against non-Godly owners while preserving the original attack type. Absolute Penetration bypasses native resistance/nullification protection only for damage attributed to that owner; nearby allies and environmental damage receive no benefit. Interference Immunity rejects non-Godly-origin Magic Interference, using the originating skill rather than the caster’s tier. These traits never stack between Godly skills. Aion retains its separate barrier/slow toggle, Thoth retains its elemental boosts and native magic-efficiency toggle, and Lugh retains its attack speed/movement/mastery toggle.
 
 ## Elemental bonus sources
 
 For each native elemental boost attribute, only the **strongest positive non-Godly modifier** applies. Compare each source’s actual effect against the current innate base, including flat, base-multiplier and total-multiplier operations. This covers native skills, Myths skills, equipment and other attribute sources. Lower bonuses remain installed and become effective automatically when a stronger source ends. Innate base values and negative modifiers remain intact.
 
-Thoth’s **Godly** +75% elemental bonus applies separately. For example, +30% Rune Smith, +50% Furnace Mantle and +50% Vritra provide **1.5×**, rather than multiplying together. Adding Thoth gives **1.5 × 1.75 = 2.625×** before penalties. This policy affects elemental boost attributes only; it does not limit healing, mastery, attack speed or the shared Godly damage bonus. Native damage paths that do not use these attributes retain their own rules.
+Thoth’s **Godly** +75% elemental bonus applies separately. For example, +30% Rune Smith, +50% Furnace Mantle and +100% Vritra provide **2×**, rather than multiplying together. Adding Thoth gives **2 × 1.75 = 3.5×** before penalties. This policy affects elemental boost attributes only; it does not limit healing, mastery, attack speed or the shared Godly damage bonus. Native damage paths that do not use these attributes retain their own rules.
 
 ## World effects
 
@@ -40,11 +40,14 @@ Unique skills have two active modes, combination Ultimates three, and Godly skil
 | Rune Smith | 20 aura | — |
 | Verdant Keeper | 20 aura | — |
 | Mirrorbound | 15 aura | — |
-| Vritra | 80 aura | — |
-| Demeter | 70 aura | — |
-| Janus | 70 aura | — |
+| Vritra | 120 aura | — |
+| Demeter | 110 aura | — |
+| Janus | 110 aura | — |
 | Aion | 180 magicules | 1,200 |
 | Thoth | 180 magicules | — |
+| Lugh | 240 magicules | — |
+| Anansi | 100 aura | — |
+| Aegir | 110 aura | — |
 
 The first second is paid when enabling; upkeep is charged once every twenty game ticks while active. Passives stay on until disabled, unfunded or blocked by activation requirements. They do not expire after fifteen or thirty seconds. Attribute contributions use stable IDs, so refreshes cannot accumulate duplicate bonuses. Turning off or forgetting the skill removes its modifiers. Saved native toggle state is restored on login.
 
@@ -52,7 +55,7 @@ The first second is paid when enabling; upkeep is charged once every twenty game
 
 Water Veil and Colossus Carapace contribute to Tensura’s `PHYSICAL_BARRIER` and `MAGIC_BARRIER` attributes and arm `MULTILAYER_BARRIER`, which is the attribute read by its shield HUD counter. Tensura handles their interaction with damage and renders its native barrier layer around the character. Wild Hunt adds no separate absorption-heart pool. Other skills’ barrier contributions remain separate.
 
-Aion also uses a recovering personal multilayer barrier. Demeter’s active Crystal Bulwark lends an eight-second, 500-capacity ward with 50 Physical Barrier and 50 Magic Barrier to eligible allies. That ward expires rather than regenerating, and owns separate modifiers for each caster. Mirrorbound, Janus and Thoth focus on reflection, positioning and spellcraft rather than general-purpose barriers.
+Aion also uses a recovering personal multilayer barrier. Demeter uses one-use **Perennial Seeds**, which heal wounded living allies for 40% maximum HP/SHP instead of lending a barrier. Its orchard and empowered harvest provide additional allied recovery. Mirrorbound and Aegir redirect projectiles; Janus uses positioning; Anansi creates runic threads; Thoth and Lugh focus on spellcraft and reconstructed techniques. None of those toggles grants a general-purpose shield.
 
 The displayed value is native per-hit blocking capacity. Tensura charges magicules for blocked damage. Overflow, inadequate magicules and native power interactions can break the shield. A broken multilayer barrier automatically rearms at the first paid upkeep after ten seconds without a hit (normally 10–11 seconds). Hits, including fully blocked hits, restart recovery. Retoggling cannot skip this delay. The shield modifier is saved across relogs; turning off removes only this art’s contribution. Ensure Tensura’s **Barrier** HUD decoration is enabled if you have customized its HUD.
 
@@ -91,6 +94,14 @@ The native HUD shows 250 combined capacity with both Unique barrier passives ena
 ## Hunter vitality
 
 Race HP bonuses are +100 / +500 / +1,000; native SHP bonuses are +400 / +3,200 / +6,600. These replace earlier hunter-stage bonuses. See [Human evolution](https://github.com/Bithio999/MC/wiki/Evolution#hp-and-shp-growth).
+
+## Ultimate interactions and technique reconstruction
+
+All five combination Ultimates' damaging arts carry native **level-1 resistance bypass**, preserving the native partial-penetration/nullification fallback rules. Native attribute resistance, barriers, authority and hit immunity still apply. Godly ownership provides stronger resistance/nullification bypass for the owner's damage only.
+
+Vritra's storm creates a second Plasma Bore firing origin and is consumed by Cataclysm Front. Janus can open a second Parallax Snare at its opposite gate. Anansi's Checkmate consumes a fixed two-anchor corridor or three-anchor triangle. Aegir's Mirrorsea adds two converging Harpoon origins with a shared victim set, then can be consumed for an empowered expanding wave. Demeter consumes its orchard for a stronger harvest and allied recovery.
+
+[Lugh](https://github.com/Bithio999/MC/wiki/Lugh) stores three bounded techniques and reconstructs their form and normalised damage type. It never executes another addon's skill code. Countermand seals only a recent non-Godly source ability for six seconds without deleting skill state. Grand Synthesis snapshots the archive and strikes at 1.0, 1.8 and 2.6 seconds.
 
 ---
 

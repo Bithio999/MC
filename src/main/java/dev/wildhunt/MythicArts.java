@@ -28,14 +28,16 @@ public final class MythicArts {
     private static final List<String> VISUALS=List.of("tether_visual","mine_visual","grove_visual","aegis_visual","thunder_visual","orchard_visual","gate_a_visual","gate_b_visual","library_visual");
     private static long now(LivingEntity e){return e.level().getGameTime();}
     private static boolean live(CompoundTag t,String key,long time){return t.getLong(key+"_until")>time;}
-    private static Vec3 location(ServerLevel l,LivingEntity e,double range){var target=ApexArts.target(l,e,range);return target==null?ApexArts.cursorPlacement(l,e,range):target.position();}
+    static Vec3 location(ServerLevel l,LivingEntity e,double range){var target=ApexArts.target(l,e,range);return target==null?ApexArts.cursorPlacement(l,e,range):target.position();}
     static boolean canCast(MythicSkill s,ServerLevel l,ManasSkillInstance i,LivingEntity e,int mode){
         var t=i.getOrCreateTag();long time=now(e);
         return switch(s.kind){
             case THREADWEAVER -> mode==0?ApexArts.target(l,e,28)!=null:t.hasUUID("tether_target") && live(t,"tether",time) && l.getEntity(t.getUUID("tether_target")) instanceof LivingEntity target && HunterData.canHarm(e,target) && e.distanceToSqr(target)<=40*40 && e.hasLineOfSight(target);
             case RUNE_SMITH -> mode==0 || live(t,"mine",time) && e.distanceToSqr(ApexArts.point(t,"mine"))<=48*48;
-            case JANUS -> mode!=0 || (!live(t,"gates",time)?safeCursor(l,e,36).distanceToSqr(e.position())>=4:Math.min(e.distanceToSqr(ApexArts.point(t,"gate_a")),e.distanceToSqr(ApexArts.point(t,"gate_b")))<=16 && safe(l,e,gateDestination(t,e)));
+            case JANUS -> mode!=0 || (!live(t,"gates",time)?safeCursor(l,e,48).distanceToSqr(e.position())>=4:Math.min(e.distanceToSqr(ApexArts.point(t,"gate_a")),e.distanceToSqr(ApexArts.point(t,"gate_b")))<=16 && safe(l,e,gateDestination(t,e)));
             case THOTH -> mode!=2 || ManaCrucible.canConvert(e);
+            case LUGH -> LughArts.canCast(l,i,e,mode);
+            case ANANSI,AEGIR -> SovereignArts.canCast(s,l,i,e,mode);
             default -> true;
         };
     }
@@ -79,30 +81,43 @@ public final class MythicArts {
             }
             case VRITRA -> {
                 if(mode==0){
-                    Vec3 from=e.getEyePosition(),end=rayEnd(l,e,48);ArtVisualEntity.spawn(l,ArtVisualEntity.PLASMA_LANCE,from,end.subtract(from),16);
-                    for(var target:lineTargets(l,e,from,end,.9,8)){
-                        hit(s,i,e,target,650,0,TensuraDamageTypes.LIGHTNING_ELEMENTAL);
-                        schedule(t,target.position(),time+16,3,350,0,"fire");ArtVisualEntity.spawn(l,ArtVisualEntity.RUNE_MINE,target.position(),new Vec3(3,1,0),16);
+                    Vec3 from=e.getEyePosition(),end=rayEnd(l,e,64);var struck=new HashSet<UUID>();
+                    ArtVisualEntity.spawn(l,ArtVisualEntity.PLASMA_LANCE,from,end.subtract(from),18);
+                    var targets=new ArrayList<>(lineTargets(l,e,from,end,1.1,8));
+                    if(live(t,"thunder",time)){
+                        Vec3 origin=ApexArts.point(t,"thunder").add(0,5,0);
+                        if(origin.distanceToSqr(e.position())<=64*64){
+                            Vec3 routed=l.clip(new net.minecraft.world.level.ClipContext(origin,end,net.minecraft.world.level.ClipContext.Block.COLLIDER,net.minecraft.world.level.ClipContext.Fluid.NONE,e)).getLocation();
+                            ArtVisualEntity.spawn(l,ArtVisualEntity.PLASMA_LANCE,origin,routed.subtract(origin),18);
+                            targets.addAll(lineTargets(l,e,origin,routed,1.1,8));
+                        }
                     }
-                }else if(mode==1){Vec3 p=location(l,e,40);field(l,t,"thunder",p,160,ArtVisualEntity.THUNDERHEAD,9);}
+                    for(var target:targets)if(struck.size()<8 && struck.add(target.getUUID())){
+                        hit(s,i,e,target,1500,0,TensuraDamageTypes.LIGHTNING_ELEMENTAL);
+                        schedule(t,target.position(),time+16,3.5,850,0,"fire");
+                        ArtVisualEntity.spawn(l,ArtVisualEntity.RUNE_MINE,target.position(),new Vec3(3.5,1,0),16);
+                    }
+                }else if(mode==1){Vec3 p=location(l,e,48);field(l,t,"thunder",p,160,ArtVisualEntity.THUNDERHEAD,11);}
                 else {
-                    Vec3 from=e.position(),forward=ApexArts.forward(e);
+                    boolean empowered=live(t,"thunder",time);Vec3 from=empowered?ApexArts.point(t,"thunder"):e.position(),forward=ApexArts.forward(e);
+                    if(empowered){t.remove("thunder_until");endVisual(l,t,"thunder_visual");}
                     for(int n=1;n<=7;n++){
                         Vec3 p=from.add(forward.scale(n*4));if(!clearPath(l,e,from.add(0,1,0),p.add(0,1,0)))break;
-                        long strike=time+12+n*4;schedule(t,p,strike,4.5,780,2,"fire");
-                        ArtVisualEntity.spawn(l,ArtVisualEntity.CATACLYSM_FRONT,p,new Vec3(4.5,0,0),(int)(strike-time+12));
+                        long strike=time+12+n*4;schedule(t,p,strike,empowered?6:4.5,empowered?2400:1800,2,"fire");
+                        ArtVisualEntity.spawn(l,ArtVisualEntity.CATACLYSM_FRONT,p,new Vec3(empowered?6:4.5,0,0),(int)(strike-time+12));
                     }
                 }
             }
             case DEMETER -> {
-                if(mode==0){Vec3 p=location(l,e,32);field(l,t,"orchard",p,200,ArtVisualEntity.WINTER_ORCHARD,10);}
-                else if(mode==1){for(var ally:allies(l,e,e.position(),12,8))lendBarrier(l,e,ally,500,50,160);}
+                if(mode==0){Vec3 p=location(l,e,32);field(l,t,"orchard",p,240,ArtVisualEntity.WINTER_ORCHARD,12);}
+                else if(mode==1){SovereignArts.plantSeeds(l,i,e,allies(l,e,e.position(),16,8));}
                 else {
                     Vec3 p=live(t,"orchard",time)?ApexArts.point(t,"orchard"):location(l,e,32);boolean empowered=live(t,"orchard",time);
                     t.remove("orchard_until");endVisual(l,t,"orchard_visual");
+                    if(empowered)for(var ally:allies(l,e,p,12,8))heal(ally,.2,.2);
                     var targets=ApexArts.enemies(l,e,p,12);int count=Math.min(6,targets.size());
                     for(int n=0;n<Math.max(1,count);n++){
-                        Vec3 mark=count==0?p:targets.get(n).position();schedule(t,mark,time+24,3,empowered?900:600,2,"ice");
+                        Vec3 mark=count==0?p:targets.get(n).position();schedule(t,mark,time+24,3,empowered?2200:1400,2,"ice");
                         ArtVisualEntity.spawn(l,ArtVisualEntity.CRYSTAL_BLOOM,mark,new Vec3(3,0,0),38);
                     }
                 }
@@ -111,20 +126,29 @@ public final class MythicArts {
                 if(mode==0){
                     if(live(t,"gates",time)){Vec3 destination=gateDestination(t,e);ArtVisualEntity.spawn(l,ArtVisualEntity.GATE_TRANSIT,e.position().add(0,1,0),destination.subtract(e.position()),14);teleport(e,destination);}
                     else {
-                        Vec3 a=e.position(),b=safeCursor(l,e,36);ApexArts.point(t,"gate_a",a);ApexArts.point(t,"gate_b",b);t.putLong("gates_until",time+400);
-                        visual(l,t,"gate_a_visual",ArtVisualEntity.TWIN_GATE,a,new Vec3(1.5,0,-Math.toRadians(e.getYRot())),400);visual(l,t,"gate_b_visual",ArtVisualEntity.TWIN_GATE,b,new Vec3(1.5,1,-Math.toRadians(e.getYRot())),400);
+                        Vec3 a=e.position(),b=safeCursor(l,e,48);ApexArts.point(t,"gate_a",a);ApexArts.point(t,"gate_b",b);t.putLong("gates_until",time+600);
+                        visual(l,t,"gate_a_visual",ArtVisualEntity.TWIN_GATE,a,new Vec3(1.5,0,-Math.toRadians(e.getYRot())),600);visual(l,t,"gate_b_visual",ArtVisualEntity.TWIN_GATE,b,new Vec3(1.5,1,-Math.toRadians(e.getYRot())),600);
                     }
-                }else if(mode==1){Vec3 p=location(l,e,36);schedule(t,p,time+16,6,780,1,"space");ArtVisualEntity.spawn(l,ArtVisualEntity.PARALLAX,p,new Vec3(6,0,0),28);}
+                }else if(mode==1){
+                    Vec3 p=location(l,e,48);schedule(t,p,time+16,7,1900,1,"space");ArtVisualEntity.spawn(l,ArtVisualEntity.PARALLAX,p,new Vec3(7,0,0),28);
+                    if(live(t,"gates",time) && Math.min(e.distanceToSqr(ApexArts.point(t,"gate_a")),e.distanceToSqr(ApexArts.point(t,"gate_b")))<=16){
+                        Vec3 other=gateDestination(t,e);if(other.distanceToSqr(p)>14*14){schedule(t,other,time+16,7,1900,1,"space");ArtVisualEntity.spawn(l,ArtVisualEntity.PARALLAX,other,new Vec3(7,0,0),28);}
+                    }
+                }
                 else {
                     Vec3 p=location(l,e,32);ArtVisualEntity.spawn(l,ArtVisualEntity.CROSSROADS,p,new Vec3(10,0,0),40);
                     for(var target:ApexArts.enemies(l,e,p,10).stream().limit(6).toList()){
                         Vec3 destination=p.scale(2).subtract(target.position());destination=new Vec3(destination.x,target.getY(),destination.z);
                         // Blocked destinations leave the target in place; damage never depends on an unsafe teleport.
                         if(safe(l,target,destination)){ArtVisualEntity.spawn(l,ArtVisualEntity.GATE_TRANSIT,target.position().add(0,1,0),destination.subtract(target.position()),14);teleport(target,destination);}
-                        if(hit(s,i,e,target,620,2,TensuraDamageTypes.SPACE_ELEMENTAL))effect(s,i,e,target,TensuraMobEffects.MOVEMENT_INTERFERENCE,50,0,2);
+                        schedule(t,target.position(),time+12,2.5,1700,2,"space");
+                        effect(s,i,e,target,TensuraMobEffects.MOVEMENT_INTERFERENCE,35,0,2);
+                        ArtVisualEntity.spawn(l,ArtVisualEntity.PARALLAX,target.position(),new Vec3(2.5,0,0),24);
                     }
                 }
             }
+            case ANANSI,AEGIR -> SovereignArts.cast(s,l,i,e,mode);
+            case LUGH -> LughArts.cast(s,l,i,e,mode);
             case THOTH -> {
                 if(mode==0){
                     Vec3 p=location(l,e,64);ArtVisualEntity.spawn(l,ArtVisualEntity.LEXICON,p,new Vec3(6,0,0),ThothElement.LEXICON_LIFETIME);
@@ -147,32 +171,38 @@ public final class MythicArts {
         l.playSound(null,e.blockPosition(),switch(s.kind){case THREADWEAVER,JANUS->SoundEvents.ENDERMAN_TELEPORT;case VERDANT_KEEPER,DEMETER->SoundEvents.AMETHYST_BLOCK_CHIME;case VRITRA->SoundEvents.BLAZE_SHOOT;default->SoundEvents.ENCHANTMENT_TABLE_USE;},SoundSource.PLAYERS,.85f,s.kind.godly()?.7f:1.1f);
     }
     private static Vec3 rayEnd(ServerLevel l,LivingEntity e,double range){Vec3 eye=e.getEyePosition();return l.clip(new net.minecraft.world.level.ClipContext(eye,eye.add(e.getLookAngle().scale(range)),net.minecraft.world.level.ClipContext.Block.COLLIDER,net.minecraft.world.level.ClipContext.Fluid.NONE,e)).getLocation();}
-    private static List<LivingEntity> lineTargets(ServerLevel l,LivingEntity e,Vec3 from,Vec3 end,double width,int cap){return l.getEntitiesOfClass(LivingEntity.class,new AABB(from,end).inflate(width),v->HunterData.canHarm(e,v) && e.hasLineOfSight(v) && v.getBoundingBox().inflate(width).clip(from,end).isPresent()).stream().sorted(Comparator.comparingDouble(v->v.distanceToSqr(from))).limit(cap).toList();}
-    private static boolean clearPath(ServerLevel l,LivingEntity e,Vec3 a,Vec3 b){return l.clip(new net.minecraft.world.level.ClipContext(a,b,net.minecraft.world.level.ClipContext.Block.COLLIDER,net.minecraft.world.level.ClipContext.Fluid.NONE,e)).getType()==HitResult.Type.MISS;}
+    static List<LivingEntity> lineTargets(ServerLevel l,LivingEntity e,Vec3 from,Vec3 end,double width,int cap){return l.getEntitiesOfClass(LivingEntity.class,new AABB(from,end).inflate(width),v->HunterData.canHarm(e,v) && e.hasLineOfSight(v) && v.getBoundingBox().inflate(width).clip(from,end).isPresent()).stream().sorted(Comparator.comparingDouble(v->v.distanceToSqr(from))).limit(cap).toList();}
+    static boolean clearPath(ServerLevel l,LivingEntity e,Vec3 a,Vec3 b){return l.clip(new net.minecraft.world.level.ClipContext(a,b,net.minecraft.world.level.ClipContext.Block.COLLIDER,net.minecraft.world.level.ClipContext.Fluid.NONE,e)).getType()==HitResult.Type.MISS;}
     static boolean safe(ServerLevel l,LivingEntity e,Vec3 p){var box=e.getBoundingBox().move(p.subtract(e.position()));return Double.isFinite(p.x+p.y+p.z) && box.minY>=l.getMinBuildHeight() && box.maxY<=l.getMaxBuildHeight() && l.getWorldBorder().isWithinBounds(box) && l.noCollision(e,box);}
-    private static Vec3 safeCursor(ServerLevel l,LivingEntity e,double range){
+    static Vec3 safeCursor(ServerLevel l,LivingEntity e,double range){
         Vec3 start=e.position(),desired=location(l,e,range),direction=desired.subtract(start).normalize(),last=start;
         double length=Math.min(range,desired.distanceTo(start));
         for(double d=.5;d<=length;d+=.5){Vec3 p=start.add(direction.scale(d));if(!safe(l,e,p))break;last=p;}return last;
     }
     private static Vec3 gateDestination(CompoundTag t,LivingEntity e){Vec3 a=ApexArts.point(t,"gate_a"),b=ApexArts.point(t,"gate_b");return e.distanceToSqr(a)<=e.distanceToSqr(b)?b:a;}
-    private static void teleport(LivingEntity e,Vec3 p){
+    static void teleport(LivingEntity e,Vec3 p){
         Vec3 velocity=e.getDeltaMovement();e.teleportTo(p.x,p.y,p.z);e.fallDistance=0;e.setDeltaMovement(velocity);e.hasImpulse=true;e.hurtMarked=true;
         if(e instanceof ServerPlayer player)player.connection.send(new net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket(e));
     }
-    private static void visual(ServerLevel l,CompoundTag t,String key,int kind,Vec3 p,Vec3 data,int ticks){endVisual(l,t,key);t.putUUID(key,ArtVisualEntity.spawn(l,kind,p,data,ticks).getUUID());}
-    private static void endVisual(ServerLevel l,CompoundTag t,String key){if(t.hasUUID(key)){var entity=l.getEntity(t.getUUID(key));if(entity!=null)entity.discard();t.remove(key);}}
-    private static void field(ServerLevel l,CompoundTag t,String key,Vec3 p,int ticks,int kind,double radius){ApexArts.point(t,key,p);t.putLong(key+"_until",l.getGameTime()+ticks);t.putLong(key+"_next",l.getGameTime());visual(l,t,key+"_visual",kind,p,new Vec3(radius,0,0),ticks);}
-    private static void schedule(CompoundTag t,Vec3 p,long time,double radius,float damage,int mode,String type){var list=t.getList("bursts",Tag.TAG_COMPOUND);if(list.size()>=32)return;var b=new CompoundTag();ApexArts.point(b,"p",p);b.putLong("at",time);b.putDouble("radius",radius);b.putFloat("damage",damage);b.putInt("mode",mode);b.putString("type",type);list.add(b);t.put("bursts",list);}
+    static void visual(ServerLevel l,CompoundTag t,String key,int kind,Vec3 p,Vec3 data,int ticks){endVisual(l,t,key);t.putUUID(key,ArtVisualEntity.spawn(l,kind,p,data,ticks).getUUID());}
+    static Entity entityAcrossLevels(ServerLevel level,UUID id){
+        var entity=level.getEntity(id);if(entity!=null)return entity;
+        for(var other:level.getServer().getAllLevels())if(other!=level){entity=other.getEntity(id);if(entity!=null)return entity;}return null;
+    }
+    static void endVisual(ServerLevel l,CompoundTag t,String key){if(t.hasUUID(key)){var entity=entityAcrossLevels(l,t.getUUID(key));if(entity!=null)entity.discard();t.remove(key);}}
+    static void field(ServerLevel l,CompoundTag t,String key,Vec3 p,int ticks,int kind,double radius){ApexArts.point(t,key,p);t.putLong(key+"_until",l.getGameTime()+ticks);t.putLong(key+"_next",l.getGameTime());visual(l,t,key+"_visual",kind,p,new Vec3(radius,0,0),ticks);}
+    static void schedule(CompoundTag t,Vec3 p,long time,double radius,float damage,int mode,String type){var list=t.getList("bursts",Tag.TAG_COMPOUND);if(list.size()>=32)return;var b=new CompoundTag();ApexArts.point(b,"p",p);b.putLong("at",time);b.putDouble("radius",radius);b.putFloat("damage",damage);b.putInt("mode",mode);b.putString("type",type);list.add(b);t.put("bursts",list);}
     private static ResourceKey<DamageType> damageType(String type){if(type.equals("ice"))return TensuraDamageTypes.ICE_ELEMENTAL;var element=ThothElement.named(type);return element==null?TensuraDamageTypes.SPACE_ELEMENTAL:element.damage;}
     static boolean hit(MythicSkill s,ManasSkillInstance i,LivingEntity e,LivingEntity target,float damage,int mode,ResourceKey<DamageType> type){
-        if(!HunterData.canHarm(e,target))return false;float power=(float)(1+.5*Math.clamp(i.getMastery()/s.getMaxMastery(),0,1));return target.hurt(s.createSource(i,e,type,mode),damage*power);
+        if(!HunterData.canHarm(e,target))return false;float power=(float)(1+.5*Math.clamp(i.getMastery()/s.getMaxMastery(),0,1));var source=s.createSource(i,e,type,mode);
+        if(!s.kind.unique() && !s.kind.godly())((io.github.manasmods.tensura.damage.TensuraDamageSource)source).tensura$setResistanceBypassLevel(1);
+        return target.hurt(source,damage*power);
     }
-    private static void area(MythicSkill s,ServerLevel l,ManasSkillInstance i,LivingEntity e,Vec3 p,double radius,float damage,int mode,ResourceKey<DamageType> type,int cap){for(var target:ApexArts.enemies(l,e,p,radius).stream().limit(cap).toList())hit(s,i,e,target,damage,mode,type);}
-    private static void effect(MythicSkill s,ManasSkillInstance i,LivingEntity e,LivingEntity target,dev.architectury.registry.registries.RegistrySupplier<MobEffect> effect,int ticks,int amplifier,int mode){s.addEffect(target,i,mode,e,TensuraMobEffects.getReference(effect),ticks,amplifier);}
+    static void area(MythicSkill s,ServerLevel l,ManasSkillInstance i,LivingEntity e,Vec3 p,double radius,float damage,int mode,ResourceKey<DamageType> type,int cap){for(var target:ApexArts.enemies(l,e,p,radius).stream().limit(cap).toList())hit(s,i,e,target,damage,mode,type);}
+    static void effect(MythicSkill s,ManasSkillInstance i,LivingEntity e,LivingEntity target,dev.architectury.registry.registries.RegistrySupplier<MobEffect> effect,int ticks,int amplifier,int mode){s.addEffect(target,i,mode,e,TensuraMobEffects.getReference(effect),ticks,amplifier);}
     static boolean friendly(LivingEntity e,LivingEntity target){return target==e || e.isAlliedTo(target) || target instanceof net.minecraft.world.entity.TamableAnimal pet && pet.isOwnedBy(e);}
-    private static List<LivingEntity> allies(ServerLevel l,LivingEntity e,Vec3 p,double radius,int cap){var list=new ArrayList<LivingEntity>();if(e.distanceToSqr(p)<=radius*radius)list.add(e);l.getEntitiesOfClass(LivingEntity.class,new AABB(p,p).inflate(radius),v->v!=e && v.isAlive() && friendly(e,v) && v.distanceToSqr(p)<=radius*radius && e.hasLineOfSight(v)).stream().sorted(Comparator.comparingDouble(v->v.distanceToSqr(p))).limit(Math.max(0,cap-list.size())).forEach(list::add);return list;}
-    private static void heal(LivingEntity e,double hp,double shp){e.heal((float)(e.getMaxHealth()*hp));var energy=TensuraStorages.getExistenceFrom(e);energy.setSpiritualHealth(Math.min(e.getAttributeValue(TensuraAttributes.MAX_SPIRITUAL_HEALTH),energy.getSpiritualHealth()+e.getAttributeValue(TensuraAttributes.MAX_SPIRITUAL_HEALTH)*shp));energy.markDirty();}
+    static List<LivingEntity> allies(ServerLevel l,LivingEntity e,Vec3 p,double radius,int cap){var list=new ArrayList<LivingEntity>();if(e.distanceToSqr(p)<=radius*radius)list.add(e);l.getEntitiesOfClass(LivingEntity.class,new AABB(p,p).inflate(radius),v->v!=e && v.isAlive() && friendly(e,v) && v.distanceToSqr(p)<=radius*radius && e.hasLineOfSight(v)).stream().sorted(Comparator.comparingDouble(v->v.distanceToSqr(p))).limit(Math.max(0,cap-list.size())).forEach(list::add);return list;}
+    static void heal(LivingEntity e,double hp,double shp){e.heal((float)(e.getMaxHealth()*hp));var energy=TensuraStorages.getExistenceFrom(e);energy.setSpiritualHealth(Math.min(e.getAttributeValue(TensuraAttributes.MAX_SPIRITUAL_HEALTH),energy.getSpiritualHealth()+e.getAttributeValue(TensuraAttributes.MAX_SPIRITUAL_HEALTH)*shp));energy.markDirty();}
     private static void detonate(MythicSkill s,ServerLevel l,ManasSkillInstance i,LivingEntity e,boolean commanded){var t=i.getOrCreateTag();Vec3 p=ApexArts.point(t,"mine");area(s,l,i,e,p,commanded?6:3,commanded?420:280,commanded?1:0,TensuraDamageTypes.EARTH_ELEMENTAL,8);ArtVisualEntity.spawn(l,ArtVisualEntity.RUNE_BURST,p,new Vec3(commanded?6:3,0,0),22);t.remove("mine_until");endVisual(l,t,"mine_visual");}
     static boolean tick(MythicSkill s,ServerLevel l,ManasSkillInstance i,LivingEntity e){
         var t=i.getOrCreateTag();long time=now(e);
@@ -184,14 +214,14 @@ public final class MythicArts {
         if(live(t,"mine",time) && time>=t.getLong("mine_armed") && !ApexArts.enemies(l,e,ApexArts.point(t,"mine"),3).isEmpty())detonate(s,l,i,e,false);
         for(String key:List.of("grove","orchard"))if(live(t,key,time) && time>=t.getLong(key+"_next")){
             boolean orchard=key.equals("orchard");Vec3 p=ApexArts.point(t,key);
-            for(var ally:allies(l,e,p,orchard?10:7,8))heal(ally,orchard?.07:.05,orchard?.06:.04);
-            if(orchard)for(var target:ApexArts.enemies(l,e,p,10).stream().limit(8).toList()){hit(s,i,e,target,140,0,TensuraDamageTypes.ICE_ELEMENTAL);effect(s,i,e,target,TensuraMobEffects.CHILL,40,1,0);}
+            for(var ally:allies(l,e,p,orchard?12:7,8))heal(ally,orchard?.1:.05,orchard?.1:.04);
+            if(orchard)for(var target:ApexArts.enemies(l,e,p,12).stream().limit(8).toList()){hit(s,i,e,target,500,0,TensuraDamageTypes.ICE_ELEMENTAL);effect(s,i,e,target,TensuraMobEffects.CHILL,40,1,0);}
             t.putLong(key+"_next",time+20);
         }
         if(live(t,"aegis",time)){moveVisual(l,t,"aegis_visual",e.position().add(0,1,0),new Vec3(3.5,0,0));reflect(l,e,3.5);}
         if(live(t,"thunder",time) && time>=t.getLong("thunder_next")){
-            Vec3 p=ApexArts.point(t,"thunder");for(var target:ApexArts.enemies(l,e,p,9).stream().limit(6).toList()){
-                hit(s,i,e,target,260,1,TensuraDamageTypes.LIGHTNING_ELEMENTAL);schedule(t,target.position(),time+10,2.5,140,1,"fire");
+            Vec3 p=ApexArts.point(t,"thunder");for(var target:ApexArts.enemies(l,e,p,11).stream().limit(6).toList()){
+                hit(s,i,e,target,900,1,TensuraDamageTypes.LIGHTNING_ELEMENTAL);schedule(t,target.position(),time+12,3,500,1,"fire");
                 ArtVisualEntity.spawn(l,ArtVisualEntity.PLASMA_LANCE,target.position().add(0,8,0),new Vec3(0,-8,0),12);
             }t.putLong("thunder_next",time+20);
         }
@@ -214,7 +244,7 @@ public final class MythicArts {
             if(s.kind==MythicKind.VRITRA)ArtVisualEntity.spawn(l,ArtVisualEntity.ELEMENT_IMPACT,p.add(0,.2,0),new Vec3(Math.min(3,b.getDouble("radius")),0,0),18).style(2);
             if(s.kind==MythicKind.THOTH){var element=ThothElement.named(b.getString("type"));GodlyVisuals.circle(l,e,p.add(0,.2,0),6,10,element==null?MagicCircleVariant.MISC:element.circle);}
         }t.put("bursts",keep);
-        boolean active=!keep.isEmpty();for(String key:List.of("tether","mine","grove","aegis","thunder","orchard","gates","library")){
+        boolean active=!keep.isEmpty() | SovereignArts.tick(s,l,i,e) | (s.kind==MythicKind.LUGH && LughArts.tick(l,i,e));for(String key:List.of("tether","mine","grove","aegis","thunder","orchard","gates","library")){
             if(live(t,key,time))active=true;else if(t.contains(key+"_until")){t.remove(key+"_until");if(key.equals("gates")){endVisual(l,t,"gate_a_visual");endVisual(l,t,"gate_b_visual");}else endVisual(l,t,key+"_visual");}
         }return active;
     }
@@ -227,8 +257,8 @@ public final class MythicArts {
             p.hurtMarked=true;ArtVisualEntity.spawn(l,ArtVisualEntity.MIRROR_SHARD,p.position(),new Vec3(.7,0,0),12);
         }
     }
-    private static void moveVisual(ServerLevel l,CompoundTag t,String key,Vec3 p,Vec3 data){if(t.hasUUID(key) && l.getEntity(t.getUUID(key)) instanceof ArtVisualEntity visual)visual.updateVector(p,data);}
-    static void clear(ManasSkillInstance i,LivingEntity e){if(i.getSkill() instanceof MythicSkill s && s.kind==MythicKind.THOTH)ManaCrucible.stop(i,e);var t=i.getOrCreateTag();if(e.level() instanceof ServerLevel l)for(String key:VISUALS)endVisual(l,t,key);for(String key:List.of("tether","mine","grove","aegis","thunder","orchard","gates","library"))t.remove(key+"_until");t.remove("bursts");t.remove("tether_target");i.markDirty();}
+    static void moveVisual(ServerLevel l,CompoundTag t,String key,Vec3 p,Vec3 data){if(t.hasUUID(key) && l.getEntity(t.getUUID(key)) instanceof ArtVisualEntity visual)visual.updateVector(p,data);}
+    static void clear(ManasSkillInstance i,LivingEntity e){SovereignArts.clear(i,e);LughArts.clear(i,e);if(i.getSkill() instanceof MythicSkill s && s.kind==MythicKind.THOTH)ManaCrucible.stop(i,e);var t=i.getOrCreateTag();if(e.level() instanceof ServerLevel l)for(String key:VISUALS)endVisual(l,t,key);for(String key:List.of("tether","mine","grove","aegis","thunder","orchard","gates","library"))t.remove(key+"_until");t.remove("bursts");t.remove("tether_target");i.markDirty();}
     private static ResourceLocation wardId(UUID owner){return WildHunt.id("crystal_bulwark/"+owner);}
     static void lendBarrier(ServerLevel l,LivingEntity owner,LivingEntity ally,double shield,double strength,int ticks){
         var id=wardId(owner.getUUID());for(var h:List.of(TensuraAttributes.PHYSICAL_BARRIER,TensuraAttributes.MAGIC_BARRIER,TensuraAttributes.MULTILAYER_BARRIER)){
@@ -239,6 +269,7 @@ public final class MythicArts {
         ArtVisualEntity.spawn(l,ArtVisualEntity.CRYSTAL_BULWARK,ally.position(),new Vec3(1.4,0,0),ticks).setCaster(ally);
     }
     public static void tickTarget(LivingEntity e){
+        SovereignArts.tickTarget(e);LughArts.tickSeal(e);
         var data=e.getPersistentData().getCompound("wildhunt");var wards=data.getList("crystal_wards",Tag.TAG_COMPOUND);var keep=new ListTag();
         for(var value:wards){var lease=(CompoundTag)value;if(e.isAlive() && lease.getLong("until")>now(e)){keep.add(lease);continue;}
             var id=wardId(lease.getUUID("owner"));for(var h:List.of(TensuraAttributes.PHYSICAL_BARRIER,TensuraAttributes.MAGIC_BARRIER,TensuraAttributes.MULTILAYER_BARRIER)){var a=e.getAttribute(h);if(a!=null)a.removeModifier(id);}
