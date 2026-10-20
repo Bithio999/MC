@@ -107,6 +107,14 @@ Attacks respect teams, owned pets, creative/spectator immunity and server PvP se
 
 [Skills](https://github.com/Bithio999/MC/wiki/Skills) · [Skill synthesis](https://github.com/Bithio999/MC/wiki/Skill-Synthesis) · [Damage types](https://github.com/Bithio999/MC/wiki/Damage-Types) · [Mechanics](https://github.com/Bithio999/MC/wiki/Mechanics)
 
+## Visual effects
+
+Winter Orchard grows an ice-veined grove with curved crystal branches, snowflake tips, roots and flowing restorative ripples. Crystal Bulwark uses six engraved faceted panels around its actual recipient. Winter Harvest first shows its frost warning, then opens into a large eight-petalled crystalline bloom at the strike.
+
+![Winter Orchard’s luminous veins and crystal branches](https://github.com/Bithio999/MC/blob/main/wiki/media/visual-demeter.png?raw=true)
+
+[Visual effects gallery and display settings](https://github.com/Bithio999/MC/wiki/Visual-Effects).
+
 ---
 
 **Categories:** Tensura Myths · Skills

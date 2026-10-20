@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.15.0 — Skill visual overhaul
+
+- Rework all eight Unique kits, Vritra, Demeter, Janus and Aion with original textured geometry, animated inscriptions and individual silhouettes. Thoth retains its recent rendering and held Mana Crucible behavior.
+- Add branching Railbolt filaments and ion collars, Thunder Step speed tunnels, caustic water crests and a raised vortex, molten tentacles, owned oil surfaces with dark/violet flame cores, and veined ice.
+- Build braided silk, inscribed rune circuitry, curved groves and briars, refracted beams, faceted orbiting mirrors, layered thunderclouds, warned volcanic eruptions, crystal orchards, architectural gates and timed spatial cuts.
+- Give Aion astronomical clockwork, a clean dark gravity core, accretion optics and a dimensional hourglass. Add brief healing wisps to successful aura regeneration and paired helices to Concordance.
+- Batch each visual’s materials, reduce detail at distance, respect native particle settings for decoration, and replace dense Railbolt server-particle traffic with a single synced visual per segment.
+- Preserve damage, costs, cooldowns, progression, target selection, warning timings and quiet water/ice toggles. Bound oil surfaces with refreshed owner leases and retire replaced/expired pools; track actual NPC recipients for moving wards. Lift missed oil surfaces onto nearby ground without moving their damage centers, and keep local beam muzzles outside the camera.
+- Add five native visual lifecycle/ownership/regeneration/ground-projection tests and update the individual articles, visual gallery and offline/GitHub Wiki exports. Full validation is recorded in `VALIDATION-0.15.0.md`.
+
 ## 0.14.1 — Held Mana Crucible
 
 - Mana Crucible now channels through the native assigned skill key. Convert 2 aura into 1 magicule at 5% of maximum magicules per second, transferred every server tick. No activation payment, cooldown, duration limit or total transfer cap; actual aura reserves and maximum magicule capacity still bound each transfer.

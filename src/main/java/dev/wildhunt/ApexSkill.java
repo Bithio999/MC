@@ -238,7 +238,7 @@ public class ApexSkill extends Skill {
         }
     }
     @Override public void onForgetSkill(ManasSkillInstance instance, LivingEntity caster) {
-        onToggleOff(instance, caster);
+        onToggleOff(instance, caster);ApexArts.clearPoolVisuals(instance,caster);
         for (String key : java.util.List.of("field_until", "domain_until", "travel_until", "prison_until", "oil_pools", "icefalls")) instance.getOrCreateTag().remove(key);
         super.onForgetSkill(instance, caster);
     }

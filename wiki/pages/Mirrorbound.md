@@ -94,6 +94,14 @@ Attacks respect teams, owned pets, creative/spectator immunity and server PvP se
 
 [Skills](Skills.md) · [Skill synthesis](Skill-Synthesis.md) · [Damage types](Damage-Types.md) · [Mechanics](Mechanics.md)
 
+## Visual effects
+
+Prismatic Lance has a white core, three refracted color strands and etched optical collars. Mirror Aegis uses independently orbiting faceted glass panels, luminous edges and inset mirror inscriptions. The formation follows the caster smoothly between server updates.
+
+![Mirror Aegis’s faceted orbiting glass](../media/visual-mirrorbound.png)
+
+[Visual effects gallery and display settings](Visual-Effects.md).
+
 ---
 
 **Categories:** Tensura Myths · Skills

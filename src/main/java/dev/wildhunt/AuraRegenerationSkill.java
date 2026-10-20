@@ -77,8 +77,11 @@ public final class AuraRegenerationSkill extends Skill {
         double cost = hp * hpCost + spirit * shpCost;
         if (cost <= 0) return;
         if (EnergyHelper.isOutOfEnergy(entity, cost, 0)) return;
+        double beforeHP=entity.getHealth(),beforeSHP=energy.getSpiritualHealth();
         if (hp > 0) entity.heal((float)hp);
         if (spirit > 0) { energy.setSpiritualHealth(energy.getSpiritualHealth() + spirit); energy.markDirty(); }
+        if(entity.level() instanceof net.minecraft.server.level.ServerLevel level && (entity.getHealth()>beforeHP || energy.getSpiritualHealth()>beforeSHP))
+            ArtVisualEntity.spawn(level,ArtVisualEntity.HEALING_PULSE,entity.position(),new net.minecraft.world.phys.Vec3(.8+tier*.15,0,0),10).style(tier-1).setCaster(entity);
         addMasteryPoint(instance, entity);
     }
     /** Match native Infinite Regeneration's healing immunity without its MP drain. */
@@ -111,5 +114,6 @@ public final class AuraRegenerationSkill extends Skill {
         double cost = instance.isMastered(entity) ? 20 : 30;
         if (EnergyHelper.isOutOfEnergy(entity, cost, 0)) return;
         entity.setHealth(1); event.setCanceled(true);
+        if(entity.level() instanceof net.minecraft.server.level.ServerLevel level)ArtVisualEntity.spawn(level,ArtVisualEntity.HEALING_PULSE,entity.position(),new net.minecraft.world.phys.Vec3(1.5,0,0),18).style(2).setCaster(entity);
     }
 }

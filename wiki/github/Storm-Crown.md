@@ -97,6 +97,14 @@ A missed initial ray cannot start a ricochet. Bounces pass through walls but can
 
 [Skills](https://github.com/Bithio999/MC/wiki/Skills) · [Mechanics](https://github.com/Bithio999/MC/wiki/Mechanics) · [Evolution](https://github.com/Bithio999/MC/wiki/Evolution) · [Commands](https://github.com/Bithio999/MC/wiki/Commands)
 
+## Visual effects
+
+A coherent white-hot Railbolt core carries branching gold lightning and moving ion collars between its victims. Thunder Step leaves a tunnel of conductors and speed streaks along the travelled path; the lightning impact expands from the landing point.
+
+![Railbolt’s branched lightning and ion collars](https://github.com/Bithio999/MC/blob/main/wiki/media/visual-storm-crown.png?raw=true)
+
+[Visual effects gallery and display settings](https://github.com/Bithio999/MC/wiki/Visual-Effects).
+
 ---
 
 **Categories:** Tensura Myths · Skills

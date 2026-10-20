@@ -92,6 +92,14 @@ Attacks respect teams, owned pets, creative/spectator immunity and server PvP se
 
 [Skills](https://github.com/Bithio999/MC/wiki/Skills) · [Skill synthesis](https://github.com/Bithio999/MC/wiki/Skill-Synthesis) · [Damage types](https://github.com/Bithio999/MC/wiki/Damage-Types) · [Mechanics](https://github.com/Bithio999/MC/wiki/Mechanics)
 
+## Visual effects
+
+Living Grove grows curved trunks, branching stems, roots and leaf clusters around a botanical ground diagram. Soft rising motes and an outward ripple accompany its healing field. Briar Grasp uses tapering, thorned vines around each caught enemy rather than a recolored grove.
+
+![Living Grove’s branches, foliage and root network](https://github.com/Bithio999/MC/blob/main/wiki/media/visual-verdant-keeper.png?raw=true)
+
+[Visual effects gallery and display settings](https://github.com/Bithio999/MC/wiki/Visual-Effects).
+
 ---
 
 **Categories:** Tensura Myths · Skills

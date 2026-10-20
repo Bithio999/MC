@@ -1,6 +1,6 @@
 # Tensura Myths Wiki
 
-An unofficial reference for the **Tensura Myths** addon to **Tensura: Reincarnated**. Minecraft 1.21.1 · NeoForge · Addon 0.14.1.
+An unofficial reference for the **Tensura Myths** addon to **Tensura: Reincarnated**. Minecraft 1.21.1 · NeoForge · Addon 0.15.0.
 
 ## Start here
 
@@ -31,14 +31,14 @@ An unofficial reference for the **Tensura Myths** addon to **Tensura: Reincarnat
 
 ## Combat and reference
 
-[Damage types](pages/Damage-Types.md) · [Combat mechanics](pages/Mechanics.md) · [Commands](pages/Commands.md)
+[Damage types](pages/Damage-Types.md) · [Combat mechanics](pages/Mechanics.md) · [Visual gallery](pages/Visual-Effects.md) · [Commands](pages/Commands.md)
 
 Ability articles separate direct elemental hits, additional status damage, healing and utility. Their data tables include damage types, resource costs, cooldowns and acquisition requirements.
 
 ## Open the visual edition
 
-[Download the styled offline wiki](../releases/tensura-myths-wiki-0.14.1.zip), extract it, and open `index.html`. It contains every article, portraits, screenshots and offline search. GitHub readers can use the Markdown links above.
+[Download the styled offline wiki](../releases/tensura-myths-wiki-0.15.0.zip), extract it, and open `index.html`. It contains every article, portraits, screenshots and offline search. GitHub readers can use the Markdown links above.
 
-[Download the addon](../releases/tensura-myths-0.14.1.jar) · [Base mod wiki](https://tensura.wiki.gg/wiki/Tensura:_Reincarnated_Wiki) · [Changelog](../docs/CHANGELOG.md) · [Wiki authoring](../docs/WIKI.md)
+[Download the addon](../releases/tensura-myths-0.15.0.jar) · [Base mod wiki](https://tensura.wiki.gg/wiki/Tensura:_Reincarnated_Wiki) · [Changelog](../docs/CHANGELOG.md) · [Wiki authoring](../docs/WIKI.md)
 
 Unofficial fan addon. Not affiliated with Capcom or ManasMods.

@@ -112,11 +112,13 @@ The damage multiplier is **1 + 0.5 × mastery fraction**, capped at **1.5×**. A
 
 Use **Skills → Godly → Ascension** to replace one mastered Myths Ultimate after reaching the awakening and EP requirements. Equip Aion from the new Godly category in Tensura’s normal ability menu.
 
-## Gallery
+## Visual effects
 
-![Worldline Sever channeled along the current aim](https://github.com/Bithio999/MC/blob/main/wiki/media/aion-worldline-channel.png?raw=true)
+Worldline Sever carries fine gold/violet helical strands and clock collars around its readable aim core. Event Horizon has a dark spherical core, tilted accretion optics, counter-rotating dials and a faint separate pull perimeter. Causal Reversal places a three-dimensional hourglass with flowing sand over its checkpoint clock. Genesis Verdict suspends mechanical dials above the field and releases timed vertical strikes.
 
-![Event Horizon’s gravity core, orbital bands and native Gravity circle](https://github.com/Bithio999/MC/blob/main/wiki/media/aion-event-horizon.png?raw=true)
+![Event Horizon’s dark core and tilted clockwork optics](https://github.com/Bithio999/MC/blob/main/wiki/media/visual-aion.png?raw=true)
+
+[Visual effects gallery and display settings](https://github.com/Bithio999/MC/wiki/Visual-Effects).
 
 ---
 

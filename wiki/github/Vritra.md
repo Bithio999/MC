@@ -109,6 +109,14 @@ Attacks respect teams, owned pets, creative/spectator immunity and server PvP se
 
 [Skills](https://github.com/Bithio999/MC/wiki/Skills) · [Skill synthesis](https://github.com/Bithio999/MC/wiki/Skill-Synthesis) · [Damage types](https://github.com/Bithio999/MC/wiki/Damage-Types) · [Mechanics](https://github.com/Bithio999/MC/wiki/Mechanics)
 
+## Visual effects
+
+Plasma Lance combines a continuous hot core, orange/violet helices and conductor collars; its delayed fuses converge into fire impacts. Thunderhead Furnace carries soft storm-cloud layers, periodic branching lightning and a suspended hot ring. Cataclysm Front warns with a fractured ground inscription before volcanic spires and flame jets erupt at the strike.
+
+![Thunderhead Furnace’s storm cloud and conductor diagram](https://github.com/Bithio999/MC/blob/main/wiki/media/visual-vritra.png?raw=true)
+
+[Visual effects gallery and display settings](https://github.com/Bithio999/MC/wiki/Visual-Effects).
+
 ---
 
 **Categories:** Tensura Myths · Skills

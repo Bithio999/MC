@@ -94,6 +94,14 @@ Attacks respect teams, owned pets, creative/spectator immunity and server PvP se
 
 [Skills](https://github.com/Bithio999/MC/wiki/Skills) · [Skill synthesis](https://github.com/Bithio999/MC/wiki/Skill-Synthesis) · [Damage types](https://github.com/Bithio999/MC/wiki/Damage-Types) · [Mechanics](https://github.com/Bithio999/MC/wiki/Mechanics)
 
+## Visual effects
+
+Prismatic Lance has a white core, three refracted color strands and etched optical collars. Mirror Aegis uses independently orbiting faceted glass panels, luminous edges and inset mirror inscriptions. The formation follows the caster smoothly between server updates.
+
+![Mirror Aegis’s faceted orbiting glass](https://github.com/Bithio999/MC/blob/main/wiki/media/visual-mirrorbound.png?raw=true)
+
+[Visual effects gallery and display settings](https://github.com/Bithio999/MC/wiki/Visual-Effects).
+
 ---
 
 **Categories:** Tensura Myths · Skills

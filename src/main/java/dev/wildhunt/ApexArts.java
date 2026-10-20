@@ -132,7 +132,7 @@ public final class ApexArts {
         caster.setDeltaMovement(momentum); caster.hasImpulse = true; caster.hurtMarked = true;
         if (caster instanceof net.minecraft.server.level.ServerPlayer player)
             player.connection.send(new net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket(caster));
-        ApexVisuals.beam(level, skill.apex, start.add(0, 0.8, 0), end.add(0, 0.8, 0), skill.ultimate);
+        ApexVisuals.thunderStep(level,start.add(0,.8,0),end.add(0,.8,0));
         ApexVisuals.impact(level, skill.apex, end.add(0, 1, 0), skill.ultimate);
     }
     public static void secondary(ApexSkill skill, ServerLevel level, ManasSkillInstance instance, LivingEntity caster) {
@@ -155,7 +155,7 @@ public final class ApexArts {
                 for (Tag raw : tag.getList("oil_pools", Tag.TAG_COMPOUND)) {
                     var pool = (CompoundTag)raw;
                     if (validPool(pool, level, now) && point(pool, "pool").distanceToSqr(caster.position()) <= 32 * 32) {
-                        pool.putBoolean("lit", true); pool.putLong("until", now + 120);
+                        pool.putBoolean("lit", true); pool.putLong("until", now + 120);updatePoolVisual(level,pool,caster);
                     }
                 }
                 tag.putLong("field_until", now + 120); tag.putLong("field_next", now + 20); tag.putString("field_dimension", dimension(level));
@@ -193,12 +193,24 @@ public final class ApexArts {
     }
     static void addPool(ApexSkill skill, ServerLevel level, ManasSkillInstance instance, LivingEntity caster, Vec3 p, boolean lit, int duration) {
         ListTag list = instance.getOrCreateTag().getList("oil_pools", Tag.TAG_COMPOUND);
-        while (list.size() >= (skill.ultimate ? 5 : 3)) list.removeFirst();
+        while (list.size() >= (skill.ultimate ? 5 : 3)) {finishPoolVisual(level,(CompoundTag)list.getFirst());list.removeFirst();}
         var pool = new CompoundTag(); point(pool, "pool", p); pool.putBoolean("lit", lit);
         pool.putLong("until", level.getGameTime() + duration); pool.putString("dimension", dimension(level));
         list.add(pool); instance.getOrCreateTag().put("oil_pools", list);
-        ApexVisuals.ring(level, skill.apex, p, 2.5, 0.1, skill.ultimate); instance.markDirty();
+        updatePoolVisual(level,pool,caster);instance.markDirty();
     }
+    private static void updatePoolVisual(ServerLevel level,CompoundTag pool,LivingEntity caster){
+        if(!caster.isAlive())return;
+        Vec3 stored=point(pool,"pool");
+        var ground=level.clip(new ClipContext(stored.add(0,2,0),stored.add(0,-.5,0),ClipContext.Block.COLLIDER,ClipContext.Fluid.ANY,caster));
+        // Miss targeting historically records below the hit surface; only lift the cosmetic mesh.
+        Vec3 surface=ground.getType()==net.minecraft.world.phys.HitResult.Type.BLOCK?ground.getLocation().add(0,.025,0):stored;
+        ArtVisualEntity visual=pool.hasUUID("visual") && level.getEntity(pool.getUUID("visual")) instanceof ArtVisualEntity existing?existing:null;
+        if(visual==null){visual=ArtVisualEntity.spawn(level,ArtVisualEntity.OIL_POOL,surface,new Vec3(pool.getBoolean("lit")?3:2.5,0,0),30);pool.putUUID("visual",visual.getUUID());}
+        visual.updateVector(surface,new Vec3(pool.getBoolean("lit")?3:2.5,0,0));visual.style(pool.getBoolean("lit")?1:0);visual.remaining((int)Math.max(1,Math.min(30,pool.getLong("until")-level.getGameTime())));
+    }
+    private static void finishPoolVisual(ServerLevel level,CompoundTag pool){if(pool.hasUUID("visual") && level.getEntity(pool.getUUID("visual")) instanceof ArtVisualEntity visual)visual.remaining(6);}
+    static void clearPoolVisuals(ManasSkillInstance instance,LivingEntity caster){if(caster.level() instanceof ServerLevel level)for(var raw:instance.getOrCreateTag().getList("oil_pools",Tag.TAG_COMPOUND))finishPoolVisual(level,(CompoundTag)raw);}
     static void pools(ApexSkill skill, ServerLevel level, ManasSkillInstance instance, LivingEntity caster, float damage, int mode) {
         Set<UUID> hit = new HashSet<>();
         for (Tag raw : instance.getOrCreateTag().getList("oil_pools", Tag.TAG_COMPOUND)) {
@@ -282,13 +294,13 @@ public final class ApexArts {
             active = true; advance(skill, level, instance, caster);
         }
         ListTag pools = tag.getList("oil_pools", Tag.TAG_COMPOUND); int oldCount = pools.size();
-        for (int i = pools.size() - 1; i >= 0; i--) if (!validPool(pools.getCompound(i), level, now)) pools.remove(i);
+        for (int i = pools.size() - 1; i >= 0; i--) if (!validPool(pools.getCompound(i), level, now)) {finishPoolVisual(level,pools.getCompound(i));pools.remove(i);}
         if (pools.size() != oldCount) instance.markDirty();
         if (!pools.isEmpty()) {
             active = true;
-            if (now % 10 == 0) for (Tag raw : pools) {
+            if (now % 20 == 0) for (Tag raw : pools) {
                 var pool = (CompoundTag)raw;
-                ApexVisuals.ring(level, skill.apex, point(pool, "pool"), pool.getBoolean("lit") ? 3 : 2.5, 0.1, skill.ultimate);
+                updatePoolVisual(level,pool,caster);
             }
         }
         boolean domain = tag.getLong("domain_until") > now && tag.getString("domain_dimension").equals(dimension(level));

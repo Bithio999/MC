@@ -22,13 +22,14 @@ public final class ArtVisualEntity extends Entity {
     public static final int THREAD_LINE=11,RUNE_MINE=12,LIVING_GROVE=13,MIRROR_WARD=14,PRISM_RAY=15,PLASMA_LANCE=16,
         THUNDERHEAD=17,CATACLYSM_FRONT=18,WINTER_ORCHARD=19,CRYSTAL_BULWARK=20,CRYSTAL_BLOOM=21,TWIN_GATE=22,
         PARALLAX=23,CROSSROADS=24,LEXICON=25,SPELLBREAK=26,MANA_CRUCIBLE=27,ASTRAL_LIBRARY=28,SPELL_RAY=29,
-        BRIAR=30,RUNE_BURST=31,MIRROR_SHARD=32;
+        BRIAR=30,RUNE_BURST=31,MIRROR_SHARD=32,RAILBOLT=33,THUNDER_STEP=34,ELEMENT_IMPACT=35,OIL_POOL=36,HEALING_PULSE=37,GATE_TRANSIT=38;
     private static final DeferredRegister<EntityType<?>> TYPES = DeferredRegister.create(WildHunt.ID, Registries.ENTITY_TYPE);
     public static final RegistrySupplier<EntityType<ArtVisualEntity>> TYPE = TYPES.register("art_visual", () ->
         EntityType.Builder.<ArtVisualEntity>of(ArtVisualEntity::new, MobCategory.MISC).sized(0.1f, 0.1f)
             .clientTrackingRange(8).updateInterval(1).noSave().noSummon().build("wildhunt:art_visual"));
     private static final EntityDataAccessor<Integer> KIND = SynchedEntityData.defineId(ArtVisualEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> LIFETIME = SynchedEntityData.defineId(ArtVisualEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> CASTER_ID = SynchedEntityData.defineId(ArtVisualEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> STYLE = SynchedEntityData.defineId(ArtVisualEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Float> END_X = SynchedEntityData.defineId(ArtVisualEntity.class, EntityDataSerializers.FLOAT);
     private static final EntityDataAccessor<Float> END_Y = SynchedEntityData.defineId(ArtVisualEntity.class, EntityDataSerializers.FLOAT);
@@ -45,13 +46,14 @@ public final class ArtVisualEntity extends Entity {
         level.addFreshEntity(entity); return entity;
     }
     @Override protected void defineSynchedData(SynchedEntityData.Builder builder) {
-        builder.define(CASTER,java.util.Optional.empty());builder.define(KIND, LASH); builder.define(LIFETIME, 16);builder.define(STYLE,0);
+        builder.define(CASTER,java.util.Optional.empty());builder.define(KIND, LASH); builder.define(LIFETIME, 16);builder.define(STYLE,0);builder.define(CASTER_ID,-1);
         builder.define(END_X, 0f); builder.define(END_Y, 0f); builder.define(END_Z, 0f);
     }
     public void updateVector(Vec3 start,Vec3 delta) {setPos(start);entityData.set(END_X,(float)delta.x);entityData.set(END_Y,(float)delta.y);entityData.set(END_Z,(float)delta.z);}
-    public void setCaster(Entity caster) {entityData.set(CASTER,java.util.Optional.of(caster.getUUID()));}
+    public void setCaster(Entity caster) {entityData.set(CASTER_ID,caster.getId());entityData.set(CASTER,java.util.Optional.of(caster.getUUID()));}
     public boolean ownedBy(Entity caster) {return caster!=null && entityData.get(CASTER).filter(caster.getUUID()::equals).isPresent();}
-    public Entity caster() {return entityData.get(CASTER).map(id->level().getPlayerByUUID(id)).orElse(null);}
+    public Entity caster() {var e=level().getEntity(entityData.get(CASTER_ID));return e!=null && ownedBy(e)?e:entityData.get(CASTER).map(id->level().getPlayerByUUID(id)).orElse(null);}
+    public void remaining(int ticks){entityData.set(LIFETIME,tickCount+Math.max(1,ticks));}
     public int kind() { return entityData.get(KIND); }
     public int lifetime() { return entityData.get(LIFETIME); }
     public int style(){return entityData.get(STYLE);}

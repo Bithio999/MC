@@ -47,6 +47,10 @@ Sovereign Rebirth can stop an ordinary lethal hit by paying 30 aura (20 mastered
 
 Hunter base evolution energy is split **2/3 aura and 1/3 magicules**. Tensura's default alignment also gives kill EP in that 2:1 ratio; native gain bonuses, penalties and server caps still apply. Spending aura does not transfer EP, change maximum magicules, or alter the allocation of later gains.
 
+## Visual effects
+
+Successful healing briefly draws a botanical seal and rising restorative wisps. Hunter’s Recovery, Apex Renewal and Sovereign Rebirth use increasingly developed wisps; the pulse follows the caster. Full-health upkeep emits no recovery pulse.
+
 ---
 
 **Categories:** Tensura Myths · Skills

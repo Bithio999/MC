@@ -92,6 +92,14 @@ Attacks respect teams, owned pets, creative/spectator immunity and server PvP se
 
 [Skills](https://github.com/Bithio999/MC/wiki/Skills) · [Skill synthesis](https://github.com/Bithio999/MC/wiki/Skill-Synthesis) · [Damage types](https://github.com/Bithio999/MC/wiki/Damage-Types) · [Mechanics](https://github.com/Bithio999/MC/wiki/Mechanics)
 
+## Visual effects
+
+Loom Needle uses four braided strands, travelling pulses and an oriented silk-web anchor at its target. Sever Thread closes that web inward into a pink spatial snap. Its fine filaments remain distinct from Janus’s large architectural cuts.
+
+![Braided silk and its target-facing web anchor](https://github.com/Bithio999/MC/blob/main/wiki/media/visual-threadweaver.png?raw=true)
+
+[Visual effects gallery and display settings](https://github.com/Bithio999/MC/wiki/Visual-Effects).
+
 ---
 
 **Categories:** Tensura Myths · Skills

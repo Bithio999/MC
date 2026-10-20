@@ -92,6 +92,14 @@ Attacks respect teams, owned pets, creative/spectator immunity and server PvP se
 
 [Skills](Skills.md) · [Skill synthesis](Skill-Synthesis.md) · [Damage types](Damage-Types.md) · [Mechanics](Mechanics.md)
 
+## Visual effects
+
+Loom Needle uses four braided strands, travelling pulses and an oriented silk-web anchor at its target. Sever Thread closes that web inward into a pink spatial snap. Its fine filaments remain distinct from Janus’s large architectural cuts.
+
+![Braided silk and its target-facing web anchor](../media/visual-threadweaver.png)
+
+[Visual effects gallery and display settings](Visual-Effects.md).
+
 ---
 
 **Categories:** Tensura Myths · Skills

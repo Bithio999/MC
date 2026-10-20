@@ -115,6 +115,14 @@ The Unique passive’s native shield counter. Its Ultimate uses a higher capacit
 
 [Skills](Skills.md) · [Mechanics](Mechanics.md) · [Evolution](Evolution.md) · [Commands](Commands.md)
 
+## Visual effects
+
+Crushing Current is a curled, scrolling caustic water sheet with a bright foam crest. Scarlet Undertow forms a shallow raised vortex with four inward-flowing spiral ribbons, coral-colored fins and drifting foam. These surfaces mark the actual travelling wave and placed field; Water Veil adds no constant custom particle cloud.
+
+![Scarlet Undertow’s layered water vortex](../media/visual-scarlet-deluge.png)
+
+[Visual effects gallery and display settings](Visual-Effects.md).
+
 ---
 
 **Categories:** Tensura Myths · Skills

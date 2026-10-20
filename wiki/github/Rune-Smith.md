@@ -94,6 +94,14 @@ Attacks respect teams, owned pets, creative/spectator immunity and server PvP se
 
 [Skills](https://github.com/Bithio999/MC/wiki/Skills) · [Skill synthesis](https://github.com/Bithio999/MC/wiki/Skill-Synthesis) · [Damage types](https://github.com/Bithio999/MC/wiki/Damage-Types) · [Mechanics](https://github.com/Bithio999/MC/wiki/Mechanics)
 
+## Visual effects
+
+Runic Mine assembles two counter-rotating circuit inscriptions and six rising rune tablets. Command Detonation releases an expanding circuit front and luminous earth pillars. The armed mine has a stable footprint rather than a continuous shower of server particles.
+
+![Runic Mine’s layered circuitry and rising tablets](https://github.com/Bithio999/MC/blob/main/wiki/media/visual-rune-smith.png?raw=true)
+
+[Visual effects gallery and display settings](https://github.com/Bithio999/MC/wiki/Visual-Effects).
+
 ---
 
 **Categories:** Tensura Myths · Skills

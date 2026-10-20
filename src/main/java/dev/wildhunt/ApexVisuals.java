@@ -60,13 +60,7 @@ public final class ApexVisuals {
     }
     public static void beam(ServerLevel level, Apex apex, Vec3 from, Vec3 to, boolean ultimate) {
         if (apex == Apex.REY_DAU) {
-            Vec3 delta = to.subtract(from);
-            // Two irregular filaments around a straight railgun core.
-            for (int i = 0, steps = Math.min(110, Math.max(2, (int)(delta.length() * 3))); i <= steps; i++) {
-                Vec3 core = from.add(delta.scale((double)i / steps));
-                dot(level, TensuraParticleTypes.LIGHTNING_EFFECT.get(), core);
-                if (i % 2 == 0) dot(level, element(apex), core.add(Math.sin(i * 2.3) * 0.28, Math.cos(i * 1.7) * 0.28, 0));
-            }
+            ArtVisualEntity.spawn(level,ArtVisualEntity.RAILBOLT,from,to.subtract(from),12);
         } else if (apex == Apex.JIN_DAHAAD) {
             Vec3 delta = to.subtract(from);
             for (int i = 0; i <= 20; i++) crystal(level, from.add(delta.scale(i / 20.0)), ultimate ? 2 : 1);
@@ -75,6 +69,7 @@ public final class ApexVisuals {
             for (int i = 0; i <= 30; i++) dot(level, TensuraParticleUtils.getWaterBubble(), from.add(delta.scale(i / 30.0)));
         }
     }
+    public static void thunderStep(ServerLevel level,Vec3 from,Vec3 to){ArtVisualEntity.spawn(level,ArtVisualEntity.THUNDER_STEP,from,to.subtract(from),16);}
     public static void tidalWave(ServerLevel level, Vec3 origin, Vec3 direction, double reach, double width) {
         ArtVisualEntity.spawn(level, ArtVisualEntity.TIDAL_WAVE, origin, new Vec3(direction.x * reach, width, direction.z * reach), 16);
     }
@@ -102,7 +97,8 @@ public final class ApexVisuals {
         }
     }
     public static void impact(ServerLevel level, Apex apex, Vec3 pos, boolean ultimate) {
-        level.sendParticles(element(apex), pos.x, pos.y, pos.z, ultimate ? 24 : 12, 0.5, 0.7, 0.5, 0.03);
+        if(apex!=Apex.JIN_DAHAAD)ArtVisualEntity.spawn(level,ArtVisualEntity.ELEMENT_IMPACT,pos,new Vec3(ultimate?2.5:1.5,0,0),18).style(apex==Apex.REY_DAU?0:apex==Apex.UTH_DUNA?1:2);
+        level.sendParticles(element(apex), pos.x, pos.y, pos.z, ultimate ? 16 : 8, 0.5, 0.7, 0.5, 0.03);
         if (apex == Apex.UTH_DUNA) dot(level, TensuraParticleUtils.getBlueWave(0.85f, 2, 0, false), pos);
         if (apex == Apex.NU_UDRA) dot(level, TensuraParticleUtils.getBlackWave(0.9f, 2, 0, false), pos);
         if (apex == Apex.JIN_DAHAAD) crystal(level, pos.subtract(0, 0.5, 0), ultimate ? 3 : 1.5);

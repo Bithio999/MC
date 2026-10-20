@@ -109,6 +109,14 @@ Attacks respect teams, owned pets, creative/spectator immunity and server PvP se
 
 [Skills](Skills.md) · [Skill synthesis](Skill-Synthesis.md) · [Damage types](Damage-Types.md) · [Mechanics](Mechanics.md)
 
+## Visual effects
+
+Twin Gate builds two freestanding frames with recessed, counter-rotating spiral apertures; entry and exit have distinct violet and gold accents. Passage leaves a short spatial transit streak. Parallax Snare closes opposing luminous cuts toward its warned center, while Crossroads Edict lays out a wide cartographic grid and cardinal anchors.
+
+![Twin Gate’s freestanding frame and layered aperture](../media/visual-janus.png)
+
+[Visual effects gallery and display settings](Visual-Effects.md).
+
 ---
 
 **Categories:** Tensura Myths · Skills

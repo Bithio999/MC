@@ -157,6 +157,10 @@ The world’s `serverconfig/tensura-myths-server.toml` controls `secondaryRaceEP
 
 Ordinary death and relogging retain the fused race and ancestry data. Reincarnation or an external replacement of the primary race resets the previous Duo life. There is no normal menu action to swap an existing secondary or repeatedly claim the awakening bonus.
 
+## Visual effects
+
+Concordance Pulse releases paired gold and cyan helices above a fractured ground seal, alongside its native ancestry-colored particles. The geometry is a short recovery burst, with no persistent aura.
+
 ---
 
 **Categories:** Tensura Myths · Races

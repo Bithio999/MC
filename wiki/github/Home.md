@@ -1,6 +1,6 @@
 # Tensura Myths Wiki
 
-An unofficial reference for the **Tensura Myths** addon to **Tensura: Reincarnated**. Minecraft 1.21.1 · NeoForge · Addon 0.14.1.
+An unofficial reference for the **Tensura Myths** addon to **Tensura: Reincarnated**. Minecraft 1.21.1 · NeoForge · Addon 0.15.0.
 
 ## Start here
 
@@ -31,9 +31,9 @@ An unofficial reference for the **Tensura Myths** addon to **Tensura: Reincarnat
 
 ## Combat and reference
 
-[Damage types](https://github.com/Bithio999/MC/wiki/Damage-Types) · [Combat mechanics](https://github.com/Bithio999/MC/wiki/Mechanics) · [Commands](https://github.com/Bithio999/MC/wiki/Commands)
+[Damage types](https://github.com/Bithio999/MC/wiki/Damage-Types) · [Combat mechanics](https://github.com/Bithio999/MC/wiki/Mechanics) · [Visual gallery](https://github.com/Bithio999/MC/wiki/Visual-Effects) · [Commands](https://github.com/Bithio999/MC/wiki/Commands)
 
 Ability articles separate direct elemental hits, additional status damage, healing and utility. Their data tables include damage types, resource costs, cooldowns and acquisition requirements.
 
 
-[Download the styled offline edition](https://github.com/Bithio999/MC/blob/main/releases/tensura-myths-wiki-0.14.1.zip)
+[Download the styled offline edition](https://github.com/Bithio999/MC/blob/main/releases/tensura-myths-wiki-0.15.0.zip)

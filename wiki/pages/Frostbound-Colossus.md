@@ -113,6 +113,14 @@ The Unique passive’s native shield counter. Its Ultimate uses a higher capacit
 
 [Skills](Skills.md) · [Mechanics](Mechanics.md) · [Evolution](Evolution.md) · [Commands](Commands.md)
 
+## Visual effects
+
+Avalanche Crash erupts in faceted, veined ice spires with luminous edges and snowflake imprints. Glacial Prison arranges the crystals around its captured victim. The crystals remain visual geometry rather than placed blocks, and Colossus Carapace adds no constant custom particle cloud.
+
+![Veined ice with luminous crystal edges](../media/visual-frostbound-colossus.png)
+
+[Visual effects gallery and display settings](Visual-Effects.md).
+
 ---
 
 **Categories:** Tensura Myths · Skills

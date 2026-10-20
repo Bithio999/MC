@@ -33,5 +33,6 @@
 
 - [Damage types](https://github.com/Bithio999/MC/wiki/Damage-Types)
 - [Combat mechanics](https://github.com/Bithio999/MC/wiki/Mechanics)
+- [Visual effects](https://github.com/Bithio999/MC/wiki/Visual-Effects)
 - [Commands](https://github.com/Bithio999/MC/wiki/Commands)
 

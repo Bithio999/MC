@@ -70,11 +70,11 @@ See [Aura regeneration](https://github.com/Bithio999/MC/wiki/Aura-Regeneration) 
 
 ## Visual effects
 
-Water waves render a broad curled mesh with a foam crest; Undertow renders rotating teal and coral spiral ribbons. Water and ice toggles emit no constant custom particles. Oil Lash uses a synced procedural mesh with a dark tapered body, glowing orange bands, extension and recoil, including on a miss. Ice spires and prison bars use rendered faceted crystals. New kits add silk strands, inscribed mines, growing briars and crystal trees, orbiting mirrors, plasma conduits, architectural gates, closing spatial blades and open orbiting spellbooks. Those visual entities deal no damage by themselves, have no collision and expire automatically; server skill logic owns targeting and damage.
+Each kit uses its own textured shapes and animation: branched lightning, caustic water, molten tentacles, veined ice, silk, rune circuits, botanical growth, faceted mirrors, storm clouds, crystal orchards, architectural gates and astronomical clockwork. See the [visual gallery](https://github.com/Bithio999/MC/wiki/Visual-Effects) for examples and display behavior. Thoth retains its layered seals, hinged grimoires and chapter-colored spells.
 
-Thoth uses original high-resolution emissive inscription textures, animated hinged grimoires, layered counter-rotating seals, continuous luminous trails and chapter-colored impacts. Moving art entities interpolate between server updates; Thoth’s local book formation follows the caster each rendered frame. These effects use standard Minecraft rendering and require no shader pack.
+Visual entities deal no damage by themselves, have no collision and expire automatically. Server skill logic owns targeting, resource use, damage and cooldowns. Long-lived fields retain their actual placement; moving wards and healing pulses follow their recipients. Native elemental particles, barrier rendering and animated magic circles remain supplied by Tensura at runtime.
 
-Tensura supplies elemental particles, shockwaves, native barrier rendering and animated magic circles. Its assets are used at runtime and are not copied into the addon.
+No shader pack is required. Materials are batched per effect; curve detail decreases at distance. Minecraft’s **Particles** setting reduces decorative motes, foam and cloud sprites while preserving primary attack paths, warning footprints, crystal geometry and gate frames. Minimal particles does not disable skill visuals. Water Veil and Colossus Carapace remain free of constant custom effects.
 
 ## Barrier HUD examples
 

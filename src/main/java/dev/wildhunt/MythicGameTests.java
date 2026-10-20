@@ -307,4 +307,57 @@ public final class MythicGameTests {
         var lease=HunterData.of(p).getList("crystal_wards",Tag.TAG_COMPOUND).getCompound(0);h.assertTrue(lease.getLong("until")==h.getLevel().getGameTime()+160,"Bulwark duration is not eight seconds");h.succeed();
     }
 
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void richerVisualEntitiesAreInertBoundedAndKeepNpcOwnership(GameTestHelper h){
+        var p=player(h);var npc=target(h,p.position().add(3,0,0));
+        afterTracking(h,List.of(npc),()->{
+            float hp=npc.getHealth();var visuals=new ArrayList<ArtVisualEntity>();
+            for(int kind:new int[]{ArtVisualEntity.RAILBOLT,ArtVisualEntity.THUNDER_STEP,ArtVisualEntity.ELEMENT_IMPACT,ArtVisualEntity.HEALING_PULSE,ArtVisualEntity.GATE_TRANSIT}){
+                var v=ArtVisualEntity.spawn(h.getLevel(),kind,npc.position(),new Vec3(3,0,0),6);v.setCaster(npc);visuals.add(v);
+                h.assertTrue(v.noPhysics && v.isNoGravity() && !v.isPickable() && v.caster()==npc && v.ownedBy(npc),"Cosmetic entity collides or loses NPC ownership: "+kind);
+            }
+            h.runAfterDelay(8,()->{h.assertTrue(visuals.stream().allMatch(Entity::isRemoved) && npc.getHealth()==hp,"Cosmetic entities persisted or caused damage");h.succeed();});
+        });
+    }
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void oilVisualsKeepOneLeasePerPoolAndMatchIgnitedRadius(GameTestHelper h){
+        var p=player(h);afterTracking(h,List.of(target(h,p.position().add(12,0,0))),()->{var s=WildHunt.UNIQUE.get(Apex.NU_UDRA).get();HunterData.learnReward(p,s);var i=SkillAPI.getSkillsFrom(p).getSkill(s).orElseThrow();
+        ApexArts.addPool(s,h.getLevel(),i,p,p.position().add(3,0,0),false,300);var pool=i.getOrCreateTag().getList("oil_pools",Tag.TAG_COMPOUND).getCompound(0);UUID id=pool.getUUID("visual");
+        var original=(ArtVisualEntity)h.getLevel().getEntity(id);h.assertTrue(original!=null && original.kind()==ArtVisualEntity.OIL_POOL && original.style()==0 && original.end().x==2.5 && original.lifetime()<=30,"Oil pool has no bounded matching surface");
+        ApexArts.secondary(s,h.getLevel(),i,p);h.assertTrue(pool.getUUID("visual").equals(id) && original.style()==1 && original.end().x==3,"Ignition replaced the surface or retained the wrong radius");
+        ApexArts.clearPoolVisuals(i,p);h.assertTrue(original.lifetime()-original.tickCount<=6,"Pool cleanup left a long-lived surface");
+        h.runAfterDelay(8,()->{h.assertTrue(original.isRemoved(),"Pool visual did not fade after cleanup");h.succeed();});
+        });
+    }
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void replacingAnOilPoolRetiresOnlyItsOwnedSurface(GameTestHelper h){
+        var p=player(h);afterTracking(h,List.of(target(h,p.position().add(12,0,0))),()->{var s=WildHunt.UNIQUE.get(Apex.NU_UDRA).get();HunterData.learnReward(p,s);var i=SkillAPI.getSkillsFrom(p).getSkill(s).orElseThrow();
+        ApexArts.addPool(s,h.getLevel(),i,p,p.position(),false,300);var first=i.getOrCreateTag().getList("oil_pools",Tag.TAG_COMPOUND).getCompound(0);var retired=(ArtVisualEntity)h.getLevel().getEntity(first.getUUID("visual"));
+        for(int n=1;n<4;n++)ApexArts.addPool(s,h.getLevel(),i,p,p.position().add(n,0,0),false,300);
+        var pools=i.getOrCreateTag().getList("oil_pools",Tag.TAG_COMPOUND);h.assertTrue(pools.size()==3 && retired.lifetime()-retired.tickCount<=6,"Pool replacement leaked its former surface or changed the gameplay cap");
+        var remaining=new ArrayList<ArtVisualEntity>();for(var raw:pools)remaining.add((ArtVisualEntity)h.getLevel().getEntity(((CompoundTag)raw).getUUID("visual")));
+        h.runAfterDelay(8,()->{h.assertTrue(retired.isRemoved() && remaining.stream().noneMatch(Entity::isRemoved),"Replacing one pool removed unrelated surfaces");h.succeed();});
+        });
+    }
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void missedOilLashSurfaceRestsOnGroundWithoutMovingItsDamageCenter(GameTestHelper h){
+        var p=player(h);afterTracking(h,List.of(target(h,p.position().add(12,0,0))),()->{
+            var skill=WildHunt.UNIQUE.get(Apex.NU_UDRA).get();HunterData.learnReward(p,skill);var i=SkillAPI.getSkillsFrom(p).getSkill(skill).orElseThrow();
+            Vec3 floor=p.position().add(3,0,0),stored=floor.add(0,-1.2,0);
+            h.getLevel().setBlockAndUpdate(BlockPos.containing(floor).below(),net.minecraft.world.level.block.Blocks.STONE.defaultBlockState());
+            ApexArts.addPool(skill,h.getLevel(),i,p,stored,false,300);var pool=i.getOrCreateTag().getList("oil_pools",Tag.TAG_COMPOUND).getCompound(0);
+            var visual=(ArtVisualEntity)h.getLevel().getEntity(pool.getUUID("visual"));
+            h.assertTrue(ApexArts.point(pool,"pool").distanceTo(stored)<.001 && Math.abs(visual.getY()-(floor.y+.025))<.001,"Ground projection moved the damage center or buried the oil mesh");h.succeed();
+        });
+    }
+
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void regenerationVisualsRequireActualHealingAndUseTheCorrectTier(GameTestHelper h){
+        var p=player(h);afterTracking(h,List.of(target(h,p.position().add(12,0,0))),()->{var skill=WildHunt.REGENERATION.getFirst().get();HunterData.learnReward(p,skill);var i=SkillAPI.getSkillsFrom(p).getSkill(skill).orElseThrow();p.setHealth(p.getMaxHealth());
+        skill.regenerate(i,p);h.assertTrue(h.getLevel().getEntitiesOfClass(ArtVisualEntity.class,p.getBoundingBox().inflate(4),v->v.kind()==ArtVisualEntity.HEALING_PULSE).isEmpty(),"Full-health recovery emitted an idle effect");
+        p.setHealth(p.getMaxHealth()-8);skill.regenerate(i,p);var effects=h.getLevel().getEntitiesOfClass(ArtVisualEntity.class,p.getBoundingBox().inflate(4),v->v.kind()==ArtVisualEntity.HEALING_PULSE);
+        h.assertTrue(p.getHealth()>p.getMaxHealth()-8 && effects.size()==1 && effects.getFirst().ownedBy(p) && effects.getFirst().style()==0 && effects.getFirst().lifetime()==10,"Successful recovery lost its bounded tier-specific pulse");h.succeed();
+        });
+    }
+
 }
