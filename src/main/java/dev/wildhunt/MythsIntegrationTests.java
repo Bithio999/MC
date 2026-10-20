@@ -249,32 +249,36 @@ public final class MythsIntegrationTests {
         h.assertTrue(!WildHunt.GODLY.get().onHeld(i,p,10,0) && !i.getOrCreateTag().contains("channel_until") && i.getCoolDown(0)==4,"Unfunded channel continued");h.succeed();
     }
     @GameTest(template="empty",timeoutTicks=100)
-    public static void godlyPassiveDefeatsResistancesWithoutDeletingThem(GameTestHelper h) {
-        var p=player(h);HunterData.learnReward(p,WildHunt.GODLY.get());var i=SkillAPI.getSkillsFrom(p).getSkill(WildHunt.GODLY.get()).orElseThrow();
-        var target=tank(h,p.position().add(2,100,0));
+    public static void godlyOwnershipDefeatsResistancesWithoutToggleOrStacking(GameTestHelper h) {
+        var p=player(h);var target=tank(h,p.position().add(2,100,0));
         var nullification=io.github.manasmods.tensura.registry.skill.ResistanceSkills.SPATIAL_ATTACK_NULLIFICATION.get();
         var resistance=io.github.manasmods.tensura.registry.skill.ResistanceSkills.SPATIAL_ATTACK_RESISTANCE.get();
         HunterData.learnReward(target,nullification);HunterData.learnReward(target,resistance);
         var ni=SkillAPI.getSkillsFrom(target).getSkill(nullification).orElseThrow();ni.setToggled(true);
         var ri=SkillAPI.getSkillsFrom(target).getSkill(resistance).orElseThrow();ri.setToggled(true);
+        var i=WildHunt.GODLY.get().createDefaultInstance();
         var source=WildHunt.GODLY.get().createSource(i,p,io.github.manasmods.tensura.damage.TensuraDamageTypes.SPACE_ELEMENTAL,0);
-        h.assertTrue(!nullification.onBeingDamaged(ni,target,source,100),"Test nullification did not initially reject spatial damage");
-        WildHunt.GODLY.get().onToggleOn(i,p);
-        h.assertTrue(nullification.onBeingDamaged(ni,target,source,100),"Aion did not degrade native nullification");
+        h.assertTrue(!nullification.onBeingDamaged(ni,target,source,100),"Fixture did not initially reject spatial damage");
+        var thoth=WildHunt.MYTHIC.get(MythicKind.THOTH).get();HunterData.learnReward(p,thoth);
+        TensuraStorages.getExistenceFrom(p).setMagicule(0);
+        h.assertTrue(nullification.onBeingDamaged(ni,target,source,100),"Untoggled, unfunded Thoth owner did not bypass nullification");
         var amount=io.github.manasmods.manascore.network.api.util.Changeable.of(100f);
-        h.assertTrue(resistance.onTakenDamage(ri,target,source,amount) && amount.get()==100f,"Resistance retained damage reduction against Aion");
-        GodlySkill.modifyDamage(SkillAPI.getSkillsFrom(target),target,source,amount);
-        h.assertTrue(Math.abs(amount.get()-135)<.001,"Passive bonus against non-Godly target missing");
-        HunterData.learnReward(target,WildHunt.GODLY.get());amount.set(100f);GodlySkill.modifyDamage(SkillAPI.getSkillsFrom(target),target,source,amount);
-        h.assertTrue(amount.get()==100f,"Godly owner incorrectly took the non-Godly damage bonus");
-        // Exercise the complete native damage path, including attribute resistance and the registered bonus hook.
+        h.assertTrue(resistance.onTakenDamage(ri,target,source,amount) && amount.get()==100f,"Resistance retained damage reduction against a Godly owner");
+        GodlyPassives.modifyDamage(SkillAPI.getSkillsFrom(target),target,source,amount);
+        h.assertTrue(Math.abs(amount.get()-135)<.001,"Classification damage bonus missing");
+        HunterData.learnReward(p,WildHunt.GODLY.get());amount.set(100f);GodlyPassives.modifyDamage(SkillAPI.getSkillsFrom(target),target,source,amount);
+        h.assertTrue(Math.abs(amount.get()-135)<.001,"Multiple Godly skills stacked the bonus");
+        HunterData.learnReward(target,WildHunt.GODLY.get());amount.set(100f);GodlyPassives.modifyDamage(SkillAPI.getSkillsFrom(target),target,source,amount);
+        h.assertTrue(amount.get()==100f,"Godly defender incorrectly took the non-Godly damage bonus");
         target.getAttribute(io.github.manasmods.tensura.registry.attribute.TensuraAttributes.SPACE_RESISTANCE).setBaseValue(.9);
         float before=target.getHealth();target.hurt(source,100);
-        h.assertTrue(before-target.getHealth()>50,"Native elemental resistance still blocked the active Aion caster's attack");
-        target.invulnerableTime=0;WildHunt.GODLY.get().onToggleOff(i,p);
+        h.assertTrue(before-target.getHealth()>50,"Native elemental resistance still blocked an untoggled Godly owner's damage");
+        SkillAPI.getSkillsFrom(p).forgetSkill(WildHunt.GODLY.get());
+        h.assertTrue(nullification.onBeingDamaged(ni,target,source,100),"Forgetting Aion disabled Thoth's classification trait");
+        SkillAPI.getSkillsFrom(p).forgetSkill(thoth);target.invulnerableTime=0;
         before=target.getHealth();target.hurt(source,100);
-        h.assertTrue(target.getHealth()==before,"Turning Aion off did not restore the native nullification damage gate");
-        h.assertTrue(ni.isToggled() && ri.isToggled() && !nullification.onBeingDamaged(ni,target,source,100),"Aion permanently removed the target's defenses");h.succeed();
+        h.assertTrue(target.getHealth()==before,"Forgetting the final Godly skill left the bypass active");
+        h.assertTrue(ni.isToggled() && ri.isToggled() && !nullification.onBeingDamaged(ni,target,source,100),"Godly damage permanently removed the target's defenses");h.succeed();
     }
     @GameTest(template="empty",timeoutTicks=100)
     public static void proximitySlowIsStrongerNearbyAndExpires(GameTestHelper h) {
@@ -328,23 +332,62 @@ public final class MythsIntegrationTests {
         h.assertTrue(energy.getMagicule()==0 && !i.getOrCreateTag().contains("anchor_until"),"Lifecycle cleanup rewound resources across a dimension/relog boundary");h.succeed();
     }
     @GameTest(template="empty",timeoutTicks=100)
-    public static void auraDegradesStatusImmunityAndThirdPartyDamageWithoutErasingDefenses(GameTestHelper h) {
+    public static void godlySuppressionOnlyBenefitsItsOwnersDamage(GameTestHelper h) {
         var p=player(h);p.setPos(p.position().add(0,120,0));HunterData.learnReward(p,WildHunt.GODLY.get());var i=SkillAPI.getSkillsFrom(p).getSkill(WildHunt.GODLY.get()).orElseThrow();
         var target=h.spawnWithNoFreeWill(EntityType.COW,2,1,2);target.setPos(p.position().add(2,0,0));target.setNoGravity(true);
         var poison=io.github.manasmods.tensura.registry.skill.ResistanceSkills.POISON_NULLIFICATION.get();var spatial=io.github.manasmods.tensura.registry.skill.ResistanceSkills.SPATIAL_ATTACK_NULLIFICATION.get();
         HunterData.learnReward(target,poison);HunterData.learnReward(target,spatial);var pi=SkillAPI.getSkillsFrom(target).getSkill(poison).orElseThrow();var si=SkillAPI.getSkillsFrom(target).getSkill(spatial).orElseThrow();pi.setToggled(true);si.setToggled(true);
-        var effect=new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.POISON,200);
-        h.assertTrue(!target.addEffect(effect),"Native poison nullification did not initially reject the effect");
         WildHunt.GODLY.get().onToggleOn(i,p);
         h.runAtTickTime(h.getTick()+(5-h.getLevel().getGameTime()%5),()->{
             WildHunt.GODLY.get().tickActive(i,p);
-            h.assertTrue(GodlySkill.degraded(target) && target.addEffect(new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.POISON,200)),"Degradation still applies only to Aion attacks, not status immunity");
+            h.assertTrue(!target.addEffect(new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.POISON,200)),"Aion aura suppressed unrelated status immunity");
             var attacker=player(h);var source=WildHunt.GODLY.get().createSource(i,attacker,io.github.manasmods.tensura.damage.TensuraDamageTypes.SPACE_ELEMENTAL,0);
-            h.assertTrue(spatial.onBeingDamaged(si,target,source,10),"Degraded enemy still nullifies another attacker's damage");
-            h.assertTrue(pi.toNBT().getBoolean("Toggled") && si.toNBT().getBoolean("Toggled"),"Suppression changed the saved native toggle flags");
-            target.removeEffect(net.minecraft.world.effect.MobEffects.POISON);WildHunt.GODLY.get().onToggleOff(i,p);
-            h.runAfterDelay(11,()->{h.assertTrue(pi.isToggled() && si.isToggled() && !target.addEffect(new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.POISON,200)),"Defenses were not restored after the aura ended");h.succeed();});
+            h.assertTrue(!spatial.onBeingDamaged(si,target,source,10),"Nearby Godly owner lent suppression to another attacker");
+            var ownSource=WildHunt.GODLY.get().createSource(i,p,io.github.manasmods.tensura.damage.TensuraDamageTypes.SPACE_ELEMENTAL,0);
+            h.assertTrue(spatial.onBeingDamaged(si,target,ownSource,10),"Owner's own damage was not exempt");
+            h.assertTrue(pi.isToggled() && si.isToggled() && !HunterData.of(target).contains("aion_degraded_until"),"Aura changed target defense state");
+            WildHunt.GODLY.get().onToggleOff(i,p);h.succeed();
         });
+    }
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void godlyDamageTraitsCoverMeleeProjectilesMagicAndNativeSkills(GameTestHelper h) {
+        var p=player(h);var ordinary=player(h);var target=tank(h,p.position().add(0,180,0));
+        HunterData.learnReward(p,WildHunt.MYTHIC.get(MythicKind.THOTH).get());
+        var arrow=new net.minecraft.world.entity.projectile.Arrow(h.getLevel(),p,new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.ARROW),null);
+        var sources=java.util.List.of(p.damageSources().playerAttack(p),p.damageSources().arrow(arrow,p),
+            WildHunt.MYTHIC.get(MythicKind.THOTH).get().createSource(WildHunt.MYTHIC.get(MythicKind.THOTH).get().createDefaultInstance(),p,io.github.manasmods.tensura.damage.TensuraDamageTypes.MAGIC_GENERIC,1),
+            WildHunt.UNIQUE.get(Apex.REY_DAU).get().createSource(WildHunt.UNIQUE.get(Apex.REY_DAU).get().createDefaultInstance(),p,io.github.manasmods.tensura.damage.TensuraDamageTypes.LIGHTNING_ELEMENTAL,0));
+        var resist=io.github.manasmods.tensura.registry.skill.ResistanceSkills.PHYSICAL_ATTACK_NULLIFICATION.get();
+        for(var source:sources) {
+            h.assertTrue(resist.isResistanceBypass(source) && resist.isNullificationBypass(source),"User damage category did not bypass defenses: "+source);
+            var amount=io.github.manasmods.manascore.network.api.util.Changeable.of(100f);GodlyPassives.modifyDamage(SkillAPI.getSkillsFrom(target),target,source,amount);
+            h.assertTrue(Math.abs(amount.get()-135)<.001,"User damage category did not get its classification bonus");
+        }
+        h.assertTrue(!GodlyPassives.bypassesDefenses(p.damageSources().playerAttack(ordinary)) && !GodlyPassives.bypassesDefenses(p.damageSources().fall()),"Unrelated or environmental damage borrowed the bypass");
+        var projectileOnly=new net.minecraft.world.damagesource.DamageSource(p.damageSources().arrow(arrow,p).typeHolder(),arrow);
+        h.assertTrue(GodlyPassives.bypassesDefenses(projectileOnly),"Projectile shooter fallback was lost");h.succeed();
+    }
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void godlyInterferenceImmunityUsesOriginSkillNotCastersTier(GameTestHelper h) {
+        var target=player(h);var caster=player(h);var thoth=WildHunt.MYTHIC.get(MythicKind.THOTH).get();
+        var interference=io.github.manasmods.tensura.registry.effect.TensuraMobEffects.getReference(io.github.manasmods.tensura.registry.effect.TensuraMobEffects.MAGIC_INTERFERENCE);
+        var ordinary=WildHunt.UNIQUE.get(Apex.REY_DAU).get();
+        h.assertTrue(io.github.manasmods.tensura.effect.template.TensuraMobEffect.addEffect(target,new net.minecraft.world.effect.MobEffectInstance(interference,200),caster,ordinary,0),"Non-Godly fixture unexpectedly immune");
+        HunterData.learnReward(target,thoth);GodlyPassives.tick(target);
+        h.assertTrue(!target.hasEffect(interference),"Existing ordinary interference survived Godly acquisition");
+        HunterData.learnReward(caster,WildHunt.GODLY.get());
+        h.assertTrue(!io.github.manasmods.tensura.effect.template.TensuraMobEffect.addEffect(target,new net.minecraft.world.effect.MobEffectInstance(interference,200),caster,ordinary,0),"Godly caster promoted an ordinary skill's interference");
+        SkillAPI.getSkillsFrom(caster).forgetSkill(WildHunt.GODLY.get());
+        h.assertTrue(io.github.manasmods.tensura.effect.template.TensuraMobEffect.addEffect(target,new net.minecraft.world.effect.MobEffectInstance(interference,200),caster,thoth,1),"Actual Godly-origin interference was rejected");
+        GodlyPassives.tick(target);h.assertTrue(target.hasEffect(interference),"Cleanup removed Godly-origin interference");
+        var effect=net.minecraft.world.effect.MobEffectInstance.load((CompoundTag)target.getEffect(interference).save());
+        h.assertTrue(effect!=null && !GodlyPassives.blocksInterference(target,effect),"Saved effect lost Godly provenance");
+        target.removeEffect(interference);
+        h.assertTrue(!target.addEffect(new net.minecraft.world.effect.MobEffectInstance(interference,200)),"Unattributed interference gained Godly authority");
+        var silence=io.github.manasmods.tensura.registry.effect.TensuraMobEffects.getReference(io.github.manasmods.tensura.registry.effect.TensuraMobEffects.SILENCE);
+        h.assertTrue(target.addEffect(new net.minecraft.world.effect.MobEffectInstance(silence,200)),"Magic Interference immunity spread to unrelated Silence");
+        SkillAPI.getSkillsFrom(target).forgetSkill(thoth);
+        h.assertTrue(target.addEffect(new net.minecraft.world.effect.MobEffectInstance(interference,200)),"Forgetting last Godly skill retained interference immunity");h.succeed();
     }
     @GameTest(template="empty",timeoutTicks=100)
     public static void projectileDilationScalesByProximityWithoutCompoundingOrSlowingOwnShots(GameTestHelper h) {

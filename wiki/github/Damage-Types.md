@@ -36,7 +36,7 @@
 
 ## Space
 
-**Damage ID:** `tensura:space_elemental`. Loom Needle, Sever Thread, Parallax Snare, Crossroads Edict, Worldline Sever, Event Horizon’s core and Genesis Verdict use Space. Thoth’s seventh Lexicon/Library phase uses Space. Gates and Causal Reversal do not deal damage. Aion’s bonus preserves the source type of the original attack.
+**Damage ID:** `tensura:space_elemental`. Loom Needle, Sever Thread, Parallax Snare, Crossroads Edict, Worldline Sever, Event Horizon’s core and Genesis Verdict use Space. Thoth’s seventh Lexicon/Library phase uses Space. Gates and Causal Reversal do not deal damage. The shared Godly damage bonus preserves the source type of the original attack.
 
 ## Earth
 
@@ -62,13 +62,13 @@ Black Flame’s ignition/pool hits can apply this status. Oil Lash applies slowi
 
 ## Non-damaging abilities
 
-Causal Reversal restores position, HP, SHP, aura and magicules. Hunter’s Recovery, Apex Renewal and Sovereign Rebirth heal. Concordance Pulse heals and pushes enemies without a damage call. Most defensive passives add attributes or barriers; Water Veil is the exception with its typed retaliation. Aion’s slowing aura and resistance degradation do not themselves create periodic damage.
+Causal Reversal restores position, HP, SHP, aura and magicules. Hunter’s Recovery, Apex Renewal and Sovereign Rebirth heal. Concordance Pulse heals and pushes enemies without a damage call. Most defensive passives add attributes or barriers; Water Veil is the exception with its typed retaliation. Aion’s slowing aura and the shared Godly penetration do not themselves create periodic damage.
 
 ## Armor, barriers and resistance
 
 Tensura 2.0.1.3 places the listed direct elemental damage IDs in the native **bypasses armor** tag. This does not make them barrier-bypassing, unresistable, physical, or generic magic damage. Native skill authority, elemental boosts, barriers, resistance/nullification skills and server data still govern the result. Datapacks can change native damage tags.
 
-Aion’s active passive adds its documented resistance/nullification degradation and non-Godly bonus. It does not convert every attack into space damage. See [Aion](https://github.com/Bithio999/MC/wiki/Aion#passive) for its exact scope and [combat mechanics](https://github.com/Bithio999/MC/wiki/Mechanics) for mastery and barrier behavior.
+Any Godly skill owner gains the shared +35% bonus against non-Godly owners and resistance/nullification bypass for their own damage, regardless of toggles. These traits preserve the original damage type. They do not weaken the target against unrelated attacks, environmental damage or status effects. See [Godly classification passives](https://github.com/Bithio999/MC/wiki/Godly#classification-passives) for the exact scope, including source-aware Magic Interference immunity, and [combat mechanics](https://github.com/Bithio999/MC/wiki/Mechanics) for mastery and barrier behavior.
 
 ## Complete reference
 

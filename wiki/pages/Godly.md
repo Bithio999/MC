@@ -16,6 +16,51 @@
 
 Godly skills appear in their own category instead of being duplicated in the ordinary Ultimate list. Other mods that only inspect the native type see an Ultimate. They do not automatically recognize the addon’s extra tier or grant it additional authority. The addon does not give Godly skills blanket immunity to other skills.
 
+## Classification passives
+
+Owning **any Godly skill** grants all three passives automatically. They require **no toggle, upkeep, equipped mode or mastery threshold**. Aion, Thoth and skills classified through the `wildhunt:godly_skills` tag qualify. Owning multiple Godly skills grants each trait only once. Forgetting the last Godly skill removes the traits.
+
+### Divine Authority
+
+[Passive - Classification] — **Divine Authority**
+
+| Ability information | Value |
+| --- | --- |
+| Damage type | Modifier — preserves the original attack's damage type |
+| Damage ID | Original attack's ID |
+| Damage bonus | +35% against non-Godly owners |
+| Resource cost | None |
+
+Your damage to eligible mobs and players that **do not own a Godly skill** is multiplied by **1.35**. Melee, owned projectiles, skill damage and other damage attributed to you qualify. A defender with any Godly skill is exempt, even with its skill toggle off. Multiple Godly skills never multiply the bonus again.
+
+### Absolute Penetration
+
+[Passive - Classification] — **Absolute Penetration**
+
+| Ability information | Value |
+| --- | --- |
+| Damage type | Modifier — preserves the original attack's damage type |
+| Damage ID | Original attack's ID |
+| Resource cost | None |
+
+**Your damage only** bypasses native Resistance and Nullification skill protection and native elemental/magic resistance attributes. It applies to melee, owned projectiles, skills, spells and other damage whose source identifies you as the attacker, regardless of range. It also works against Godly owners.
+
+The target retains its learned skills, mastery, toggle settings and status immunities. Other attackers and environmental damage receive no benefit from your ownership or proximity. Armor, barriers, dodging, other skill defenses, authority and server PvP rules retain their normal behavior. Damage without an identifiable owner does not gain your traits.
+
+### Interference Immunity
+
+[Passive - Classification] — **Interference Immunity**
+
+| Ability information | Value |
+| --- | --- |
+| Damage type | None — status immunity |
+| Damage ID | — |
+| Resource cost | None |
+
+Reject Tensura's **Magic Interference** effect when its originating skill is **not Godly**. The source skill's classification decides this: an ordinary skill cast by a Godly owner remains ordinary. An effect explicitly attributed to a Godly skill can still apply through native status rules. Unattributed interference has no Godly authority and is rejected.
+
+Learning a Godly skill also clears existing non-Godly interference on the next server tick. Godly-origin interference is preserved, including after save/load. This trait does not grant general immunity to Silence, sleep, world restrictions or resource drain; individual skills can have their own additional protections.
+
 ## Obtaining
 
 Master one of the addon’s [three combination Ultimates](Ultimate-Skills.md), become a True Hero or True Demon Lord and reach **12,000,000 base EP**. Open **Skills → Godly → Ascension**, select your mastered Ultimate and choose **Aion** or **Thoth** with the destination button. Thoth additionally requires a mastered [Rune Smith](Rune-Smith.md), which is combined into the result.
@@ -24,7 +69,7 @@ The chosen Ultimate is replaced; Thoth also replaces Rune Smith. All nine preset
 
 ## Controls
 
-Open Tensura’s **Skills** categories and select **Godly**. Equip modes and toggle the passive using the native Ability Selection interface. The four active modes cycle with the normal Tensura controls.
+Open Tensura’s **Skills** categories and select **Godly**. Equip modes and toggle each skill’s own passive using the native Ability Selection interface. The three classification passives require no menu activation. The four active modes cycle with the normal Tensura controls.
 
 The server’s `godlyEP` setting controls the default EP gate. Registry IDs are `wildhunt:aion` and `wildhunt:thoth`. Owning either does not prevent earning the other with another valid source.
 

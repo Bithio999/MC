@@ -18,7 +18,7 @@ public final class MythicSkill extends Skill {
     @Override public MutableComponent getName(){return Component.translatableWithFallback("wildhunt.skill."+kind.id(),kind.title);}
     @Override public MutableComponent getColoredName(){return kind.godly()?getName().withColor(0xE8C56F):getName().withStyle(getType().getChatFormatting());}
     @Override public ResourceLocation getSkillIcon(){return WildHunt.id("textures/skill/"+kind.id()+".png");}
-    @Override public MutableComponent getSkillDescription(){return Component.literal(kind.description()+(kind==MythicKind.RUNE_SMITH || kind==MythicKind.MIRRORBOUND || kind==MythicKind.VRITRA || kind==MythicKind.JANUS?" Only the strongest ordinary elemental bonus applies; Godly bonuses apply separately.":""));}
+    @Override public MutableComponent getSkillDescription(){return Component.literal(kind.description()+(kind.godly()?GodlyPassives.DESCRIPTION:"")+(kind==MythicKind.RUNE_SMITH || kind==MythicKind.MIRRORBOUND || kind==MythicKind.VRITRA || kind==MythicKind.JANUS?" Only the strongest ordinary elemental bonus applies; Godly bonuses apply separately.":""));}
     @Override public int getMaxMastery(){return kind.godly()?50000:kind.unique()?1000:10000;}
     @Override public int getModes(ManasSkillInstance i){return kind.modes.length;}
     @Override public String getModeId(ManasSkillInstance i,int mode){return kind.id()+".mode_"+mode;}

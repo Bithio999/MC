@@ -14,13 +14,13 @@ The original four apex Uniques use **0.90 × (1 + 0.5 × mastery fraction)**. Th
 
 **EP never multiplies damage.** It is a fixed progression requirement. Native elemental boosts, skill authority, barriers, resistance/nullification, hit immunity and server rules still determine actual health loss. Overlapping warnings do not reset vanilla/native hit immunity to force multiple full hits.
 
-Aion’s active passive adds 35% damage against non-Godly owners while preserving the original attack type. Thoth’s elemental boosts and native magic-efficiency attributes are separate from Aion’s resistance suppression.
+Owning any Godly skill grants [three shared classification passives](Godly.md#classification-passives), independently of toggles and upkeep. Divine Authority adds 35% damage against non-Godly owners while preserving the original attack type. Absolute Penetration bypasses native resistance/nullification protection only for damage attributed to that owner; nearby allies and environmental damage receive no benefit. Interference Immunity rejects non-Godly-origin Magic Interference, using the originating skill rather than the caster’s tier. These traits never stack between Godly skills. Aion retains its separate barrier/slow toggle, and Thoth retains its elemental boosts and native magic-efficiency toggle.
 
 ## Elemental bonus sources
 
 For each native elemental boost attribute, only the **strongest positive non-Godly modifier** applies. Compare each source’s actual effect against the current innate base, including flat, base-multiplier and total-multiplier operations. This covers native skills, Myths skills, equipment and other attribute sources. Lower bonuses remain installed and become effective automatically when a stronger source ends. Innate base values and negative modifiers remain intact.
 
-Thoth’s **Godly** +75% elemental bonus applies separately. For example, +30% Rune Smith, +50% Furnace Mantle and +50% Vritra provide **1.5×**, rather than multiplying together. Adding Thoth gives **1.5 × 1.75 = 2.625×** before penalties. This policy affects elemental boost attributes only; it does not limit healing, mastery, attack speed or Aion’s separate damage bonus. Native damage paths that do not use these attributes retain their own rules.
+Thoth’s **Godly** +75% elemental bonus applies separately. For example, +30% Rune Smith, +50% Furnace Mantle and +50% Vritra provide **1.5×**, rather than multiplying together. Adding Thoth gives **1.5 × 1.75 = 2.625×** before penalties. This policy affects elemental boost attributes only; it does not limit healing, mastery, attack speed or the shared Godly damage bonus. Native damage paths that do not use these attributes retain their own rules.
 
 ## World effects
 

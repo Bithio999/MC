@@ -2,7 +2,7 @@
 
 [Main Page](https://github.com/Bithio999/MC/wiki/Home) · [Skills](https://github.com/Bithio999/MC/wiki/Skills) · [Ability index](https://github.com/Bithio999/MC/wiki/Abilities) · [Damage types](https://github.com/Bithio999/MC/wiki/Damage-Types)
 
-**Ability index** lists every active art, toggleable passive and shared racial action. Each entry links to its exact resource cost, targeting and damage-type table. Reflected projectiles retain their own damage source.
+**Ability index** lists every active art, classification passive, toggleable passive and shared racial action. Each entry links to its exact resource cost, targeting and damage-type table. Reflected projectiles retain their own damage source.
 
 ## Unique abilities
 
@@ -52,6 +52,14 @@
 
 ## Godly abilities
 
+The three shared classification passives are granted by ownership of any Godly skill, require no toggle or upkeep and do not stack.
+
+| Classification passive | Parent system | Activation | Damage type |
+| --- | --- | --- | --- |
+| [Divine Authority](https://github.com/Bithio999/MC/wiki/Godly#divine-authority) | [Godly](https://github.com/Bithio999/MC/wiki/Godly) | Always active | Modifier — original attack type |
+| [Absolute Penetration](https://github.com/Bithio999/MC/wiki/Godly#absolute-penetration) | [Godly](https://github.com/Bithio999/MC/wiki/Godly) | Always active | Modifier — original attack type |
+| [Interference Immunity](https://github.com/Bithio999/MC/wiki/Godly#interference-immunity) | [Godly](https://github.com/Bithio999/MC/wiki/Godly) | Always active | None |
+
 | Ability | Parent skill / system | Activation | Damage type |
 | --- | --- | --- | --- |
 | [Unbroken Continuum](https://github.com/Bithio999/MC/wiki/Aion#passive) | [Aion, God of Causality](https://github.com/Bithio999/MC/wiki/Aion) | Passive | None |
@@ -60,10 +68,10 @@
 | [Causal Reversal](https://github.com/Bithio999/MC/wiki/Aion#causal-reversal) | [Aion, God of Causality](https://github.com/Bithio999/MC/wiki/Aion) | Active | None |
 | [Genesis Verdict](https://github.com/Bithio999/MC/wiki/Aion#genesis-verdict) | [Aion, God of Causality](https://github.com/Bithio999/MC/wiki/Aion) | Active | Space elemental — `tensura:space_elemental` |
 | [Arcane Sovereignty](https://github.com/Bithio999/MC/wiki/Thoth#passive) | [Thoth, God of Magic](https://github.com/Bithio999/MC/wiki/Thoth) | Passive | None |
-| [Lexicon of Ruin](https://github.com/Bithio999/MC/wiki/Thoth#lexicon-of-ruin) | [Thoth, God of Magic](https://github.com/Bithio999/MC/wiki/Thoth) | Active | Fire elemental, then Ice elemental, then Lightning elemental — `tensura:fire_elemental`, `tensura:ice_elemental`, `tensura:lightning_elemental` |
+| [Lexicon of Ruin](https://github.com/Bithio999/MC/wiki/Thoth#lexicon-of-ruin) | [Thoth, God of Magic](https://github.com/Bithio999/MC/wiki/Thoth) | Active | Fire, Water, Lightning, Earth, Wind, Light and Space elemental — see the linked skill for all seven native IDs |
 | [Spellbreak](https://github.com/Bithio999/MC/wiki/Thoth#spellbreak) | [Thoth, God of Magic](https://github.com/Bithio999/MC/wiki/Thoth) | Active | Generic magic — `tensura:magic` |
 | [Mana Crucible](https://github.com/Bithio999/MC/wiki/Thoth#mana-crucible) | [Thoth, God of Magic](https://github.com/Bithio999/MC/wiki/Thoth) | Active | None |
-| [Astral Library](https://github.com/Bithio999/MC/wiki/Thoth#astral-library) | [Thoth, God of Magic](https://github.com/Bithio999/MC/wiki/Thoth) | Active | Rotating Fire, Ice and Lightning elemental — `tensura:fire_elemental`, `tensura:ice_elemental`, `tensura:lightning_elemental` |
+| [Astral Library](https://github.com/Bithio999/MC/wiki/Thoth#astral-library) | [Thoth, God of Magic](https://github.com/Bithio999/MC/wiki/Thoth) | Active | Rotating Fire, Water, Lightning, Earth, Wind, Light and Space elemental — see the linked skill for all seven native IDs |
 
 ## Extra abilities
 

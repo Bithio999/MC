@@ -23,6 +23,10 @@
 
 ## Usage
 
+### Classification passives
+
+Owning Thoth automatically grants [Divine Authority, Absolute Penetration and Interference Immunity](Godly.md#classification-passives): +35% damage against non-Godly owners, resistance/nullification bypass for your own damage, and protection against non-Godly Magic Interference. They have no toggle or upkeep and do not stack with Aion's shared traits. Arcane Sovereignty below retains its separate toggle and cost.
+
 ### Passive
 
 [Passive - Toggle] — **Arcane Sovereignty**
@@ -46,7 +50,7 @@ Enable the native skill toggle in Ability Selection. The first second is paid on
 | 3. Mana Crucible | 0; converts aura while held | None | — |
 | 4. Astral Library | 9,000 | 35 s | 160 per bolt |
 
-Damage listed here is before native combat handling and uses **1 + 0.5 × mastery fraction**, capped at **1.5×**. These new kits do not use the apex skills’ 0.90 multiplier or the former 3× Ultimate multiplier. EP never multiplies their damage. Native elemental boosts, authority, resistances, barriers and hit immunity apply.
+Damage listed here is before native combat handling and uses **1 + 0.5 × mastery fraction**, capped at **1.5×**. These new kits do not use the apex skills’ 0.90 multiplier or the former 3× Ultimate multiplier. EP never multiplies their damage. Native elemental boosts, authority, barriers and hit immunity apply; shared Godly penetration bypasses native resistance/nullification protection.
 
 #### Lexicon of Ruin
 

@@ -31,17 +31,14 @@
 
 | Ability information | Value |
 | --- | --- |
-| Damage type | None — defense / damage modifier / slowing |
+| Damage type | None — defense / slowing |
 | Damage ID | — |
-| Damage bonus | +35% to qualifying outgoing attacks; preserves each attack’s damage type |
 
 Adds **45 physical barrier**, **45 magic barrier**, **0.75 knockback resistance** and **1,200 native Multilayer Barrier** capacity. The latter uses Tensura’s existing barrier HUD. Its owned multilayer contribution rearms after **10 seconds without an incoming hit**, checked on the next upkeep tick. Upkeep does not repair it during combat. Turning the passive off removes its own contributions while preserving other barrier modifiers.
 
 Enabling costs the first 180 magicules, then 180 magicules each second. It turns off when unfunded or suppressed. It emits no constant passive particle cloud.
 
-While active, the caster deals **35% additional damage** to eligible mobs and players that do not own a Godly skill. Owning a skill in the addon’s Godly tag counts even when that target has its passive off. The bonus applies to melee, projectiles and skills through native damage calculation.
-
-The caster’s attacks degrade native **Resistance and Nullification skills to no protection** and ignore native elemental/magic resistance attributes. In addition, eligible enemies within the **16-block aura** have their resistance/nullification defenses suppressed against **all sources**, including other attackers, environmental damage and status effects. Poison, paralysis and other immunities granted by native Resistance/Nullification skills are included. Learned skills, mastery and saved toggle settings are preserved; protection returns within half a second after leaving the aura or the passive stopping. Armor, barriers, other skill defenses, authority and PvP protection continue to apply.
+Aion ownership also grants the three always-active [Godly classification passives](Godly.md#classification-passives): Divine Authority, Absolute Penetration and Interference Immunity. These are independent of Unbroken Continuum's toggle and upkeep. Resistance bypass belongs to the owner's damage; the slowing aura never suppresses nearby targets' defenses against other sources.
 
 Eligible enemies within **16 blocks** suffer causal time dilation. Movement reduction increases linearly from **15% at the edge** toward **80% at the caster**. It uses a temporary movement modifier, has no ambient particle cloud, does not stack between Aion users and expires within half a second after leaving the aura or the caster stopping it. Hostile and unowned **projectiles** are also slowed by proximity, using the same 15–80% reduction. Their speed is adjusted rather than repeatedly multiplied toward zero, and the aura’s speed reduction is removed after leaving. Own and allied shots are preserved. Native projectile collision, gravity and drag continue to operate.
 
@@ -106,7 +103,7 @@ If your Event Horizon is active, Verdict consumes it, uses its existing center a
 
 ## Damage and interaction
 
-The damage multiplier is **1 + 0.5 × mastery fraction**, capped at **1.5×**. All damaging modes use native `tensura:space_elemental` damage and use native damage calculation. Unbroken Continuum adds its stated resistance degradation and non-Godly bonus; other defenses, authority and PvP rules still apply. Team and owner protection follows the addon’s existing target checks. No mode destroys blocks or scales damage with EP.
+The damage multiplier is **1 + 0.5 × mastery fraction**, capped at **1.5×**. All damaging modes use native `tensura:space_elemental` damage and use native damage calculation. The shared Godly traits provide source-specific resistance/nullification bypass and +35% damage against non-Godly owners, even with Unbroken Continuum off. Other defenses, authority and PvP rules still apply. Team and owner protection follows the addon’s existing target checks. No mode destroys blocks or scales damage with EP.
 
 ## Obtaining
 

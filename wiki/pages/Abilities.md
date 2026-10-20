@@ -2,7 +2,7 @@
 
 [Main Page](../README.md) · [Skills](Skills.md) · [Ability index](Abilities.md) · [Damage types](Damage-Types.md)
 
-**Ability index** lists every active art, toggleable passive and shared racial action. Each entry links to its exact resource cost, targeting and damage-type table. Reflected projectiles retain their own damage source.
+**Ability index** lists every active art, classification passive, toggleable passive and shared racial action. Each entry links to its exact resource cost, targeting and damage-type table. Reflected projectiles retain their own damage source.
 
 ## Unique abilities
 
@@ -52,6 +52,14 @@
 
 ## Godly abilities
 
+The three shared classification passives are granted by ownership of any Godly skill, require no toggle or upkeep and do not stack.
+
+| Classification passive | Parent system | Activation | Damage type |
+| --- | --- | --- | --- |
+| [Divine Authority](Godly.md#divine-authority) | [Godly](Godly.md) | Always active | Modifier — original attack type |
+| [Absolute Penetration](Godly.md#absolute-penetration) | [Godly](Godly.md) | Always active | Modifier — original attack type |
+| [Interference Immunity](Godly.md#interference-immunity) | [Godly](Godly.md) | Always active | None |
+
 | Ability | Parent skill / system | Activation | Damage type |
 | --- | --- | --- | --- |
 | [Unbroken Continuum](Aion.md#passive) | [Aion, God of Causality](Aion.md) | Passive | None |
@@ -60,10 +68,10 @@
 | [Causal Reversal](Aion.md#causal-reversal) | [Aion, God of Causality](Aion.md) | Active | None |
 | [Genesis Verdict](Aion.md#genesis-verdict) | [Aion, God of Causality](Aion.md) | Active | Space elemental — `tensura:space_elemental` |
 | [Arcane Sovereignty](Thoth.md#passive) | [Thoth, God of Magic](Thoth.md) | Passive | None |
-| [Lexicon of Ruin](Thoth.md#lexicon-of-ruin) | [Thoth, God of Magic](Thoth.md) | Active | Fire elemental, then Ice elemental, then Lightning elemental — `tensura:fire_elemental`, `tensura:ice_elemental`, `tensura:lightning_elemental` |
+| [Lexicon of Ruin](Thoth.md#lexicon-of-ruin) | [Thoth, God of Magic](Thoth.md) | Active | Fire, Water, Lightning, Earth, Wind, Light and Space elemental — see the linked skill for all seven native IDs |
 | [Spellbreak](Thoth.md#spellbreak) | [Thoth, God of Magic](Thoth.md) | Active | Generic magic — `tensura:magic` |
 | [Mana Crucible](Thoth.md#mana-crucible) | [Thoth, God of Magic](Thoth.md) | Active | None |
-| [Astral Library](Thoth.md#astral-library) | [Thoth, God of Magic](Thoth.md) | Active | Rotating Fire, Ice and Lightning elemental — `tensura:fire_elemental`, `tensura:ice_elemental`, `tensura:lightning_elemental` |
+| [Astral Library](Thoth.md#astral-library) | [Thoth, God of Magic](Thoth.md) | Active | Rotating Fire, Water, Lightning, Earth, Wind, Light and Space elemental — see the linked skill for all seven native IDs |
 
 ## Extra abilities
 

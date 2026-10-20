@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.17.0 — Shared Godly classification passives
+
+- Move Aion’s +35% damage against non-Godly owners and native resistance/nullification bypass into always-active Godly ownership traits. Aion, Thoth and datapack-classified Godly skills qualify; multiple skills never stack the bonus. No toggle, upkeep or equipped mode is required.
+- Scope penetration to damage attributable to the Godly owner, including ordinary melee, projectiles, skills and spells. Remove Aion’s target-wide defense/status suppression; other attackers and environmental damage no longer benefit. Preserve learned defenses and saved toggles. Aion retains recovering barriers and proximity movement/projectile slowing.
+- Add Magic Interference immunity keyed to the originating skill’s Godly classification, rather than the caster’s other skills. Preserve Godly-origin interference and unrelated status rules; cleanse ordinary interference acquired before Godly ownership.
+- Extend native combat/effect integration tests and update the individual skill articles, classification reference, ability index, in-game descriptions and generated/offline wiki editions.
+
 ## 0.16.0 — Thoth’s seven-element spectrum
 
 - Expand Lexicon of Ruin and Astral Library to Fire, Water, Lightning, Earth, Wind, Light and Space, matching Thoth’s passive. Water represents the shared Water/Ice slot; no separate Ice, Darkness or Gravity phase is added. Other skills retain their Ice damage.

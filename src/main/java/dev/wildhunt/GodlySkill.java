@@ -25,7 +25,7 @@ public final class GodlySkill extends Skill {
     @Override public MutableComponent getName() { return Component.translatableWithFallback("wildhunt.skill.aion","Aion, God of Causality"); }
     @Override public MutableComponent getColoredName() { return getName().withColor(0xE8C56F); }
     @Override public ResourceLocation getSkillIcon() { return WildHunt.id("textures/skill/aion.png"); }
-    @Override public MutableComponent getSkillDescription() { return Component.literal("[Godly] Hold Worldline Sever to sweep an eight-target spatial beam along your aim. Event Horizon pulls from 24 blocks into a 10-block damaging core. Causal Reversal restores recorded HP, SHP, aura, magicules and position; the free return triggers automatically after 20 seconds. Genesis Verdict collapses a Horizon for an empowered finale. Unbroken Continuum grants recovering barriers, resistance/nullification degradation, 35% bonus damage against non-Godly foes, and a proximity slowing aura. Magicules only; mastery strengthens damage."); }
+    @Override public MutableComponent getSkillDescription() { return Component.literal("[Godly] Hold Worldline Sever to sweep an eight-target spatial beam along your aim. Event Horizon pulls from 24 blocks into a 10-block damaging core. Causal Reversal restores recorded HP, SHP, aura, magicules and position; the free return triggers automatically after 20 seconds. Genesis Verdict collapses a Horizon for an empowered finale. Unbroken Continuum grants recovering barriers and a proximity slowing aura. Magicules only; mastery strengthens damage."+GodlyPassives.DESCRIPTION); }
     @Override public int getMaxMastery() { return 50_000; }
     @Override public double getDefaultAcquiringMagiculeCost() { return 0; }
     @Override public int getModes(ManasSkillInstance i) { return 4; }
@@ -128,15 +128,11 @@ public final class GodlySkill extends Skill {
         if(!(entity instanceof LivingEntity e) || !e.isAlive())return false;
         return SkillAPI.getSkillsFrom(e).getSkill(WildHunt.GODLY.get()).map(i->i.isToggled() && i.getSkill().canInteractSkill(i,e) && (e.hasInfiniteMaterials() || i.getOrCreateTag().getLong("upkeep")>e.level().getGameTime() || TensuraStorages.getExistenceFrom(e).getMagicule()>=180)).orElse(false);
     }
-    public static dev.architectury.event.EventResult modifyDamage(io.github.manasmods.manascore.skill.api.Skills storage,LivingEntity target,net.minecraft.world.damagesource.DamageSource source,io.github.manasmods.manascore.network.api.util.Changeable<Float> amount) {
-        if(source.getEntity() instanceof LivingEntity caster && passiveActive(caster) && HunterData.canHarm(caster,target) && SkillAPI.getSkillsFrom(target).getLearnedSkills().stream().noneMatch(i->dev.wildhunt.myths.MythsTiers.isGodly(i.getSkill())))amount.set(amount.get()*1.35f);
-        return dev.architectury.event.EventResult.pass();
-    }
     private static final ResourceLocation SLOW=WildHunt.id("causal_dilation");
     private static void slowNearby(ServerLevel level,LivingEntity caster) {
         for(var target:ApexArts.enemies(level,caster,caster.position(),16)) {
             double strength=.15+.65*(1-Math.clamp(target.distanceTo(caster)/16d,0,1));
-            var d=HunterData.of(target);d.putLong("aion_degraded_until",level.getGameTime()+10);var movement=target.getAttribute(Attributes.MOVEMENT_SPEED);if(movement==null)continue;
+            var d=HunterData.of(target);var movement=target.getAttribute(Attributes.MOVEMENT_SPEED);if(movement==null)continue;
             // One non-stacking modifier; the strongest overlapping aura wins until its short lease expires.
             var old=movement.getModifier(SLOW);
             if(old==null || -old.amount()<=strength || level.getGameTime()>=d.getLong("aion_slow_until")) {
@@ -144,10 +140,6 @@ public final class GodlySkill extends Skill {
                 d.putLong("aion_slow_until",level.getGameTime()+10);
             }
         }
-    }
-    /** Suppression is a short aura lease; the learned toggle flags themselves are never changed. */
-    public static boolean degraded(LivingEntity target) {
-        return target.isAlive() && target.getPersistentData().getCompound("wildhunt").getLong("aion_degraded_until")>target.level().getGameTime();
     }
     private static double dilation(double distance) {return .15+.65*(1-Math.clamp(distance/16,0,1));}
     private static void slowProjectiles(ServerLevel level,LivingEntity caster) {
@@ -194,6 +186,7 @@ public final class GodlySkill extends Skill {
     }
     public static void tickSlow(LivingEntity target) {
         var d=target.getPersistentData().getCompound("wildhunt");
+        d.remove("aion_degraded_until"); // Discard the retired, target-wide suppression lease.
         if(d.contains("aion_slow_until") && (!target.isAlive() || target.level().getGameTime()>=d.getLong("aion_slow_until"))) {
             var movement=target.getAttribute(Attributes.MOVEMENT_SPEED);if(movement!=null)movement.removeModifier(SLOW);d.remove("aion_slow_until");
         }

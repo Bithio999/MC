@@ -1,6 +1,6 @@
 package dev.wildhunt.mixin;
 
-import dev.wildhunt.GodlySkill;
+import dev.wildhunt.GodlyPassives;
 import io.github.manasmods.manascore.network.api.util.Changeable;
 import io.github.manasmods.tensura.handler.DamagingHandler;
 import net.minecraft.world.damagesource.DamageSource;
@@ -13,6 +13,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class GodlyResistanceAttributesMixin {
     @Inject(method="applyResistanceAttributes",at=@At("HEAD"),cancellable=true,remap=false)
     private static void myths$degrade(LivingEntity target,DamageSource source,Changeable<Float> amount,CallbackInfo ci) {
-        if(GodlySkill.passiveActive(source.getEntity()) || GodlySkill.degraded(target))ci.cancel();
+        if(GodlyPassives.bypassesDefenses(source))ci.cancel();
     }
 }
