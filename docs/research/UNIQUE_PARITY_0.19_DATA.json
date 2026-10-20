@@ -1,0 +1,457 @@
+{
+  "audit_date": "2026-10-20",
+  "myths_release": "0.19.0",
+  "method": "Released-binary/configuration and source-path inspection; no new cross-mod runtime benchmark. Native generated development config matches inspected relevant defaults. Excludes Godly ownership, other skills and gear. Printed values are not guaranteed full-cast HP loss.",
+  "native_version": "2.0.1.3",
+  "native_config": {
+    "AbsoluteSeverance": {
+      "mpAcquirement": 60000.0,
+      "magiculeCostCoating": 1000.0,
+      "magiculeCostProjectile": 20000.0,
+      "coatingDuration": 12000,
+      "coatingLevel": 5,
+      "coatingLevelMastered": 20,
+      "projectileDamage": 50.0,
+      "projectileDamageMastered": 300.0,
+      "projectileSize": 5.0,
+      "projectileSizeMastered": 8.0,
+      "projectileDuration": 20,
+      "projectileDurationMastered": 40,
+      "projectileCooldown": 3
+    },
+    "Musician": {
+      "mpAcquirement": 70000.0,
+      "magiculeCostBlast": 50.0,
+      "magiculeCostWave": 100.0,
+      "magiculeCostRequiem": 200.0,
+      "blastRange": 8,
+      "blastRangeMastered": 12,
+      "blastDamage": 75,
+      "blastDamageMastered": 150,
+      "blastCooldown": 1,
+      "waveRadius": 5,
+      "waveDamage": 40,
+      "waveDamageMastered": 75,
+      "waveCooldown": 1,
+      "requiemRange": 10,
+      "requiemDamage": 150,
+      "requiemSpiritualDamage": 100,
+      "requiemCooldown": 3
+    },
+    "Fusionist": {
+      "mpAcquirement": 50000.0,
+      "magiculeCostFuse": 1000.0,
+      "magiculeCostProjectile": 200.0,
+      "range": 5.0,
+      "fuseMatterCost": 5,
+      "fuseBlastDamage": 300,
+      "fuseBlastDamageMastered": 500,
+      "fuseBlastRadius": 25,
+      "bonusBlastCost": 10,
+      "bonusBlastDamage": 50,
+      "bonusBlastRadius": 5,
+      "maxBlastRadius": 50,
+      "projectileMatterCost": 1,
+      "projectileBlastRadius": 6
+    },
+    "Healer": {
+      "mpAcquirement": 50000.0,
+      "magiculeCostInfection": 200.0,
+      "magiculeCostHP": 80.0,
+      "magiculeCostHPMastered": 40.0,
+      "magiculeCostSHP": 60.0,
+      "cooldown": 5,
+      "cooldownMastered": 3,
+      "infectionDuration": 900,
+      "plagueRadius": 7,
+      "cooldownInfection": 3,
+      "cooldownInfectionMastered": 1
+    },
+    "Guardian": {
+      "mpAcquirement": 50000.0,
+      "magiculeCost": 100.0,
+      "protectionRadius": 25.0,
+      "protectionDuration": 3600,
+      "protectionArmor": 10.0,
+      "protectionBarrier": 30.0,
+      "wallArmor": 15.0,
+      "wallArmorMastered": 40.0,
+      "wallKnockResist": 0.4,
+      "wallKnockResistMastered": 1.0
+    },
+    "Reflector": {
+      "mpAcquirement": 30000.0,
+      "counterSpeedMultiplier": 0.0,
+      "counterSpeedMultiplierMastered": 1.0,
+      "counterDamageMultiplier": 2.5,
+      "counterProjectileSpeedMultiplier": 2.0,
+      "counterCooldown": 5,
+      "maximumPoint": 100,
+      "bonusPointMultiplier": 0.001,
+      "reflectionDamageMultiplier": 3.0,
+      "reflectionDamageMultiplierMastered": 5.0
+    },
+    "MartialMaster": {
+      "mpAcquirement": 40000.0,
+      "auraCost": 100.0,
+      "damageMultiplier": 1.5,
+      "ultraDistance": 15.0,
+      "ultraDistanceMastered": 20.0,
+      "ultraDamage": 15.0,
+      "ultraDamageMastered": 75.0,
+      "chantSpeed": 2.0,
+      "meleeDodge": 25.0,
+      "projectileDodge": 100.0,
+      "dodgeStrength": 0.25,
+      "dodgeInvulnerability": 2,
+      "learningPoint": 4.0,
+      "masteryPoint": 4.0
+    }
+  },
+  "myths": {
+    "Storm Crown": {
+      "raw_mode_damage": [
+        550,
+        350
+      ],
+      "mastered_damage_with_own_toggle_at_element_base_one": [
+        1237.5,
+        787.5
+      ],
+      "aura_costs": [
+        800,
+        1000
+      ],
+      "cooldown_seconds": [
+        3,
+        4
+      ],
+      "notes": ""
+    },
+    "Scarlet Deluge": {
+      "raw_mode_damage": [
+        420,
+        200
+      ],
+      "mastered_damage_with_own_toggle_at_element_base_one": [
+        945.0,
+        450.0
+      ],
+      "aura_costs": [
+        600,
+        1600
+      ],
+      "cooldown_seconds": [
+        3,
+        6
+      ],
+      "notes": ""
+    },
+    "Black Flame": {
+      "raw_mode_damage": [
+        450,
+        650
+      ],
+      "mastered_damage_with_own_toggle_at_element_base_one": [
+        1012.5,
+        1462.5
+      ],
+      "aura_costs": [
+        650,
+        1800
+      ],
+      "cooldown_seconds": [
+        3,
+        7
+      ],
+      "notes": ""
+    },
+    "Frostbound Colossus": {
+      "raw_mode_damage": [
+        700,
+        300
+      ],
+      "mastered_damage_with_own_toggle_at_element_base_one": [
+        1575.0,
+        675.0
+      ],
+      "aura_costs": [
+        800,
+        1400
+      ],
+      "cooldown_seconds": [
+        3,
+        7
+      ],
+      "notes": ""
+    },
+    "Threadweaver": {
+      "raw_mode_damage": [
+        450,
+        800
+      ],
+      "mastered_damage_with_own_toggle_at_element_base_one": [
+        675.0,
+        1200.0
+      ],
+      "aura_costs": [
+        600,
+        1000
+      ],
+      "cooldown_seconds": [
+        4,
+        6
+      ],
+      "notes": ""
+    },
+    "Rune Smith": {
+      "raw_mode_damage": [
+        650,
+        1000
+      ],
+      "mastered_damage_with_own_toggle_at_element_base_one": [
+        1462.5,
+        2250.0
+      ],
+      "aura_costs": [
+        600,
+        800
+      ],
+      "cooldown_seconds": [
+        6,
+        4
+      ],
+      "notes": "Rune Smith: first damage is automatic proximity trigger; placement costs aura but deals no immediate hit. Verdant Keeper: first mode heals. Mirrorbound: second mode reflects."
+    },
+    "Verdant Keeper": {
+      "raw_mode_damage": [
+        null,
+        500
+      ],
+      "mastered_damage_with_own_toggle_at_element_base_one": [
+        null,
+        750.0
+      ],
+      "aura_costs": [
+        1600,
+        700
+      ],
+      "cooldown_seconds": [
+        14,
+        5
+      ],
+      "notes": "Rune Smith: first damage is automatic proximity trigger; placement costs aura but deals no immediate hit. Verdant Keeper: first mode heals. Mirrorbound: second mode reflects."
+    },
+    "Mirrorbound": {
+      "raw_mode_damage": [
+        600,
+        null
+      ],
+      "mastered_damage_with_own_toggle_at_element_base_one": [
+        1350.0,
+        null
+      ],
+      "aura_costs": [
+        750,
+        1400
+      ],
+      "cooldown_seconds": [
+        3,
+        10
+      ],
+      "notes": "Rune Smith: first damage is automatic proximity trigger; placement costs aura but deals no immediate hit. Verdant Keeper: first mode heals. Mirrorbound: second mode reflects."
+    }
+  },
+  "addons": {
+    "mysticism": {
+      "sha256": "61e98fe4666cb2baa35396dca7d4e1bb7e41069f2ddfc4af9799b2bb5eb442d3",
+      "config_defaults": {
+        "Engineer": {
+          "mpAcquirement": 50000.0,
+          "buildSentryCost": 500.0,
+          "buildSentryCostMastered": 500.0,
+          "sentryLevel1FireRate": 10,
+          "sentryLevel2LevelUpTime": 2400,
+          "sentryLevel2FireRate": 5,
+          "sentryLevel3LevelUpTime": 6000,
+          "sentryLevel3FireRate": 10,
+          "buildDispenserCost": 500.0,
+          "buildDispenserCostMastered": 500.0,
+          "buildCooldown": 30,
+          "buildCooldownMastered": 15,
+          "bubbleShieldCost": 1000.0,
+          "bubbleShieldCostMastered": 1000.0,
+          "bubbleShieldShouldHurt": false,
+          "bubbleShieldSize": 7.0,
+          "bubbleShieldCooldown": 25,
+          "bubbleShieldCooldownMastered": 15,
+          "bubbleShieldLifespan": 300,
+          "bubbleShieldLifespanMastered": 600,
+          "percentageDispenserEPRegenLevel1": 0.5,
+          "percentageDispenserEPRegenLevel2": 1.0,
+          "percentageDispenserEPRegenLevel3": 3.0,
+          "healthDispenserRegenLevel2": 10,
+          "healthDispenserRegenLevel3": 5.0,
+          "foodDispenserRegenLevel1": 1,
+          "foodDispenserRegenLevel2": 2,
+          "foodDispenserRegenLevel3": 3
+        },
+        "Kyurem": {
+          "epRequirement": 100000.0,
+          "canAcquireWithOtherSkills": true,
+          "iceEssenceAmount": 10,
+          "dragonEssenceAmount": 10,
+          "mpAcquirement": 64600.0,
+          "pressureEffectDuration": 30,
+          "pressureCostMultiplier": 2.0,
+          "glaciateMPCost": 900.0,
+          "glaciateRange": 15,
+          "glaciateDamageIncrement": 10,
+          "glaciateMaxDamageMastered": 200,
+          "glaciateMaxDamage": 100,
+          "glaciateCooldown": 30,
+          "draconicPulseMPCost": 700.0,
+          "draconicPulseDamage": 40.0,
+          "draconicPulseExplosionRadius": 7.5,
+          "draconicPulseCooldown": 10,
+          "draconicPulseCooldownMastered": 5,
+          "freezeDryMPCost": 800.0,
+          "freezeDryDamage": 20.0,
+          "freezeDryCooldown": 20,
+          "freezeDryCooldownMastered": 10,
+          "blizzardMPCost": 900.0,
+          "blizzardDamage": 40.0,
+          "blizzardCooldown": 10,
+          "blizzardRadius": 7.5
+        },
+        "Reshiram": {
+          "epRequirement": 100000.0,
+          "canAcquireWithOtherSkills": true,
+          "blazeEssenceAmount": 10,
+          "dragonEssenceAmount": 10,
+          "mpAcquirement": 64300.0,
+          "flameBoostAmount": 1.5,
+          "blueFlareMPCost": 800.0,
+          "blueFlareDamage": 60.0,
+          "blueFlareRadius": 20.0,
+          "blueFlareCooldown": 10,
+          "blueFlareCooldownMastered": 5,
+          "fusionFlareMPCost": 700.0,
+          "fusionFlareZekromMPCostBoost": 2.0,
+          "fusionFlareDamage": 200.0,
+          "fusionFlareRadius": 5.0,
+          "fusionFlareZekromBonus": 40.0,
+          "fusionFlareCooldown": 20,
+          "draconicMeteorMPCost": 1000.0,
+          "draconicMeteorDamage": 70.0,
+          "draconicMeteorExplosionRadius": 10.0,
+          "draconicMeteorKnockbackForce": 5.0,
+          "draconicMeteorCooldown": 20,
+          "flamethrowerMPCost": 400.0,
+          "flamethrowerDamage": 30.0,
+          "flamethrowerCooldown": 10
+        },
+        "Restricted": {
+          "mpAcquirement": 20000.0,
+          "battlewillMultiplier": 5.0,
+          "physicalAttackMultiplier": 3.0,
+          "maximumStatBoost": 2.0,
+          "maximumFlatStatBoost": 20.0,
+          "decimateDistance": 12,
+          "decimateDistanceMastered": 16,
+          "decimateDamage": 25.0,
+          "decimateDamageMastered": 75.0,
+          "counterStateDuration": 60,
+          "counterStateDurationMastered": 100,
+          "counterImbalanceDuration": 100,
+          "counterImbalanceDurationMastered": 100,
+          "counterCooldown": 15,
+          "counterCooldownMastered": 15
+        },
+        "Zekrom": {
+          "epRequirement": 100000.0,
+          "canAcquireWithOtherSkills": true,
+          "dragonEssenceAmount": 10,
+          "lightningEssenceAmount": 10,
+          "mpAcquirement": 64400.0,
+          "lightningBoostAmount": 1.5,
+          "boltStrikeMPCost": 800.0,
+          "boltStrikeDamage": 150.0,
+          "boltStrikeRadius": 7.5,
+          "boltStrikeAdditionalVisual": 8,
+          "boltStrikeCooldown": 20,
+          "boltStrikeCooldownMastered": 10,
+          "fusionBoltMPCost": 800.0,
+          "fusionBoltDamage": 60.0,
+          "fusionBoltReshiramBonus": 40.0,
+          "fusionboltReshiramMPCost": 2.0,
+          "fusionBoltRange": 15.0,
+          "fusionBoltFireDuration": 5,
+          "fusionBoltCooldown": 20,
+          "draconicBreathMPCost": 800.0,
+          "draconicBreathDamage": 60.0,
+          "draconicBreathCooldown": 10,
+          "thunderboltMPCost": 1000.0,
+          "thunderboltDamage": 100.0,
+          "thunderboltRange": 30.0
+        }
+      }
+    },
+    "nightmares": {
+      "sha256": "892d77a3169a45c14c41efc277cae8204d2b0786fec6f5416b9ad7bcaa35dd04",
+      "config_defaults": {
+        "Elementalist": {
+          "mpAcquirement": 60000.0,
+          "passiveBoost": 0.3,
+          "passiveBoostMastered": 0.4,
+          "connectionBoost": 20.0,
+          "connectionBoostMastered": 40.0
+        },
+        "Ending": {
+          "mpAcquirement": 44444.0,
+          "magiculeCostPull": 4444.0,
+          "magiculeCostDoor": 4444.0,
+          "pullDamage": 44,
+          "pullCooldown": 44,
+          "doorCooldown": 444,
+          "healCooldown": 1
+        },
+        "FreezingFlame": {
+          "mpAcquirement": 90000.0,
+          "maxMastery": 1000,
+          "coatingDamage": 50.0,
+          "coatingDamageMastered": 100.0,
+          "magiculeCostAfterWorld": 5000.0,
+          "magiculeCostWhiteFlame": 0.0
+        },
+        "Stasis": {
+          "epAcquirement": 70000.0,
+          "learningCost": 1000.0,
+          "maxMastery": 1000,
+          "fixedStateCooldownSeconds": 60,
+          "fixedStateDurationTicks": 600,
+          "airWallMagiculePerSecond": 1000.0,
+          "airWallHalfSize": 2.5,
+          "airWallCenterDistance": 2.75,
+          "airWallThickness": 0.35
+        },
+        "SunWheel": {
+          "mpAcquirement": 100000.0,
+          "maxMastery": 1000,
+          "defaultIgnition": 30,
+          "magiculeCostSunCircle": 2000.0,
+          "magiculeCostRedSun": 1500.0,
+          "magiculeCostFireMoon": 3000.0,
+          "magiculeCostRedMoon": 8000.0,
+          "sunCircleMaxDamage": 100.0,
+          "redSunMaxDamage": 200.0,
+          "fireMoonMaxDamage": 100.0,
+          "redMoonMaxDamage": 300.0,
+          "fireWallDamage": 50.0,
+          "burnedOutTicks": 3600,
+          "handSwordSweepRatio": 0.75
+        }
+      }
+    }
+  }
+}

@@ -1,5 +1,9 @@
 # Current balance: 0.19.0
 
+> **External parity audit:** [native/addon Unique comparison](research/UNIQUE_PARITY_0.19.md)
+> identifies high repeatable damage and healing-economy concerns. These values
+> describe the shipped internal tier balance, not confirmed cross-mod parity.
+
 The approved five combination Ultimates remain the benchmark. Uniques provide
 repeatable early combat and narrower utility; Ultimates add native penetration,
 stronger fields and linked third arts; Godly skills add exceptional sustained
