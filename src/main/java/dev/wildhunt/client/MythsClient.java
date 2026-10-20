@@ -22,7 +22,13 @@ public final class MythsClient {
     public static void open(String view) {requested=view;PacketDistributor.sendToServer(new MythsNetwork.Request("open",view));}
     @SubscribeEvent public static void setup(FMLClientSetupEvent event) {
         MythsNetwork.clientStateReceiver=tag->{
-            var mc=Minecraft.getInstance();if(mc.player==null)return;state=tag;if(tag.getBoolean("silent")){if(mc.screen instanceof MythsEvolutionScreen screen)screen.refreshState(tag);return;}
+            var mc=Minecraft.getInstance();if(mc.player==null)return;
+            if(tag.getBoolean("lugh_library")){
+                if(mc.screen instanceof LughLibraryScreen screen)screen.update(tag);
+                else if(tag.getBoolean("open") && tag.getBoolean("owned") && (mc.screen==null || mc.screen instanceof ChatScreen))mc.setScreen(new LughLibraryScreen(tag));
+                return;
+            }
+            state=tag;if(tag.getBoolean("silent")){if(mc.screen instanceof MythsEvolutionScreen screen)screen.refreshState(tag);return;}
             if(requested!=null){var view=requested;requested=null;mc.setScreen(view.equals("godly")?new GodlyAscensionScreen():view.equals("synthesis")?new SkillSynthesisScreen():new MythsEvolutionScreen(tag,view.equals("convergence")));}
             else if(mc.screen instanceof MythsEvolutionScreen screen)screen.update(tag);
             else if(mc.screen instanceof GodlyAscensionScreen screen){if(screen.destinationOwned())mc.setScreen(new GodlySelectionScreen());else screen.refresh();}

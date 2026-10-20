@@ -26,20 +26,22 @@ public final class MythicSkill extends Skill {
     @Override public int nextMode(LivingEntity e,ManasSkillInstance i,int mode,boolean reverse){return Math.floorMod(mode+(reverse?-1:1),kind.modes.length);}
     @Override public double getDefaultAcquiringMagiculeCost(){return kind.unique()?25000:0;}
     @Override public double getAuraCost(LivingEntity e,ManasSkillInstance i,int mode){return kind.godly()?0:kind==MythicKind.JANUS && mode==0 && i.getOrCreateTag().getLong("gates_until")>e.level().getGameTime()?400:cost(mode);}
-    @Override public double getMagiculeCost(LivingEntity e,ManasSkillInstance i,int mode){return kind.godly()?(kind==MythicKind.LUGH && mode==1 && e.isShiftKeyDown()?0:cost(mode)):0;}
+    @Override public double getMagiculeCost(LivingEntity e,ManasSkillInstance i,int mode){return kind.godly()?(kind==MythicKind.LUGH && (mode==0 || mode==1) && e.isShiftKeyDown()?0:cost(mode)):0;}
     private double cost(int mode){return mode>=0 && mode<kind.costs.length?kind.costs[mode]:0;}
     @Override public boolean canBeToggled(ManasSkillInstance i,LivingEntity e){return true;}
     @Override public boolean canTick(ManasSkillInstance i,LivingEntity e){return false;}
     private boolean crucible(int mode){return kind==MythicKind.THOTH && mode==2;}
-    @Override public boolean canIgnoreCoolDown(ManasSkillInstance i,LivingEntity e,int mode){return crucible(mode) || kind==MythicKind.LUGH && mode==1 && e.isShiftKeyDown() || super.canIgnoreCoolDown(i,e,mode);}
+    @Override public boolean canIgnoreCoolDown(ManasSkillInstance i,LivingEntity e,int mode){return crucible(mode) || kind==MythicKind.LUGH && (mode==0 || mode==1) && e.isShiftKeyDown() || super.canIgnoreCoolDown(i,e,mode);}
     // ManasCore's explicit -1 sentinel is unlimited, with no artificial hold duration.
     @Override public int getMaxHeldTime(ManasSkillInstance i,LivingEntity e){return kind==MythicKind.THOTH?-1:super.getMaxHeldTime(i,e);}
     @Override public boolean shouldTriggerReleaseOnHeldInterrupt(ManasSkillInstance i,LivingEntity e,int key,int mode){return crucible(mode);}
     @Override public boolean onHeld(ManasSkillInstance i,LivingEntity e,int heldTicks,int mode){return crucible(mode) && ManaCrucible.held(this,i,e);}
     @Override public void onRelease(ManasSkillInstance i,LivingEntity e,int ticks,int key,int mode){if(crucible(mode))ManaCrucible.stop(i,e);}
     @Override public void onPressed(ManasSkillInstance i,LivingEntity e,int slot,int mode){
-        if(e.level() instanceof ServerLevel && kind==MythicKind.LUGH && mode==1 && e.isShiftKeyDown()){
-            if(e.isAlive() && canInteractSkill(i,e) && canActivateSkill(i,e,mode))LughArts.cycle(i,e);return;
+        if(e.level() instanceof ServerLevel && kind==MythicKind.LUGH && (mode==0 || mode==1) && e.isShiftKeyDown()){
+            if(e.isAlive() && canInteractSkill(i,e) && canActivateSkill(i,e,mode)){
+                if(mode==0 && e instanceof net.minecraft.server.level.ServerPlayer p)dev.wildhunt.myths.MythsNetwork.sendLugh(p,true);else if(mode==1)LughArts.cycle(i,e);
+            }return;
         }
         if(!(e.level() instanceof ServerLevel level) || mode<0 || mode>=kind.modes.length || !crucible(mode) && i.onCoolDown(mode) || !canInteractSkill(i,e) || !canActivateSkill(i,e,mode))return;
         if(crucible(mode)){ManaCrucible.begin(i,e);return;}

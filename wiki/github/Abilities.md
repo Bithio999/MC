@@ -81,7 +81,7 @@ The three Godly classification passives are always active, free and non-stacking
 | [Skill Appraisal](https://github.com/Bithio999/MC/wiki/Lugh#skill-appraisal) | [Lugh, God of Skills](https://github.com/Bithio999/MC/wiki/Lugh) | Active | None |
 | [Reconstructed Art](https://github.com/Bithio999/MC/wiki/Lugh#reconstructed-art) | [Lugh, God of Skills](https://github.com/Bithio999/MC/wiki/Lugh) | Active | Variable normalised physical, elemental or generic magic — see the linked archive/source reference |
 | [Countermand](https://github.com/Bithio999/MC/wiki/Lugh#countermand) | [Lugh, God of Skills](https://github.com/Bithio999/MC/wiki/Lugh) | Active | None |
-| [Grand Synthesis](https://github.com/Bithio999/MC/wiki/Lugh#grand-synthesis) | [Lugh, God of Skills](https://github.com/Bithio999/MC/wiki/Lugh) | Active | Three archived normalised damage types — see the linked archive/source reference |
+| [Grand Synthesis](https://github.com/Bithio999/MC/wiki/Lugh#grand-synthesis) | [Lugh, God of Skills](https://github.com/Bithio999/MC/wiki/Lugh) | Active | Three bound normalised damage types — see the linked archive/source reference |
 
 ## Extra abilities
 

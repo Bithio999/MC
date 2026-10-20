@@ -81,7 +81,7 @@ The three Godly classification passives are always active, free and non-stacking
 | [Skill Appraisal](Lugh.md#skill-appraisal) | [Lugh, God of Skills](Lugh.md) | Active | None |
 | [Reconstructed Art](Lugh.md#reconstructed-art) | [Lugh, God of Skills](Lugh.md) | Active | Variable normalised physical, elemental or generic magic — see the linked archive/source reference |
 | [Countermand](Lugh.md#countermand) | [Lugh, God of Skills](Lugh.md) | Active | None |
-| [Grand Synthesis](Lugh.md#grand-synthesis) | [Lugh, God of Skills](Lugh.md) | Active | Three archived normalised damage types — see the linked archive/source reference |
+| [Grand Synthesis](Lugh.md#grand-synthesis) | [Lugh, God of Skills](Lugh.md) | Active | Three bound normalised damage types — see the linked archive/source reference |
 
 ## Extra abilities
 

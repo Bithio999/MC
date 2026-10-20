@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.21.0
+
+- Skill Appraisal now accumulates a persistent Lugh technique library instead of replacing an equipped art. Record source modes separately, refresh known techniques by stable ID, and preserve the old three-entry loadout on migration.
+- Shift + Skill Appraisal opens a Pride-style native panel with search, scrolling list, source icons and detailed damage/type/form/range parameters. Opening, selecting and binding are free even during cooldown and at zero MP.
+- Bind library entries explicitly to Art I/II/III. Reconstructed Art uses the active binding; Grand Synthesis freezes all three bindings when cast. Existing crouch cycling remains a free shortcut. Server validation accepts only learned record IDs and valid slots.
+- Update the Lugh article, generated GitHub Wiki edition, styled wiki and offline bundle. Combat budgets, Countermand and shared Godly traits retain their existing rules.
+
 ## 0.20.0 — External Unique calibration and funded Grove healing
 
 - Apply the native Tensura / Mysticism / Nightmares Unique audit with individual damage and aura-cost adjustments across all eight Uniques. Make the largest cuts to repeatable attacks and compact detonation; keep the more constrained tether burst stronger relative to its former budget. Reduce Current's drenched bonus to 25%.

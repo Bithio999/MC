@@ -33,6 +33,13 @@ public final class MythsNetwork {
             if(!(context.player() instanceof ServerPlayer p))return;
             if(java.util.Set.of("race_press","race_hold","race_release").contains(payload.action())) {SecondaryAbility.input(p,payload.action());return;}
             if(payload.action().equals("sync")){var sync=DuoSystem.data(p);long time=p.level().getGameTime();if(sync.contains("sync_time") && time-sync.getLong("sync_time")<10)return;sync.putLong("sync_time",time);var snapshot=snapshot(p,"");snapshot.putBoolean("silent",true);PacketDistributor.sendToPlayer(p,new State(snapshot));return;}
+            if(payload.action().startsWith("lugh_")){
+                var data=DuoSystem.data(p);long time=p.level().getGameTime();
+                // A periodic refresh must never swallow a player's binding click.
+                boolean sync=payload.action().equals("lugh_sync");String clock=sync?"lugh_sync_time":"lugh_action_time";
+                if(data.contains(clock) && time-data.getLong(clock)<(sync?20:1))return;data.putLong(clock,time);
+                if(!sync)LughArts.configure(p,payload.action(),payload.argument());sendLugh(p,false);return;
+            }
             long now=p.serverLevel().getGameTime(); var d=DuoSystem.data(p);
             if(d.contains("request_time") && now-d.getLong("request_time")<3)return;
             d.putLong("request_time",now);
@@ -50,6 +57,7 @@ public final class MythsNetwork {
         }));
         registrar.playToClient(State.TYPE,State.CODEC,(payload,context)->context.enqueueWork(()->clientStateReceiver.accept(payload.data())));
     }
+    public static void sendLugh(ServerPlayer p,boolean open){var state=LughArts.snapshot(p);state.putBoolean("open",open);PacketDistributor.sendToPlayer(p,new State(state));}
     public static void send(ServerPlayer p,String message) { PacketDistributor.sendToPlayer(p,new State(snapshot(p,message))); }
     public static CompoundTag snapshot(ServerPlayer p,String message) {
         var tag=new CompoundTag();tag.putString("message",message);

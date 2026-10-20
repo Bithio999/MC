@@ -69,8 +69,8 @@ public final class SovereignGameTests {
         afterTracking(h,List.of(actor,victim),()->{
             victim.hurt(((MythicSkill)sourceSkill.getSkill()).createSource(sourceSkill,actor,TensuraDamageTypes.EARTH_ELEMENTAL,0),100);
             h.assertTrue(HunterData.of(actor).contains("last_technique"),"Actual native damage did not enter the observation hook");double mp=TensuraStorages.getExistenceFrom(p).getMagicule();cast(p,i,0);
-            var list=LughArts.archive(i);var copied=list.getCompound(0);h.assertTrue(copied.getString("source").equals(sourceSkill.getSkillId().toString()) && copied.getString("type").equals("tensura:earth_elemental") && copied.getFloat("damage")==3500 && TensuraStorages.getExistenceFrom(p).getMagicule()==mp-1200,"Appraisal lost native provenance, bounded power or MP cost");
-            i.setCoolDown(0,0);cast(p,i,0);h.assertTrue(LughArts.archive(i).size()==3 && LughArts.archive(i).stream().filter(v->((CompoundTag)v).getString("source").equals(sourceSkill.getSkillId().toString())).count()==1,"Repeated appraisal duplicated its source");h.succeed();
+            var list=LughArts.library(i);var copied=list.getCompound(3);h.assertTrue(copied.getString("source").equals(sourceSkill.getSkillId().toString()) && copied.getString("type").equals("tensura:earth_elemental") && copied.getFloat("damage")==3500 && TensuraStorages.getExistenceFrom(p).getMagicule()==mp-1200,"Appraisal lost native provenance, bounded power or MP cost");
+            i.setCoolDown(0,0);cast(p,i,0);h.assertTrue(LughArts.library(i).size()==4 && LughArts.archive(i).getCompound(0).getString("name").equals("Sovereign Edge") && LughArts.library(i).stream().filter(v->((CompoundTag)v).getString("source").equals(sourceSkill.getSkillId().toString())).count()==1,"Repeated appraisal duplicated its source");h.succeed();
         });
     }
     @GameTest(template="empty",timeoutTicks=100)

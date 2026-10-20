@@ -1,4 +1,4 @@
-# Current balance: 0.20.0
+# Current balance: 0.21.0
 
 This calibration applies the [external Unique audit](research/UNIQUE_PARITY_0.19.md).
 The largest cuts target repeatable direct damage; conditional burst receives
@@ -108,7 +108,7 @@ exceptions are added. Demeter still exceeds Grove's pulse, area and duration.
 | --- | --- | --- |
 | Aion | Worldline 1,200 per half-second; Horizon 700/s; Verdict 2,400 + 2,400 + 4,800, or 7,200 final when empowered | Worldline 2,400 opening + 1,200/pulse (15,600 full channel); Horizon 10K; Reversal 12K; Verdict 28K. Existing cooldowns and durations. |
 | Thoth | Lexicon 1,100/chapter; Spellbreak 900; Library 800/bolt | 12K / 6.5K / free Crucible / 24K. Existing 12 / 15 / 0 / 35 s cooldowns. |
-| Lugh | Origin arts 3,800 / 3,800 / 4,200; appraised raw bounded to 3,500–6,000; synthesis 1.6× each archived art | 1.2K / 10K / 9K / 30K. Existing 2 / 4 / 18 / 40 s cooldowns. |
+| Lugh | Origin arts 3,800 / 3,800 / 4,200; appraised raw bounded to 3,500–6,000; synthesis 1.6× each of three bound arts | 1.2K / 10K / 9K / 30K. 2 / 4 / 18 / 40 s cooldowns; library access, selection and binding are free. |
 
 Aion's rewind preserves its fixed post-payment checkpoint, increase-only stat
 restoration, free return, twenty-second auto-return and all safety/cleanup rules.
@@ -153,8 +153,8 @@ The ordinary elemental strongest-source policy and separate Godly bonuses remain
 Demeter uses a threshold rescue effect rather than an active team barrier.
 
 [Lugh](../wiki/pages/Lugh.md) starts with three reconstruction forms. Observations
-produce 2K–4K bounded raw damage, with ordinary source normalization; its finisher
-snapshots three attacks at 1.8× each, sixteen ticks apart. Countermand blocks one
+produce 3.5K–6K bounded raw damage, with ordinary source normalization; its finisher
+snapshots the three bound attacks at 1.6× each, sixteen ticks apart. Countermand blocks one
 recent non-Godly technique for six seconds without changing learned state.
 Its shared Godly traits require ownership, while its speed/mastery toggle has
 separate upkeep. No kit uses hit-count passive stacks or direct health assignment

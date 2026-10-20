@@ -28,27 +28,70 @@ public final class LughArts {
     private static CompoundTag pattern(String name,String source,ResourceLocation type,int form,float damage){
         var t=new CompoundTag();t.putString("name",name);t.putString("source",source);t.putString("type",type.toString());t.putInt("form",Math.clamp(form,0,2));t.putFloat("damage",bounded(damage));return t;
     }
-    public static ListTag archive(ManasSkillInstance i){
-        var tag=i.getOrCreateTag();var list=tag.getList("archive",Tag.TAG_COMPOUND);
-        if(list.size()!=3){
-            list=new ListTag();list.add(pattern("Sovereign Edge","wildhunt:origin_edge",TensuraDamageTypes.AURA_SLASH.location(),0,3800));
-            list.add(pattern("Heavenly Thread","wildhunt:origin_thread",TensuraDamageTypes.SPACE_ELEMENTAL.location(),1,3800));
-            list.add(pattern("Founder's Rune","wildhunt:origin_rune",TensuraDamageTypes.EARTH_ELEMENTAL.location(),2,4200));tag.put("archive",list);
+    public static final int LIBRARY_LIMIT=256;
+    private static ListTag origins(){
+        var list=new ListTag();list.add(pattern("Sovereign Edge","wildhunt:origin_edge",TensuraDamageTypes.AURA_SLASH.location(),0,3800));
+        list.add(pattern("Heavenly Thread","wildhunt:origin_thread",TensuraDamageTypes.SPACE_ELEMENTAL.location(),1,3800));
+        list.add(pattern("Founder's Rune","wildhunt:origin_rune",TensuraDamageTypes.EARTH_ELEMENTAL.location(),2,4200));return list;
+    }
+    /** Append-only records have stable server-generated IDs; old three-slot saves migrate once. */
+    public static ListTag library(ManasSkillInstance i){
+        var tag=i.getOrCreateTag();
+        if(!tag.contains("art_library",Tag.TAG_LIST)){
+            var old=tag.getList("archive",Tag.TAG_COMPOUND);var list=old.size()==3?old.copy():origins();var bindings=new ListTag();
+            for(var value:list){var record=(CompoundTag)value;record.putString("entry",UUID.randomUUID().toString());record.putInt("mode",-1);bindings.add(StringTag.valueOf(record.getString("entry")));}
+            // Keep every old appraised record and restore any origins that it had replaced.
+            for(var value:origins()){var origin=(CompoundTag)value;if(list.stream().noneMatch(v->((CompoundTag)v).getString("source").equals(origin.getString("source")))){origin.putString("entry",UUID.randomUUID().toString());origin.putInt("mode",-1);list.add(origin);}}
+            tag.put("art_library",list);tag.put("art_bindings",bindings);tag.remove("archive");i.markDirty();
         }
-        // Upgrade only untouched origin records. Appraised techniques keep their identity,
-        // type and form; all saved intensities are brought into the current bounded budget.
-        for(var value:list){
-            var record=(CompoundTag)value;float damage=record.getFloat("damage");
-            damage=switch(record.getString("source")){
-                case "wildhunt:origin_edge","wildhunt:origin_thread" -> damage==2200?3800:damage;
-                case "wildhunt:origin_rune" -> damage==2400?4200:damage;
-                default -> damage;
-            };
-            record.putFloat("damage",bounded(damage));
+        var list=tag.getList("art_library",Tag.TAG_COMPOUND);
+        for(var value:list){var record=(CompoundTag)value;float damage=record.getFloat("damage");
+            damage=switch(record.getString("source")){case "wildhunt:origin_edge","wildhunt:origin_thread"->damage==2200?3800:damage;case "wildhunt:origin_rune"->damage==2400?4200:damage;default->damage;};record.putFloat("damage",bounded(damage));
         }
         return list;
     }
-    public static String selectedName(ManasSkillInstance i){return archive(i).getCompound(Math.floorMod(i.getOrCreateTag().getInt("selected_art"),3)).getString("name");}
+    /** Three live loadout references, separate from the permanent appraisal library. */
+    public static ListTag archive(ManasSkillInstance i){
+        var list=library(i);var bindings=i.getOrCreateTag().getList("art_bindings",Tag.TAG_STRING);var result=new ListTag();
+        for(int n=0;n<3;n++){
+            final String id=n<bindings.size()?bindings.getString(n):"";
+            var record=list.stream().map(v->(CompoundTag)v).filter(v->v.getString("entry").equals(id)).findFirst().orElse(list.getCompound(Math.min(n,list.size()-1)));result.add(record);
+        }return result;
+    }
+    private static String text(String text){return text.substring(0,Math.min(256,text.length()));}
+    private static int storedIndex(ListTag list,CompoundTag record){
+        for(int n=0;n<list.size();n++){var stored=list.getCompound(n);if(stored.getString("source").equals(record.getString("source")) && (stored.getInt("mode")==record.getInt("mode") || stored.getInt("mode")==-1))return n;}return -1;
+    }
+    static boolean remember(ManasSkillInstance i,CompoundTag observation){
+        var list=library(i);int index=storedIndex(list,observation);if(index<0 && list.size()>=LIBRARY_LIMIT)return false;
+        var record=pattern(text(observation.getString("name")),observation.getString("source"),safeType(observation).location(),observation.getInt("form"),observation.getFloat("damage"));
+        record.putString("entry",index<0?UUID.randomUUID().toString():list.getCompound(index).getString("entry"));record.putInt("mode",observation.getInt("mode"));
+        record.putString("mode_name",text(observation.getString("mode_name")));record.putString("source_type",observation.getString("source_type"));
+        record.putFloat("observed_damage",Math.max(0,observation.getFloat("observed_damage")));record.putBoolean("observed",true);
+        if(index<0)list.add(record);else list.set(index,record);i.markDirty();return true;
+    }
+    /** The client supplies only an ID and slot. Damage and other parameters never cross C2S. */
+    public static boolean configure(net.minecraft.server.level.ServerPlayer p,String action,String argument){
+        var optional=SkillAPI.getSkillsFrom(p).getSkill(skill());if(optional.isEmpty() || !p.isAlive())return false;
+        var i=optional.get();if(!skill().canInteractSkill(i,p) || !skill().canActivateSkill(i,p,0))return false;
+        var parts=argument.split("\\|",-1);int slot;
+        try{slot=Integer.parseInt(parts[0]);}catch(NumberFormatException ex){return false;}
+        if(slot<0 || slot>2)return false;
+        if(action.equals("lugh_bind")){
+            var list=library(i);if(parts.length!=2 || list.stream().noneMatch(v->((CompoundTag)v).getString("entry").equals(parts[1])))return false;
+            var bindings=i.getOrCreateTag().getList("art_bindings",Tag.TAG_STRING);if(bindings.size()!=3)return false;bindings.set(slot,StringTag.valueOf(parts[1]));
+        }else if(!action.equals("lugh_select") || parts.length!=1)return false;
+        i.getOrCreateTag().putInt("selected_art",slot);i.markDirty();return true;
+    }
+    public static CompoundTag snapshot(net.minecraft.server.level.ServerPlayer p){
+        var state=new CompoundTag();state.putBoolean("lugh_library",true);
+        SkillAPI.getSkillsFrom(p).getSkill(skill()).ifPresent(i->{
+            state.putBoolean("owned",true);state.put("entries",library(i).copy());state.put("bindings",i.getOrCreateTag().getList("art_bindings",Tag.TAG_STRING).copy());state.putInt("selected",Math.floorMod(i.getOrCreateTag().getInt("selected_art"),3));
+            state.putFloat("mastery_scale",1+.5f*(float)Math.clamp(i.getMastery()/i.getMaxMastery(),0,1));
+        });return state;
+    }
+    public static String techniqueName(CompoundTag record){var mode=record.getString("mode_name");return mode.isBlank()?record.getString("name"):mode;}
+    public static String selectedName(ManasSkillInstance i){return techniqueName(archive(i).getCompound(Math.floorMod(i.getOrCreateTag().getInt("selected_art"),3)));}
     public static void cycle(ManasSkillInstance i,LivingEntity e){
         i.getOrCreateTag().putInt("selected_art",Math.floorMod(i.getOrCreateTag().getInt("selected_art")+1,3));i.markDirty();message(e,"Reconstructed Art: "+selectedName(i));
     }
@@ -57,12 +100,16 @@ public final class LughArts {
         if(target.level().isClientSide() || !(source.getEntity() instanceof LivingEntity caster) || !Float.isFinite(amount.get()) || amount.get()<=0)return EventResult.pass();
         var instance=((TensuraDamageSource)source).tensura$getAbilityInstance();
         if(instance==null || instance.getSkill()==skill() || instance.getSkill().getRegistryName()==null || !HunterData.canHarm(caster,target))return EventResult.pass();
+        var originalType=source.typeHolder().unwrapKey().map(ResourceKey::location).orElse(TensuraDamageTypes.MAGIC_GENERIC.location());
         var id=source.typeHolder().unwrapKey().map(ResourceKey::location).orElse(TensuraDamageTypes.MAGIC_GENERIC.location());
         boolean physical=TensuraDamageHelper.isPhysicalAttack(source);if(!SAFE_TYPES.contains(id))id=physical?TensuraDamageTypes.AURA_SLASH.location():TensuraDamageTypes.MAGIC_GENERIC.location();
         var old=HunterData.of(caster).getCompound("last_technique");String sourceId=instance.getSkillId().toString();long now=caster.level().getGameTime();
-        boolean spread=old.getLong("time")==now && old.getString("source").equals(sourceId) && old.hasUUID("victim") && !old.getUUID("victim").equals(target.getUUID());
+        boolean spread=old.getLong("time")==now && old.getInt("mode")==((TensuraDamageSource)source).tensura$getAbilityMode() && old.getString("source").equals(sourceId) && old.hasUUID("victim") && !old.getUUID("victim").equals(target.getUUID());
         int form=spread?2:source.getDirectEntity() instanceof Projectile || caster.distanceToSqr(target)>64?1:physical?0:2;
         var record=pattern(instance.getSkill().getName().getString(),sourceId,id,form,amount.get()*.8f);
+        int mode=((TensuraDamageSource)source).tensura$getAbilityMode();record.putInt("mode",mode);
+        record.putString("source_type",originalType.toString());record.putFloat("observed_damage",amount.get());
+        if(instance.getSkill() instanceof io.github.manasmods.tensura.ability.TensuraSkill nativeSkill && mode>=0 && mode<instance.getModes())record.putString("mode_name",text(nativeSkill.getModeName(instance,mode).getString()));
         record.putLong("time",now);record.putUUID("victim",target.getUUID());HunterData.of(caster).put("last_technique",record);return EventResult.pass();
     }
     private static CompoundTag recent(LivingEntity target){
@@ -75,17 +122,16 @@ public final class LughArts {
         var target=ApexArts.target(l,e,48);var record=target==null?null:recent(target);
         if(record==null){message(e,"Aim at an enemy that used a damaging technique in the last 30 seconds.");return false;}
         if(mode==2 && MythsTiers.isGodly(SkillAPI.getSkillRegistry().get(ResourceLocation.parse(record.getString("source"))))){message(e,"Countermand cannot seal a Godly technique.");return false;}
+        if(mode==0 && storedIndex(library(i),record)<0 && library(i).size()>=LIBRARY_LIMIT){message(e,"The appraisal library is full (256 techniques).");return false;}
         return true;
     }
     static void cast(MythicSkill s,ServerLevel l,ManasSkillInstance i,LivingEntity e,int mode){
         var tag=i.getOrCreateTag();long now=l.getGameTime();var list=archive(i);
         if(mode==0){
-            var target=ApexArts.target(l,e,48);var record=recent(target).copy();int selected=Math.floorMod(tag.getInt("selected_art"),3);
-            for(int n=0;n<3;n++)if(list.getCompound(n).getString("source").equals(record.getString("source"))){selected=n;break;}
-            list.set(selected,pattern(record.getString("name"),record.getString("source"),safeType(record).location(),record.getInt("form"),record.getFloat("damage")));tag.put("archive",list);tag.putInt("selected_art",selected);
+            var target=ApexArts.target(l,e,48);var record=recent(target).copy();remember(i,record);
             ArtVisualEntity.spawn(l,ArtVisualEntity.SKILL_APPRAISAL,target.position(),new Vec3(2.2,0,0),40).style(record.getInt("form"));
             ArtVisualEntity.spawn(l,ArtVisualEntity.ARTISAN_THREAD,e.getEyePosition(),target.getEyePosition().subtract(e.getEyePosition()),22);
-            message(e,"Archived "+selectedName(i)+" as "+formName(record.getInt("form"))+". Crouch + Reconstructed Art to select another entry.");
+            message(e,"Appraised "+record.getString("name")+". Shift + Skill Appraisal opens your library to bind it to Reconstructed Art.");
         }else if(mode==1){
             var record=list.getCompound(Math.floorMod(tag.getInt("selected_art"),3));reconstruct(s,l,i,e,record,null,1,false);
         }else if(mode==2){

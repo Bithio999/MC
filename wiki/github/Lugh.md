@@ -2,7 +2,7 @@
 
 [Main Page](https://github.com/Bithio999/MC/wiki/Home) · [Godly Skills](https://github.com/Bithio999/MC/wiki/Godly) · [Ability index](https://github.com/Bithio999/MC/wiki/Abilities) · [Damage types](https://github.com/Bithio999/MC/wiki/Damage-Types)
 
-**Lugh, God of Skills** is a Godly Skill for **analysing, reconstructing and combining combat techniques**. Its three-entry archive determines the forms and damage types of its attacks, while Countermand seals one enemy technique temporarily.
+**Lugh, God of Skills** is a Godly Skill for **analysing, reconstructing and combining combat techniques**. Its persistent appraisal library and three bound techniques determine the forms and damage types of its attacks, while Countermand seals one enemy technique temporarily.
 
 ![Lugh, God of Skills](https://github.com/Bithio999/MC/blob/main/src/main/resources/assets/wildhunt/textures/skill/lugh.png?raw=true)
 
@@ -40,11 +40,11 @@ Lugh ownership automatically grants [Divine Authority, Absolute Penetration and 
 
 Gain **50% attack speed**, **35% movement speed** and **100% native ability mastery gain**. The mastery attribute affects abilities where Tensura reads that attribute. It does not instantly learn or master skills. The first upkeep second is paid when enabled; the toggle ends if unfunded or blocked by native activation rules. It generates no passive barrier or hit-count stacks.
 
-The archive and four active arts remain available with All-Skilled off.
+The library and four active arts remain available with All-Skilled off.
 
 ### Technique archive
 
-The archive has **three entries**, not an accumulating power meter. Lugh begins with three usable origin techniques:
+The **appraisal library** stores up to **256 techniques**, including three usable origin techniques. The **three Art slots** are a separate loadout:
 
 | Entry | Form | Damage type | Raw reconstruction damage |
 | --- | --- | --- | ---: |
@@ -52,18 +52,30 @@ The archive has **three entries**, not an accumulating power meter. Lugh begins 
 | Heavenly Thread | Lance | Space elemental — `tensura:space_elemental` | 3,800 |
 | Founder's Rune | Crown | Earth elemental — `tensura:earth_elemental` | 4,200 |
 
-**Crouch + Reconstructed Art** cycles the selected entry without spending magicules, changing its cooldown or earning mastery. It works while that mode is cooling down. Its mode name shows the selected technique.
+**Shift + Skill Appraisal** opens a menu styled after native **Pride’s copied-skill list**, with search, six visible list entries, a scrollbar, source-skill icons and a scrolling parameter panel. Opening the menu is free, works during Skill Appraisal’s cooldown, and needs neither magicules nor a target.
 
-Skill Appraisal replaces the selected entry. If that source skill already exists in the archive, its existing entry is refreshed and selected instead. Entries and selection survive normal save/load and lifecycle cleanup while Lugh is retained.
+To bind a technique:
+
+1. Select it in the left-hand list. Search by skill, technique, damage type or form.
+2. Choose **Art I**, **Art II** or **Art III** at the bottom left.
+3. Press **Bind to Art I / II / III** at the bottom right.
+
+The highlighted Art slot is the active Reconstructed Art. Hover over a slot to see its bound technique. **Crouch + Reconstructed Art** cycles the three bindings without payment, cooldown changes or mastery gain. Binding and selection are also free; they do not cast an attack.
+
+The parameter panel shows **raw reconstruction damage**, damage at your current mastery, native damage type/ID, form, range, width or radius, target cap, reconstruction cost/cooldown, and Synthesis multiplier. Appraised records additionally show the **observed damage-calculation amount**, original source type, originating skill and technique. Scroll the panel to read all parameters. Final combat damage also uses native modifiers and Godly traits.
+
+Skill Appraisal **adds** the observed technique to the library. Reappraising the same source skill and mode refreshes that record and every slot bound to it. Different modes of one source skill can have separate entries. New appraisals leave your bindings unchanged until you explicitly bind them. At the 256-entry limit, existing techniques can still be refreshed; an unknown technique fails without payment or cooldown.
+
+The library, bindings and active slot survive normal save/load and lifecycle cleanup while Lugh is retained.
 
 ### Active
 
 | Mode | Magicule cost | Cooldown | Damage |
 | --- | ---: | ---: | --- |
 | 1. Skill Appraisal | 1,200 | 2 s | — |
-| 2. Reconstructed Art | 10,000; selection is free | 4 s | 3,500–6,000 raw |
+| 2. Reconstructed Art | 10,000; selection/binding are free | 4 s | 3,500–6,000 raw |
 | 3. Countermand | 9,000 | 18 s | — |
-| 4. Grand Synthesis | 30,000 | 40 s | Three archived attacks at 1.6× their reconstruction damage |
+| 4. Grand Synthesis | 30,000 | 40 s | Three bound attacks at 1.6× their reconstruction damage |
 
 Mastery scales damaging arts by **1 + 0.5 × mastery fraction**, capped at 1.5×. Native elemental boosts, barriers, hit immunity, authority and PvP rules remain relevant. The shared Godly traits apply separately. Damage never scales with EP.
 
@@ -78,7 +90,7 @@ Mastery scales damaging arts by **1 + 0.5 × mastery fraction**, capped at 1.5×
 | Range | 48 blocks |
 | Observation window | The enemy's last 30 seconds |
 
-Aim at an eligible enemy that recently used a **damaging ability**. Lugh reads its most recent observed damage source and records the originating skill, normalised damage type, observed intensity and attack form. The original user keeps their skill.
+Aim at an eligible enemy that recently used a **damaging ability**. Lugh reads its most recent observed damage source and records the originating skill and mode, original and normalised damage types, observed intensity and attack form. The original user keeps their skill.
 
 The reconstruction's raw damage is **80% of the observed damage-calculation amount**, bounded to **3,500–6,000**. This amount may already include native modifiers at observation time; it is not a promise to reproduce an entire multi-hit skill's total damage.
 
@@ -94,11 +106,11 @@ Missing, stale or invalid observations cost nothing and start no cooldown. Float
 
 | Ability information | Value |
 | --- | --- |
-| Damage type | Selected archive entry: physical, elemental or generic magic |
+| Damage type | Active bound entry: physical, elemental or generic magic |
 | Damage ID | `tensura:aura_slash`; `tensura:magic`; or a supported native elemental ID |
 | Target cap | 8 enemies |
 
-Use the selected entry in one of three distinct geometries:
+Use the technique bound to the active Art slot in one of three distinct geometries:
 
 - **Blade:** sweep a forward fan within **16 blocks**. Ivory/gold cutting arcs trace the sweep.
 - **Lance:** fire along the cursor direction up to **64 blocks**, with a 1.4-block targeting width. Solid blocks stop it; fluids do not. A reconstructed spearhead travels along the visible path.
@@ -129,17 +141,17 @@ Missing or Godly observations fail without payment or cooldown. Third-party skil
 
 | Ability information | Value |
 | --- | --- |
-| Damage type | The three archived entries, in order |
+| Damage type | The three bound entries, in slot order |
 | Damage ID | Each entry's normalised native damage ID |
 | Placement range | 64 blocks |
 | Formation radius | 10 blocks |
 | Timing | 1.0, 1.8 and 2.6 seconds after casting |
 
-Snapshot all three archive entries into a fixed, warned formation. Three floating rune tablets assemble into the corresponding armaments, each striking for **1.6× its archived raw damage** before mastery and native handling.
+Snapshot all three bound entries into a fixed, warned formation. Three floating rune tablets assemble into the corresponding armaments, each striking for **1.6× its recorded raw damage** before mastery and native handling.
 
-Blade and Crown phases strike the fixed area; a Lance phase cuts a cross through its center with narrow horizontal arms. Each phase targets up to eight eligible enemies. Changing the archive after casting does not change the pending plan. Sixteen ticks separate phases, preserving native hit-immunity rules. Enemies can leave the formation.
+Blade and Crown phases strike the fixed area; a Lance phase cuts a cross through its center with narrow horizontal arms. Each phase targets up to eight eligible enemies. Reappraising techniques or changing bindings after casting does not change the pending plan. Sixteen ticks separate phases, preserving native hit-immunity rules. Enemies can leave the formation.
 
-Death, forgetting, relogging or dimension changes cancel pending strikes. The attack does not consume the learned archive and does not edit terrain.
+Death, forgetting, relogging or dimension changes cancel pending strikes. The attack does not consume the learned library and does not edit terrain.
 
 ## Obtaining
 
@@ -149,9 +161,11 @@ Both the selected Ultimate and Threadweaver are combined. Presets and the longes
 
 ## Suggested combo
 
-Appraise an enemy's recent damaging technique → select the form that suits the approach → Countermand the technique they rely on → place Grand Synthesis across their escape route → use Reconstructed Art while they leave the formation.
+Appraise an enemy's recent damaging technique → open the library and bind the form that suits the approach → Countermand the technique they rely on → place Grand Synthesis across their escape route → use Reconstructed Art while they leave the formation.
 
 ## Gallery
+
+![Lugh’s searchable appraisal library, technique parameters and Art bindings](https://github.com/Bithio999/MC/blob/main/wiki/media/lugh-library.png?raw=true)
 
 ![Grand Synthesis's rune tablets and reconstructed armaments](https://github.com/Bithio999/MC/blob/main/wiki/media/lugh-synthesis.png?raw=true)
 
