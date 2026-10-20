@@ -36,7 +36,7 @@ public final class ArtVisualRenderer extends EntityRenderer<ArtVisualEntity> {
             if((entity.kind()==ArtVisualEntity.ASTRAL_LIBRARY || entity.kind()==ArtVisualEntity.MANA_CRUCIBLE) && entity.caster()!=null){
                 Vec3 offset=entity.caster().getPosition(partial).add(0,entity.kind()==ArtVisualEntity.ASTRAL_LIBRARY?2.5:0,0).subtract(entity.getPosition(partial));poses.translate(offset.x,offset.y,offset.z);
             }
-            ThothGeometry.render(poses,buffers,entity.kind(),entity.end(partial),age,entity.lifetime(),entity.style());poses.popPose();
+            ThothGeometry.render(poses,batch,entity.kind(),entity.end(partial),age,entity.lifetime(),entity.style());poses.popPose();
         } else if(entity.kind()==ArtVisualEntity.CAUSAL_RAY || entity.kind()>=ArtVisualEntity.CAUSAL_SPHERE && entity.kind()<=ArtVisualEntity.CAUSAL_IMPACT) {
             Vec3 vector=entity.end(partial);poses.pushPose();
             var player=net.minecraft.client.Minecraft.getInstance().player;

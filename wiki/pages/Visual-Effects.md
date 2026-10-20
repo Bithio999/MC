@@ -88,7 +88,7 @@ These in-game views show the geometry in an isolated development world. Some use
 
 ### Thoth
 
-[Thoth](Thoth.md) retains its original chapter-colored spells, counter-rotating seals, animated grimoires and held Mana Crucible formation.
+[Thoth](Thoth.md) cycles Fire, Water, Lightning, Earth, Wind, Light and Space through flame crowns, caustic ribbons, branching bolts, stone tablets, wind helices, radiant spokes and spatial fractures. Its animated books, counter-rotating seals and held Mana Crucible formation remain. Water represents the shared Water/Ice slot.
 
 ![Thoth’s held Mana Crucible formation](../media/thoth-mana-crucible.png)
 

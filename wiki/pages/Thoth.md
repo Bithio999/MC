@@ -41,10 +41,10 @@ Enable the native skill toggle in Ability Selection. The first second is paid on
 
 | Mode | Magicules | Cooldown | Raw damage |
 | --- | ---: | ---: | --- |
-| 1. Lexicon of Ruin | 5,000 | 12 s | 500 fire / 400 ice / 600 lightning |
+| 1. Lexicon of Ruin | 5,000 | 12 s | 375 per chapter |
 | 2. Spellbreak | 4,000 | 15 s | 180 |
 | 3. Mana Crucible | 0; converts aura while held | None | — |
-| 4. Astral Library | 9,000 | 35 s | 240 per bolt |
+| 4. Astral Library | 9,000 | 35 s | 160 per bolt |
 
 Damage listed here is before native combat handling and uses **1 + 0.5 × mastery fraction**, capped at **1.5×**. These new kits do not use the apex skills’ 0.90 multiplier or the former 3× Ultimate multiplier. EP never multiplies their damage. Native elemental boosts, authority, resistances, barriers and hit immunity apply.
 
@@ -54,13 +54,13 @@ Damage listed here is before native combat handling and uses **1 + 0.5 × master
 
 | Ability information | Value |
 | --- | --- |
-| Damage type | Fire elemental, then Ice elemental, then Lightning elemental |
-| Damage ID | `tensura:fire_elemental`; `tensura:ice_elemental`; `tensura:lightning_elemental` |
+| Damage type | Fire, Water, Lightning, Earth, Wind, Light and Space elemental |
+| Damage ID | `tensura:fire_elemental`; `tensura:water_elemental`; `tensura:lightning_elemental`; `tensura:earth_elemental`; `tensura:wind_elemental`; `tensura:light_elemental`; `tensura:space_elemental` |
 | Resource cost | 5,000 magicules |
 | Cooldown | 12 seconds |
-| Raw damage | 500 fire / 400 ice / 600 lightning |
+| Raw damage | 375 per chapter |
 
-Mark a six-block-radius spell diagram within 64 blocks. Three chapters strike the fixed location at 0.6, 1.6 and 2.6 seconds. Each chapter hits up to eight visible enemies using its own native elemental source and animated magic circle. The sequence can be dodged by leaving its area.
+Mark a six-block-radius spell diagram within 64 blocks. Seven chapters strike the fixed location at **0.60, 0.90, 1.25, 1.60, 1.90, 2.25 and 2.60 seconds**, cycling **Fire → Water → Lightning → Earth → Wind → Light → Space**. The warning begins immediately and the formation lasts **3.5 seconds**. Each chapter attempts to hit up to eight visible enemies using its own native elemental source and animated magic circle. Native hit immunity still applies to closely spaced chapters; it is never reset to force extra hits. Water represents the passive’s shared Water/Ice boost, so there is no separate Ice chapter. The sequence can be dodged by leaving its area.
 
 #### Spellbreak
 
@@ -102,19 +102,23 @@ Repeated taps do not grant mastery. Sustained conversion earns mastery once per 
 
 | Ability information | Value |
 | --- | --- |
-| Damage type | Rotating Fire, Ice and Lightning elemental |
-| Damage ID | `tensura:fire_elemental`; `tensura:ice_elemental`; `tensura:lightning_elemental` |
+| Damage type | Rotating Fire, Water, Lightning, Earth, Wind, Light and Space elemental |
+| Damage ID | `tensura:fire_elemental`; `tensura:water_elemental`; `tensura:lightning_elemental`; `tensura:earth_elemental`; `tensura:wind_elemental`; `tensura:light_elemental`; `tensura:space_elemental` |
 | Resource cost | 9,000 magicules |
 | Cooldown | 35 seconds |
-| Raw damage | 240 per bolt |
+| Raw damage | 160 per bolt |
 
-For ten seconds, three open grimoires orbit above you. Starting after half a second and then every 0.75 seconds, fire at up to three visible enemies within 28 blocks. The chapter cycles Fire → Ice → Lightning. The formation moves with you; only one library per owner. Forgetting the skill, dying or changing dimension cancels it.
+For ten seconds, three open grimoires orbit above you. Starting after half a second and then every **0.25 seconds**, fire at up to three visible enemies within 28 blocks. The chapter cycles **Fire → Water → Lightning → Earth → Wind → Light → Space**, repeating every **1.75 seconds**. There are 38 volleys within the same ten-second window. Each bolt uses 160 raw damage before mastery and native combat handling; normal hit immunity can suppress closely spaced hits. The three books take turns firing and recolour for their upcoming element; there is no separate Ice volley. The formation moves with you; only one library per owner. Forgetting the skill, dying or changing dimension cancels it.
 
 ## Spellcraft visuals
 
-Lexicon raises a three-volume casting formation above counter-rotating inscription seals. Fire, Ice and Lightning chapters have separate timed eruptions. Spellbreak spreads rings of fractured sigils; Mana Crucible draws golden and cyan helical currents into a raised focus. Astral Library carries animated open books, celestial seals, continuous trails and softly fading motes. Its chapter-colored bolts originate at the matching book. All effects use standard Minecraft rendering, without a shader pack.
+Lexicon raises a three-volume casting formation above counter-rotating inscription seals. The seven chapters have synchronized elemental eruptions: flame crowns, caustic water ribbons, branched lightning, rising stone tablets, wind helices, radiant spokes and spatial fractures. Water has no ice-spire phase. Spellbreak spreads rings of fractured sigils; Mana Crucible draws golden and cyan helical currents into a raised focus. Astral Library carries animated open books, celestial seals, continuous trails and softly fading motes. Its chapter-colored bolts and miniature elemental impacts originate at the actual firing book. Damage sources, bolt styles and the faster chapter timing share one spectrum definition. All effects use standard Minecraft rendering, without a shader pack.
 
-![Lexicon of Ruin’s elemental casting formation](../media/thoth-lexicon.png)
+![Lexicon of Ruin’s Water chapter and flowing ribbons](../media/thoth-lexicon.png)
+
+![Lexicon’s final Space chapter and spatial fractures](../media/thoth-lexicon-space.png)
+
+![Astral Library’s rotating books and elemental bolt](../media/thoth-astral-library.png)
 
 ![Spellbreak’s expanding inscription rings](../media/thoth-spellbreak.png)
 

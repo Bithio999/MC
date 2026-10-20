@@ -57,7 +57,7 @@ public final class ArtVisualEntity extends Entity {
     public int kind() { return entityData.get(KIND); }
     public int lifetime() { return entityData.get(LIFETIME); }
     public int style(){return entityData.get(STYLE);}
-    public ArtVisualEntity style(int style){entityData.set(STYLE,Math.clamp(style,0,2));return this;}
+    public ArtVisualEntity style(int style){entityData.set(STYLE,Math.clamp(style,0,kind()==SPELL_RAY?ThothElement.COUNT-1:kind()==ASTRAL_LIBRARY?ThothElement.LIBRARY_DURATION/ThothElement.LIBRARY_INTERVAL:2));return this;}
     public Vec3 end() { return new Vec3(entityData.get(END_X), entityData.get(END_Y), entityData.get(END_Z)); }
     public Vec3 end(float partial) {return tickCount<=1?end():previousEnd.lerp(smoothedEnd,partial);}
     @Override public void lerpTo(double x,double y,double z,float yaw,float pitch,int steps) {

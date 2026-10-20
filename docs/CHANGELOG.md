@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.16.0 — Thoth’s seven-element spectrum
+
+- Expand Lexicon of Ruin and Astral Library to Fire, Water, Lightning, Earth, Wind, Light and Space, matching Thoth’s passive. Water represents the shared Water/Ice slot; no separate Ice, Darkness or Gravity phase is added. Other skills retain their Ice damage.
+- Keep Lexicon’s 70-tick visual, original opening/last-strike times (12/52 ticks), costs, cooldown, area and target cap. Fit seven chapters into that window with 6–7 ticks between strikes, using 375 raw damage per chapter and preserving native hit immunity.
+- Keep Library’s 200-tick duration, ten-tick opening delay, cost, cooldown, range and three-target cap. Fire every five ticks, with 160 raw damage per bolt. Recasts start at Fire. The three books take turns and receive the actual server volley for their tint, preventing client timing drift.
+- Share element order, native damage sources, circle variants, colours and timing between combat and rendering. Add element-specific flame, water, lightning, earth, wind, light and space silhouettes to Lexicon and Library impacts. Extend only spell-ray styles to the full spectrum.
+- Add native execution tests for complete source order, exact timing, bolt/book styles, cancellation/duration, native hit-immunity balance and retained Ice damage in Demeter. Harden the out-of-range baseline and pre-existing Mirror projectile fixtures, and check both spatial and UUID indexes before treating recipients as ready. Update the damage index, current skill article and both wiki editions.
+
 ## 0.15.0 — Skill visual overhaul
 
 - Rework all eight Unique kits, Vritra, Demeter, Janus and Aion with original textured geometry, animated inscriptions and individual silhouettes. Thoth retains its recent rendering and held Mana Crucible behavior.

@@ -7,7 +7,7 @@
 <div class="global-bar"><span>TENSURA MYTHS</span><div><a href="https://tensura.wiki.gg/wiki/Tensura:_Reincarnated_Wiki">Base mod wiki</a><a href="https://github.com/Bithio999/MC">GitHub</a></div></div>
 <header class="masthead"><a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">M</span><span>TENSURA MYTHS<small>Tensura: Reincarnated addon wiki</small></span></a>
 <div class="search"><label for="wiki-search">Search Tensura Myths Wiki</label><input id="wiki-search" type="search" placeholder="Search skills, races, characters…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="search-results" aria-expanded="false"><div id="search-results" role="listbox" aria-label="Search results" hidden></div><span id="search-status" class="sr-only" aria-live="polite"></span></div></header>
-<div class="layout"><button id="navigation-toggle" aria-controls="wiki-navigation" aria-expanded="false">☰ Wiki navigation</button><nav id="wiki-navigation" class="sidebar" aria-label="Wiki navigation"><section><h2>Start here</h2><a href="../index.html">Main Page</a><a href="../site/Getting-Started.html">Getting started</a></section><section><h2>Skills</h2><a href="../site/Skills.html">Skill overview</a><a href="../site/Unique-Skills.html">Unique Skills</a><a href="../site/Ultimate-Skills.html">Ultimate Skills</a><a href="../site/Skill-Synthesis.html">Skill synthesis</a><a href="../site/Godly.html">Godly Skills</a><a href="../site/Aura-Regeneration.html">Extra Skills</a><a href="../site/Abilities.html">Ability index</a></section><section><h2>Races</h2><a href="../site/Races.html">Race directory</a><a href="../site/Evolution.html">Hunter evolution</a><a href="../site/Duo-Races.html">Secondary races</a><a href="../site/Convergent-Awakening.html">Convergent Awakening</a></section><section><h2>Otherworlders</h2><a href="../site/Otherworlders.html">Character directory</a><a href="../site/Alma.html">Alma</a><a href="../site/Gemma.html">Gemma</a></section><section><h2>Reference</h2><a href="../site/Damage-Types.html" aria-current="page">Damage types</a><a href="../site/Mechanics.html">Combat mechanics</a><a href="../site/Visual-Effects.html">Visual effects</a><a href="../site/Commands.html">Commands</a></section><div class="sidebar-version">Tensura Myths <strong>0.15.0</strong><br>Minecraft 1.21.1 · NeoForge<br><span>Offline reference edition</span></div></nav>
+<div class="layout"><button id="navigation-toggle" aria-controls="wiki-navigation" aria-expanded="false">☰ Wiki navigation</button><nav id="wiki-navigation" class="sidebar" aria-label="Wiki navigation"><section><h2>Start here</h2><a href="../index.html">Main Page</a><a href="../site/Getting-Started.html">Getting started</a></section><section><h2>Skills</h2><a href="../site/Skills.html">Skill overview</a><a href="../site/Unique-Skills.html">Unique Skills</a><a href="../site/Ultimate-Skills.html">Ultimate Skills</a><a href="../site/Skill-Synthesis.html">Skill synthesis</a><a href="../site/Godly.html">Godly Skills</a><a href="../site/Aura-Regeneration.html">Extra Skills</a><a href="../site/Abilities.html">Ability index</a></section><section><h2>Races</h2><a href="../site/Races.html">Race directory</a><a href="../site/Evolution.html">Hunter evolution</a><a href="../site/Duo-Races.html">Secondary races</a><a href="../site/Convergent-Awakening.html">Convergent Awakening</a></section><section><h2>Otherworlders</h2><a href="../site/Otherworlders.html">Character directory</a><a href="../site/Alma.html">Alma</a><a href="../site/Gemma.html">Gemma</a></section><section><h2>Reference</h2><a href="../site/Damage-Types.html" aria-current="page">Damage types</a><a href="../site/Mechanics.html">Combat mechanics</a><a href="../site/Visual-Effects.html">Visual effects</a><a href="../site/Commands.html">Commands</a></section><div class="sidebar-version">Tensura Myths <strong>0.16.0</strong><br>Minecraft 1.21.1 · NeoForge<br><span>Offline reference edition</span></div></nav>
 <main id="article" class="article-page"><div class="page-tabs"><span aria-current="page">Article</span><a href="../pages/Damage-Types.md">Read Markdown</a><a href="https://github.com/Bithio999/MC/blob/main/docs/CHANGELOG.md">Changelog</a></div>
 <div class="article-heading"><div class="breadcrumbs"><a href="../index.html">Tensura Myths Wiki</a> / <a href="../site/Mechanics.html">Reference</a></div><h1>Damage types</h1><p class="subtitle">From the unofficial Tensura Myths Wiki</p></div>
 <div class="article-content"><div class="article-intro"><p><strong>Damage types</strong> identify the native attack source used by an ability. Aura and magicules are resources; neither is a damage type. Skill tier, elemental damage and physical-looking animation are separate properties.</p></div><details class="contents" open><summary>Contents</summary><div class="toc">
@@ -20,6 +20,7 @@
 <li><a href="#space">Space</a></li>
 <li><a href="#earth">Earth</a></li>
 <li><a href="#light">Light</a></li>
+<li><a href="#wind">Wind</a></li>
 <li><a href="#generic-magic">Generic magic</a></li>
 <li><a href="#black-burn">Black Burn</a></li>
 <li><a href="#non-damaging-abilities">Non-damaging abilities</a></li>
@@ -46,7 +47,7 @@
 <tr>
 <td><a href="#water">Water</a></td>
 <td><code>tensura:water_elemental</code></td>
-<td>Scarlet Deluge</td>
+<td>Scarlet Deluge, Thoth</td>
 </tr>
 <tr>
 <td><a href="#fire">Fire</a></td>
@@ -56,22 +57,27 @@
 <tr>
 <td><a href="#ice">Ice</a></td>
 <td><code>tensura:ice_elemental</code></td>
-<td>Frostbound Colossus, Demeter, Thoth</td>
+<td>Frostbound Colossus, Demeter</td>
 </tr>
 <tr>
 <td><a href="#space">Space</a></td>
 <td><code>tensura:space_elemental</code></td>
-<td>Threadweaver, Janus, Aion</td>
+<td>Threadweaver, Janus, Aion, Thoth</td>
 </tr>
 <tr>
 <td><a href="#earth">Earth</a></td>
 <td><code>tensura:earth_elemental</code></td>
-<td>Rune Smith, Verdant Keeper</td>
+<td>Rune Smith, Verdant Keeper, Thoth</td>
 </tr>
 <tr>
 <td><a href="#light">Light</a></td>
 <td><code>tensura:light_elemental</code></td>
-<td>Mirrorbound</td>
+<td>Mirrorbound, Thoth</td>
+</tr>
+<tr>
+<td><a href="#wind">Wind</a></td>
+<td><code>tensura:wind_elemental</code></td>
+<td>Thoth</td>
 </tr>
 <tr>
 <td><a href="#generic-magic">Generic magic</a></td>
@@ -81,19 +87,21 @@
 </tbody>
 </table></div>
 <h2 id="lightning">Lightning</h2>
-<p><strong>Damage ID:</strong> <code>tensura:lightning_elemental</code>. Railbolt and Thunder Step use this source. Vritra’s Plasma Bore opening hit and Thunderhead strikes use it; their delayed fire fuses use a separate Fire source. Thoth’s third Lexicon chapter and every third Library chapter use Lightning.</p>
+<p><strong>Damage ID:</strong> <code>tensura:lightning_elemental</code>. Railbolt and Thunder Step use this source. Vritra’s Plasma Bore opening hit and Thunderhead strikes use it; their delayed fire fuses use a separate Fire source. Thoth’s third phase in its seven-element Lexicon/Library cycle uses Lightning.</p>
 <h2 id="water">Water</h2>
-<p><strong>Damage ID:</strong> <code>tensura:water_elemental</code>. Crushing Current, Scarlet Undertow and Water Veil retaliation use Water. The barrier itself deals no damage.</p>
+<p><strong>Damage ID:</strong> <code>tensura:water_elemental</code>. Crushing Current, Scarlet Undertow and Water Veil retaliation use Water. Thoth’s second Lexicon/Library phase uses Water for its shared Water/Ice slot. The barrier itself deals no damage.</p>
 <h2 id="fire">Fire</h2>
-<p><strong>Damage ID:</strong> <code>tensura:fire_elemental</code>. Black Flame’s Oil Lash and ignition/pool hits use Fire. Vritra’s delayed fuses, thunderhead fire bursts and Cataclysm Front eruptions use Fire. Thoth’s first Lexicon and Library chapters use Fire. Vritra/Thoth do not automatically inflict Black Burn.</p>
+<p><strong>Damage ID:</strong> <code>tensura:fire_elemental</code>. Black Flame’s Oil Lash and ignition/pool hits use Fire. Vritra’s delayed fuses, thunderhead fire bursts and Cataclysm Front eruptions use Fire. Thoth’s first phase in each seven-element Lexicon/Library cycle uses Fire. Vritra/Thoth do not automatically inflict Black Burn.</p>
 <h2 id="ice">Ice</h2>
-<p><strong>Damage ID:</strong> <code>tensura:ice_elemental</code>. Avalanche Crash, Glacial Prison, Winter Orchard’s hostile pulses and Winter Harvest blooms use Ice. Thoth’s second Lexicon and Library chapters use Ice. Healing in Winter Orchard has no damage source. Chill, Frost and Webbed are additional statuses, not names for the direct hit.</p>
+<p><strong>Damage ID:</strong> <code>tensura:ice_elemental</code>. Avalanche Crash, Glacial Prison, Winter Orchard’s hostile pulses and Winter Harvest blooms use Ice. Thoth uses Water for the shared Water/Ice slot and has no separate Ice chapter. Healing in Winter Orchard has no damage source. Chill, Frost and Webbed are additional statuses, not names for the direct hit.</p>
 <h2 id="space">Space</h2>
-<p><strong>Damage ID:</strong> <code>tensura:space_elemental</code>. Loom Needle, Sever Thread, Parallax Snare, Crossroads Edict, Worldline Sever, Event Horizon’s core and Genesis Verdict use Space. Gates and Causal Reversal do not deal damage. Aion’s bonus preserves the source type of the original attack.</p>
+<p><strong>Damage ID:</strong> <code>tensura:space_elemental</code>. Loom Needle, Sever Thread, Parallax Snare, Crossroads Edict, Worldline Sever, Event Horizon’s core and Genesis Verdict use Space. Thoth’s seventh Lexicon/Library phase uses Space. Gates and Causal Reversal do not deal damage. Aion’s bonus preserves the source type of the original attack.</p>
 <h2 id="earth">Earth</h2>
-<p><strong>Damage ID:</strong> <code>tensura:earth_elemental</code>. Runic Mine, Command Detonation and Briar Grasp use Earth. Living Grove and Verdant Heart do not deal damage. Physical-looking branches or a hammer icon do not change the native damage ID.</p>
+<p><strong>Damage ID:</strong> <code>tensura:earth_elemental</code>. Runic Mine, Command Detonation and Briar Grasp use Earth. Thoth’s fourth Lexicon/Library phase uses Earth. Living Grove and Verdant Heart do not deal damage. Physical-looking branches or a hammer icon do not change the native damage ID.</p>
 <h2 id="light">Light</h2>
-<p><strong>Damage ID:</strong> <code>tensura:light_elemental</code>. Prismatic Lance and its secondary splits use Light. Mirror Aegis does no direct attack damage; a reflected arrow/fireball/etc. retains its own projectile damage type with ownership transferred to the defender.</p>
+<p><strong>Damage ID:</strong> <code>tensura:light_elemental</code>. Prismatic Lance and its secondary splits use Light. Thoth’s sixth Lexicon/Library phase uses Light. Mirror Aegis does no direct attack damage; a reflected arrow/fireball/etc. retains its own projectile damage type with ownership transferred to the defender.</p>
+<h2 id="wind">Wind</h2>
+<p><strong>Damage ID:</strong> <code>tensura:wind_elemental</code>. Thoth’s fifth Lexicon/Library phase uses Wind, with a rising helix visual. It is a direct elemental hit rather than additional movement damage.</p>
 <h2 id="generic-magic">Generic magic</h2>
 <p><strong>Damage ID:</strong> <code>tensura:magic</code>. Spellbreak uses native generic magic rather than an elemental source. Its drain, Silence and Magic Interference are separate effects. Godly owners still take the attack but are excluded from those additional disruption/drain effects.</p>
 <h2 id="black-burn">Black Burn</h2>
@@ -108,4 +116,4 @@
 <p><a href="Abilities.html">Ability index</a> · <a href="Skills.html">Skill overview</a> · <a href="Mechanics.html">Combat mechanics</a></p>
 </div><nav class="related-box" aria-label="Related reference"><strong>Tensura Myths · Reference</strong><div class="navbox-row"><strong>Reference</strong><div><a href="../site/Getting-Started.html">Getting started</a><a href="../site/Skills.html">Skills</a><a href="../site/Abilities.html">Ability index</a><a href="../site/Damage-Types.html" aria-current="page">Damage types</a><a href="../site/Races.html">Race directory</a><a href="../site/Otherworlders.html">Otherworlders</a><a href="../site/Mechanics.html">Combat mechanics</a><a href="../site/Commands.html">Commands</a></div></div></nav>
 <div class="categories">Categories: <a href="../index.html">Tensura Myths</a> · <a href="../site/Mechanics.html">Reference</a></div>
-<footer>Unofficial fan addon. Original documentation and portraits. Not affiliated with Capcom or ManasMods.<br>Tensura Myths 0.15.0 · Offline edition · No external services required.</footer></main></div></body></html>
+<footer>Unofficial fan addon. Original documentation and portraits. Not affiliated with Capcom or ManasMods.<br>Tensura Myths 0.16.0 · Offline edition · No external services required.</footer></main></div></body></html>

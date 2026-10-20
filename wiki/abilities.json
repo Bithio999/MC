@@ -171,7 +171,7 @@
   },
   {
     "skill": "Hunters-Recovery",
-    "name": "Hunter\u2019s Recovery",
+    "name": "Hunter’s Recovery",
     "tier": "Extra",
     "kind": "Passive",
     "damage": "None",
@@ -343,7 +343,7 @@
     "name": "Mirror Aegis",
     "tier": "Unique",
     "kind": "Active",
-    "damage": "None \u2014 reflected projectiles retain their own attack type",
+    "damage": "None — reflected projectiles retain their own attack type",
     "damage_id": null,
     "secondary_damage_id": null,
     "damage_ids": [],
@@ -509,13 +509,17 @@
     "name": "Lexicon of Ruin",
     "tier": "Godly",
     "kind": "Active",
-    "damage": "Fire elemental, then Ice elemental, then Lightning elemental",
+    "damage": "Fire, Water, Lightning, Earth, Wind, Light and Space elemental",
     "damage_id": "tensura:fire_elemental",
-    "secondary_damage_id": "tensura:ice_elemental",
+    "secondary_damage_id": "tensura:water_elemental",
     "damage_ids": [
       "tensura:fire_elemental",
-      "tensura:ice_elemental",
-      "tensura:lightning_elemental"
+      "tensura:water_elemental",
+      "tensura:lightning_elemental",
+      "tensura:earth_elemental",
+      "tensura:wind_elemental",
+      "tensura:light_elemental",
+      "tensura:space_elemental"
     ],
     "anchor": "lexicon-of-ruin"
   },
@@ -548,13 +552,17 @@
     "name": "Astral Library",
     "tier": "Godly",
     "kind": "Active",
-    "damage": "Rotating Fire, Ice and Lightning elemental",
+    "damage": "Rotating Fire, Water, Lightning, Earth, Wind, Light and Space elemental",
     "damage_id": "tensura:fire_elemental",
-    "secondary_damage_id": "tensura:ice_elemental",
+    "secondary_damage_id": "tensura:water_elemental",
     "damage_ids": [
       "tensura:fire_elemental",
-      "tensura:ice_elemental",
-      "tensura:lightning_elemental"
+      "tensura:water_elemental",
+      "tensura:lightning_elemental",
+      "tensura:earth_elemental",
+      "tensura:wind_elemental",
+      "tensura:light_elemental",
+      "tensura:space_elemental"
     ],
     "anchor": "astral-library"
   }

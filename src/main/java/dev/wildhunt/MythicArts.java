@@ -127,9 +127,9 @@ public final class MythicArts {
             }
             case THOTH -> {
                 if(mode==0){
-                    Vec3 p=location(l,e,64);ArtVisualEntity.spawn(l,ArtVisualEntity.LEXICON,p,new Vec3(6,0,0),70);
-                    schedule(t,p,time+12,6,500,0,"fire");schedule(t,p,time+32,6,400,0,"ice");schedule(t,p,time+52,6,600,0,"lightning");
-                    GodlyVisuals.circle(l,e,p.add(0,.1,0),6,70,MagicCircleVariant.MISC);
+                    Vec3 p=location(l,e,64);ArtVisualEntity.spawn(l,ArtVisualEntity.LEXICON,p,new Vec3(6,0,0),ThothElement.LEXICON_LIFETIME);
+                    for(int chapter=0;chapter<ThothElement.COUNT;chapter++)schedule(t,p,time+ThothElement.lexiconTick(chapter),6,ThothElement.LEXICON_DAMAGE,0,ThothElement.at(chapter).id);
+                    GodlyVisuals.circle(l,e,p.add(0,.1,0),6,ThothElement.LEXICON_LIFETIME,MagicCircleVariant.MISC);
                 }else if(mode==1){
                     Vec3 p=location(l,e,36);double recovered=0;ArtVisualEntity.spawn(l,ArtVisualEntity.SPELLBREAK,p,new Vec3(12,0,0),30);
                     for(var target:ApexArts.enemies(l,e,p,12).stream().limit(6).toList()){
@@ -141,7 +141,7 @@ public final class MythicArts {
                     var own=TensuraStorages.getExistenceFrom(e);own.setMagicule(Math.min(EnergyHelper.getMaxMagicule(e),own.getMagicule()+Math.min(2000,recovered)));own.markDirty();
                 }else if(mode==2){
                     ManaCrucible.begin(i,e);
-                }else {t.putLong("library_until",time+200);t.putLong("library_next",time+10);visual(l,t,"library_visual",ArtVisualEntity.ASTRAL_LIBRARY,e.position().add(0,2.5,0),new Vec3(3.5,0,0),200);if(l.getEntity(t.getUUID("library_visual")) instanceof ArtVisualEntity v)v.setCaster(e);}
+                }else {t.putInt("library_chapter",0);t.putLong("library_until",time+ThothElement.LIBRARY_DURATION);t.putLong("library_next",time+ThothElement.LIBRARY_FIRST);visual(l,t,"library_visual",ArtVisualEntity.ASTRAL_LIBRARY,e.position().add(0,2.5,0),new Vec3(3.5,0,0),ThothElement.LIBRARY_DURATION);if(l.getEntity(t.getUUID("library_visual")) instanceof ArtVisualEntity v)v.setCaster(e);}
             }
         }
         l.playSound(null,e.blockPosition(),switch(s.kind){case THREADWEAVER,JANUS->SoundEvents.ENDERMAN_TELEPORT;case VERDANT_KEEPER,DEMETER->SoundEvents.AMETHYST_BLOCK_CHIME;case VRITRA->SoundEvents.BLAZE_SHOOT;default->SoundEvents.ENCHANTMENT_TABLE_USE;},SoundSource.PLAYERS,.85f,s.kind.godly()?.7f:1.1f);
@@ -164,7 +164,7 @@ public final class MythicArts {
     private static void endVisual(ServerLevel l,CompoundTag t,String key){if(t.hasUUID(key)){var entity=l.getEntity(t.getUUID(key));if(entity!=null)entity.discard();t.remove(key);}}
     private static void field(ServerLevel l,CompoundTag t,String key,Vec3 p,int ticks,int kind,double radius){ApexArts.point(t,key,p);t.putLong(key+"_until",l.getGameTime()+ticks);t.putLong(key+"_next",l.getGameTime());visual(l,t,key+"_visual",kind,p,new Vec3(radius,0,0),ticks);}
     private static void schedule(CompoundTag t,Vec3 p,long time,double radius,float damage,int mode,String type){var list=t.getList("bursts",Tag.TAG_COMPOUND);if(list.size()>=32)return;var b=new CompoundTag();ApexArts.point(b,"p",p);b.putLong("at",time);b.putDouble("radius",radius);b.putFloat("damage",damage);b.putInt("mode",mode);b.putString("type",type);list.add(b);t.put("bursts",list);}
-    private static ResourceKey<DamageType> damageType(String type){return switch(type){case "fire"->TensuraDamageTypes.FIRE_ELEMENTAL;case "ice"->TensuraDamageTypes.ICE_ELEMENTAL;case "lightning"->TensuraDamageTypes.LIGHTNING_ELEMENTAL;default->TensuraDamageTypes.SPACE_ELEMENTAL;};}
+    private static ResourceKey<DamageType> damageType(String type){if(type.equals("ice"))return TensuraDamageTypes.ICE_ELEMENTAL;var element=ThothElement.named(type);return element==null?TensuraDamageTypes.SPACE_ELEMENTAL:element.damage;}
     static boolean hit(MythicSkill s,ManasSkillInstance i,LivingEntity e,LivingEntity target,float damage,int mode,ResourceKey<DamageType> type){
         if(!HunterData.canHarm(e,target))return false;float power=(float)(1+.5*Math.clamp(i.getMastery()/s.getMaxMastery(),0,1));return target.hurt(s.createSource(i,e,type,mode),damage*power);
     }
@@ -198,12 +198,13 @@ public final class MythicArts {
         if(live(t,"library",time)){
             moveVisual(l,t,"library_visual",e.position().add(0,2.5,0),new Vec3(3.5,0,0));
             if(time>=t.getLong("library_next")){
-                int chapter=t.getInt("library_chapter")%3;var type=damageType(chapter==0?"fire":chapter==1?"ice":"lightning");
+                int chapter=t.getInt("library_chapter");var element=ThothElement.at(chapter);int book=ThothElement.libraryBook(chapter);
+                if(t.hasUUID("library_visual") && l.getEntity(t.getUUID("library_visual")) instanceof ArtVisualEntity formation)formation.style(chapter);
                 for(var target:ApexArts.enemies(l,e,e.position(),28).stream().limit(3).toList()){
-                    double phase=(200-(t.getLong("library_until")-time))*.025+chapter*Math.PI*2/3;
-                    Vec3 from=e.position().add(Math.cos(phase)*3.5,2.5+Math.sin((200-(t.getLong("library_until")-time))*.04+chapter)*.35,Math.sin(phase)*3.5);
-                    ArtVisualEntity.spawn(l,ArtVisualEntity.SPELL_RAY,from,target.getEyePosition().subtract(from),10).style(chapter);hit(s,i,e,target,240,3,type);
-                }t.putLong("library_next",time+15);t.putInt("library_chapter",chapter+1);
+                    double phase=(ThothElement.LIBRARY_DURATION-(t.getLong("library_until")-time))*.025+book*Math.PI*2/3;
+                    Vec3 from=e.position().add(Math.cos(phase)*3.5,2.5+Math.sin((ThothElement.LIBRARY_DURATION-(t.getLong("library_until")-time))*.04+book)*.35,Math.sin(phase)*3.5);
+                    ArtVisualEntity.spawn(l,ArtVisualEntity.SPELL_RAY,from,target.getEyePosition().subtract(from),10).style(element.ordinal());hit(s,i,e,target,ThothElement.LIBRARY_DAMAGE,3,element.damage);
+                }t.putLong("library_next",time+ThothElement.LIBRARY_INTERVAL);t.putInt("library_chapter",chapter+1);
             }
         }
         var pending=t.getList("bursts",Tag.TAG_COMPOUND);var keep=new ListTag();
@@ -211,7 +212,7 @@ public final class MythicArts {
             Vec3 p=ApexArts.point(b,"p");area(s,l,i,e,p,b.getDouble("radius"),b.getFloat("damage"),b.getInt("mode"),damageType(b.getString("type")),8);
             l.sendParticles(s.kind==MythicKind.DEMETER?ParticleTypes.SNOWFLAKE:ParticleTypes.ENCHANT,p.x,p.y+1,p.z,25,1.2,1.5,1.2,.04);
             if(s.kind==MythicKind.VRITRA)ArtVisualEntity.spawn(l,ArtVisualEntity.ELEMENT_IMPACT,p.add(0,.2,0),new Vec3(Math.min(3,b.getDouble("radius")),0,0),18).style(2);
-            if(s.kind==MythicKind.THOTH)GodlyVisuals.circle(l,e,p.add(0,.2,0),6,16,switch(b.getString("type")){case "fire"->MagicCircleVariant.FLAME;case "ice"->MagicCircleVariant.ICE;default->MagicCircleVariant.LIGHTNING;});
+            if(s.kind==MythicKind.THOTH){var element=ThothElement.named(b.getString("type"));GodlyVisuals.circle(l,e,p.add(0,.2,0),6,10,element==null?MagicCircleVariant.MISC:element.circle);}
         }t.put("bursts",keep);
         boolean active=!keep.isEmpty();for(String key:List.of("tether","mine","grove","aegis","thunder","orchard","gates","library")){
             if(live(t,key,time))active=true;else if(t.contains(key+"_until")){t.remove(key+"_until");if(key.equals("gates")){endVisual(l,t,"gate_a_visual");endVisual(l,t,"gate_b_visual");}else endVisual(l,t,key+"_visual");}

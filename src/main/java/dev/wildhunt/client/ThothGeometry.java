@@ -3,6 +3,7 @@ package dev.wildhunt.client;
 import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Axis;
 import dev.wildhunt.ArtVisualEntity;
+import dev.wildhunt.ThothElement;
 import dev.wildhunt.WildHunt;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.texture.OverlayTexture;
@@ -13,16 +14,20 @@ import net.minecraft.world.phys.Vec3;
 final class ThothGeometry {
     private static final ResourceLocation SEAL=WildHunt.id("textures/effect/thoth_seal.png"),
         PAGE=WildHunt.id("textures/effect/thoth_grimoire.png"),GLOW=WildHunt.id("textures/effect/thoth_glow.png");
-    private static final int GOLD=0xFFE8C376,CYAN=0xFF83E9FF,FIRE=0xFFFF925B,ICE=0xFFAFDAFF;
+    private static final int GOLD=0xFFE8C376,CYAN=0xFF83E9FF,FIRE=0xFFFF925B;
     private ThothGeometry(){}
     static boolean handles(int kind){return kind>=ArtVisualEntity.LEXICON && kind<=ArtVisualEntity.SPELL_RAY;}
     static void render(PoseStack poses,MultiBufferSource buffers,int kind,Vec3 data,float age,int life,int style){
         double fade=smooth(Math.min(age/8d,(life-age)/10d)),r=Math.abs(data.x),t=age*.05;
         if(kind==ArtVisualEntity.SPELL_RAY){
-            int color=style==0?FIRE:style==1?ICE:GOLD;
-            beam(poses,buffers,Vec3.ZERO,data,.08*fade,0xFFFFFFFF);
-            beam(poses,buffers,Vec3.ZERO,data,.35*fade,color);
-            flare(poses,buffers,data,1.2*fade,color);return;
+            // Each flash finishes before the next volley, keeping the faster spectrum legible.
+            double visible=Math.min(life,ThothElement.LIBRARY_INTERVAL);if(age>=visible)return;
+            fade=smooth(Math.min(age/1.1,(visible-age)/1.6));
+            ThothElement element=ThothElement.at(style);int color=element.color;
+            beam(poses,buffers,Vec3.ZERO,data,.045*fade,alpha(0xFFFFFFFF,.6*fade));
+            beam(poses,buffers,Vec3.ZERO,data,.3*fade,alpha(color,.8*fade));
+            flare(poses,buffers,data,.75*fade,color);
+            signature(poses,buffers,element,data,.75,age/Math.max(1,life),fade);return;
         }
         if(kind==ArtVisualEntity.ASTRAL_LIBRARY){
             // Counter-rotating inscription discs, a tilted celestial meridian and three legible volumes.
@@ -30,7 +35,8 @@ final class ThothGeometry {
             seal(poses,buffers,Vec3.ZERO,r*.65*fade,-t*.3,0,alpha(CYAN,.65*fade));
             seal(poses,buffers,new Vec3(0,.6,0),r*1.05*fade,t*.12,.65,alpha(CYAN,.32*fade));
             for(int n=0;n<3;n++){
-                double a=n*Math.PI*2/3+age*.025;int c=n==0?FIRE:n==1?ICE:GOLD;
+                int chapter=style,active=ThothElement.libraryBook(chapter);
+                double a=n*Math.PI*2/3+age*.025;int c=ThothElement.at(chapter+Math.floorMod(n-active,3)).color;
                 Vec3 p=new Vec3(Math.cos(a)*r,Math.sin(age*.04+n)*.35,Math.sin(a)*r);
                 book(poses,buffers,p,.95*fade,a+Math.PI/2,age+n*19,c);
                 seal(poses,buffers,p.add(0,.02,0),1.35*fade,-t*.4+n,.95,alpha(c,.55*fade));
@@ -39,7 +45,8 @@ final class ThothGeometry {
             motes(poses,buffers,r,age,fade,36,CYAN);
             flare(poses,buffers,new Vec3(0,.1,0),.9*fade,GOLD);
         } else if(kind==ArtVisualEntity.LEXICON){
-            double chapter=Math.min(2,Math.max(0,(age-12)/20));int c=chapter<1?blend(FIRE,ICE,chapter):blend(ICE,GOLD,chapter-1);
+            int chapter=ThothElement.lexiconChapter(age);double transition=chapter==ThothElement.COUNT-1?0:smooth((age-ThothElement.lexiconTick(chapter))/(ThothElement.lexiconTick(chapter+1)-ThothElement.lexiconTick(chapter)));
+            int c=blend(ThothElement.at(chapter).color,ThothElement.at(chapter+1).color,transition);
             seal(poses,buffers,new Vec3(0,.16,0),r*fade,t*.15,0,alpha(GOLD,.9*fade));
             seal(poses,buffers,new Vec3(0,.22,0),r*.74*fade,-t*.3,0,alpha(c,.8*fade));
             seal(poses,buffers,new Vec3(0,7*fade,0),r*.48*fade,-t*.2,0,alpha(c,.75*fade));
@@ -48,20 +55,14 @@ final class ThothGeometry {
                 book(poses,buffers,p,1.1*fade,a+Math.PI/2,age+n*15,c);
                 beam(poses,buffers,p,new Vec3(0,7*fade,0),.06*fade,c);
             }
-            // Three separate impacts match the server's 12/32/52-tick chapter timings.
-            for(int n=0;n<3;n++){
-                double elapsed=age-(12+n*20);if(elapsed<0 || elapsed>18)continue;
-                double pulse=Math.sin(elapsed/18*Math.PI),radius=r*(.25+.75*elapsed/18);
-                int color=n==0?FIRE:n==1?ICE:GOLD;
-                seal(poses,buffers,new Vec3(0,.35+elapsed*.03,0),radius,t,0,alpha(color,pulse));
-                beam(poses,buffers,new Vec3(0,12,0),Vec3.ZERO,(n==2?.5:.3)*pulse,color);
-                flare(poses,buffers,new Vec3(0,2,0),5*pulse,color);
-                for(int k=0;k<14;k++){
-                    double a=k*Math.PI/7,rr=r*.8;
-                    Vec3 p=new Vec3(Math.cos(a)*rr,0,Math.sin(a)*rr);
-                    Vec3 end=p.scale(n==0?1.2:.5).add(0,(n==1?6:3)*pulse,0);
-                    beam(poses,buffers,p,end,(n==1?.12:.06)*pulse,color);
-                }
+            // Every eruption shares the exact server schedule and native element; the overall lifetime stays 70 ticks.
+            for(int n=0;n<ThothElement.COUNT;n++){
+                double elapsed=age-ThothElement.lexiconTick(n);if(elapsed<0 || elapsed>12)continue;
+                double pulse=Math.sin(elapsed/12*Math.PI),radius=r*(.25+.75*elapsed/12);ThothElement element=ThothElement.at(n);
+                seal(poses,buffers,new Vec3(0,.35+elapsed*.03,0),radius,t,0,alpha(element.color,pulse));
+                beam(poses,buffers,new Vec3(0,12,0),Vec3.ZERO,.25*pulse,element.color);
+                flare(poses,buffers,new Vec3(0,2,0),3*pulse,alpha(element.color,.65));
+                signature(poses,buffers,element,Vec3.ZERO,r,elapsed/12,pulse*fade);
             }
             motes(poses,buffers,r,age,fade,42,c);
         } else if(kind==ArtVisualEntity.SPELLBREAK){
@@ -83,6 +84,46 @@ final class ThothGeometry {
             }
             flare(poses,buffers,new Vec3(0,3.5,0),2*fade,CYAN);motes(poses,buffers,r,age,fade,24,GOLD);
         }
+    }
+    /** Element-specific silhouettes supplement the existing books/seals instead of merely changing their tint. */
+    private static void signature(PoseStack p,MultiBufferSource b,ThothElement element,Vec3 center,double radius,double progress,double fade){
+        if(fade<.001)return;p.pushPose();p.translate(center.x,center.y,center.z);int c=element.color;double r=radius*(.3+.7*progress);
+        switch(element){
+            case FIRE->{
+                VfxMesh.seal(p,b,VfxMesh.RIFT,new Vec3(0,.08,0),r,progress*.2,0,VfxMesh.tint(c,fade));
+                for(int n=0;n<6;n++){Vec3 q=VfxMesh.polar(n*Math.PI/3,r*.65,radius*.22);VfxMesh.billboard(p,b,VfxMesh.FLAME,q,radius*.15*fade,radius*.55*fade,n*.3,VfxMesh.tint(c,fade),true);}
+            }
+            case WATER->{
+                // Two rising, scrolling caustic ribbons and foam rims, rather than ice columns.
+                for(int arm=0;arm<2;arm++)for(int n=0;n<32;n++){
+                    double a=n*Math.PI*2/32+arm*Math.PI+progress*2,q=(n+1)*Math.PI*2/32+arm*Math.PI+progress*2;
+                    Vec3 x=VfxMesh.polar(a,r*(.7+arm*.15),radius*(.15+.13*Math.sin(a))),y=VfxMesh.polar(q,r*(.7+arm*.15),radius*(.15+.13*Math.sin(q)));
+                    VfxMesh.surface(p,b,VfxMesh.WAVE,x,y,y.add(0,radius*.24*fade,0),x.add(0,radius*.24*fade,0),VfxMesh.opacity(c,.6*fade));
+                    VfxMesh.beam(p,b,x.add(0,radius*.24*fade,0),y.add(0,radius*.24*fade,0),.04*fade,VfxMesh.tint(c,fade));
+                }
+            }
+            case LIGHTNING->{
+                VfxMesh.seal(p,b,VfxMesh.CIRCUIT,new Vec3(0,.08,0),r,progress*.1,0,VfxMesh.tint(c,.7*fade));
+                for(int n=0;n<5;n++)VfxMesh.bolt(p,b,new Vec3(0,radius*.9,0),VfxMesh.polar(n*Math.PI*2/5,r,.1),.08*fade,(float)(progress*12),n,VfxMesh.tint(c,fade));
+            }
+            case EARTH->{
+                VfxMesh.seal(p,b,VfxMesh.CIRCUIT,new Vec3(0,.1,0),r,0,0,VfxMesh.tint(c,.65*fade));
+                for(int n=0;n<6;n++){double a=n*Math.PI/3;Vec3 base=VfxMesh.polar(a,r*.7,.1),tip=base.add(0,radius*.8*fade,0);
+                    VfxMesh.tube(p,b,java.util.List.of(base,base.lerp(tip,.72),tip),radius*.11*fade,.015,VfxMesh.STONE,0xFFD4B78D);
+                    VfxMesh.beam(p,b,base,tip,.035*fade,VfxMesh.tint(c,fade));}
+            }
+            case WIND->{
+                for(int arm=0;arm<3;arm++){Vec3 last=VfxMesh.polar(arm*Math.PI*2/3,r,0);for(int n=1;n<=30;n++){double s=n/30d,a=arm*Math.PI*2/3+s*Math.PI*3-progress*3;Vec3 next=VfxMesh.polar(a,r*(1-.5*s),s*radius*1.1*fade);VfxMesh.beam(p,b,last,next,.055*fade,VfxMesh.tint(c,(1-s*.5)*fade));last=next;}}
+            }
+            case LIGHT->{
+                VfxMesh.seal(p,b,VfxMesh.MIRROR,new Vec3(0,.12,0),r,progress*.15,0,VfxMesh.tint(c,fade));
+                for(int n=0;n<12;n++){double a=n*Math.PI/6;Vec3 x=VfxMesh.polar(a,r*.18,radius*.28),y=VfxMesh.polar(a,r*(n%2==0?1:.65),radius*.28);VfxMesh.beam(p,b,x,y,(n%2==0?.12:.045)*fade,VfxMesh.tint(c,fade));}
+            }
+            case SPACE->{
+                for(int plane=0;plane<3;plane++)VfxMesh.ring(p,b,new Vec3(0,radius*.3,0),r*.7,.065*fade,progress,plane,VfxMesh.tint(c,fade));
+                VfxMesh.seal(p,b,VfxMesh.RIFT,new Vec3(0,radius*.3,0),r,progress*.3,Math.PI/3,VfxMesh.tint(c,.75*fade));
+            }
+        }p.popPose();
     }
     private static void orbit(PoseStack p,MultiBufferSource b,double r,float age,int chapter,double fade,int color){
         // Continuous luminous ribbons curve behind each book rather than appearing as dotted particles.

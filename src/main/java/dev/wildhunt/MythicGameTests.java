@@ -33,7 +33,7 @@ public final class MythicGameTests {
     private static ManasSkillInstance learn(LivingEntity p,MythicKind k){var s=WildHunt.MYTHIC.get(k).get();HunterData.learnReward(p,s);return SkillAPI.getSkillsFrom(p).getSkill(s).orElseThrow();}
     private static void afterTracking(GameTestHelper h,List<? extends LivingEntity> targets,Runnable checks){
         h.runAfterDelay(5,()->h.startSequence().thenWaitUntil(()->{
-            for(var target:targets)h.assertTrue(h.getLevel().getEntitiesOfClass(LivingEntity.class,target.getBoundingBox().inflate(.1)).contains(target),"Fixture target is not accessible in the entity manager yet");
+            for(var target:targets)h.assertTrue(h.getLevel().getEntitiesOfClass(LivingEntity.class,target.getBoundingBox().inflate(.1)).contains(target) && h.getLevel().getEntity(target.getUUID())==target,"Fixture target is not accessible in both entity indexes yet");
         }).thenExecute(checks));
     }
     private static void cast(LivingEntity p,ManasSkillInstance i,int mode){i.getSkill().onPressed(i,p,0,mode);}
@@ -78,7 +78,7 @@ public final class MythicGameTests {
     public static void threadLeashPullsOnlyOutsideItsRadiusAndSeverConsumesIt(GameTestHelper h){
         var p=player(h);var z=target(h,p.position().add(8,0,0));var i=learn(p,MythicKind.THREADWEAVER);afterTracking(h,List.of(z),()->{
             cast(p,i,0);h.assertTrue(i.getOrCreateTag().hasUUID("tether_target") && z.getHealth()<1024,"Needle failed to hit/tether");z.setDeltaMovement(Vec3.ZERO);tick(p,i);h.assertTrue(z.getDeltaMovement().lengthSqr()==0,"Leash pulls while inside its radius");
-            z.setPos(z.position().add(0,0,5));tick(p,i);h.assertTrue(z.getDeltaMovement().z<0,"Leash did not pull toward its fixed anchor");z.invulnerableTime=0;float before=z.getHealth();cast(p,i,1);h.assertTrue(z.getHealth()<before && !i.getOrCreateTag().contains("tether_until"),"Sever did not consume the tether and damage");h.succeed();
+            z.setPos(z.position().add(0,0,5));tick(p,i);h.assertTrue(z.getDeltaMovement().z<0,"Leash did not pull toward its fixed anchor: hp="+z.getHealth()+" alive="+z.isAlive()+" resistance="+z.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE)+" indexed="+(h.getLevel().getEntity(z.getUUID())==z)+" lineOfSight="+p.hasLineOfSight(z)+" tag="+i.getOrCreateTag());z.invulnerableTime=0;float before=z.getHealth();cast(p,i,1);h.assertTrue(z.getHealth()<before && !i.getOrCreateTag().contains("tether_until"),"Sever did not consume the tether and damage");h.succeed();
         });
     }
     @GameTest(template="empty",timeoutTicks=100)
@@ -99,9 +99,11 @@ public final class MythicGameTests {
     @GameTest(template="empty",timeoutTicks=100)
     public static void mirrorAegisTransfersProjectileOwnershipAndLeavesOutgoingFriendlyShots(GameTestHelper h){
         var p=player(h);var enemy=target(h,p.position().add(12,0,0));var i=learn(p,MythicKind.MIRRORBOUND);
-        var hostile=new net.minecraft.world.entity.projectile.Snowball(h.getLevel(),enemy);hostile.setPos(p.position().add(2,1,0));hostile.setDeltaMovement(-1,0,0);h.getLevel().addFreshEntity(hostile);
-        var own=new net.minecraft.world.entity.projectile.Snowball(h.getLevel(),p);own.setPos(p.position().add(1,1,0));own.setDeltaMovement(1,0,0);h.getLevel().addFreshEntity(own);
-        h.runAfterDelay(5,()->{hostile.setPos(p.position().add(2,1,0));hostile.setDeltaMovement(-1,0,0);own.setPos(p.position().add(1,1,0));own.setDeltaMovement(1,0,0);cast(p,i,1);tick(p,i);h.assertTrue(hostile.getOwner()==p && hostile.getDeltaMovement().x>0,"Hostile projectile was not reflected with correct ownership");h.assertTrue(own.getOwner()==p && own.getDeltaMovement().x==1,"Mirror changed a friendly projectile");h.succeed();});
+        var hostile=new net.minecraft.world.entity.projectile.Snowball(h.getLevel(),enemy);hostile.setPos(p.position().add(2,1,0));hostile.setDeltaMovement(Vec3.ZERO);hostile.setNoGravity(true);h.getLevel().addFreshEntity(hostile);
+        var own=new net.minecraft.world.entity.projectile.Snowball(h.getLevel(),p);own.setPos(p.position().add(1,1,0));own.setDeltaMovement(Vec3.ZERO);own.setNoGravity(true);h.getLevel().addFreshEntity(own);
+        h.runAfterDelay(5,()->h.startSequence().thenWaitUntil(()->{
+            h.assertTrue(h.getLevel().getEntitiesOfClass(net.minecraft.world.entity.projectile.Snowball.class,hostile.getBoundingBox().inflate(.1)).contains(hostile) && h.getLevel().getEntitiesOfClass(net.minecraft.world.entity.projectile.Snowball.class,own.getBoundingBox().inflate(.1)).contains(own),"Fixture projectiles are not tracked yet");
+        }).thenExecute(()->{hostile.setPos(p.position().add(2,1,0));hostile.setDeltaMovement(-1,0,0);own.setPos(p.position().add(1,1,0));own.setDeltaMovement(1,0,0);cast(p,i,1);tick(p,i);h.assertTrue(hostile.getOwner()==p && hostile.getDeltaMovement().x>0,"Hostile projectile was not reflected with correct ownership");h.assertTrue(own.getOwner()==p && own.getDeltaMovement().x==1,"Mirror changed a friendly projectile");h.succeed();}));
     }
     @GameTest(template="empty",timeoutTicks=100)
     public static void plasmaBoreLeavesDelayedFireAndCataclysmIsTelegraphed(GameTestHelper h){
@@ -187,8 +189,80 @@ public final class MythicGameTests {
         h.runAfterDelay(1,()->{h.assertTrue(s.onHeld(i,p,1,2) && i.getMastery()>mastery,"Sustained paid conversion did not earn mastery");s.onRelease(i,p,1,0,2);h.succeed();});
     }
     @GameTest(template="empty",timeoutTicks=100)
-    public static void lexiconUsesThreeElementChaptersAndOnlyMagicules(GameTestHelper h){
-        var p=player(h);var i=learn(p,MythicKind.THOTH);double aura=TensuraStorages.getExistenceFrom(p).getAura(),mp=TensuraStorages.getExistenceFrom(p).getMagicule();cast(p,i,0);var bursts=i.getOrCreateTag().getList("bursts",Tag.TAG_COMPOUND);h.assertTrue(bursts.size()==3 && bursts.getCompound(0).getString("type").equals("fire") && bursts.getCompound(1).getString("type").equals("ice") && bursts.getCompound(2).getString("type").equals("lightning"),"Lexicon chapters lost distinct native damage types");h.assertTrue(TensuraStorages.getExistenceFrom(p).getAura()==aura && TensuraStorages.getExistenceFrom(p).getMagicule()==mp-5000,"Thoth charged wrong energy");h.succeed();
+    public static void lexiconUsesSevenPassiveElementsWithinItsOriginalWindowAndOnlyMagicules(GameTestHelper h){
+        var p=player(h);afterTracking(h,List.of(target(h,p.position().add(14,0,0))),()->{var i=learn(p,MythicKind.THOTH);double aura=TensuraStorages.getExistenceFrom(p).getAura(),mp=TensuraStorages.getExistenceFrom(p).getMagicule();long now=h.getLevel().getGameTime();cast(p,i,0);
+        var bursts=i.getOrCreateTag().getList("bursts",Tag.TAG_COMPOUND);String[] ids={"fire","water","lightning","earth","wind","light","space"};int[] ticks={12,18,25,32,38,45,52};
+        h.assertTrue(bursts.size()==7,"Lexicon did not schedule exactly seven passive-backed elements");
+        for(int n=0;n<7;n++)h.assertTrue(bursts.getCompound(n).getString("type").equals(ids[n]) && bursts.getCompound(n).getLong("at")==now+ticks[n],"Wrong element or delayed chapter: "+n);
+        h.assertTrue(TensuraStorages.getExistenceFrom(p).getAura()==aura && TensuraStorages.getExistenceFrom(p).getMagicule()==mp-5000,"Thoth charged wrong energy");
+        var visual=h.getLevel().getEntitiesOfClass(ArtVisualEntity.class,p.getBoundingBox().inflate(70),v->v.kind()==ArtVisualEntity.LEXICON);
+        h.assertTrue(visual.size()==1 && visual.getFirst().lifetime()==70 && i.getCoolDown(0)==12,"Lexicon changed lifetime or cooldown");h.succeed();});
+    }
+    private static final class ChapterProbe extends net.minecraft.world.entity.monster.Husk {
+        final List<String> sources=new ArrayList<>();final List<Long> times=new ArrayList<>();
+        ChapterProbe(net.minecraft.server.level.ServerLevel level){super(EntityType.HUSK,level);setNoAi(true);setNoGravity(true);}
+        @Override public boolean hurt(net.minecraft.world.damagesource.DamageSource source,float amount){sources.add(source.typeHolder().unwrapKey().orElseThrow().location().getPath());times.add(level().getGameTime());return false;}
+    }
+    @GameTest(template="empty",timeoutTicks=240)
+    public static void libraryActuallyCyclesAllSevenSourcesAndBoltStylesWithoutExtendingDuration(GameTestHelper h){
+        var p=player(h);var target=new ChapterProbe(h.getLevel());target.setPos(p.position().add(8,0,0));h.getLevel().addFreshEntity(target);
+        afterTracking(h,List.of(target),()->{
+            var i=learn(p,MythicKind.THOTH);long start=h.getLevel().getGameTime();cast(p,i,3);var tag=i.getOrCreateTag();
+            h.assertTrue(tag.getLong("library_until")==start+200 && i.getCoolDown(3)==35,"Library changed duration or cooldown");
+            for(int elapsed=0;elapsed<=201;elapsed++){final int age=elapsed;h.runAfterDelay(elapsed,()->{
+                tick(p,i);
+                if(age>=10 && age<200 && (age-10)%5==0){
+                    int chapter=(age-10)/5;var formation=(ArtVisualEntity)h.getLevel().getEntity(tag.getUUID("library_visual"));h.assertTrue(formation.style()==chapter,"Book colours lost the actual server volley");var bolts=h.getLevel().getEntitiesOfClass(ArtVisualEntity.class,p.getBoundingBox().inflate(35),v->v.kind()==ArtVisualEntity.SPELL_RAY && v.tickCount==0);
+                    h.assertTrue(bolts.size()==1 && bolts.getFirst().style()==chapter%7,"Bolt visual lost its actual damage element at chapter "+chapter);
+                }
+                if(age==201){String[] ids={"fire_elemental","water_elemental","lightning_elemental","earth_elemental","wind_elemental","light_elemental","space_elemental"};
+                    h.assertTrue(target.sources.size()==38,"Library cadence is wrong: "+target.sources.size());
+                    for(int n=0;n<38;n++)h.assertTrue(target.sources.get(n).equals(ids[n%7]) && target.times.get(n)==start+10+n*5,"Wrong real damage source/tick: "+n);
+                    h.assertTrue(!tag.contains("library_until"),"Library continued beyond ten seconds");h.succeed();
+                }
+            });}
+        });
+    }
+    @GameTest(template="empty",timeoutTicks=120)
+    public static void lexiconExecutesAllSevenNativeSourcesAtTheWarnedTimes(GameTestHelper h){
+        var p=player(h);var target=new ChapterProbe(h.getLevel());target.setPos(p.position().add(8,0,0));h.getLevel().addFreshEntity(target);
+        afterTracking(h,List.of(target),()->{var i=learn(p,MythicKind.THOTH);long start=h.getLevel().getGameTime();cast(p,i,0);
+            for(int elapsed=0;elapsed<=70;elapsed++){final int age=elapsed;h.runAfterDelay(elapsed,()->{tick(p,i);if(age==70){
+                String[] ids={"fire_elemental","water_elemental","lightning_elemental","earth_elemental","wind_elemental","light_elemental","space_elemental"};int[] ticks={12,18,25,32,38,45,52};
+                h.assertTrue(target.sources.size()==7,"Lexicon skipped or repeated a chapter: "+target.sources);
+                for(int n=0;n<7;n++)h.assertTrue(target.sources.get(n).equals(ids[n]) && target.times.get(n)==start+ticks[n],"Wrong actual source/timing: "+n);
+                h.succeed();
+            }});}
+        });
+    }
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void expandedSpellStylesStayScopedAndLegacyIceDamageStillWorks(GameTestHelper h){
+        for(int style=0;style<7;style++){
+            var bolt=ArtVisualEntity.spawn(h.getLevel(),ArtVisualEntity.SPELL_RAY,h.absoluteVec(Vec3.ZERO),new Vec3(3,0,0),10).style(style);
+            h.assertTrue(bolt.style()==style,"Spell style was truncated: "+style);bolt.discard();
+        }
+        var other=ArtVisualEntity.spawn(h.getLevel(),ArtVisualEntity.HEALING_PULSE,h.absoluteVec(Vec3.ZERO),new Vec3(1,0,0),10).style(6);
+        h.assertTrue(other.style()==2 && ThothElement.named("ice")==null && ThothElement.named("darkness")==null && ThothElement.named("gravity")==null,"Expanded styles leaked or unwanted elements entered Thoth");other.discard();
+        var p=player(h);var target=new ChapterProbe(h.getLevel());target.setPos(p.position().add(8,0,0));h.getLevel().addFreshEntity(target);var i=learn(p,MythicKind.DEMETER);afterTracking(h,List.of(target),()->{cast(p,i,2);due(i,h.getLevel().getGameTime());tick(p,i);h.assertTrue(!target.sources.isEmpty() && target.sources.stream().allMatch(id->id.equals("ice_elemental")),"Removing Thoth's ice phase changed Demeter's actual native damage");h.succeed();});
+    }
+    @GameTest(template="empty",timeoutTicks=350)
+    public static void fasterThothCyclesKeepComparableDamageWithoutResettingNativeHitImmunity(GameTestHelper h){
+        var p=player(h);var current=target(h,p.position().add(8,0,0));var former=target(h,p.position().add(40,0,0));
+        // The baseline is outside Library range; force its own chunks so its native immunity timer actually ticks.
+        for(int dx=-1;dx<=1;dx++)for(int dz=-1;dz<=1;dz++){var pos=former.blockPosition().offset(dx*16,0,dz*16);h.getLevel().getChunk(pos);h.getLevel().setChunkForced(pos.getX()>>4,pos.getZ()>>4,true);}
+        current.invulnerableTime=2;former.invulnerableTime=2;
+        afterTracking(h,List.of(current,former),()->h.startSequence().thenWaitUntil(()->h.assertTrue(current.invulnerableTime==0 && former.invulnerableTime==0,"Fixture recipients are not entity-ticking yet")).thenExecute(()->{var i=learn(p,MythicKind.THOTH);var skill=(MythicSkill)i.getSkill();double[] damage=new double[4];cast(p,i,0);
+            for(int elapsed=0;elapsed<=270;elapsed++){final int age=elapsed;h.runAfterDelay(elapsed,()->{
+                // Refill HP to observe a full cast without killing either recipient; keep their real immunity timers.
+                current.setHealth(1024);former.setHealth(1024);float before=current.getHealth();tick(p,i);damage[age<=70?0:2]+=before-current.getHealth();
+                int local=age<=70?age:age-71;float old=0;
+                if(age<=70){if(local==12)old=500;if(local==32)old=400;if(local==52)old=600;}
+                else if(local>=10 && local<200 && (local-10)%15==0)old=240;
+                if(old>0){before=former.getHealth();MythicArts.hit(skill,i,p,former,old,age<=70?0:3,io.github.manasmods.tensura.damage.TensuraDamageTypes.FIRE_ELEMENTAL);damage[age<=70?1:3]+=before-former.getHealth();}
+                if(age==70)cast(p,i,3);
+                if(age==270){h.assertTrue(damage[1]>0 && damage[3]>0 && damage[0]/damage[1]>.8 && damage[0]/damage[1]<1.2 && damage[2]/damage[3]>.8 && damage[2]/damage[3]<1.2,"Native damage changed substantially: Lexicon="+damage[0]+" / "+damage[1]+", Library="+damage[2]+" / "+damage[3]);h.succeed();}
+            });}
+        }));
     }
     @GameTest(template="empty",timeoutTicks=100)
     public static void newTogglesOwnModifiersWithoutCreatingPassiveBarriers(GameTestHelper h){
