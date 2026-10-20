@@ -33,7 +33,7 @@
 | Damage ID | — |
 | Upkeep | 180 magicules / second |
 
-Gain 75% Earth, Flame, Water/Ice, Wind, Light, Lightning and Space boost; 50% increased native Chant Speed; 25% reduced native Magic Cost Multiplier; 70 Magic Barrier; and a 1,000-capacity native Multilayer Barrier. Native spell-cost efficiency applies where Tensura reads that attribute; the art costs on this page remain fixed. Broken multilayer capacity recovers after ten seconds without a hit, at the next paid upkeep.
+Gain 75% Earth, Flame, Water/Ice, Wind, Light, Lightning and Space boost; 75% increased native Chant Speed; and 25% reduced native Magic Cost Multiplier. Thoth’s Godly boosts apply in addition to the strongest ordinary elemental source. Native spell-cost efficiency applies where Tensura reads that attribute; the art costs on this page remain fixed.
 
 Enable the native skill toggle in Ability Selection. The first second is paid on enabling; upkeep is paid every twenty game ticks. It turns off when unfunded or blocked by native activation rules. Turning it off removes only its own modifiers. It is separate from active mode cycling.
 
@@ -104,6 +104,16 @@ After paying its 1,000-magicule cast cost, convert two current aura into one mis
 
 For ten seconds, three open grimoires orbit above you. Starting after half a second and then every 0.75 seconds, fire at up to three visible enemies within 28 blocks. The chapter cycles Fire → Ice → Lightning. The formation moves with you; only one library per owner. Forgetting the skill, dying or changing dimension cancels it.
 
+## Spellcraft visuals
+
+Lexicon raises a three-volume casting formation above counter-rotating inscription seals. Fire, Ice and Lightning chapters have separate timed eruptions. Spellbreak spreads rings of fractured sigils; Mana Crucible draws golden and cyan helical currents into a raised focus. Astral Library carries animated open books, celestial seals, continuous trails and softly fading motes. Its chapter-colored bolts originate at the matching book. All effects use standard Minecraft rendering, without a shader pack.
+
+![Lexicon of Ruin’s elemental casting formation](../media/thoth-lexicon.png)
+
+![Spellbreak’s expanding inscription rings](../media/thoth-spellbreak.png)
+
+![Mana Crucible’s converging currents](../media/thoth-mana-crucible.png)
+
 ## Obtaining
 
 Open **Skills → Godly → Ascension**, select one mastered [combination Ultimate](Ultimate-Skills.md), choose **Thoth**, then Ascend. Also master [Rune Smith](Rune-Smith.md), become a True Hero or True Demon Lord and reach **12,000,000 base EP**. Both the selected Ultimate and Rune Smith are combined into Thoth. Other skills remain learned. Presets and the longest remaining cooldown carry over. Owning Aion does not prevent earning Thoth using another valid source Ultimate.
@@ -124,7 +134,9 @@ Attacks respect teams, owned pets, creative/spectator immunity and server PvP se
 
 ## Gallery
 
-![Astral Library’s upright open grimoires orbiting the caster](../media/astral-library.png)
+![Astral Library’s luminous inscriptions and animated grimoires](../media/astral-library.png)
+
+[Watch Astral Library in motion](../media/astral-library.mp4).
 
 ![Aion and Thoth in the native Godly skill list](../media/godly-magic.png)
 

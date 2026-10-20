@@ -16,6 +16,8 @@ import net.minecraft.world.phys.Vec3;
 
 /** Synced visual geometry only: cannot collide, hurt entities or edit blocks. */
 public final class ArtVisualEntity extends Entity {
+    private Vec3 interpolationTarget=Vec3.ZERO, previousEnd=Vec3.ZERO, smoothedEnd=Vec3.ZERO;
+    private int interpolationSteps;
     public static final int LASH = 0, CRYSTAL = 1, FALLING_ICE = 2, TIDAL_WAVE = 3, WHIRLPOOL = 4, CAUSAL_SPHERE = 5, CAUSAL_RAY = 6, CAUSAL_DOMAIN = 7, CAUSAL_ANCHOR = 8, CAUSAL_VERDICT = 9, CAUSAL_IMPACT = 10;
     public static final int THREAD_LINE=11,RUNE_MINE=12,LIVING_GROVE=13,MIRROR_WARD=14,PRISM_RAY=15,PLASMA_LANCE=16,
         THUNDERHEAD=17,CATACLYSM_FRONT=18,WINTER_ORCHARD=19,CRYSTAL_BULWARK=20,CRYSTAL_BLOOM=21,TWIN_GATE=22,
@@ -27,6 +29,7 @@ public final class ArtVisualEntity extends Entity {
             .clientTrackingRange(8).updateInterval(1).noSave().noSummon().build("wildhunt:art_visual"));
     private static final EntityDataAccessor<Integer> KIND = SynchedEntityData.defineId(ArtVisualEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> LIFETIME = SynchedEntityData.defineId(ArtVisualEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> STYLE = SynchedEntityData.defineId(ArtVisualEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Float> END_X = SynchedEntityData.defineId(ArtVisualEntity.class, EntityDataSerializers.FLOAT);
     private static final EntityDataAccessor<Float> END_Y = SynchedEntityData.defineId(ArtVisualEntity.class, EntityDataSerializers.FLOAT);
     private static final EntityDataAccessor<Float> END_Z = SynchedEntityData.defineId(ArtVisualEntity.class, EntityDataSerializers.FLOAT);
@@ -42,16 +45,27 @@ public final class ArtVisualEntity extends Entity {
         level.addFreshEntity(entity); return entity;
     }
     @Override protected void defineSynchedData(SynchedEntityData.Builder builder) {
-        builder.define(CASTER,java.util.Optional.empty());builder.define(KIND, LASH); builder.define(LIFETIME, 16);
+        builder.define(CASTER,java.util.Optional.empty());builder.define(KIND, LASH); builder.define(LIFETIME, 16);builder.define(STYLE,0);
         builder.define(END_X, 0f); builder.define(END_Y, 0f); builder.define(END_Z, 0f);
     }
     public void updateVector(Vec3 start,Vec3 delta) {setPos(start);entityData.set(END_X,(float)delta.x);entityData.set(END_Y,(float)delta.y);entityData.set(END_Z,(float)delta.z);}
     public void setCaster(Entity caster) {entityData.set(CASTER,java.util.Optional.of(caster.getUUID()));}
     public boolean ownedBy(Entity caster) {return caster!=null && entityData.get(CASTER).filter(caster.getUUID()::equals).isPresent();}
+    public Entity caster() {return entityData.get(CASTER).map(id->level().getPlayerByUUID(id)).orElse(null);}
     public int kind() { return entityData.get(KIND); }
     public int lifetime() { return entityData.get(LIFETIME); }
+    public int style(){return entityData.get(STYLE);}
+    public ArtVisualEntity style(int style){entityData.set(STYLE,Math.clamp(style,0,2));return this;}
     public Vec3 end() { return new Vec3(entityData.get(END_X), entityData.get(END_Y), entityData.get(END_Z)); }
-    @Override public void tick() { super.tick(); if (!level().isClientSide() && tickCount >= lifetime()) discard(); }
+    public Vec3 end(float partial) {return tickCount<=1?end():previousEnd.lerp(smoothedEnd,partial);}
+    @Override public void lerpTo(double x,double y,double z,float yaw,float pitch,int steps) {
+        interpolationTarget=new Vec3(x,y,z);interpolationSteps=Math.clamp(steps,1,3);
+    }
+    @Override public void tick() {
+        previousEnd=smoothedEnd;smoothedEnd=tickCount<=1?end():smoothedEnd.lerp(end(),.65);super.tick();
+        if(level().isClientSide() && interpolationSteps>0){setPos(position().lerp(interpolationTarget,1d/interpolationSteps));interpolationSteps--;}
+        if (!level().isClientSide() && tickCount >= lifetime()) discard();
+    }
     @Override public AABB getBoundingBoxForCulling() { return new AABB(position(), position().add(end())).inflate((kind() == WHIRLPOOL || kind() == CAUSAL_SPHERE || kind()>=CAUSAL_DOMAIN) ? Math.abs(end().x) + 12 : kind() == TIDAL_WAVE ? end().y + 3 : 4); }
     @Override public boolean shouldRenderAtSqrDistance(double distance) { return distance < 128 * 128; }
     @Override protected void readAdditionalSaveData(CompoundTag tag) {}

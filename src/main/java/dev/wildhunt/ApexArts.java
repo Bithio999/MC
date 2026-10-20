@@ -214,8 +214,8 @@ public final class ApexArts {
         var tag = instance.getOrCreateTag(); int step = tag.getInt("travel_step") + 1; tag.putInt("travel_step", step);
         Vec3 origin = point(tag, "travel_origin"), direction = point(tag, "travel_forward"), right = direction.yRot((float)(Math.PI / 2));
         double reach = tag.getDouble("travel_reach"), initial = Math.min(2, reach);
-        double distance = initial + (reach - initial) * (step - 1) / 7;
-        double previous = step == 1 ? 0 : initial + (reach - initial) * (step - 2) / 7;
+        double distance = initial + (reach - initial) * (step - 1) / 15;
+        double previous = step == 1 ? 0 : initial + (reach - initial) * (step - 2) / 15;
         Vec3 front = origin.add(direction.scale(distance)), midpoint = origin.add(direction.scale((previous + distance) / 2));
         double halfLength = (distance - previous) / 2 + 0.6, width = skill.ultimate ? 5 : 4;
         ListTag hit = tag.getList("travel_hits", Tag.TAG_STRING);
@@ -278,8 +278,8 @@ public final class ApexArts {
     }
     public static boolean tick(ApexSkill skill, ServerLevel level, ManasSkillInstance instance, LivingEntity caster) {
         var tag = instance.getOrCreateTag(); long now = level.getGameTime(); boolean active = false;
-        if (tag.getLong("travel_until") > now && tag.getInt("travel_step") < 8 && tag.getString("travel_dimension").equals(dimension(level))) {
-            active = true; if (now % 2 == 0) advance(skill, level, instance, caster);
+        if (tag.getLong("travel_until") > now && tag.getInt("travel_step") < 16 && tag.getString("travel_dimension").equals(dimension(level))) {
+            active = true; advance(skill, level, instance, caster);
         }
         ListTag pools = tag.getList("oil_pools", Tag.TAG_COMPOUND); int oldCount = pools.size();
         for (int i = pools.size() - 1; i >= 0; i--) if (!validPool(pools.getCompound(i), level, now)) pools.remove(i);

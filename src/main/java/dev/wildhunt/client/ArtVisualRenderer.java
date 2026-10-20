@@ -32,10 +32,16 @@ public final class ArtVisualRenderer extends EntityRenderer<ArtVisualEntity> {
     }
     @Override public void render(ArtVisualEntity entity, float yaw, float partial, PoseStack poses, MultiBufferSource buffers, int light) {
         float age = entity.tickCount + partial;
-        if(entity.kind()>=ArtVisualEntity.THREAD_LINE) {
+        if(ThothGeometry.handles(entity.kind())) {
+            poses.pushPose();
+            if(entity.kind()==ArtVisualEntity.ASTRAL_LIBRARY && entity.caster()!=null){
+                Vec3 offset=entity.caster().getPosition(partial).add(0,2.5,0).subtract(entity.getPosition(partial));poses.translate(offset.x,offset.y,offset.z);
+            }
+            ThothGeometry.render(poses,buffers,entity.kind(),entity.end(partial),age,entity.lifetime(),entity.style());poses.popPose();
+        } else if(entity.kind()>=ArtVisualEntity.THREAD_LINE) {
             poses.pushPose();
             if(entity.kind()==ArtVisualEntity.TWIN_GATE)poses.mulPose(com.mojang.math.Axis.YP.rotation((float)entity.end().z));
-            MythicGeometry.render(poses.last(),buffers.getBuffer(RenderType.debugQuads()),entity.kind(),entity.end(),age,entity.lifetime());
+            MythicGeometry.render(poses.last(),buffers.getBuffer(RenderType.debugQuads()),entity.kind(),entity.end(partial),age,entity.lifetime());
             poses.popPose();
         } else if (entity.kind() == ArtVisualEntity.LASH) {
             double extent = Math.clamp(age / 4, 0, 1) * Math.clamp((entity.lifetime() - age) / 6, 0, 1);

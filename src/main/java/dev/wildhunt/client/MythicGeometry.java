@@ -5,7 +5,7 @@ import dev.wildhunt.ArtVisualEntity;
 import net.minecraft.world.phys.Vec3;
 
 /** Each kit has its own silhouette and animation: silk, inscriptions, roots, mirrors,
- * plasma, crystal trees, doors and an orbiting three-volume grimoire. */
+ * plasma, crystal trees, doors and spatial blades. Thoth has a dedicated textured renderer. */
 final class MythicGeometry {
     private MythicGeometry(){}
     static void render(PoseStack.Pose pose,VertexConsumer mesh,int kind,Vec3 data,float age,int life){
@@ -53,7 +53,7 @@ final class MythicGeometry {
                     shard(pose,mesh,center,.35*fade,kind==ArtVisualEntity.CRYSTAL_BULWARK?0xBBAAF5D0:0xBBC1E9FF,a);
                 }
             }
-            case ArtVisualEntity.PRISM_RAY,ArtVisualEntity.PLASMA_LANCE,ArtVisualEntity.SPELL_RAY->{
+            case ArtVisualEntity.PRISM_RAY,ArtVisualEntity.PLASMA_LANCE->{
                 Vec3 axis=data.normalize(),side=axis.cross(Math.abs(axis.y)>.98?new Vec3(1,0,0):new Vec3(0,1,0)).normalize(),up=axis.cross(side).normalize();
                 boolean plasma=kind==ArtVisualEntity.PLASMA_LANCE;
                 for(int n=0;n<3;n++){
@@ -95,45 +95,9 @@ final class MythicGeometry {
                 for(int n=0;n<4;n++){double a=n*Math.PI/2;Vec3 p=new Vec3(Math.cos(a)*r,.2,Math.sin(a)*r);line(pose,mesh,p,p.scale(-1),.09,0xFFBEA0F0);shard(pose,mesh,p.add(0,1,0),.8*fade,0xDDEAD3FF,a);}
                 ring(pose,mesh,new Vec3(0,.1,0),r,.09,0,0,0xFFEDD5AC);
             }
-            case ArtVisualEntity.LEXICON->{
-                int chapter=Math.min(2,(int)(age/22));int c=chapter==0?0xFFFFA15A:chapter==1?0xFFA3ECFF:0xFFFFE28E;
-                for(int n=0;n<3;n++){double a=n*Math.PI*2/3-age*.01;Vec3 p=new Vec3(Math.cos(a)*r*.55,2+Math.sin(age*.05+n)*.3,Math.sin(a)*r*.55);book(pose,mesh,p,.8*fade,a+Math.PI/2,c);}
-                ring(pose,mesh,new Vec3(0,.1,0),r,.12,age*.01,0,c);star(pose,mesh,r*.8,age*.008,c);
-            }
-            case ArtVisualEntity.SPELLBREAK->{
-                double pulse=Math.clamp(age/18d,0,1)*r;for(int n=0;n<3;n++)ring(pose,mesh,new Vec3(0,.1+n*.6,0),pulse,.08,0,n==2?1:0,0xFF8AE7F5);
-                for(int n=0;n<8;n++){double a=n*Math.PI/4;Vec3 p=new Vec3(Math.cos(a)*pulse,1,Math.sin(a)*pulse);shard(pose,mesh,p,.25*fade,0xFFEBD59C,a);}
-            }
-            case ArtVisualEntity.MANA_CRUCIBLE->{
-                for(int n=0;n<2;n++){ring(pose,mesh,new Vec3(0,.2+n*.2,0),r*(1-n*.2),.09,age*.03*(n==0?1:-1),0,n==0?0xFFE0BD65:0xFF6CE5F5);}
-                for(int n=0;n<18;n++){double a=n*Math.PI/9+age*.1,rr=r*(1-(age*.04+n*.1)%1);diamond(pose,mesh,new Vec3(Math.cos(a)*rr,1+Math.sin(a)*.5,Math.sin(a)*rr),.1*fade,n%2==0?0xFFFFCE85:0xFF8EEAFA);}
-            }
-            case ArtVisualEntity.ASTRAL_LIBRARY->{
-                for(int n=0;n<3;n++){double a=n*Math.PI*2/3+age*.025;Vec3 p=new Vec3(Math.cos(a)*r,Math.sin(age*.04+n)*.35,Math.sin(a)*r);book(pose,mesh,p,.85*fade,a+Math.PI/2,n==0?0xFFFFB979:n==1?0xFFB0E6FF:0xFFFFE8A0);}
-                ring(pose,mesh,Vec3.ZERO,r,.035,age*.025,0,0xFF71CDDF);star(pose,mesh,r*.6,-age*.01,0xFFDAC589);
-            }
+
         }
     }
-    private static void book(PoseStack.Pose p,VertexConsumer v,Vec3 c,double size,double angle,int color){
-        Vec3 right=new Vec3(Math.cos(angle),0,Math.sin(angle)).scale(size),up=new Vec3(0,size*.68,0),normal=right.cross(up).normalize();
-        // Upright open volumes remain recognizable from player height. Covers, page blocks,
-        // gold rims and luminous writing are separate surfaces, rather than flat overhead quads.
-        for(int side:new int[]{-1,1}){
-            Vec3 outer=right.scale(side).add(normal.scale(size*.22));
-            Vec3 a=c.subtract(up),b=c.add(up),d=c.add(outer).subtract(up),q=c.add(outer).add(up);
-            quad(p,v,a,b,q,d,0xFF263B66);
-            Vec3 lift=normal.scale(.035),inner=outer.scale(.9);
-            Vec3 pa=c.subtract(up.scale(.91)).add(lift),pb=c.add(up.scale(.91)).add(lift),pc=c.add(inner).add(up.scale(.91)).add(lift),pd=c.add(inner).subtract(up.scale(.91)).add(lift);
-            quad(p,v,pa,pb,pc,pd,0xFFFFEDC6);
-            line(p,v,a,b,.035,color);line(p,v,b,q,.035,color);line(p,v,q,d,.035,color);line(p,v,d,a,.035,color);
-            for(int n=0;n<5;n++){
-                Vec3 start=c.add(right.scale(side*.15)).add(up.scale((n-2)*.3)).add(normal.scale(size*.08));
-                Vec3 end=start.add(right.scale(side*.6)).add(normal.scale(size*.13));line(p,v,start,end,.018,color);
-            }
-        }
-        diamond(p,v,c.add(0,size,0),.16*size,color);
-    }
-    private static void star(PoseStack.Pose p,VertexConsumer v,double r,double angle,int color){for(int n=0;n<6;n++){double a=n*Math.PI/3+angle,b=a+Math.PI*2/3;line(p,v,new Vec3(Math.cos(a)*r,.12,Math.sin(a)*r),new Vec3(Math.cos(b)*r,.12,Math.sin(b)*r),.03,color);}}
     private static void shard(PoseStack.Pose p,VertexConsumer v,Vec3 c,double r,int color,double angle){Vec3 side=new Vec3(Math.cos(angle),0,Math.sin(angle)).scale(r);quad(p,v,c.add(0,r*1.6,0),c.add(side),c.add(0,-r,0),c.subtract(side),color);line(p,v,c.add(0,r*1.6,0),c.add(side),.025,0xFFE3F5FF);line(p,v,c.add(0,r*1.6,0),c.subtract(side),.025,0xFFE3F5FF);}
     private static void diamond(PoseStack.Pose p,VertexConsumer v,Vec3 c,double r,int color){quad(p,v,c.add(0,r,0),c.add(r,0,0),c.add(0,-r,0),c.add(-r,0,0),color);quad(p,v,c.add(0,r,0),c.add(0,0,r),c.add(0,-r,0),c.add(0,0,-r),color);}
     private static void ring(PoseStack.Pose p,VertexConsumer v,Vec3 center,double radius,double width,double rotation,int plane,int color){for(int n=0;n<64;n++){double a=n*Math.PI/32+rotation,b=a+Math.PI/32;Vec3 a0=onPlane(a,radius-width,plane).add(center),a1=onPlane(a,radius+width,plane).add(center),b0=onPlane(b,radius-width,plane).add(center),b1=onPlane(b,radius+width,plane).add(center);quad(p,v,a0,a1,b1,b0,color);}}

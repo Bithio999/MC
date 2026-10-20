@@ -2,7 +2,7 @@
 
 [Main Page](https://github.com/Bithio999/MC/wiki/Home) · [Skills](https://github.com/Bithio999/MC/wiki/Skills) · [Ability index](https://github.com/Bithio999/MC/wiki/Abilities) · [Damage types](https://github.com/Bithio999/MC/wiki/Damage-Types)
 
-**Janus, Lord of Crossroads** is a Ultimate Skill focused on **linked gates, opposing spatial blades and safe displacement**.
+**Janus, Lord of Crossroads** is an Ultimate Skill focused on **linked gates, opposing spatial blades and safe displacement**.
 
 ![Janus, Lord of Crossroads](https://github.com/Bithio999/MC/blob/main/src/main/resources/assets/wildhunt/textures/skill/janus.png?raw=true)
 
@@ -33,7 +33,9 @@
 | Damage ID | — |
 | Upkeep | 70 aura / second |
 
-Gain 35% movement speed, 0.5 knockback resistance, 30 Magic Barrier and 300 native Multilayer Barrier capacity. Broken multilayer capacity recovers after ten seconds without a hit, at the next paid upkeep.
+Gain 35% movement speed, 30% attack speed, 0.5 knockback resistance and 60% Space boost. Threshold Dominion rewards movement and spatial offense.
+
+Elemental boosts use the [strongest ordinary source](https://github.com/Bithio999/MC/wiki/Mechanics#elemental-bonus-sources); Godly bonuses apply separately.
 
 Enable the native skill toggle in Ability Selection. The first second is paid on enabling; upkeep is paid every twenty game ticks. It turns off when unfunded or blocked by native activation rules. Turning it off removes only its own modifiers. It is separate from active mode cycling.
 
@@ -42,8 +44,8 @@ Enable the native skill toggle in Ability Selection. The first second is paid on
 | Mode | Aura | Cooldown | Raw damage |
 | --- | ---: | ---: | --- |
 | 1. Twin Gates | 1,600 | 3 s | — |
-| 2. Parallax Snare | 2,200 | 9 s | 420 |
-| 3. Crossroads Edict | 4,500 | 24 s | 320 |
+| 2. Parallax Snare | 2,200 | 7 s | 780 |
+| 3. Crossroads Edict | 4,500 | 18 s | 620 |
 
 Damage listed here is before native combat handling and uses **1 + 0.5 × mastery fraction**, capped at **1.5×**. These new kits do not use the apex skills’ 0.90 multiplier or the former 3× Ultimate multiplier. EP never multiplies their damage. Native elemental boosts, authority, resistances, barriers and hit immunity apply.
 
@@ -70,8 +72,8 @@ First cast places a gate at your feet and a second safe point up to 36 blocks al
 | Damage type | Space elemental |
 | Damage ID | `tensura:space_elemental` |
 | Resource cost | 2,200 aura |
-| Cooldown | 9 seconds |
-| Raw damage | 420 |
+| Cooldown | 7 seconds |
+| Raw damage | 780 |
 
 Mark a point within 36 blocks. Opposing spatial blades close around a six-block radius and strike after 0.8 seconds. The warning stays fixed; up to eight visible enemies can be hit.
 
@@ -84,8 +86,8 @@ Mark a point within 36 blocks. Opposing spatial blades close around a six-block 
 | Damage type | Space elemental |
 | Damage ID | `tensura:space_elemental` |
 | Resource cost | 4,500 aura |
-| Cooldown | 24 seconds |
-| Raw damage | 320 |
+| Cooldown | 18 seconds |
+| Raw damage | 620 |
 
 Choose a field center within 32 blocks. Up to six visible enemies within ten blocks are displaced to their mirrored horizontal positions across the center. Each destination is checked against collision, build height and world border. An unsafe displacement leaves that enemy in place; the spatial hit still applies. Successful hits attempt native Movement Interference for 2.5 seconds.
 

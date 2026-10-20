@@ -144,7 +144,7 @@ public final class MythsIntegrationTests {
         var targets=new java.util.ArrayList<net.minecraft.world.entity.monster.Zombie>();
         for(int n=0;n<9;n++) {
             var pos=p.position().add(3+n*3,0,0);h.getLevel().getChunk(net.minecraft.core.BlockPos.containing(pos));
-            var z=h.spawnWithNoFreeWill(EntityType.ZOMBIE,2,1,2);z.setPos(pos);z.setNoGravity(true);
+            var z=h.spawnWithNoFreeWill(EntityType.HUSK,2,1,2);z.setPos(pos);z.setNoGravity(true);
             z.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH).setBaseValue(1024);z.setHealth(1024);targets.add(z);
         }
         HunterData.learnReward(p,WildHunt.GODLY.get());var i=SkillAPI.getSkillsFrom(p).getSkill(WildHunt.GODLY.get()).orElseThrow();
@@ -474,7 +474,7 @@ public final class MythsIntegrationTests {
         EnergyHelper.setBaseMaxEP(p,DuoSystem.secondaryEvolutionEP(p));return DuoSystem.evolve(p,id);
     }
     private static net.minecraft.world.entity.monster.Zombie tank(GameTestHelper h,net.minecraft.world.phys.Vec3 pos) {
-        var chunk=net.minecraft.core.BlockPos.containing(pos);h.getLevel().getChunk(chunk);h.getLevel().setChunkForced(chunk.getX()>>4,chunk.getZ()>>4,true);var z=h.spawnWithNoFreeWill(EntityType.ZOMBIE,2,1,2);z.setPos(pos);z.setNoGravity(true);
+        var chunk=net.minecraft.core.BlockPos.containing(pos);h.getLevel().getChunk(chunk);h.getLevel().setChunkForced(chunk.getX()>>4,chunk.getZ()>>4,true);var z=h.spawnWithNoFreeWill(EntityType.HUSK,2,1,2);z.setPos(pos);z.setNoGravity(true);
         z.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH).setBaseValue(1024);z.setHealth(1024);return z;
     }
 }

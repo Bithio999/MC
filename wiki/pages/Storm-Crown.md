@@ -40,14 +40,16 @@ All damaging arts in this skill use **lightning elemental damage**, including it
 
 While toggled on, gain 6 armor, 35% movement, 25% attack speed and 50% lightning boost. Movement generates no resource.
 
+Elemental boosts use the [strongest ordinary source](Mechanics.md#elemental-bonus-sources); Godly bonuses apply separately.
+
 Enable or disable this through Tensura’s native **Ability Selection** skill toggle. It is separate from active mode cycling and has no fifteen/thirty-second duration. Upkeep is **10 aura per second**, with the first second paid on enabling. It turns off when aura is insufficient or activation requirements fail. Turning it off removes its own attribute modifiers immediately.
 
 ### Active
 
 | Mode | Aura | Cooldown | Raw opening damage |
 | --- | ---: | ---: | ---: |
-| 1. Railbolt | 200 | 4 s | 90 |
-| 2. Thunder Step | 600 | 5 s | 80 |
+| 1. Railbolt | 200 | 3 s | 160 |
+| 2. Thunder Step | 600 | 4 s | 135 |
 
 **Damage calculation:** multiply the listed base values by **0.90**, then by the mastery multiplier (up to **1.50**). Elemental boosts, defenses, barriers, and situational modifiers also apply. EP does not multiply damage.
 

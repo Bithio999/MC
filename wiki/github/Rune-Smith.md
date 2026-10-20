@@ -35,14 +35,16 @@
 
 Gain 30% Earth, Flame and Lightning boost through native attributes. No passive stacks are accumulated.
 
+Elemental boosts use the [strongest ordinary source](https://github.com/Bithio999/MC/wiki/Mechanics#elemental-bonus-sources); Godly bonuses apply separately.
+
 Enable the native skill toggle in Ability Selection. The first second is paid on enabling; upkeep is paid every twenty game ticks. It turns off when unfunded or blocked by native activation rules. Turning it off removes only its own modifiers. It is separate from active mode cycling.
 
 ### Active
 
 | Mode | Aura | Cooldown | Raw damage |
 | --- | ---: | ---: | --- |
-| 1. Runic Mine | 350 | 8 s | 160 on trigger |
-| 2. Command Detonation | 400 | 5 s | 230 |
+| 1. Runic Mine | 350 | 6 s | 280 on trigger |
+| 2. Command Detonation | 400 | 4 s | 420 |
 
 Damage listed here is before native combat handling and uses **1 + 0.5 × mastery fraction**, capped at **1.5×**. These new kits do not use the apex skills’ 0.90 multiplier or the former 3× Ultimate multiplier. EP never multiplies their damage. Native elemental boosts, authority, resistances, barriers and hit immunity apply.
 
@@ -55,8 +57,8 @@ Damage listed here is before native combat handling and uses **1 + 0.5 × master
 | Damage type | Earth elemental |
 | Damage ID | `tensura:earth_elemental` |
 | Resource cost | 350 aura |
-| Cooldown | 8 seconds |
-| Raw damage | 160 on trigger |
+| Cooldown | 6 seconds |
+| Raw damage | 280 on trigger |
 
 Place one rune at your crosshair within 28 blocks, using a visible target or bounded surface/endpoint. It arms after one second and lasts fifteen seconds. An eligible enemy entering its three-block radius triggers one Earth blast against up to eight enemies. Placing another rune replaces the previous one. The mine checks your line of sight to victims and does not edit terrain.
 
@@ -69,10 +71,10 @@ Place one rune at your crosshair within 28 blocks, using a visible target or bou
 | Damage type | Earth elemental |
 | Damage ID | `tensura:earth_elemental` |
 | Resource cost | 400 aura |
-| Cooldown | 5 seconds |
-| Raw damage | 230 |
+| Cooldown | 4 seconds |
+| Raw damage | 420 |
 
-Detonate your existing rune within 48 blocks, expanding its blast radius to six blocks and raising its raw damage to 230. You can detonate before proximity arming completes. No live rune means no resource charge, mastery or cooldown.
+Detonate your existing rune within 48 blocks, expanding its blast radius to six blocks and raising its raw damage to 420. You can detonate before proximity arming completes. No live rune means no resource charge, mastery or cooldown.
 
 ## Obtaining
 

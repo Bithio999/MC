@@ -10,7 +10,8 @@
     "DuoRaceMixin",
     "GodlyResistanceMixin",
     "GodlyDefensesMixin",
-    "GodlyResistanceAttributesMixin"
+    "GodlyResistanceAttributesMixin",
+    "ElementalBonusesMixin"
   ],
   "injectors": {
     "defaultRequire": 1

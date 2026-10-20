@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.14.0 — Skill identity, power and spellcraft
+
+- Raised the fixed raw damage of all eight Uniques and all three combination Ultimates; shortened combat cooldowns, strengthened allied grove/orchard healing and extended Mirror Aegis to six seconds. Resource costs, mastery scaling, rank rules and EP-independent damage remain intact.
+- Removed incidental passive shields from Mirrorbound, Demeter, Janus and Thoth. Silvered Soul gains light power/attack speed, Evergreen Sanctuary gains spiritual recovery/stability, Threshold Dominion gains spatial power/attack speed, and Arcane Sovereignty gains stronger chanting. Existing owned shield modifiers are cleaned on login and refresh without touching other sources.
+- Retained Water Veil and Colossus Carapace's native recovering barriers, Demeter's dedicated active team ward and Aion's causality defense. Crystal Bulwark now lends 500 Multilayer capacity and 50 Physical/Magic Barrier for eight seconds.
+- Native elemental attributes use the strongest positive ordinary modifier across flat/base/total operations, rather than stacking different sources. Innate base values, penalties and Thoth's Godly elemental multiplier remain. Non-elemental attributes and Aion's separate Godly damage bonus are unaffected.
+- Added client interpolation for moving art entities and animated endpoint vectors. Water waves advance and sweep every server tick instead of alternating ticks. Library bolts originate at the corresponding animated book and synchronize their elemental color.
+- Rebuilt all four Thoth arts with original 1,024px inscription seals, emissive layered geometry, animated textured grimoires, continuous trails, softly fading motes and separate chapter eruptions. Standard Minecraft rendering; no shader dependency. Original textures can be regenerated with `scripts/prepare-thoth-effects.py`.
+- Updated individual wiki abilities, combat source rules, passive roles and screenshots. Release history stays in this document.
+- Validation: 95 required native GameTests and 11 JUnit tests; real-client checks of Thoth's four arts. See `VALIDATION-0.14.0.md`.
+
 ## 0.13.0 — Combination skills and fixed progression gates
 
 - Secondary evolution uses `secondaryRaceEP + secondaryEvolutionEPStep × stage`; neither current EP nor selection EP changes its requirements. Convergence uses the fixed completed-stage gates and native lineage requirements, ignoring old selection/evolution EP snapshots.

@@ -6,10 +6,10 @@ public record ApexBalance(float primary, float burst, float pulse, int primaryCo
                           double passiveAuraPerSecond, double radius) {
     public static ApexBalance of(Apex apex) {
         return switch (apex) {
-            case REY_DAU -> new ApexBalance(90, 80, 20, 4, 5, 200, 600, 10, 8);
-            case UTH_DUNA -> new ApexBalance(65, 45, 18, 3, 7, 160, 500, 10, 9);
-            case NU_UDRA -> new ApexBalance(70, 90, 24, 3, 8, 160, 800, 15, 8);
-            case JIN_DAHAAD -> new ApexBalance(100, 55, 30, 4, 8, 200, 650, 20, 4);
+            case REY_DAU -> new ApexBalance(160, 135, 32, 3, 4, 200, 600, 10, 8);
+            case UTH_DUNA -> new ApexBalance(120, 80, 32, 3, 6, 160, 500, 10, 9);
+            case NU_UDRA -> new ApexBalance(125, 165, 42, 3, 7, 160, 800, 15, 8);
+            case JIN_DAHAAD -> new ApexBalance(180, 100, 50, 3, 7, 200, 650, 20, 4);
         };
     }
     public static float power(double masteryFraction, boolean ultimate) {

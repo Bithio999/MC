@@ -1,3 +1,51 @@
+# Current balance: 0.14.0
+
+All values below are fixed raw damage before native authority, defenses, elemental
+attributes and mastery. There is no EP damage multiplier. Costs remain unchanged.
+The four original apex skills apply 0.90 × mastery (1–1.5); other kits apply
+mastery (1–1.5). Historical comparisons follow this current section.
+
+| Unique | Opening / second art | Cooldowns |
+| --- | --- | --- |
+| Storm Crown | 160 / 135 | 3 / 4 s |
+| Scarlet Deluge | 120 / 80 + 32 per pulse | 3 / 6 s |
+| Black Flame | 125 / 165 + 42 per pulse | 3 / 7 s |
+| Frostbound Colossus | 180 / 100 | 3 / 7 s |
+| Threadweaver | 160 / 300 | 4 / 6 s |
+| Rune Smith | 280 proximity / 420 command | 6 / 4 s |
+| Verdant Keeper | 5% HP + 4% SHP per second / 190 | 14 / 5 s |
+| Mirrorbound | 220 + two 130 splits / six-second reflection | 3 / 10 s |
+
+The native reference remains Tensura 2.0.1.3: strong Black Lightning is 135
+lightning + 15 magic at seven seconds / 1,000 MP; Black Flame's Flare is
+270 fire + 30 magic for 2,000 MP. Storm Crown now starts at 144 before mastery,
+with ricochets and a three-second cadence; Rune Smith's prepared command blast
+is 420 before mastery. These are meaningful Unique attack budgets without
+requiring multiple elemental passives. Aura and magicules are distinct resources.
+
+| Ultimate | Fixed raw damage / support | Cooldowns |
+| --- | --- | --- |
+| Vritra | 650 lightning + 350 fire fuse; 260 lightning + 140 fire per thunder pulse; 780 front eruption | 4 / 15 / 24 s |
+| Demeter | 140 Ice per orchard pulse and 7% HP / 6% SHP healing; 500-capacity, 50 Physical/Magic ward for 8 s; 600 / 900 empowered harvest | 18 / 16 / 20 s |
+| Janus | Safe gates; 780 spatial snare; 620 spatial displacement | 3 / 7 / 18 s |
+
+Ultimate damage rises about 67–115%, depending on art. Warnings remain dodgeable,
+line-of-sight and target caps remain, and overlapping attacks respect native hit
+immunity. The three Ultimates retain their demolition, team sustain and spatial
+control roles. Automated combat tests compare old/new Unique and Ultimate raw
+hits through the same actual native damage pipeline, rather than only testing constants.
+
+Only Water Veil, Colossus Carapace and Aion supply persistent personal barriers.
+Demeter spends an active mode on its team ward. Mirrorbound reflects projectiles;
+Janus relies on mobility; Thoth focuses on magic. Their old passive shields are
+removed automatically, including saved permanent modifiers.
+
+Each elemental attribute uses its strongest positive ordinary modifier. Godly
+Thoth applies separately; native innate base values and penalties remain. Native
+skills, equipment and other modifiers participate in this rule. This is source
+selection, not a hard cap that weakens a single powerful native source. Damage
+paths that do not consult elemental boost attributes retain their native rules.
+
 > **0.7.0:** All art damage is multiplied by 0.90; current costs, native barriers,
 > recovery, Human vitality benchmarks and aura regeneration are in the
 > [wiki](../wiki/README.md) and [native integration notes](NATIVE-INTEGRATION.md).

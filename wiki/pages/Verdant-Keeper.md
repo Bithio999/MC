@@ -41,8 +41,8 @@ Enable the native skill toggle in Ability Selection. The first second is paid on
 
 | Mode | Aura | Cooldown | Raw damage |
 | --- | ---: | ---: | --- |
-| 1. Living Grove | 700 | 16 s | — |
-| 2. Briar Grasp | 300 | 7 s | 105 |
+| 1. Living Grove | 700 | 14 s | — |
+| 2. Briar Grasp | 300 | 5 s | 190 |
 
 Damage listed here is before native combat handling and uses **1 + 0.5 × mastery fraction**, capped at **1.5×**. These new kits do not use the apex skills’ 0.90 multiplier or the former 3× Ultimate multiplier. EP never multiplies their damage. Native elemental boosts, authority, resistances, barriers and hit immunity apply.
 
@@ -55,10 +55,10 @@ Damage listed here is before native combat handling and uses **1 + 0.5 × master
 | Damage type | None |
 | Damage ID | — |
 | Resource cost | 700 aura |
-| Cooldown | 16 seconds |
+| Cooldown | 14 seconds |
 | Raw damage | — |
 
-Grow a stationary grove within 24 blocks. For eight seconds it restores 3.5% maximum HP and 2% maximum SHP each second to up to eight beneficiaries within seven blocks. Beneficiaries are yourself, teammates/allies and your owned pets; neutral strangers are excluded. Healing caps at each pool’s current maximum. Only one grove per owner; other allies need your line of sight.
+Grow a stationary grove within 24 blocks. For eight seconds it restores 5% maximum HP and 4% maximum SHP each second to up to eight beneficiaries within seven blocks. Beneficiaries are yourself, teammates/allies and your owned pets; neutral strangers are excluded. Healing caps at each pool’s current maximum. Only one grove per owner; other allies need your line of sight.
 
 #### Briar Grasp
 
@@ -69,8 +69,8 @@ Grow a stationary grove within 24 blocks. For eight seconds it restores 3.5% max
 | Damage type | Earth elemental |
 | Damage ID | `tensura:earth_elemental` |
 | Resource cost | 300 aura |
-| Cooldown | 7 seconds |
-| Raw damage | 105 |
+| Cooldown | 5 seconds |
+| Raw damage | 190 |
 
 Lash up to six visible enemies in a forward fan within twelve blocks. Successful hits attempt to apply native Webbed for 3.5 seconds. Animated briars erupt around the selected victims. Native resistance and rank rules still govern the status.
 

@@ -299,7 +299,7 @@ public final class IntegrationGameTests {
         var instance = SkillAPI.getSkillsFrom(player).getSkill(skill).orElseThrow();
         float before = target.getHealth(); skill.onPressed(instance, player, 0, 0);
         helper.assertTrue(target.getHealth() == before, "Wave hit a distant target instantly");
-        for (int step = 0; step < 7; step++) ApexArts.advance(skill, helper.getLevel(), instance, player);
+        for (int step = 0; step < 15; step++) ApexArts.advance(skill, helper.getLevel(), instance, player);
         helper.assertTrue(target.getHealth() < before, "Travelling wave missed its distant target");
         helper.assertTrue(instance.getOrCreateTag().getList("travel_hits", net.minecraft.nbt.Tag.TAG_STRING).size() == 1, "Wave hit its target more than once");
         helper.assertTrue(target.getDeltaMovement().x > 0, "Tidal wave did not carry its target forward");
@@ -543,7 +543,7 @@ public final class IntegrationGameTests {
             ApexArts.thunderStep(skill,helper.getLevel(),SkillAPI.getSkillsFrom(caster).getSkill(skill).orElseThrow(),caster);
             helper.assertTrue(Math.abs(caster.position().distanceTo(start)-(ultimate?24:16))<0.01,"Extended teleport range incorrect");
             helper.assertTrue(caster.getDeltaMovement().distanceToSqr(motion)<0.000001,"Teleport changed momentum");
-            helper.assertTrue(skill.balance.cooldown(1,ultimate)==(ultimate?4:5),"Teleport cooldown was not reduced"); caster.discard();
+            helper.assertTrue(skill.balance.cooldown(1,ultimate)==(ultimate?3:4),"Teleport cooldown was not reduced"); caster.discard();
         }
         helper.succeed();
     }

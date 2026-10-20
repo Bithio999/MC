@@ -18,7 +18,7 @@ public final class MythicSkill extends Skill {
     @Override public MutableComponent getName(){return Component.translatableWithFallback("wildhunt.skill."+kind.id(),kind.title);}
     @Override public MutableComponent getColoredName(){return kind.godly()?getName().withColor(0xE8C56F):getName().withStyle(getType().getChatFormatting());}
     @Override public ResourceLocation getSkillIcon(){return WildHunt.id("textures/skill/"+kind.id()+".png");}
-    @Override public MutableComponent getSkillDescription(){return Component.literal(kind.description());}
+    @Override public MutableComponent getSkillDescription(){return Component.literal(kind.description()+(kind==MythicKind.RUNE_SMITH || kind==MythicKind.MIRRORBOUND || kind==MythicKind.VRITRA || kind==MythicKind.JANUS?" Only the strongest ordinary elemental bonus applies; Godly bonuses apply separately.":""));}
     @Override public int getMaxMastery(){return kind.godly()?50000:kind.unique()?1000:10000;}
     @Override public int getModes(ManasSkillInstance i){return kind.modes.length;}
     @Override public String getModeId(ManasSkillInstance i,int mode){return kind.id()+".mode_"+mode;}
@@ -48,24 +48,25 @@ public final class MythicSkill extends Skill {
     private void modify(LivingEntity e,Holder<Attribute> holder,double amount,boolean multiply){
         var a=e.getAttribute(holder);if(a!=null)a.addOrUpdateTransientModifier(new AttributeModifier(modifier(),amount,multiply?AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL:AttributeModifier.Operation.ADD_VALUE));
     }
-    public double barrier(){return switch(kind){case DEMETER->500;case JANUS->300;case THOTH->1000;default->0;};}
+    void clearLegacyDefense(LivingEntity e){
+        for(var h:java.util.List.of(TensuraAttributes.PHYSICAL_BARRIER,TensuraAttributes.MAGIC_BARRIER,TensuraAttributes.MULTILAYER_BARRIER)){var a=e.getAttribute(h);if(a!=null)a.removeModifier(modifier());}
+    }
     private void restore(ManasSkillInstance i,LivingEntity e){
+        clearLegacyDefense(e);
         switch(kind){
             case THREADWEAVER->{modify(e,Attributes.MOVEMENT_SPEED,.25,true);modify(e,Attributes.ATTACK_SPEED,.2,true);}
             case RUNE_SMITH->{modify(e,TensuraAttributes.EARTH_BOOST,.3,true);modify(e,TensuraAttributes.FLAME_BOOST,.3,true);modify(e,TensuraAttributes.LIGHTNING_BOOST,.3,true);}
             case VERDANT_KEEPER->modify(e,TensuraAttributes.SPIRITUAL_HEALTH_REGENERATION,.5,true);
-            case MIRRORBOUND->{modify(e,TensuraAttributes.MAGIC_BARRIER,18,false);modify(e,Attributes.MOVEMENT_SPEED,.1,true);}
+            case MIRRORBOUND->{modify(e,TensuraAttributes.LIGHT_BOOST,.5,true);modify(e,Attributes.ATTACK_SPEED,.25,true);modify(e,Attributes.MOVEMENT_SPEED,.15,true);}
             case VRITRA->{modify(e,TensuraAttributes.FLAME_BOOST,.5,true);modify(e,TensuraAttributes.LIGHTNING_BOOST,.5,true);modify(e,Attributes.ATTACK_DAMAGE,.25,true);}
-            case DEMETER->{modify(e,TensuraAttributes.PHYSICAL_BARRIER,40,false);modify(e,TensuraAttributes.MAGIC_BARRIER,40,false);modify(e,TensuraAttributes.SPIRITUAL_HEALTH_REGENERATION,1,true);}
-            case JANUS->{modify(e,Attributes.MOVEMENT_SPEED,.35,true);modify(e,Attributes.KNOCKBACK_RESISTANCE,.5,false);modify(e,TensuraAttributes.MAGIC_BARRIER,30,false);}
+            case DEMETER->{modify(e,TensuraAttributes.SPIRITUAL_HEALTH_REGENERATION,1.5,true);modify(e,Attributes.KNOCKBACK_RESISTANCE,.6,false);}
+            case JANUS->{modify(e,Attributes.MOVEMENT_SPEED,.35,true);modify(e,Attributes.KNOCKBACK_RESISTANCE,.5,false);modify(e,TensuraAttributes.SPACE_BOOST,.6,true);modify(e,Attributes.ATTACK_SPEED,.3,true);}
             case THOTH->{
                 for(var a:java.util.List.of(TensuraAttributes.FLAME_BOOST,TensuraAttributes.WATER_BOOST,TensuraAttributes.LIGHTNING_BOOST,TensuraAttributes.EARTH_BOOST,TensuraAttributes.WIND_BOOST,TensuraAttributes.LIGHT_BOOST,TensuraAttributes.SPACE_BOOST))modify(e,a,.75,true);
-                modify(e,TensuraAttributes.CHANT_SPEED,.5,true);modify(e,TensuraAttributes.MAGIC_COST_MULTIPLIER,-.25,true);modify(e,TensuraAttributes.MAGIC_BARRIER,70,false);
+                modify(e,TensuraAttributes.CHANT_SPEED,.75,true);modify(e,TensuraAttributes.MAGIC_COST_MULTIPLIER,-.25,true);
             }
         }
-        var b=e.getAttribute(TensuraAttributes.MULTILAYER_BARRIER);
-        if(barrier()>0 && b!=null && b.getModifier(modifier())==null && e.level().getGameTime()>=i.getOrCreateTag().getLong("barrier_ready"))
-            b.addOrReplacePermanentModifier(new AttributeModifier(modifier(),barrier(),AttributeModifier.Operation.ADD_VALUE));
+
     }
     @Override public void onToggleOff(ManasSkillInstance i,LivingEntity e){
         i.setToggled(false);

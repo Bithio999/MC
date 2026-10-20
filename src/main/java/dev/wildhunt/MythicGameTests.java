@@ -139,10 +139,10 @@ public final class MythicGameTests {
         var p=player(h);var i=learn(p,MythicKind.THOTH);double aura=TensuraStorages.getExistenceFrom(p).getAura(),mp=TensuraStorages.getExistenceFrom(p).getMagicule();cast(p,i,0);var bursts=i.getOrCreateTag().getList("bursts",Tag.TAG_COMPOUND);h.assertTrue(bursts.size()==3 && bursts.getCompound(0).getString("type").equals("fire") && bursts.getCompound(1).getString("type").equals("ice") && bursts.getCompound(2).getString("type").equals("lightning"),"Lexicon chapters lost distinct native damage types");h.assertTrue(TensuraStorages.getExistenceFrom(p).getAura()==aura && TensuraStorages.getExistenceFrom(p).getMagicule()==mp-5000,"Thoth charged wrong energy");h.succeed();
     }
     @GameTest(template="empty",timeoutTicks=100)
-    public static void newTogglesOwnModifiersAndRegenerateBarriersOnlyAfterQuiet(GameTestHelper h){
+    public static void newTogglesOwnModifiersWithoutCreatingPassiveBarriers(GameTestHelper h){
         var p=player(h);for(var k:MythicKind.values()){
             var i=learn(p,k);var s=(MythicSkill)i.getSkill();s.onToggleOn(i,p);h.assertTrue(i.isToggled(),"Toggle failed: "+k);var id=WildHunt.id(k.id()+"_passive");var barrier=p.getAttribute(TensuraAttributes.MULTILAYER_BARRIER);
-            if(s.barrier()>0){h.assertTrue(barrier.getModifier(id)!=null,"HUD barrier missing: "+k);barrier.removeModifier(id);i.getOrCreateTag().putLong("barrier_ready",h.getLevel().getGameTime()+200);i.getOrCreateTag().putLong("upkeep",0);tick(p,i);h.assertTrue(barrier.getModifier(id)==null,"Upkeep instantly repaired a broken barrier");i.getOrCreateTag().putLong("barrier_ready",0);i.getOrCreateTag().putLong("upkeep",0);tick(p,i);h.assertTrue(barrier.getModifier(id)!=null,"Quiet recovery did not restore barrier");}
+            h.assertTrue(barrier.getModifier(id)==null,"Unrelated kit gained a passive barrier: "+k);
             s.onToggleOff(i,p);h.assertTrue(!i.isToggled() && barrier.getModifier(id)==null,"Toggle left owned barrier behind");
         }h.succeed();
     }
@@ -198,6 +198,61 @@ public final class MythicGameTests {
             h.assertTrue(pending.size()==21,"Full Vritra combo dropped promised fire fuses: "+pending.size());
             h.assertTrue(pending.stream().filter(v->((CompoundTag)v).getInt("mode")==2).count()==7,"A visual Cataclysm warning was left without its damage event");h.succeed();
         });
+    }
+
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void ordinaryElementalSourcesUseStrongestWhileGodlyAndPenaltiesRemain(GameTestHelper h){
+        var p=player(h);var a=p.getAttribute(TensuraAttributes.LIGHTNING_BOOST);a.setBaseValue(1);
+        var op=AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL;
+        var small=WildHunt.id("stack_small");var large=WildHunt.id("stack_large");var other=net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("test_native","domination");
+        a.addOrUpdateTransientModifier(new AttributeModifier(small,.3,op));a.addOrUpdateTransientModifier(new AttributeModifier(large,.5,op));a.addOrUpdateTransientModifier(new AttributeModifier(other,1,op));
+        h.assertTrue(Math.abs(a.getValue()-2)<.0001,"Ordinary sources multiplied: "+a.getValue());
+        a.addOrUpdateTransientModifier(new AttributeModifier(WildHunt.id("thoth_passive"),.75,op));
+        h.assertTrue(Math.abs(a.getValue()-3.5)<.0001,"Godly bonus was limited with ordinary sources");
+        a.addOrUpdateTransientModifier(new AttributeModifier(WildHunt.id("element_penalty"),-.2,op));
+        h.assertTrue(Math.abs(a.getValue()-2.8)<.0001,"Elemental penalty was discarded");a.removeModifier(other);
+        h.assertTrue(Math.abs(a.getValue()-2.1)<.0001,"Removing strongest source did not reveal next strongest");
+        var attack=new AttributeInstance(Attributes.ATTACK_DAMAGE,a0->{});attack.setBaseValue(10);attack.addOrUpdateTransientModifier(new AttributeModifier(small,.5,op));attack.addOrUpdateTransientModifier(new AttributeModifier(large,.5,op));h.assertTrue(attack.getValue()==22.5,"Element policy changed non-elemental attributes");h.succeed();
+    }
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void elementalPolicyComparesMixedOperationsAndPreservesInnateBase(GameTestHelper h){
+        var p=player(h);var a=p.getAttribute(TensuraAttributes.FLAME_BOOST);a.setBaseValue(1);
+        a.addOrUpdateTransientModifier(new AttributeModifier(WildHunt.id("flat_element"),1.4,AttributeModifier.Operation.ADD_VALUE));
+        a.addOrUpdateTransientModifier(new AttributeModifier(WildHunt.id("base_element"),.8,AttributeModifier.Operation.ADD_MULTIPLIED_BASE));
+        a.addOrUpdateTransientModifier(new AttributeModifier(WildHunt.id("total_element"),1,AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
+        h.assertTrue(Math.abs(a.getValue()-2.4)<.0001,"Mixed operations stacked or chose wrong source: "+a.getValue());
+        a.setBaseValue(3);h.assertTrue(Math.abs(a.getValue()-6)<.0001,"Innate elemental base was capped");h.succeed();
+    }
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void revisedPassivesClearSavedLegacyShieldsWithoutRemovingForeignDefense(GameTestHelper h){
+        var p=player(h);var foreign=WildHunt.id("unrelated_saved_shield");
+        for(var kind:List.of(MythicKind.MIRRORBOUND,MythicKind.DEMETER,MythicKind.JANUS,MythicKind.THOTH)){
+            var i=learn(p,kind);var s=(MythicSkill)i.getSkill();var id=WildHunt.id(kind.id()+"_passive");
+            for(var holder:List.of(TensuraAttributes.PHYSICAL_BARRIER,TensuraAttributes.MAGIC_BARRIER,TensuraAttributes.MULTILAYER_BARRIER)){
+                var a=p.getAttribute(holder);a.addOrReplacePermanentModifier(new AttributeModifier(foreign,27,AttributeModifier.Operation.ADD_VALUE));a.addOrReplacePermanentModifier(new AttributeModifier(id,500,AttributeModifier.Operation.ADD_VALUE));
+            }
+            s.onToggleOn(i,p);
+            for(var holder:List.of(TensuraAttributes.PHYSICAL_BARRIER,TensuraAttributes.MAGIC_BARRIER,TensuraAttributes.MULTILAYER_BARRIER))h.assertTrue(p.getAttribute(holder).getModifier(id)==null && p.getAttribute(holder).getModifier(foreign)!=null,"Saved passive shield survived or foreign defense removed: "+kind);
+            s.onToggleOff(i,p);
+        }h.succeed();
+    }
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void revisedDamageBeatsPreviousUniqueAndUltimateBaselinesInNativeCombat(GameTestHelper h){
+        var p=player(h);var z=target(h,p.position().add(8,0,0));var unique=learn(p,MythicKind.THREADWEAVER);var ultimate=learn(p,MythicKind.VRITRA);
+        afterTracking(h,List.of(z),()->{
+            var us=(MythicSkill)unique.getSkill();var ult=(MythicSkill)ultimate.getSkill();
+            MythicArts.hit(us,unique,p,z,90,0,io.github.manasmods.tensura.damage.TensuraDamageTypes.SPACE_ELEMENTAL);float old=1024-z.getHealth();z.setHealth(1024);z.invulnerableTime=0;
+            cast(p,unique,0);float improved=1024-z.getHealth();h.assertTrue(old>0 && improved>=old*1.7,"Unique damage failed to improve against native defenses");
+            z.setHealth(1024);z.invulnerableTime=0;MythicArts.hit(ult,ultimate,p,z,330,0,io.github.manasmods.tensura.damage.TensuraDamageTypes.LIGHTNING_ELEMENTAL);float previous=1024-z.getHealth();z.setHealth(1024);z.invulnerableTime=0;cast(p,ultimate,0);
+            h.assertTrue(previous>0 && 1024-z.getHealth()>=previous*1.9,"Ultimate damage failed to improve against native defenses");h.succeed();
+        });
+    }
+
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void crystalBulwarkKeepsDefenseAsAnActiveTeamSpecialty(GameTestHelper h){
+        var p=player(h);var i=learn(p,MythicKind.DEMETER);cast(p,i,1);var id=WildHunt.id("crystal_bulwark/"+p.getUUID());
+        h.assertTrue(p.getAttribute(TensuraAttributes.MULTILAYER_BARRIER).getModifier(id).amount()==500 && p.getAttribute(TensuraAttributes.PHYSICAL_BARRIER).getModifier(id).amount()==50 && p.getAttribute(TensuraAttributes.MAGIC_BARRIER).getModifier(id).amount()==50,"Dedicated Bulwark did not receive stronger native protection");
+        var lease=HunterData.of(p).getList("crystal_wards",Tag.TAG_COMPOUND).getCompound(0);h.assertTrue(lease.getLong("until")==h.getLevel().getGameTime()+160,"Bulwark duration is not eight seconds");h.succeed();
     }
 
 }

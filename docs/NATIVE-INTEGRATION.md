@@ -195,3 +195,23 @@ Consuming a Horizon discards its owned geometry and circle immediately. Its pull
 Worldline Sever uses native ManasCore press/held/release callbacks. A server-owned six-second window, aim ray, half-second pulse schedule and paid magicule costs prevent continuing damage after release or exhaustion. Cooldown starts when the channel ends. Its visual entity updates position/end vector over native entity synchronization; relog, death, suppression and dimension change stop it. Legacy echo victims are discarded.
 
 Aion costs magicules throughout, including passive upkeep and channel pulses. The native pre-calculation event adds a single 35% outgoing bonus against targets without a Godly-tagged skill. Scoped hooks in `ResistSkill.isResistanceBypass` / `isNullificationBypass` and `DamagingHandler.applyResistanceAttributes` remove resistance protection only for an active Aion caster's attacks. They never remove, retoggle or alter learned defenses or their mastery. Armor, barriers, other authority/skill checks and PvP rules remain native. A short-lived, non-stacking transient movement modifier slows eligible enemies in a 16-block aura by proximity; its ten-tick lease expires after leaving or toggle-off.
+
+## Elemental attributes and Thoth rendering (0.14.0)
+
+`ElementalBonusesMixin` intercepts the cached `AttributeInstance.calculateValue`
+only for the eleven registered native boost attributes. It compares each positive
+ordinary modifier independently using Minecraft's flat, multiplied-base and
+multiplied-total order, retaining the most effective one. All non-positive
+modifiers and `wildhunt:thoth_passive` remain in every candidate calculation.
+The native attribute sanitizer still applies. Modifiers are never deleted, so
+removal/expiry, client/server recalculation and the next-strongest source work
+through native attribute dirtiness. Armor, resistance, healing, costs and attack
+speed do not enter this hook.
+
+Thoth's dedicated renderer uses full-bright standard entity and additive-eye
+passes, original transparent seals, page panels and premultiplied soft glows.
+Additive RGB is faded with alpha to avoid opaque white glow rectangles. All mesh
+counts are bounded and animated with partial ticks; no shader pack or extra
+particle entities are needed. Moving art entities implement packet interpolation;
+the client book formation follows the caster's interpolated position. Damage,
+chapter timing, target caps and resource costs remain server-owned.
