@@ -12,7 +12,7 @@
 | Type | Godly Skill / native Ultimate |
 | Combat role | Elemental sequences, disruption, conversion and autonomous spell fire |
 | Active modes | 4 |
-| Resource | Magicules |
+| Resource | Magicules; Mana Crucible converts aura |
 | Toggleable passive | Arcane Sovereignty |
 | Passive upkeep | 180 magicules / second |
 | Registry ID | `wildhunt:thoth` |
@@ -43,7 +43,7 @@ Enable the native skill toggle in Ability Selection. The first second is paid on
 | --- | ---: | ---: | --- |
 | 1. Lexicon of Ruin | 5,000 | 12 s | 500 fire / 400 ice / 600 lightning |
 | 2. Spellbreak | 4,000 | 15 s | 180 |
-| 3. Mana Crucible | 1,000 | 20 s | — |
+| 3. Mana Crucible | 0; converts aura while held | None | — |
 | 4. Astral Library | 9,000 | 35 s | 240 per bolt |
 
 Damage listed here is before native combat handling and uses **1 + 0.5 × mastery fraction**, capped at **1.5×**. These new kits do not use the apex skills’ 0.90 multiplier or the former 3× Ultimate multiplier. EP never multiplies their damage. Native elemental boosts, authority, resistances, barriers and hit immunity apply.
@@ -78,17 +78,23 @@ Place a twelve-block-radius disruption field within 36 blocks, affecting up to s
 
 #### Mana Crucible
 
-[Active - Press] — **Mana Crucible**
+[Active - Hold] — **Mana Crucible**
 
 | Ability information | Value |
 | --- | --- |
 | Damage type | None |
 | Damage ID | — |
-| Resource cost | 1,000 magicules |
-| Cooldown | 20 seconds |
+| Resource cost | 2 aura per 1 magicule restored; no activation cost |
+| Cooldown | None |
+| Conversion speed | 5% of maximum magicules per second |
+| Duration / total conversion limit | None; hold to continue |
 | Raw damage | — |
 
-After paying its 1,000-magicule cast cost, convert two current aura into one missing magicule, up to 20,000 magicules. The transfer is limited by current aura and missing magicule capacity. It never increases maximum resources or refunds the cast payment. Requires at least two aura and more than 1,000 missing magicules before casting.
+Hold the assigned skill key to continuously convert **2 current aura into 1 magicule**. Restore **5% of maximum magicules per second**, transferred smoothly each server tick. An empty magicule pool takes twenty seconds to fill if you have enough aura. There is **no activation cost, cooldown, duration limit or total conversion cap**. It has no upfront magicule requirement; native activation restrictions, including exhaustion sleep, still apply.
+
+Release to stop immediately. The channel also ends when aura runs out, magicules reach their normal maximum, native suppression interrupts it, or you die, change dimension, log out or forget Thoth. It follows you while held and can restart immediately after ending. Only the aura actually converted is spent, including a fractional final transfer; maximum resources never change. Arcane Sovereignty’s separate upkeep still applies when that passive is enabled.
+
+Repeated taps do not grant mastery. Sustained conversion earns mastery once per second of successful channel ticks.
 
 #### Astral Library
 

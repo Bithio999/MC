@@ -30,8 +30,16 @@ public final class MythicSkill extends Skill {
     private double cost(int mode){return mode>=0 && mode<kind.costs.length?kind.costs[mode]:0;}
     @Override public boolean canBeToggled(ManasSkillInstance i,LivingEntity e){return true;}
     @Override public boolean canTick(ManasSkillInstance i,LivingEntity e){return false;}
+    private boolean crucible(int mode){return kind==MythicKind.THOTH && mode==2;}
+    @Override public boolean canIgnoreCoolDown(ManasSkillInstance i,LivingEntity e,int mode){return crucible(mode) || super.canIgnoreCoolDown(i,e,mode);}
+    // ManasCore's explicit -1 sentinel is unlimited, with no artificial hold duration.
+    @Override public int getMaxHeldTime(ManasSkillInstance i,LivingEntity e){return kind==MythicKind.THOTH?-1:super.getMaxHeldTime(i,e);}
+    @Override public boolean shouldTriggerReleaseOnHeldInterrupt(ManasSkillInstance i,LivingEntity e,int key,int mode){return crucible(mode);}
+    @Override public boolean onHeld(ManasSkillInstance i,LivingEntity e,int heldTicks,int mode){return crucible(mode) && ManaCrucible.held(this,i,e);}
+    @Override public void onRelease(ManasSkillInstance i,LivingEntity e,int ticks,int key,int mode){if(crucible(mode))ManaCrucible.stop(i,e);}
     @Override public void onPressed(ManasSkillInstance i,LivingEntity e,int slot,int mode){
-        if(!(e.level() instanceof ServerLevel level) || mode<0 || mode>=kind.modes.length || i.onCoolDown(mode) || !canInteractSkill(i,e) || !canActivateSkill(i,e,mode))return;
+        if(!(e.level() instanceof ServerLevel level) || mode<0 || mode>=kind.modes.length || !crucible(mode) && i.onCoolDown(mode) || !canInteractSkill(i,e) || !canActivateSkill(i,e,mode))return;
+        if(crucible(mode)){ManaCrucible.begin(i,e);return;}
         // Failed targeting and blocked gates are free, with no cooldown or mastery award.
         if(!MythicArts.canCast(this,level,i,e,mode) || EnergyHelper.isOutOfEnergy(e,i,mode))return;
         MythicArts.cast(this,level,i,e,mode);i.setCoolDown(kind.cooldowns[mode],mode);addMasteryPoint(i,e);
@@ -85,7 +93,9 @@ public final class MythicSkill extends Skill {
             if(!canActivateSkill(i,e,0) || payUpkeep(e))onToggleOff(i,e);
             else {restore(i,e);tag.putLong("upkeep",now+20);i.markDirty();}
         }
-        boolean active=MythicArts.tick(this,level,i,e)|i.isToggled();if(active)i.markDirty();return active;
+        boolean active=MythicArts.tick(this,level,i,e)|i.isToggled();
+        if(kind==MythicKind.THOTH)active|=ManaCrucible.tick(this,i,e);
+        if(active)i.markDirty();return active;
     }
     @Override public void onForgetSkill(ManasSkillInstance i,LivingEntity e){onToggleOff(i,e);MythicArts.clear(i,e);super.onForgetSkill(i,e);}
 }

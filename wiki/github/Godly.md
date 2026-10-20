@@ -20,7 +20,7 @@ Godly skills appear in their own category instead of being duplicated in the ord
 
 Master one of the addon’s [three combination Ultimates](https://github.com/Bithio999/MC/wiki/Ultimate-Skills), become a True Hero or True Demon Lord and reach **12,000,000 base EP**. Open **Skills → Godly → Ascension**, select your mastered Ultimate and choose **Aion** or **Thoth** with the destination button. Thoth additionally requires a mastered [Rune Smith](https://github.com/Bithio999/MC/wiki/Rune-Smith), which is combined into the result.
 
-The chosen Ultimate is replaced; Thoth also replaces Rune Smith. All nine presets retain references to the evolved skill; its longest remaining cooldown carries to all four new modes. Godly ascension is separate from Duo Races and does not require a fusion. It is not a reincarnation roll, does not consume EP and grants no free magicule or aura pool.
+The chosen Ultimate is replaced; Thoth also replaces Rune Smith. All nine presets retain references to the evolved skill; its longest remaining cooldown carries to the new modes, except Thoth’s cooldown-free Mana Crucible. Godly ascension is separate from Duo Races and does not require a fusion. It is not a reincarnation roll, does not consume EP and grants no free magicule or aura pool.
 
 ## Controls
 

@@ -35,7 +35,7 @@ public final class MythicArts {
             case THREADWEAVER -> mode==0?ApexArts.target(l,e,28)!=null:t.hasUUID("tether_target") && live(t,"tether",time) && l.getEntity(t.getUUID("tether_target")) instanceof LivingEntity target && HunterData.canHarm(e,target) && e.distanceToSqr(target)<=40*40 && e.hasLineOfSight(target);
             case RUNE_SMITH -> mode==0 || live(t,"mine",time) && e.distanceToSqr(ApexArts.point(t,"mine"))<=48*48;
             case JANUS -> mode!=0 || (!live(t,"gates",time)?safeCursor(l,e,36).distanceToSqr(e.position())>=4:Math.min(e.distanceToSqr(ApexArts.point(t,"gate_a")),e.distanceToSqr(ApexArts.point(t,"gate_b")))<=16 && safe(l,e,gateDestination(t,e)));
-            case THOTH -> mode!=2 || EnergyHelper.getMaxMagicule(e)-TensuraStorages.getExistenceFrom(e).getMagicule()>s.kind.costs[mode] && TensuraStorages.getExistenceFrom(e).getAura()>=2;
+            case THOTH -> mode!=2 || ManaCrucible.canConvert(e);
             default -> true;
         };
     }
@@ -140,9 +140,7 @@ public final class MythicArts {
                     }
                     var own=TensuraStorages.getExistenceFrom(e);own.setMagicule(Math.min(EnergyHelper.getMaxMagicule(e),own.getMagicule()+Math.min(2000,recovered)));own.markDirty();
                 }else if(mode==2){
-                    var energy=TensuraStorages.getExistenceFrom(e);double transfer=Math.min(20000,Math.min(Math.max(0,energy.getAura())*.5,Math.max(0,EnergyHelper.getMaxMagicule(e)-energy.getMagicule())));
-                    energy.setAura(energy.getAura()-transfer*2);energy.setMagicule(energy.getMagicule()+transfer);energy.markDirty();
-                    ArtVisualEntity.spawn(l,ArtVisualEntity.MANA_CRUCIBLE,e.position(),new Vec3(3,0,0),40);
+                    ManaCrucible.begin(i,e);
                 }else {t.putLong("library_until",time+200);t.putLong("library_next",time+10);visual(l,t,"library_visual",ArtVisualEntity.ASTRAL_LIBRARY,e.position().add(0,2.5,0),new Vec3(3.5,0,0),200);if(l.getEntity(t.getUUID("library_visual")) instanceof ArtVisualEntity v)v.setCaster(e);}
             }
         }
@@ -228,7 +226,7 @@ public final class MythicArts {
         }
     }
     private static void moveVisual(ServerLevel l,CompoundTag t,String key,Vec3 p,Vec3 data){if(t.hasUUID(key) && l.getEntity(t.getUUID(key)) instanceof ArtVisualEntity visual)visual.updateVector(p,data);}
-    static void clear(ManasSkillInstance i,LivingEntity e){var t=i.getOrCreateTag();if(e.level() instanceof ServerLevel l)for(String key:VISUALS)endVisual(l,t,key);for(String key:List.of("tether","mine","grove","aegis","thunder","orchard","gates","library"))t.remove(key+"_until");t.remove("bursts");t.remove("tether_target");i.markDirty();}
+    static void clear(ManasSkillInstance i,LivingEntity e){if(i.getSkill() instanceof MythicSkill s && s.kind==MythicKind.THOTH)ManaCrucible.stop(i,e);var t=i.getOrCreateTag();if(e.level() instanceof ServerLevel l)for(String key:VISUALS)endVisual(l,t,key);for(String key:List.of("tether","mine","grove","aegis","thunder","orchard","gates","library"))t.remove(key+"_until");t.remove("bursts");t.remove("tether_target");i.markDirty();}
     private static ResourceLocation wardId(UUID owner){return WildHunt.id("crystal_bulwark/"+owner);}
     static void lendBarrier(ServerLevel l,LivingEntity owner,LivingEntity ally,double shield,double strength,int ticks){
         var id=wardId(owner.getUUID());for(var h:List.of(TensuraAttributes.PHYSICAL_BARRIER,TensuraAttributes.MAGIC_BARRIER,TensuraAttributes.MULTILAYER_BARRIER)){

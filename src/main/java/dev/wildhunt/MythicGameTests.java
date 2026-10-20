@@ -128,11 +128,63 @@ public final class MythicGameTests {
     @GameTest(template="empty",timeoutTicks=100)
     public static void thothAscensionRequiresRuneSmithAndRetainsNativeUltimateCompatibility(GameTestHelper h){
         var p=player(h);var i=learn(p,MythicKind.JANUS);i.setMastery(i.getMaxMastery());String source=i.getSkillId().toString();MythsProgression.ascend(p,source,"thoth");h.assertTrue(SkillAPI.getSkillsFrom(p).getSkill(WildHunt.MYTHIC.get(MythicKind.THOTH).get()).isEmpty(),"Thoth did not require Rune Smith");var rune=learn(p,MythicKind.RUNE_SMITH);rune.setMastery(rune.getMaxMastery());rune.setCoolDown(18,1);MythsProgression.ascend(p,source,"thoth");var result=SkillAPI.getSkillsFrom(p).getSkill(WildHunt.MYTHIC.get(MythicKind.THOTH).get()).orElseThrow();
-        h.assertTrue(result.is(MythsTiers.GODLY) && result.is(io.github.manasmods.tensura.data.TensuraSkillTags.ULTIMATE_SKILLS) && result.getCoolDown(0)==18,"Godly classification or source cooldown lost");h.assertTrue(SkillAPI.getSkillsFrom(p).getSkill(rune.getSkill()).isEmpty() && SkillAPI.getSkillsFrom(p).getSkill(i.getSkill()).isEmpty(),"Thoth duplicated its ingredients");h.succeed();
+        h.assertTrue(result.is(MythsTiers.GODLY) && result.is(io.github.manasmods.tensura.data.TensuraSkillTags.ULTIMATE_SKILLS) && result.getCoolDown(0)==18 && result.getCoolDown(2)==0,"Godly classification or source cooldown lost");h.assertTrue(SkillAPI.getSkillsFrom(p).getSkill(rune.getSkill()).isEmpty() && SkillAPI.getSkillsFrom(p).getSkill(i.getSkill()).isEmpty(),"Thoth duplicated its ingredients");h.succeed();
     }
     @GameTest(template="empty",timeoutTicks=100)
-    public static void manaCrucibleConvertsTwoAuraPerMagiculeAndCannotExceedTheCap(GameTestHelper h){
-        var p=player(h);var i=learn(p,MythicKind.THOTH);var energy=TensuraStorages.getExistenceFrom(p);energy.setAura(10000);energy.setMagicule(EnergyHelper.getMaxMagicule(p)-3000);double before=energy.getMagicule();cast(p,i,2);h.assertTrue(energy.getAura()==2000 && energy.getMagicule()==EnergyHelper.getMaxMagicule(p) && energy.getMagicule()-before==3000,"Crucible refunded its cast, created energy or exceeded capacity");h.assertTrue(i.getCoolDown(2)==20,"Crucible cooldown missing");h.succeed();
+    public static void manaCrucibleUsesNativeHoldHasNoCooldownAndExceedsTheOldTotalCap(GameTestHelper h){
+        var p=player(h);var i=learn(p,MythicKind.THOTH);var s=(MythicSkill)i.getSkill();var storage=SkillAPI.getSkillsFrom(p);var energy=TensuraStorages.getExistenceFrom(p);
+        energy.setAura(1_000_000);energy.setMagicule(0);i.setCoolDown(20,2);
+        var abilities=TensuraStorages.getAbilityFrom(p);abilities.setAbilitySlot(abilities.getActivePreset(),0,s,2);
+        h.assertTrue(storage.startHoldSkill(i,0,2),"Native hold rejected the channel or an old saved cooldown");
+        h.assertTrue(i.getCoolDown(2)==0 && s.getMaxHeldTime(i,p)==-1 && s.getMagiculeCost(p,i,2)==0 && energy.getMagicule()==0 && energy.getAura()==1_000_000,"Starting charged resources, transferred immediately or retained a limit");
+        var held=storage.getHeldSkills().getFirst();UUID visual=i.getOrCreateTag().getUUID("crucible_visual");double perTick=EnergyHelper.getMaxMagicule(p)*.05/20;
+        h.runAfterDelay(1,()->{
+            h.assertTrue(held.tick(storage,p),"Native held callback did not continue");double mp=energy.getMagicule(),aura=energy.getAura();
+            h.assertTrue(Math.abs(mp-perTick)<.001 && Math.abs(1_000_000-aura-mp*2)<.001,"Channel rate or conserved ratio is wrong");held.tick(storage,p);
+            h.assertTrue(energy.getMagicule()==mp && energy.getAura()==aura,"Duplicate callback converted twice in one tick");
+        });
+        h.runAfterDelay(2,()->{
+            held.tick(storage,p);h.assertTrue(energy.getMagicule()>20_000 && Math.abs(energy.getMagicule()-perTick*2)<.001,"The old per-cast limit remains");
+            p.setPos(p.position().add(1,0,0));tick(p,i);h.assertTrue(((ArtVisualEntity)h.getLevel().getEntity(visual)).position().distanceTo(p.position())<.001,"Held effect failed to follow its owner");
+            double mp=energy.getMagicule();storage.handleSkillRelease(i,0,2,false);
+            h.assertTrue(!i.getOrCreateTag().getBoolean("crucible_active") && h.getLevel().getEntity(visual)==null && i.getCoolDown(2)==0 && !s.onHeld(i,p,3,2) && energy.getMagicule()==mp,"Releasing left conversion, visual or cooldown active");h.succeed();
+        });
+    }
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void manaCrucibleStopsAtRealCapacityAndCanRestartImmediately(GameTestHelper h){
+        var p=player(h);var i=learn(p,MythicKind.THOTH);var s=(MythicSkill)i.getSkill();var energy=TensuraStorages.getExistenceFrom(p);double max=EnergyHelper.getMaxMagicule(p);
+        energy.setAura(10000);energy.setMagicule(max-3000);cast(p,i,2);
+        h.runAfterDelay(1,()->{
+            h.assertTrue(!s.onHeld(i,p,1,2) && energy.getMagicule()==max && energy.getAura()==4000 && i.getCoolDown(2)==0,"Full pool overfilled, spent excess aura or gained a cooldown");
+            energy.setMagicule(max-1000);cast(p,i,2);h.assertTrue(i.getOrCreateTag().getBoolean("crucible_active") && energy.getMagicule()==max-1000,"Channel could not restart freely");
+        });
+        h.runAfterDelay(2,()->{s.onHeld(i,p,1,2);h.assertTrue(energy.getMagicule()==max && energy.getAura()==2000,"Restart charged activation magicules or wasted aura");h.succeed();});
+    }
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void manaCrucibleConsumesOnlyAvailableFractionalAuraAndRejectsInvalidStarts(GameTestHelper h){
+        var p=player(h);var i=learn(p,MythicKind.THOTH);var s=(MythicSkill)i.getSkill();var energy=TensuraStorages.getExistenceFrom(p);
+        energy.setAura(0);energy.setMagicule(0);cast(p,i,2);h.assertTrue(!i.getOrCreateTag().getBoolean("crucible_active"),"Empty aura started channel");
+        energy.setAura(1000);energy.setMagicule(EnergyHelper.getMaxMagicule(p));cast(p,i,2);h.assertTrue(!i.getOrCreateTag().getBoolean("crucible_active") && energy.getAura()==1000,"Full magicules started conversion");
+        energy.setAura(1);energy.setMagicule(0);cast(p,i,2);
+        h.runAfterDelay(1,()->{h.assertTrue(!s.onHeld(i,p,1,2) && energy.getAura()==0 && energy.getMagicule()==.5 && i.getCoolDown(2)==0,"Last fractional aura was lost, minted or overdrafted");h.succeed();});
+    }
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void manaCrucibleWatchdogAndLifecycleCancelWithoutBackgroundConversion(GameTestHelper h){
+        var p=player(h);var i=learn(p,MythicKind.THOTH);var s=(MythicSkill)i.getSkill();var energy=TensuraStorages.getExistenceFrom(p);energy.setAura(100000);energy.setMagicule(0);cast(p,i,2);UUID first=i.getOrCreateTag().getUUID("crucible_visual");
+        h.runAfterDelay(3,()->{
+            tick(p,i);h.assertTrue(!i.getOrCreateTag().getBoolean("crucible_active") && h.getLevel().getEntity(first)==null && energy.getMagicule()==0 && energy.getAura()==100000,"Lost release left a background drain");
+            cast(p,i,2);UUID second=i.getOrCreateTag().getUUID("crucible_visual");MythicArts.clearTransient(p);
+            h.assertTrue(!i.getOrCreateTag().getBoolean("crucible_active") && h.getLevel().getEntity(second)==null && i.getCoolDown(2)==0,"Lifecycle retained a held channel");
+            cast(p,i,2);UUID third=i.getOrCreateTag().getUUID("crucible_visual");SkillAPI.getSkillsFrom(p).forgetSkill(i);
+            h.assertTrue(!i.getOrCreateTag().getBoolean("crucible_active") && h.getLevel().getEntity(third)==null,"Forgetting left a crucible alive");h.succeed();
+        });
+    }
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void manaCrucibleOnlyAwardsMasteryForActualSustainedConversion(GameTestHelper h){
+        var p=player(h);var i=learn(p,MythicKind.THOTH);var s=(MythicSkill)i.getSkill();var energy=TensuraStorages.getExistenceFrom(p);energy.setAura(1_000_000);energy.setMagicule(0);double mastery=i.getMastery();
+        for(int n=0;n<10;n++){cast(p,i,2);s.onRelease(i,p,0,0,2);}h.assertTrue(i.getMastery()==mastery && energy.getAura()==1_000_000 && energy.getMagicule()==0,"Free tap-spam farmed mastery or resources");
+        cast(p,i,2);i.getOrCreateTag().putInt("crucible_paid_ticks",19);
+        h.runAfterDelay(1,()->{h.assertTrue(s.onHeld(i,p,1,2) && i.getMastery()>mastery,"Sustained paid conversion did not earn mastery");s.onRelease(i,p,1,0,2);h.succeed();});
     }
     @GameTest(template="empty",timeoutTicks=100)
     public static void lexiconUsesThreeElementChaptersAndOnlyMagicules(GameTestHelper h){

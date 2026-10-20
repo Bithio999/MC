@@ -215,3 +215,21 @@ counts are bounded and animated with partial ticks; no shader pack or extra
 particle entities are needed. Moving art entities implement packet interpolation;
 the client book formation follows the caster's interpolated position. Damage,
 chapter timing, target caps and resource costs remain server-owned.
+
+## Native Mana Crucible channel (0.14.1)
+
+ManasCore's `TickingSkill.reachedMaxDuration` explicitly recognizes -1 as
+unlimited. Thoth uses that sentinel and its native `onHeld` / `onRelease`
+callbacks; conversion is never performed by the generic event tick. A server
+game-time guard prevents duplicate transfers. A two-tick heartbeat watchdog
+removes abandoned channels without granting catch-up conversion.
+
+The transfer each tick is `min(maxMP × 0.05 / 20, currentAura / 2, missingMP)`.
+Actual aura storage is debited even in creative; no cast magicules are charged.
+Magic Cost Multiplier does not change the exchange ratio. Mastery is granted
+once per twenty successful conversion ticks, without a start/tap reward.
+
+`canIgnoreCoolDown` lets native activation accept an old Crucible cooldown;
+login/lifecycle cleanup clears that cooldown, and ascension excludes this one
+art from inherited cooldowns. Other Thoth modes keep their cooldown handling.
+The same single owned visual is retained and follows the caster while held.

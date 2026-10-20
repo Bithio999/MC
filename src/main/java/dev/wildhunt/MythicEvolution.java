@@ -38,7 +38,7 @@ public final class MythicEvolution {
         if(newly && !HunterData.learnReward(e,destination))return false;
         var target=storage.getSkill(destination).orElseThrow();int remaining=sources.stream().flatMap(i->i.getCooldownList().stream()).mapToInt(Integer::intValue).max().orElse(0);
         if(preserveMastery){double fraction=sources.stream().mapToDouble(i->i.getMastery()/Math.max(1,i.getMaxMastery())).max().orElse(0);target.setMastery(Math.max(target.getMastery(),fraction*target.getMaxMastery()));}
-        for(int mode=0;mode<target.getModes();mode++)target.setCoolDown(Math.max(remaining,target.getCoolDown(mode)),mode);
+        for(int mode=0;mode<target.getModes();mode++)target.setCoolDown(destination instanceof MythicSkill skill && skill.kind==MythicKind.THOTH && mode==2?0:Math.max(remaining,target.getCoolDown(mode)),mode);
         if(e instanceof ServerPlayer p){
             var abilities=TensuraStorages.getAbilityFrom(p);
             // Forgetting can clear native slots, so first record all nine presets.

@@ -10,7 +10,7 @@
 | --- | --- | --- | --- |
 | [Unique](https://github.com/Bithio999/MC/wiki/Unique-Skills) | Storm Crown, Scarlet Deluge, Black Flame, Frostbound Colossus, Threadweaver, Rune Smith, Verdant Keeper, Mirrorbound | Reincarnation rolls | Aura |
 | [Ultimate](https://github.com/Bithio999/MC/wiki/Ultimate-Skills) | Vritra, Demeter, Janus | Two specific mastered Uniques; 2M base EP; [Synthesis](https://github.com/Bithio999/MC/wiki/Skill-Synthesis) | Aura |
-| [Godly](https://github.com/Bithio999/MC/wiki/Godly) | Aion, Thoth | Mastered combination Ultimate; true awakening; 12M base EP; Thoth also combines mastered Rune Smith | Magicules |
+| [Godly](https://github.com/Bithio999/MC/wiki/Godly) | Aion, Thoth | Mastered combination Ultimate; true awakening; 12M base EP; Thoth also combines mastered Rune Smith | Magicules; Mana Crucible converts aura |
 | [Extra](https://github.com/Bithio999/MC/wiki/Aura-Regeneration) | Hunter’s Recovery, Apex Renewal, Sovereign Rebirth | Hunter race evolution | Aura |
 
 ## Using skills

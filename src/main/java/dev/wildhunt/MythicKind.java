@@ -17,7 +17,7 @@ public enum MythicKind {
     JANUS("Janus, Lord of Crossroads", 0xCAACFF, "Twin Gates", "Parallax Snare", "Crossroads Edict", "Threshold Dominion",
         new double[]{1600,2200,4500}, new int[]{3,7,18}, 70),
     THOTH("Thoth, God of Magic", 0x92E9F7, "Lexicon of Ruin", "Spellbreak", "Mana Crucible", "Astral Library", "Arcane Sovereignty",
-        new double[]{5000,4000,1000,9000}, new int[]{12,15,20,35}, 180);
+        new double[]{5000,4000,0,9000}, new int[]{12,15,0,35}, 180);
 
     public final String title, passive;
     public final String[] modes;
@@ -48,6 +48,6 @@ public enum MythicKind {
         case VRITRA -> "Storm Crown + Black Flame. Bore a lightning lance through enemies and leave delayed fire detonations. Forge a fiery thunderhead, or send a telegraphed cataclysm front forward. Catastrophe Engine strengthens lightning, flame and melee.";
         case DEMETER -> "Verdant Keeper + Frostbound Colossus. Winter Orchard restores allied HP/SHP and chills enemies. Crystal Bulwark lends native physical, magic and HUD barriers to allies. Winter Harvest consumes the orchard into six dodgeable crystal blooms. Evergreen Sanctuary strengthens natural SHP recovery and knockback resistance.";
         case JANUS -> "Threadweaver + Mirrorbound. Link two safe gates and recast to traverse them without losing momentum. Parallax Snare closes opposing spatial blades around a marked location. Crossroads Edict safely displaces enemies across the field. Threshold Dominion strengthens spatial damage, attack speed and agility.";
-        case THOTH -> "[Godly] Unleash a three-chapter fire, ice and lightning spell sequence. Spellbreak disrupts non-Godly enemies and recovers part of drained magicules. Mana Crucible converts two aura into one missing magicule. Astral Library follows you with orbiting books and autonomous spell fire. Arcane Sovereignty strengthens elemental magic, chanting, native magic efficiency. All arts cost magicules; no EP damage scaling.";
+        case THOTH -> "[Godly] Unleash a three-chapter fire, ice and lightning spell sequence. Spellbreak disrupts non-Godly enemies and recovers part of drained magicules. Hold Mana Crucible to convert two aura into one magicule at 5% of maximum magicules per second, with no cast cost, cooldown or total cap. Astral Library follows you with orbiting books and autonomous spell fire. Arcane Sovereignty strengthens elemental magic, chanting and native magic efficiency. Offensive arts cost magicules; no EP damage scaling.";
     };}
 }

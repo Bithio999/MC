@@ -10,7 +10,7 @@
 | --- | --- | --- | --- |
 | [Unique](Unique-Skills.md) | Storm Crown, Scarlet Deluge, Black Flame, Frostbound Colossus, Threadweaver, Rune Smith, Verdant Keeper, Mirrorbound | Reincarnation rolls | Aura |
 | [Ultimate](Ultimate-Skills.md) | Vritra, Demeter, Janus | Two specific mastered Uniques; 2M base EP; [Synthesis](Skill-Synthesis.md) | Aura |
-| [Godly](Godly.md) | Aion, Thoth | Mastered combination Ultimate; true awakening; 12M base EP; Thoth also combines mastered Rune Smith | Magicules |
+| [Godly](Godly.md) | Aion, Thoth | Mastered combination Ultimate; true awakening; 12M base EP; Thoth also combines mastered Rune Smith | Magicules; Mana Crucible converts aura |
 | [Extra](Aura-Regeneration.md) | Hunter’s Recovery, Apex Renewal, Sovereign Rebirth | Hunter race evolution | Aura |
 
 ## Using skills

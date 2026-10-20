@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.14.1 — Held Mana Crucible
+
+- Mana Crucible now channels through the native assigned skill key. Convert 2 aura into 1 magicule at 5% of maximum magicules per second, transferred every server tick. No activation payment, cooldown, duration limit or total transfer cap; actual aura reserves and maximum magicule capacity still bound each transfer.
+- Stop on release, depletion, full magicules, suppression or lifecycle cleanup. The original crucible effect follows the owner throughout the hold and is removed when it ends.
+- Duplicate callbacks cannot transfer twice per tick. Mastery requires successful sustained conversion, preventing free tap-spam rewards. Old saved Crucible cooldowns are cleared, and Thoth ascension keeps inherited cooldowns only on its other arts.
+- Updated native descriptions and the wiki; per-ability damage remains unchanged.
+
 ## 0.14.0 — Skill identity, power and spellcraft
 
 - Raised the fixed raw damage of all eight Uniques and all three combination Ultimates; shortened combat cooldowns, strengthened allied grove/orchard healing and extended Mirror Aegis to six seconds. Resource costs, mastery scaling, rank rules and EP-independent damage remain intact.
