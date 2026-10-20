@@ -33,7 +33,7 @@ public final class GodlySkill extends Skill {
     @Override public Component getModeName(ManasSkillInstance i,int mode) { return Component.literal(switch(mode) {case 0->"Worldline Sever";case 1->"Event Horizon";case 2->"Causal Reversal";default->"Genesis Verdict";}); }
     @Override public int nextMode(LivingEntity e,ManasSkillInstance i,int mode,boolean reverse) { return Math.floorMod(mode+(reverse?-1:1),4); }
     @Override public double getAuraCost(LivingEntity e,ManasSkillInstance i,int mode) { return 0; }
-    @Override public double getMagiculeCost(LivingEntity e,ManasSkillInstance i,int mode) { return switch(mode) {case 0->800;case 1->6000;case 2->i.getOrCreateTag().contains("anchor_until")?0:2400;default->15000;}; }
+    @Override public double getMagiculeCost(LivingEntity e,ManasSkillInstance i,int mode) { return switch(mode) {case 0->2400;case 1->10000;case 2->i.getOrCreateTag().contains("anchor_until")?0:12000;default->28000;}; }
     @Override public boolean canBeToggled(ManasSkillInstance i,LivingEntity e) { return true; }
     @Override public boolean canTick(ManasSkillInstance i,LivingEntity e) { return false; }
     @Override public void onPressed(ManasSkillInstance i,LivingEntity caster,int slot,int mode) {
@@ -122,7 +122,7 @@ public final class GodlySkill extends Skill {
         if(!damage)return;
         var targets=level.getEntitiesOfClass(LivingEntity.class,new AABB(from,end).inflate(2),e->HunterData.canHarm(caster,e) && e.getBoundingBox().inflate(1.25).clip(from,end).isPresent());
         targets.sort(java.util.Comparator.comparingDouble(e->e.distanceToSqr(caster)));
-        targets.stream().limit(8).forEach(target->{hit(level,i,caster,target,220,0);GodlyVisuals.impact(level,target.getBoundingBox().getCenter(),1.2);});
+        targets.stream().limit(8).forEach(target->{hit(level,i,caster,target,1200,0);GodlyVisuals.impact(level,target.getBoundingBox().getCenter(),1.2);});
     }
     public static boolean passiveActive(net.minecraft.world.entity.Entity entity) {
         if(!(entity instanceof LivingEntity e) || !e.isAlive())return false;
@@ -247,7 +247,7 @@ public final class GodlySkill extends Skill {
             for(var target:ApexArts.enemies(level,e,center,24)) {
                 double resistance=1-Math.clamp(target.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE),0,1);
                 Vec3 pull=center.subtract(target.position()).normalize().scale(.4*resistance); target.push(pull.x,.01,pull.z); target.hurtMarked=true;
-                if(now%20==0 && target.distanceToSqr(center)<=100)hit(level,i,e,target,120,1);
+                if(now%20==0 && target.distanceToSqr(center)<=100)hit(level,i,e,target,700,1);
             }
             for(var projectile:level.getEntitiesOfClass(Projectile.class,new AABB(center,center).inflate(24),p->p.getOwner()!=e && (!(p.getOwner() instanceof LivingEntity owner) || HunterData.canHarm(e,owner)) && p.distanceToSqr(center)<24*24)) {
                 projectile.setDeltaMovement(projectile.getDeltaMovement().scale(.65).add(center.subtract(projectile.position()).normalize().scale(.025))); projectile.hurtMarked=true;
@@ -256,7 +256,7 @@ public final class GodlySkill extends Skill {
         if(tag.getLong("verdict_until")>now && now>=tag.getLong("verdict_next") && sameDimension(i,e)) {
             Vec3 center=ApexArts.point(tag,"verdict");
             int pulse=tag.getInt("verdict_pulse");boolean empowered=tag.getBoolean("verdict_empowered");double radius=empowered?14:12;
-            for(var target:ApexArts.enemies(level,e,center,radius))hit(level,i,e,target,pulse<2?700:empowered?2100:1400,3);
+            for(var target:ApexArts.enemies(level,e,center,radius))hit(level,i,e,target,pulse<2?2400:empowered?7200:4800,3);
             ArtVisualEntity.spawn(level,ArtVisualEntity.CAUSAL_IMPACT,center,new Vec3(radius,pulse+1,0),22);
             level.sendParticles(ParticleTypes.END_ROD,center.x,center.y,center.z,60,radius*.45,2,radius*.45,.1);
             tag.putInt("verdict_pulse",pulse+1);tag.putLong("verdict_next",now+20);

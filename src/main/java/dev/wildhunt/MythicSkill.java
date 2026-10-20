@@ -65,10 +65,10 @@ public final class MythicSkill extends Skill {
     private void restore(ManasSkillInstance i,LivingEntity e){
         clearLegacyDefense(e);
         switch(kind){
-            case THREADWEAVER->{modify(e,Attributes.MOVEMENT_SPEED,.25,true);modify(e,Attributes.ATTACK_SPEED,.2,true);}
-            case RUNE_SMITH->{modify(e,TensuraAttributes.EARTH_BOOST,.3,true);modify(e,TensuraAttributes.FLAME_BOOST,.3,true);modify(e,TensuraAttributes.LIGHTNING_BOOST,.3,true);}
-            case VERDANT_KEEPER->modify(e,TensuraAttributes.SPIRITUAL_HEALTH_REGENERATION,.5,true);
-            case MIRRORBOUND->{modify(e,TensuraAttributes.LIGHT_BOOST,.5,true);modify(e,Attributes.ATTACK_SPEED,.25,true);modify(e,Attributes.MOVEMENT_SPEED,.15,true);}
+            case THREADWEAVER->{modify(e,Attributes.MOVEMENT_SPEED,.3,true);modify(e,Attributes.ATTACK_SPEED,.25,true);}
+            case RUNE_SMITH->{modify(e,TensuraAttributes.EARTH_BOOST,.5,true);modify(e,TensuraAttributes.FLAME_BOOST,.5,true);modify(e,TensuraAttributes.LIGHTNING_BOOST,.5,true);}
+            case VERDANT_KEEPER->modify(e,TensuraAttributes.SPIRITUAL_HEALTH_REGENERATION,1,true);
+            case MIRRORBOUND->{modify(e,TensuraAttributes.LIGHT_BOOST,.5,true);modify(e,Attributes.ATTACK_SPEED,.25,true);modify(e,Attributes.MOVEMENT_SPEED,.2,true);}
             case VRITRA->{modify(e,TensuraAttributes.FLAME_BOOST,1,true);modify(e,TensuraAttributes.LIGHTNING_BOOST,1,true);modify(e,Attributes.ATTACK_DAMAGE,.5,true);}
             case DEMETER->{modify(e,TensuraAttributes.SPIRITUAL_HEALTH_REGENERATION,2,true);modify(e,Attributes.KNOCKBACK_RESISTANCE,.6,false);modify(e,TensuraAttributes.WATER_BOOST,1,true);}
             case JANUS->{modify(e,Attributes.MOVEMENT_SPEED,.35,true);modify(e,Attributes.KNOCKBACK_RESISTANCE,.5,false);modify(e,TensuraAttributes.SPACE_BOOST,1,true);modify(e,Attributes.ATTACK_SPEED,.3,true);}

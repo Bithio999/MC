@@ -360,7 +360,7 @@ public final class ApexArts {
             if (tag.getLong("counter_next") > now || victim.distanceToSqr(attacker) > 144 || !victim.hasLineOfSight(attacker)) continue;
             tag.putLong("counter_next", now + (skill.ultimate ? 20 : 60)); instance.markDirty();
             // Retaliation belongs to the passive; mode 1 supplies native source metadata.
-            skill.strike(level, instance, victim, attacker, 25, 1, false);
+            skill.strike(level, instance, victim, attacker, skill.ultimate ? 25 : 100, 1, false);
             push(attacker, attacker.position().subtract(victim.position()).normalize().scale(0.8));
         }
     }

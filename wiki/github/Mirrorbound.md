@@ -14,7 +14,7 @@
 | Active modes | 2 |
 | Resource | Aura |
 | Toggleable passive | Silvered Soul |
-| Passive upkeep | 15 aura / second |
+| Passive upkeep | 25 aura / second |
 | Registry ID | `wildhunt:mirrorbound` |
 | **Obtaining** | |
 | Method | Reincarnation starting-skill roll |
@@ -31,9 +31,9 @@
 | --- | --- |
 | Damage type | None — support / defense |
 | Damage ID | — |
-| Upkeep | 15 aura / second |
+| Upkeep | 25 aura / second |
 
-Gain 50% Light boost, 25% attack speed and 15% movement speed. Silvered Soul is an offensive mobility passive; defense comes from timing Mirror Aegis.
+Gain 50% Light boost, 25% attack speed and 20% movement speed. Silvered Soul is an offensive mobility passive; defense comes from timing Mirror Aegis.
 
 Elemental boosts use the [strongest ordinary source](https://github.com/Bithio999/MC/wiki/Mechanics#elemental-bonus-sources); Godly bonuses apply separately.
 
@@ -43,10 +43,10 @@ Enable the native skill toggle in Ability Selection. The first second is paid on
 
 | Mode | Aura | Cooldown | Raw damage |
 | --- | ---: | ---: | --- |
-| 1. Prismatic Lance | 280 | 3 s | 220 first hit; 130 each secondary hit |
-| 2. Mirror Aegis | 600 | 10 s | — |
+| 1. Prismatic Lance | 750 | 3 s | 600 first hit; 350 each secondary hit |
+| 2. Mirror Aegis | 1,400 | 10 s | — |
 
-Damage listed here is before native combat handling and uses **1 + 0.5 × mastery fraction**, capped at **1.5×**. These new kits do not use the apex skills’ 0.90 multiplier or the former 3× Ultimate multiplier. EP never multiplies their damage. Native elemental boosts, authority, resistances, barriers and hit immunity apply.
+Damage listed here is before native combat handling and uses **1 + 0.5 × mastery fraction**, capped at **1.5×**. EP never multiplies their damage. Native elemental boosts, authority, resistances, barriers and hit immunity apply.
 
 #### Prismatic Lance
 
@@ -56,9 +56,9 @@ Damage listed here is before native combat handling and uses **1 + 0.5 × master
 | --- | --- |
 | Damage type | Light elemental |
 | Damage ID | `tensura:light_elemental` |
-| Resource cost | 280 aura |
+| Resource cost | 750 aura |
 | Cooldown | 3 seconds |
-| Raw damage | 220 first hit; 130 each secondary hit |
+| Raw damage | 600 first hit; 350 each secondary hit |
 
 Aim a light lance up to 32 blocks. On an initial hit, split toward up to two additional enemies within eight blocks of that victim. You and the first victim must have line of sight to each secondary target. This is at most three distinct enemies; a missed initial lance has no secondary hits.
 
@@ -70,7 +70,7 @@ Aim a light lance up to 32 blocks. On an initial hit, split toward up to two add
 | --- | --- |
 | Damage type | None — reflected projectiles retain their own attack type |
 | Damage ID | — |
-| Resource cost | 600 aura |
+| Resource cost | 1,400 aura |
 | Cooldown | 10 seconds |
 | Raw damage | — |
 

@@ -1,4 +1,63 @@
-# Current balance: 0.18.0
+# Current balance: 0.19.0
+
+The approved five combination Ultimates remain the benchmark. Uniques provide
+repeatable early combat and narrower utility; Ultimates add native penetration,
+stronger fields and linked third arts; Godly skills add exceptional sustained
+pressure or adaptive damage alongside their existing ownership traits. This is
+role-based balance, not one fixed multiplier across every attack.
+
+All current playable skills now use **1–1.5× mastery**. The original four
+Uniques no longer have the extra 0.90 penalty. No damage formula uses EP.
+Uniques retain ordinary native authority and defenses; Ultimate attacks retain
+level-1 resistance penetration; Godly owners retain source-scoped resistance/
+nullification bypass and their non-stacking +35% bonus against non-Godly owners.
+Printed damage below excludes these modifiers, elemental attributes and defenses.
+
+| Unique | Raw damage / support | Aura costs | Cooldowns / upkeep |
+| --- | --- | --- | --- |
+| Storm Crown | Railbolt 550, four distinct victims, 90% retained per hop; Thunder Step 350 | 800 / 1,000 | 3 / 4 s; 25/s |
+| Scarlet Deluge | Current 420, 630 if already drenched; Undertow 200 + 110/s; retaliation 100 | 600 / 1,600 | 3 / 6 s; 30/s |
+| Black Flame | Lash 450; ignition 650 + 150/s, overlapping owned pools deduplicated | 650 / 1,800 | 3 / 7 s; 35/s |
+| Frostbound Colossus | Avalanche 700; Prison 300 + native Frost | 800 / 1,400 | 3 / 7 s; 40/s |
+| Threadweaver | Needle 450; tether-consuming Sever 800; +30% movement / +25% attack speed | 600 / 1,000 | 4 / 6 s; 25/s |
+| Rune Smith | Proximity 650 or command 1,000, not both; +50% Earth/Flame/Lightning | 600 placement + 800 command | 6 / 4 s; 30/s |
+| Verdant Keeper | Grove 7% HP / 6% SHP per second; Briar 500; +100% natural SHP regeneration | 1,600 / 700 | 14 / 5 s; 35/s |
+| Mirrorbound | Lance 600 + two distinct 350 splits; six-second reflection; +20% movement | 750 / 1,400 | 3 / 10 s; 25/s |
+
+The two Unique personal barriers retain 100 / 150 Multilayer capacity and their
+existing Physical/Magic values and ten-second quiet recovery. Healing remains
+capped by current maxima. No new barriers, passive stacks or elemental stacking
+exceptions are added. Demeter still exceeds Grove's pulse, area and duration.
+
+| Godly | Raw combat budget | Magicule costs / cadence |
+| --- | --- | --- |
+| Aion | Worldline 1,200 per half-second; Horizon 700/s; Verdict 2,400 + 2,400 + 4,800, or 7,200 final when empowered | Worldline 2,400 opening + 1,200/pulse (15,600 full channel); Horizon 10K; Reversal 12K; Verdict 28K. Existing cooldowns and durations. |
+| Thoth | Lexicon 1,100/chapter; Spellbreak 900; Library 800/bolt | 12K / 6.5K / free Crucible / 24K. Existing 12 / 15 / 0 / 35 s cooldowns. |
+| Lugh | Origin arts 3,800 / 3,800 / 4,200; appraised raw bounded to 3,500–6,000; synthesis 1.6× each archived art | 1.2K / 10K / 9K / 30K. Existing 2 / 4 / 18 / 40 s cooldowns. |
+
+Aion's rewind preserves its fixed post-payment checkpoint, increase-only stat
+restoration, free return, twenty-second auto-return and all safety/cleanup rules.
+Its initial payment is now priced for this exceptional recovery/resource utility.
+Thoth keeps exactly seven passive-backed elements and the existing seventy-tick
+Lexicon / two-hundred-tick Library choreography. The 2:1 continuous Crucible,
+resource drain caps, reflection behavior and Godly toggle budgets stay intact.
+Lugh's old origin records upgrade without losing an appraised source, attack
+form or selected slot. Existing observations are bounded to the new range;
+synthesis reduces its per-record multiplier as basic reconstruction rises.
+
+Rapid visual hits are not a guarantee of fixed HP loss: native hit handling,
+element rules, barriers and authority still apply. The validation suite compares
+measured native damage, full channel costs and seven-element cadence, rather
+than assuming that a scheduled hit always removes HP. See
+[0.19.0 validation](VALIDATION-0.19.0.md) for results and test limits.
+
+The [0.18 addon research](research/ULTIMATE_BALANCE_0.18.md) still informs the
+Ultimate benchmark. No additional third-party runtime compatibility is claimed.
+Current ability-level damage IDs and values are in the [wiki](../wiki/README.md).
+
+---
+
+# Historical balance: 0.18.0
 
 The five combination Ultimates have distinct assault, sustain, spatial, trap and
 water-refraction roles. Acquisition remains two specific mastered Uniques and

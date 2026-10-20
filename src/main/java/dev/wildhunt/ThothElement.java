@@ -22,7 +22,7 @@ public enum ThothElement {
     private static final ThothElement[] SPECTRUM=values();
     public static final int COUNT=SPECTRUM.length,LEXICON_LIFETIME=70,LEXICON_FIRST=12,LEXICON_LAST=52,
         LIBRARY_DURATION=200,LIBRARY_FIRST=10,LIBRARY_INTERVAL=5;
-    public static final float LEXICON_DAMAGE=375,LIBRARY_DAMAGE=160;
+    public static final float LEXICON_DAMAGE=1100,LIBRARY_DAMAGE=800;
     ThothElement(String id,ResourceKey<DamageType> damage,MagicCircleVariant circle,int color){this.id=id;this.damage=damage;this.circle=circle;this.color=color;}
     public static ThothElement at(int chapter){return SPECTRUM[Math.floorMod(chapter,COUNT)];}
     public static ThothElement named(String id){for(var element:SPECTRUM)if(element.id.equals(id))return element;return null;}

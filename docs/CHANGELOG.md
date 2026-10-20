@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.19.0 — Unique and Godly balance
+
+- Balance all eight Unique kits against the revised combination Ultimates: stronger fixed attacks and fields, higher aura budgets, improved Verdant sustain, and stronger Threadweaver / Rune Smith / Verdant / Mirrorbound utility passives. Remove the extra 0.90 damage penalty from the four playable apex Uniques. Keep their cooldowns, shapes, target rules and distinct mechanics.
+- Raise Aion's channel, gravity-core and Verdict damage; price its initial casts for Godly strength while preserving free upward-only Causal Reversal returns. Raise Thoth's seven-element attacks without changing their durations, timing, elements or unlimited 2:1 Mana Crucible.
+- Raise Lugh's bounded reconstruction range and origin arts, adjust Synthesis's per-art multiplier and costs, and upgrade saved archives without discarding their observed techniques or selection. Keep existing shared Godly traits, native hit handling, strongest ordinary elemental source and EP-independent damage.
+- Update individual skill pages, damage information, mechanics, generated wiki editions and the release bundle. Add native damage/economy/cadence/save-upgrade coverage; preserve the approved Ultimate kits and visuals.
+
 ## 0.18.0 — Lugh and Ultimate reconstruction
 
 - Add Lugh, God of Skills: a persistent three-entry technique archive with three immediately usable origin arts, bounded native-source reconstruction in Blade/Lance/Crown forms, a specific six-second non-Godly technique seal and a warned three-art Grand Synthesis. Add All-Skilled and the shared Godly classification traits. Ascension combines a mastered Ultimate and Threadweaver at the existing true-awakening/12M gate.

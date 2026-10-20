@@ -69,7 +69,7 @@ public final class SovereignGameTests {
         afterTracking(h,List.of(actor,victim),()->{
             victim.hurt(((MythicSkill)sourceSkill.getSkill()).createSource(sourceSkill,actor,TensuraDamageTypes.EARTH_ELEMENTAL,0),100);
             h.assertTrue(HunterData.of(actor).contains("last_technique"),"Actual native damage did not enter the observation hook");double mp=TensuraStorages.getExistenceFrom(p).getMagicule();cast(p,i,0);
-            var list=LughArts.archive(i);var copied=list.getCompound(0);h.assertTrue(copied.getString("source").equals(sourceSkill.getSkillId().toString()) && copied.getString("type").equals("tensura:earth_elemental") && copied.getFloat("damage")==2000 && TensuraStorages.getExistenceFrom(p).getMagicule()==mp-1200,"Appraisal lost native provenance, bounded power or MP cost");
+            var list=LughArts.archive(i);var copied=list.getCompound(0);h.assertTrue(copied.getString("source").equals(sourceSkill.getSkillId().toString()) && copied.getString("type").equals("tensura:earth_elemental") && copied.getFloat("damage")==3500 && TensuraStorages.getExistenceFrom(p).getMagicule()==mp-1200,"Appraisal lost native provenance, bounded power or MP cost");
             i.setCoolDown(0,0);cast(p,i,0);h.assertTrue(LughArts.archive(i).size()==3 && LughArts.archive(i).stream().filter(v->((CompoundTag)v).getString("source").equals(sourceSkill.getSkillId().toString())).count()==1,"Repeated appraisal duplicated its source");h.succeed();
         });
     }
@@ -90,7 +90,7 @@ public final class SovereignGameTests {
             i.setCoolDown(0,1);i.getOrCreateTag().putInt("selected_art",1);cast(p,i,1);h.assertTrue(ahead.sources.size()==2 && offAxis.sources.size()==1,"Lance did not restrict hits to its aim line");
             i.setCoolDown(0,1);i.getOrCreateTag().putInt("selected_art",2);cast(p,i,1);h.assertTrue(ahead.sources.size()==3 && offAxis.sources.size()==2,"Crown did not strike the cursor area");
             var record=LughArts.archive(i).getCompound(2);record.putString("type","tensura:disintegration");record.putFloat("damage",Float.MAX_VALUE);i.setCoolDown(0,1);cast(p,i,1);
-            h.assertTrue(ahead.sources.getLast().is(TensuraDamageTypes.MAGIC_GENERIC) && ahead.amounts.getLast()<=6000 && ((TensuraDamageSource)ahead.sources.getLast()).tensura$getAbilityInstance()==i,"Reconstruction inherited a special bypass source, unbounded damage or the original skill authority");h.succeed();
+            h.assertTrue(ahead.sources.getLast().is(TensuraDamageTypes.MAGIC_GENERIC) && ahead.amounts.getLast()<=9000 && ((TensuraDamageSource)ahead.sources.getLast()).tensura$getAbilityInstance()==i,"Reconstruction inherited a special bypass source, unbounded damage or the original skill authority");h.succeed();
         });
     }
     @GameTest(template="empty",timeoutTicks=100)

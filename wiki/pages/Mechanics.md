@@ -10,7 +10,7 @@ The [ability index](Abilities.md) and [damage reference](Damage-Types.md) distin
 
 ## Damage and mastery
 
-The original four apex Uniques use **0.90 × (1 + 0.5 × mastery fraction)**. The four additional Uniques, combination Ultimates, Aion, Thoth and Lugh use **1 + 0.5 × mastery fraction**. Mastery fractions are clamped to 0–1, giving a maximum of 1.5× before native modifiers. Each new kit has its own raw damage values; there is no shared Ultimate 3× multiplier.
+All eight Uniques, the combination Ultimates and the three Godly skills use **1 + 0.5 × mastery fraction**. Mastery fractions are clamped to 0–1, giving a maximum of 1.5× before native modifiers. Each new kit has its own raw damage values; there is no shared Ultimate 3× multiplier.
 
 **EP never multiplies damage.** It is a fixed progression requirement. Native elemental boosts, skill authority, barriers, resistance/nullification, hit immunity and server rules still determine actual health loss. Overlapping warnings do not reset vanilla/native hit immunity to force multiple full hits.
 
@@ -20,7 +20,7 @@ Owning any Godly skill grants [three shared classification passives](Godly.md#cl
 
 For each native elemental boost attribute, only the **strongest positive non-Godly modifier** applies. Compare each source’s actual effect against the current innate base, including flat, base-multiplier and total-multiplier operations. This covers native skills, Myths skills, equipment and other attribute sources. Lower bonuses remain installed and become effective automatically when a stronger source ends. Innate base values and negative modifiers remain intact.
 
-Thoth’s **Godly** +75% elemental bonus applies separately. For example, +30% Rune Smith, +50% Furnace Mantle and +100% Vritra provide **2×**, rather than multiplying together. Adding Thoth gives **2 × 1.75 = 3.5×** before penalties. This policy affects elemental boost attributes only; it does not limit healing, mastery, attack speed or the shared Godly damage bonus. Native damage paths that do not use these attributes retain their own rules.
+Thoth’s **Godly** +75% elemental bonus applies separately. For example, +50% Rune Smith, +50% Furnace Mantle and +100% Vritra provide **2×**, rather than multiplying together. Adding Thoth gives **2 × 1.75 = 3.5×** before penalties. This policy affects elemental boost attributes only; it does not limit healing, mastery, attack speed or the shared Godly damage bonus. Native damage paths that do not use these attributes retain their own rules.
 
 ## World effects
 
@@ -32,14 +32,14 @@ Unique skills have two active modes, combination Ultimates three, and Godly skil
 
 | Skill | Upkeep per second | Native multilayer capacity |
 | --- | ---: | ---: |
-| Storm Crown | 10 aura | — |
-| Scarlet Deluge | 10 aura | 100 |
-| Black Flame | 15 aura | — |
-| Frostbound Colossus | 20 aura | 150 |
-| Threadweaver | 15 aura | — |
-| Rune Smith | 20 aura | — |
-| Verdant Keeper | 20 aura | — |
-| Mirrorbound | 15 aura | — |
+| Storm Crown | 25 aura | — |
+| Scarlet Deluge | 30 aura | 100 |
+| Black Flame | 35 aura | — |
+| Frostbound Colossus | 40 aura | 150 |
+| Threadweaver | 25 aura | — |
+| Rune Smith | 30 aura | — |
+| Verdant Keeper | 35 aura | — |
+| Mirrorbound | 25 aura | — |
 | Vritra | 120 aura | — |
 | Demeter | 110 aura | — |
 | Janus | 110 aura | — |

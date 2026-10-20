@@ -7,7 +7,7 @@
 <div class="global-bar"><span>TENSURA MYTHS</span><div><a href="https://tensura.wiki.gg/wiki/Tensura:_Reincarnated_Wiki">Base mod wiki</a><a href="https://github.com/Bithio999/MC">GitHub</a></div></div>
 <header class="masthead"><a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">M</span><span>TENSURA MYTHS<small>Tensura: Reincarnated addon wiki</small></span></a>
 <div class="search"><label for="wiki-search">Search Tensura Myths Wiki</label><input id="wiki-search" type="search" placeholder="Search skills, races, characters…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="search-results" aria-expanded="false"><div id="search-results" role="listbox" aria-label="Search results" hidden></div><span id="search-status" class="sr-only" aria-live="polite"></span></div></header>
-<div class="layout"><button id="navigation-toggle" aria-controls="wiki-navigation" aria-expanded="false">☰ Wiki navigation</button><nav id="wiki-navigation" class="sidebar" aria-label="Wiki navigation"><section><h2>Start here</h2><a href="../index.html">Main Page</a><a href="../site/Getting-Started.html">Getting started</a></section><section><h2>Skills</h2><a href="../site/Skills.html">Skill overview</a><a href="../site/Unique-Skills.html">Unique Skills</a><a href="../site/Ultimate-Skills.html">Ultimate Skills</a><a href="../site/Skill-Synthesis.html">Skill synthesis</a><a href="../site/Godly.html">Godly Skills</a><a href="../site/Aura-Regeneration.html">Extra Skills</a><a href="../site/Abilities.html">Ability index</a></section><section><h2>Races</h2><a href="../site/Races.html">Race directory</a><a href="../site/Evolution.html">Hunter evolution</a><a href="../site/Duo-Races.html">Secondary races</a><a href="../site/Convergent-Awakening.html">Convergent Awakening</a></section><section><h2>Otherworlders</h2><a href="../site/Otherworlders.html">Character directory</a><a href="../site/Alma.html">Alma</a><a href="../site/Gemma.html">Gemma</a></section><section><h2>Reference</h2><a href="../site/Damage-Types.html">Damage types</a><a href="../site/Mechanics.html" aria-current="page">Combat mechanics</a><a href="../site/Visual-Effects.html">Visual effects</a><a href="../site/Commands.html">Commands</a></section><div class="sidebar-version">Tensura Myths <strong>0.18.0</strong><br>Minecraft 1.21.1 · NeoForge<br><span>Offline reference edition</span></div></nav>
+<div class="layout"><button id="navigation-toggle" aria-controls="wiki-navigation" aria-expanded="false">☰ Wiki navigation</button><nav id="wiki-navigation" class="sidebar" aria-label="Wiki navigation"><section><h2>Start here</h2><a href="../index.html">Main Page</a><a href="../site/Getting-Started.html">Getting started</a></section><section><h2>Skills</h2><a href="../site/Skills.html">Skill overview</a><a href="../site/Unique-Skills.html">Unique Skills</a><a href="../site/Ultimate-Skills.html">Ultimate Skills</a><a href="../site/Skill-Synthesis.html">Skill synthesis</a><a href="../site/Godly.html">Godly Skills</a><a href="../site/Aura-Regeneration.html">Extra Skills</a><a href="../site/Abilities.html">Ability index</a></section><section><h2>Races</h2><a href="../site/Races.html">Race directory</a><a href="../site/Evolution.html">Hunter evolution</a><a href="../site/Duo-Races.html">Secondary races</a><a href="../site/Convergent-Awakening.html">Convergent Awakening</a></section><section><h2>Otherworlders</h2><a href="../site/Otherworlders.html">Character directory</a><a href="../site/Alma.html">Alma</a><a href="../site/Gemma.html">Gemma</a></section><section><h2>Reference</h2><a href="../site/Damage-Types.html">Damage types</a><a href="../site/Mechanics.html" aria-current="page">Combat mechanics</a><a href="../site/Visual-Effects.html">Visual effects</a><a href="../site/Commands.html">Commands</a></section><div class="sidebar-version">Tensura Myths <strong>0.19.0</strong><br>Minecraft 1.21.1 · NeoForge<br><span>Offline reference edition</span></div></nav>
 <main id="article" class="article-page"><div class="page-tabs"><span aria-current="page">Article</span><a href="../pages/Mechanics.md">Read Markdown</a><a href="https://github.com/Bithio999/MC/blob/main/docs/CHANGELOG.md">Changelog</a></div>
 <div class="article-heading"><div class="breadcrumbs"><a href="../index.html">Tensura Myths Wiki</a> / <a href="../site/Mechanics.html">Reference</a></div><h1>Combat mechanics</h1><p class="subtitle">From the unofficial Tensura Myths Wiki</p></div>
 <div class="article-content"><div class="article-intro"><p>This page explains <strong>Tensura Myths combat mechanics</strong>, including native barriers, skill toggles, damage modifiers, and aura consumption.</p></div><details class="contents" open><summary>Contents</summary><div class="toc">
@@ -30,12 +30,12 @@
 <h2 id="damage-types">Damage types</h2>
 <p>The <a href="Abilities.html">ability index</a> and <a href="Damage-Types.html">damage reference</a> distinguish every direct elemental source, native status and non-damaging utility. Vritra and Thoth use multiple elements within one skill; each strike keeps its own native damage source. Reflection preserves the projectile’s own type. Healing, gates, resource conversion and barriers do not invent attack damage.</p>
 <h2 id="damage-and-mastery">Damage and mastery</h2>
-<p>The original four apex Uniques use <strong>0.90 × (1 + 0.5 × mastery fraction)</strong>. The four additional Uniques, combination Ultimates, Aion, Thoth and Lugh use <strong>1 + 0.5 × mastery fraction</strong>. Mastery fractions are clamped to 0–1, giving a maximum of 1.5× before native modifiers. Each new kit has its own raw damage values; there is no shared Ultimate 3× multiplier.</p>
+<p>All eight Uniques, the combination Ultimates and the three Godly skills use <strong>1 + 0.5 × mastery fraction</strong>. Mastery fractions are clamped to 0–1, giving a maximum of 1.5× before native modifiers. Each new kit has its own raw damage values; there is no shared Ultimate 3× multiplier.</p>
 <p><strong>EP never multiplies damage.</strong> It is a fixed progression requirement. Native elemental boosts, skill authority, barriers, resistance/nullification, hit immunity and server rules still determine actual health loss. Overlapping warnings do not reset vanilla/native hit immunity to force multiple full hits.</p>
 <p>Owning any Godly skill grants <a href="Godly.html#classification-passives">three shared classification passives</a>, independently of toggles and upkeep. Divine Authority adds 35% damage against non-Godly owners while preserving the original attack type. Absolute Penetration bypasses native resistance/nullification protection only for damage attributed to that owner; nearby allies and environmental damage receive no benefit. Interference Immunity rejects non-Godly-origin Magic Interference, using the originating skill rather than the caster’s tier. These traits never stack between Godly skills. Aion retains its separate barrier/slow toggle, Thoth retains its elemental boosts and native magic-efficiency toggle, and Lugh retains its attack speed/movement/mastery toggle.</p>
 <h2 id="elemental-bonus-sources">Elemental bonus sources</h2>
 <p>For each native elemental boost attribute, only the <strong>strongest positive non-Godly modifier</strong> applies. Compare each source’s actual effect against the current innate base, including flat, base-multiplier and total-multiplier operations. This covers native skills, Myths skills, equipment and other attribute sources. Lower bonuses remain installed and become effective automatically when a stronger source ends. Innate base values and negative modifiers remain intact.</p>
-<p>Thoth’s <strong>Godly</strong> +75% elemental bonus applies separately. For example, +30% Rune Smith, +50% Furnace Mantle and +100% Vritra provide <strong>2×</strong>, rather than multiplying together. Adding Thoth gives <strong>2 × 1.75 = 3.5×</strong> before penalties. This policy affects elemental boost attributes only; it does not limit healing, mastery, attack speed or the shared Godly damage bonus. Native damage paths that do not use these attributes retain their own rules.</p>
+<p>Thoth’s <strong>Godly</strong> +75% elemental bonus applies separately. For example, +50% Rune Smith, +50% Furnace Mantle and +100% Vritra provide <strong>2×</strong>, rather than multiplying together. Adding Thoth gives <strong>2 × 1.75 = 3.5×</strong> before penalties. This policy affects elemental boost attributes only; it does not limit healing, mastery, attack speed or the shared Godly damage bonus. Native damage paths that do not use these attributes retain their own rules.</p>
 <h2 id="world-effects">World effects</h2>
 <p>Oil pools occupy finite world locations. Drenched is a timed water mark that supports the water/lightning interactions described on the skill pages.</p>
 <h2 id="toggleable-passives">Toggleable passives</h2>
@@ -51,42 +51,42 @@
 <tbody>
 <tr>
 <td>Storm Crown</td>
-<td style="text-align: right;">10 aura</td>
+<td style="text-align: right;">25 aura</td>
 <td style="text-align: right;">—</td>
 </tr>
 <tr>
 <td>Scarlet Deluge</td>
-<td style="text-align: right;">10 aura</td>
+<td style="text-align: right;">30 aura</td>
 <td style="text-align: right;">100</td>
 </tr>
 <tr>
 <td>Black Flame</td>
-<td style="text-align: right;">15 aura</td>
+<td style="text-align: right;">35 aura</td>
 <td style="text-align: right;">—</td>
 </tr>
 <tr>
 <td>Frostbound Colossus</td>
-<td style="text-align: right;">20 aura</td>
+<td style="text-align: right;">40 aura</td>
 <td style="text-align: right;">150</td>
 </tr>
 <tr>
 <td>Threadweaver</td>
-<td style="text-align: right;">15 aura</td>
+<td style="text-align: right;">25 aura</td>
 <td style="text-align: right;">—</td>
 </tr>
 <tr>
 <td>Rune Smith</td>
-<td style="text-align: right;">20 aura</td>
+<td style="text-align: right;">30 aura</td>
 <td style="text-align: right;">—</td>
 </tr>
 <tr>
 <td>Verdant Keeper</td>
-<td style="text-align: right;">20 aura</td>
+<td style="text-align: right;">35 aura</td>
 <td style="text-align: right;">—</td>
 </tr>
 <tr>
 <td>Mirrorbound</td>
-<td style="text-align: right;">15 aura</td>
+<td style="text-align: right;">25 aura</td>
 <td style="text-align: right;">—</td>
 </tr>
 <tr>
@@ -160,4 +160,4 @@
 <p><a href="Lugh.html">Lugh</a> stores three bounded techniques and reconstructs their form and normalised damage type. It never executes another addon's skill code. Countermand seals only a recent non-Godly source ability for six seconds without deleting skill state. Grand Synthesis snapshots the archive and strikes at 1.0, 1.8 and 2.6 seconds.</p>
 </div><nav class="related-box" aria-label="Related reference"><strong>Tensura Myths · Reference</strong><div class="navbox-row"><strong>Reference</strong><div><a href="../site/Getting-Started.html">Getting started</a><a href="../site/Skills.html">Skills</a><a href="../site/Abilities.html">Ability index</a><a href="../site/Damage-Types.html">Damage types</a><a href="../site/Races.html">Race directory</a><a href="../site/Otherworlders.html">Otherworlders</a><a href="../site/Mechanics.html" aria-current="page">Combat mechanics</a><a href="../site/Commands.html">Commands</a></div></div></nav>
 <div class="categories">Categories: <a href="../index.html">Tensura Myths</a> · <a href="../site/Mechanics.html">Reference</a></div>
-<footer>Unofficial fan addon. Original documentation and portraits. Not affiliated with Capcom or ManasMods.<br>Tensura Myths 0.18.0 · Offline edition · No external services required.</footer></main></div></body></html>
+<footer>Unofficial fan addon. Original documentation and portraits. Not affiliated with Capcom or ManasMods.<br>Tensura Myths 0.19.0 · Offline edition · No external services required.</footer></main></div></body></html>

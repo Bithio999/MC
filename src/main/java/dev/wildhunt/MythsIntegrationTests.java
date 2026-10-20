@@ -116,14 +116,14 @@ public final class MythsIntegrationTests {
         var p=tank(h,h.absolutePos(new net.minecraft.core.BlockPos(1,101,1)).getCenter());EnergyHelper.setBaseMaxEP(p,20_000_000);HunterData.learnReward(p,WildHunt.GODLY.get());var i=SkillAPI.getSkillsFrom(p).getSkill(WildHunt.GODLY.get()).orElseThrow();
         var energy=TensuraStorages.getExistenceFrom(p);energy.setAura(100_000);energy.setMagicule(100_000);
         var start=p.position();WildHunt.GODLY.get().onPressed(i,p,0,2);
-        h.assertTrue(energy.getMagicule()==97_600 && i.getOrCreateTag().getDouble("anchor_magicules")==97_600,"Snapshot refunded or preceded the initial cast payment");
+        h.assertTrue(energy.getMagicule()==88_000 && i.getOrCreateTag().getDouble("anchor_magicules")==88_000,"Snapshot refunded or preceded the initial cast payment");
         h.assertTrue(i.getOrCreateTag().contains("anchor_until"),"Causal checkpoint was not set");
         i.setCoolDown(0,2);p.setPos(start.add(2,0,0));p.setHealth(Math.max(1,p.getHealth()-20));
         energy.setAura(1);energy.setMagicule(0);
         h.assertTrue(WildHunt.GODLY.get().getMagiculeCost(p,i,2)==0,"Pending Reversal displays a recast cost");
         WildHunt.GODLY.get().onPressed(i,p,0,2);
         h.assertTrue(p.position().distanceTo(start)<.1,"Reversal did not return to safe anchor");
-        h.assertTrue(energy.getAura()==100_000 && energy.getMagicule()==97_600,"Free return did not restore recorded reserves after the cast payment");
+        h.assertTrue(energy.getAura()==100_000 && energy.getMagicule()==88_000,"Free return did not restore recorded reserves after the cast payment");
         h.assertTrue(i.getCoolDown(2)==25,"Reversal bypasses its cooldown");h.succeed();
     }
 
@@ -151,7 +151,7 @@ public final class MythsIntegrationTests {
         double aura=TensuraStorages.getExistenceFrom(p).getMagicule();WildHunt.GODLY.get().onPressed(i,p,0,0);
         for(int n=0;n<8;n++)h.assertTrue(targets.get(n).getHealth()<1024,"Spatial ray missed pierced target "+n);
         h.assertTrue(targets.get(8).getHealth()==1024,"Spatial ray exceeded its eight-target cap");
-        h.assertTrue(Math.abs(aura-TensuraStorages.getExistenceFrom(p).getMagicule()-800)<.01,"Spatial ray charged the wrong pool or cost");
+        h.assertTrue(Math.abs(aura-TensuraStorages.getExistenceFrom(p).getMagicule()-2400)<.01,"Spatial ray charged the wrong pool or cost");
         h.assertTrue(i.getCoolDown(0)==0 && i.getOrCreateTag().contains("channel_until"),"Channel did not start before its release cooldown");
         WildHunt.GODLY.get().onRelease(i,p,1,0,0);h.assertTrue(i.getCoolDown(0)==4 && !i.getOrCreateTag().contains("channel_until"),"Release did not stop the channel and start cooldown");h.succeed();
     }
@@ -159,7 +159,7 @@ public final class MythsIntegrationTests {
     public static void godlyVerdictCanCastAloneAndConsumesItsFieldForEmpowerment(GameTestHelper h) {
         var p=player(h);HunterData.learnReward(p,WildHunt.GODLY.get());var i=SkillAPI.getSkillsFrom(p).getSkill(WildHunt.GODLY.get()).orElseThrow();
         double aura=TensuraStorages.getExistenceFrom(p).getMagicule();WildHunt.GODLY.get().onPressed(i,p,0,3);
-        h.assertTrue(TensuraStorages.getExistenceFrom(p).getMagicule()==aura-15000 && i.onCoolDown(3) && !i.getOrCreateTag().getBoolean("verdict_empowered"),"Standalone Verdict failed or received unearned empowerment");
+        h.assertTrue(TensuraStorages.getExistenceFrom(p).getMagicule()==aura-28000 && i.onCoolDown(3) && !i.getOrCreateTag().getBoolean("verdict_empowered"),"Standalone Verdict failed or received unearned empowerment");
         i.setCoolDown(0,3);
         WildHunt.GODLY.get().onPressed(i,p,0,1);h.assertTrue(i.getOrCreateTag().contains("horizon_until"),"Horizon did not persist its center/lifetime");
         WildHunt.GODLY.get().onPressed(i,p,0,3);
@@ -236,7 +236,7 @@ public final class MythsIntegrationTests {
         h.runAfterDelay(11,()->{
             h.assertTrue(WildHunt.GODLY.get().onHeld(i,p,11,0),"Native held callback did not continue channel");
             h.assertTrue(second.getHealth()<1024 && first.getHealth()==after,"Channel pulse: first="+first.getHealth()+" expected="+after+" second="+second.getHealth()+" aim="+ApexArts.point(i.getOrCreateTag(),"channel_aim"));
-            h.assertTrue(energy.getMagicule()==mp-400 && energy.getAura()==aura,"Channel billed the wrong resource or pulse cost");
+            h.assertTrue(energy.getMagicule()==mp-1200 && energy.getAura()==aura,"Channel billed the wrong resource or pulse cost");
             WildHunt.GODLY.get().onRelease(i,p,11,0,0);
             h.assertTrue(!WildHunt.GODLY.get().onHeld(i,p,12,0) && !i.getOrCreateTag().hasUUID("channel_visual"),"Released channel retained a damaging beam");h.succeed();
         });
@@ -244,7 +244,7 @@ public final class MythsIntegrationTests {
     @GameTest(template="empty",timeoutTicks=100)
     public static void channelStopsWhenMagiculesAreExhausted(GameTestHelper h) {
         var p=player(h);HunterData.learnReward(p,WildHunt.GODLY.get());var i=SkillAPI.getSkillsFrom(p).getSkill(WildHunt.GODLY.get()).orElseThrow();
-        TensuraStorages.getExistenceFrom(p).setMagicule(800);WildHunt.GODLY.get().onPressed(i,p,0,0);
+        TensuraStorages.getExistenceFrom(p).setMagicule(2400);WildHunt.GODLY.get().onPressed(i,p,0,0);
         i.getOrCreateTag().putLong("channel_next",0);
         h.assertTrue(!WildHunt.GODLY.get().onHeld(i,p,10,0) && !i.getOrCreateTag().contains("channel_until") && i.getCoolDown(0)==4,"Unfunded channel continued");h.succeed();
     }
@@ -327,7 +327,7 @@ public final class MythsIntegrationTests {
         var anchor=p.blockPosition();p.setPos(p.position().add(3,0,0));var before=p.position();energy.setMagicule(0);
         h.getLevel().setBlockAndUpdate(anchor,net.minecraft.world.level.block.Blocks.STONE.defaultBlockState());i.getOrCreateTag().putLong("anchor_until",h.getLevel().getGameTime());
         WildHunt.GODLY.get().tickActive(i,p);
-        h.assertTrue(p.position().equals(before) && energy.getMagicule()==97_600 && !i.getOrCreateTag().contains("anchor_until"),"Blocked timeout stranded a checkpoint or teleported into a wall");
+        h.assertTrue(p.position().equals(before) && energy.getMagicule()==88_000 && !i.getOrCreateTag().contains("anchor_until"),"Blocked timeout stranded a checkpoint or teleported into a wall");
         i.setCoolDown(0,2);WildHunt.GODLY.get().onPressed(i,p,0,2);energy.setMagicule(0);GodlySkill.clearTransient(p);WildHunt.GODLY.get().tickActive(i,p);
         h.assertTrue(energy.getMagicule()==0 && !i.getOrCreateTag().contains("anchor_until"),"Lifecycle cleanup rewound resources across a dimension/relog boundary");h.succeed();
     }
@@ -422,7 +422,7 @@ public final class MythsIntegrationTests {
         h.assertTrue(!i.getSkill().canInteractSkill(i,p),"Fixture did not suppress native skill interaction");
         WildHunt.GODLY.get().tickActive(i,p);h.assertTrue(i.getOrCreateTag().contains("anchor_until"),"Temporary suppression canceled a previously armed checkpoint");
         i.getOrCreateTag().putLong("anchor_until",h.getLevel().getGameTime());WildHunt.GODLY.get().tickActive(i,p);
-        h.assertTrue(p.position().distanceTo(start)<.1 && energy.getMagicule()==97_600 && !i.getOrCreateTag().contains("anchor_until") && i.getCoolDown(2)==25,"Unfunded, suppressed checkpoint failed to return automatically");h.succeed();
+        h.assertTrue(p.position().distanceTo(start)<.1 && energy.getMagicule()==88_000 && !i.getOrCreateTag().contains("anchor_until") && i.getCoolDown(2)==25,"Unfunded, suppressed checkpoint failed to return automatically");h.succeed();
     }
     @GameTest(template="empty",timeoutTicks=100)
     public static void worldlineSteersSmoothlyAndIndependentlyOfFrameRate(GameTestHelper h) {

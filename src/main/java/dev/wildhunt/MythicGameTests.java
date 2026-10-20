@@ -147,9 +147,11 @@ public final class MythicGameTests {
         });
         h.runAfterDelay(2,()->{
             held.tick(storage,p);h.assertTrue(energy.getMagicule()>20_000 && Math.abs(energy.getMagicule()-perTick*2)<.001,"The old per-cast limit remains");
-            p.setPos(p.position().add(1,0,0));tick(p,i);h.assertTrue(((ArtVisualEntity)h.getLevel().getEntity(visual)).position().distanceTo(p.position())<.001,"Held effect failed to follow its owner");
-            double mp=energy.getMagicule();storage.handleSkillRelease(i,0,2,false);
-            h.assertTrue(!i.getOrCreateTag().getBoolean("crucible_active") && h.getLevel().getEntity(visual)==null && i.getCoolDown(2)==0 && !s.onHeld(i,p,3,2) && energy.getMagicule()==mp,"Releasing left conversion, visual or cooldown active");h.succeed();
+            h.startSequence().thenWaitUntil(()->h.assertTrue(h.getLevel().getEntity(visual) instanceof ArtVisualEntity,"Crucible visual is not indexed yet")).thenExecute(()->{
+                p.setPos(p.position().add(1,0,0));tick(p,i);h.assertTrue(((ArtVisualEntity)h.getLevel().getEntity(visual)).position().distanceTo(p.position())<.001,"Held effect failed to follow its owner");
+                double mp=energy.getMagicule();storage.handleSkillRelease(i,0,2,false);
+                h.assertTrue(!i.getOrCreateTag().getBoolean("crucible_active") && h.getLevel().getEntity(visual)==null && i.getCoolDown(2)==0 && !s.onHeld(i,p,3,2) && energy.getMagicule()==mp,"Releasing left conversion, visual or cooldown active");h.succeed();
+            });
         });
     }
     @GameTest(template="empty",timeoutTicks=100)
@@ -194,7 +196,7 @@ public final class MythicGameTests {
         var bursts=i.getOrCreateTag().getList("bursts",Tag.TAG_COMPOUND);String[] ids={"fire","water","lightning","earth","wind","light","space"};int[] ticks={12,18,25,32,38,45,52};
         h.assertTrue(bursts.size()==7,"Lexicon did not schedule exactly seven passive-backed elements");
         for(int n=0;n<7;n++)h.assertTrue(bursts.getCompound(n).getString("type").equals(ids[n]) && bursts.getCompound(n).getLong("at")==now+ticks[n],"Wrong element or delayed chapter: "+n);
-        h.assertTrue(TensuraStorages.getExistenceFrom(p).getAura()==aura && TensuraStorages.getExistenceFrom(p).getMagicule()==mp-5000,"Thoth charged wrong energy");
+        h.assertTrue(TensuraStorages.getExistenceFrom(p).getAura()==aura && TensuraStorages.getExistenceFrom(p).getMagicule()==mp-12000,"Thoth charged wrong energy");
         var visual=h.getLevel().getEntitiesOfClass(ArtVisualEntity.class,p.getBoundingBox().inflate(70),v->v.kind()==ArtVisualEntity.LEXICON);
         h.assertTrue(visual.size()==1 && visual.getFirst().lifetime()==70 && i.getCoolDown(0)==12,"Lexicon changed lifetime or cooldown");h.succeed();});
     }
@@ -246,21 +248,22 @@ public final class MythicGameTests {
         var p=player(h);var target=new ChapterProbe(h.getLevel());target.setPos(p.position().add(8,0,0));h.getLevel().addFreshEntity(target);var i=learn(p,MythicKind.DEMETER);afterTracking(h,List.of(target),()->{cast(p,i,2);due(i,h.getLevel().getGameTime());tick(p,i);h.assertTrue(!target.sources.isEmpty() && target.sources.stream().allMatch(id->id.equals("ice_elemental")),"Removing Thoth's ice phase changed Demeter's actual native damage");h.succeed();});
     }
     @GameTest(template="empty",timeoutTicks=350)
-    public static void fasterThothCyclesKeepComparableDamageWithoutResettingNativeHitImmunity(GameTestHelper h){
+    public static void thothSevenElementCastsBeatOldBudgetsWithoutResettingNativeHitImmunity(GameTestHelper h){
         var p=player(h);var current=target(h,p.position().add(8,0,0));var former=target(h,p.position().add(40,0,0));
         // The baseline is outside Library range; force its own chunks so its native immunity timer actually ticks.
         for(int dx=-1;dx<=1;dx++)for(int dz=-1;dz<=1;dz++){var pos=former.blockPosition().offset(dx*16,0,dz*16);h.getLevel().getChunk(pos);h.getLevel().setChunkForced(pos.getX()>>4,pos.getZ()>>4,true);}
+        for(var v:List.of(current,former))v.addEffect(new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.DAMAGE_RESISTANCE,400,3));
         current.invulnerableTime=2;former.invulnerableTime=2;
         afterTracking(h,List.of(current,former),()->h.startSequence().thenWaitUntil(()->h.assertTrue(current.invulnerableTime==0 && former.invulnerableTime==0,"Fixture recipients are not entity-ticking yet")).thenExecute(()->{var i=learn(p,MythicKind.THOTH);var skill=(MythicSkill)i.getSkill();double[] damage=new double[4];cast(p,i,0);
             for(int elapsed=0;elapsed<=270;elapsed++){final int age=elapsed;h.runAfterDelay(elapsed,()->{
                 // Refill HP to observe a full cast without killing either recipient; keep their real immunity timers.
                 current.setHealth(1024);former.setHealth(1024);float before=current.getHealth();tick(p,i);damage[age<=70?0:2]+=before-current.getHealth();
-                int local=age<=70?age:age-71;float old=0;
-                if(age<=70){if(local==12)old=500;if(local==32)old=400;if(local==52)old=600;}
-                else if(local>=10 && local<200 && (local-10)%15==0)old=240;
-                if(old>0){before=former.getHealth();MythicArts.hit(skill,i,p,former,old,age<=70?0:3,io.github.manasmods.tensura.damage.TensuraDamageTypes.FIRE_ELEMENTAL);damage[age<=70?1:3]+=before-former.getHealth();}
+                int local=age<=70?age:age-70;float old=0;var oldType=ThothElement.FIRE.damage;
+                if(age<=70){for(int chapter=0;chapter<ThothElement.COUNT;chapter++)if(local==ThothElement.lexiconTick(chapter)){old=375;oldType=ThothElement.at(chapter).damage;}}
+                else if(local>=10 && local<200 && (local-10)%5==0){old=160;oldType=ThothElement.at((local-10)/5).damage;}
+                if(old>0){before=former.getHealth();MythicArts.hit(skill,i,p,former,old,age<=70?0:3,oldType);damage[age<=70?1:3]+=before-former.getHealth();}
                 if(age==70)cast(p,i,3);
-                if(age==270){h.assertTrue(damage[1]>0 && damage[3]>0 && damage[0]/damage[1]>.8 && damage[0]/damage[1]<1.2 && damage[2]/damage[3]>.8 && damage[2]/damage[3]<1.2,"Native damage changed substantially: Lexicon="+damage[0]+" / "+damage[1]+", Library="+damage[2]+" / "+damage[3]);h.succeed();}
+                if(age==270){h.assertTrue(damage[1]>0 && damage[3]>0 && damage[0]/damage[1]>2.7 && damage[0]/damage[1]<3.2 && damage[2]/damage[3]>4.8 && damage[2]/damage[3]<5.2,"Native damage changed substantially: Lexicon="+damage[0]+" / "+damage[1]+", Library="+damage[2]+" / "+damage[3]);h.succeed();}
             });}
         }));
     }
@@ -279,6 +282,7 @@ public final class MythicGameTests {
     @GameTest(template="empty",timeoutTicks=100)
     public static void prismSplitsToThreeAndBriarsApplyNativeWebbed(GameTestHelper h){
         var p=player(h);var a=target(h,p.position().add(8,0,0));var b=target(h,p.position().add(8,0,3));var c=target(h,p.position().add(8,0,-3));var d=target(h,p.position().add(8,0,6));var mirror=learn(p,MythicKind.MIRRORBOUND);var verdant=learn(p,MythicKind.VERDANT_KEEPER);
+        for(var v:List.of(a,b,c,d))v.addEffect(new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.DAMAGE_RESISTANCE,200,3));
         afterTracking(h,List.of(a,b,c,d),()->{cast(p,mirror,0);h.assertTrue(a.getHealth()<1024 && b.getHealth()<1024 && c.getHealth()<1024 && d.getHealth()==1024,"Prism did not limit its split to three distinct targets");for(var v:List.of(a,b,c,d))v.invulnerableTime=0;cast(p,verdant,1);
             h.assertTrue(a.hasEffect(io.github.manasmods.tensura.registry.effect.TensuraMobEffects.getReference(io.github.manasmods.tensura.registry.effect.TensuraMobEffects.WEBBED)),"Briar Grasp failed native Webbed");h.succeed();});
     }
@@ -291,7 +295,7 @@ public final class MythicGameTests {
             // Set the measured reserves immediately before the atomic cast.
             for(var v:List.of(a,b))TensuraStorages.getExistenceFrom(v).setMagicule(5000);
             double mp=TensuraStorages.getExistenceFrom(p).getMagicule();cast(p,i,1);
-            h.assertTrue(TensuraStorages.getExistenceFrom(a).getMagicule()==3500 && TensuraStorages.getExistenceFrom(b).getMagicule()==5000,"Spellbreak reserves: ordinary="+TensuraStorages.getExistenceFrom(a).getMagicule()+" Godly="+TensuraStorages.getExistenceFrom(b).getMagicule());h.assertTrue(TensuraStorages.getExistenceFrom(p).getMagicule()==mp-3250,"Spellbreak did not recover exactly half the actual drained magicules");
+            h.assertTrue(TensuraStorages.getExistenceFrom(a).getMagicule()==3500 && TensuraStorages.getExistenceFrom(b).getMagicule()==5000,"Spellbreak reserves: ordinary="+TensuraStorages.getExistenceFrom(a).getMagicule()+" Godly="+TensuraStorages.getExistenceFrom(b).getMagicule());h.assertTrue(TensuraStorages.getExistenceFrom(p).getMagicule()==mp-5750,"Spellbreak did not recover exactly half the actual drained magicules");
             var silence=io.github.manasmods.tensura.registry.effect.TensuraMobEffects.getReference(io.github.manasmods.tensura.registry.effect.TensuraMobEffects.SILENCE);h.assertTrue(a.hasEffect(silence) && !b.hasEffect(silence) && b.getHealth()<1024,"Spellbreak did not distinguish native disruption from attack damage");h.succeed();});
     }
     @GameTest(template="empty",timeoutTicks=100)

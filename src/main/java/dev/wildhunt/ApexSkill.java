@@ -164,7 +164,7 @@ public class ApexSkill extends Skill {
     }
     boolean strike(ServerLevel level, ManasSkillInstance instance, LivingEntity caster, LivingEntity target,
                    float raw, int mode, boolean pulse) {
-        float damage = raw * 0.9f; var data = HunterData.of(target); long now = level.getGameTime();
+        float damage = raw * (ultimate ? 0.9f : 1f); var data = HunterData.of(target); long now = level.getGameTime();
         if (apex == Apex.REY_DAU && (target.isInWaterOrRain() || data.getLong("drenched_until") > now)) damage *= 1.3f;
         if (apex == Apex.UTH_DUNA && mode == 0 && data.getLong("drenched_until") > now) damage *= 1.5f;
         var type = switch (apex) {

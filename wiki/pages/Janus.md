@@ -47,7 +47,7 @@ Enable the native skill toggle in Ability Selection. The first second is paid on
 | 2. Parallax Snare | 9,000 | 8 s | 1,900 |
 | 3. Crossroads Edict | 16,000 | 18 s | 1,700 |
 
-Damage listed here is before native combat handling and uses **1 + 0.5 × mastery fraction**, capped at **1.5×**. These new kits do not use the apex skills’ 0.90 multiplier or the former 3× Ultimate multiplier. EP never multiplies their damage. Damaging arts carry native **level-1 resistance penetration**; native elemental boosts, resistance attributes, nullification fallback, authority, barriers and hit immunity remain relevant.
+Damage listed here is before native combat handling and uses **1 + 0.5 × mastery fraction**, capped at **1.5×**. EP never multiplies their damage. Damaging arts carry native **level-1 resistance penetration**; native elemental boosts, resistance attributes, nullification fallback, authority, barriers and hit immunity remain relevant.
 
 #### Twin Gates
 

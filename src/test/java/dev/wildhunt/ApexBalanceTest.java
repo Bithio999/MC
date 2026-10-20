@@ -20,10 +20,10 @@ class ApexBalanceTest {
         assertEquals(1.5f, ApexBalance.power(100, false));
         assertEquals(4.5f, ApexBalance.power(1, true));
     }
-    @Test void eachUniqueStartsAboveTheOldEightDamageBeam() {
+    @Test void apexUniquesHaveAffordableCombatOpeners() {
         for (Apex apex : Apex.values()) {
-            assertTrue(ApexBalance.of(apex).primary() >= 65);
-            assertTrue(ApexBalance.of(apex).aura(0, false) <= 200);
+            assertTrue(ApexBalance.of(apex).primary() >= 400);
+            assertTrue(ApexBalance.of(apex).aura(0, false) <= 800);
         }
     }
 }

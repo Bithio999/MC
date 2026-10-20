@@ -45,12 +45,12 @@ Enable the native skill toggle in Ability Selection. The first second is paid on
 
 | Mode | Magicules | Cooldown | Raw damage |
 | --- | ---: | ---: | --- |
-| 1. Lexicon of Ruin | 5,000 | 12 s | 375 per chapter |
-| 2. Spellbreak | 4,000 | 15 s | 180 |
+| 1. Lexicon of Ruin | 12,000 | 12 s | 1,100 per chapter |
+| 2. Spellbreak | 6,500 | 15 s | 900 |
 | 3. Mana Crucible | 0; converts aura while held | None | — |
-| 4. Astral Library | 9,000 | 35 s | 160 per bolt |
+| 4. Astral Library | 24,000 | 35 s | 800 per bolt |
 
-Damage listed here is before native combat handling and uses **1 + 0.5 × mastery fraction**, capped at **1.5×**. These new kits do not use the apex skills’ 0.90 multiplier or the former 3× Ultimate multiplier. EP never multiplies their damage. Native elemental boosts, authority, barriers and hit immunity apply; shared Godly penetration bypasses native resistance/nullification protection.
+Damage listed here is before native combat handling and uses **1 + 0.5 × mastery fraction**, capped at **1.5×**. EP never multiplies their damage. Native elemental boosts, authority, barriers and hit immunity apply; shared Godly penetration bypasses native resistance/nullification protection.
 
 #### Lexicon of Ruin
 
@@ -60,9 +60,9 @@ Damage listed here is before native combat handling and uses **1 + 0.5 × master
 | --- | --- |
 | Damage type | Fire, Water, Lightning, Earth, Wind, Light and Space elemental |
 | Damage ID | `tensura:fire_elemental`; `tensura:water_elemental`; `tensura:lightning_elemental`; `tensura:earth_elemental`; `tensura:wind_elemental`; `tensura:light_elemental`; `tensura:space_elemental` |
-| Resource cost | 5,000 magicules |
+| Resource cost | 12,000 magicules |
 | Cooldown | 12 seconds |
-| Raw damage | 375 per chapter |
+| Raw damage | 1,100 per chapter |
 
 Mark a six-block-radius spell diagram within 64 blocks. Seven chapters strike the fixed location at **0.60, 0.90, 1.25, 1.60, 1.90, 2.25 and 2.60 seconds**, cycling **Fire → Water → Lightning → Earth → Wind → Light → Space**. The warning begins immediately and the formation lasts **3.5 seconds**. Each chapter attempts to hit up to eight visible enemies using its own native elemental source and animated magic circle. Native hit immunity still applies to closely spaced chapters; it is never reset to force extra hits. Water represents the passive’s shared Water/Ice boost, so there is no separate Ice chapter. The sequence can be dodged by leaving its area.
 
@@ -74,9 +74,9 @@ Mark a six-block-radius spell diagram within 64 blocks. Seven chapters strike th
 | --- | --- |
 | Damage type | Generic magic |
 | Damage ID | `tensura:magic` |
-| Resource cost | 4,000 magicules |
+| Resource cost | 6,500 magicules |
 | Cooldown | 15 seconds |
-| Raw damage | 180 |
+| Raw damage | 900 |
 
 Place a twelve-block-radius disruption field within 36 blocks, affecting up to six visible enemies. Each takes generic magic damage. Non-Godly owners additionally face native Silence and Magic Interference II for three seconds, and lose up to 1,500 current magicules. Half the drained magicules returns to you, capped at 2,000 total and your current maximum. Godly owners take the attack damage but are exempt from the drain and disruption.
 
@@ -108,11 +108,11 @@ Repeated taps do not grant mastery. Sustained conversion earns mastery once per 
 | --- | --- |
 | Damage type | Rotating Fire, Water, Lightning, Earth, Wind, Light and Space elemental |
 | Damage ID | `tensura:fire_elemental`; `tensura:water_elemental`; `tensura:lightning_elemental`; `tensura:earth_elemental`; `tensura:wind_elemental`; `tensura:light_elemental`; `tensura:space_elemental` |
-| Resource cost | 9,000 magicules |
+| Resource cost | 24,000 magicules |
 | Cooldown | 35 seconds |
-| Raw damage | 160 per bolt |
+| Raw damage | 800 per bolt |
 
-For ten seconds, three open grimoires orbit above you. Starting after half a second and then every **0.25 seconds**, fire at up to three visible enemies within 28 blocks. The chapter cycles **Fire → Water → Lightning → Earth → Wind → Light → Space**, repeating every **1.75 seconds**. There are 38 volleys within the same ten-second window. Each bolt uses 160 raw damage before mastery and native combat handling; normal hit immunity can suppress closely spaced hits. The three books take turns firing and recolour for their upcoming element; there is no separate Ice volley. The formation moves with you; only one library per owner. Forgetting the skill, dying or changing dimension cancels it.
+For ten seconds, three open grimoires orbit above you. Starting after half a second and then every **0.25 seconds**, fire at up to three visible enemies within 28 blocks. The chapter cycles **Fire → Water → Lightning → Earth → Wind → Light → Space**, repeating every **1.75 seconds**. There are 38 volleys within the same ten-second window. Each bolt uses 800 raw damage before mastery and native combat handling; normal hit immunity can suppress closely spaced hits. The three books take turns firing and recolour for their upcoming element; there is no separate Ice volley. The formation moves with you; only one library per owner. Forgetting the skill, dying or changing dimension cancels it.
 
 ## Spellcraft visuals
 

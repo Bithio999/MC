@@ -45,7 +45,7 @@ Enable the native skill toggle in Ability Selection. The first second is paid on
 | 2. Perennial Seed | 10,000 | 24 s | — |
 | 3. Winter Harvest | 20,000 | 24 s | 1,400; 2,200 when consuming a live orchard |
 
-Damage listed here is before native combat handling and uses **1 + 0.5 × mastery fraction**, capped at **1.5×**. These new kits do not use the apex skills’ 0.90 multiplier or the former 3× Ultimate multiplier. EP never multiplies their damage. Ultimate damaging arts use native **level-1 resistance penetration**; elemental boosts, resistance attributes, native nullification fallback, barriers, authority and hit immunity retain their independent rules.
+Damage listed here is before native combat handling and uses **1 + 0.5 × mastery fraction**, capped at **1.5×**. EP never multiplies their damage. Ultimate damaging arts use native **level-1 resistance penetration**; elemental boosts, resistance attributes, native nullification fallback, barriers, authority and hit immunity retain their independent rules.
 
 #### Winter Orchard
 

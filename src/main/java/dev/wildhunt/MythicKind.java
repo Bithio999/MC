@@ -3,13 +3,13 @@ package dev.wildhunt;
 /** Independent kits share native skill plumbing, never their combat behavior. */
 public enum MythicKind {
     THREADWEAVER("Threadweaver", 0xED82D1, "Loom Needle", "Sever Thread", "Silken Instinct",
-        new double[]{220,500}, new int[]{4,6}, 15),
+        new double[]{600,1000}, new int[]{4,6}, 25),
     RUNE_SMITH("Rune Smith", 0xF9BA60, "Runic Mine", "Command Detonation", "Runic Circuit",
-        new double[]{350,400}, new int[]{6,4}, 20),
+        new double[]{600,800}, new int[]{6,4}, 30),
     VERDANT_KEEPER("Verdant Keeper", 0x8EE5AE, "Living Grove", "Briar Grasp", "Verdant Heart",
-        new double[]{700,300}, new int[]{14,5}, 20),
+        new double[]{1600,700}, new int[]{14,5}, 35),
     MIRRORBOUND("Mirrorbound", 0xB2DDFB, "Prismatic Lance", "Mirror Aegis", "Silvered Soul",
-        new double[]{280,600}, new int[]{3,10}, 15),
+        new double[]{750,1400}, new int[]{3,10}, 25),
     VRITRA("Vritra, Lord of Cataclysm", 0xFFAA59, "Plasma Bore", "Thunderhead Crucible", "Cataclysm Front", "Catastrophe Engine",
         new double[]{6000,15000,25000}, new int[]{5,16,26}, 120),
     DEMETER("Demeter, Lady of Sanctuary", 0xBCF4CE, "Winter Orchard", "Perennial Seed", "Winter Harvest", "Evergreen Sanctuary",
@@ -21,9 +21,9 @@ public enum MythicKind {
     AEGIR("Aegir, Lord of the Abyss", 0x65E4EC, "Refracted Harpoon", "Mirrorsea", "Sovereign Breaker", "Abyssal Majesty",
         new double[]{7000,12000,20000}, new int[]{5,16,24}, 110),
     LUGH("Lugh, God of Skills", 0xF4E7A1, "Skill Appraisal", "Reconstructed Art", "Countermand", "Grand Synthesis", "All-Skilled",
-        new double[]{1200,6500,9000,18000}, new int[]{2,4,18,40}, 240),
+        new double[]{1200,10000,9000,30000}, new int[]{2,4,18,40}, 240),
     THOTH("Thoth, God of Magic", 0x92E9F7, "Lexicon of Ruin", "Spellbreak", "Mana Crucible", "Astral Library", "Arcane Sovereignty",
-        new double[]{5000,4000,0,9000}, new int[]{12,15,0,35}, 180);
+        new double[]{12000,6500,0,24000}, new int[]{12,15,0,35}, 180);
 
     public final String title, passive;
     public final String[] modes;

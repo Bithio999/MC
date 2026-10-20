@@ -17,7 +17,7 @@
 | Combat role | Tentacle pulls / burning ground |
 | Active modes | 2 |
 | Toggleable passive | Furnace Mantle |
-| Passive upkeep | 15 aura / second |
+| Passive upkeep | 35 aura / second |
 | Registry ID | `wildhunt:black_flame` |
 | **Evolution** | |
 | Previous | — |
@@ -43,16 +43,16 @@ While toggled on, gain 8 armor, 50% melee attack and 50% flame boost. Fire-tagge
 
 Elemental boosts use the [strongest ordinary source](https://github.com/Bithio999/MC/wiki/Mechanics#elemental-bonus-sources); Godly bonuses apply separately.
 
-Enable or disable this through Tensura’s native **Ability Selection** skill toggle. It is separate from active mode cycling and has no fifteen/thirty-second duration. Upkeep is **15 aura per second**, with the first second paid on enabling. It turns off when aura is insufficient or activation requirements fail. Turning it off removes its own attribute modifiers immediately.
+Enable or disable this through Tensura’s native **Ability Selection** skill toggle. It is separate from active mode cycling and has no fifteen/thirty-second duration. Upkeep is **35 aura per second**, with the first second paid on enabling. It turns off when aura is insufficient or activation requirements fail. Turning it off removes its own attribute modifiers immediately.
 
 ### Active
 
 | Mode | Aura | Cooldown | Raw opening damage |
 | --- | ---: | ---: | ---: |
-| 1. Oil Lash | 160 | 3 s | 125 |
-| 2. Blackflame Ignition | 800 | 7 s | 165 |
+| 1. Oil Lash | 650 | 3 s | 450 |
+| 2. Blackflame Ignition | 1,800 | 7 s | 650 |
 
-**Damage calculation:** multiply the listed base values by **0.90**, then by the mastery multiplier (up to **1.50**). Elemental boosts, defenses, barriers, and situational modifiers also apply. EP does not multiply damage.
+**Damage calculation:** multiply the listed base values by **1 + 0.5 × mastery fraction**, up to **1.50×**. Elemental boosts, defenses, barriers, and situational modifiers also apply. EP does not multiply damage.
 
 #### Oil Lash
 
@@ -79,7 +79,7 @@ Lash up to 4 enemies in a forward fan within 14 blocks and pull them toward you.
 | Effect | Direct hits use this native element. |
 | Additional status damage | Black Burn: `tensura:black_flame` ([details](https://github.com/Bithio999/MC/wiki/Damage-Types#black-burn)) |
 
-Ignite valid owned pools for six seconds. Each affects a 3-block radius; overlapping pools cannot damage one enemy twice in a pulse. Opening damage is immediate and fixed, with no oil-stack multiplier. Later pulses deal 42 raw damage once per second and apply native Black Burn. If no valid controllable pool exists, place a fallback pool at the aim point up to six blocks away.
+Ignite valid owned pools for six seconds. Each affects a 3-block radius; overlapping pools cannot damage one enemy twice in a pulse. Opening damage is immediate and fixed, with no oil-stack multiplier. Later pulses deal 150 raw damage once per second and apply native Black Burn. If no valid controllable pool exists, place a fallback pool at the aim point up to six blocks away.
 
 ## Obtaining
 

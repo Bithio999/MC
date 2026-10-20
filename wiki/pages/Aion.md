@@ -18,7 +18,7 @@
 | Mastery cap | 50,000 |
 | Registry ID | `wildhunt:aion` |
 | **Evolution** | |
-| Previous | Vritra, Demeter or Janus |
+| Previous | Any of the five combination Ultimates |
 | Evolution | — |
 | **Obtaining** | |
 | Method | Mastered Myths Ultimate, True Hero or True Demon Lord, 12M base EP |
@@ -46,10 +46,10 @@ Eligible enemies within **16 blocks** suffer causal time dilation. Movement redu
 
 | Mode | Magicule cost | Cooldown | Range / area | Base damage |
 | --- | ---: | --- | --- | ---: |
-| Worldline Sever | 800 to start; 400 per additional 0.5 seconds | 4 seconds after channel ends | 80-block beam, up to 8 targets per pulse, 6-second maximum | 220 per 0.5 seconds |
-| Event Horizon | 6,000 | 16 seconds | 64-block cursor placement; 24-block pull, 10-block damage radius; 10 seconds | 120 per second |
-| Causal Reversal | 2,400 to record; free return | 1 second to recast; 25 seconds after manual or automatic return | Personal checkpoint, 20-second window | — |
-| Genesis Verdict | 15,000 | 45 seconds | 64-block placement; 12 / 14-block radius | 700 + 700 + 1,400 / 2,100 |
+| Worldline Sever | 2,400 to start; 1,200 per additional 0.5 seconds | 4 seconds after channel ends | 80-block beam, up to 8 targets per pulse, 6-second maximum | 1,200 per 0.5 seconds |
+| Event Horizon | 10,000 | 16 seconds | 64-block cursor placement; 24-block pull, 10-block damage radius; 10 seconds | 700 per second |
+| Causal Reversal | 12,000 to record; free return | 1 second to recast; 25 seconds after manual or automatic return | Personal checkpoint, 20-second window | — |
+| Genesis Verdict | 28,000 | 45 seconds | 64-block placement; 12 / 14-block radius | 2,400 + 2,400 + 4,800 / 7,200 |
 
 #### Worldline Sever
 
@@ -60,7 +60,7 @@ Eligible enemies within **16 blocks** suffer causal time dilation. Movement redu
 | Damage type | [Space elemental](Damage-Types.md#space) |
 | Damage ID | `tensura:space_elemental` |
 
-Hold the assigned skill key to channel a gold-white spatial beam that follows the current crosshair direction. Both the local preview and server damage ray use a short, frame-independent steering response, giving sweeping turns a smooth transition instead of snapping immediately. The local visual still updates every rendered frame; damage and resource use remain server-controlled. It pierces up to eight eligible enemies per pulse, passes through water and lava, and stops at solid block collision shapes (including solid waterlogged blocks). Damage pulses every half second; the opening pulse costs 800 magicules and each additional pulse costs 400. A full six-second channel has twelve pulses and costs 5,200 magicules before native cost modifiers.
+Hold the assigned skill key to channel a gold-white spatial beam that follows the current crosshair direction. Both the local preview and server damage ray use a short, frame-independent steering response, giving sweeping turns a smooth transition instead of snapping immediately. The local visual still updates every rendered frame; damage and resource use remain server-controlled. It pierces up to eight eligible enemies per pulse, passes through water and lava, and stops at solid block collision shapes (including solid waterlogged blocks). Damage pulses every half second; the opening pulse costs 2,400 magicules and each additional pulse costs 1,200. A full six-second channel has twelve pulses and costs 15,600 magicules before native cost modifiers.
 
 Releasing the key, exhausting magicules, suppression, death, dimension changes or reaching six seconds ends the beam and starts its four-second cooldown. The channel cannot keep damaging after release. Each pulse rechecks friendly/PvP protection.
 
@@ -84,7 +84,7 @@ Place a gravity domain with a dark core, counter-rotating accretion bands and Te
 | Damage type | None — recovery / repositioning |
 | Damage ID | — |
 
-The first press costs **2,400 magicules** and places a visible clockwork checkpoint, recording position, HP, SHP, aura and magicules **after paying that initial cast cost**. Press again after the one-second recast delay to return for **no cost**, even with no magicules remaining. If not used manually, it **automatically returns after twenty seconds**. HP, SHP, aura and magicules only **increase toward their recorded values**, limited by current caps. If a current stat is already higher than its checkpoint value, that higher value is preserved. The checkpoint stays fixed; it does not continually record new peaks. The initial cast cost is never refunded. Native **Recovery** circle effects and spatial bursts mark the return.
+The first press costs **12,000 magicules** and places a visible clockwork checkpoint, recording position, HP, SHP, aura and magicules **after paying that initial cast cost**. Press again after the one-second recast delay to return for **no cost**, even with no magicules remaining. If not used manually, it **automatically returns after twenty seconds**. HP, SHP, aura and magicules only **increase toward their recorded values**, limited by current caps. If a current stat is already higher than its checkpoint value, that higher value is preserved. The checkpoint stays fixed; it does not continually record new peaks. The initial cast cost is never refunded. Native **Recovery** circle effects and spatial bursts mark the return.
 
 Reversal does not restore items, cooldowns, buffs or lost lives. The destination must remain unobstructed, inside the world border and in the same dimension. A blocked manual return keeps the pending checkpoint. If the destination is blocked at timeout, recovery happens **in place** instead of teleporting into a wall. A completed manual or automatic return consumes the checkpoint and starts the full twenty-five-second cooldown. An already-armed checkpoint still resolves while asleep or temporarily suppressed. Death, forgetting Aion, relogging and dimension changes clear it without restoring resources.
 
@@ -97,9 +97,9 @@ Reversal does not restore items, cooldowns, buffs or lost lives. The destination
 | Damage type | [Space elemental](Damage-Types.md#space) |
 | Damage ID | `tensura:space_elemental` |
 
-Place a warned spatial catastrophe at the cursor within 64 blocks. After one second of warning, three pulses strike at one-second intervals: **700, 700 and 1,400** base damage within twelve blocks.
+Place a warned spatial catastrophe at the cursor within 64 blocks. After one second of warning, three pulses strike at one-second intervals: **2,400, 2,400 and 4,800** base damage within twelve blocks.
 
-If your Event Horizon is active, Verdict consumes it, uses its existing center and expands to **fourteen blocks**, with the final strike raised to **2,100**. The old Horizon visual is removed when consumed. A contracting cage, rising spatial beams, native **Space** circle and expanding fracture fronts telegraph the strikes. Enemies can leave the area.
+If your Event Horizon is active, Verdict consumes it, uses its existing center and expands to **fourteen blocks**, with the final strike raised to **7,200**. The old Horizon visual is removed when consumed. A contracting cage, rising spatial beams, native **Space** circle and expanding fracture fronts telegraph the strikes. Enemies can leave the area.
 
 ## Damage and interaction
 

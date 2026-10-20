@@ -24,16 +24,27 @@ public final class LughArts {
         TensuraDamageTypes.ICE_ELEMENTAL.location(),TensuraDamageTypes.WIND_ELEMENTAL.location(),TensuraDamageTypes.LIGHTNING_ELEMENTAL.location(),
         TensuraDamageTypes.LIGHT_ELEMENTAL.location(),TensuraDamageTypes.DARKNESS_ELEMENTAL.location(),TensuraDamageTypes.SPACE_ELEMENTAL.location(),TensuraDamageTypes.GRAVITY_ELEMENTAL.location());
     private static MythicSkill skill(){return WildHunt.MYTHIC.get(MythicKind.LUGH).get();}
-    private static float bounded(float value){return Float.isFinite(value)?Math.clamp(value,2000,4000):2200;}
+    private static float bounded(float value){return Float.isFinite(value)?Math.clamp(value,3500,6000):3800;}
     private static CompoundTag pattern(String name,String source,ResourceLocation type,int form,float damage){
         var t=new CompoundTag();t.putString("name",name);t.putString("source",source);t.putString("type",type.toString());t.putInt("form",Math.clamp(form,0,2));t.putFloat("damage",bounded(damage));return t;
     }
     public static ListTag archive(ManasSkillInstance i){
         var tag=i.getOrCreateTag();var list=tag.getList("archive",Tag.TAG_COMPOUND);
         if(list.size()!=3){
-            list=new ListTag();list.add(pattern("Sovereign Edge","wildhunt:origin_edge",TensuraDamageTypes.AURA_SLASH.location(),0,2200));
-            list.add(pattern("Heavenly Thread","wildhunt:origin_thread",TensuraDamageTypes.SPACE_ELEMENTAL.location(),1,2200));
-            list.add(pattern("Founder's Rune","wildhunt:origin_rune",TensuraDamageTypes.EARTH_ELEMENTAL.location(),2,2400));tag.put("archive",list);
+            list=new ListTag();list.add(pattern("Sovereign Edge","wildhunt:origin_edge",TensuraDamageTypes.AURA_SLASH.location(),0,3800));
+            list.add(pattern("Heavenly Thread","wildhunt:origin_thread",TensuraDamageTypes.SPACE_ELEMENTAL.location(),1,3800));
+            list.add(pattern("Founder's Rune","wildhunt:origin_rune",TensuraDamageTypes.EARTH_ELEMENTAL.location(),2,4200));tag.put("archive",list);
+        }
+        // Upgrade only untouched origin records. Appraised techniques keep their identity,
+        // type and form; all saved intensities are brought into the current bounded budget.
+        for(var value:list){
+            var record=(CompoundTag)value;float damage=record.getFloat("damage");
+            damage=switch(record.getString("source")){
+                case "wildhunt:origin_edge","wildhunt:origin_thread" -> damage==2200?3800:damage;
+                case "wildhunt:origin_rune" -> damage==2400?4200:damage;
+                default -> damage;
+            };
+            record.putFloat("damage",bounded(damage));
         }
         return list;
     }
@@ -95,7 +106,7 @@ public final class LughArts {
         var id=ResourceLocation.tryParse(pattern.getString("type"));return ResourceKey.create(Registries.DAMAGE_TYPE,id!=null && SAFE_TYPES.contains(id)?id:TensuraDamageTypes.MAGIC_GENERIC.location());
     }
     private static void reconstruct(MythicSkill s,ServerLevel l,ManasSkillInstance i,LivingEntity e,CompoundTag record,Vec3 center,int mode,boolean synthesis){
-        int form=Math.clamp(record.getInt("form"),0,2);float damage=bounded(record.getFloat("damage"))*(synthesis?1.8f:1);var type=safeType(record);List<LivingEntity> targets;
+        int form=Math.clamp(record.getInt("form"),0,2);float damage=bounded(record.getFloat("damage"))*(synthesis?1.6f:1);var type=safeType(record);List<LivingEntity> targets;
         if(center!=null){
             final Vec3 origin=center;
             targets=ApexArts.enemies(l,e,center,10).stream().filter(v->form==2 || form==0?Math.abs(v.getY()-origin.y)<6:Math.abs(v.getX()-origin.x)<2.5 || Math.abs(v.getZ()-origin.z)<2.5).limit(8).toList();

@@ -47,7 +47,7 @@ Enable the native skill toggle in Ability Selection. The first second is paid on
 | 2. Thunderhead Crucible | 15,000 | 16 s | 900 lightning + 500 fire per pulse |
 | 3. Cataclysm Front | 25,000 | 26 s | 1,800 per eruption; 2,400 when empowered |
 
-Damage listed here is before native combat handling and uses **1 + 0.5 × mastery fraction**, capped at **1.5×**. These new kits do not use the apex skills’ 0.90 multiplier or the former 3× Ultimate multiplier. EP never multiplies their damage. Ultimate art hits carry native **level-1 resistance penetration**. Native elemental boosts, authority, resistance attributes, nullification fallback rules, barriers and hit immunity remain relevant.
+Damage listed here is before native combat handling and uses **1 + 0.5 × mastery fraction**, capped at **1.5×**. EP never multiplies their damage. Ultimate art hits carry native **level-1 resistance penetration**. Native elemental boosts, authority, resistance attributes, nullification fallback rules, barriers and hit immunity remain relevant.
 
 #### Plasma Bore
 

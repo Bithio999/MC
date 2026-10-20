@@ -16,7 +16,7 @@
 | Combat role | Ricochet lightning / mobility |
 | Active modes | 2 |
 | Toggleable passive | Storm Mantle |
-| Passive upkeep | 10 aura / second |
+| Passive upkeep | 25 aura / second |
 | Registry ID | `wildhunt:storm_crown` |
 | **Evolution** | |
 | Previous | — |
@@ -42,16 +42,16 @@ While toggled on, gain 6 armor, 35% movement, 25% attack speed and 50% lightning
 
 Elemental boosts use the [strongest ordinary source](Mechanics.md#elemental-bonus-sources); Godly bonuses apply separately.
 
-Enable or disable this through Tensura’s native **Ability Selection** skill toggle. It is separate from active mode cycling and has no fifteen/thirty-second duration. Upkeep is **10 aura per second**, with the first second paid on enabling. It turns off when aura is insufficient or activation requirements fail. Turning it off removes its own attribute modifiers immediately.
+Enable or disable this through Tensura’s native **Ability Selection** skill toggle. It is separate from active mode cycling and has no fifteen/thirty-second duration. Upkeep is **25 aura per second**, with the first second paid on enabling. It turns off when aura is insufficient or activation requirements fail. Turning it off removes its own attribute modifiers immediately.
 
 ### Active
 
 | Mode | Aura | Cooldown | Raw opening damage |
 | --- | ---: | ---: | ---: |
-| 1. Railbolt | 200 | 3 s | 160 |
-| 2. Thunder Step | 600 | 4 s | 135 |
+| 1. Railbolt | 800 | 3 s | 550 |
+| 2. Thunder Step | 1,000 | 4 s | 350 |
 
-**Damage calculation:** multiply the listed base values by **0.90**, then by the mastery multiplier (up to **1.50**). Elemental boosts, defenses, barriers, and situational modifiers also apply. EP does not multiply damage.
+**Damage calculation:** multiply the listed base values by **1 + 0.5 × mastery fraction**, up to **1.50×**. Elemental boosts, defenses, barriers, and situational modifiers also apply. EP does not multiply damage.
 
 #### Railbolt
 

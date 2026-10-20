@@ -48,9 +48,9 @@ The archive has **three entries**, not an accumulating power meter. Lugh begins 
 
 | Entry | Form | Damage type | Raw reconstruction damage |
 | --- | --- | --- | ---: |
-| Sovereign Edge | Blade | Physical aura slash — `tensura:aura_slash` | 2,200 |
-| Heavenly Thread | Lance | Space elemental — `tensura:space_elemental` | 2,200 |
-| Founder's Rune | Crown | Earth elemental — `tensura:earth_elemental` | 2,400 |
+| Sovereign Edge | Blade | Physical aura slash — `tensura:aura_slash` | 3,800 |
+| Heavenly Thread | Lance | Space elemental — `tensura:space_elemental` | 3,800 |
+| Founder's Rune | Crown | Earth elemental — `tensura:earth_elemental` | 4,200 |
 
 **Crouch + Reconstructed Art** cycles the selected entry without spending magicules, changing its cooldown or earning mastery. It works while that mode is cooling down. Its mode name shows the selected technique.
 
@@ -61,9 +61,9 @@ Skill Appraisal replaces the selected entry. If that source skill already exists
 | Mode | Magicule cost | Cooldown | Damage |
 | --- | ---: | ---: | --- |
 | 1. Skill Appraisal | 1,200 | 2 s | — |
-| 2. Reconstructed Art | 6,500; selection is free | 4 s | 2,000–4,000 raw |
+| 2. Reconstructed Art | 10,000; selection is free | 4 s | 3,500–6,000 raw |
 | 3. Countermand | 9,000 | 18 s | — |
-| 4. Grand Synthesis | 18,000 | 40 s | Three archived attacks at 1.8× their reconstruction damage |
+| 4. Grand Synthesis | 30,000 | 40 s | Three archived attacks at 1.6× their reconstruction damage |
 
 Mastery scales damaging arts by **1 + 0.5 × mastery fraction**, capped at 1.5×. Native elemental boosts, barriers, hit immunity, authority and PvP rules remain relevant. The shared Godly traits apply separately. Damage never scales with EP.
 
@@ -80,7 +80,7 @@ Mastery scales damaging arts by **1 + 0.5 × mastery fraction**, capped at 1.5×
 
 Aim at an eligible enemy that recently used a **damaging ability**. Lugh reads its most recent observed damage source and records the originating skill, normalised damage type, observed intensity and attack form. The original user keeps their skill.
 
-The reconstruction's raw damage is **80% of the observed damage-calculation amount**, bounded to **2,000–4,000**. This amount may already include native modifiers at observation time; it is not a promise to reproduce an entire multi-hit skill's total damage.
+The reconstruction's raw damage is **80% of the observed damage-calculation amount**, bounded to **3,500–6,000**. This amount may already include native modifiers at observation time; it is not a promise to reproduce an entire multi-hit skill's total damage.
 
 Projectile or distant single-target techniques become **Lance** forms. Other physical techniques become **Blade** forms. Nearby non-physical techniques and same-tick attacks observed on distinct victims become **Crown** forms. Re-appraise after the desired technique has actually dealt damage to update its reading.
 
@@ -135,7 +135,7 @@ Missing or Godly observations fail without payment or cooldown. Third-party skil
 | Formation radius | 10 blocks |
 | Timing | 1.0, 1.8 and 2.6 seconds after casting |
 
-Snapshot all three archive entries into a fixed, warned formation. Three floating rune tablets assemble into the corresponding armaments, each striking for **1.8× its archived raw damage** before mastery and native handling.
+Snapshot all three archive entries into a fixed, warned formation. Three floating rune tablets assemble into the corresponding armaments, each striking for **1.6× its archived raw damage** before mastery and native handling.
 
 Blade and Crown phases strike the fixed area; a Lance phase cuts a cross through its center with narrow horizontal arms. Each phase targets up to eight eligible enemies. Changing the archive after casting does not change the pending plan. Sixteen ticks separate phases, preserving native hit-immunity rules. Enemies can leave the formation.
 
