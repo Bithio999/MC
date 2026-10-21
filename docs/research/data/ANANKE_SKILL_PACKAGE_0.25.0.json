@@ -1,0 +1,1255 @@
+{
+  "initial": [
+    {
+      "type": "entity.wildhunt.ananke",
+      "hp": 48000.0,
+      "max_hp": 48000.0,
+      "max_aura": 15000000.0,
+      "max_magicule": 15000000.0,
+      "shp": 120000.0,
+      "max_shp": 120000.0,
+      "melee_dodge": 30.0,
+      "projectile_dodge": 100.0,
+      "resistance_degradation": 1.0,
+      "space_boost": 5.25,
+      "skills": [
+        {
+          "id": "tensura:pain_nullification",
+          "mastery": 100.0,
+          "toggled": false,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:physical_attack_resistance",
+          "mastery": 100.0,
+          "toggled": false,
+          "toggleable": true
+        },
+        {
+          "id": "wildhunt:thoth",
+          "mastery": 50000.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:observer",
+          "mastery": 1000.0,
+          "toggled": false,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:spatial_domination",
+          "mastery": 500.0,
+          "toggled": false,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:universal_perception",
+          "mastery": 500.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:chant_annulment",
+          "mastery": 500.0,
+          "toggled": false,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:magic_resistance",
+          "mastery": 100.0,
+          "toggled": false,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:self_regeneration",
+          "mastery": 100.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:thought_acceleration",
+          "mastery": 500.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:spiritual_attack_resistance",
+          "mastery": 100.0,
+          "toggled": false,
+          "toggleable": true
+        },
+        {
+          "id": "wildhunt:moira",
+          "mastery": 10000.0,
+          "toggled": false,
+          "toggleable": false
+        },
+        {
+          "id": "tensura:abnormal_condition_nullification",
+          "mastery": 100.0,
+          "toggled": false,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:holy_attack_resistance",
+          "mastery": 100.0,
+          "toggled": false,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:mathematician",
+          "mastery": 1000.0,
+          "toggled": false,
+          "toggleable": true
+        }
+      ]
+    },
+    {
+      "type": "entity.tensura.hinata_sakaguchi",
+      "hp": 3000.0,
+      "max_hp": 3000.0,
+      "max_aura": 500000.0,
+      "max_magicule": 536231.0,
+      "shp": 3600.0,
+      "max_shp": 3600.0,
+      "melee_dodge": 10.0,
+      "projectile_dodge": 10.0,
+      "resistance_degradation": 1.0,
+      "space_boost": 1.0,
+      "skills": [
+        {
+          "id": "tensura:electricity_nullification",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:earth_jail",
+          "mastery": 0.0,
+          "toggled": false,
+          "toggleable": false
+        },
+        {
+          "id": "tensura:physical_attack_resistance",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:cold_resistance",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:darkness_attack_resistance",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:corrosion_nullification",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:summon_greater_elemental",
+          "mastery": 0.0,
+          "toggled": false,
+          "toggleable": false
+        },
+        {
+          "id": "tensura:spatial_attack_nullification",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:summon_medium_elemental",
+          "mastery": 0.0,
+          "toggled": false,
+          "toggleable": false
+        },
+        {
+          "id": "tensura:earth_attack_nullification",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:hellfire",
+          "mastery": 0.0,
+          "toggled": false,
+          "toggleable": false
+        },
+        {
+          "id": "tensura:water_attack_nullification",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:thermal_fluctuation_resistance",
+          "mastery": 0.0,
+          "toggled": false,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:magic_resistance",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:aerial_blade",
+          "mastery": 0.0,
+          "toggled": false,
+          "toggleable": false
+        },
+        {
+          "id": "tensura:heat_resistance",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:swipe",
+          "mastery": 0.0,
+          "toggled": false,
+          "toggleable": false
+        },
+        {
+          "id": "tensura:blizzard",
+          "mastery": 0.0,
+          "toggled": false,
+          "toggleable": false
+        },
+        {
+          "id": "tensura:light_attack_resistance",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:spiritual_attack_resistance",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:usurper",
+          "mastery": 0.0,
+          "toggled": false,
+          "toggleable": false
+        },
+        {
+          "id": "tensura:magic_sense",
+          "mastery": 0.0,
+          "toggled": false,
+          "toggleable": false
+        },
+        {
+          "id": "tensura:wind_attack_nullification",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:holy_attack_resistance",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:abnormal_condition_resistance",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:mathematician",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:flame_attack_nullification",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:poison_nullification",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        }
+      ]
+    },
+    {
+      "type": "entity.tensura.gazel_dwargo",
+      "hp": 3000.0,
+      "max_hp": 3000.0,
+      "max_aura": 736331.0,
+      "max_magicule": 299900.0,
+      "shp": 3600.0,
+      "max_shp": 3600.0,
+      "melee_dodge": 0.0,
+      "projectile_dodge": 0.0,
+      "resistance_degradation": 0.0,
+      "space_boost": 1.0,
+      "skills": [
+        {
+          "id": "tensura:earth_spikes",
+          "mastery": 0.0,
+          "toggled": false,
+          "toggleable": false
+        },
+        {
+          "id": "tensura:physical_attack_resistance",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:cold_resistance",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:flame_attack_resistance",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:darkness_attack_resistance",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:corrosion_nullification",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:summon_greater_elemental",
+          "mastery": 0.0,
+          "toggled": false,
+          "toggleable": false
+        },
+        {
+          "id": "tensura:five_petals_thrust",
+          "mastery": 0.0,
+          "toggled": false,
+          "toggleable": false
+        },
+        {
+          "id": "tensura:electricity_resistance",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:eight_petals_flash",
+          "mastery": 0.0,
+          "toggled": false,
+          "toggleable": false
+        },
+        {
+          "id": "tensura:earth_attack_resistance",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:earth_storm",
+          "mastery": 0.0,
+          "toggled": false,
+          "toggleable": false
+        },
+        {
+          "id": "tensura:thermal_fluctuation_resistance",
+          "mastery": 0.0,
+          "toggled": false,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:magic_resistance",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:spatial_attack_resistance",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:heat_resistance",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:wind_attack_resistance",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:light_attack_resistance",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:spiritual_attack_resistance",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:magic_sense",
+          "mastery": 0.0,
+          "toggled": false,
+          "toggleable": false
+        },
+        {
+          "id": "tensura:earth_domination",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:water_attack_resistance",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:holy_attack_resistance",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:abnormal_condition_resistance",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:poison_nullification",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        }
+      ]
+    },
+    {
+      "type": "entity.tensura.charybdis",
+      "hp": 3000.0,
+      "max_hp": 3000.0,
+      "max_aura": 309182.0,
+      "max_magicule": 1200000.0,
+      "shp": 3200.0,
+      "max_shp": 3200.0,
+      "melee_dodge": 0.0,
+      "projectile_dodge": 0.0,
+      "resistance_degradation": 0.0,
+      "space_boost": 1.0,
+      "skills": [
+        {
+          "id": "tensura:physical_attack_resistance",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:magic_jamming",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:gravity_flight",
+          "mastery": 0.0,
+          "toggled": false,
+          "toggleable": false
+        },
+        {
+          "id": "tensura:gravity_manipulation",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:ultraspeed_regeneration",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:magic_sense",
+          "mastery": 0.0,
+          "toggled": false,
+          "toggleable": false
+        },
+        {
+          "id": "tensura:paralysis_resistance",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:pain_resistance",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        }
+      ]
+    }
+  ],
+  "after_40_ticks": [
+    {
+      "type": "entity.wildhunt.ananke",
+      "hp": 47008.0,
+      "max_hp": 48000.0,
+      "max_aura": 15000000.0,
+      "max_magicule": 15000000.0,
+      "shp": 119096.0,
+      "max_shp": 120000.0,
+      "melee_dodge": 30.0,
+      "projectile_dodge": 100.0,
+      "resistance_degradation": 1.0,
+      "space_boost": 5.25,
+      "skills": [
+        {
+          "id": "tensura:pain_nullification",
+          "mastery": 100.0,
+          "toggled": false,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:physical_attack_resistance",
+          "mastery": 100.0,
+          "toggled": false,
+          "toggleable": true
+        },
+        {
+          "id": "wildhunt:thoth",
+          "mastery": 50000.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:observer",
+          "mastery": 1000.0,
+          "toggled": false,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:spatial_domination",
+          "mastery": 500.0,
+          "toggled": false,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:universal_perception",
+          "mastery": 500.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:chant_annulment",
+          "mastery": 500.0,
+          "toggled": false,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:magic_resistance",
+          "mastery": 100.0,
+          "toggled": false,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:self_regeneration",
+          "mastery": 100.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:thought_acceleration",
+          "mastery": 500.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:spiritual_attack_resistance",
+          "mastery": 100.0,
+          "toggled": false,
+          "toggleable": true
+        },
+        {
+          "id": "wildhunt:moira",
+          "mastery": 10000.0,
+          "toggled": false,
+          "toggleable": false
+        },
+        {
+          "id": "tensura:abnormal_condition_nullification",
+          "mastery": 100.0,
+          "toggled": false,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:holy_attack_resistance",
+          "mastery": 100.0,
+          "toggled": false,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:mathematician",
+          "mastery": 1000.0,
+          "toggled": false,
+          "toggleable": true
+        }
+      ]
+    },
+    {
+      "type": "entity.tensura.hinata_sakaguchi",
+      "hp": 3000.0,
+      "max_hp": 3000.0,
+      "max_aura": 500000.0,
+      "max_magicule": 536231.0,
+      "shp": 3600.0,
+      "max_shp": 3600.0,
+      "melee_dodge": 10.0,
+      "projectile_dodge": 10.0,
+      "resistance_degradation": 1.0,
+      "space_boost": 1.0,
+      "skills": [
+        {
+          "id": "tensura:electricity_nullification",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:earth_jail",
+          "mastery": 0.0,
+          "toggled": false,
+          "toggleable": false
+        },
+        {
+          "id": "tensura:physical_attack_resistance",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:cold_resistance",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:darkness_attack_resistance",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:corrosion_nullification",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:summon_greater_elemental",
+          "mastery": 0.0,
+          "toggled": false,
+          "toggleable": false
+        },
+        {
+          "id": "tensura:spatial_attack_nullification",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:summon_medium_elemental",
+          "mastery": 0.0,
+          "toggled": false,
+          "toggleable": false
+        },
+        {
+          "id": "tensura:earth_attack_nullification",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:hellfire",
+          "mastery": 0.0,
+          "toggled": false,
+          "toggleable": false
+        },
+        {
+          "id": "tensura:water_attack_nullification",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:thermal_fluctuation_resistance",
+          "mastery": 0.0,
+          "toggled": false,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:magic_resistance",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:aerial_blade",
+          "mastery": 0.0,
+          "toggled": false,
+          "toggleable": false
+        },
+        {
+          "id": "tensura:heat_resistance",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:swipe",
+          "mastery": 0.0,
+          "toggled": false,
+          "toggleable": false
+        },
+        {
+          "id": "tensura:blizzard",
+          "mastery": 0.0,
+          "toggled": false,
+          "toggleable": false
+        },
+        {
+          "id": "tensura:light_attack_resistance",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:spiritual_attack_resistance",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:usurper",
+          "mastery": 0.0,
+          "toggled": false,
+          "toggleable": false
+        },
+        {
+          "id": "tensura:magic_sense",
+          "mastery": 0.0,
+          "toggled": false,
+          "toggleable": false
+        },
+        {
+          "id": "tensura:wind_attack_nullification",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:holy_attack_resistance",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:abnormal_condition_resistance",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:mathematician",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:flame_attack_nullification",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:poison_nullification",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        }
+      ]
+    },
+    {
+      "type": "entity.tensura.gazel_dwargo",
+      "hp": 3000.0,
+      "max_hp": 3000.0,
+      "max_aura": 736331.0,
+      "max_magicule": 299900.0,
+      "shp": 3600.0,
+      "max_shp": 3600.0,
+      "melee_dodge": 0.0,
+      "projectile_dodge": 0.0,
+      "resistance_degradation": 0.0,
+      "space_boost": 1.0,
+      "skills": [
+        {
+          "id": "tensura:earth_spikes",
+          "mastery": 0.0,
+          "toggled": false,
+          "toggleable": false
+        },
+        {
+          "id": "tensura:physical_attack_resistance",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:cold_resistance",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:flame_attack_resistance",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:darkness_attack_resistance",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:corrosion_nullification",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:summon_greater_elemental",
+          "mastery": 0.0,
+          "toggled": false,
+          "toggleable": false
+        },
+        {
+          "id": "tensura:five_petals_thrust",
+          "mastery": 0.0,
+          "toggled": false,
+          "toggleable": false
+        },
+        {
+          "id": "tensura:electricity_resistance",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:eight_petals_flash",
+          "mastery": 0.0,
+          "toggled": false,
+          "toggleable": false
+        },
+        {
+          "id": "tensura:earth_attack_resistance",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:earth_storm",
+          "mastery": 0.0,
+          "toggled": false,
+          "toggleable": false
+        },
+        {
+          "id": "tensura:thermal_fluctuation_resistance",
+          "mastery": 0.0,
+          "toggled": false,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:magic_resistance",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:spatial_attack_resistance",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:heat_resistance",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:wind_attack_resistance",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:light_attack_resistance",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:spiritual_attack_resistance",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:magic_sense",
+          "mastery": 0.0,
+          "toggled": false,
+          "toggleable": false
+        },
+        {
+          "id": "tensura:earth_domination",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:water_attack_resistance",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:holy_attack_resistance",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:abnormal_condition_resistance",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:poison_nullification",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        }
+      ]
+    },
+    {
+      "type": "entity.tensura.charybdis",
+      "hp": 3000.0,
+      "max_hp": 3000.0,
+      "max_aura": 309182.0,
+      "max_magicule": 1200000.0,
+      "shp": 3200.0,
+      "max_shp": 3200.0,
+      "melee_dodge": 0.0,
+      "projectile_dodge": 0.0,
+      "resistance_degradation": 0.0,
+      "space_boost": 1.0,
+      "skills": [
+        {
+          "id": "tensura:physical_attack_resistance",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:magic_jamming",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:gravity_flight",
+          "mastery": 0.0,
+          "toggled": false,
+          "toggleable": false
+        },
+        {
+          "id": "tensura:gravity_manipulation",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:ultraspeed_regeneration",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:magic_sense",
+          "mastery": 0.0,
+          "toggled": false,
+          "toggleable": false
+        },
+        {
+          "id": "tensura:paralysis_resistance",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        },
+        {
+          "id": "tensura:pain_resistance",
+          "mastery": 0.0,
+          "toggled": true,
+          "toggleable": true
+        }
+      ]
+    }
+  ],
+  "physical_native_callback": {
+    "physical_source_recognized": true,
+    "off_allows_hit": true,
+    "off_amount": 100.0,
+    "on_allows_hit": false,
+    "on_amount": 100.0
+  },
+  "reloaded": {
+    "type": "entity.wildhunt.ananke",
+    "hp": 47008.0,
+    "max_hp": 48000.0,
+    "max_aura": 15000000.0,
+    "max_magicule": 15000000.0,
+    "shp": 119096.0,
+    "max_shp": 120000.0,
+    "melee_dodge": 30.0,
+    "projectile_dodge": 100.0,
+    "resistance_degradation": 1.0,
+    "space_boost": 3.0,
+    "skills": [
+      {
+        "id": "tensura:pain_nullification",
+        "mastery": 100.0,
+        "toggled": false,
+        "toggleable": true
+      },
+      {
+        "id": "tensura:physical_attack_resistance",
+        "mastery": 100.0,
+        "toggled": false,
+        "toggleable": true
+      },
+      {
+        "id": "wildhunt:thoth",
+        "mastery": 50000.0,
+        "toggled": true,
+        "toggleable": true
+      },
+      {
+        "id": "tensura:observer",
+        "mastery": 1000.0,
+        "toggled": false,
+        "toggleable": true
+      },
+      {
+        "id": "tensura:spatial_domination",
+        "mastery": 500.0,
+        "toggled": false,
+        "toggleable": true
+      },
+      {
+        "id": "tensura:universal_perception",
+        "mastery": 500.0,
+        "toggled": true,
+        "toggleable": true
+      },
+      {
+        "id": "tensura:chant_annulment",
+        "mastery": 500.0,
+        "toggled": false,
+        "toggleable": true
+      },
+      {
+        "id": "tensura:magic_resistance",
+        "mastery": 100.0,
+        "toggled": false,
+        "toggleable": true
+      },
+      {
+        "id": "tensura:self_regeneration",
+        "mastery": 100.0,
+        "toggled": true,
+        "toggleable": true
+      },
+      {
+        "id": "tensura:thought_acceleration",
+        "mastery": 500.0,
+        "toggled": true,
+        "toggleable": true
+      },
+      {
+        "id": "tensura:spiritual_attack_resistance",
+        "mastery": 100.0,
+        "toggled": false,
+        "toggleable": true
+      },
+      {
+        "id": "wildhunt:moira",
+        "mastery": 10000.0,
+        "toggled": false,
+        "toggleable": false
+      },
+      {
+        "id": "tensura:abnormal_condition_nullification",
+        "mastery": 100.0,
+        "toggled": false,
+        "toggleable": true
+      },
+      {
+        "id": "tensura:holy_attack_resistance",
+        "mastery": 100.0,
+        "toggled": false,
+        "toggleable": true
+      },
+      {
+        "id": "tensura:mathematician",
+        "mastery": 1000.0,
+        "toggled": false,
+        "toggleable": true
+      }
+    ]
+  },
+  "full_hp_soul_recovery_20_ticks": {
+    "type": "entity.wildhunt.ananke",
+    "hp": 48000.0,
+    "max_hp": 48000.0,
+    "max_aura": 15000000.0,
+    "max_magicule": 15000000.0,
+    "shp": 119040.0,
+    "max_shp": 120000.0,
+    "melee_dodge": 30.0,
+    "projectile_dodge": 100.0,
+    "resistance_degradation": 1.0,
+    "space_boost": 5.25,
+    "skills": [
+      {
+        "id": "tensura:pain_nullification",
+        "mastery": 100.0,
+        "toggled": false,
+        "toggleable": true
+      },
+      {
+        "id": "tensura:physical_attack_resistance",
+        "mastery": 100.0,
+        "toggled": false,
+        "toggleable": true
+      },
+      {
+        "id": "wildhunt:thoth",
+        "mastery": 50000.0,
+        "toggled": true,
+        "toggleable": true
+      },
+      {
+        "id": "tensura:observer",
+        "mastery": 1000.0,
+        "toggled": false,
+        "toggleable": true
+      },
+      {
+        "id": "tensura:spatial_domination",
+        "mastery": 500.0,
+        "toggled": false,
+        "toggleable": true
+      },
+      {
+        "id": "tensura:universal_perception",
+        "mastery": 500.0,
+        "toggled": true,
+        "toggleable": true
+      },
+      {
+        "id": "tensura:chant_annulment",
+        "mastery": 500.0,
+        "toggled": false,
+        "toggleable": true
+      },
+      {
+        "id": "tensura:magic_resistance",
+        "mastery": 100.0,
+        "toggled": false,
+        "toggleable": true
+      },
+      {
+        "id": "tensura:self_regeneration",
+        "mastery": 100.0,
+        "toggled": true,
+        "toggleable": true
+      },
+      {
+        "id": "tensura:thought_acceleration",
+        "mastery": 500.0,
+        "toggled": true,
+        "toggleable": true
+      },
+      {
+        "id": "tensura:spiritual_attack_resistance",
+        "mastery": 100.0,
+        "toggled": false,
+        "toggleable": true
+      },
+      {
+        "id": "wildhunt:moira",
+        "mastery": 10000.0,
+        "toggled": false,
+        "toggleable": false
+      },
+      {
+        "id": "tensura:abnormal_condition_nullification",
+        "mastery": 100.0,
+        "toggled": false,
+        "toggleable": true
+      },
+      {
+        "id": "tensura:holy_attack_resistance",
+        "mastery": 100.0,
+        "toggled": false,
+        "toggleable": true
+      },
+      {
+        "id": "tensura:mathematician",
+        "mastery": 1000.0,
+        "toggled": false,
+        "toggleable": true
+      }
+    ]
+  }
+}
