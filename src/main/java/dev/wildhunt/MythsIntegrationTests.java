@@ -157,7 +157,8 @@ public final class MythsIntegrationTests {
     }
     @GameTest(template="empty",timeoutTicks=100)
     public static void godlyVerdictCanCastAloneAndConsumesItsFieldForEmpowerment(GameTestHelper h) {
-        var p=player(h);HunterData.learnReward(p,WildHunt.GODLY.get());var i=SkillAPI.getSkillsFrom(p).getSkill(WildHunt.GODLY.get()).orElseThrow();
+        var p=MythicGameTests.player(h);var target=MythicGameTests.target(h,p.position().add(8,0,0));HunterData.learnReward(p,WildHunt.GODLY.get());var i=SkillAPI.getSkillsFrom(p).getSkill(WildHunt.GODLY.get()).orElseThrow();
+        MythicGameTests.afterTracking(h,java.util.List.of(target),()->{
         double aura=TensuraStorages.getExistenceFrom(p).getMagicule();WildHunt.GODLY.get().onPressed(i,p,0,3);
         h.assertTrue(TensuraStorages.getExistenceFrom(p).getMagicule()==aura-28000 && i.onCoolDown(3) && !i.getOrCreateTag().getBoolean("verdict_empowered"),"Standalone Verdict failed or received unearned empowerment");
         i.setCoolDown(0,3);
@@ -165,7 +166,7 @@ public final class MythsIntegrationTests {
         WildHunt.GODLY.get().onPressed(i,p,0,3);
         h.assertTrue(!i.getOrCreateTag().contains("horizon_until") && i.getOrCreateTag().contains("verdict_until"),"Verdict did not consume its own field");
         h.assertTrue(i.getOrCreateTag().getBoolean("verdict_empowered"),"Consuming a Horizon did not empower Verdict");
-        GodlySkill.clearTransient(p);h.assertTrue(!i.getOrCreateTag().contains("verdict_until"),"Dimension/relog cleanup left delayed damage active");h.succeed();
+        GodlySkill.clearTransient(p);h.assertTrue(!i.getOrCreateTag().contains("verdict_until"),"Dimension/relog cleanup left delayed damage active");h.succeed();});
     }
     @GameTest(template="empty",timeoutTicks=100)
     public static void godlyBarrierRecoversOnlyAfterQuietAndOwnsItsModifiers(GameTestHelper h) {
@@ -216,12 +217,13 @@ public final class MythsIntegrationTests {
 
     @GameTest(template="empty",timeoutTicks=100)
     public static void consumedHorizonVisualsAndForgottenEffectsAreRemoved(GameTestHelper h) {
-        var p=player(h);HunterData.learnReward(p,WildHunt.GODLY.get());var i=SkillAPI.getSkillsFrom(p).getSkill(WildHunt.GODLY.get()).orElseThrow();
+        var p=MythicGameTests.player(h);var target=MythicGameTests.target(h,p.position().add(8,0,0));HunterData.learnReward(p,WildHunt.GODLY.get());var i=SkillAPI.getSkillsFrom(p).getSkill(WildHunt.GODLY.get()).orElseThrow();
+        MythicGameTests.afterTracking(h,java.util.List.of(target),()->{
         WildHunt.GODLY.get().onPressed(i,p,0,1);var tag=i.getOrCreateTag();var id=tag.getUUID("horizon_visual");var circle=tag.getUUID("horizon_circle");
         WildHunt.GODLY.get().onPressed(i,p,0,3);
         h.assertTrue((h.getLevel().getEntity(id)==null || h.getLevel().getEntity(id).isRemoved()) && (h.getLevel().getEntity(circle)==null || h.getLevel().getEntity(circle).isRemoved()),"Consumed Horizon left its old geometry or native circle active");
         WildHunt.GODLY.get().onToggleOn(i,p);var verdict=tag.getUUID("verdict_visual");WildHunt.GODLY.get().onForgetSkill(i,p);
-        h.assertTrue(!i.isToggled() && !tag.contains("verdict_until") && (h.getLevel().getEntity(verdict)==null || h.getLevel().getEntity(verdict).isRemoved()),"Forgetting Aion left its passive or delayed visuals active");h.succeed();
+        h.assertTrue(!i.isToggled() && !tag.contains("verdict_until") && (h.getLevel().getEntity(verdict)==null || h.getLevel().getEntity(verdict).isRemoved()),"Forgetting Aion left its passive or delayed visuals active");h.succeed();});
     }
 
     @GameTest(template="empty",timeoutTicks=100)

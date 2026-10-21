@@ -49,7 +49,7 @@ Eligible enemies within **16 blocks** suffer causal time dilation. Movement redu
 | Worldline Sever | 2,400 to start; 1,200 per additional 0.5 seconds | 4 seconds after channel ends | 80-block beam, up to 8 targets per pulse, 6-second maximum | 1,200 per 0.5 seconds |
 | Event Horizon | 10,000 | 16 seconds | 64-block cursor placement; 24-block pull, 10-block damage radius; 10 seconds | 700 per second |
 | Causal Reversal | 12,000 to record; free return | 1 second to recast; 25 seconds after manual or automatic return | Personal checkpoint, 20-second window | — |
-| Genesis Verdict | 28,000 | 45 seconds | 64-block acquisition / placement; 20 blasts, 3.75 / 4.5-block radius each | 480 / 600 per hole; 9,600 / 12,000 total |
+| Genesis Verdict | 28,000 | 45 seconds | 64-block mob/player acquisition; 20 blasts, 3.75 / 4.5-block radius each | 480 / 600 per hole; 9,600 / 12,000 total |
 
 #### Worldline Sever
 
@@ -97,17 +97,19 @@ Reversal does not restore items, cooldowns, buffs or lost lives. The destination
 | Damage type | [Space elemental](Damage-Types.md#space) |
 | Damage ID | `tensura:space_elemental` |
 
-Summon **twenty miniature black holes** at scattered airborne positions around the enemy under your crosshair, within **64 blocks**. If no enemy is acquired, the barrage forms around the cursor location instead. The holes materialise in a staggered formation, hover briefly, then accelerate inward along **twenty different curved paths**.
+Summon **twenty miniature black holes** at scattered airborne positions around the mob or player under your crosshair, within **64 blocks**. A valid, visible enemy is required. Aiming at empty space, terrain or an ineligible target spends **no magicules, cooldown or mastery** and does not consume Event Horizon.
 
-They arrive in **five salvos of four**, at **2.5, 3.1, 3.7, 4.3 and 4.9 seconds**. Each hole contributes **480 base space damage** to enemies within **3.75 blocks** of its individual detonation. All four overlapping explosions combine into **one native hit per recipient per salvo**, affecting up to **eight enemies**. A recipient inside all twenty blasts receives **9,600 raw damage** before mastery and native handling. The twelve-tick salvo spacing respects normal hit immunity.
+The holes appear in a staggered formation, hover briefly, then accelerate inward along **twenty different curved paths**. Each flight lasts **0.5–0.75 seconds**. Impacts begin **1.6 seconds** after casting, arrive individually every **0.1 seconds**, and finish at **3.5 seconds**.
 
-The barrage follows the selected enemy while they remain alive, eligible and within **24 blocks of the original formation center**. Each salvo locks its destination **six ticks before impact**, providing a brief chance to leave the blast. Later salvos can continue tracking. A lost target leaves the barrage aiming at its last valid position; it does not chase across dimensions or load distant chunks.
+**Every black hole deals its own damage:** **480 base space damage** to up to **eight eligible mobs/players** within **3.75 blocks** of its individual detonation. Each collision uses an independent native hit, so ordinary hurt cooldown does not swallow successive holes. This exception belongs only to Verdict’s collision sources; other attacks keep their usual cooldown rules. An enemy caught in all twenty explosions receives **9,600 raw damage** before mastery and native handling.
 
-If your **Event Horizon** is active, Verdict consumes it and empowers all twenty holes to **600 damage** and **4.5-block blast radii**, for **12,000 raw damage** when every explosion overlaps. An acquired enemy takes priority for placement; without one, the consumed Horizon’s center is used. The Horizon’s previous visual and circle disappear.
+Every airborne hole continuously homes toward the target’s **current position**, including during its final approach. There is no pre-impact aim lock or distance tether around the original formation. Each completed explosion stays at its actual collision point while the remaining holes continue following. If the target dies, becomes ineligible or leaves the loaded dimension, the remaining holes converge at the last tracked location; the barrage never loads chunks or follows between dimensions. Damage still checks each recipient’s current eligibility.
 
-The black cores have volume-preserving squash and stretch driven by their actual flight speed. Tilted accretion bands, thin photon rings, curved luminous wakes and rapid implosion-to-shock-front transitions distinguish the formation, flight and explosion phases. All clients receive the same seed, cast clock and locked destinations. Reduced particle settings remove decorative sparks rather than holes or their flight paths.
+If your **Event Horizon** is active, Verdict consumes it and empowers every hole to **600 damage** with a **4.5-block damage radius**, for **12,000 raw damage** when all twenty explosions overlap. A mob or player target is still required. The Horizon’s previous visual and circle disappear.
 
-The visual tail ends roughly **6.1 seconds** after casting. Death, suppression, forgetting Aion, relogging and dimension changes cancel the pending barrage. Terrain is not destroyed and native friendly/PvP protection is checked again for every damaging salvo.
+Black cores stretch with flight speed. Broad, striated accretion disks retain their own stable world orientation; lensed upper and lower arcs and thin photon rings frame the dark silhouettes. At collision, short starbursts ignite into large pressure fronts, tilted shock rings and arcing luminous ejecta. The cinematic pressure fronts expand to roughly **10 blocks** (**12 empowered**); their outer light is visual and does not enlarge the damage radius. Reduced particle settings preserve all twenty holes, their disks and primary shock fronts while reducing decorative fragments.
+
+The visual tail ends roughly **5.2 seconds** after casting. Death of the caster, suppression, forgetting Aion, relogging and dimension changes cancel the pending barrage. Terrain is not destroyed and native friendly/PvP protection is checked again for every collision.
 
 ## Damage and interaction
 

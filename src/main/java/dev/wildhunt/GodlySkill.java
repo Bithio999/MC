@@ -25,7 +25,7 @@ public final class GodlySkill extends Skill {
     @Override public MutableComponent getName() { return Component.translatableWithFallback("wildhunt.skill.aion","Aion, God of Causality"); }
     @Override public MutableComponent getColoredName() { return getName().withColor(0xE8C56F); }
     @Override public ResourceLocation getSkillIcon() { return WildHunt.id("textures/skill/aion.png"); }
-    @Override public MutableComponent getSkillDescription() { return Component.literal("[Godly] Hold Worldline Sever to sweep an eight-target spatial beam along your aim. Event Horizon pulls from 24 blocks into a 10-block damaging core. Causal Reversal restores recorded HP, SHP, aura, magicules and position; the free return triggers automatically after 20 seconds. Genesis Verdict suspends twenty miniature black holes around a target, then curves them inward in five explosive salvos; consume an Event Horizon to empower them. Unbroken Continuum grants recovering barriers and a proximity slowing aura. Magicules only; mastery strengthens damage."+GodlyPassives.DESCRIPTION); }
+    @Override public MutableComponent getSkillDescription() { return Component.literal("[Godly] Hold Worldline Sever to sweep an eight-target spatial beam along your aim. Event Horizon pulls from 24 blocks into a 10-block damaging core. Causal Reversal restores recorded HP, SHP, aura, magicules and position; the free return triggers automatically after 20 seconds. Genesis Verdict suspends twenty miniature black holes around a target, then rapidly homes them inward along twenty arcs, each with its own spatial detonation; consume an Event Horizon to empower them. Unbroken Continuum grants recovering barriers and a proximity slowing aura. Magicules only; mastery strengthens damage."+GodlyPassives.DESCRIPTION); }
     @Override public int getMaxMastery() { return 50_000; }
     @Override public double getDefaultAcquiringMagiculeCost() { return 0; }
     @Override public int getModes(ManasSkillInstance i) { return 4; }
@@ -45,6 +45,8 @@ public final class GodlySkill extends Skill {
         if(returning && (!sameDimension(i,caster) || !level.noCollision(caster,caster.getBoundingBox().move(anchor.subtract(caster.position()))) || !level.getWorldBorder().isWithinBounds(net.minecraft.core.BlockPos.containing(anchor)))) {
             message(caster,"Your recorded position is no longer safe."); return;
         }
+        LivingEntity verdictTarget=mode==3?ApexArts.target(level,caster,64):null;
+        if(mode==3 && !(verdictTarget instanceof Mob || verdictTarget instanceof net.minecraft.world.entity.player.Player)){message(caster,"Aim at a mob or player within 64 blocks.");return;}
         if(!returning && EnergyHelper.isOutOfEnergy(caster,i,mode))return;
         int cooldown;
         switch(mode) {
@@ -74,7 +76,7 @@ public final class GodlySkill extends Skill {
             }
             default -> {
                 boolean empowered=tag.getLong("horizon_until")>now && sameDimension(i,caster);
-                SingularityBarrage.begin(level,i,caster,empowered);tag.remove("horizon_until");
+                SingularityBarrage.begin(level,i,caster,verdictTarget,empowered);tag.remove("horizon_until");
                 removeVisual(level,tag,"horizon_visual");removeVisual(level,tag,"horizon_circle");tag.putString("dimension",level.dimension().location().toString());cooldown=45;
             }
         }
@@ -190,7 +192,9 @@ public final class GodlySkill extends Skill {
     void hit(ServerLevel level,ManasSkillInstance i,LivingEntity caster,LivingEntity target,float damage,int mode) {
         if(!HunterData.canHarm(caster,target))return;
         float power=(float)(1+.5*Math.clamp(i.getMastery()/getMaxMastery(),0,1));
-        if(target.hurt(createSource(i,caster,TensuraDamageTypes.SPACE_ELEMENTAL,mode),damage*power))level.sendParticles(ParticleTypes.END_ROD,target.getX(),target.getY()+1,target.getZ(),8,.3,.7,.3,.02);
+        var source=createSource(i,caster,TensuraDamageTypes.SPACE_ELEMENTAL,mode);
+        if(mode==3)((IndependentHitSource)source).myths$independentHit();
+        if(target.hurt(source,damage*power))level.sendParticles(ParticleTypes.END_ROD,target.getX(),target.getY()+1,target.getZ(),8,.3,.7,.3,.02);
     }
     @Override public void onToggleOn(ManasSkillInstance i,LivingEntity e) {
         if(e.level().isClientSide())return;

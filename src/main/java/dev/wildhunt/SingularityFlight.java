@@ -4,15 +4,15 @@ import net.minecraft.world.phys.Vec3;
 
 /** Seeded, continuous choreography shared by damage timing and every client's renderer. */
 public final class SingularityFlight {
-    public static final int COUNT=20, WAVES=5, PER_WAVE=4, FIRST_IMPACT=50, WAVE_INTERVAL=12, LOCK_LEAD=6, LIFE=122;
+    public static final int COUNT=20, FIRST_IMPACT=32, IMPACT_INTERVAL=2, IMPACT_LIFE=32, LIFE=104;
     private SingularityFlight(){}
     public static double random(int seed,int node,int salt){
         long v=((long)seed<<32) ^ node*0x9E3779B97F4A7C15L ^ salt*0xBF58476D1CE4E5B9L;
         v=(v^(v>>>30))*0xBF58476D1CE4E5B9L;v=(v^(v>>>27))*0x94D049BB133111EBL;return ((v^(v>>>31))>>>11)*0x1.0p-53;
     }
-    public static int impact(int wave){return FIRST_IMPACT+WAVE_INTERVAL*wave;}
-    public static int duration(int seed,int node){return 20+(int)(random(seed,node,8)*11);}
-    public static int launch(int seed,int node){return impact(node/PER_WAVE)-duration(seed,node);}
+    public static int impact(int node){return FIRST_IMPACT+IMPACT_INTERVAL*node;}
+    public static int duration(int seed,int node){return 10+(int)(random(seed,node,8)*6);}
+    public static int launch(int seed,int node){return impact(node)-duration(seed,node);}
     public static double birth(int seed,int node){return node*.38+random(seed,node,7)*2;}
     public static Vec3 origin(int seed,int node){
         double a=node*2.3999632297+(random(seed,node,0)-.5)*.65,r=8+random(seed,node,1)*5;

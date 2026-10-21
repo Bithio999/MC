@@ -86,7 +86,7 @@ public final class ArtVisualEntity extends Entity {
             }
         }else if (!level().isClientSide() && tickCount >= lifetime()) discard();
     }
-    @Override public AABB getBoundingBoxForCulling() { if(kind()==CAUSAL_VERDICT && !barrage().isEmpty())return new AABB(position(),position()).inflate(40);return new AABB(position(), position().add(end())).inflate((kind() == WHIRLPOOL || kind() == CAUSAL_SPHERE || kind()>=CAUSAL_DOMAIN) ? Math.abs(end().x) + 12 : kind() == TIDAL_WAVE ? end().y + 3 : 4); }
+    @Override public AABB getBoundingBoxForCulling() { if(kind()==CAUSAL_VERDICT && !barrage().isEmpty())return new AABB(position(),position().add(new Vec3(barrage().getDouble("aim_x"),barrage().getDouble("aim_y"),barrage().getDouble("aim_z")))).inflate(24);return new AABB(position(), position().add(end())).inflate((kind() == WHIRLPOOL || kind() == CAUSAL_SPHERE || kind()>=CAUSAL_DOMAIN) ? Math.abs(end().x) + 12 : kind() == TIDAL_WAVE ? end().y + 3 : 4); }
     @Override public boolean shouldRenderAtSqrDistance(double distance) { return distance < 128 * 128; }
     @Override protected void readAdditionalSaveData(CompoundTag tag) {}
     @Override protected void addAdditionalSaveData(CompoundTag tag) {}

@@ -11,7 +11,8 @@
     "GodlyResistanceMixin",
     "GodlyResistanceAttributesMixin",
     "ElementalBonusesMixin",
-    "LughCountermandMixin"
+    "LughCountermandMixin",
+    "SingularityDamageMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.23.0
+
+- Make each of Genesis Verdict’s twenty black holes deal its own native Space-elemental hit. Scope hurt-cooldown bypass to these individual collision sources, preserving ordinary attacks, native skill metadata, defenses and the 9,600 / 12,000 raw budgets.
+- Require an eligible aimed mob/player before payment, cooldown or Horizon consumption. Continuously home through final approach without the previous lock or formation tether; freeze only completed detonation positions. Halve flight durations and stagger individual impacts from 1.6 to 3.5 seconds.
+- Rebuild the accretion optics around the Interstellar/Gargantua production reference: broad striated disks with stable world planes, lensed rear arcs, restrained emission and dark silhouettes. Add original optical-burst art and much larger layered collision effects, keeping damage radii explicit.
+- Update native regression coverage, animation research, gameplay documentation, captured media and release editions.
+
 ## 0.22.0
 
 - Replace Aion’s Genesis Verdict with twenty suspended miniature black holes that fly along distinct seeded cubic curves and explode in five four-hole salvos. Track an aimed enemy within a bounded tether, then freeze each salvo’s aim six ticks before impact; retain cursor placement when no enemy is acquired.
