@@ -12,12 +12,12 @@
 | [Water](#water) | `tensura:water_elemental` | Scarlet Deluge, Aegir, Thoth, Lugh |
 | [Fire](#fire) | `tensura:fire_elemental` | Black Flame, Vritra, Thoth, Lugh |
 | [Ice](#ice) | `tensura:ice_elemental` | Frostbound Colossus, Demeter, Lugh |
-| [Space](#space) | `tensura:space_elemental` | Threadweaver, Janus, Anansi, Aion, Thoth, Lugh |
+| [Space](#space) | `tensura:space_elemental` | Threadweaver, Janus, Anansi, Aion, Thoth, Lugh, Moira |
 | [Earth](#earth) | `tensura:earth_elemental` | Rune Smith, Verdant Keeper, Anansi, Thoth, Lugh |
-| [Light](#light) | `tensura:light_elemental` | Mirrorbound, Thoth, Lugh |
+| [Light](#light) | `tensura:light_elemental` | Mirrorbound, Thoth, Lugh, Moira |
 | [Wind](#wind) | `tensura:wind_elemental` | Thoth, Lugh |
-| [Physical aura slash](#physical-aura-slash) | `tensura:aura_slash` | Lugh |
-| [Darkness](#darkness) | `tensura:darkness_elemental` | Lugh |
+| [Physical aura slash](#physical-aura-slash) | `tensura:aura_slash` | Lugh, Moira |
+| [Darkness](#darkness) | `tensura:darkness_elemental` | Lugh, Moira |
 | [Gravity](#gravity) | `tensura:gravity_elemental` | Lugh |
 | [Generic magic](#generic-magic) | `tensura:magic` | Thoth: Spellbreak; Lugh |
 
@@ -73,13 +73,15 @@ Tensura 2.0.1.3 places the listed direct elemental damage IDs in the native **by
 
 Any Godly skill owner gains the shared +35% bonus against non-Godly owners and resistance/nullification bypass for their own damage, regardless of toggles. These traits preserve the original damage type. They do not weaken the target against unrelated attacks, environmental damage or status effects. See [Godly classification passives](Godly.md#classification-passives) for the exact scope, including source-aware Magic Interference immunity, and [combat mechanics](Mechanics.md) for mastery and barrier behavior.
 
+Moira’s [four boss rites](Moira.md) use Aura Slash, Light, Darkness and Space. Ananke’s Thoth arts retain the exact player skill source types and ordinary mastered multiplier; Moira’s fixed encounter values have no mastery multiplier.
+
 ## Complete reference
 
 [Ability index](Abilities.md) · [Skill overview](Skills.md) · [Combat mechanics](Mechanics.md)
 
 ## Physical aura slash
 
-**Damage ID:** `tensura:aura_slash`. Lugh's Sovereign Edge origin entry uses this native physical source. Other recognised physical techniques can normalise to it. Aura slash retains native physical handling; it does not mean Lugh pays aura.
+**Damage ID:** `tensura:aura_slash`. Moira’s Fatebreaker and Lugh's Sovereign Edge origin entry use this native physical source. Other recognised physical techniques can normalise to it. Aura slash retains native physical handling; it does not mean Lugh pays aura.
 
 ## Darkness
 

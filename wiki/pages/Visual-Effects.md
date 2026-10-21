@@ -120,6 +120,14 @@ Bright cores mark beam paths, floor inscriptions preserve placed areas, and warn
 
 ![Lugh's three-technique synthesis formation](../media/lugh-synthesis.png)
 
+## Ananke, the Unwritten End
+
+An original six-winged ceremonial armor model has articulated feather spars, emissive violet cores and a rotating gold halo. Its [Moira rites](Moira.md) use different warning geometry: a locked fan, individually placed starfall seals, a hollow advancing wave and a dark sun above a real golden refuge ring. Cast poses ease into the animation rather than snapping. Geometry is rendered with native batched materials and distance detail limits.
+
+![Ananke and the golden Last Dawn refuge](../media/ananke-last-dawn.png)
+
+[Watch The Last Dawn](../media/ananke-last-dawn.mp4) · [Encounter and full gallery](Ananke.md#gallery)
+
 ---
 
 **Categories:** Tensura Myths · Reference

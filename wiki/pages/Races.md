@@ -279,6 +279,10 @@ The directory below groups all 105 races by ancestry; each race appears under bo
 - [Pale Star Oracle](Fusion-elf-wight.md) — Wight + Elf
 - [Pale Thunderbird](Fusion-harpy-wight.md) — Wight + Harpy
 
+## Boss lineages
+
+[Eclipse Seraph](Eclipse-Seraph.md) belongs to the Myth [Ananke](Ananke.md). It has no player reincarnation, secondary-race or Convergent route. The boss entity supplies its encounter stats.
+
 ---
 
 **Categories:** Tensura Myths · Races

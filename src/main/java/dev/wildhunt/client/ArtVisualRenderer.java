@@ -23,6 +23,7 @@ public final class ArtVisualRenderer extends EntityRenderer<ArtVisualEntity> {
     public ArtVisualRenderer(EntityRendererProvider.Context context) { super(context); }
     @SubscribeEvent public static void register(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(ArtVisualEntity.TYPE.get(), ArtVisualRenderer::new);
+        event.registerEntityRenderer(ArtVisualEntity.MYTH_TYPE.get(), ArtVisualRenderer::new);
     }
     @Override public ResourceLocation getTextureLocation(ArtVisualEntity entity) { return ICE; }
     @Override public boolean shouldRender(ArtVisualEntity entity,net.minecraft.client.renderer.culling.Frustum frustum,double x,double y,double z) {
@@ -31,7 +32,8 @@ public final class ArtVisualRenderer extends EntityRenderer<ArtVisualEntity> {
     @Override public void render(ArtVisualEntity entity, float yaw, float partial, PoseStack poses, MultiBufferSource buffers, int light) {
         float age = entity.tickCount + partial;
         VfxMesh.begin(entity.getPosition(partial));batch.begin();
-        if(entity.kind()==ArtVisualEntity.CAUSAL_VERDICT && !entity.barrage().isEmpty()){SingularityGeometry.render(entity,poses,batch,partial);}
+        if(AnankeGeometry.handles(entity.kind())){AnankeGeometry.render(entity,poses,batch,partial);}
+        else if(entity.kind()==ArtVisualEntity.CAUSAL_VERDICT && !entity.barrage().isEmpty()){SingularityGeometry.render(entity,poses,batch,partial);}
         else if(SovereignGeometry.handles(entity.kind())) {
             poses.pushPose();
             if((entity.kind()==ArtVisualEntity.PERENNIAL_SEED || entity.kind()==ArtVisualEntity.COUNTERMAND) && entity.caster()!=null){Vec3 offset=entity.caster().getPosition(partial).subtract(entity.getPosition(partial));poses.translate(offset.x,offset.y,offset.z);}

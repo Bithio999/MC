@@ -51,6 +51,7 @@ public final class HunterData {
     }
     public static boolean canHarm(LivingEntity caster, LivingEntity target) {
         if (caster == target || !target.isAlive() || caster.isAlliedTo(target)) return false;
+        if (caster instanceof AnankeEntity boss && !boss.inEncounter(target)) return false;
         if (target instanceof Player player && (player.isCreative() || player.isSpectator())) return false;
         if (caster instanceof Player player && target instanceof Player other) {
             if (!player.canHarmPlayer(other)) return false;

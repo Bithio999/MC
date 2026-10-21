@@ -5,8 +5,14 @@ An expanded progression and skills addon for **Tensura 2.0.1.3**, **Minecraft
 
 ## Download
 
-The built addon is included at [releases/tensura-myths-0.24.0.jar](releases/tensura-myths-0.24.0.jar).
+The built addon is included at [releases/tensura-myths-0.25.0.jar](releases/tensura-myths-0.25.0.jar).
 Install it alongside Tensura and its required dependencies on both client and server.
+
+## First Myth boss
+
+**[Ananke, the Unwritten End](wiki/pages/Ananke.md)** is a **30M-EP Eclipse Seraph** with 48,000 HP, 120,000 SHP, three combat phases and a fifteen-skill mastered package. Its original six-winged model, two bossbars and four warned **Moira, Lord of Finality** rites pair with **Thoth's Godly authority**, Astral Library and Spellbreak. Attacks have distinct dodge patterns, including a gold refuge ring during The Last Dawn. Native resources and skill costs apply; there is no EP damage multiplier or incoming damage cap.
+
+Craft a **Writ of Last Dawn** (four End Crystals, two Echo Shards, two Dragon's Breath, one Nether Star) and use it on a **lodestone** with open space. Player kills drop a **Dawn Testament** recovery consumable and 1–3 Nether Stars. Operators can use `/myths boss summon` or create a native Tensura arena with `/myths boss arena`, then `/bossFight join @s ananke`. [Encounter guide](wiki/pages/Ananke.md) · [Boss implementation research](docs/research/MYTH_BOSS_IMPLEMENTATION.md).
 
 ## Skills
 
@@ -79,7 +85,7 @@ An independent secondary grants **10% extra native EP gain**, retaining the prim
 
 ## Updating
 
-Replace the previous addon JAR with **0.24.0** on client and server. Install only one addon version. The `wildhunt` namespace remains stable for existing saves.
+Replace the previous addon JAR with **0.25.0** on client and server. Install only one addon version. The `wildhunt` namespace remains stable for existing saves.
 
 Ordinary elemental attribute bonuses use the strongest source per element; Godly bonuses remain separate. Mirrorbound, Demeter, Janus and Thoth no longer give passive shields; old saved contributions are cleaned automatically. Water Veil, Colossus Carapace and Aion retain their dedicated defenses. Demeter’s second mode is Perennial Seed: a one-use 40% HP/SHP rescue effect.
 
@@ -89,7 +95,7 @@ The [changelog](docs/CHANGELOG.md) records development changes separately from t
 
 ## Wiki
 
-Read the [Tensura Myths Wiki](wiki/README.md) for individual skill/race articles, per-ability damage types, progression and commands. [Download the styled offline edition](releases/tensura-myths-wiki-0.24.0.zip), extract it and open `index.html` for the wiki layout, infoboxes, screenshots and offline search. The [GitHub Wiki edition](wiki/github/Home.md) is prepared for the separate Wiki when it is available; [publishing instructions](docs/WIKI.md).
+Read the [Tensura Myths Wiki](wiki/README.md) for individual skill/race articles, per-ability damage types, progression and commands. [Download the styled offline edition](releases/tensura-myths-wiki-0.25.0.zip), extract it and open `index.html` for the wiki layout, infoboxes, screenshots and offline search. The [GitHub Wiki edition](wiki/github/Home.md) is prepared for the separate Wiki when it is available; [publishing instructions](docs/WIKI.md).
 
 ## Build and test
 
@@ -116,9 +122,9 @@ vertical dashes, through-wall ricochets, momentum preservation, native shield
 breakage and timed recovery, HP/SHP evolution, aura regeneration and native NPC loadouts.
 `./gradlew runClient` starts a development client on a machine with graphics.
 
-The [0.24.0 validation report](docs/VALIDATION-0.24.0.md) covers the native GameTests, including Aion’s seeded trajectories, native salvo damage and cleanup, 11 JUnit tests, graphical menu checks, and responsive wiki validation.
+The [0.25.0 validation report](docs/VALIDATION-0.25.0.md) covers the full native GameTest suite, Ananke’s resources, AI, warnings, damage, lifecycle and arena integration, 11 JUnit tests, native client captures and responsive wiki validation.
 
-Install `build/libs/tensura-myths-0.24.0.jar` on **both client and server**,
+Install `build/libs/tensura-myths-0.25.0.jar` on **both client and server**,
 alongside Tensura and its required dependencies. The addon jar is not a complete
 modpack. Additional development dependency versions are in `runtime-mods.lock.json`.
 

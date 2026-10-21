@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.25.0 — The First Myth
+
+- Add Ananke, the Unwritten End: a 30M-EP Eclipse Seraph with real 48,000 HP, 120,000 native SHP, two native tracking bossbars placed clear of Tensura’s player HUD, six articulated wings and three combat phases. Keep its health-range exception local to this entity; external health modifiers still apply.
+- Add the boss-intrinsic Ultimate Moira, Lord of Finality, with four native paid/cooldown modes: a locked aura-slash fan, individually warned Light starfalls, a once-per-victim hollow Darkness wave, and a Space blast with a real gold refuge annulus. No EP damage scaling or incoming damage cap.
+- Give Ananke a fifteen-skill mastered package, including Thoth, native perception, gradual Self-Regeneration and resistances. Use paid Thoth support, Astral Library and Spellbreak in later phases. Preserve shared Godly ownership traits; allow Countermand to interrupt Ultimate Moira. Keep native negative-mastery learning records unmastered.
+- Add a survival lodestone ritual, original item art and model atlas, spawn egg, player-kill trophy/loot, challenge advancement, native boss tags and native IArenaBoss support. Add operator summon and non-overwriting arena-profile setup commands. Apply arena eligibility to auxiliary Myths spells as well as Moira.
+- Persist native resources and wounds; cancel pending rites on reload, death, interruption or removal. Reset a fully abandoned encounter after ten seconds. Add focused native regression coverage, implementation research, per-ability damage-type wiki articles, captured media and release editions.
+
 ## 0.24.0
 
 - Replace Lugh’s percentage mastery and attack-speed bonuses with flat +49 native learning/mastery gain and 50% shorter cooldown recovery for other skills. Exclude every Lugh mode, preserve +35% movement and 240-MP/s upkeep, and remove both gain modifiers on cleanup.

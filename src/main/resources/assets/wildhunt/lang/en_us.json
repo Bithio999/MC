@@ -95,5 +95,10 @@
   "wildhunt.skill.thoth.passive": "Arcane Sovereignty",
   "wildhunt.skill.lugh": "Lugh, God of Skills",
   "wildhunt.skill.anansi": "Anansi, Lord of Schemes",
-  "wildhunt.skill.aegir": "Aegir, Lord of the Abyss"
+  "wildhunt.skill.aegir": "Aegir, Lord of the Abyss",
+  "entity.wildhunt.myth_visual": "Myth Rite",
+  "entity.wildhunt.ananke": "Ananke, the Unwritten End",
+  "item.wildhunt.ananke_spawn_egg": "Ananke Spawn Egg",
+  "item.wildhunt.writ_of_last_dawn": "Writ of Last Dawn",
+  "item.wildhunt.dawn_testament": "Dawn Testament"
 }

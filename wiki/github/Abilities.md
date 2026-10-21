@@ -57,6 +57,10 @@
 | [Refracted Harpoon](https://github.com/Bithio999/MC/wiki/Aegir#refracted-harpoon) | [Aegir, Lord of the Abyss](https://github.com/Bithio999/MC/wiki/Aegir) | Active | Water elemental — `tensura:water_elemental` |
 | [Mirrorsea](https://github.com/Bithio999/MC/wiki/Aegir#mirrorsea) | [Aegir, Lord of the Abyss](https://github.com/Bithio999/MC/wiki/Aegir) | Active | None — reflected projectiles retain their attack type |
 | [Sovereign Breaker](https://github.com/Bithio999/MC/wiki/Aegir#sovereign-breaker) | [Aegir, Lord of the Abyss](https://github.com/Bithio999/MC/wiki/Aegir) | Active | Water elemental — `tensura:water_elemental` |
+| [Fatebreaker](https://github.com/Bithio999/MC/wiki/Moira#fatebreaker) | [Moira, Lord of Finality](https://github.com/Bithio999/MC/wiki/Moira) | Boss cast | Aura slash — `tensura:aura_slash` |
+| [Starfall Canticle](https://github.com/Bithio999/MC/wiki/Moira#starfall-canticle) | [Moira, Lord of Finality](https://github.com/Bithio999/MC/wiki/Moira) | Boss cast | Light elemental — `tensura:light_elemental` |
+| [Eventide Procession](https://github.com/Bithio999/MC/wiki/Moira#eventide-procession) | [Moira, Lord of Finality](https://github.com/Bithio999/MC/wiki/Moira) | Boss cast | Darkness elemental — `tensura:darkness_elemental` |
+| [The Last Dawn](https://github.com/Bithio999/MC/wiki/Moira#the-last-dawn) | [Moira, Lord of Finality](https://github.com/Bithio999/MC/wiki/Moira) | Boss cast | Space elemental — `tensura:space_elemental` |
 
 ## Godly abilities
 

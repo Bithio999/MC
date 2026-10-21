@@ -26,6 +26,10 @@ Three active modes use aura; the separate native toggle charges aura upkeep. Dam
 
 Master one of these Ultimates, become a True Hero or True Demon Lord and reach 12M base EP to obtain [Aion](Aion.md), or additionally combine a mastered [Rune Smith](Rune-Smith.md) for [Thoth](Thoth.md), or combine a mastered [Threadweaver](Threadweaver.md) for [Lugh](Lugh.md).
 
+## Boss-intrinsic Ultimates
+
+[Moira, Lord of Finality](Moira.md) belongs to [Ananke](Ananke.md). Its four native Ultimate rites are encounter mechanics, with no player roll, synthesis or slotting route. It is separate from the five playable combinations above.
+
 ---
 
 **Categories:** Tensura Myths · Skills

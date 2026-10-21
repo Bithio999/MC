@@ -57,6 +57,10 @@
 | [Refracted Harpoon](Aegir.md#refracted-harpoon) | [Aegir, Lord of the Abyss](Aegir.md) | Active | Water elemental — `tensura:water_elemental` |
 | [Mirrorsea](Aegir.md#mirrorsea) | [Aegir, Lord of the Abyss](Aegir.md) | Active | None — reflected projectiles retain their attack type |
 | [Sovereign Breaker](Aegir.md#sovereign-breaker) | [Aegir, Lord of the Abyss](Aegir.md) | Active | Water elemental — `tensura:water_elemental` |
+| [Fatebreaker](Moira.md#fatebreaker) | [Moira, Lord of Finality](Moira.md) | Boss cast | Aura slash — `tensura:aura_slash` |
+| [Starfall Canticle](Moira.md#starfall-canticle) | [Moira, Lord of Finality](Moira.md) | Boss cast | Light elemental — `tensura:light_elemental` |
+| [Eventide Procession](Moira.md#eventide-procession) | [Moira, Lord of Finality](Moira.md) | Boss cast | Darkness elemental — `tensura:darkness_elemental` |
+| [The Last Dawn](Moira.md#the-last-dawn) | [Moira, Lord of Finality](Moira.md) | Boss cast | Space elemental — `tensura:space_elemental` |
 
 ## Godly abilities
 

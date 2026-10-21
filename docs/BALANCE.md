@@ -1,4 +1,4 @@
-# Current balance: 0.22.0
+# Current balance: 0.25.0
 
 This calibration applies the [external Unique audit](research/UNIQUE_PARITY_0.19.md).
 The largest cuts target repeatable direct damage; conditional burst receives
@@ -372,3 +372,14 @@ reincarnation rolling and boss progression. Automated tests verify behavior; the
 do not establish PvP balance or replace a client playtest of the new visuals.
 
 Lugh’s All-Skilled adds flat +49 native learning and mastery gain, keeps +35% movement, and halves other skills’ cooldown recovery time through native updates. Lugh’s own cooldowns are excluded. Passive observation automatically banks actual damaging techniques used within 64 blocks; Skill Bank opens directly for free. Reconstruction bounds, art costs and Lugh’s remaining cooldowns are unchanged.
+
+
+## First Myth: Ananke (0.25.0)
+
+The optional endgame encounter has **30M base EP** split evenly between aura and magicules, **48,000 real HP** and **120,000 native SHP**. Its HP accessor allows this boss's native base/modifiers above the pinned 10K attribute bound without changing any other entity's limit. Fifteen selected skills are mastered; unrelated native learning records are not promoted.
+
+Moira uses fixed raw encounter values, with **no EP or mastery damage multiplier**: Fatebreaker 1,800 aura slash (4K MP / 4s), Starfall 1,000 Light per star (10K MP / 10s), Procession 2,200 Darkness once per victim (14K MP / 12s), Last Dawn 4,800 Space (50K MP / 24s). Native boosts, defenses, difficulty and hit immunity still apply. Its real safe shapes and warnings, not an incoming damage cap or phase invulnerability, define the encounter. Thoth separately applies its standard Godly traits, mastered Astral Library and Spellbreak, and its paid passive.
+
+Self-Regeneration is gradual native recovery. Ultraspeed/Infinite Regeneration are deliberately absent because native Instant Regeneration can refill all missing HP every ten ticks while funded. Ananke's 15M MP reserve would otherwise make it a one-shot/resource-exhaustion test. Final-phase decisions become faster and introduce Last Dawn; an abandoned fight resets after ten seconds.
+
+The [research](research/MYTH_BOSS_IMPLEMENTATION.md) compares pinned native profiles and inspected Nightmares/Mysticism implementations. The target is above shipped base-mod bosses; it is not a universal ranking against configured addon bosses. [Full encounter and damage types](../wiki/pages/Ananke.md).

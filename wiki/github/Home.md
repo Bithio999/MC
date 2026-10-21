@@ -1,6 +1,6 @@
 # Tensura Myths Wiki
 
-An unofficial reference for the **Tensura Myths** addon to **Tensura: Reincarnated**. Minecraft 1.21.1 · NeoForge · Addon 0.24.0.
+An unofficial reference for the **Tensura Myths** addon to **Tensura: Reincarnated**. Minecraft 1.21.1 · NeoForge · Addon 0.25.0.
 
 ## Start here
 
@@ -25,6 +25,10 @@ An unofficial reference for the **Tensura Myths** addon to **Tensura: Reincarnat
 - [Secondary races](https://github.com/Bithio999/MC/wiki/Duo-Races): develop an independent lineage and gain 10% extra EP.
 - [Convergent Awakening](https://github.com/Bithio999/MC/wiki/Convergent-Awakening): unite two fully evolved lineages into one unique race.
 
+## Myth bosses
+
+[Ananke, the Unwritten End](https://github.com/Bithio999/MC/wiki/Ananke) is the first Myth: a **30M-EP Eclipse Seraph** with three phases, Moira’s four warned rites and Thoth’s Godly authority. [Boss directory](https://github.com/Bithio999/MC/wiki/Bosses) · [Summoning and rewards](https://github.com/Bithio999/MC/wiki/Ananke#summoning)
+
 ## Otherworlders
 
 [Character directory](https://github.com/Bithio999/MC/wiki/Otherworlders) · [Alma](https://github.com/Bithio999/MC/wiki/Alma) · [Gemma](https://github.com/Bithio999/MC/wiki/Gemma)
@@ -36,4 +40,4 @@ An unofficial reference for the **Tensura Myths** addon to **Tensura: Reincarnat
 Ability articles separate direct elemental hits, additional status damage, healing and utility. Their data tables include damage types, resource costs, cooldowns and acquisition requirements.
 
 
-[Download the styled offline edition](https://github.com/Bithio999/MC/blob/main/releases/tensura-myths-wiki-0.24.0.zip)
+[Download the styled offline edition](https://github.com/Bithio999/MC/blob/main/releases/tensura-myths-wiki-0.25.0.zip)

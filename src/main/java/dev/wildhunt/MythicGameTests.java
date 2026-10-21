@@ -148,6 +148,8 @@ public final class MythicGameTests {
         h.runAfterDelay(2,()->{
             held.tick(storage,p);h.assertTrue(energy.getMagicule()>20_000 && Math.abs(energy.getMagicule()-perTick*2)<.001,"The old per-cast limit remains");
             h.startSequence().thenWaitUntil(()->h.assertTrue(h.getLevel().getEntity(visual) instanceof ArtVisualEntity,"Crucible visual is not indexed yet")).thenExecute(()->{
+                // The fake player has no native input loop: keep its held heartbeat alive while waiting for indexing.
+                h.assertTrue(held.tick(storage,p),"Manual held fixture expired while awaiting its visual");
                 p.setPos(p.position().add(1,0,0));tick(p,i);h.assertTrue(((ArtVisualEntity)h.getLevel().getEntity(visual)).position().distanceTo(p.position())<.001,"Held effect failed to follow its owner");
                 double mp=energy.getMagicule();storage.handleSkillRelease(i,0,2,false);
                 h.assertTrue(!i.getOrCreateTag().getBoolean("crucible_active") && h.getLevel().getEntity(visual)==null && i.getCoolDown(2)==0 && !s.onHeld(i,p,3,2) && energy.getMagicule()==mp,"Releasing left conversion, visual or cooldown active");h.succeed();

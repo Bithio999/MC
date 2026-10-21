@@ -61,7 +61,8 @@ public final class WildHunt {
         NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerRespawnEvent e)->{if(e.getEntity() instanceof net.minecraft.server.level.ServerPlayer p)dev.wildhunt.myths.SecondaryAbility.clear(p);});
         // ManasCore owns these custom registrars, as it does for Tensura itself.
         // Avoid looking them up through Architectury's cross-mod constructor map.
-        ArtVisualEntity.register(); HunterOtherworlders.register();
+        ArtVisualEntity.register(); HunterOtherworlders.register(); MythBosses.register(modBus);
+        NeoForge.EVENT_BUS.addListener(MythBossCommands::register);
         NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.LOWEST, HunterEvents::onKill);
         NeoForge.EVENT_BUS.addListener(HunterEvents::onClone);
         NeoForge.EVENT_BUS.addListener(HunterCommands::register);

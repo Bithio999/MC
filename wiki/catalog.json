@@ -22,6 +22,11 @@
     "category": "Otherworlders"
   },
   {
+    "slug": "Ananke",
+    "title": "Ananke, the Unwritten End",
+    "category": "Bosses"
+  },
+  {
     "slug": "Anansi",
     "title": "Anansi, Lord of Schemes",
     "category": "Skills",
@@ -55,6 +60,11 @@
     "tier": "Unique"
   },
   {
+    "slug": "Bosses",
+    "title": "Myth bosses",
+    "category": "Bosses"
+  },
+  {
     "slug": "Commands",
     "title": "Commands",
     "category": "Reference"
@@ -78,6 +88,11 @@
   {
     "slug": "Duo-Races",
     "title": "Duo Races",
+    "category": "Races"
+  },
+  {
+    "slug": "Eclipse-Seraph",
+    "title": "Eclipse Seraph",
     "category": "Races"
   },
   {
@@ -633,7 +648,7 @@
   },
   {
     "slug": "Hunters-Recovery",
-    "title": "Hunter’s Recovery",
+    "title": "Hunter\u2019s Recovery",
     "category": "Skills",
     "tier": "Extra"
   },
@@ -659,6 +674,12 @@
     "title": "Mirrorbound",
     "category": "Skills",
     "tier": "Unique"
+  },
+  {
+    "slug": "Moira",
+    "title": "Moira, Lord of Finality",
+    "category": "Skills",
+    "tier": "Ultimate"
   },
   {
     "slug": "Otherworlders",

@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "CEC",
+    "DNS",
+    "CEC"
+  ],
+  "key": {
+    "C": {
+      "item": "minecraft:end_crystal"
+    },
+    "E": {
+      "item": "minecraft:echo_shard"
+    },
+    "D": {
+      "item": "minecraft:dragon_breath"
+    },
+    "N": {
+      "item": "minecraft:nether_star"
+    },
+    "S": {
+      "item": "minecraft:dragon_breath"
+    }
+  },
+  "result": {
+    "id": "wildhunt:writ_of_last_dawn",
+    "count": 1
+  }
+}

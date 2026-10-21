@@ -1,6 +1,6 @@
 # Tensura Myths Wiki
 
-An unofficial reference for the **Tensura Myths** addon to **Tensura: Reincarnated**. Minecraft 1.21.1 · NeoForge · Addon 0.24.0.
+An unofficial reference for the **Tensura Myths** addon to **Tensura: Reincarnated**. Minecraft 1.21.1 · NeoForge · Addon 0.25.0.
 
 ## Start here
 
@@ -25,6 +25,10 @@ An unofficial reference for the **Tensura Myths** addon to **Tensura: Reincarnat
 - [Secondary races](pages/Duo-Races.md): develop an independent lineage and gain 10% extra EP.
 - [Convergent Awakening](pages/Convergent-Awakening.md): unite two fully evolved lineages into one unique race.
 
+## Myth bosses
+
+[Ananke, the Unwritten End](pages/Ananke.md) is the first Myth: a **30M-EP Eclipse Seraph** with three phases, Moira’s four warned rites and Thoth’s Godly authority. [Boss directory](pages/Bosses.md) · [Summoning and rewards](pages/Ananke.md#summoning)
+
 ## Otherworlders
 
 [Character directory](pages/Otherworlders.md) · [Alma](pages/Alma.md) · [Gemma](pages/Gemma.md)
@@ -37,8 +41,8 @@ Ability articles separate direct elemental hits, additional status damage, heali
 
 ## Open the visual edition
 
-[Download the styled offline wiki](../releases/tensura-myths-wiki-0.24.0.zip), extract it, and open `index.html`. It contains every article, portraits, screenshots and offline search. GitHub readers can use the Markdown links above.
+[Download the styled offline wiki](../releases/tensura-myths-wiki-0.25.0.zip), extract it, and open `index.html`. It contains every article, portraits, screenshots and offline search. GitHub readers can use the Markdown links above.
 
-[Download the addon](../releases/tensura-myths-0.24.0.jar) · [Base mod wiki](https://tensura.wiki.gg/wiki/Tensura:_Reincarnated_Wiki) · [Changelog](../docs/CHANGELOG.md) · [Wiki authoring](../docs/WIKI.md)
+[Download the addon](../releases/tensura-myths-0.25.0.jar) · [Base mod wiki](https://tensura.wiki.gg/wiki/Tensura:_Reincarnated_Wiki) · [Changelog](../docs/CHANGELOG.md) · [Wiki authoring](../docs/WIKI.md)
 
 Unofficial fan addon. Not affiliated with Capcom or ManasMods.

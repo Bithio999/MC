@@ -25,10 +25,16 @@ public final class ArtVisualEntity extends Entity {
         BRIAR=30,RUNE_BURST=31,MIRROR_SHARD=32,RAILBOLT=33,THUNDER_STEP=34,ELEMENT_IMPACT=35,OIL_POOL=36,HEALING_PULSE=37,GATE_TRANSIT=38,
         FATE_ANCHOR=39,FATE_THREAD=40,LOOM_TRANSIT=41,CHECKMATE_EDGE=42,MIRRORSEA=43,REFRACTED_HARPOON=44,SOVEREIGN_BREAKER=45,WATER_REFRACTION=46,
         PERENNIAL_SEED=47,REBIRTH_BLOOM=48,SKILL_APPRAISAL=49,ARTISAN_THREAD=50,COUNTERMAND=51,GRAND_SYNTHESIS=52,RECONSTRUCTED_BLADE=53,RECONSTRUCTED_LANCE=54,RECONSTRUCTED_CROWN=55;
+    public static final int ANANKE_FATEBREAKER=56,ANANKE_STARFALL=57,ANANKE_PROCESSION=58,ANANKE_LAST_DAWN=59,ANANKE_ASCENSION=60;
     private static final DeferredRegister<EntityType<?>> TYPES = DeferredRegister.create(WildHunt.ID, Registries.ENTITY_TYPE);
     public static final RegistrySupplier<EntityType<ArtVisualEntity>> TYPE = TYPES.register("art_visual", () ->
         EntityType.Builder.<ArtVisualEntity>of(ArtVisualEntity::new, MobCategory.MISC).sized(0.1f, 0.1f)
             .clientTrackingRange(8).updateInterval(1).noSave().noSummon().build("wildhunt:art_visual"));
+    // Boss warnings can be separated by the full encounter diameter. Keep their
+    // network range independent from the ordinary skill visual budget.
+    public static final RegistrySupplier<EntityType<ArtVisualEntity>> MYTH_TYPE=TYPES.register("myth_visual",()->
+        EntityType.Builder.<ArtVisualEntity>of(ArtVisualEntity::new,MobCategory.MISC).sized(.1f,.1f)
+            .clientTrackingRange(12).updateInterval(1).noSave().noSummon().build("wildhunt:myth_visual"));
     private static final EntityDataAccessor<Integer> KIND = SynchedEntityData.defineId(ArtVisualEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> LIFETIME = SynchedEntityData.defineId(ArtVisualEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> CASTER_ID = SynchedEntityData.defineId(ArtVisualEntity.class, EntityDataSerializers.INT);
@@ -46,7 +52,7 @@ public final class ArtVisualEntity extends Entity {
         super(type, level); noPhysics = true; setNoGravity(true);
     }
     public static ArtVisualEntity spawn(Level level, int kind, Vec3 start, Vec3 delta, int ticks) {
-        var entity = new ArtVisualEntity(TYPE.get(), level); entity.setPos(start);
+        var entity = new ArtVisualEntity(kind>=ANANKE_FATEBREAKER && kind<=ANANKE_ASCENSION?MYTH_TYPE.get():TYPE.get(), level); entity.setPos(start);
         entity.entityData.set(KIND, kind); entity.entityData.set(LIFETIME, ticks);
         entity.entityData.set(END_X, (float)delta.x); entity.entityData.set(END_Y, (float)delta.y); entity.entityData.set(END_Z, (float)delta.z);
         level.addFreshEntity(entity); return entity;
@@ -86,8 +92,16 @@ public final class ArtVisualEntity extends Entity {
             }
         }else if (!level().isClientSide() && tickCount >= lifetime()) discard();
     }
-    @Override public AABB getBoundingBoxForCulling() { if(kind()==CAUSAL_VERDICT && !barrage().isEmpty())return new AABB(position(),position().add(new Vec3(barrage().getDouble("aim_x"),barrage().getDouble("aim_y"),barrage().getDouble("aim_z")))).inflate(24);return new AABB(position(), position().add(end())).inflate((kind() == WHIRLPOOL || kind() == CAUSAL_SPHERE || kind()>=CAUSAL_DOMAIN) ? Math.abs(end().x) + 12 : kind() == TIDAL_WAVE ? end().y + 3 : 4); }
-    @Override public boolean shouldRenderAtSqrDistance(double distance) { return distance < 128 * 128; }
+    @Override public AABB getBoundingBoxForCulling() {
+        // Each star warning can be far from the caster. Cull by its actual saved
+        // placement and sky lance, not only the encounter's origin.
+        if(kind()==ANANKE_STARFALL && !barrage().isEmpty()){
+            var box=new AABB(position(),position());var plan=barrage();
+            for(int n=0;n<plan.getInt("warned");n++){var at=position().add(AnankeRites.star(plan,n));box=box.minmax(new AABB(at,at.add(0,20,0)).inflate(4));}
+            return box;
+        }
+        if(kind()==CAUSAL_VERDICT && !barrage().isEmpty())return new AABB(position(),position().add(new Vec3(barrage().getDouble("aim_x"),barrage().getDouble("aim_y"),barrage().getDouble("aim_z")))).inflate(24);return new AABB(position(), position().add(end())).inflate((kind() == WHIRLPOOL || kind() == CAUSAL_SPHERE || kind()>=CAUSAL_DOMAIN) ? Math.abs(end().x) + 12 : kind() == TIDAL_WAVE ? end().y + 3 : 4); }
+    @Override public boolean shouldRenderAtSqrDistance(double distance) { return distance < (kind()==ANANKE_STARFALL ? 192 * 192 : 128 * 128); }
     @Override protected void readAdditionalSaveData(CompoundTag tag) {}
     @Override protected void addAdditionalSaveData(CompoundTag tag) {}
 }

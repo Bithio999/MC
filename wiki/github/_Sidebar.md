@@ -23,6 +23,12 @@
 - [Secondary races](https://github.com/Bithio999/MC/wiki/Duo-Races)
 - [Convergent Awakening](https://github.com/Bithio999/MC/wiki/Convergent-Awakening)
 
+### Myth bosses
+
+- [Boss directory](https://github.com/Bithio999/MC/wiki/Bosses)
+- [Ananke](https://github.com/Bithio999/MC/wiki/Ananke)
+- [Moira, Lord of Finality](https://github.com/Bithio999/MC/wiki/Moira)
+
 ### Otherworlders
 
 - [Character directory](https://github.com/Bithio999/MC/wiki/Otherworlders)

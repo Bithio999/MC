@@ -2,7 +2,7 @@
 
 [Main Page](../README.md) · [Reference](Mechanics.md) · [Ability index](Abilities.md) · [Damage types](Damage-Types.md)
 
-All commands affect the issuing player. No operator permission is required, and progression gates are still enforced.
+Player progression commands affect the issuing player, need no operator permission, and enforce progression gates. The boss administration commands below require operator permission.
 
 | Command | Function |
 | --- | --- |
@@ -36,6 +36,16 @@ Any race can synthesize at **2M base EP** with both specific ingredients mastere
 These commands are available to players and enforce the same server-side requirements as the menu. Valid secondary keys: `beastfolk`, `harpy`, `ogre`, `goblin`, `giant`, `orc`, `lizardman`, `merfolk`, `elf`, `human`, `dwarf`, `slime`, `vampire`, `wight`, `daemon`.
 
 Godly IDs are `wildhunt:aion`, `wildhunt:thoth` and `wildhunt:lugh`. Fused race IDs follow `wildhunt:convergence/<sorted_family_pair>`; the [catalog](Convergent-Awakening.md#race-catalog) links to each exact ID.
+
+## Boss administration
+
+| Command | Function |
+| --- | --- |
+| `/myths boss summon` | Summon Ananke in front of the operator, if there is room |
+| `/myths boss arena` | Create a native `ananke` boss-fight profile at the operator's position; never overwrite an existing one |
+| `/bossFight join @s ananke` | Native Tensura command to join the prepared arena; requires the base mod's permissions |
+
+These are operator tools. Survival players use the [Writ of Last Dawn ritual](Ananke.md#summoning). Arena setup creates configuration, not terrain; prepare the ground and entrance first.
 
 ---
 

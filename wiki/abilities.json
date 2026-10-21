@@ -725,5 +725,45 @@
     "damage_id": "tensura:aura_slash",
     "secondary_damage_id": "tensura:magic",
     "anchor": "grand-synthesis"
+  },
+  {
+    "skill": "Moira",
+    "name": "Fatebreaker",
+    "tier": "Ultimate",
+    "kind": "Boss cast",
+    "damage": "Aura slash",
+    "damage_id": "tensura:aura_slash",
+    "secondary_damage_id": null,
+    "anchor": "fatebreaker"
+  },
+  {
+    "skill": "Moira",
+    "name": "Starfall Canticle",
+    "tier": "Ultimate",
+    "kind": "Boss cast",
+    "damage": "Light elemental",
+    "damage_id": "tensura:light_elemental",
+    "secondary_damage_id": null,
+    "anchor": "starfall-canticle"
+  },
+  {
+    "skill": "Moira",
+    "name": "Eventide Procession",
+    "tier": "Ultimate",
+    "kind": "Boss cast",
+    "damage": "Darkness elemental",
+    "damage_id": "tensura:darkness_elemental",
+    "secondary_damage_id": null,
+    "anchor": "eventide-procession"
+  },
+  {
+    "skill": "Moira",
+    "name": "The Last Dawn",
+    "tier": "Ultimate",
+    "kind": "Boss cast",
+    "damage": "Space elemental",
+    "damage_id": "tensura:space_elemental",
+    "secondary_damage_id": null,
+    "anchor": "the-last-dawn"
   }
 ]
