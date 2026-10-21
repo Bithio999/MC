@@ -65,7 +65,7 @@ Black Flame’s ignition/pool hits can apply this status. Oil Lash applies slowi
 
 ## Non-damaging abilities
 
-Countermand and Skill Appraisal deal no damage. Perennial Seed restores HP/SHP and cleanses selected ordinary afflictions. Puppet Passage moves the caster and an anchor; Mirrorsea redirects projectiles without inventing a new damage type. Causal Reversal restores position, HP, SHP, aura and magicules. Hunter’s Recovery, Apex Renewal and Sovereign Rebirth heal. Concordance Pulse heals and pushes enemies without a damage call. Most defensive passives add attributes or barriers; Water Veil is the exception with its typed retaliation. Aion’s slowing aura and the shared Godly penetration do not themselves create periodic damage.
+Countermand and Skill Bank deal no damage. Perennial Seed restores HP/SHP and cleanses selected ordinary afflictions. Puppet Passage moves the caster and an anchor; Mirrorsea redirects projectiles without inventing a new damage type. Causal Reversal restores position, HP, SHP, aura and magicules. Hunter’s Recovery, Apex Renewal and Sovereign Rebirth heal. Concordance Pulse heals and pushes enemies without a damage call. Most defensive passives add attributes or barriers; Water Veil is the exception with its typed retaliation. Aion’s slowing aura and the shared Godly penetration do not themselves create periodic damage.
 
 ## Armor, barriers and resistance
 

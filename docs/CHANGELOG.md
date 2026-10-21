@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.24.0
+
+- Replace Lugh’s percentage mastery and attack-speed bonuses with flat +49 native learning/mastery gain and 50% shorter cooldown recovery for other skills. Exclude every Lugh mode, preserve +35% movement and 240-MP/s upkeep, and remove both gain modifiers on cleanup.
+- Rename Skill Appraisal to Skill Bank. A normal press directly opens the free Pride-style bank; crouching is optional. Preserve bank entries, bindings, selected Art, source parameters and native save data.
+- Move technique scanning into All-Skilled: automatically collect actual damaging techniques used within 64 blocks while funded and enabled. Refresh stable skill/mode entries without changing bindings, preserve the storage bound, and throttle scan optics independently of capture.
+- Add native tests for point gains, automatic range/toggle rules, native cooldown recovery, the Lugh exclusion and lifecycle cleanup. Update individual gameplay pages, UI labels and release editions.
+
 ## 0.23.0
 
 - Make each of Genesis Verdict’s twenty black holes deal its own native Space-elemental hit. Scope hurt-cooldown bypass to these individual collision sources, preserving ordinary attacks, native skill metadata, defenses and the 9,600 / 12,000 raw budgets.

@@ -171,7 +171,7 @@
   },
   {
     "skill": "Hunters-Recovery",
-    "name": "Hunter’s Recovery",
+    "name": "Hunter\u2019s Recovery",
     "tier": "Extra",
     "kind": "Passive",
     "damage": "None",
@@ -343,7 +343,7 @@
     "name": "Mirror Aegis",
     "tier": "Unique",
     "kind": "Active",
-    "damage": "None — reflected projectiles retain their own attack type",
+    "damage": "None \u2014 reflected projectiles retain their own attack type",
     "damage_id": null,
     "secondary_damage_id": null,
     "damage_ids": [],
@@ -571,7 +571,7 @@
     "name": "Divine Authority",
     "tier": "Godly",
     "kind": "Passive",
-    "damage": "Modifier — original damage type",
+    "damage": "Modifier \u2014 original damage type",
     "damage_id": null,
     "secondary_damage_id": null,
     "anchor": "divine-authority"
@@ -581,7 +581,7 @@
     "name": "Absolute Penetration",
     "tier": "Godly",
     "kind": "Passive",
-    "damage": "Modifier — original damage type",
+    "damage": "Modifier \u2014 original damage type",
     "damage_id": null,
     "secondary_damage_id": null,
     "anchor": "absolute-penetration"
@@ -661,7 +661,7 @@
     "name": "Mirrorsea",
     "tier": "Ultimate",
     "kind": "Active",
-    "damage": "None — reflected projectiles retain their attack type",
+    "damage": "None \u2014 reflected projectiles retain their attack type",
     "damage_id": null,
     "secondary_damage_id": null,
     "anchor": "mirrorsea"
@@ -688,13 +688,13 @@
   },
   {
     "skill": "Lugh",
-    "name": "Skill Appraisal",
+    "name": "Skill Bank",
     "tier": "Godly",
     "kind": "Active",
     "damage": "None",
     "damage_id": null,
     "secondary_damage_id": null,
-    "anchor": "skill-appraisal"
+    "anchor": "skill-bank"
   },
   {
     "skill": "Lugh",

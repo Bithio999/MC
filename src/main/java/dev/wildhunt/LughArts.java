@@ -68,6 +68,7 @@ public final class LughArts {
         record.putString("entry",index<0?UUID.randomUUID().toString():list.getCompound(index).getString("entry"));record.putInt("mode",observation.getInt("mode"));
         record.putString("mode_name",text(observation.getString("mode_name")));record.putString("source_type",observation.getString("source_type"));
         record.putFloat("observed_damage",Math.max(0,observation.getFloat("observed_damage")));record.putBoolean("observed",true);
+        if(index>=0 && record.equals(list.getCompound(index)))return true;
         if(index<0)list.add(record);else list.set(index,record);i.markDirty();return true;
     }
     /** The client supplies only an ID and slot. Damage and other parameters never cross C2S. */
@@ -110,7 +111,34 @@ public final class LughArts {
         int mode=((TensuraDamageSource)source).tensura$getAbilityMode();record.putInt("mode",mode);
         record.putString("source_type",originalType.toString());record.putFloat("observed_damage",amount.get());
         if(instance.getSkill() instanceof io.github.manasmods.tensura.ability.TensuraSkill nativeSkill && mode>=0 && mode<instance.getModes())record.putString("mode_name",text(nativeSkill.getModeName(instance,mode).getString()));
-        record.putLong("time",now);record.putUUID("victim",target.getUUID());HunterData.of(caster).put("last_technique",record);return EventResult.pass();
+        record.putLong("time",now);record.putUUID("victim",target.getUUID());HunterData.of(caster).put("last_technique",record);
+        for(var observer:((ServerLevel)caster.level()).getEntitiesOfClass(LivingEntity.class,caster.getBoundingBox().inflate(64),e->e.distanceToSqr(caster)<=64*64))collect(observer,caster,record);
+        return EventResult.pass();
+    }
+    /** Live toggle authorization is shared by collection and cooldown recovery. */
+    public static boolean active(LivingEntity owner){
+        if(!owner.isAlive())return false;
+        return SkillAPI.getSkillsFrom(owner).getSkill(skill()).filter(i->i.isToggled() && skill().canInteractSkill(i,owner) && skill().canActivateSkill(i,owner,0)
+            && (owner.hasInfiniteMaterials() || i.getOrCreateTag().getLong("upkeep")>owner.level().getGameTime() || io.github.manasmods.tensura.storage.TensuraStorages.getExistenceFrom(owner).getMagicule()>=MythicKind.LUGH.upkeep)).isPresent();
+    }
+    static void collect(LivingEntity observer,LivingEntity caster,CompoundTag record){
+        if(observer.level().isClientSide() || observer.level()!=caster.level() || observer.distanceToSqr(caster)>64*64 || !active(observer))return;
+        var i=SkillAPI.getSkillsFrom(observer).getSkill(skill()).orElseThrow();var list=library(i);int previous=storedIndex(list,record);
+        var before=previous>=0?list.getCompound(previous).copy():null;
+        if(!remember(i,record) || before!=null && before.equals(library(i).getCompound(previous)))return;
+        long now=observer.level().getGameTime();var tag=i.getOrCreateTag();
+        // Coalesce scan optics, never the captured data; multi-hit attacks cannot flood visual entities.
+        if(now<tag.getLong("bank_visual_at"))return;tag.putLong("bank_visual_at",now+24);
+        var level=(ServerLevel)observer.level();
+        ArtVisualEntity.spawn(level,ArtVisualEntity.SKILL_APPRAISAL,caster.position(),new Vec3(2.2,0,0),32).style(record.getInt("form"));
+        ArtVisualEntity.spawn(level,ArtVisualEntity.ARTISAN_THREAD,observer.getEyePosition(),caster.getEyePosition().subtract(observer.getEyePosition()),18);
+    }
+    /** Double native cooldown recovery = 50% recovery time; Lugh itself never benefits. */
+    public static EventResult cooldown(ManasSkillInstance instance,LivingEntity owner,int mode,int previous,Changeable<Integer> remaining){
+        if(!owner.level().isClientSide() && instance.getSkill()!=skill() && instance.getSkill() instanceof io.github.manasmods.tensura.ability.skill.Skill && active(owner)){
+            int elapsed=Math.max(0,previous-remaining.get());
+            if(elapsed>0)remaining.set(Math.max(0,remaining.get()-elapsed));
+        }return EventResult.pass();
     }
     private static CompoundTag recent(LivingEntity target){
         var record=HunterData.of(target).getCompound("last_technique");long age=target.level().getGameTime()-record.getLong("time");
@@ -118,20 +146,16 @@ public final class LughArts {
         var id=ResourceLocation.tryParse(record.getString("source"));return id==null || SkillAPI.getSkillRegistry().get(id)==null?null:record;
     }
     static boolean canCast(ServerLevel l,ManasSkillInstance i,LivingEntity e,int mode){
-        archive(i);if(mode==1 || mode==3)return true;
+        archive(i);if(mode==0 || mode==1 || mode==3)return true;
         var target=ApexArts.target(l,e,48);var record=target==null?null:recent(target);
         if(record==null){message(e,"Aim at an enemy that used a damaging technique in the last 30 seconds.");return false;}
         if(mode==2 && MythsTiers.isGodly(SkillAPI.getSkillRegistry().get(ResourceLocation.parse(record.getString("source"))))){message(e,"Countermand cannot seal a Godly technique.");return false;}
-        if(mode==0 && storedIndex(library(i),record)<0 && library(i).size()>=LIBRARY_LIMIT){message(e,"The appraisal library is full (256 techniques).");return false;}
         return true;
     }
     static void cast(MythicSkill s,ServerLevel l,ManasSkillInstance i,LivingEntity e,int mode){
         var tag=i.getOrCreateTag();long now=l.getGameTime();var list=archive(i);
         if(mode==0){
-            var target=ApexArts.target(l,e,48);var record=recent(target).copy();remember(i,record);
-            ArtVisualEntity.spawn(l,ArtVisualEntity.SKILL_APPRAISAL,target.position(),new Vec3(2.2,0,0),40).style(record.getInt("form"));
-            ArtVisualEntity.spawn(l,ArtVisualEntity.ARTISAN_THREAD,e.getEyePosition(),target.getEyePosition().subtract(e.getEyePosition()),22);
-            message(e,"Appraised "+record.getString("name")+". Shift + Skill Appraisal opens your library to bind it to Reconstructed Art.");
+            if(e instanceof net.minecraft.server.level.ServerPlayer p)dev.wildhunt.myths.MythsNetwork.sendLugh(p,true);
         }else if(mode==1){
             var record=list.getCompound(Math.floorMod(tag.getInt("selected_art"),3));reconstruct(s,l,i,e,record,null,1,false);
         }else if(mode==2){

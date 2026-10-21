@@ -52,6 +52,7 @@ public final class WildHunt {
         NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.LOWEST,GodlyPassives::effectApplicable);
         io.github.manasmods.manascore.skill.api.SkillEvents.SKILL_DAMAGE_PRE_CALCULATION.register(LughArts::observeDamage);
         io.github.manasmods.manascore.skill.api.SkillEvents.ACTIVATE_SKILL.register(LughArts::activate);
+        io.github.manasmods.manascore.skill.api.SkillEvents.SKILL_UPDATE_COOLDOWN.register(LughArts::cooldown);
         io.github.manasmods.manascore.skill.api.SkillEvents.SKILL_DAMAGE_PRE_CALCULATION.register(GodlyPassives::modifyDamage);
         NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent e)->{GodlySkill.clearTransient(e.getEntity());MythicArts.clearTransient(e.getEntity());});
         NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerChangedDimensionEvent e)->{GodlySkill.clearTransient(e.getEntity());MythicArts.clearTransient(e.getEntity());});

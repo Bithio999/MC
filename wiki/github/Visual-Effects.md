@@ -116,7 +116,7 @@ Bright cores mark beam paths, floor inscriptions preserve placed areas, and warn
 
 ### Lugh
 
-[Lugh](https://github.com/Bithio999/MC/wiki/Lugh) assembles ivory/gold armaments from solid, recessed rune tablets. Blade arcs, travelling lances and a descending crown identify its three forms. Grand Synthesis visibly assembles its archived forms in sequence. Appraisal scans the target, while Countermand locks a single rune tablet rather than surrounding the victim with a barrier.
+[Lugh](https://github.com/Bithio999/MC/wiki/Lugh) assembles ivory/gold armaments from solid, recessed rune tablets. Blade arcs, travelling lances and a descending crown identify its three forms. Grand Synthesis visibly assembles its archived forms in sequence. All-Skilled automatically scans nearby demonstrated techniques into Skill Bank, while Countermand locks a single rune tablet rather than surrounding the victim with a barrier.
 
 ![Lugh's three-technique synthesis formation](https://github.com/Bithio999/MC/blob/main/wiki/media/lugh-synthesis.png?raw=true)
 

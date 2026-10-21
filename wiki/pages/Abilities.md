@@ -78,7 +78,7 @@ The three Godly classification passives are always active, free and non-stacking
 | [Absolute Penetration](Godly.md#absolute-penetration) | [Godly Skills](Godly.md) | Always active | Modifier — original damage type |
 | [Interference Immunity](Godly.md#interference-immunity) | [Godly Skills](Godly.md) | Always active | None |
 | [All-Skilled](Lugh.md#passive) | [Lugh, God of Skills](Lugh.md) | Passive | None |
-| [Skill Appraisal](Lugh.md#skill-appraisal) | [Lugh, God of Skills](Lugh.md) | Active | None |
+| [Skill Bank](Lugh.md#skill-bank) | [Lugh, God of Skills](Lugh.md) | Active | None |
 | [Reconstructed Art](Lugh.md#reconstructed-art) | [Lugh, God of Skills](Lugh.md) | Active | Variable normalised physical, elemental or generic magic — see the linked archive/source reference |
 | [Countermand](Lugh.md#countermand) | [Lugh, God of Skills](Lugh.md) | Active | None |
 | [Grand Synthesis](Lugh.md#grand-synthesis) | [Lugh, God of Skills](Lugh.md) | Active | Three bound normalised damage types — see the linked archive/source reference |

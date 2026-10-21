@@ -64,17 +64,17 @@ public final class SovereignGameTests {
         var copy=ManasSkillInstance.fromNBT(i.toNBT());h.assertTrue(LughArts.selectedName(copy).equals("Heavenly Thread") && LughArts.archive(copy).size()==3,"Archive failed native save/load");h.succeed();
     }
     @GameTest(template="empty",timeoutTicks=100)
-    public static void lughAppraisesRealNativeDamageAndDoesNotDuplicateArchivedSources(GameTestHelper h){
-        var p=player(h);var actor=target(h,p.position().add(8,0,0));var victim=target(h,p.position().add(10,0,0));var i=learn(p,MythicKind.LUGH);var sourceSkill=learn(actor,MythicKind.RUNE_SMITH);
-        afterTracking(h,List.of(actor,victim),()->{
-            victim.hurt(((MythicSkill)sourceSkill.getSkill()).createSource(sourceSkill,actor,TensuraDamageTypes.EARTH_ELEMENTAL,0),100);
-            h.assertTrue(HunterData.of(actor).contains("last_technique"),"Actual native damage did not enter the observation hook");double mp=TensuraStorages.getExistenceFrom(p).getMagicule();cast(p,i,0);
-            var list=LughArts.library(i);var copied=list.getCompound(3);h.assertTrue(copied.getString("source").equals(sourceSkill.getSkillId().toString()) && copied.getString("type").equals("tensura:earth_elemental") && copied.getFloat("damage")==3500 && TensuraStorages.getExistenceFrom(p).getMagicule()==mp-1200,"Appraisal lost native provenance, bounded power or MP cost");
-            i.setCoolDown(0,0);cast(p,i,0);h.assertTrue(LughArts.library(i).size()==4 && LughArts.archive(i).getCompound(0).getString("name").equals("Sovereign Edge") && LughArts.library(i).stream().filter(v->((CompoundTag)v).getString("source").equals(sourceSkill.getSkillId().toString())).count()==1,"Repeated appraisal duplicated its source");h.succeed();
+    public static void lughBanksRealNativeDamageAndDoesNotDuplicateArchivedSources(GameTestHelper h){
+        var p=LughPassiveGameTests.observer(h,player(h).position());var actor=target(h,p.position().add(8,0,0));var victim=target(h,p.position().add(10,0,0));var i=LughPassiveGameTests.enable(p);var sourceSkill=learn(actor,MythicKind.RUNE_SMITH);
+        afterTracking(h,List.of(p,actor,victim),()->{
+            double mp=TensuraStorages.getExistenceFrom(p).getMagicule();victim.hurt(((MythicSkill)sourceSkill.getSkill()).createSource(sourceSkill,actor,TensuraDamageTypes.EARTH_ELEMENTAL,0),100);
+            var copied=LughArts.library(i).getCompound(3);h.assertTrue(copied.getString("source").equals(sourceSkill.getSkillId().toString()) && copied.getString("type").equals("tensura:earth_elemental") && copied.getFloat("damage")==3500 && TensuraStorages.getExistenceFrom(p).getMagicule()==mp,"Automatic bank lost provenance, bounded power or charged an extra scan cost");
+            victim.invulnerableTime=0;victim.hurt(((MythicSkill)sourceSkill.getSkill()).createSource(sourceSkill,actor,TensuraDamageTypes.EARTH_ELEMENTAL,0),100);h.assertTrue(LughArts.library(i).size()==4 && LughArts.archive(i).getCompound(0).getString("name").equals("Sovereign Edge"),"Repeated observation duplicated a record or replaced a binding");h.succeed();
         });
     }
+
     @GameTest(template="empty",timeoutTicks=100)
-    public static void invalidAppraisalAndGodlyCountermandAreFree(GameTestHelper h){
+    public static void skillBankAndInvalidGodlyCountermandAreFree(GameTestHelper h){
         var p=player(h);var actor=target(h,p.position().add(8,0,0));var victim=target(h,p.position().add(10,0,0));var i=learn(p,MythicKind.LUGH);
         afterTracking(h,List.of(actor,victim),()->{
             double mp=TensuraStorages.getExistenceFrom(p).getMagicule();cast(p,i,0);h.assertTrue(i.getCoolDown(0)==0 && TensuraStorages.getExistenceFrom(p).getMagicule()==mp,"Missing observation consumed a cast");

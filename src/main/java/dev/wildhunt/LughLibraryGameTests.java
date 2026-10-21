@@ -41,9 +41,9 @@ public final class LughLibraryGameTests {
         SkillAPI.getSkillsFrom(p).forgetSkill(i);h.assertTrue(!LughArts.configure(p,"lugh_bind","0|"+id) && !LughArts.snapshot(p).getBoolean("owned"),"Forgotten Lugh still accepted its library");h.succeed();
     }
     @GameTest(template="empty",timeoutTicks=100)
-    public static void shiftAppraisalAndBindingAreFreeWhileCoolingDownAtZeroMagicules(GameTestHelper h){
+    public static void normalSkillBankAndBindingAreFreeWhileCoolingDownAtZeroMagicules(GameTestHelper h){
         var p=player(h);var i=learn(p,MythicKind.LUGH);var s=(MythicSkill)i.getSkill();var energy=TensuraStorages.getExistenceFrom(p);energy.setMagicule(0);i.setCoolDown(8,0);i.setCoolDown(9,1);double mastery=i.getMastery();
-        p.setShiftKeyDown(true);h.assertTrue(s.getMagiculeCost(p,i,0)==0 && s.canIgnoreCoolDown(i,p,0),"Native input blocked free menu access");cast(p,i,0);p.setShiftKeyDown(false);
+        p.setShiftKeyDown(false);h.assertTrue(s.getMagiculeCost(p,i,0)==0 && s.canIgnoreCoolDown(i,p,0),"Native input blocked free menu access");cast(p,i,0);p.setShiftKeyDown(false);
         String id=LughArts.library(i).getCompound(2).getString("entry");h.assertTrue(LughArts.configure(p,"lugh_bind","1|"+id) && LughArts.configure(p,"lugh_select","2"),"Free binding or active selection was blocked");
         h.assertTrue(energy.getMagicule()==0 && i.getCoolDown(0)==8 && i.getCoolDown(1)==9 && i.getMastery()==mastery,"Menu/binding spent/refunded energy, reset cooldown or awarded mastery");h.succeed();
     }

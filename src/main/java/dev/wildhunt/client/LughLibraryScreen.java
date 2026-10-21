@@ -31,7 +31,7 @@ public final class LughLibraryScreen extends SimpleScreen implements IScrollBar 
     private float offset;
     private boolean scrolling;
     private int syncTicks;
-    public LughLibraryScreen(CompoundTag state){super(Component.literal("Appraised Skills"),233,145);this.state=state;filter();if(!filtered.isEmpty())selected=filtered.getFirst().getString("entry");}
+    public LughLibraryScreen(CompoundTag state){super(Component.literal("Skill Bank"),233,145);this.state=state;filter();if(!filtered.isEmpty())selected=filtered.getFirst().getString("entry");}
     public void update(CompoundTag tag){state=tag;if(!tag.getBoolean("owned")){onClose();return;}filter();}
     private void request(String action,String argument){PacketDistributor.sendToServer(new MythsNetwork.Request(action,argument));}
     private int slot(){return Math.clamp(state.getInt("selected"),0,2);}
@@ -59,7 +59,7 @@ public final class LughLibraryScreen extends SimpleScreen implements IScrollBar 
         addRenderableWidget(new LibraryButton(guiLeft+96,guiTop+129,13,11,Component.literal("›"),Component.literal("Next Art slot"),b->request("lugh_select",Integer.toString((slot()+1)%3))));
         var bind=new LibraryButton(guiLeft+119,guiTop+128,106,11,Component.literal("Bind selected skill"),Component.literal("Bind the highlighted library entry to the selected Art slot.\nGrand Synthesis uses all three bindings.\nScroll the right panel to inspect all parameters."),b->{if(!record(selected).isEmpty())request("lugh_bind",slot()+"|"+selected);});
         bind.setActiveCheck(()->!record(selected).isEmpty());addRenderableWidget(bind);
-        addRenderableWidget(new LibraryButton(guiLeft+197,guiTop+11,20,20,Component.literal("×"),Component.literal("Close appraisal library"),b->onClose()));
+        addRenderableWidget(new LibraryButton(guiLeft+197,guiTop+11,20,20,Component.literal("×"),Component.literal("Close Skill Bank"),b->onClose()));
     }
     @Override public void tick(){super.tick();if(++syncTicks%20==0)request("lugh_sync","");}
     @Override public void renderBackground(GuiGraphics g,int mx,int my,float partial){

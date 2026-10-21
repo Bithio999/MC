@@ -20,8 +20,8 @@ public enum MythicKind {
         new double[]{5000,3500,22000}, new int[]{2,5,24}, 100),
     AEGIR("Aegir, Lord of the Abyss", 0x65E4EC, "Refracted Harpoon", "Mirrorsea", "Sovereign Breaker", "Abyssal Majesty",
         new double[]{7000,12000,20000}, new int[]{5,16,24}, 110),
-    LUGH("Lugh, God of Skills", 0xF4E7A1, "Skill Appraisal", "Reconstructed Art", "Countermand", "Grand Synthesis", "All-Skilled",
-        new double[]{1200,10000,9000,30000}, new int[]{2,4,18,40}, 240),
+    LUGH("Lugh, God of Skills", 0xF4E7A1, "Skill Bank", "Reconstructed Art", "Countermand", "Grand Synthesis", "All-Skilled",
+        new double[]{0,10000,9000,30000}, new int[]{0,4,18,40}, 240),
     THOTH("Thoth, God of Magic", 0x92E9F7, "Lexicon of Ruin", "Spellbreak", "Mana Crucible", "Astral Library", "Arcane Sovereignty",
         new double[]{12000,6500,0,24000}, new int[]{12,15,0,35}, 180);
 
@@ -56,7 +56,7 @@ public enum MythicKind {
         case JANUS -> "Threadweaver + Mirrorbound. Link safe gates and recast to traverse them without losing momentum. Parallax Snare also opens at your opposite gate when cast near an endpoint. Crossroads Edict mirrors enemies across a field, then closes its delayed spatial cut. Native resistance penetration; no EP damage scaling.";
         case ANANSI -> "Threadweaver + Rune Smith. Place up to three armed anchors; their linking threads cut enemies that cross them. Puppet Passage traverses to the aimed anchor, moving that anchor to your former position. Checkmate Loom consumes the network into a warned triangular spatial collapse and delayed earth detonation. No passive stacks.";
         case AEGIR -> "Scarlet Deluge + Mirrorbound. Refracted Harpoon fires a water lance; Mirrorsea adds two angled firing origins and redirects incoming hostile projectiles. Sovereign Breaker launches an expanding water shock front, consuming Mirrorsea to originate there with greater reach and force.";
-        case LUGH -> "[Godly] Appraise an enemy's recent damaging technique into a persistent library. Shift + Skill Appraisal opens a searchable list with damage, type, form and range. Bind entries to three Art slots; crouch + Reconstructed Art cycles those bindings for free. Press normally to reconstruct the active binding. Countermand seals a target's recent non-Godly technique for six seconds. Grand Synthesis weaves the three bound forms into a warned sequence. Three origin techniques are available immediately. All-Skilled strengthens attack speed, movement and native mastery gain. Magicules only; no EP damage scaling.";
+        case LUGH -> "[Godly] Press Skill Bank to open a searchable technique list with damage, type, form and range. All-Skilled automatically banks damaging techniques used within 64 blocks, grants +49 native learning and mastery points per gain, +35% movement and 50% shorter cooldown recovery for other skills; Lugh's own cooldowns are unchanged. Bind entries to three Art slots; crouch + Reconstructed Art cycles those bindings for free. Countermand seals a target's recent non-Godly technique for six seconds. Grand Synthesis weaves the three bound forms into a warned sequence. Three origin techniques are available immediately. Magicules only; no EP damage scaling.";
         case THOTH -> "[Godly] Unleash a seven-chapter Fire, Water, Lightning, Earth, Wind, Light and Space spell sequence. Spellbreak disrupts non-Godly enemies and recovers part of drained magicules. Hold Mana Crucible to convert two aura into one magicule at 5% of maximum magicules per second, with no cast cost, cooldown or total cap. Astral Library follows you with orbiting books and autonomous seven-element spell fire. Arcane Sovereignty strengthens elemental magic, chanting and native magic efficiency. Offensive arts cost magicules; no EP damage scaling.";
     };}
 }

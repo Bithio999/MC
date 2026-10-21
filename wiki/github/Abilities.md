@@ -78,7 +78,7 @@ The three Godly classification passives are always active, free and non-stacking
 | [Absolute Penetration](https://github.com/Bithio999/MC/wiki/Godly#absolute-penetration) | [Godly Skills](https://github.com/Bithio999/MC/wiki/Godly) | Always active | Modifier — original damage type |
 | [Interference Immunity](https://github.com/Bithio999/MC/wiki/Godly#interference-immunity) | [Godly Skills](https://github.com/Bithio999/MC/wiki/Godly) | Always active | None |
 | [All-Skilled](https://github.com/Bithio999/MC/wiki/Lugh#passive) | [Lugh, God of Skills](https://github.com/Bithio999/MC/wiki/Lugh) | Passive | None |
-| [Skill Appraisal](https://github.com/Bithio999/MC/wiki/Lugh#skill-appraisal) | [Lugh, God of Skills](https://github.com/Bithio999/MC/wiki/Lugh) | Active | None |
+| [Skill Bank](https://github.com/Bithio999/MC/wiki/Lugh#skill-bank) | [Lugh, God of Skills](https://github.com/Bithio999/MC/wiki/Lugh) | Active | None |
 | [Reconstructed Art](https://github.com/Bithio999/MC/wiki/Lugh#reconstructed-art) | [Lugh, God of Skills](https://github.com/Bithio999/MC/wiki/Lugh) | Active | Variable normalised physical, elemental or generic magic — see the linked archive/source reference |
 | [Countermand](https://github.com/Bithio999/MC/wiki/Lugh#countermand) | [Lugh, God of Skills](https://github.com/Bithio999/MC/wiki/Lugh) | Active | None |
 | [Grand Synthesis](https://github.com/Bithio999/MC/wiki/Lugh#grand-synthesis) | [Lugh, God of Skills](https://github.com/Bithio999/MC/wiki/Lugh) | Active | Three bound normalised damage types — see the linked archive/source reference |

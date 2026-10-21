@@ -2,7 +2,7 @@
 
 [Main Page](https://github.com/Bithio999/MC/wiki/Home) · [Godly Skills](https://github.com/Bithio999/MC/wiki/Godly) · [Ability index](https://github.com/Bithio999/MC/wiki/Abilities) · [Damage types](https://github.com/Bithio999/MC/wiki/Damage-Types)
 
-**Lugh, God of Skills** is a Godly Skill for **analysing, reconstructing and combining combat techniques**. Its persistent appraisal library and three bound techniques determine the forms and damage types of its attacks, while Countermand seals one enemy technique temporarily.
+**Lugh, God of Skills** is a Godly Skill for **analysing, reconstructing and combining combat techniques**. Its persistent Skill Bank and three bound techniques determine the forms and damage types of its attacks, while Countermand seals one enemy technique temporarily.
 
 ![Lugh, God of Skills](https://github.com/Bithio999/MC/blob/main/src/main/resources/assets/wildhunt/textures/skill/lugh.png?raw=true)
 
@@ -34,17 +34,23 @@ Lugh ownership automatically grants [Divine Authority, Absolute Penetration and 
 
 | Ability information | Value |
 | --- | --- |
-| Damage type | None — attribute support |
+| Damage type | None — learning, cooldown support and technique analysis |
 | Damage ID | — |
 | Upkeep | 240 magicules / second |
 
-Gain **50% attack speed**, **35% movement speed** and **100% native ability mastery gain**. The mastery attribute affects abilities where Tensura reads that attribute. It does not instantly learn or master skills. The first upkeep second is paid when enabled; the toggle ends if unfunded or blocked by native activation rules. It generates no passive barrier or hit-count stacks.
+Gain **+49 native learning points** and **+49 native mastery points per gain**, **35% movement speed**, and **50% shorter cooldown recovery for other skills**. The point bonuses are flat additions to Tensura’s native gain attributes, rather than percentage multipliers. Native learning costs, learning rules and mastery caps still apply.
 
-The library and four active arts remain available with All-Skilled off.
+Other skills’ cooldowns recover **twice as fast** through ManasCore’s normal cooldown update pipeline while the toggle is active. **All of Lugh’s own cooldowns are excluded.** Already-running cooldowns benefit only while All-Skilled remains active; toggling repeatedly never resets or re-halves a stored timer. Native cooldowns use whole-second counters, so odd values finish on the next native update.
+
+All-Skilled also **automatically records damaging techniques demonstrated by users within 64 blocks**. No crosshair target, manual scan or extra scan payment is required. The observation uses the technique user’s position and the actual native damage source. It can record your other techniques and allies’ techniques; Lugh’s own arts are excluded to prevent recursive copies. Missed attacks and purely non-damaging utility moves do not provide a damage reading.
+
+The first upkeep second is paid when enabled. Collection, faster cooldown recovery and gain modifiers end when the toggle is disabled, unfunded or blocked by native activation rules. It generates no passive barrier or attack-speed bonus.
+
+The bank, existing bindings and active arts remain usable with All-Skilled off; automatic collection requires the toggle.
 
 ### Technique archive
 
-The **appraisal library** stores up to **256 techniques**, including three usable origin techniques. The **three Art slots** are a separate loadout:
+The **Skill Bank** stores up to **256 techniques**, including three usable origin techniques. The **three Art slots** are a separate loadout:
 
 | Entry | Form | Damage type | Raw reconstruction damage |
 | --- | --- | --- | ---: |
@@ -52,7 +58,7 @@ The **appraisal library** stores up to **256 techniques**, including three usabl
 | Heavenly Thread | Lance | Space elemental — `tensura:space_elemental` | 3,800 |
 | Founder's Rune | Crown | Earth elemental — `tensura:earth_elemental` | 4,200 |
 
-**Shift + Skill Appraisal** opens a menu styled after native **Pride’s copied-skill list**, with search, six visible list entries, a scrollbar, source-skill icons and a scrolling parameter panel. Opening the menu is free, works during Skill Appraisal’s cooldown, and needs neither magicules nor a target.
+**Press Skill Bank normally** to open a menu styled after native **Pride’s copied-skill list**, with search, six visible list entries, a scrollbar, source-skill icons and a scrolling parameter panel. Opening the menu is free, ignores any legacy cooldown on the menu mode, and needs neither magicules nor a target.
 
 To bind a technique:
 
@@ -62,9 +68,9 @@ To bind a technique:
 
 The highlighted Art slot is the active Reconstructed Art. Hover over a slot to see its bound technique. **Crouch + Reconstructed Art** cycles the three bindings without payment, cooldown changes or mastery gain. Binding and selection are also free; they do not cast an attack.
 
-The parameter panel shows **raw reconstruction damage**, damage at your current mastery, native damage type/ID, form, range, width or radius, target cap, reconstruction cost/cooldown, and Synthesis multiplier. Appraised records additionally show the **observed damage-calculation amount**, original source type, originating skill and technique. Scroll the panel to read all parameters. Final combat damage also uses native modifiers and Godly traits.
+The parameter panel shows **raw reconstruction damage**, damage at your current mastery, native damage type/ID, form, range, width or radius, target cap, reconstruction cost/cooldown, and Synthesis multiplier. Observed records additionally show the **observed damage-calculation amount**, original source type, originating skill and technique. Scroll the panel to read all parameters. Final combat damage also uses native modifiers and Godly traits.
 
-Skill Appraisal **adds** the observed technique to the library. Reappraising the same source skill and mode refreshes that record and every slot bound to it. Different modes of one source skill can have separate entries. New appraisals leave your bindings unchanged until you explicitly bind them. At the 256-entry limit, existing techniques can still be refreshed; an unknown technique fails without payment or cooldown.
+All-Skilled **adds** observed techniques automatically. A repeat use of the same source skill and mode refreshes that record and every slot bound to it. Different modes of one skill can have separate entries. Newly observed techniques leave your bindings unchanged until you explicitly bind them. At the 256-entry limit, known techniques can still refresh; new entries are ignored without erasing anything or adding a scan cost.
 
 The library, bindings and active slot survive normal save/load and lifecycle cleanup while Lugh is retained.
 
@@ -72,33 +78,32 @@ The library, bindings and active slot survive normal save/load and lifecycle cle
 
 | Mode | Magicule cost | Cooldown | Damage |
 | --- | ---: | ---: | --- |
-| 1. Skill Appraisal | 1,200 | 2 s | — |
+| 1. Skill Bank | Free | None | — |
 | 2. Reconstructed Art | 10,000; selection/binding are free | 4 s | 3,500–6,000 raw |
 | 3. Countermand | 9,000 | 18 s | — |
 | 4. Grand Synthesis | 30,000 | 40 s | Three bound attacks at 1.6× their reconstruction damage |
 
 Mastery scales damaging arts by **1 + 0.5 × mastery fraction**, capped at 1.5×. Native elemental boosts, barriers, hit immunity, authority and PvP rules remain relevant. The shared Godly traits apply separately. Damage never scales with EP.
 
-#### Skill Appraisal
+#### Skill Bank
 
-[Active - Press] — **Skill Appraisal**
+[Active - Press] — **Skill Bank**
 
 | Ability information | Value |
 | --- | --- |
-| Damage type | None — technique analysis |
+| Damage type | None — technique storage and selection |
 | Damage ID | — |
-| Range | 48 blocks |
-| Observation window | The enemy's last 30 seconds |
+| Magicule cost | Free |
+| Cooldown | None |
+| Collection range | 64 blocks around the user of a damaging technique, while All-Skilled is enabled |
 
-Aim at an eligible enemy that recently used a **damaging ability**. Lugh reads its most recent observed damage source and records the originating skill and mode, original and normalised damage types, observed intensity and attack form. The original user keeps their skill.
+Press the assigned key to open the searchable bank directly. Crouching is not required; crouching also opens the same menu. Neither opening nor editing bindings needs a target, magicules or a fresh observation, and neither awards mastery.
 
-The reconstruction's raw damage is **80% of the observed damage-calculation amount**, bounded to **3,500–6,000**. This amount may already include native modifiers at observation time; it is not a promise to reproduce an entire multi-hit skill's total damage.
+The passive records the originating skill and mode, original and normalised damage types, observed intensity and attack form. The original user keeps their skill. Reconstruction’s raw damage is **80% of the observed damage-calculation amount**, bounded to **3,500–6,000**. This amount may already include native modifiers at observation time; it is not the entire damage budget of a multi-hit skill.
 
-Projectile or distant single-target techniques become **Lance** forms. Other physical techniques become **Blade** forms. Nearby non-physical techniques and same-tick attacks observed on distinct victims become **Crown** forms. Re-appraise after the desired technique has actually dealt damage to update its reading.
+Projectile or distant single-target techniques become **Lance** forms. Other physical techniques become **Blade** forms. Nearby non-physical techniques and same-tick attacks observed on distinct victims become **Crown** forms. Subsequent demonstrated hits update the reading automatically while within range.
 
-Elemental sources retain their recognised element. Special sources such as disintegration or instant-kill damage are reconstructed as ordinary generic magic, or aura slash for physical techniques. Lugh does not execute another mod's skill code, copy its utilities, inherit its instant-kill rules, or learn it as a separate owned skill.
-
-Missing, stale or invalid observations cost nothing and start no cooldown. Floating rune tablets and scanning rings mark a successful appraisal.
+Elemental sources retain their recognised element. Special sources such as disintegration or instant-kill damage are reconstructed as ordinary generic magic, or aura slash for physical techniques. Lugh reconstructs bounded combat forms; it does not execute another mod’s skill code, copy utility effects, inherit instant-kill rules or grant the original as a separately owned skill. Floating rune tablets and scanning threads mark passive observations, with a short visual throttle for multi-hit attacks.
 
 #### Reconstructed Art
 
@@ -161,17 +166,17 @@ Both the selected Ultimate and Threadweaver are combined. Presets and the longes
 
 ## Suggested combo
 
-Appraise an enemy's recent damaging technique → open the library and bind the form that suits the approach → Countermand the technique they rely on → place Grand Synthesis across their escape route → use Reconstructed Art while they leave the formation.
+Enable All-Skilled to collect nearby demonstrated techniques → press Skill Bank and bind the form that suits the approach → Countermand the technique they rely on → place Grand Synthesis across their escape route → use Reconstructed Art while they leave the formation.
 
 ## Gallery
 
-![Lugh’s searchable appraisal library, technique parameters and Art bindings](https://github.com/Bithio999/MC/blob/main/wiki/media/lugh-library.png?raw=true)
+![Lugh’s searchable Skill Bank, technique parameters and Art bindings](https://github.com/Bithio999/MC/blob/main/wiki/media/lugh-library.png?raw=true)
 
 ![Grand Synthesis's rune tablets and reconstructed armaments](https://github.com/Bithio999/MC/blob/main/wiki/media/lugh-synthesis.png?raw=true)
 
 ![The final Crown phase](https://github.com/Bithio999/MC/blob/main/wiki/media/lugh-synthesis-crown.png?raw=true)
 
-![Skill Appraisal's scanning tablets](https://github.com/Bithio999/MC/blob/main/wiki/media/lugh-appraisal.png?raw=true)
+![All-Skilled’s automatic scanning tablets](https://github.com/Bithio999/MC/blob/main/wiki/media/lugh-appraisal.png?raw=true)
 
 [Visual effects gallery](https://github.com/Bithio999/MC/wiki/Visual-Effects).
 

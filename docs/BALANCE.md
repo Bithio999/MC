@@ -108,7 +108,7 @@ exceptions are added. Demeter still exceeds Grove's pulse, area and duration.
 | --- | --- | --- |
 | Aion | Worldline 1,200 per half-second; Horizon 700/s; Verdict twenty 480-damage blasts, or 600 each when empowered; twenty independent native hits (9,600 / 12,000 total) | Worldline 2,400 opening + 1,200/pulse (15,600 full channel); Horizon 10K; Reversal 12K; Verdict 28K; 45-second finisher cooldown. Target required; uninterrupted homing. Independent impacts at 1.6–3.5 seconds; visual tail ends at 5.2 seconds. Only collision sources bypass hurt cooldown. |
 | Thoth | Lexicon 1,100/chapter; Spellbreak 900; Library 800/bolt | 12K / 6.5K / free Crucible / 24K. Existing 12 / 15 / 0 / 35 s cooldowns. |
-| Lugh | Origin arts 3,800 / 3,800 / 4,200; appraised raw bounded to 3,500–6,000; synthesis 1.6× each of three bound arts | 1.2K / 10K / 9K / 30K. 2 / 4 / 18 / 40 s cooldowns; library access, selection and binding are free. |
+| Lugh | Origin arts 3,800 / 3,800 / 4,200; banked raw bounded to 3,500–6,000; synthesis 1.6× each of three bound arts | Free / 10K / 9K / 30K. 0 / 4 / 18 / 40 s cooldowns; direct Skill Bank access, selection and binding are free. |
 
 Aion's rewind preserves its fixed post-payment checkpoint, increase-only stat
 restoration, free return, twenty-second auto-return and all safety/cleanup rules.
@@ -156,7 +156,7 @@ Demeter uses a threshold rescue effect rather than an active team barrier.
 produce 3.5K–6K bounded raw damage, with ordinary source normalization; its finisher
 snapshots the three bound attacks at 1.6× each, sixteen ticks apart. Countermand blocks one
 recent non-Godly technique for six seconds without changing learned state.
-Its shared Godly traits require ownership, while its speed/mastery toggle has
+Its shared Godly traits require ownership, while its learning/mastery/cooldown toggle has
 separate upkeep. No kit uses hit-count passive stacks or direct health assignment
 to bypass combat rules.
 
@@ -370,3 +370,5 @@ Regression tests exercise attacks and names across all eight skills, oil
 consumption, rime shatter, temporary-attribute expiry, one-second domain scheduling,
 reincarnation rolling and boss progression. Automated tests verify behavior; they
 do not establish PvP balance or replace a client playtest of the new visuals.
+
+Lugh’s All-Skilled adds flat +49 native learning and mastery gain, keeps +35% movement, and halves other skills’ cooldown recovery time through native updates. Lugh’s own cooldowns are excluded. Passive observation automatically banks actual damaging techniques used within 64 blocks; Skill Bank opens directly for free. Reconstruction bounds, art costs and Lugh’s remaining cooldowns are unchanged.

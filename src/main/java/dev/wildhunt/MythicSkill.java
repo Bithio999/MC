@@ -26,19 +26,19 @@ public final class MythicSkill extends Skill {
     @Override public int nextMode(LivingEntity e,ManasSkillInstance i,int mode,boolean reverse){return Math.floorMod(mode+(reverse?-1:1),kind.modes.length);}
     @Override public double getDefaultAcquiringMagiculeCost(){return kind.unique()?25000:0;}
     @Override public double getAuraCost(LivingEntity e,ManasSkillInstance i,int mode){return kind.godly()?0:kind==MythicKind.JANUS && mode==0 && i.getOrCreateTag().getLong("gates_until")>e.level().getGameTime()?400:cost(mode);}
-    @Override public double getMagiculeCost(LivingEntity e,ManasSkillInstance i,int mode){return kind.godly()?(kind==MythicKind.LUGH && (mode==0 || mode==1) && e.isShiftKeyDown()?0:cost(mode)):0;}
+    @Override public double getMagiculeCost(LivingEntity e,ManasSkillInstance i,int mode){return kind.godly()?(kind==MythicKind.LUGH && (mode==0 || mode==1 && e.isShiftKeyDown())?0:cost(mode)):0;}
     private double cost(int mode){return mode>=0 && mode<kind.costs.length?kind.costs[mode]:0;}
     @Override public boolean canBeToggled(ManasSkillInstance i,LivingEntity e){return true;}
     @Override public boolean canTick(ManasSkillInstance i,LivingEntity e){return false;}
     private boolean crucible(int mode){return kind==MythicKind.THOTH && mode==2;}
-    @Override public boolean canIgnoreCoolDown(ManasSkillInstance i,LivingEntity e,int mode){return crucible(mode) || kind==MythicKind.LUGH && (mode==0 || mode==1) && e.isShiftKeyDown() || super.canIgnoreCoolDown(i,e,mode);}
+    @Override public boolean canIgnoreCoolDown(ManasSkillInstance i,LivingEntity e,int mode){return crucible(mode) || kind==MythicKind.LUGH && (mode==0 || mode==1 && e.isShiftKeyDown()) || super.canIgnoreCoolDown(i,e,mode);}
     // ManasCore's explicit -1 sentinel is unlimited, with no artificial hold duration.
     @Override public int getMaxHeldTime(ManasSkillInstance i,LivingEntity e){return kind==MythicKind.THOTH?-1:super.getMaxHeldTime(i,e);}
     @Override public boolean shouldTriggerReleaseOnHeldInterrupt(ManasSkillInstance i,LivingEntity e,int key,int mode){return crucible(mode);}
     @Override public boolean onHeld(ManasSkillInstance i,LivingEntity e,int heldTicks,int mode){return crucible(mode) && ManaCrucible.held(this,i,e);}
     @Override public void onRelease(ManasSkillInstance i,LivingEntity e,int ticks,int key,int mode){if(crucible(mode))ManaCrucible.stop(i,e);}
     @Override public void onPressed(ManasSkillInstance i,LivingEntity e,int slot,int mode){
-        if(e.level() instanceof ServerLevel && kind==MythicKind.LUGH && (mode==0 || mode==1) && e.isShiftKeyDown()){
+        if(e.level() instanceof ServerLevel && kind==MythicKind.LUGH && (mode==0 || mode==1 && e.isShiftKeyDown())){
             if(e.isAlive() && canInteractSkill(i,e) && canActivateSkill(i,e,mode)){
                 if(mode==0 && e instanceof net.minecraft.server.level.ServerPlayer p)dev.wildhunt.myths.MythsNetwork.sendLugh(p,true);else if(mode==1)LughArts.cycle(i,e);
             }return;
@@ -76,7 +76,12 @@ public final class MythicSkill extends Skill {
             case JANUS->{modify(e,Attributes.MOVEMENT_SPEED,.35,true);modify(e,Attributes.KNOCKBACK_RESISTANCE,.5,false);modify(e,TensuraAttributes.SPACE_BOOST,1,true);modify(e,Attributes.ATTACK_SPEED,.3,true);}
             case ANANSI->{modify(e,TensuraAttributes.SPACE_BOOST,1,true);modify(e,TensuraAttributes.EARTH_BOOST,1,true);modify(e,Attributes.MOVEMENT_SPEED,.3,true);}
             case AEGIR->{modify(e,TensuraAttributes.WATER_BOOST,1,true);modify(e,TensuraAttributes.LIGHT_BOOST,.75,true);modify(e,Attributes.KNOCKBACK_RESISTANCE,.5,false);}
-            case LUGH->{modify(e,Attributes.ATTACK_SPEED,.5,true);modify(e,Attributes.MOVEMENT_SPEED,.35,true);modify(e,TensuraAttributes.ABILITY_MASTERY_GAIN,1,true);}
+            case LUGH->{
+                // Remove the former attack-speed modifier when refreshing an already-active toggle.
+                var speed=e.getAttribute(Attributes.ATTACK_SPEED);if(speed!=null)speed.removeModifier(modifier());
+                modify(e,Attributes.MOVEMENT_SPEED,.35,true);
+                modify(e,TensuraAttributes.ABILITY_MASTERY_GAIN,49,false);modify(e,TensuraAttributes.ABILITY_LEARNING_GAIN,49,false);
+            }
             case THOTH->{
                 for(var a:java.util.List.of(TensuraAttributes.FLAME_BOOST,TensuraAttributes.WATER_BOOST,TensuraAttributes.LIGHTNING_BOOST,TensuraAttributes.EARTH_BOOST,TensuraAttributes.WIND_BOOST,TensuraAttributes.LIGHT_BOOST,TensuraAttributes.SPACE_BOOST))modify(e,a,.75,true);
                 modify(e,TensuraAttributes.CHANT_SPEED,.75,true);modify(e,TensuraAttributes.MAGIC_COST_MULTIPLIER,-.25,true);
@@ -90,7 +95,7 @@ public final class MythicSkill extends Skill {
     }
     private static java.util.List<Holder<Attribute>> attributes(){return java.util.List.of(Attributes.MOVEMENT_SPEED,Attributes.ATTACK_SPEED,Attributes.ATTACK_DAMAGE,Attributes.KNOCKBACK_RESISTANCE,
         TensuraAttributes.MAGIC_BARRIER,TensuraAttributes.PHYSICAL_BARRIER,TensuraAttributes.MULTILAYER_BARRIER,TensuraAttributes.SPIRITUAL_HEALTH_REGENERATION,
-        TensuraAttributes.EARTH_BOOST,TensuraAttributes.FLAME_BOOST,TensuraAttributes.LIGHTNING_BOOST,TensuraAttributes.WATER_BOOST,TensuraAttributes.WIND_BOOST,TensuraAttributes.LIGHT_BOOST,TensuraAttributes.SPACE_BOOST,TensuraAttributes.CHANT_SPEED,TensuraAttributes.MAGIC_COST_MULTIPLIER,TensuraAttributes.ABILITY_MASTERY_GAIN);}
+        TensuraAttributes.EARTH_BOOST,TensuraAttributes.FLAME_BOOST,TensuraAttributes.LIGHTNING_BOOST,TensuraAttributes.WATER_BOOST,TensuraAttributes.WIND_BOOST,TensuraAttributes.LIGHT_BOOST,TensuraAttributes.SPACE_BOOST,TensuraAttributes.CHANT_SPEED,TensuraAttributes.MAGIC_COST_MULTIPLIER,TensuraAttributes.ABILITY_MASTERY_GAIN,TensuraAttributes.ABILITY_LEARNING_GAIN);}
     public boolean tickActive(ManasSkillInstance i,LivingEntity e){
         if(!(e.level() instanceof ServerLevel level))return false;
         var tag=i.getOrCreateTag();long now=level.getGameTime();
