@@ -31,13 +31,13 @@ public final class MythBossGameTests {
     static ManasSkillInstance moira(AnankeEntity b){return SkillAPI.getSkillsFrom(b).getSkill(MythBosses.MOIRA.get()).orElseThrow();}
     static void castBoss(AnankeEntity b,LivingEntity target,int mode){b.setTarget(target);moira(b).setCoolDown(0,mode);moira(b).onPressed(b,0,mode);}
     @GameTest(template="empty",timeoutTicks=100)
-    public static void nativeStatsAndFifteenRealSkillsAreInitializedOnce(GameTestHelper h){
+    public static void nativeStatsAndRealSkillPackageAreInitializedOnce(GameTestHelper h){
         var p=player(h);var b=boss(h,p.position().add(10,0,0));var e=TensuraStorages.getExistenceFrom(b);
         h.assertTrue(b.getMaxHealth()==48000 && b.getHealth()==48000,"Native HP clamped: "+b.getMaxHealth());
         h.assertTrue(EnergyHelper.getMaxAura(b)==15000000 && EnergyHelper.getMaxMagicule(b)==15000000,"Native resource split is not 15M/15M: "+EnergyHelper.getMaxAura(b)+"/"+EnergyHelper.getMaxMagicule(b));
         h.assertTrue(b.getAttributeValue(TensuraAttributes.MAX_SPIRITUAL_HEALTH)==120000 && e.getSpiritualHealth()==120000,"Native SHP is wrong");
         h.assertTrue(RaceAPI.getRaceFrom(b).getRace().orElseThrow().getRace()==MythBosses.RACE.get(),"Boss race lost");
-        var skills=SkillAPI.getSkillsFrom(b);h.assertTrue(skills.getLearnedSkills().stream().filter(i->i.getMastery()>=0).count()==15,"Wrong skill count: "+skills.getLearnedSkills().stream().map(v->v.getSkillId().toString()).toList());
+        var skills=SkillAPI.getSkillsFrom(b);h.assertTrue(skills.getLearnedSkills().stream().filter(i->i.getMastery()>=0).count()==MythBosses.NATIVE_SKILLS.size()+2,"Wrong skill count: "+skills.getLearnedSkills().stream().map(v->v.getSkillId().toString()).toList());
         for(var i:skills.getLearnedSkills())if(i.getMastery()>=0)h.assertTrue(i.isMastered(b),"Unmastered boss skill: "+i.getSkillId());
         h.assertTrue(moira(b).is(TensuraSkillTags.ULTIMATE_SKILLS) && !MythsTiers.isGodly(MythBosses.MOIRA.get()) && GodlyPassives.ownsGodly(b),"Native Ultimate/Godly classification broken");
         e.setMagicule(1000);b.setHealth(5000);b.initializeMyth();h.assertTrue(b.getHealth()==5000 && e.getMagicule()==1000,"Initialization refilled a living boss");h.succeed();

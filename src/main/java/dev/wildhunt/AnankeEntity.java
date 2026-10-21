@@ -38,6 +38,9 @@ public final class AnankeEntity extends Monster implements IArenaBoss {
     private final ServerBossEvent soulBar=new ServerBossEvent(Component.literal("Ananke · Spiritual Body").withStyle(s->s.withInsertion("wildhunt:ananke_shp")),BossEvent.BossBarColor.PURPLE,BossEvent.BossBarOverlay.PROGRESS);
     private final Set<ServerPlayer> watchers=new HashSet<>();
     private boolean initialized,loadCleanup;
+    private int supportVersion;
+    final AnankeRecovery recovery=new AnankeRecovery();
+    private long shiftReadyAt;
     private float previousCastPose,castPose;
     private BlockPos anchor;
     private String bossFightId="";
@@ -80,16 +83,33 @@ public final class AnankeEntity extends Monster implements IArenaBoss {
         owned.getSkill(MythBosses.MOIRA.get()).ifPresent(i->i.setMastery(i.getMaxMastery()));
         owned.getSkill(WildHunt.MYTHIC.get(MythicKind.THOTH).get()).ifPresent(i->i.setMastery(i.getMaxMastery()));
         for(var id:MythBosses.NATIVE_SKILLS)owned.getSkill(ResourceLocation.parse(id)).ifPresent(i->i.setMastery(i.getMaxMastery()));
-        initialized=true;setHealth(getMaxHealth());enableSupport();
+        initialized=true;setHealth(getMaxHealth());enableSupport();supportVersion=1;
     }
+    /** The existence profile supplies stats only. Always toggle the actual stored instance. */
     private void enableSupport(){
-        var thoth=SkillAPI.getSkillsFrom(this).getSkill(WildHunt.MYTHIC.get(MythicKind.THOTH).get());thoth.ifPresent(i->{if(!i.isToggled())i.onToggleOn(this);});
-        for(var id:List.of("tensura:universal_perception","tensura:thought_acceleration","tensura:self_regeneration"))SkillAPI.getSkillsFrom(this).getSkill(ResourceLocation.parse(id)).ifPresent(i->{if(!i.isToggled() && i.canBeToggled(this)){i.setToggled(true);i.onToggleOn(this);}});
+        var skills=SkillAPI.getSkillsFrom(this);
+        for(var id:MythBosses.NATIVE_SKILLS){
+            var skill=SkillAPI.getSkillRegistry().get(ResourceLocation.parse(id));
+            if(skill==null)throw new IllegalStateException("Missing Ananke support "+id);
+            if(skills.getSkill(skill).isEmpty())HunterData.learnReward(this,skill);
+            var i=skills.getSkill(skill).orElseThrow();i.setMastery(i.getMaxMastery());
+            if(!i.isToggled() && i.canBeToggled(this)){i.setToggled(true);i.onToggleOn(this);i.markDirty();}
+        }
+        skills.getSkill(WildHunt.MYTHIC.get(MythicKind.THOTH).get()).ifPresent(i->{if(!i.isToggled())i.onToggleOn(this);});
+    }
+    private void restoreSupport(){
+        if(supportVersion<1){
+            // 0.25's profile toggled unstored instances. Remove their native, keyed
+            // side effects even where the stored flag is false, then activate once.
+            for(var id:MythBosses.NATIVE_SKILLS)SkillAPI.getSkillsFrom(this).getSkill(ResourceLocation.parse(id)).ifPresent(i->{i.onToggleOff(this);i.setToggled(false);});
+            supportVersion=1;
+        }
+        enableSupport();
     }
     public float castPose(float partial){return net.minecraft.util.Mth.lerp(partial,previousCastPose,castPose);}
     public int phase(){return entityData.get(PHASE);}
     public int riteMode(){return entityData.get(RITE);}
-    public boolean isCasting(){return !rite.isEmpty();}
+    public boolean isCasting(){return !rite.isEmpty() || recovery.active();}
     public void setRite(int value){entityData.set(RITE,value);}
     public BlockPos anchor(){return anchor==null?blockPosition():anchor;}
     public boolean eligible(LivingEntity target){return HunterData.canHarm(this,target);}
@@ -101,9 +121,9 @@ public final class AnankeEntity extends Monster implements IArenaBoss {
     }
     @Override public void tick(){
         super.tick();if(level().isClientSide()){previousCastPose=castPose;castPose=net.minecraft.util.Mth.approach(castPose,riteMode()==0?0:1,.125f);return;}var level=(ServerLevel)level();initializeMyth();
-        if(loadCleanup){MythicArts.clearTransient(this);loadCleanup=false;enableSupport();}
+        if(loadCleanup){MythicArts.clearTransient(this);loadCleanup=false;restoreSupport();}
         if(!isAlive()){AnankeRites.clear(level,this);return;}
-        updateBars();AnankeRites.tick(level,this);
+        updateBars();AnankeRites.tick(level,this);recovery.observeDamage(this);
         if(isNoAi())return;
         int reached=getHealth()<=getMaxHealth()*.3?3:getHealth()<=getMaxHealth()*.65?2:1;
         if(reached>phase()){
@@ -114,45 +134,52 @@ public final class AnankeEntity extends Monster implements IArenaBoss {
         }
         var target=getTarget();
         if(target==null || !eligible(target)){
-            setTarget(null);if(isCasting())AnankeRites.clear(level,this);
+            setTarget(null);if(isCasting()){AnankeRites.clear(level,this);recovery.cancel(this);}
             if(++idleTicks==200)resetEncounter();
             if(distanceToSqr(Vec3.atCenterOf(anchor()))>9)getNavigation().moveTo(anchor().getX()+.5,anchor().getY()+.2,anchor().getZ()+.5,1);
             return;
         }
         idleTicks=0;getLookControl().setLookAt(target,40,40);lookAt(target,30,30);
+        if(recovery.active()){recovery.tick(this);getNavigation().stop();return;}
         if(isCasting()){getNavigation().stop();return;}
         if(distanceToSqr(target)>7*7)getNavigation().moveTo(target,1.15);else getNavigation().stop();
         if(meleeDelay>0)meleeDelay--;
         if(distanceToSqr(target)<3.5*3.5 && meleeDelay==0){doHurtTarget(target);swing(InteractionHand.MAIN_HAND);meleeDelay=30;}
         if(decisionDelay>0){decisionDelay--;return;}
         var moira=SkillAPI.getSkillsFrom(this).getSkill(MythBosses.MOIRA.get()).orElseThrow();
-        int mode=phase()==3 && !moira.onCoolDown(3)?3:new int[]{0,1,0,2,1,0}[sequence++%6];
-        if(moira.onCoolDown(mode))mode=!moira.onCoolDown(0)?0:!moira.onCoolDown(1)?1:2;
+        boolean dawnReady=phase()==3 && !moira.onCoolDown(3) && AnankeTactics.inRange(this,target,3);
+        if(!dawnReady && recovery.tryBegin(this)){decisionDelay=20;return;}
+        if(level.getGameTime()>=shiftReadyAt && AnankeTactics.reposition(this,target)){
+            shiftReadyAt=level.getGameTime()+200;decisionDelay=20;return;
+        }
+        int preferred=phase()==3 && !moira.onCoolDown(3)?3:new int[]{0,1,0,2,1,0}[sequence++%6];
+        int mode=AnankeTactics.chooseRite(this,moira,target,preferred);
+        if(mode<0){decisionDelay=10;return;}
         moira.onPressed(this,0,mode);decisionDelay=phase()==3?18:phase()==2?28:38;
         var thoth=SkillAPI.getSkillsFrom(this).getSkill(WildHunt.MYTHIC.get(MythicKind.THOTH).get()).orElseThrow();
         if(phase()>=2 && !thoth.onCoolDown(3))thoth.onPressed(this,0,3);
         else if(phase()>=2 && sequence%3==0 && !thoth.onCoolDown(1))thoth.onPressed(this,0,1);
     }
     private void resetEncounter(){
-        AnankeRites.clear((ServerLevel)level(),this);MythicArts.clearTransient(this);entityData.set(PHASE,1);sequence=0;decisionDelay=90;
+        AnankeRites.clear((ServerLevel)level(),this);recovery.reset(this);MythicArts.clearTransient(this);entityData.set(PHASE,1);sequence=0;decisionDelay=90;
         setHealth(getMaxHealth());var e=TensuraStorages.getExistenceFrom(this);e.setAura(EnergyHelper.getMaxAura(this));e.setMagicule(EnergyHelper.getMaxMagicule(this));e.setSpiritualHealth(getAttributeValue(TensuraAttributes.MAX_SPIRITUAL_HEALTH));e.markDirty();enableSupport();
     }
     private void updateBars(){
         healthBar.setProgress(Math.clamp(getHealth()/getMaxHealth(),0,1));var energy=TensuraStorages.getExistenceFrom(this);
         soulBar.setProgress((float)Math.clamp(energy.getSpiritualHealth()/Math.max(1,getAttributeValue(TensuraAttributes.MAX_SPIRITUAL_HEALTH)),0,1));
         if(tickCount%20==0){
-            healthBar.setName(Component.literal(riteMode()==4?"Last Dawn: refuge 7–12m":"Ananke · 30M EP · "+switch(phase()){case 1->"I";case 2->"II";default->"III";}).withStyle(s->s.withInsertion("wildhunt:ananke_hp")));
+            healthBar.setName(Component.literal(riteMode()==5?"Ananke · Unwritten Renewal":riteMode()==4?"Last Dawn: refuge 7–12m":"Ananke · 30M EP · "+switch(phase()){case 1->"I";case 2->"II";default->"III";}).withStyle(s->s.withInsertion("wildhunt:ananke_hp")));
             for(var p:watchers)if(p.distanceToSqr(this)<=80*80){healthBar.addPlayer(p);soulBar.addPlayer(p);}else{healthBar.removePlayer(p);soulBar.removePlayer(p);}
         }
     }
-    @Override public boolean hurt(DamageSource source,float amount){boolean hit=super.hurt(source,amount);if(hit && source.getEntity() instanceof LivingEntity attacker && eligible(attacker))setTarget(attacker);return hit;}
+    @Override public boolean hurt(DamageSource source,float amount){boolean hit=super.hurt(source,amount);if(hit && !level().isClientSide())recovery.damaged(this);if(hit && source.getEntity() instanceof LivingEntity attacker && eligible(attacker))setTarget(attacker);return hit;}
     @Override public boolean causeFallDamage(float distance,float multiplier,DamageSource source){return false;}
     @Override public void startSeenByPlayer(ServerPlayer p){super.startSeenByPlayer(p);watchers.add(p);if(p.distanceToSqr(this)<=80*80){healthBar.addPlayer(p);soulBar.addPlayer(p);}}
     @Override public void stopSeenByPlayer(ServerPlayer p){super.stopSeenByPlayer(p);watchers.remove(p);healthBar.removePlayer(p);soulBar.removePlayer(p);}
-    @Override public void die(DamageSource source){if(level() instanceof ServerLevel level){AnankeRites.clear(level,this);MythicArts.clearTransient(this);healthBar.removeAllPlayers();soulBar.removeAllPlayers();}super.die(source);}
-    @Override public void remove(RemovalReason reason){if(!level().isClientSide()){AnankeRites.clear((ServerLevel)level(),this);MythicArts.clearTransient(this);healthBar.removeAllPlayers();soulBar.removeAllPlayers();}super.remove(reason);}
-    @Override public void addAdditionalSaveData(CompoundTag t){super.addAdditionalSaveData(t);t.putBoolean("myth_initialized",initialized);t.putInt("myth_phase",phase());t.putLong("myth_anchor",anchor().asLong());t.putInt("myth_idle",idleTicks);t.putString("myth_arena",bossFightId);}
-    @Override public void readAdditionalSaveData(CompoundTag t){super.readAdditionalSaveData(t);initialized=t.getBoolean("myth_initialized");entityData.set(PHASE,Math.clamp(t.getInt("myth_phase"),1,3));anchor=t.contains("myth_anchor")?BlockPos.of(t.getLong("myth_anchor")):blockPosition();idleTicks=t.getInt("myth_idle");bossFightId=t.getString("myth_arena");rite=new CompoundTag();setRite(0);loadCleanup=true;}
+    @Override public void die(DamageSource source){if(level() instanceof ServerLevel level){AnankeRites.clear(level,this);recovery.cancel(this);MythicArts.clearTransient(this);healthBar.removeAllPlayers();soulBar.removeAllPlayers();}super.die(source);}
+    @Override public void remove(RemovalReason reason){if(!level().isClientSide()){AnankeRites.clear((ServerLevel)level(),this);recovery.cancel(this);MythicArts.clearTransient(this);healthBar.removeAllPlayers();soulBar.removeAllPlayers();}super.remove(reason);}
+    @Override public void addAdditionalSaveData(CompoundTag t){super.addAdditionalSaveData(t);t.putBoolean("myth_initialized",initialized);t.putInt("myth_support_version",supportVersion);recovery.save(this,t);t.putLong("myth_shift_remaining",Math.clamp(shiftReadyAt-level().getGameTime(),0,200));t.putInt("myth_phase",phase());t.putLong("myth_anchor",anchor().asLong());t.putInt("myth_idle",idleTicks);t.putString("myth_arena",bossFightId);}
+    @Override public void readAdditionalSaveData(CompoundTag t){super.readAdditionalSaveData(t);initialized=t.getBoolean("myth_initialized");supportVersion=t.getInt("myth_support_version");recovery.load(this,t);shiftReadyAt=level().getGameTime()+Math.clamp(t.getLong("myth_shift_remaining"),0,200);entityData.set(PHASE,Math.clamp(t.getInt("myth_phase"),1,3));anchor=t.contains("myth_anchor")?BlockPos.of(t.getLong("myth_anchor")):blockPosition();idleTicks=t.getInt("myth_idle");bossFightId=t.getString("myth_arena");rite=new CompoundTag();setRite(0);loadCleanup=true;}
     @Override public String getBossFightId(){return bossFightId;}
     @Override public void setBossFightId(String id){bossFightId=id==null?"":id;}
     @Override public void onSpawned(ServerLevel level,String id,BossFightInstance fight){setBossFightId(id);anchor=fight.getCenter();}

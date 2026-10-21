@@ -65,7 +65,21 @@ public final class AnankeRites {
             for(var target:targets(level,boss,root,33))if(dawnDanger(target.getBoundingBox().getCenter().subtract(root)))skill.hit(boss,target,mode);
             plan.putBoolean("struck",true);strikeSound(level,root,.45f);
         }
+        if(age>=releaseAge(plan)){boss.rite=new CompoundTag();boss.setRite(0);}
+    }
+    /** Keep cosmetic decay, but release movement eight ticks after the last damaging frame. */
+    static int releaseAge(CompoundTag plan){
+        return switch(plan.getInt("mode")){
+            case 0->WARNING[0]+8;
+            case 1->WARNING[1]+(plan.getInt("count")-1)*12+8;
+            case 2->WARNING[2]+39+8;
+            default->WARNING[3]+8;
+        };
     }
     private static void strikeSound(ServerLevel level,Vec3 at,float pitch){level.playSound(null,net.minecraft.core.BlockPos.containing(at),SoundEvents.WARDEN_SONIC_BOOM,SoundSource.HOSTILE,1.5f,pitch);level.playSound(null,net.minecraft.core.BlockPos.containing(at),SoundEvents.AMETHYST_BLOCK_RESONATE,SoundSource.HOSTILE,1.4f,pitch);}
-    public static void clear(ServerLevel level,AnankeEntity boss){if(boss.rite.hasUUID("visual") && MythicArts.entityAcrossLevels(level,boss.rite.getUUID("visual")) instanceof ArtVisualEntity visual)visual.discard();boss.rite=new CompoundTag();boss.setRite(0);}
+    public static void clear(ServerLevel level,AnankeEntity boss){
+        for(var visual:level.getEntitiesOfClass(ArtVisualEntity.class,boss.getBoundingBox().inflate(192),v->v.ownedBy(boss)
+            && v.kind()>=ArtVisualEntity.ANANKE_FATEBREAKER && v.kind()<=ArtVisualEntity.ANANKE_LAST_DAWN))visual.discard();
+        boss.rite=new CompoundTag();boss.setRite(0);
+    }
 }

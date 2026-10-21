@@ -25,7 +25,8 @@ public final class MythBosses {
     public static final RegistrySupplier<Item> TESTAMENT=ITEMS.register("dawn_testament",()->new AnankeItems.Testament(new Item.Properties().stacksTo(16).rarity(Rarity.EPIC)));
     public static final List<String> NATIVE_SKILLS=List.of("tensura:mathematician","tensura:observer","tensura:universal_perception","tensura:thought_acceleration",
         "tensura:chant_annulment","tensura:spatial_domination","tensura:self_regeneration","tensura:physical_attack_resistance",
-        "tensura:spiritual_attack_resistance","tensura:magic_resistance","tensura:abnormal_condition_nullification","tensura:pain_nullification","tensura:holy_attack_resistance");
+        "tensura:spiritual_attack_resistance","tensura:magic_resistance","tensura:abnormal_condition_nullification","tensura:pain_nullification","tensura:holy_attack_resistance",
+        "tensura:light_attack_resistance","tensura:darkness_attack_resistance","tensura:spatial_attack_resistance");
     public static void register(IEventBus bus){TYPES.register();ITEMS.register();bus.addListener(MythBosses::attributes);bus.addListener(MythBosses::tabs);}
     private static void attributes(EntityAttributeCreationEvent event){event.put(ANANKE.get(),AnankeEntity.attributes().build());}
     private static void tabs(BuildCreativeModeTabContentsEvent event){

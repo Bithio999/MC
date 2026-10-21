@@ -4,22 +4,5 @@
   "min_aura": 15000000,
   "max_aura": 15000000,
   "min_magicule": 15000000,
-  "max_magicule": 15000000,
-  "abilities": [
-    "wildhunt:moira",
-    "wildhunt:thoth",
-    "tensura:mathematician",
-    "tensura:observer",
-    "tensura:universal_perception",
-    "tensura:thought_acceleration",
-    "tensura:chant_annulment",
-    "tensura:spatial_domination",
-    "tensura:self_regeneration",
-    "tensura:physical_attack_resistance",
-    "tensura:spiritual_attack_resistance",
-    "tensura:magic_resistance",
-    "tensura:abnormal_condition_nullification",
-    "tensura:pain_nullification",
-    "tensura:holy_attack_resistance"
-  ]
+  "max_magicule": 15000000
 }

@@ -1,4 +1,4 @@
-# Current balance: 0.25.0
+# Current balance: 0.26.0
 
 This calibration applies the [external Unique audit](research/UNIQUE_PARITY_0.19.md).
 The largest cuts target repeatable direct damage; conditional burst receives
@@ -374,11 +374,17 @@ do not establish PvP balance or replace a client playtest of the new visuals.
 Lugh’s All-Skilled adds flat +49 native learning and mastery gain, keeps +35% movement, and halves other skills’ cooldown recovery time through native updates. Lugh’s own cooldowns are excluded. Passive observation automatically banks actual damaging techniques used within 64 blocks; Skill Bank opens directly for free. Reconstruction bounds, art costs and Lugh’s remaining cooldowns are unchanged.
 
 
-## First Myth: Ananke (0.25.0)
+## First Myth: Ananke (0.26.0)
 
-The optional endgame encounter has **30M base EP** split evenly between aura and magicules, **48,000 real HP** and **120,000 native SHP**. Its HP accessor allows this boss's native base/modifiers above the pinned 10K attribute bound without changing any other entity's limit. Fifteen selected skills are mastered; unrelated native learning records are not promoted.
+The optional endgame encounter has **30M base EP** split evenly between aura and magicules, **48,000 real HP** and **120,000 native SHP**. Its HP accessor allows this boss's native base/modifiers above the pinned 10K attribute bound without changing any other entity's limit. Eighteen selected skills are mastered; unrelated native learning records are not promoted.
 
 Moira uses fixed raw encounter values, with **no EP or mastery damage multiplier**: Fatebreaker 1,800 aura slash (4K MP / 4s), Starfall 1,000 Light per star (10K MP / 10s), Procession 2,200 Darkness once per victim (14K MP / 12s), Last Dawn 4,800 Space (50K MP / 24s). Native boosts, defenses, difficulty and hit immunity still apply. Its real safe shapes and warnings, not an incoming damage cap or phase invulnerability, define the encounter. Thoth separately applies its standard Godly traits, mastered Astral Library and Spellbreak, and its paid passive.
+
+All native supports are activated through their actual stored instances. Dedicated Light, Darkness and Spatial Resistance supplement the original physical/spiritual/magic/holy/status/pain package; these are resistances, not a blanket nullification set. Moira and Thoth damage values are unchanged.
+
+**Unwritten Renewal** is a separate, interruptible recovery action: at least four seconds without HP/SHP damage, below 85% HP or 80% SHP, 5K MP to begin, a two-second windup and four one-second-spaced pulses of up to 3% maximum HP/SHP each (12% total). Each restored HP costs 50 MP and each SHP costs 20 MP; incomplete funding scales both proportionally. Native healing suppression and severance still apply, reduced/cancelled HP healing is refunded, and any accepted hit/SHP loss interrupts. Cooldown is 30 seconds from the start and persists across reload. This provides a visible, punishable recovery opening.
+
+A 20K-MP spatial reposition closes to ten blocks only between casts, with a ten-second cooldown and a one-second reaction interval before the next attack. Loaded chunks, solid/fluid collision, world border and the encounter anchor bound its destinations. Rites are selected by range, and movement resumes eight ticks after the last damaging frame while their cosmetic tail finishes.
 
 Self-Regeneration is gradual native recovery. Ultraspeed/Infinite Regeneration are deliberately absent because native Instant Regeneration can refill all missing HP every ten ticks while funded. Ananke's 15M MP reserve would otherwise make it a one-shot/resource-exhaustion test. Final-phase decisions become faster and introduce Last Dawn; an abandoned fight resets after ten seconds.
 

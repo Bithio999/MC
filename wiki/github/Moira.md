@@ -90,7 +90,7 @@ Available to Ananke's final phase. Opposed celestial seals gather a dark sun abo
 
 These fixed values are before native combat handling and Thoth's independent elemental boosts. They do not receive Myths' normal player mastery multiplier. Hit immunity is never reset to force damage, and the rites do not destroy blocks. Creative/spectator players, allies, Ananke itself and other Anankes are excluded. Native arena instances also exclude unjoined players.
 
-Interrupted, expired, reset or unloaded rites are cancelled with their owned visual entities. Learning Moira through an operator command does not make it a player-usable skill.
+Movement releases eight ticks after the last damaging frame; the cosmetic tail can finish independently. Interrupted, expired, reset or unloaded rites are cancelled with their owned visual entities. Learning Moira through an operator command does not make it a player-usable skill.
 
 ---
 

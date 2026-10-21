@@ -101,6 +101,13 @@ The three Godly classification passives are always active, free and non-stacking
 | --- | --- | --- | --- |
 | [Concordance Pulse](Convergent-Awakening.md#awakening-rewards) | [Convergent Awakening](Convergent-Awakening.md) | Active | None |
 
+## Boss actions
+
+| Ability | Parent skill / system | Activation | Damage type |
+| --- | --- | --- | --- |
+| [Unwritten Renewal](Ananke.md#unwritten-renewal) | [Ananke, the Unwritten End](Ananke.md) | Boss recovery | None — recovery only |
+| [Spatial Reposition](Ananke.md#spatial-reposition) | [Ananke, the Unwritten End](Ananke.md) | Boss movement | None — movement only |
+
 ---
 
 **Categories:** Tensura Myths · Skills

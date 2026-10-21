@@ -27,7 +27,7 @@ public final class MoiraSkill extends Skill {
     @Override public double getMagiculeCost(LivingEntity e,ManasSkillInstance i,int mode){return mode>=0 && mode<4?COSTS[mode]:0;}
     @Override public void onPressed(ManasSkillInstance i,LivingEntity caster,int key,int mode){
         if(!(caster instanceof AnankeEntity boss) || !(caster.level() instanceof ServerLevel level) || mode<0 || mode>3 || boss.isCasting() || i.onCoolDown(mode)
-            || !canInteractSkill(i,caster) || !canActivateSkill(i,caster,mode) || boss.getTarget()==null || !boss.eligible(boss.getTarget()))return;
+            || !canInteractSkill(i,caster) || !canActivateSkill(i,caster,mode) || boss.getTarget()==null || !boss.eligible(boss.getTarget()) || !AnankeTactics.inRange(boss,boss.getTarget(),mode))return;
         if(EnergyHelper.isOutOfEnergy(caster,i,mode))return;
         AnankeRites.begin(level,boss,mode);i.setCoolDown(COOLDOWNS[mode],mode);i.markDirty();
     }

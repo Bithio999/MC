@@ -12,10 +12,12 @@ import static dev.wildhunt.client.VfxMesh.*;
 final class AnankeGeometry {
     private static final int GOLD=0xFFFFCB74,WHITE_GOLD=0xFFFFEFD1,VIOLET=0xFFAA79FF,WARNING=0xFFFF6C97;
     private AnankeGeometry(){}
-    static boolean handles(int kind){return kind>=ArtVisualEntity.ANANKE_FATEBREAKER && kind<=ArtVisualEntity.ANANKE_ASCENSION;}
+    static boolean handles(int kind){return kind>=ArtVisualEntity.ANANKE_FATEBREAKER && kind<=ArtVisualEntity.ANANKE_SHIFT;}
     static void render(ArtVisualEntity entity,PoseStack p,MultiBufferSource b,float partial){
         float age=entity.barrage().isEmpty()?entity.tickCount+partial:entity.barrageAge(partial);int kind=entity.kind();
         if(kind==ArtVisualEntity.ANANKE_ASCENSION){ascend(p,b,age,entity.lifetime(),entity.end().x);return;}
+        if(kind==ArtVisualEntity.ANANKE_RENEWAL){renewal(p,b,age);return;}
+        if(kind==ArtVisualEntity.ANANKE_SHIFT){shift(p,b,age);return;}
         var state=entity.barrage();if(state.isEmpty())return;
         if(kind==ArtVisualEntity.ANANKE_FATEBREAKER)fan(p,b,state,age);
         else if(kind==ArtVisualEntity.ANANKE_STARFALL)stars(p,b,state,age);
@@ -81,6 +83,25 @@ final class AnankeGeometry {
             ring(p,b,new Vec3(0,1,0),Math.max(12,32-t*1.4),.6,t*.01,0,tint(VIOLET,.8*fade));
             for(int n=0;n<16;n++){double a=n*Math.PI/8;beam(p,b,polar(a,13,.2),polar(a,32,4*Math.sin(t*.06)+3),.11,tint(GOLD,.65*fade));}
         }
+    }
+    private static void renewal(PoseStack p,MultiBufferSource b,float age){
+        double charge=smooth(age/40d),fade=Math.min(1,Math.max(0,(120-age)/20d));
+        seal(p,b,CLOCK,new Vec3(0,.13,0),4.5,age*.009,0,tint(GOLD,.55*fade));
+        seal(p,b,GATE,new Vec3(0,3,0),2+charge,-age*.014,.35,tint(VIOLET,.55*fade));
+        for(int n=0;n<6;n++){
+            double angle=n*Math.PI/3+age*.012;Vec3 outside=polar(angle,5,1),inside=polar(angle+.35,1.2,3.5);
+            beam(p,b,outside,inside,.035,tint(WHITE_GOLD,.55*charge*fade));
+            double travel=(age*.025+n/6d)%1;glow(p,b,outside.lerp(inside,travel),.25,tint(GOLD,.6*fade));
+        }
+        if(age>=40){
+            double pulse=(age-40)%20;ring(p,b,new Vec3(0,.2+pulse*.15,0),1+pulse*.16,.12,0,1,tint(WHITE_GOLD,Math.exp(-pulse*.17)*fade));
+            glow(p,b,new Vec3(0,2,0),3,tint(GOLD,.18*Math.exp(-pulse*.15)*fade));
+        }
+    }
+    private static void shift(PoseStack p,MultiBufferSource b,float age){
+        double fade=Math.pow(Math.max(0,1-age/24d),2),r=1+3*smooth(age/24d);
+        for(int n=0;n<3;n++)ring(p,b,new Vec3(0,1+n,0),r,.08,age*.02+n,n%2,tint(n==1?GOLD:VIOLET,fade));
+        seal(p,b,GATE,new Vec3(0,.15,0),r,age*.018,0,tint(GOLD,.6*fade));
     }
     private static void ascend(PoseStack p,MultiBufferSource b,float age,int life,double size){
         double t=age/life,fade=Math.sin(Math.PI*Math.clamp(t,0,1)),r=2+size*smooth(t);

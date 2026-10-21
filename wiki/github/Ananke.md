@@ -20,7 +20,7 @@
 | **Skills** | |
 | Signature Ultimate | [Moira, Lord of Finality](https://github.com/Bithio999/MC/wiki/Moira) |
 | Godly Skill | [Thoth, God of Magic](https://github.com/Bithio999/MC/wiki/Thoth) |
-| Learned package | 15 mastered skills |
+| Learned package | 18 mastered skills |
 | **Spawning** | |
 | Survival | Writ of Last Dawn on a lodestone |
 | Natural spawning | None |
@@ -82,12 +82,12 @@ Moira itself is **Ultimate**, so Lugh's Countermand can seal and interrupt its r
 | --- | --- | --- |
 | Moira, Lord of Finality | `wildhunt:moira` | Four autonomous encounter rites; aura slash, Light, Darkness and Space damage |
 | Thoth, God of Magic | `wildhunt:thoth` | Godly ownership, paid Arcane Sovereignty, Astral Library and Spellbreak |
-| Mathematician | `tensura:mathematician` | Native analysis skill; no invented extra NPC attack |
-| Observer | `tensura:observer` | Native perception/analysis; no invented extra NPC attack |
+| Mathematician | `tensura:mathematician` | Enabled native analysis and support; no invented extra NPC attack |
+| Observer | `tensura:observer` | Enabled native perception and dodge support; no invented extra NPC attack |
 | Universal Perception | `tensura:universal_perception` | Enabled native perception toggle |
 | Thought Acceleration | `tensura:thought_acceleration` | Enabled native support toggle |
-| Chant Annulment | `tensura:chant_annulment` | Native owned support skill |
-| Spatial Domination | `tensura:spatial_domination` | Native owned support skill; no autonomous teleport mode added |
+| Chant Annulment | `tensura:chant_annulment` | Enabled native support toggle |
+| Spatial Domination | `tensura:spatial_domination` | Enabled native elemental support; the encounter has a separate paid repositioning action |
 | Self-Regeneration | `tensura:self_regeneration` | Enabled native sustained recovery; respects healing suppression |
 | Physical Attack Resistance | `tensura:physical_attack_resistance` | Native physical defense |
 | Spiritual Attack Resistance | `tensura:spiritual_attack_resistance` | Native spiritual defense |
@@ -95,14 +95,51 @@ Moira itself is **Ultimate**, so Lugh's Countermand can seal and interrupt its r
 | Abnormal Condition Nullification | `tensura:abnormal_condition_nullification` | Native status protection |
 | Pain Nullification | `tensura:pain_nullification` | Native pain protection |
 | Holy Attack Resistance | `tensura:holy_attack_resistance` | Native holy defense |
+| Light Attack Resistance | `tensura:light_attack_resistance` | Dedicated native Light defense |
+| Darkness Attack Resistance | `tensura:darkness_attack_resistance` | Dedicated native Darkness defense |
+| Spatial Attack Resistance | `tensura:spatial_attack_resistance` | Dedicated native Space defense |
 
-All fifteen are registered, learned and mastered skills. Native server configuration can change their effects. Owning a support skill does not imply every player-only mode has custom boss AI. Self-Regeneration is gradual; Ananke does not have Ultraspeed or Infinite Regeneration, a stacking barrier passive or automatic phase healing.
+All eighteen are registered, learned and mastered skills. Native supports are enabled on their actual stored instances. Native server configuration can change their effects. Owning a support skill does not imply every player-only mode has custom boss AI. Self-Regeneration is gradual; Ananke does not have Ultraspeed or Infinite Regeneration, a stacking barrier passive or automatic phase healing.
+
+### Unwritten Renewal
+
+[Active - Boss recovery] — **Unwritten Renewal**
+
+| Ability information | Value |
+| --- | --- |
+| Damage type / Damage ID | None — recovery only |
+| Starting condition | Below 85% HP or 80% SHP; four seconds without HP/SHP damage |
+| Windup | Two seconds |
+| Recovery | Four pulses, one second apart; each restores up to 3% maximum HP and SHP |
+| Maximum sequence recovery | 12% maximum HP and SHP |
+| Resource cost | 5,000 magicules to begin, then 50 per restored HP and 20 per restored SHP |
+| Cooldown | 30 seconds from the start, including interrupted attempts |
+
+Gold scripture gathers into Ananke's core before recovery begins. Its bossbar displays **Unwritten Renewal**. Deal a hit or damage its spiritual body to interrupt the sequence; no invulnerability or new barrier protects the channel. Native healing suppression and Lugh's Countermand against Moira can also stop it. Last Dawn takes priority when ready and in range.
+
+Recovery clamps at the native HP/SHP limits, respects severance, and scales both pools proportionally if magicules cannot fund a full pulse. Reduced or cancelled HP healing does not consume its unused recovery budget. The passive Self-Regeneration remains separate. Reload cancels an unfinished sequence and preserves its remaining cooldown.
+
+### Spatial Reposition
+
+[Active - Boss movement] — **Spatial Reposition**
+
+| Ability information | Value |
+| --- | --- |
+| Damage type / Damage ID | None — movement only |
+| Trigger distance | Target more than 22 and no more than 64 blocks away |
+| Destination | Approximately ten blocks from the target, within 60 blocks of the encounter anchor |
+| Resource cost / cooldown | 20,000 magicules / ten seconds |
+| Follow-through | One second before the next attack decision |
+
+Between casts, Ananke can dissolve into violet and gold seals and reappear nearer a distant opponent. It checks loaded chunks, solid blocks, liquids and the world border before spending magicules. It never moves the origin of an active rite. This is an encounter movement action, not an automatic player mode of Spatial Domination.
+
+Moira selection checks range before payment: the boss prefers a usable distant Starfall over a fan that cannot reach. Movement resumes eight ticks after a rite's final damaging frame while its remaining visual fades at the original position.
 
 ### Leaving and reloading
 
 After **10 seconds without a valid target**, Ananke resets to phase one and restores its HP, SHP and resources. It moves back toward its original anchor and does not despawn through ordinary distance rules.
 
-Saving/loading preserves HP, resources, race and learned skills. Pending rites are cancelled on reload, preventing an invisible attack from resuming. Death, removal, interruption and encounter reset cancel owned visual/attack plans.
+Saving/loading preserves HP, resources, race, learned skills and remaining recovery/repositioning cooldowns. Pending rites are cancelled on reload, preventing an invisible attack from resuming. Death, removal, interruption and encounter reset cancel owned visual/attack plans.
 
 ## Rewards
 
@@ -127,6 +164,10 @@ Drink a Dawn Testament for **2.4 seconds** to heal **50% maximum HP**, restore *
 [Watch The Last Dawn in the Minecraft client](https://github.com/Bithio999/MC/blob/main/wiki/media/ananke-last-dawn.mp4).
 
 Captures use an isolated validation arena. Warning stills pause the native encounter at specific moments; the clip shows the running cast. No shader pack or external rendering is used.
+
+![Unwritten Renewal gathering scripture before its first recovery pulse](https://github.com/Bithio999/MC/blob/main/wiki/media/ananke-renewal.png?raw=true)
+
+![Spatial Reposition leaving violet and gold rings at its destination](https://github.com/Bithio999/MC/blob/main/wiki/media/ananke-reposition.png?raw=true)
 
 ## Native boss arena
 

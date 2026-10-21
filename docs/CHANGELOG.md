@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.26.0 — Ananke support and tactics
+
+- Consolidate Ananke skill activation into its stored native instances; remove duplicate profile skill initialization and repair existing 0.25 saves once without refilling wounds/resources or duplicating modifiers. Add Light, Darkness and Spatial Resistance for an eighteen-skill mastered package.
+- Add Unwritten Renewal: a visible, interruptible, magicule-funded HP/SHP recovery sequence with a damage delay, windup, four bounded pulses and a persisted cooldown. Preserve native healing suppression, severance and actual-healing refunds.
+- Make Moira selection range-aware and out-of-range activations free. Add a paid, collision-checked spatial gap closer between casts with a ten-second cooldown. Release movement after damaging frames while cosmetic tails finish, and clean those tails on interruption/reset/removal.
+- Preserve Moira/Thoth damage, health, EP and Godly ownership rules. Add native support, migration, defense, endgame-hit, recovery economy/interruption and tactical regressions. Update the gameplay wiki, validation and release editions.
+
 ## 0.25.0 — The First Myth
 
 - Add Ananke, the Unwritten End: a 30M-EP Eclipse Seraph with real 48,000 HP, 120,000 native SHP, two native tracking bossbars placed clear of Tensura’s player HUD, six articulated wings and three combat phases. Keep its health-range exception local to this entity; external health modifiers still apply.

@@ -171,7 +171,7 @@
   },
   {
     "skill": "Hunters-Recovery",
-    "name": "Hunter\u2019s Recovery",
+    "name": "Hunter’s Recovery",
     "tier": "Extra",
     "kind": "Passive",
     "damage": "None",
@@ -343,7 +343,7 @@
     "name": "Mirror Aegis",
     "tier": "Unique",
     "kind": "Active",
-    "damage": "None \u2014 reflected projectiles retain their own attack type",
+    "damage": "None — reflected projectiles retain their own attack type",
     "damage_id": null,
     "secondary_damage_id": null,
     "damage_ids": [],
@@ -571,7 +571,7 @@
     "name": "Divine Authority",
     "tier": "Godly",
     "kind": "Passive",
-    "damage": "Modifier \u2014 original damage type",
+    "damage": "Modifier — original damage type",
     "damage_id": null,
     "secondary_damage_id": null,
     "anchor": "divine-authority"
@@ -581,7 +581,7 @@
     "name": "Absolute Penetration",
     "tier": "Godly",
     "kind": "Passive",
-    "damage": "Modifier \u2014 original damage type",
+    "damage": "Modifier — original damage type",
     "damage_id": null,
     "secondary_damage_id": null,
     "anchor": "absolute-penetration"
@@ -661,7 +661,7 @@
     "name": "Mirrorsea",
     "tier": "Ultimate",
     "kind": "Active",
-    "damage": "None \u2014 reflected projectiles retain their attack type",
+    "damage": "None — reflected projectiles retain their attack type",
     "damage_id": null,
     "secondary_damage_id": null,
     "anchor": "mirrorsea"
@@ -765,5 +765,25 @@
     "damage_id": "tensura:space_elemental",
     "secondary_damage_id": null,
     "anchor": "the-last-dawn"
+  },
+  {
+    "skill": "Ananke",
+    "name": "Unwritten Renewal",
+    "tier": "Boss",
+    "kind": "Boss recovery",
+    "damage": "None — recovery only",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "anchor": "unwritten-renewal"
+  },
+  {
+    "skill": "Ananke",
+    "name": "Spatial Reposition",
+    "tier": "Boss",
+    "kind": "Boss movement",
+    "damage": "None — movement only",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "anchor": "spatial-reposition"
   }
 ]
