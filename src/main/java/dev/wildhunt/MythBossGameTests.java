@@ -86,7 +86,7 @@ public final class MythBossGameTests {
     public static void saveReloadPreservesWoundsAndResourcesButCancelsPendingRites(GameTestHelper h){
         var p=player(h);var b=boss(h,p.position().add(10,0,0));var z=target(h,b.position().add(8,0,0));b.setHealth(8000);var e=TensuraStorages.getExistenceFrom(b);e.setMagicule(100000);e.setSpiritualHealth(60000);castBoss(b,z,0);
         var tag=new CompoundTag();b.save(tag);b.discard();var copy=(AnankeEntity)EntityType.loadEntityRecursive(tag,h.getLevel(),entity->entity);h.assertTrue(copy!=null,"Reload failed");h.getLevel().addFreshEntity(copy);
-        h.assertTrue(copy.getHealth()==8000 && !copy.isCasting() && copy.riteMode()==0,"Reload healed wounds or resumed an untelegraphed rite");h.runAfterDelay(2,()->{h.assertTrue(copy.getHealth()<9000 && TensuraStorages.getExistenceFrom(copy).getMagicule()<200000 && TensuraStorages.getExistenceFrom(copy).getSpiritualHealth()<70000,"Reload initialized free resources");h.succeed();});
+        h.assertTrue(copy.getHealth()==8000 && !copy.isCasting() && copy.riteMode()==0,"Reload healed wounds or resumed an untelegraphed rite");h.runAfterDelay(2,()->{h.assertTrue(TensuraStorages.getExistenceFrom(copy).getMagicule()<200000,"Reload initialized free resources");h.succeed();});
     }
     @GameTest(template="empty",timeoutTicks=100)
     public static void ritualConsumesOnlyOnSuccessAndNativeBossTagsArePresent(GameTestHelper h){
@@ -94,7 +94,7 @@ public final class MythBossGameTests {
         var context=new UseOnContext(p,InteractionHand.MAIN_HAND,new BlockHitResult(Vec3.atCenterOf(at),Direction.UP,at,false));
         h.getLevel().setBlockAndUpdate(at.above(2),Blocks.STONE.defaultBlockState());h.assertTrue(MythBosses.WRIT.get().useOn(context)==InteractionResult.FAIL && p.getMainHandItem().getCount()==1,"Blocked ritual consumed its writ");h.getLevel().setBlockAndUpdate(at.above(2),Blocks.AIR.defaultBlockState());
         h.assertTrue(MythBosses.WRIT.get().useOn(context)==InteractionResult.CONSUME && p.getMainHandItem().isEmpty(),"Successful ritual failed/was not consumed");
-        h.runAfterDelay(5,()->{var b=h.getLevel().getEntitiesOfClass(AnankeEntity.class,new AABB(at).inflate(8)).getFirst();h.assertTrue(b.getType().is(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.ENTITY_TYPE,net.minecraft.resources.ResourceLocation.parse("c:bosses"))),"Native progression boss tag missing");
+        h.startSequence().thenWaitUntil(()->h.assertTrue(!h.getLevel().getEntitiesOfClass(AnankeEntity.class,new AABB(at).inflate(8)).isEmpty(),"Ritual boss not in native entity index yet")).thenExecute(()->{var b=h.getLevel().getEntitiesOfClass(AnankeEntity.class,new AABB(at).inflate(8)).getFirst();h.assertTrue(b.getType().is(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.ENTITY_TYPE,net.minecraft.resources.ResourceLocation.parse("c:bosses"))),"Native progression boss tag missing");
         p.setItemInHand(InteractionHand.MAIN_HAND,new ItemStack(MythBosses.WRIT.get()));h.assertTrue(MythBosses.WRIT.get().useOn(context)==InteractionResult.FAIL && p.getMainHandItem().getCount()==1,"Duplicate ritual consumed a writ");h.succeed();});
     }
     @GameTest(template="empty",timeoutTicks=100)
@@ -111,7 +111,7 @@ public final class MythBossGameTests {
     }
     @GameTest(template="empty",timeoutTicks=200)
     public static void liveAiEntersLastPhaseAndPaysForItsUltimate(GameTestHelper h){
-        var p=player(h);var b=boss(h,p.position().add(10,0,0));var z=target(h,b.position().add(8,0,0));z.setInvulnerable(true);b.setTarget(z);b.setHealth(12000);b.setNoAi(false);
+        var p=player(h);var b=boss(h,p.position().add(10,0,0));var z=target(h,b.position().add(8,0,0));z.setInvulnerable(true);b.setTarget(z);var regen=AnankeSupportGameTests.support(b,"infinite_regeneration");regen.onToggleOff(b);regen.setToggled(false);b.setHealth(12000);b.setNoAi(false);
         h.runAfterDelay(110,()->{h.assertTrue(b.phase()==3,"Live AI did not unlock final phase");h.assertTrue(b.isCasting() && b.riteMode()==4 && moira(b).getCoolDown(3)>0,"Live AI did not cast/pay for Last Dawn");h.assertTrue(SkillAPI.getSkillsFrom(b).getSkill(WildHunt.MYTHIC.get(MythicKind.THOTH).get()).orElseThrow().getCoolDown(3)>0,"Phase AI did not use Astral Library");b.setNoAi(true);h.succeed();});
     }
     @GameTest(template="empty",timeoutTicks=100)

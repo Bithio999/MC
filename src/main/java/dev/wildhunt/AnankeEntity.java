@@ -39,7 +39,6 @@ public final class AnankeEntity extends Monster implements IArenaBoss {
     private final Set<ServerPlayer> watchers=new HashSet<>();
     private boolean initialized,loadCleanup;
     private int supportVersion;
-    final AnankeRecovery recovery=new AnankeRecovery();
     private long shiftReadyAt;
     private float previousCastPose,castPose;
     private BlockPos anchor;
@@ -83,7 +82,7 @@ public final class AnankeEntity extends Monster implements IArenaBoss {
         owned.getSkill(MythBosses.MOIRA.get()).ifPresent(i->i.setMastery(i.getMaxMastery()));
         owned.getSkill(WildHunt.MYTHIC.get(MythicKind.THOTH).get()).ifPresent(i->i.setMastery(i.getMaxMastery()));
         for(var id:MythBosses.NATIVE_SKILLS)owned.getSkill(ResourceLocation.parse(id)).ifPresent(i->i.setMastery(i.getMaxMastery()));
-        initialized=true;setHealth(getMaxHealth());enableSupport();supportVersion=1;
+        initialized=true;setHealth(getMaxHealth());enableSupport();supportVersion=2;
     }
     /** The existence profile supplies stats only. Always toggle the actual stored instance. */
     private void enableSupport(){
@@ -102,14 +101,19 @@ public final class AnankeEntity extends Monster implements IArenaBoss {
             // 0.25's profile toggled unstored instances. Remove their native, keyed
             // side effects even where the stored flag is false, then activate once.
             for(var id:MythBosses.NATIVE_SKILLS)SkillAPI.getSkillsFrom(this).getSkill(ResourceLocation.parse(id)).ifPresent(i->{i.onToggleOff(this);i.setToggled(false);});
-            supportVersion=1;
+        }
+        if(supportVersion<2){
+            // Replace the former gradual regeneration on existing bosses without
+            // refilling native resources or reviving a removed recovery channel.
+            SkillAPI.getSkillsFrom(this).forgetSkill(ResourceLocation.parse("tensura:self_regeneration"),null);
+            supportVersion=2;
         }
         enableSupport();
     }
     public float castPose(float partial){return net.minecraft.util.Mth.lerp(partial,previousCastPose,castPose);}
     public int phase(){return entityData.get(PHASE);}
     public int riteMode(){return entityData.get(RITE);}
-    public boolean isCasting(){return !rite.isEmpty() || recovery.active();}
+    public boolean isCasting(){return !rite.isEmpty();}
     public void setRite(int value){entityData.set(RITE,value);}
     public BlockPos anchor(){return anchor==null?blockPosition():anchor;}
     public boolean eligible(LivingEntity target){return HunterData.canHarm(this,target);}
@@ -120,35 +124,26 @@ public final class AnankeEntity extends Monster implements IArenaBoss {
         return true;
     }
     @Override public void tick(){
+        if(!level().isClientSide() && !isNoAi() && isAlive())advancePhase();
         super.tick();if(level().isClientSide()){previousCastPose=castPose;castPose=net.minecraft.util.Mth.approach(castPose,riteMode()==0?0:1,.125f);return;}var level=(ServerLevel)level();initializeMyth();
         if(loadCleanup){MythicArts.clearTransient(this);loadCleanup=false;restoreSupport();}
         if(!isAlive()){AnankeRites.clear(level,this);return;}
-        updateBars();AnankeRites.tick(level,this);recovery.observeDamage(this);
+        updateBars();AnankeRites.tick(level,this);
         if(isNoAi())return;
-        int reached=getHealth()<=getMaxHealth()*.3?3:getHealth()<=getMaxHealth()*.65?2:1;
-        if(reached>phase()){
-            entityData.set(PHASE,reached);decisionDelay=Math.max(decisionDelay,45);
-            ArtVisualEntity.spawn(level,ArtVisualEntity.ANANKE_ASCENSION,position(),new Vec3(9,reached,0),45);
-            level.playSound(null,blockPosition(),SoundEvents.BEACON_ACTIVATE,SoundSource.HOSTILE,2,.6f+reached*.15f);
-            for(var p:healthBar.getPlayers())p.displayClientMessage(Component.literal(reached==2?"Ananke: The unwritten crown opens.":"Ananke: The Last Dawn approaches. Find refuge in the gold ring.").withColor(0xFFD386),false);
-        }
         var target=getTarget();
         if(target==null || !eligible(target)){
-            setTarget(null);if(isCasting()){AnankeRites.clear(level,this);recovery.cancel(this);}
+            setTarget(null);if(isCasting()){AnankeRites.clear(level,this);}
             if(++idleTicks==200)resetEncounter();
             if(distanceToSqr(Vec3.atCenterOf(anchor()))>9)getNavigation().moveTo(anchor().getX()+.5,anchor().getY()+.2,anchor().getZ()+.5,1);
             return;
         }
         idleTicks=0;getLookControl().setLookAt(target,40,40);lookAt(target,30,30);
-        if(recovery.active()){recovery.tick(this);getNavigation().stop();return;}
         if(isCasting()){getNavigation().stop();return;}
         if(distanceToSqr(target)>7*7)getNavigation().moveTo(target,1.15);else getNavigation().stop();
         if(meleeDelay>0)meleeDelay--;
         if(distanceToSqr(target)<3.5*3.5 && meleeDelay==0){doHurtTarget(target);swing(InteractionHand.MAIN_HAND);meleeDelay=30;}
         if(decisionDelay>0){decisionDelay--;return;}
         var moira=SkillAPI.getSkillsFrom(this).getSkill(MythBosses.MOIRA.get()).orElseThrow();
-        boolean dawnReady=phase()==3 && !moira.onCoolDown(3) && AnankeTactics.inRange(this,target,3);
-        if(!dawnReady && recovery.tryBegin(this)){decisionDelay=20;return;}
         if(level.getGameTime()>=shiftReadyAt && AnankeTactics.reposition(this,target)){
             shiftReadyAt=level.getGameTime()+200;decisionDelay=20;return;
         }
@@ -160,26 +155,37 @@ public final class AnankeEntity extends Monster implements IArenaBoss {
         if(phase()>=2 && !thoth.onCoolDown(3))thoth.onPressed(this,0,3);
         else if(phase()>=2 && sequence%3==0 && !thoth.onCoolDown(1))thoth.onPressed(this,0,1);
     }
+    /** Observe wounds before native regeneration can heal them in super.tick(). */
+    private void advancePhase(){
+        var level=(ServerLevel)level();
+        int reached=getHealth()<=getMaxHealth()*.3?3:getHealth()<=getMaxHealth()*.65?2:1;
+        if(reached>phase()){
+            entityData.set(PHASE,reached);decisionDelay=Math.max(decisionDelay,45);
+            ArtVisualEntity.spawn(level,ArtVisualEntity.ANANKE_ASCENSION,position(),new Vec3(9,reached,0),45);
+            level.playSound(null,blockPosition(),SoundEvents.BEACON_ACTIVATE,SoundSource.HOSTILE,2,.6f+reached*.15f);
+            for(var p:healthBar.getPlayers())p.displayClientMessage(Component.literal(reached==2?"Ananke: The unwritten crown opens.":"Ananke: The Last Dawn approaches. Find refuge in the gold ring.").withColor(0xFFD386),false);
+        }
+    }
     private void resetEncounter(){
-        AnankeRites.clear((ServerLevel)level(),this);recovery.reset(this);MythicArts.clearTransient(this);entityData.set(PHASE,1);sequence=0;decisionDelay=90;
+        AnankeRites.clear((ServerLevel)level(),this);MythicArts.clearTransient(this);entityData.set(PHASE,1);sequence=0;decisionDelay=90;
         setHealth(getMaxHealth());var e=TensuraStorages.getExistenceFrom(this);e.setAura(EnergyHelper.getMaxAura(this));e.setMagicule(EnergyHelper.getMaxMagicule(this));e.setSpiritualHealth(getAttributeValue(TensuraAttributes.MAX_SPIRITUAL_HEALTH));e.markDirty();enableSupport();
     }
     private void updateBars(){
         healthBar.setProgress(Math.clamp(getHealth()/getMaxHealth(),0,1));var energy=TensuraStorages.getExistenceFrom(this);
         soulBar.setProgress((float)Math.clamp(energy.getSpiritualHealth()/Math.max(1,getAttributeValue(TensuraAttributes.MAX_SPIRITUAL_HEALTH)),0,1));
         if(tickCount%20==0){
-            healthBar.setName(Component.literal(riteMode()==5?"Ananke · Unwritten Renewal":riteMode()==4?"Last Dawn: refuge 7–12m":"Ananke · 30M EP · "+switch(phase()){case 1->"I";case 2->"II";default->"III";}).withStyle(s->s.withInsertion("wildhunt:ananke_hp")));
+            healthBar.setName(Component.literal(riteMode()==4?"Last Dawn: refuge 7–12m":"Ananke · 30M EP · "+switch(phase()){case 1->"I";case 2->"II";default->"III";}).withStyle(s->s.withInsertion("wildhunt:ananke_hp")));
             for(var p:watchers)if(p.distanceToSqr(this)<=80*80){healthBar.addPlayer(p);soulBar.addPlayer(p);}else{healthBar.removePlayer(p);soulBar.removePlayer(p);}
         }
     }
-    @Override public boolean hurt(DamageSource source,float amount){boolean hit=super.hurt(source,amount);if(hit && !level().isClientSide())recovery.damaged(this);if(hit && source.getEntity() instanceof LivingEntity attacker && eligible(attacker))setTarget(attacker);return hit;}
+    @Override public boolean hurt(DamageSource source,float amount){boolean hit=super.hurt(source,amount);if(hit && source.getEntity() instanceof LivingEntity attacker && eligible(attacker))setTarget(attacker);return hit;}
     @Override public boolean causeFallDamage(float distance,float multiplier,DamageSource source){return false;}
     @Override public void startSeenByPlayer(ServerPlayer p){super.startSeenByPlayer(p);watchers.add(p);if(p.distanceToSqr(this)<=80*80){healthBar.addPlayer(p);soulBar.addPlayer(p);}}
     @Override public void stopSeenByPlayer(ServerPlayer p){super.stopSeenByPlayer(p);watchers.remove(p);healthBar.removePlayer(p);soulBar.removePlayer(p);}
-    @Override public void die(DamageSource source){if(level() instanceof ServerLevel level){AnankeRites.clear(level,this);recovery.cancel(this);MythicArts.clearTransient(this);healthBar.removeAllPlayers();soulBar.removeAllPlayers();}super.die(source);}
-    @Override public void remove(RemovalReason reason){if(!level().isClientSide()){AnankeRites.clear((ServerLevel)level(),this);recovery.cancel(this);MythicArts.clearTransient(this);healthBar.removeAllPlayers();soulBar.removeAllPlayers();}super.remove(reason);}
-    @Override public void addAdditionalSaveData(CompoundTag t){super.addAdditionalSaveData(t);t.putBoolean("myth_initialized",initialized);t.putInt("myth_support_version",supportVersion);recovery.save(this,t);t.putLong("myth_shift_remaining",Math.clamp(shiftReadyAt-level().getGameTime(),0,200));t.putInt("myth_phase",phase());t.putLong("myth_anchor",anchor().asLong());t.putInt("myth_idle",idleTicks);t.putString("myth_arena",bossFightId);}
-    @Override public void readAdditionalSaveData(CompoundTag t){super.readAdditionalSaveData(t);initialized=t.getBoolean("myth_initialized");supportVersion=t.getInt("myth_support_version");recovery.load(this,t);shiftReadyAt=level().getGameTime()+Math.clamp(t.getLong("myth_shift_remaining"),0,200);entityData.set(PHASE,Math.clamp(t.getInt("myth_phase"),1,3));anchor=t.contains("myth_anchor")?BlockPos.of(t.getLong("myth_anchor")):blockPosition();idleTicks=t.getInt("myth_idle");bossFightId=t.getString("myth_arena");rite=new CompoundTag();setRite(0);loadCleanup=true;}
+    @Override public void die(DamageSource source){if(level() instanceof ServerLevel level){AnankeRites.clear(level,this);MythicArts.clearTransient(this);healthBar.removeAllPlayers();soulBar.removeAllPlayers();}super.die(source);}
+    @Override public void remove(RemovalReason reason){if(!level().isClientSide()){AnankeRites.clear((ServerLevel)level(),this);MythicArts.clearTransient(this);healthBar.removeAllPlayers();soulBar.removeAllPlayers();}super.remove(reason);}
+    @Override public void addAdditionalSaveData(CompoundTag t){super.addAdditionalSaveData(t);t.putBoolean("myth_initialized",initialized);t.putInt("myth_support_version",supportVersion);t.putLong("myth_shift_remaining",Math.clamp(shiftReadyAt-level().getGameTime(),0,200));t.putInt("myth_phase",phase());t.putLong("myth_anchor",anchor().asLong());t.putInt("myth_idle",idleTicks);t.putString("myth_arena",bossFightId);}
+    @Override public void readAdditionalSaveData(CompoundTag t){super.readAdditionalSaveData(t);initialized=t.getBoolean("myth_initialized");supportVersion=t.getInt("myth_support_version");shiftReadyAt=level().getGameTime()+Math.clamp(t.getLong("myth_shift_remaining"),0,200);entityData.set(PHASE,Math.clamp(t.getInt("myth_phase"),1,3));anchor=t.contains("myth_anchor")?BlockPos.of(t.getLong("myth_anchor")):blockPosition();idleTicks=t.getInt("myth_idle");bossFightId=t.getString("myth_arena");rite=new CompoundTag();setRite(0);loadCleanup=true;}
     @Override public String getBossFightId(){return bossFightId;}
     @Override public void setBossFightId(String id){bossFightId=id==null?"":id;}
     @Override public void onSpawned(ServerLevel level,String id,BossFightInstance fight){setBossFightId(id);anchor=fight.getCenter();}

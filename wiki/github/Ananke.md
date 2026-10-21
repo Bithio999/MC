@@ -20,7 +20,7 @@
 | **Skills** | |
 | Signature Ultimate | [Moira, Lord of Finality](https://github.com/Bithio999/MC/wiki/Moira) |
 | Godly Skill | [Thoth, God of Magic](https://github.com/Bithio999/MC/wiki/Thoth) |
-| Learned package | 18 mastered skills |
+| Learned package | 53 mastered skills |
 | **Spawning** | |
 | Survival | Writ of Last Dawn on a lodestone |
 | Natural spawning | None |
@@ -88,36 +88,58 @@ Moira itself is **Ultimate**, so Lugh's Countermand can seal and interrupt its r
 | Thought Acceleration | `tensura:thought_acceleration` | Enabled native support toggle |
 | Chant Annulment | `tensura:chant_annulment` | Enabled native support toggle |
 | Spatial Domination | `tensura:spatial_domination` | Enabled native elemental support; the encounter has a separate paid repositioning action |
-| Self-Regeneration | `tensura:self_regeneration` | Enabled native sustained recovery; respects healing suppression |
-| Physical Attack Resistance | `tensura:physical_attack_resistance` | Native physical defense |
-| Spiritual Attack Resistance | `tensura:spiritual_attack_resistance` | Native spiritual defense |
-| Magic Resistance | `tensura:magic_resistance` | Native magical defense |
-| Abnormal Condition Nullification | `tensura:abnormal_condition_nullification` | Native status protection |
-| Pain Nullification | `tensura:pain_nullification` | Native pain protection |
-| Holy Attack Resistance | `tensura:holy_attack_resistance` | Native holy defense |
-| Light Attack Resistance | `tensura:light_attack_resistance` | Dedicated native Light defense |
-| Darkness Attack Resistance | `tensura:darkness_attack_resistance` | Dedicated native Darkness defense |
-| Spatial Attack Resistance | `tensura:spatial_attack_resistance` | Dedicated native Space defense |
+| Infinite Regeneration | `tensura:infinite_regeneration` | Enabled, mastered native HP/SHP recovery |
+| All native defenses | See the table below | Every resistance and nullification, learned, mastered and enabled |
 
-All eighteen are registered, learned and mastered skills. Native supports are enabled on their actual stored instances. Native server configuration can change their effects. Owning a support skill does not imply every player-only mode has custom boss AI. Self-Regeneration is gradual; Ananke does not have Ultraspeed or Infinite Regeneration, a stacking barrier passive or automatic phase healing.
+The package contains **53 mastered skills**: Moira, Thoth, seven native support/recovery skills and all **44 native defense skills**. The native supports use their actual stored instances. Server configuration controls native effects and nullification availability; native Godly penetration and other valid bypass rules still apply.
 
-### Unwritten Renewal
+### Resistances and nullifications
 
-[Active - Boss recovery] — **Unwritten Renewal**
+Both skills in every row are granted, mastered and toggled on. Native resistance/nullification processing determines which applies to a particular damage source; owning both does not multiply the same protection twice.
+
+| Defense family | Resistance ID | Nullification ID |
+| --- | --- | --- |
+| Abnormal Condition | `tensura:abnormal_condition_resistance` | `tensura:abnormal_condition_nullification` |
+| Cold | `tensura:cold_resistance` | `tensura:cold_nullification` |
+| Corrosion | `tensura:corrosion_resistance` | `tensura:corrosion_nullification` |
+| Darkness Attack | `tensura:darkness_attack_resistance` | `tensura:darkness_attack_nullification` |
+| Earth Attack | `tensura:earth_attack_resistance` | `tensura:earth_attack_nullification` |
+| Electricity | `tensura:electricity_resistance` | `tensura:electricity_nullification` |
+| Flame Attack | `tensura:flame_attack_resistance` | `tensura:flame_attack_nullification` |
+| Gravity Attack | `tensura:gravity_attack_resistance` | `tensura:gravity_attack_nullification` |
+| Heat | `tensura:heat_resistance` | `tensura:heat_nullification` |
+| Holy Attack | `tensura:holy_attack_resistance` | `tensura:holy_attack_nullification` |
+| Light Attack | `tensura:light_attack_resistance` | `tensura:light_attack_nullification` |
+| Magic | `tensura:magic_resistance` | `tensura:magic_nullification` |
+| Physical Attack | `tensura:physical_attack_resistance` | `tensura:physical_attack_nullification` |
+| Pain | `tensura:pain_resistance` | `tensura:pain_nullification` |
+| Paralysis | `tensura:paralysis_resistance` | `tensura:paralysis_nullification` |
+| Pierce | `tensura:pierce_resistance` | `tensura:pierce_nullification` |
+| Poison | `tensura:poison_resistance` | `tensura:poison_nullification` |
+| Spatial Attack | `tensura:spatial_attack_resistance` | `tensura:spatial_attack_nullification` |
+| Spiritual Attack | `tensura:spiritual_attack_resistance` | `tensura:spiritual_attack_nullification` |
+| Thermal Fluctuation | `tensura:thermal_fluctuation_resistance` | `tensura:thermal_fluctuation_nullification` |
+| Water Attack | `tensura:water_attack_resistance` | `tensura:water_attack_nullification` |
+| Wind Attack | `tensura:wind_attack_resistance` | `tensura:wind_attack_nullification` |
+
+### Infinite Regeneration
+
+[Passive - Native recovery] — **Infinite Regeneration**
 
 | Ability information | Value |
 | --- | --- |
 | Damage type / Damage ID | None — recovery only |
-| Starting condition | Below 85% HP or 80% SHP; four seconds without HP/SHP damage |
-| Windup | Two seconds |
-| Recovery | Four pulses, one second apart; each restores up to 3% maximum HP and SHP |
-| Maximum sequence recovery | 12% maximum HP and SHP |
-| Resource cost | 5,000 magicules to begin, then 50 per restored HP and 20 per restored SHP |
-| Cooldown | 30 seconds from the start, including interrupted attempts |
+| Native skill | `tensura:infinite_regeneration` |
+| Mastery / toggle | Mastered and enabled |
+| Recovery cadence | Native Instant Regeneration checks every ten ticks / half second |
+| HP recovery | Attempts to restore all missing HP, within native limits and available magicules |
+| SHP recovery | Native Infinite Regeneration also attempts to restore missing SHP |
+| Default mastered costs | 60 magicules per HP and 80 per SHP; native configuration applies |
+| Windup / cooldown | None |
 
-Gold scripture gathers into Ananke's core before recovery begins. Its bossbar displays **Unwritten Renewal**. Deal a hit or damage its spiritual body to interrupt the sequence; no invulnerability or new barrier protects the channel. Native healing suppression and Lugh's Countermand against Moira can also stop it. Last Dawn takes priority when ready and in range.
+Ananke continuously maintains Tensura's native Infinite Regeneration effect. It restores wounds rapidly while funded and uses the native ordinary-lethal-damage prevention rules. A recent hit does not interrupt it or impose a recovery delay. It consumes Ananke's magicules rather than granting free HP/SHP.
 
-Recovery clamps at the native HP/SHP limits, respects severance, and scales both pools proportionally if magicules cannot fund a full pulse. Reduced or cancelled HP healing does not consume its unused recovery budget. The passive Self-Regeneration remains separate. Reload cancels an unfinished sequence and preserves its remaining cooldown.
+Native severance, confinement, healing rules and qualifying bypass sources remain authoritative. Regeneration never relocks an unlocked combat phase. There is no separate recovery cast or recovery bossbar mode.
 
 ### Spatial Reposition
 
@@ -139,7 +161,7 @@ Moira selection checks range before payment: the boss prefers a usable distant S
 
 After **10 seconds without a valid target**, Ananke resets to phase one and restores its HP, SHP and resources. It moves back toward its original anchor and does not despawn through ordinary distance rules.
 
-Saving/loading preserves HP, resources, race, learned skills and remaining recovery/repositioning cooldowns. Pending rites are cancelled on reload, preventing an invisible attack from resuming. Death, removal, interruption and encounter reset cancel owned visual/attack plans.
+Saving/loading preserves HP, resources, race, learned skills and the remaining repositioning cooldown. Pending rites are cancelled on reload, preventing an invisible attack from resuming. Death, removal, interruption and encounter reset cancel owned visual/attack plans.
 
 ## Rewards
 
@@ -164,8 +186,6 @@ Drink a Dawn Testament for **2.4 seconds** to heal **50% maximum HP**, restore *
 [Watch The Last Dawn in the Minecraft client](https://github.com/Bithio999/MC/blob/main/wiki/media/ananke-last-dawn.mp4).
 
 Captures use an isolated validation arena. Warning stills pause the native encounter at specific moments; the clip shows the running cast. No shader pack or external rendering is used.
-
-![Unwritten Renewal gathering scripture before its first recovery pulse](https://github.com/Bithio999/MC/blob/main/wiki/media/ananke-renewal.png?raw=true)
 
 ![Spatial Reposition leaving violet and gold rings at its destination](https://github.com/Bithio999/MC/blob/main/wiki/media/ananke-reposition.png?raw=true)
 

@@ -23,10 +23,26 @@ public final class MythBosses {
     public static final RegistrySupplier<Item> EGG=ITEMS.register("ananke_spawn_egg",()->new DeferredSpawnEggItem(ANANKE,0x171125,0xF2C36D,new Item.Properties()));
     public static final RegistrySupplier<Item> WRIT=ITEMS.register("writ_of_last_dawn",()->new AnankeItems.Writ(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
     public static final RegistrySupplier<Item> TESTAMENT=ITEMS.register("dawn_testament",()->new AnankeItems.Testament(new Item.Properties().stacksTo(16).rarity(Rarity.EPIC)));
-    public static final List<String> NATIVE_SKILLS=List.of("tensura:mathematician","tensura:observer","tensura:universal_perception","tensura:thought_acceleration",
-        "tensura:chant_annulment","tensura:spatial_domination","tensura:self_regeneration","tensura:physical_attack_resistance",
-        "tensura:spiritual_attack_resistance","tensura:magic_resistance","tensura:abnormal_condition_nullification","tensura:pain_nullification","tensura:holy_attack_resistance",
-        "tensura:light_attack_resistance","tensura:darkness_attack_resistance","tensura:spatial_attack_resistance");
+    /** Every resistance and nullification in the pinned Tensura native registry. */
+    public static final List<String> NATIVE_DEFENSES=List.of(
+        "tensura:abnormal_condition_resistance","tensura:cold_resistance","tensura:corrosion_resistance",
+        "tensura:darkness_attack_resistance","tensura:earth_attack_resistance","tensura:electricity_resistance",
+        "tensura:flame_attack_resistance","tensura:gravity_attack_resistance","tensura:heat_resistance",
+        "tensura:holy_attack_resistance","tensura:light_attack_resistance","tensura:magic_resistance",
+        "tensura:physical_attack_resistance","tensura:pain_resistance","tensura:paralysis_resistance",
+        "tensura:pierce_resistance","tensura:poison_resistance","tensura:spatial_attack_resistance",
+        "tensura:spiritual_attack_resistance","tensura:thermal_fluctuation_resistance","tensura:water_attack_resistance",
+        "tensura:wind_attack_resistance","tensura:abnormal_condition_nullification","tensura:cold_nullification",
+        "tensura:corrosion_nullification","tensura:darkness_attack_nullification","tensura:earth_attack_nullification",
+        "tensura:electricity_nullification","tensura:flame_attack_nullification","tensura:gravity_attack_nullification",
+        "tensura:heat_nullification","tensura:holy_attack_nullification","tensura:light_attack_nullification",
+        "tensura:magic_nullification","tensura:pain_nullification","tensura:paralysis_nullification",
+        "tensura:pierce_nullification","tensura:physical_attack_nullification","tensura:poison_nullification",
+        "tensura:spatial_attack_nullification","tensura:spiritual_attack_nullification","tensura:thermal_fluctuation_nullification",
+        "tensura:water_attack_nullification","tensura:wind_attack_nullification");
+    public static final List<String> NATIVE_SKILLS=java.util.stream.Stream.concat(
+        java.util.stream.Stream.of("tensura:mathematician","tensura:observer","tensura:universal_perception","tensura:thought_acceleration",
+            "tensura:chant_annulment","tensura:spatial_domination","tensura:infinite_regeneration"),NATIVE_DEFENSES.stream()).toList();
     public static void register(IEventBus bus){TYPES.register();ITEMS.register();bus.addListener(MythBosses::attributes);bus.addListener(MythBosses::tabs);}
     private static void attributes(EntityAttributeCreationEvent event){event.put(ANANKE.get(),AnankeEntity.attributes().build());}
     private static void tabs(BuildCreativeModeTabContentsEvent event){

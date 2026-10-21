@@ -768,16 +768,6 @@
   },
   {
     "skill": "Ananke",
-    "name": "Unwritten Renewal",
-    "tier": "Boss",
-    "kind": "Boss recovery",
-    "damage": "None — recovery only",
-    "damage_id": null,
-    "secondary_damage_id": null,
-    "anchor": "unwritten-renewal"
-  },
-  {
-    "skill": "Ananke",
     "name": "Spatial Reposition",
     "tier": "Boss",
     "kind": "Boss movement",
@@ -785,5 +775,15 @@
     "damage_id": null,
     "secondary_damage_id": null,
     "anchor": "spatial-reposition"
+  },
+  {
+    "skill": "Ananke",
+    "name": "Infinite Regeneration",
+    "tier": "Boss",
+    "kind": "Native passive",
+    "damage": "None — recovery only",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "anchor": "infinite-regeneration"
   }
 ]

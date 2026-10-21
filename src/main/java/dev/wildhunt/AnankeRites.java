@@ -79,7 +79,7 @@ public final class AnankeRites {
     private static void strikeSound(ServerLevel level,Vec3 at,float pitch){level.playSound(null,net.minecraft.core.BlockPos.containing(at),SoundEvents.WARDEN_SONIC_BOOM,SoundSource.HOSTILE,1.5f,pitch);level.playSound(null,net.minecraft.core.BlockPos.containing(at),SoundEvents.AMETHYST_BLOCK_RESONATE,SoundSource.HOSTILE,1.4f,pitch);}
     public static void clear(ServerLevel level,AnankeEntity boss){
         for(var visual:level.getEntitiesOfClass(ArtVisualEntity.class,boss.getBoundingBox().inflate(192),v->v.ownedBy(boss)
-            && v.kind()>=ArtVisualEntity.ANANKE_FATEBREAKER && v.kind()<=ArtVisualEntity.ANANKE_LAST_DAWN))visual.discard();
+            && v.kind()>=ArtVisualEntity.ANANKE_FATEBREAKER && v.kind()<=ArtVisualEntity.ANANKE_SHIFT))visual.discard();
         boss.rite=new CompoundTag();boss.setRite(0);
     }
 }

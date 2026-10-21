@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.27.0 — Ananke native regeneration and full defenses
+
+- Remove Unwritten Renewal, its channel, costs, cooldown, bossbar mode and custom effect. Replace Self-Regeneration with mastered, enabled native Infinite Regeneration.
+- Grant and activate all 44 native defenses: every resistance and every nullification. The complete mastered boss package now contains 53 skills. Retain native magicule-funded recovery, healing limits, configuration and bypass rules.
+- Migrate existing bosses without resetting resources or movement cooldowns, remove the former gradual regeneration and discard the retired recovery state. Observe phase thresholds before native regeneration heals wounds.
+- Update native activation/registry, regeneration, migration and bypass tests, gameplay documentation and release files.
+
 ## 0.26.0 — Ananke support and tactics
 
 - Consolidate Ananke skill activation into its stored native instances; remove duplicate profile skill initialization and repair existing 0.25 saves once without refilling wounds/resources or duplicating modifiers. Add Light, Darkness and Spatial Resistance for an eighteen-skill mastered package.

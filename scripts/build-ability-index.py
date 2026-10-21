@@ -7,7 +7,7 @@ WIKI=ROOT/'wiki'
 records=json.loads((WIKI/'abilities.json').read_text())
 titles={item['slug']:item['title'] for item in json.loads((WIKI/'catalog.json').read_text())}
 lines=['# Ability index','','[Main Page](../README.md) · [Skills](Skills.md) · [Damage types](Damage-Types.md)','','**Ability index** lists active arts, toggleable passives, classification passives and shared racial actions. Each entry links to its exact resource costs, targeting and damage-type information. Reflected projectiles retain their original attack type.','']
-for tier,label in [('Unique','Unique abilities'),('Ultimate','Ultimate abilities'),('Godly','Godly abilities'),('Extra','Extra abilities'),('Racial','Racial abilities'),('Boss','Boss actions')]:
+for tier,label in [('Unique','Unique abilities'),('Ultimate','Ultimate abilities'),('Godly','Godly abilities'),('Extra','Extra abilities'),('Racial','Racial abilities'),('Boss','Boss abilities')]:
     entries=[a for a in records if a['tier']==tier]
     if not entries:continue
     lines+=['## '+label,'']

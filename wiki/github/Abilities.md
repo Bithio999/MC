@@ -101,12 +101,12 @@ The three Godly classification passives are always active, free and non-stacking
 | --- | --- | --- | --- |
 | [Concordance Pulse](https://github.com/Bithio999/MC/wiki/Convergent-Awakening#awakening-rewards) | [Convergent Awakening](https://github.com/Bithio999/MC/wiki/Convergent-Awakening) | Active | None |
 
-## Boss actions
+## Boss abilities
 
 | Ability | Parent skill / system | Activation | Damage type |
 | --- | --- | --- | --- |
-| [Unwritten Renewal](https://github.com/Bithio999/MC/wiki/Ananke#unwritten-renewal) | [Ananke, the Unwritten End](https://github.com/Bithio999/MC/wiki/Ananke) | Boss recovery | None — recovery only |
 | [Spatial Reposition](https://github.com/Bithio999/MC/wiki/Ananke#spatial-reposition) | [Ananke, the Unwritten End](https://github.com/Bithio999/MC/wiki/Ananke) | Boss movement | None — movement only |
+| [Infinite Regeneration](https://github.com/Bithio999/MC/wiki/Ananke#infinite-regeneration) | [Ananke, the Unwritten End](https://github.com/Bithio999/MC/wiki/Ananke) | Native passive | None — recovery only |
 
 ---
 
