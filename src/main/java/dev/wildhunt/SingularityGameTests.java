@@ -111,7 +111,7 @@ public final class SingularityGameTests {
         h.runAfterDelay(2,()->{
             var other=h.getLevel().getServer().getLevel(net.minecraft.world.level.Level.NETHER);var visual=h.getLevel().getEntity(id);h.assertTrue(visual!=null,"Barrage visual did not enter entity tracking");visual.discard();
             other.getChunk(new net.minecraft.core.BlockPos(9,180,9));other.setChunkForced(0,0,true);var replacement=ArtVisualEntity.spawn(other,ArtVisualEntity.CAUSAL_VERDICT,new Vec3(9,180,9),new Vec3(24,0,0),122);tag.putUUID("verdict_visual",replacement.getUUID());
-            h.runAfterDelay(2,()->{
+            h.startSequence().thenWaitUntil(()->h.assertTrue(other.getEntity(replacement.getUUID())==replacement,"Remote visual fixture not indexed yet")).thenExecute(()->{
                 GodlySkill.clearTransient(p);h.assertTrue(replacement.isRemoved() && !tag.contains("singularity_plan") && !tag.contains("verdict_until"),"Lifecycle left a remote barrage running");
                 i.setCoolDown(0,3);WildHunt.GODLY.get().onPressed(i,p,0,3);var last=tag.getUUID("verdict_visual");h.runAfterDelay(2,()->{
                     SkillAPI.getSkillsFrom(p).forgetSkill(i);var abandoned=h.getLevel().getEntity(last);h.assertTrue((abandoned==null || abandoned.isRemoved()) && !tag.contains("singularity_plan"),"Forgetting Aion left a running barrage");h.succeed();

@@ -44,13 +44,17 @@ Spawn eggs and `/summon wildhunt:ananke` also work for operators. Ordinary ritua
 
 Ananke flies after valid targets, fights nearby players and retaliates when attacked. Its arena anchor limits valid targets to 72 blocks from the spawn. Both **HP and SHP bossbars** appear at the upper right to tracking players within 80 blocks, clear of Tensura’s player HUD. The health bar shows phase I, II or III, and switches to the gold-refuge warning during Last Dawn.
 
-| Phase | HP threshold | Changes |
+| Phase | Entry condition | Changes |
 | --- | --- | --- |
-| Sealed Testament | Above 65% | Fatebreaker, six-star Starfall Canticle, Eventide Procession and melee |
-| Unwritten Crown | 65% or less | Faster decisions, eight-star Starfall, Astral Library and Spellbreak |
-| Last Dawn | 30% or less | Fastest decisions; The Last Dawn joins the rotation |
+| Sealed Testament | Initial life | Fatebreaker, six-star Starfall Canticle, Eventide Procession and melee |
+| Unwritten Crown | First fatal defeat after regeneration fails | Faster decisions, eight-star Starfall, Astral Library and Spellbreak |
+| Last Dawn | Second fatal defeat after regeneration fails | Fastest decisions; The Last Dawn joins the rotation |
 
-Phases only advance during an encounter; healing does not relock a phase. Phase changes announce themselves with a six-point ascension effect. There is no forced invulnerability window or incoming damage cap. All attacks keep native hit immunity.
+Infinite Regeneration takes priority: while funded and able to prevent the incoming death, it keeps Ananke in the current phase and restores wounds using magicules. When it can no longer prevent a fatal defeat, Ananke enters the next phase and immediately refills **HP, SHP, magicules and aura to their current maximums**. This can happen twice. A fatal defeat in phase III ends the encounter once regeneration can no longer prevent it. Native bypass and healing rules still apply.
+
+Each revival cancels the previous attack sequence and announces the new phase with the six-point ascension effect. The new phase has a short attack preparation interval, with ordinary native hit immunity. Nonfatal damage and low-health percentages do not change phases.
+
+Successful **HP or SHP damage** makes the model flash Minecraft red, including while Pain Nullification is enabled and while regeneration repairs the hit. Nullified or dodged attacks do not trigger this confirmed-damage flash.
 
 ### Moira's rites
 
@@ -139,7 +143,7 @@ Both skills in every row are granted, mastered and toggled on. Native resistance
 
 Ananke continuously maintains Tensura's native Infinite Regeneration effect. It restores wounds rapidly while funded and uses the native ordinary-lethal-damage prevention rules. A recent hit does not interrupt it or impose a recovery delay. It consumes Ananke's magicules rather than granting free HP/SHP.
 
-Native severance, confinement, healing rules and qualifying bypass sources remain authoritative. Regeneration never relocks an unlocked combat phase. There is no separate recovery cast or recovery bossbar mode.
+Native severance, confinement, healing rules and qualifying bypass sources remain authoritative. Regeneration has priority over phase revival while it can prevent death, and never relocks an unlocked phase. There is no separate recovery cast or recovery bossbar mode.
 
 ### Spatial Reposition
 
@@ -161,7 +165,7 @@ Moira selection checks range before payment: the boss prefers a usable distant S
 
 After **10 seconds without a valid target**, Ananke resets to phase one and restores its HP, SHP and resources. It moves back toward its original anchor and does not despawn through ordinary distance rules.
 
-Saving/loading preserves HP, resources, race, learned skills and the remaining repositioning cooldown. Pending rites are cancelled on reload, preventing an invisible attack from resuming. Death, removal, interruption and encounter reset cancel owned visual/attack plans.
+Saving/loading preserves the current phase, HP, resources, race, learned skills and the remaining repositioning cooldown. Loading does not replenish a spent phase. Pending rites are cancelled on reload, preventing an invisible attack from resuming. Death, removal, interruption and encounter reset cancel owned visual/attack plans.
 
 ## Rewards
 
@@ -174,6 +178,8 @@ Drink a Dawn Testament for **2.4 seconds** to heal **50% maximum HP**, restore *
 ![Ananke’s original six-winged model and halo](../media/ananke.png)
 
 ![Native HP and spiritual-health bossbars](../media/ananke-bossbars.png)
+
+![Confirmed damage flashes red while Pain Nullification remains enabled](../media/ananke-hit-feedback.png)
 
 ![Fatebreaker’s fixed fan warning](../media/ananke-fatebreaker.png)
 
@@ -197,6 +203,8 @@ For a managed encounter, stand at the center of a prepared arena and run:
 /myths boss arena
 /bossFight join @s ananke
 ```
+
+Operator `/kill` removes Ananke directly without playing through its combat lives.
 
 The first command requires operator permission and creates a native profile named `ananke` in the current dimension: radius 48, up to four joined players, five-second start delay, fifteen-minute timer. It sets the boss spawn one block above the center and the entrance 24 blocks along +Z. The native arena system handles the fight lifecycle. Build safe ground and clear space at both locations first.
 

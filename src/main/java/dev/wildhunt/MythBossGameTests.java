@@ -111,7 +111,7 @@ public final class MythBossGameTests {
     }
     @GameTest(template="empty",timeoutTicks=200)
     public static void liveAiEntersLastPhaseAndPaysForItsUltimate(GameTestHelper h){
-        var p=player(h);var b=boss(h,p.position().add(10,0,0));var z=target(h,b.position().add(8,0,0));z.setInvulnerable(true);b.setTarget(z);var regen=AnankeSupportGameTests.support(b,"infinite_regeneration");regen.onToggleOff(b);regen.setToggled(false);b.setHealth(12000);b.setNoAi(false);
+        var p=player(h);var b=boss(h,p.position().add(10,0,0));var z=target(h,b.position().add(8,0,0));z.setInvulnerable(true);b.setTarget(z);b.hurt(b.damageSources().genericKill(),1000000);b.invulnerableTime=0;b.hurt(b.damageSources().genericKill(),1000000);b.setNoAi(false);
         h.runAfterDelay(110,()->{h.assertTrue(b.phase()==3,"Live AI did not unlock final phase");h.assertTrue(b.isCasting() && b.riteMode()==4 && moira(b).getCoolDown(3)>0,"Live AI did not cast/pay for Last Dawn");h.assertTrue(SkillAPI.getSkillsFrom(b).getSkill(WildHunt.MYTHIC.get(MythicKind.THOTH).get()).orElseThrow().getCoolDown(3)>0,"Phase AI did not use Astral Library");b.setNoAi(true);h.succeed();});
     }
     @GameTest(template="empty",timeoutTicks=100)

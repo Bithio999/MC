@@ -1,4 +1,4 @@
-# Current balance: 0.27.0
+# Current balance: 0.28.0
 
 This calibration applies the [external Unique audit](research/UNIQUE_PARITY_0.19.md).
 The largest cuts target repeatable direct damage; conditional burst receives
@@ -374,7 +374,7 @@ do not establish PvP balance or replace a client playtest of the new visuals.
 Lugh’s All-Skilled adds flat +49 native learning and mastery gain, keeps +35% movement, and halves other skills’ cooldown recovery time through native updates. Lugh’s own cooldowns are excluded. Passive observation automatically banks actual damaging techniques used within 64 blocks; Skill Bank opens directly for free. Reconstruction bounds, art costs and Lugh’s remaining cooldowns are unchanged.
 
 
-## First Myth: Ananke (0.27.0)
+## First Myth: Ananke (0.28.0)
 
 The optional endgame encounter has **30M base EP** split evenly between aura and magicules, **48,000 real HP** and **120,000 native SHP**. Its HP accessor allows this boss's native base/modifiers above the pinned 10K attribute bound without changing any other entity's limit. Fifty-three selected skills are mastered; unrelated native learning records are not promoted.
 
@@ -386,6 +386,8 @@ All native supports are activated through their actual stored instances. Ananke 
 
 A 20K-MP spatial reposition closes to ten blocks only between casts, with a ten-second cooldown and a one-second reaction interval before the next attack. Loaded chunks, solid/fluid collision, world border and the encounter anchor bound its destinations. Rites are selected by range, and movement resumes eight ticks after the last damaging frame while their cosmetic tail finishes.
 
-Phases observe wounds before regeneration executes, and once unlocked remain available after healing. Final-phase decisions introduce Last Dawn; an abandoned fight resets after ten seconds.
+Funded, eligible native Infinite Regeneration gets death-prevention priority. After it can no longer prevent a fatal defeat, phases I and II revive into the next phase with HP/SHP/MP/AP filled to their current caps. The native NPC regeneration reserve is ten magicules; an unfunded lingering effect cannot grant an extra life. Native regeneration-bypassing sources remain authoritative. Phase III dies when death prevention fails; intermediate revivals do not execute death/loot/EP/progression events. A 45-tick attack decision delay follows a revival. Native skill cooldowns remain intact, pending attacks are cancelled, and ordinary hit immunity remains. Operator kill removes the boss directly.
+
+Low HP no longer unlocks phases. Current phase persists through save/load, while a fully abandoned fight resets after ten seconds. Minecraft's damage overlay is restored locally on Ananke's model for confirmed HP/SHP losses despite Pain Nullification, without disabling the skill or globally changing Tensura's rendering.
 
 The [research](research/MYTH_BOSS_IMPLEMENTATION.md) compares pinned native profiles and inspected Nightmares/Mysticism implementations. The target is above shipped base-mod bosses; it is not a universal ranking against configured addon bosses. [Full encounter and damage types](../wiki/pages/Ananke.md).

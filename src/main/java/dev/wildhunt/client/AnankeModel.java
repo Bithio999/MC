@@ -9,6 +9,7 @@ import net.minecraft.client.model.geom.builders.*;
 /** Original six-winged ceremonial armor, articulated feather spars and an obsidian faceplate. */
 final class AnankeModel extends EntityModel<AnankeEntity> {
     private final ModelPart root,head,leftArm,rightArm;
+    private boolean damageFeedback;
     private final ModelPart[] wings=new ModelPart[6];
     AnankeModel(ModelPart root){this.root=root;head=root.getChild("head");leftArm=root.getChild("left_arm");rightArm=root.getChild("right_arm");for(int n=0;n<6;n++)wings[n]=root.getChild("wing_"+n);}
     static LayerDefinition layer(){
@@ -45,10 +46,13 @@ final class AnankeModel extends EntityModel<AnankeEntity> {
         return LayerDefinition.create(mesh,128,128);
     }
     @Override public void setupAnim(AnankeEntity entity,float limbSwing,float limbAmount,float age,float yaw,float pitch){
+        damageFeedback=entity.hasDamageFeedback();
         root.getAllParts().forEach(ModelPart::resetPose);root.y=(float)Math.sin(age*.05)*.45f;head.yRot=yaw*(float)Math.PI/180;head.xRot=pitch*(float)Math.PI/180*.5f;
         float cast=entity.castPose(age-entity.tickCount);
         leftArm.xRot=-.15f-cast*.9f;rightArm.xRot=-.15f-cast*.9f;leftArm.zRot=.1f+cast*.3f;rightArm.zRot=-.1f-cast*.3f;
         for(int n=0;n<6;n++){int side=n%2==0?-1:1,tier=n/2;wings[n].zRot=side*((tier-1)*(.58f+entity.phase()*.04f)+.06f*(float)Math.sin(age*.065+tier));wings[n].yRot=side*(.14f+.1f*(float)Math.cos(age*.05+tier));}
     }
-    @Override public void renderToBuffer(PoseStack p,VertexConsumer b,int light,int overlay,int color){root.render(p,b,light,overlay,color);}
+    @Override public void renderToBuffer(PoseStack p,VertexConsumer b,int light,int overlay,int color){// Bypass Tensura's global Pain Nullification overlay suppression for this
+        // boss's confirmed-hit feedback only; the skill's gameplay protection stays ON.
+        root.render(p,b,light,damageFeedback?net.minecraft.client.renderer.texture.OverlayTexture.pack(0,true):overlay,color);}
 }

@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.28.0 — Exhaustion-based phases and confirmed damage feedback
+
+- Replace percentage-health phase gates with fatal-defeat revivals. Funded, eligible Infinite Regeneration gets native death-prevention priority. Once it cannot prevent death, the first two defeats advance one phase and refill HP, SHP, magicules and aura to their current caps; the final defeat ends the encounter.
+- Cancel old rites and auxiliary attack plans at revival, preserve learned supports and native cooldowns, save the current phase, and keep final rewards/progression exclusive to the real death. Operator kill remains direct.
+- Restore Minecraft red model feedback for confirmed HP/SHP losses despite Pain Nullification. Preserve native immunity, avoid flashing on nullified/dodged attacks, and synchronize the brief visual window independently of immediate healing.
+- Add native phase, regeneration-priority, resource, SHP-death, reward, persistence and hit-feedback checks. Make asynchronous visual fixtures wait for their native state. Update the gameplay wiki and release editions.
+
 ## 0.27.0 — Ananke native regeneration and full defenses
 
 - Remove Unwritten Renewal, its channel, costs, cooldown, bossbar mode and custom effect. Replace Self-Regeneration with mastered, enabled native Infinite Regeneration.
