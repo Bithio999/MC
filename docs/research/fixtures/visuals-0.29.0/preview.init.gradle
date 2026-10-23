@@ -1,0 +1,5 @@
+gradle.projectsEvaluated {
+    rootProject.sourceSets.main.java.srcDir(rootProject.file('docs/research/fixtures/visuals-0.29.0'))
+    rootProject.neoForge.runs.getByName('client').programArgument('--quickPlaySingleplayer')
+    rootProject.neoForge.runs.getByName('client').programArgument('Myths Validation')
+}

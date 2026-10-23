@@ -1,4 +1,6 @@
-# Current balance: 0.28.0
+# Current balance: 0.29.0
+
+0.29.0 changes world visuals and animation only; gameplay values retain the 0.28.0 calibration.
 
 This calibration applies the [external Unique audit](research/UNIQUE_PARITY_0.19.md).
 The largest cuts target repeatable direct damage; conditional burst receives

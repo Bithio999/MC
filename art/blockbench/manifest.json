@@ -1,0 +1,574 @@
+{
+  "schema": 1,
+  "effects": [
+    {
+      "asset": "oil_lash",
+      "theme": "volcanic",
+      "bones": 11,
+      "cubes": 30,
+      "kind": 0,
+      "shape": "lash",
+      "placement": "lash"
+    },
+    {
+      "asset": "glacial_spire",
+      "theme": "winter",
+      "bones": 1,
+      "cubes": 15,
+      "kind": 1,
+      "shape": "crystal",
+      "placement": "crystal"
+    },
+    {
+      "asset": "falling_icicle",
+      "theme": "winter",
+      "bones": 1,
+      "cubes": 15,
+      "kind": 2,
+      "shape": "icefall",
+      "placement": "fall"
+    },
+    {
+      "asset": "tidal_crest",
+      "theme": "tide",
+      "bones": 9,
+      "cubes": 40,
+      "kind": 3,
+      "shape": "wave",
+      "placement": "wave"
+    },
+    {
+      "asset": "coral_vortex",
+      "theme": "tide",
+      "bones": 9,
+      "cubes": 40,
+      "kind": 4,
+      "shape": "whirl",
+      "placement": "radial"
+    },
+    {
+      "asset": "causal_astrolabe",
+      "theme": "causal",
+      "bones": 4,
+      "cubes": 51,
+      "kind": 5,
+      "shape": "astrolabe",
+      "placement": "radial"
+    },
+    {
+      "asset": "worldline_blade",
+      "theme": "causal",
+      "bones": 3,
+      "cubes": 15,
+      "kind": 6,
+      "shape": "sever",
+      "placement": "beam"
+    },
+    {
+      "asset": "event_horizon_orrery",
+      "theme": "causal",
+      "bones": 4,
+      "cubes": 51,
+      "kind": 7,
+      "shape": "orrery",
+      "placement": "horizon"
+    },
+    {
+      "asset": "causal_hourglass",
+      "theme": "causal",
+      "bones": 3,
+      "cubes": 28,
+      "kind": 8,
+      "shape": "hourglass",
+      "placement": "anchor"
+    },
+    {
+      "asset": "singularity_armature",
+      "theme": "causal",
+      "bones": 4,
+      "cubes": 48,
+      "kind": 9,
+      "shape": "singularity",
+      "placement": "singularity"
+    },
+    {
+      "asset": "chronofracture",
+      "theme": "causal",
+      "bones": 4,
+      "cubes": 51,
+      "kind": 10,
+      "shape": "chronoburst",
+      "placement": "radial"
+    },
+    {
+      "asset": "silken_spindle",
+      "theme": "silk",
+      "bones": 10,
+      "cubes": 53,
+      "kind": 11,
+      "shape": "spindle",
+      "placement": "beam"
+    },
+    {
+      "asset": "runic_igniter",
+      "theme": "rune",
+      "bones": 8,
+      "cubes": 36,
+      "kind": 12,
+      "shape": "mine",
+      "placement": "radial"
+    },
+    {
+      "asset": "living_grove",
+      "theme": "grove",
+      "bones": 6,
+      "cubes": 65,
+      "kind": 13,
+      "shape": "garden",
+      "placement": "radial"
+    },
+    {
+      "asset": "prism_guard",
+      "theme": "mirror",
+      "bones": 7,
+      "cubes": 12,
+      "kind": 14,
+      "shape": "mirror",
+      "placement": "follow"
+    },
+    {
+      "asset": "prismatic_emitter",
+      "theme": "mirror",
+      "bones": 8,
+      "cubes": 38,
+      "kind": 15,
+      "shape": "prism",
+      "placement": "beam"
+    },
+    {
+      "asset": "plasma_capacitor",
+      "theme": "volcanic",
+      "bones": 8,
+      "cubes": 38,
+      "kind": 16,
+      "shape": "plasma",
+      "placement": "beam"
+    },
+    {
+      "asset": "storm_engine",
+      "theme": "volcanic",
+      "bones": 8,
+      "cubes": 36,
+      "kind": 17,
+      "shape": "stormcloud",
+      "placement": "sky"
+    },
+    {
+      "asset": "volcanic_fault",
+      "theme": "volcanic",
+      "bones": 8,
+      "cubes": 36,
+      "kind": 18,
+      "shape": "eruption",
+      "placement": "radial"
+    },
+    {
+      "asset": "winter_orchard",
+      "theme": "winter",
+      "bones": 6,
+      "cubes": 65,
+      "kind": 19,
+      "shape": "icegarden",
+      "placement": "radial"
+    },
+    {
+      "asset": "crystal_aegis",
+      "theme": "winter",
+      "bones": 7,
+      "cubes": 30,
+      "kind": 20,
+      "shape": "bulwark",
+      "placement": "follow"
+    },
+    {
+      "asset": "glacial_blossom",
+      "theme": "winter",
+      "bones": 9,
+      "cubes": 43,
+      "kind": 21,
+      "shape": "bloom",
+      "placement": "radial"
+    },
+    {
+      "asset": "threshold_gate",
+      "theme": "gate",
+      "bones": 2,
+      "cubes": 40,
+      "kind": 22,
+      "shape": "gate",
+      "placement": "gate"
+    },
+    {
+      "asset": "parallax_judges",
+      "theme": "gate",
+      "bones": 4,
+      "cubes": 22,
+      "kind": 23,
+      "shape": "parallax",
+      "placement": "radial"
+    },
+    {
+      "asset": "crossroads",
+      "theme": "gate",
+      "bones": 5,
+      "cubes": 160,
+      "kind": 24,
+      "shape": "crossroads",
+      "placement": "radial"
+    },
+    {
+      "asset": "lexicon_volumes",
+      "theme": "thoth",
+      "bones": 11,
+      "cubes": 55,
+      "kind": 25,
+      "shape": "lexicon",
+      "placement": "radial"
+    },
+    {
+      "asset": "spellbreak_obelisks",
+      "theme": "thoth",
+      "bones": 8,
+      "cubes": 36,
+      "kind": 26,
+      "shape": "spellbreak",
+      "placement": "radial"
+    },
+    {
+      "asset": "mana_alembic",
+      "theme": "thoth",
+      "bones": 9,
+      "cubes": 48,
+      "kind": 27,
+      "shape": "crucible",
+      "placement": "follow"
+    },
+    {
+      "asset": "astral_volumes",
+      "theme": "thoth",
+      "bones": 11,
+      "cubes": 55,
+      "kind": 28,
+      "shape": "library",
+      "placement": "library"
+    },
+    {
+      "asset": "spectrum_emitter",
+      "theme": "thoth",
+      "bones": 8,
+      "cubes": 38,
+      "kind": 29,
+      "shape": "muzzle",
+      "placement": "beam"
+    },
+    {
+      "asset": "briar_corolla",
+      "theme": "grove",
+      "bones": 9,
+      "cubes": 43,
+      "kind": 30,
+      "shape": "briar",
+      "placement": "radial"
+    },
+    {
+      "asset": "runic_detonator",
+      "theme": "rune",
+      "bones": 8,
+      "cubes": 36,
+      "kind": 31,
+      "shape": "burst",
+      "placement": "radial"
+    },
+    {
+      "asset": "mirror_splinters",
+      "theme": "mirror",
+      "bones": 4,
+      "cubes": 6,
+      "kind": 32,
+      "shape": "shards",
+      "placement": "radial"
+    },
+    {
+      "asset": "fulgur_conductor",
+      "theme": "storm",
+      "bones": 8,
+      "cubes": 38,
+      "kind": 33,
+      "shape": "rail",
+      "placement": "beam"
+    },
+    {
+      "asset": "thunderstep_armature",
+      "theme": "storm",
+      "bones": 8,
+      "cubes": 38,
+      "kind": 34,
+      "shape": "step",
+      "placement": "beam"
+    },
+    {
+      "asset": "elemental_detonation",
+      "theme": "storm",
+      "bones": 8,
+      "cubes": 36,
+      "kind": 35,
+      "shape": "impact",
+      "placement": "radial"
+    },
+    {
+      "asset": "obsidian_vents",
+      "theme": "volcanic",
+      "bones": 9,
+      "cubes": 40,
+      "kind": 36,
+      "shape": "oil",
+      "placement": "radial"
+    },
+    {
+      "asset": "vital_corolla",
+      "theme": "grove",
+      "bones": 9,
+      "cubes": 43,
+      "kind": 37,
+      "shape": "heal",
+      "placement": "follow"
+    },
+    {
+      "asset": "gate_wake",
+      "theme": "gate",
+      "bones": 2,
+      "cubes": 40,
+      "kind": 38,
+      "shape": "transit",
+      "placement": "beam"
+    },
+    {
+      "asset": "fate_loom",
+      "theme": "silk",
+      "bones": 9,
+      "cubes": 43,
+      "kind": 39,
+      "shape": "spider",
+      "placement": "anchor"
+    },
+    {
+      "asset": "fate_spindle",
+      "theme": "silk",
+      "bones": 10,
+      "cubes": 53,
+      "kind": 40,
+      "shape": "thread",
+      "placement": "beam"
+    },
+    {
+      "asset": "loom_wake",
+      "theme": "silk",
+      "bones": 10,
+      "cubes": 53,
+      "kind": 41,
+      "shape": "loomstep",
+      "placement": "beam"
+    },
+    {
+      "asset": "checkmate_blades",
+      "theme": "silk",
+      "bones": 6,
+      "cubes": 36,
+      "kind": 42,
+      "shape": "checkmate",
+      "placement": "edge"
+    },
+    {
+      "asset": "mirrorsea_lenses",
+      "theme": "tide",
+      "bones": 7,
+      "cubes": 12,
+      "kind": 43,
+      "shape": "mirrorsea",
+      "placement": "radial"
+    },
+    {
+      "asset": "refracted_harpoon",
+      "theme": "tide",
+      "bones": 3,
+      "cubes": 15,
+      "kind": 44,
+      "shape": "spear",
+      "placement": "tip"
+    },
+    {
+      "asset": "sovereign_crest",
+      "theme": "tide",
+      "bones": 9,
+      "cubes": 40,
+      "kind": 45,
+      "shape": "breaker",
+      "placement": "breaker"
+    },
+    {
+      "asset": "refraction_lenses",
+      "theme": "tide",
+      "bones": 7,
+      "cubes": 12,
+      "kind": 46,
+      "shape": "lens",
+      "placement": "radial"
+    },
+    {
+      "asset": "perennial_corolla",
+      "theme": "grove",
+      "bones": 9,
+      "cubes": 43,
+      "kind": 47,
+      "shape": "seed",
+      "placement": "marker"
+    },
+    {
+      "asset": "rebirth_lotus",
+      "theme": "grove",
+      "bones": 9,
+      "cubes": 43,
+      "kind": 48,
+      "shape": "rebirth",
+      "placement": "radial"
+    },
+    {
+      "asset": "skill_bank_codex",
+      "theme": "lugh",
+      "bones": 3,
+      "cubes": 24,
+      "kind": 49,
+      "shape": "tablet",
+      "placement": "radial"
+    },
+    {
+      "asset": "artisan_spindle",
+      "theme": "lugh",
+      "bones": 10,
+      "cubes": 53,
+      "kind": 50,
+      "shape": "thread",
+      "placement": "beam"
+    },
+    {
+      "asset": "countermand_tablet",
+      "theme": "lugh",
+      "bones": 3,
+      "cubes": 24,
+      "kind": 51,
+      "shape": "seal",
+      "placement": "marker"
+    },
+    {
+      "asset": "grand_synthesis_codices",
+      "theme": "lugh",
+      "bones": 5,
+      "cubes": 48,
+      "kind": 52,
+      "shape": "synthesis",
+      "placement": "radial"
+    },
+    {
+      "asset": "reconstructed_sword",
+      "theme": "lugh",
+      "bones": 3,
+      "cubes": 15,
+      "kind": 53,
+      "shape": "blade",
+      "placement": "blade"
+    },
+    {
+      "asset": "reconstructed_lance",
+      "theme": "lugh",
+      "bones": 3,
+      "cubes": 15,
+      "kind": 54,
+      "shape": "lance",
+      "placement": "tip"
+    },
+    {
+      "asset": "reconstructed_crown",
+      "theme": "lugh",
+      "bones": 9,
+      "cubes": 57,
+      "kind": 55,
+      "shape": "crown",
+      "placement": "radial"
+    },
+    {
+      "asset": "fatebreaker_armature",
+      "theme": "ananke",
+      "bones": 3,
+      "cubes": 15,
+      "kind": 56,
+      "shape": "blade",
+      "placement": "bossfan"
+    },
+    {
+      "asset": "starfall_armature",
+      "theme": "ananke",
+      "bones": 3,
+      "cubes": 15,
+      "kind": 57,
+      "shape": "spear",
+      "placement": "stars"
+    },
+    {
+      "asset": "procession_censer",
+      "theme": "ananke",
+      "bones": 9,
+      "cubes": 48,
+      "kind": 58,
+      "shape": "crucible",
+      "placement": "procession"
+    },
+    {
+      "asset": "last_dawn_orrery",
+      "theme": "ananke",
+      "bones": 4,
+      "cubes": 51,
+      "kind": 59,
+      "shape": "dawn",
+      "placement": "dawn"
+    },
+    {
+      "asset": "seraph_ascension",
+      "theme": "ananke",
+      "bones": 4,
+      "cubes": 51,
+      "kind": 60,
+      "shape": "ascend",
+      "placement": "ascend"
+    },
+    {
+      "asset": "seraph_threshold",
+      "theme": "ananke",
+      "bones": 2,
+      "cubes": 40,
+      "kind": 62,
+      "shape": "shift",
+      "placement": "anchor"
+    }
+  ],
+  "boss": "ananke",
+  "otherworlders": [
+    "alma_equipment",
+    "gemma_equipment"
+  ],
+  "custom_optics": [
+    "singularity horizons and stable disks",
+    "fluid sheets and caustics",
+    "beams and trails",
+    "exact boss damage warnings"
+  ]
+}

@@ -4,3 +4,5 @@ run/
 libs/
 .idea/
 *.iml
+
+__pycache__/

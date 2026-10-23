@@ -42,3 +42,5 @@ These are real Tensura abilities learned and toggled through native entity-exist
 ---
 
 **Categories:** Tensura Myths · Otherworlders
+
+![Animated travel journals and smithing-tool packs](https://github.com/Bithio999/MC/blob/main/wiki/media/otherworlder-equipment.png?raw=true)

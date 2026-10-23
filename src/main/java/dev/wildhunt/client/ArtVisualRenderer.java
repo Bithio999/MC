@@ -15,17 +15,17 @@ import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 
 /** Render dispatch for bounded textured skill geometry and locally smoothed channels. */
 @EventBusSubscriber(modid = WildHunt.ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-public final class ArtVisualRenderer extends EntityRenderer<ArtVisualEntity> {
-    private static final ResourceLocation ICE = ResourceLocation.withDefaultNamespace("textures/block/blue_ice.png");
+public final class ArtVisualRenderer extends software.bernie.geckolib.renderer.GeoEntityRenderer<ArtVisualEntity> {
     private final EffectBatch batch=new EffectBatch();
     private record AimFrame(Vec3 direction,long time) {}
     private final java.util.Map<ArtVisualEntity,AimFrame> aimFrames=new java.util.WeakHashMap<>();
-    public ArtVisualRenderer(EntityRendererProvider.Context context) { super(context); }
+    public ArtVisualRenderer(EntityRendererProvider.Context context) { super(context,new MythsArtModel());addRenderLayer(new software.bernie.geckolib.renderer.layer.AutoGlowingGeoLayer<>(this)); }
     @SubscribeEvent public static void register(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(ArtVisualEntity.TYPE.get(), ArtVisualRenderer::new);
         event.registerEntityRenderer(ArtVisualEntity.MYTH_TYPE.get(), ArtVisualRenderer::new);
     }
-    @Override public ResourceLocation getTextureLocation(ArtVisualEntity entity) { return ICE; }
+    @Override public ResourceLocation getTextureLocation(ArtVisualEntity entity) { return getGeoModel().getTextureResource(entity); }
+    @Override public net.minecraft.client.renderer.RenderType getRenderType(ArtVisualEntity e,ResourceLocation texture,MultiBufferSource buffers,float partial){return net.minecraft.client.renderer.RenderType.entityTranslucent(texture);}
     @Override public boolean shouldRender(ArtVisualEntity entity,net.minecraft.client.renderer.culling.Frustum frustum,double x,double y,double z) {
         return entity.kind()==ArtVisualEntity.CAUSAL_RAY && entity.ownedBy(net.minecraft.client.Minecraft.getInstance().player) || super.shouldRender(entity,frustum,x,y,z);
     }
@@ -81,6 +81,68 @@ public final class ArtVisualRenderer extends EntityRenderer<ArtVisualEntity> {
             ElementalGeometry.render(poses,batch,entity.kind(),vector,age,entity.lifetime(),entity.style());poses.popPose();
         }
         batch.flush(buffers);
-        super.render(entity, yaw, partial, poses, buffers, light);
+        renderAuthored(entity,partial,poses,buffers,light);
     }
+    @Override protected void applyRotations(ArtVisualEntity e,PoseStack p,float age,float rotation,float partial,float scale){}
+    private void drawRig(ArtVisualEntity e,float partial,PoseStack p,MultiBufferSource b,int light){super.render(e,0,partial,p,b,light);}
+    private static void scale(PoseStack p,double x,double y,double z){p.scale((float)Math.max(.001,x),(float)Math.max(.001,y),(float)Math.max(.001,z));}
+    private void renderAuthored(ArtVisualEntity e,float partial,PoseStack p,MultiBufferSource b,int light){
+        var rig=dev.wildhunt.visual.VisualRig.forKind(e.kind());if(rig==null)return;
+        // Fluid surfaces, horizons and exact hit footprints remain procedural. Authored
+        // armatures provide solid detail; the twenty moving holes retain their optics.
+        if(e.kind()==ArtVisualEntity.CAUSAL_VERDICT && !e.barrage().isEmpty())return;
+        if(e.distanceToSqr(net.minecraft.client.Minecraft.getInstance().gameRenderer.getMainCamera().getPosition())>96*96 && !AnankeGeometry.handles(e.kind()))return;
+        float age=e.barrage().isEmpty()?e.tickCount+partial:e.barrageAge(partial);Vec3 d=e.end(partial);double r=Math.max(.4,Math.abs(d.x));
+        p.pushPose();
+        switch(rig.placement()){
+            case BEAM,LASH,TIP->{
+                Vec3 axis=d.normalize();
+                if(e.kind()==ArtVisualEntity.CAUSAL_RAY && e.ownedBy(net.minecraft.client.Minecraft.getInstance().player)){
+                    var player=net.minecraft.client.Minecraft.getInstance().player;var frame=aimFrames.get(e);if(frame!=null)axis=frame.direction();
+                    Vec3 eye=player.getEyePosition(partial),side=axis.cross(new Vec3(0,1,0)).normalize();
+                    Vec3 start=eye.add(axis.scale(.9)).add(side.scale(.35)).add(0,-.25,0),offset=start.subtract(e.getPosition(partial));p.translate(offset.x,offset.y,offset.z);
+                }
+                else {
+                    var mc=net.minecraft.client.Minecraft.getInstance();var player=mc.player;
+                    if(player!=null && mc.getCameraEntity()==player && mc.options.getCameraType().isFirstPerson() && e.getPosition(partial).distanceToSqr(player.getEyePosition(partial))<.75*.75){
+                        Vec3 side=axis.cross(new Vec3(0,1,0)).normalize();if(side.lengthSqr()<.01)side=new Vec3(1,0,0);
+                        Vec3 q=axis.scale(Math.min(.9,d.length()*.3)).add(side.scale(.35)).add(0,-.25,0);p.translate(q.x,q.y,q.z);
+                    }
+                }
+                if(rig.placement()==dev.wildhunt.visual.VisualRig.Placement.TIP){Vec3 q=d.scale(VfxMesh.smooth(age/9d)).subtract(axis.scale(.85));p.translate(q.x,q.y,q.z);}
+                else if(e.kind()==ArtVisualEntity.CAUSAL_RAY){Vec3 q=axis.scale(Math.min(1,d.length()*.2));p.translate(q.x,q.y,q.z);}
+                p.mulPose(new org.joml.Quaternionf().rotationTo(0,rig.placement()==dev.wildhunt.visual.VisualRig.Placement.LASH?0:1,rig.placement()==dev.wildhunt.visual.VisualRig.Placement.LASH?1:0,(float)axis.x,(float)axis.y,(float)axis.z));
+                if(rig.placement()!=dev.wildhunt.visual.VisualRig.Placement.LASH)scale(p,.65,.65,.65);
+            }
+            case CRYSTAL->{scale(p,1,Math.max(.3,d.y/1.4),1);}
+            case FALL->{Vec3 q=d.scale(Math.pow(Math.clamp(age/e.lifetime(),0,1),2));p.translate(q.x,q.y,q.z);p.mulPose(com.mojang.math.Axis.ZP.rotationDegrees(180));}
+            case WAVE->{Vec3 q=new Vec3(d.x,0,d.z).scale(Math.clamp(age/e.lifetime(),0,1));p.translate(q.x,q.y,q.z);p.mulPose(com.mojang.math.Axis.YP.rotation((float)Math.atan2(d.x,d.z)));scale(p,Math.max(1,d.y),1,1);}
+            case FOLLOW,MARKER,LIBRARY->{
+                if(e.caster()!=null){Vec3 q=e.caster().getPosition(partial).subtract(e.getPosition(partial));p.translate(q.x,q.y,q.z);}
+                if(rig.placement()==dev.wildhunt.visual.VisualRig.Placement.MARKER)p.translate(0,e.kind()==ArtVisualEntity.PERENNIAL_SEED?1.4:1.2,0);
+                else if(rig.placement()==dev.wildhunt.visual.VisualRig.Placement.LIBRARY)p.translate(0,2.5,0);
+                scale(p,Math.min(1.5,r/0.85),1,Math.min(1.5,r/0.85));
+            }
+            case RADIAL->{scale(p,Math.min(1.5,r/0.85),1,Math.min(1.5,r/0.85));}
+            case HORIZON->{p.translate(0,1,0);scale(p,r*.22,r*.22,r*.22);}
+            case ANCHOR->{if(e.kind()==ArtVisualEntity.CAUSAL_ANCHOR)p.translate(0,.15,0);}
+            case GATE->{p.mulPose(com.mojang.math.Axis.YP.rotation((float)d.z));scale(p,r/0.85,r/0.85,1);}
+            case SKY->{p.translate(0,5,0);scale(p,r*.7,1,r*.7);}
+            case SINGULARITY->{p.translate(0,4,0);scale(p,2,2,2);}
+            case BREAKER->{double radius=r*Math.clamp(age/40d,0,1);scale(p,radius/0.85,1,radius/0.85);}
+            case EDGE->{Vec3 q=d.scale(.5);p.translate(q.x,q.y,q.z);p.mulPose(com.mojang.math.Axis.YP.rotation((float)Math.atan2(-d.z,d.x)));scale(p,Math.max(1,d.length()*.35),1,1);}
+            case BLADE->{p.mulPose(com.mojang.math.Axis.YP.rotation((float)d.z));p.mulPose(com.mojang.math.Axis.ZP.rotation((float)(-1.2+Math.clamp(age/14d,0,1)*2.4)));scale(p,1,r/1.5,1);}
+            case BOSSFAN->{Vec3 forward=planPoint(e.barrage(),"forward");p.translate(forward.x*2,1.7,forward.z*2);p.mulPose(new org.joml.Quaternionf().rotationTo(0,1,0,(float)forward.x,(float)forward.y,(float)forward.z));scale(p,1.7,1.7,1.7);}
+            case STARS->{
+                var plan=e.barrage();for(int n=0;n<plan.getInt("warned");n++){
+                    double t=age-(28+n*12);if(age<n*12 || t>8)continue;Vec3 q=dev.wildhunt.AnankeRites.star(plan,n);p.pushPose();p.translate(q.x,q.y+Math.max(0,12*(1-Math.max(0,t)/4)),q.z);p.mulPose(com.mojang.math.Axis.ZP.rotationDegrees(180));scale(p,1.5,1.5,1.5);drawRig(e,partial,p,b,light);p.popPose();
+                }p.popPose();return;
+            }
+            case PROCESSION->{if(age>=30){p.popPose();return;}scale(p,2,2,2);}
+            case DAWN->{if(age>=82){p.popPose();return;}p.translate(0,7-.75,0);double s=2+VfxMesh.smooth(age/75d)*3;scale(p,s,s,s);}
+            case ASCEND->{scale(p,3,3,3);}
+        }
+        drawRig(e,partial,p,b,light);p.popPose();
+    }
+    private static Vec3 planPoint(net.minecraft.nbt.CompoundTag t,String key){return new Vec3(t.getDouble(key+"_x"),t.getDouble(key+"_y"),t.getDouble(key+"_z"));}
 }

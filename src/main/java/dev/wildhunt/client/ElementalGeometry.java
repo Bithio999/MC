@@ -32,7 +32,8 @@ final class ElementalGeometry {
         if(kind==ArtVisualEntity.CRYSTAL || kind==ArtVisualEntity.FALLING_ICE){
             boolean fall=kind==ArtVisualEntity.FALLING_ICE;Vec3 base=fall?data.scale(Math.pow(Math.clamp(age/life,0,1),2)):Vec3.ZERO;
             Vec3 tip=base.add(0,fall?-2.5:data.y*smooth(Math.min(age/5d,(life-age)/6d)),0);
-            crystal(p,b,base,tip,Math.min(.65,tip.distanceTo(base)*.22),ICE_COLOR);
+
+            crystal(p,b,base,tip,Math.min(.65,tip.distanceTo(base)*.22),0x99BAE8FF);
             seal(p,b,FROST,base.add(0,.05,0),.9*f,age*.012,0,tint(0xFF9AD8FF,.65*f));
             for(int n=0;n<3;n++){double a=n*Math.PI*2/3;Vec3 c=base.add(polar(a,.4,0));beam(p,b,c,c.add(0,Math.abs(tip.y-base.y)*.55,0),.02*f,tint(0xFFD9FCFF,.7*f));}return;
         }
@@ -83,9 +84,10 @@ final class ElementalGeometry {
     private static void lash(PoseStack p,MultiBufferSource b,Vec3 end,float age,int life){
         double f=smooth(age/4d)*smooth((life-age)/6d);int count=segments(32);List<Vec3> path=new ArrayList<>();Vec3 side=end.cross(new Vec3(0,1,0)).normalize();
         for(int n=0;n<=count;n++){double t=n/(double)count*f;path.add(end.scale(t).add(0,Math.sin(t*Math.PI)*(.7+end.length()*.04),0).add(side.scale(Math.sin(t*Math.PI*2-age*.15)*Math.sin(t*Math.PI)*.3)));}
-        tube(p,b,path,.29*f,.018,STONE,0xFF574458);
+
+        tube(p,b,path,.22*f,.018,STONE,0xFF443344);
         for(int n=2;n<count;n+=3){Vec3 c=path.get(n),q=path.get(n+1);beam(p,b,c.add(side.scale(.1)),q.add(side.scale(.1)),.075*f,tint(FIRE,.85*f));
-            crystal(p,b,c.add(side.scale(-.16)),c.add(side.scale(-.36)).add(0,-.08,0),.08,0xDDB6776B);}
+            }
         for(int strand=0;strand<2;strand++)for(int n=0;n<count;n++){Vec3 a=path.get(n).add(side.scale(strand==0?.22:-.22)),q=path.get(n+1).add(side.scale(strand==0?.22:-.22));beam(p,b,a,q,.018*f,tint(FIRE,.7*f));}
     }
     private static void oil(PoseStack p,MultiBufferSource b,double radius,float age,int life,boolean lit){

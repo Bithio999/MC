@@ -2,7 +2,7 @@ plugins {
     id 'java-library'
     id 'net.neoforged.moddev' version '2.0.148'
 }
-version = '0.28.0'
+version = '0.29.0'
 group = 'dev.wildhunt'
 base { archivesName = 'tensura-myths' }
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
@@ -40,7 +40,7 @@ dependencies {
     compileOnly files(fileTree(dir: layout.buildDirectory.dir('manascore-api'), include: '*.jar')).builtBy(extractManasApi)
     implementation 'dev.architectury:architectury-neoforge:13.0.8'
     runtimeOnly fileTree(dir: 'libs/runtime', include: '*.jar')
-    // Native animated magic-circle entities implement GeckoLib's public API.
+    // Authored bosses/effects and native circles use GeckoLib's public API.
     compileOnly fileTree(dir: 'libs/runtime', include: ['geckolib-*.jar', 'SmartBrainLib-*.jar'])
     testImplementation platform('org.junit:junit-bom:5.11.4')
     testImplementation 'org.junit.jupiter:junit-jupiter'

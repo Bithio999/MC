@@ -15,9 +15,15 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 /** Synced visual geometry only: cannot collide, hurt entities or edit blocks. */
-public final class ArtVisualEntity extends Entity {
+public final class ArtVisualEntity extends Entity implements software.bernie.geckolib.animatable.GeoEntity {
     private Vec3 interpolationTarget=Vec3.ZERO, previousEnd=Vec3.ZERO, smoothedEnd=Vec3.ZERO;
     private int interpolationSteps;
+    private final software.bernie.geckolib.animatable.instance.AnimatableInstanceCache animationCache=software.bernie.geckolib.util.GeckoLibUtil.createInstanceCache(this);
+    @Override public software.bernie.geckolib.animatable.instance.AnimatableInstanceCache getAnimatableInstanceCache(){return animationCache;}
+    @Override public void registerControllers(software.bernie.geckolib.animation.AnimatableManager.ControllerRegistrar controllers){
+        controllers.add(new software.bernie.geckolib.animation.AnimationController<>(this,"rig",0,state->state.setAndContinue(software.bernie.geckolib.animation.RawAnimation.begin().thenPlay("animation.myths.appear").thenLoop("animation.myths.idle"))));
+    }
+
     public static final int LASH = 0, CRYSTAL = 1, FALLING_ICE = 2, TIDAL_WAVE = 3, WHIRLPOOL = 4, CAUSAL_SPHERE = 5, CAUSAL_RAY = 6, CAUSAL_DOMAIN = 7, CAUSAL_ANCHOR = 8, CAUSAL_VERDICT = 9, CAUSAL_IMPACT = 10;
     public static final int THREAD_LINE=11,RUNE_MINE=12,LIVING_GROVE=13,MIRROR_WARD=14,PRISM_RAY=15,PLASMA_LANCE=16,
         THUNDERHEAD=17,CATACLYSM_FRONT=18,WINTER_ORCHARD=19,CRYSTAL_BULWARK=20,CRYSTAL_BLOOM=21,TWIN_GATE=22,

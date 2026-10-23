@@ -38,7 +38,7 @@ final class ThothGeometry {
                 int chapter=style,active=ThothElement.libraryBook(chapter);
                 double a=n*Math.PI*2/3+age*.025;int c=ThothElement.at(chapter+Math.floorMod(n-active,3)).color;
                 Vec3 p=new Vec3(Math.cos(a)*r,Math.sin(age*.04+n)*.35,Math.sin(a)*r);
-                book(poses,buffers,p,.95*fade,a+Math.PI/2,age+n*19,c);
+
                 seal(poses,buffers,p.add(0,.02,0),1.35*fade,-t*.4+n,.95,alpha(c,.55*fade));
                 orbit(poses,buffers,r,age,n,fade,c);
             }
@@ -52,7 +52,7 @@ final class ThothGeometry {
             seal(poses,buffers,new Vec3(0,7*fade,0),r*.48*fade,-t*.2,0,alpha(c,.75*fade));
             for(int n=0;n<3;n++){
                 double a=n*Math.PI*2/3-t*.2;Vec3 p=new Vec3(Math.cos(a)*r*.7,3+Math.sin(t*2+n)*.3,Math.sin(a)*r*.7);
-                book(poses,buffers,p,1.1*fade,a+Math.PI/2,age+n*15,c);
+
                 beam(poses,buffers,p,new Vec3(0,7*fade,0),.06*fade,c);
             }
             // Every eruption shares the exact server schedule and native element; the overall lifetime stays 70 ticks.
@@ -140,20 +140,6 @@ final class ThothGeometry {
             double y=(phase-Math.floor(phase))*4,envelope=Math.sin((phase-Math.floor(phase))*Math.PI);
             flare(p,b,new Vec3(Math.cos(a)*r,y,Math.sin(a)*r),(.09+(n%4)*.025)*fade*envelope,color);
         }
-    }
-    private static void book(PoseStack p,MultiBufferSource buffers,Vec3 center,double size,double angle,float age,int color){
-        p.pushPose();p.translate(center.x,center.y,center.z);p.mulPose(Axis.YP.rotation((float)-angle));
-        p.mulPose(Axis.ZP.rotation((float)(Math.sin(age*.035)*.07)));
-        for(int side:new int[]{-1,1}){
-            // Hinged halves, separate page blocks, a moving translucent leaf and a gold spine.
-            double opening=.22+Math.sin(age*.045)*.045;
-            Vec3 a=new Vec3(0,-size*.7,0),b=new Vec3(0,size*.7,0),c=new Vec3(side*size,size*.7,size*opening),d=new Vec3(side*size,-size*.7,size*opening);
-            quad(p.last(),buffers.getBuffer(RenderType.entityCutoutNoCull(PAGE)),a,b,c,d,0xFFD6CEB1);
-            beam(p,buffers,a,b,.055,color);beam(p,buffers,b,c,.045,color);beam(p,buffers,c,d,.045,color);beam(p,buffers,d,a,.045,color);
-            double page=Math.sin(age*.065+side)*.2;
-            quad(p.last(),buffers.getBuffer(RenderType.entityTranslucentEmissive(PAGE)),a.add(0,0,.035),b.add(0,0,.035),c.add(-side*.08,0,page+.04),d.add(-side*.08,0,page+.04),0xAFFFFFFF);
-        }
-        flare(p,buffers,new Vec3(0,size*.95,0),.55,color);p.popPose();
     }
     private static void seal(PoseStack p,MultiBufferSource buffers,Vec3 center,double radius,double angle,double tilt,int color){
         p.pushPose();p.translate(center.x,center.y,center.z);p.mulPose(Axis.YP.rotation((float)angle));p.mulPose(Axis.XP.rotation((float)tilt));

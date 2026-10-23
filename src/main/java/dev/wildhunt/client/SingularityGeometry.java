@@ -87,9 +87,13 @@ final class SingularityGeometry {
             double a=n*Math.PI*2/count,q=(n+1)*Math.PI*2/count,v0=band/(double)bands,v1=(band+1d)/bands;
             double inner=1.08+v0*1.65,outer=1.08+v1*1.65;
             Vec3 i0=polar(a,inner,0),i1=polar(q,inner,0),o0=polar(a,outer,0),o1=polar(q,outer,0);
-            double bright=.68+.32*Math.cos(a+.8);int color=blend(IVORY,GOLD,v0*.85);
+            double approaching=Math.pow(Math.max(0,Math.cos(a+.8)),3),receding=Math.pow(Math.max(0,-Math.cos(a+.8)),3);
+            double bright=.55+.45*approaching;int color=blend(IVORY,GOLD,v0*.85);
+            // Fixed approaching/receding sides: UV flow animates matter while
+            // Doppler coloration and the lens silhouette stay spatially stable.
+            color=blend(color,0xFFFF6B35,receding*.32);
             // Restrained asymmetry preserves the black silhouette, as in Gargantua's cinematic treatment.
-            color=blend(color,BLUE,Math.pow(Math.max(0,Math.cos(a+.8)),8)*.14);
+            color=blend(color,BLUE,approaching*.24);
             quadUV(p.last(),surface,i0,i1,o1,o0,opacity(color,.94),false,(float)(n/(double)count+flow),(float)v0,(float)((n+1d)/count+flow),(float)v1);
             quadUV(p.last(),emission,i0,i1,o1,o0,tint(color,.24*bright),true,(float)(n/(double)count+flow),(float)v0,(float)((n+1d)/count+flow),(float)v1);
         }

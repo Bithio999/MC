@@ -51,7 +51,7 @@ final class SovereignGeometry {
             case ArtVisualEntity.REFRACTED_HARPOON->{
                 Vec3 axis=data.normalize(),side=side(data),up=axis.cross(side).normalize();beam(p,b,Vec3.ZERO,data,.08*f,tint(WATER,.65*f));
                 for(int arm=0;arm<2;arm++){Vec3 last=Vec3.ZERO;for(int n=1;n<=segments(48);n++){double a=n/(double)segments(48),spin=a*data.length()*.7-age*.12+arm*Math.PI;Vec3 next=data.scale(a).add(side.scale(Math.cos(spin)*.23)).add(up.scale(Math.sin(spin)*.23));beam(p,b,last,next,.033*f,tint(arm==0?IVORY:WATER,.7*f));last=next;}}
-                Vec3 tip=data.scale(smooth(age/9d));spear(p,b,tip,axis,1.15*f,WATER);glow(p,b,tip,.7*f,tint(WATER,.6*f));
+                Vec3 tip=data.scale(smooth(age/9d));glow(p,b,tip,.7*f,tint(WATER,.6*f));
                 for(double d=3;d<data.length();d+=8)lens(p,b,axis.scale(d),axis,.55*f,age*.02,WATER);
             }
             case ArtVisualEntity.SOVEREIGN_BREAKER->{
@@ -79,10 +79,10 @@ final class SovereignGeometry {
             }
             case ArtVisualEntity.SKILL_APPRAISAL->{
                 for(int n=0;n<3;n++){double y=.5+n*.8+Math.sin(t+n)*.05;ring(p,b,new Vec3(0,y,0),r*(.7+.2*Math.sin(t+n)),.035*f,t*(n%2==0?1:-1),0,tint(GOLD,.75*f));}
-                tablet(p,b,new Vec3(0,3.4,0),1*f,age,style);beam(p,b,new Vec3(-r,.2,0),new Vec3(r,2.8,0),.018*f,tint(MINT,.6*f));
+                beam(p,b,new Vec3(-r,.2,0),new Vec3(r,2.8,0),.018*f,tint(MINT,.6*f));
             }
             case ArtVisualEntity.COUNTERMAND->{
-                Vec3 c=new Vec3(0,2.6,0);double shut=smooth(age/12d);tablet(p,b,c,.7*f,age,1);
+                Vec3 c=new Vec3(0,2.6,0);double shut=smooth(age/12d);
                 for(int n=0;n<2;n++){p.pushPose();p.translate(c.x,c.y,c.z);p.mulPose(Axis.ZP.rotation((float)(n*Math.PI/2)));beam(p,b,new Vec3(-1.1*f,0,.15),new Vec3(1.1*f,0,.15),.065*f,tint(GOLD,.85*f));p.popPose();}
                 ring(p,b,c,r*.65*f,.045*f,0,1,tint(GOLD,.8*f));crystal(p,b,c.add(0,-.2,.2),c.add(0,.45*shut,.2),.16*f,0xFF413A57);
             }
@@ -90,7 +90,7 @@ final class SovereignGeometry {
                 seal(p,b,CIRCUIT,new Vec3(0,.09,0),r*f,0,0,tint(GOLD,.4*f));
                 for(int n=0;n<3;n++){double phase=20+n*16,collapse=smooth((age-phase+7)/12d),a=n*Math.PI*2/3-.3;
                     Vec3 c=polar(a,r*.72*(1-.75*collapse),4+Math.sin(t+n)*.2+collapse*2);int form=(style/(n==0?1:n==1?3:9))%3;
-                    tablet(p,b,c,1.45*f*(1-.35*collapse),age+n*10,form);
+
                     Vec3 base=polar(a,r*.72,.15);beam(p,b,base,c,.025*f,tint(MINT,.55*f));
                     if(age>=phase-5 && age<phase+9){double flash=Math.sin(Math.clamp((age-phase+5)/14,0,1)*Math.PI);beam(p,b,c,new Vec3(0,.2,0),.14*flash*f,tint(GOLD,flash*f));}
                 }
@@ -103,12 +103,12 @@ final class SovereignGeometry {
                 p.popPose();
             }
             case ArtVisualEntity.RECONSTRUCTED_LANCE->{
-                Vec3 axis=data.normalize(),tip=data.scale(smooth(age/10d));beam(p,b,Vec3.ZERO,data,.06*f,tint(MINT,.55*f));spear(p,b,tip,axis,1.5*f,GOLD);
+                Vec3 axis=data.normalize(),tip=data.scale(smooth(age/10d));beam(p,b,Vec3.ZERO,data,.06*f,tint(MINT,.55*f));
                 for(int n=0;n<4;n++){Vec3 c=data.scale(Math.clamp(age/10d-n*.09,0,1));lens(p,b,c,axis,(.55+n*.08)*f,age*.02,GOLD);}
             }
             case ArtVisualEntity.RECONSTRUCTED_CROWN->{
                 double rise=smooth(age/10d);seal(p,b,CIRCUIT,new Vec3(0,.08,0),r*f,-t*.12,0,tint(GOLD,.6*f));
-                for(int n=0;n<7;n++){Vec3 c=polar(n*Math.PI*2/7,r*.65,0);spear(p,b,c.add(0,5*rise,0),new Vec3(0,-1,0),(.7+rise*.3)*f,IVORY);beam(p,b,c,c.add(0,5*rise,0),.03*f,tint(MINT,.65*f));}
+                for(int n=0;n<7;n++){Vec3 c=polar(n*Math.PI*2/7,r*.65,0);beam(p,b,c,c.add(0,5*rise,0),.03*f,tint(MINT,.65*f));}
                 ring(p,b,new Vec3(0,4*rise,0),r*.65*f,.065*f,t*.1,0,tint(GOLD,.8*f));
             }
         }
@@ -128,31 +128,5 @@ final class SovereignGeometry {
     private static Vec3 side(Vec3 d){Vec3 a=d.normalize();return a.cross(Math.abs(a.y)>.98?new Vec3(1,0,0):new Vec3(0,1,0)).normalize();}
     private static void lens(PoseStack p,MultiBufferSource b,Vec3 c,Vec3 axis,double r,double spin,int color){
         p.pushPose();p.translate(c.x,c.y,c.z);p.mulPose(new org.joml.Quaternionf().rotationTo(0,1,0,(float)axis.x,(float)axis.y,(float)axis.z));seal(p,b,MIRROR,Vec3.ZERO,r,spin,0,tint(color,.6));ring(p,b,Vec3.ZERO,r,.025,spin,0,tint(color,.8));p.popPose();
-    }
-    private static void spear(PoseStack p,MultiBufferSource b,Vec3 tip,Vec3 direction,double size,int color){
-        if(size<.001)return;Vec3 axis=direction.normalize(),side=side(axis),up=axis.cross(side).normalize(),base=tip.subtract(axis.scale(size*2));
-        beam(p,b,base,tip,.055*size,tint(color,.9));crystal(p,b,tip.subtract(axis.scale(size*.7)),tip,size*.16,color);
-        for(int n:new int[]{-1,1}){Vec3 wing=tip.subtract(axis.scale(size*.6)).add(side.scale(n*size*.5));beam(p,b,tip.subtract(axis.scale(size)),wing,.04*size,color);beam(p,b,wing,tip.subtract(axis.scale(size*.2)),.03*size,color);}
-        beam(p,b,base.add(up.scale(size*.1)),tip.subtract(axis.scale(size*.65)),.02*size,tint(MINT,.8));
-    }
-    private static void tablet(PoseStack p,MultiBufferSource b,Vec3 center,double size,float age,int form){
-        p.pushPose();p.translate(center.x,center.y,center.z);p.mulPose(net.minecraft.client.Minecraft.getInstance().getEntityRenderDispatcher().cameraOrientation());p.mulPose(Axis.ZP.rotation((float)(Math.sin(age*.02)*.06)));
-        Vec3 a=new Vec3(-size,-size*.8,0),q=new Vec3(size,-size*.8,0),c=new Vec3(size,size*.8,0),d=new Vec3(-size,size*.8,0);
-        Vec3 back=new Vec3(0,0,-.14*size);
-        surface(p,b,WHITE,a,q,c,d,0xFFE9DFBE);
-        for(Vec3[] edge:new Vec3[][]{{a,q},{q,c},{c,d},{d,a}}){
-            surface(p,b,WHITE,edge[0],edge[1],edge[1].add(back),edge[0].add(back),0xFF9D864E);
-            beam(p,b,edge[0],edge[1],.035*size,tint(GOLD,.9));
-        }
-        // A dark recessed face keeps the inscribed armament readable against bright terrain.
-        surface(p,b,WHITE,a.scale(.85).add(0,0,.012),q.scale(.85).add(0,0,.012),c.scale(.85).add(0,0,.012),d.scale(.85).add(0,0,.012),0xFF263D38);
-        seal(p,b,CIRCUIT,new Vec3(0,0,.03),size*.62,age*.008,Math.PI/2,tint(MINT,.75));
-        for(int row=0;row<3;row++){
-            double y=size*(.56-row*.075);beam(p,b,new Vec3(-size*.55,y,.045),new Vec3(size*.55,y,.045),.009*size,tint(GOLD,.7));
-        }
-        if(form==0){beam(p,b,new Vec3(-size*.35,-size*.4,.07),new Vec3(size*.35,size*.4,.07),.07*size,IVORY);beam(p,b,new Vec3(-size*.3,0,.07),new Vec3(size*.1,-size*.35,.07),.04*size,GOLD);}
-        else if(form==1){beam(p,b,new Vec3(0,-size*.5,.07),new Vec3(0,size*.5,.07),.06*size,IVORY);beam(p,b,new Vec3(-size*.25,size*.15,.07),new Vec3(0,size*.5,.07),.04*size,GOLD);beam(p,b,new Vec3(size*.25,size*.15,.07),new Vec3(0,size*.5,.07),.04*size,GOLD);}
-        else for(int n=-1;n<=1;n++)beam(p,b,new Vec3(n*size*.28,-size*.25,.07),new Vec3(n*size*.28,size*(n==0?.45:.25),.07),.055*size,IVORY);
-        p.popPose();
     }
 }

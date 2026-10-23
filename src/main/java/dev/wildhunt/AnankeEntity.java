@@ -30,7 +30,17 @@ import net.minecraft.world.phys.*;
 import java.util.*;
 
 /** Thirty-million-EP myth. Native resources/skills; readable server-authoritative encounter choreography. */
-public final class AnankeEntity extends Monster implements IArenaBoss {
+public final class AnankeEntity extends Monster implements IArenaBoss, software.bernie.geckolib.animatable.GeoEntity {
+    private final software.bernie.geckolib.animatable.instance.AnimatableInstanceCache animationCache=software.bernie.geckolib.util.GeckoLibUtil.createInstanceCache(this);
+    @Override public software.bernie.geckolib.animatable.instance.AnimatableInstanceCache getAnimatableInstanceCache(){return animationCache;}
+    @Override public void registerControllers(software.bernie.geckolib.animation.AnimatableManager.ControllerRegistrar controllers){
+        controllers.add(new software.bernie.geckolib.animation.AnimationController<>(this,"flight",6,state->state.setAndContinue(software.bernie.geckolib.animation.RawAnimation.begin().thenLoop(getDeltaMovement().lengthSqr()>.003?"animation.ananke.flight":"animation.myths.idle"))).triggerableAnim("ascend",software.bernie.geckolib.animation.RawAnimation.begin().thenPlay("animation.ananke.ascend")));
+        controllers.add(new software.bernie.geckolib.animation.AnimationController<>(this,"rites",6,state->{
+            if(riteMode()==0)return software.bernie.geckolib.animation.PlayState.STOP;
+            return state.setAndContinue(software.bernie.geckolib.animation.RawAnimation.begin().thenLoop("animation.ananke.cast_"+Math.clamp(riteMode(),1,4)));
+        }));
+    }
+
     public static final double EP=30_000_000,HP=48_000,SHP=120_000;
     private static final EntityDataAccessor<Integer> PHASE=SynchedEntityData.defineId(AnankeEntity.class,EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> RITE=SynchedEntityData.defineId(AnankeEntity.class,EntityDataSerializers.INT);
@@ -165,7 +175,7 @@ public final class AnankeEntity extends Monster implements IArenaBoss {
         try{
             var level=(ServerLevel)level();int reached=phase()+1;
             AnankeRites.clear(level,this);MythicArts.clearTransient(this);getNavigation().stop();setDeltaMovement(Vec3.ZERO);
-            entityData.set(PHASE,reached);dead=false;deathTime=0;setPose(Pose.STANDING);decisionDelay=45;meleeDelay=30;
+            entityData.set(PHASE,reached);triggerAnim("flight","ascend");dead=false;deathTime=0;setPose(Pose.STANDING);decisionDelay=45;meleeDelay=30;
             refillPools();enableSupport();refillPools();snapshotPools();markDamageFeedback();updateBars();
             ArtVisualEntity.spawn(level,ArtVisualEntity.ANANKE_ASCENSION,position(),new Vec3(9,reached,0),45);
             level.playSound(null,blockPosition(),SoundEvents.BEACON_ACTIVATE,SoundSource.HOSTILE,2,.6f+reached*.15f);

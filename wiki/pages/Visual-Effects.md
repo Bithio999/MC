@@ -2,7 +2,9 @@
 
 [Main Page](../README.md) · [Skills](Skills.md) · [Combat mechanics](Mechanics.md)
 
-Tensura Myths gives each skill family an individual visual language, using original inscription and surface textures, animated geometry and Tensura’s native magic circles. Effects are full-bright where appropriate and require no shader pack.
+Tensura Myths gives each skill family an individual visual language, using articulated models, original inscription and surface textures, smooth keyframe animation and Tensura’s native magic circles. Effects are full-bright where appropriate and require no shader pack.
+
+The formations combine detailed solid structures with flowing light: engraved storm conductors, coral crests, segmented oil tendons, hinged parchment grimoires, fate looms, recessed codices and reconstructed weapons. Ananke has layered armor, articulated feathers, ritual poses and an ascending phase animation. Alma and Gemma carry animated journals and smithing tools. The summoning scroll and Dawn Testament have three-dimensional item models.
 
 ## Display settings
 
@@ -92,7 +94,7 @@ These in-game views show the geometry in an isolated development world. Some use
 
 ### Thoth
 
-[Thoth](Thoth.md) cycles Fire, Water, Lightning, Earth, Wind, Light and Space through flame crowns, caustic ribbons, branching bolts, stone tablets, wind helices, radiant spokes and spatial fractures. Its animated books, counter-rotating seals and held Mana Crucible formation remain. Water represents the shared Water/Ice slot.
+[Thoth](Thoth.md) cycles Fire, Water, Lightning, Earth, Wind, Light and Space through flame crowns, caustic ribbons, branching bolts, stone tablets, wind helices, radiant spokes and spatial fractures. Its hinged parchment books, counter-rotating seals, spellbreak obelisks and held Mana Crucible alembic move together. Water represents the shared Water/Ice slot.
 
 ![Thoth’s held Mana Crucible formation](../media/thoth-mana-crucible.png)
 
@@ -131,3 +133,84 @@ An original six-winged ceremonial armor model has articulated feather spars, emi
 ---
 
 **Categories:** Tensura Myths · Reference
+
+## Equipment and artifacts
+
+Alma carries a journal and rolled field notes; Gemma carries her smithing tools. Their travel equipment moves with them while retaining their normal skins and held items.
+
+![Alma and Gemma’s travel and smithing equipment](../media/otherworlder-equipment.png)
+
+The Writ of Last Dawn and Dawn Testament have modeled covers, end caps, layered pages and ornamental details.
+
+![Writ of Last Dawn held in first person](../media/item-scroll.png)
+
+![Dawn Testament held in first person](../media/item-testament.png)
+
+## Individual formation previews
+
+These staged views show each structure with its accompanying light or fluid effect. Recipient-bound effects use third-person view. Apparent size and pose depend on the camera and captured animation frame; these are visual references, not damage-volume diagrams.
+
+| Formation | Native preview |
+| --- | --- |
+| Oil Lash | ![Oil Lash](../media/modeled/00-oil_lash.png) |
+| Ice spire | ![Ice spire](../media/modeled/01-glacial_spire.png) |
+| Falling icicle | ![Falling icicle](../media/modeled/02-falling_icicle.png) |
+| Crushing Current | ![Crushing Current](../media/modeled/03-tidal_crest.png) |
+| Scarlet Undertow | ![Scarlet Undertow](../media/modeled/04-coral_vortex.png) |
+| Temporal protection | ![Temporal protection](../media/modeled/05-causal_astrolabe.png) |
+| Worldline Sever | ![Worldline Sever](../media/modeled/06-worldline_blade.png) |
+| Event Horizon | ![Event Horizon](../media/modeled/07-event_horizon_orrery.png) |
+| Causal Reversal | ![Causal Reversal](../media/modeled/08-causal_hourglass.png) |
+| Genesis Verdict | ![Genesis Verdict](../media/modeled/09-singularity_armature.png) |
+| Causal impact | ![Causal impact](../media/modeled/10-chronofracture.png) |
+| Loom Needle | ![Loom Needle](../media/modeled/11-silken_spindle.png) |
+| Runic Mine | ![Runic Mine](../media/modeled/12-runic_igniter.png) |
+| Living Grove | ![Living Grove](../media/modeled/13-living_grove.png) |
+| Mirror Aegis | ![Mirror Aegis](../media/modeled/14-prism_guard.png) |
+| Prismatic Lance | ![Prismatic Lance](../media/modeled/15-prismatic_emitter.png) |
+| Plasma Lance | ![Plasma Lance](../media/modeled/16-plasma_capacitor.png) |
+| Thunderhead Furnace | ![Thunderhead Furnace](../media/modeled/17-storm_engine.png) |
+| Cataclysm Front | ![Cataclysm Front](../media/modeled/18-volcanic_fault.png) |
+| Winter Orchard | ![Winter Orchard](../media/modeled/19-winter_orchard.png) |
+| Crystal Bulwark | ![Crystal Bulwark](../media/modeled/20-crystal_aegis.png) |
+| Winter Harvest | ![Winter Harvest](../media/modeled/21-glacial_blossom.png) |
+| Twin Gate | ![Twin Gate](../media/modeled/22-threshold_gate.png) |
+| Parallax Snare | ![Parallax Snare](../media/modeled/23-parallax_judges.png) |
+| Crossroads Edict | ![Crossroads Edict](../media/modeled/24-crossroads.png) |
+| Elemental Lexicon | ![Elemental Lexicon](../media/modeled/25-lexicon_volumes.png) |
+| Spellbreak | ![Spellbreak](../media/modeled/26-spellbreak_obelisks.png) |
+| Mana Crucible | ![Mana Crucible](../media/modeled/27-mana_alembic.png) |
+| Astral Library | ![Astral Library](../media/modeled/28-astral_volumes.png) |
+| Spectrum bolt | ![Spectrum bolt](../media/modeled/29-spectrum_emitter.png) |
+| Briar Grasp | ![Briar Grasp](../media/modeled/30-briar_corolla.png) |
+| Command Detonation | ![Command Detonation](../media/modeled/31-runic_detonator.png) |
+| Mirror splinters | ![Mirror splinters](../media/modeled/32-mirror_splinters.png) |
+| Railbolt | ![Railbolt](../media/modeled/33-fulgur_conductor.png) |
+| Thunder Step | ![Thunder Step](../media/modeled/34-thunderstep_armature.png) |
+| Elemental impact | ![Elemental impact](../media/modeled/35-elemental_detonation.png) |
+| Oil pool | ![Oil pool](../media/modeled/36-obsidian_vents.png) |
+| Aura recovery | ![Aura recovery](../media/modeled/37-vital_corolla.png) |
+| Gate transit | ![Gate transit](../media/modeled/38-gate_wake.png) |
+| Fate Anchor | ![Fate Anchor](../media/modeled/39-fate_loom.png) |
+| Fate Thread | ![Fate Thread](../media/modeled/40-fate_spindle.png) |
+| Loom Transit | ![Loom Transit](../media/modeled/41-loom_wake.png) |
+| Checkmate | ![Checkmate](../media/modeled/42-checkmate_blades.png) |
+| Mirrorsea | ![Mirrorsea](../media/modeled/43-mirrorsea_lenses.png) |
+| Refracted Harpoon | ![Refracted Harpoon](../media/modeled/44-refracted_harpoon.png) |
+| Sovereign Breaker | ![Sovereign Breaker](../media/modeled/45-sovereign_crest.png) |
+| Water Refraction | ![Water Refraction](../media/modeled/46-refraction_lenses.png) |
+| Perennial Seed | ![Perennial Seed](../media/modeled/47-perennial_corolla.png) |
+| Rebirth Bloom | ![Rebirth Bloom](../media/modeled/48-rebirth_lotus.png) |
+| Skill Bank | ![Skill Bank](../media/modeled/49-skill_bank_codex.png) |
+| Artisan Thread | ![Artisan Thread](../media/modeled/50-artisan_spindle.png) |
+| Countermand | ![Countermand](../media/modeled/51-countermand_tablet.png) |
+| Grand Synthesis | ![Grand Synthesis](../media/modeled/52-grand_synthesis_codices.png) |
+| Reconstructed Blade | ![Reconstructed Blade](../media/modeled/53-reconstructed_sword.png) |
+| Reconstructed Lance | ![Reconstructed Lance](../media/modeled/54-reconstructed_lance.png) |
+| Reconstructed Crown | ![Reconstructed Crown](../media/modeled/55-reconstructed_crown.png) |
+| Fatebreaker | ![Fatebreaker](../media/modeled/56-fatebreaker_armature.png) |
+| Starfall Canticle | ![Starfall Canticle](../media/modeled/57-starfall_armature.png) |
+| Eventide Procession | ![Eventide Procession](../media/modeled/58-procession_censer.png) |
+| The Last Dawn | ![The Last Dawn](../media/modeled/59-last_dawn_orrery.png) |
+| Phase ascension | ![Phase ascension](../media/modeled/60-seraph_ascension.png) |
+| Spatial Reposition | ![Spatial Reposition](../media/modeled/62-seraph_threshold.png) |

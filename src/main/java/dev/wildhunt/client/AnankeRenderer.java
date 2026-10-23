@@ -3,10 +3,8 @@ package dev.wildhunt.client;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import dev.wildhunt.*;
-import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.entity.*;
-import net.minecraft.client.renderer.entity.layers.EyesLayer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
@@ -16,13 +14,12 @@ import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import static dev.wildhunt.client.VfxMesh.*;
 
 @EventBusSubscriber(modid=WildHunt.ID,bus=EventBusSubscriber.Bus.MOD,value=Dist.CLIENT)
-public final class AnankeRenderer extends MobRenderer<AnankeEntity,AnankeModel> {
-    public static final ModelLayerLocation LAYER=new ModelLayerLocation(WildHunt.id("ananke"),"main");
+public final class AnankeRenderer extends software.bernie.geckolib.renderer.GeoEntityRenderer<AnankeEntity> {
     private final EffectBatch optics=new EffectBatch();
-    public AnankeRenderer(EntityRendererProvider.Context context){super(context,new AnankeModel(context.bakeLayer(LAYER)),1.1f);addLayer(new EyesLayer<AnankeEntity,AnankeModel>(this){@Override public RenderType renderType(){return RenderType.eyes(WildHunt.id("textures/entity/ananke_emissive.png"));}});}
-    @SubscribeEvent public static void layers(EntityRenderersEvent.RegisterLayerDefinitions event){event.registerLayerDefinition(LAYER,AnankeModel::layer);}
+    public AnankeRenderer(EntityRendererProvider.Context context){super(context,new AnankeGeoModel());shadowRadius=1.1f;addRenderLayer(new software.bernie.geckolib.renderer.layer.AutoGlowingGeoLayer<>(this));}
+    @Override public int getPackedOverlay(AnankeEntity e,float u,float partial){return net.minecraft.client.renderer.texture.OverlayTexture.pack(0,e.hasDamageFeedback());}
     @SubscribeEvent public static void renderers(EntityRenderersEvent.RegisterRenderers event){event.registerEntityRenderer(MythBosses.ANANKE.get(),AnankeRenderer::new);}
-    @Override public ResourceLocation getTextureLocation(AnankeEntity entity){return WildHunt.id("textures/entity/ananke.png");}
+    @Override public ResourceLocation getTextureLocation(AnankeEntity entity){return WildHunt.id("textures/geo/ananke.png");}
     @Override public void render(AnankeEntity entity,float yaw,float partial,PoseStack p,MultiBufferSource b,int light){
         super.render(entity,yaw,partial,p,b,light);float age=entity.tickCount+partial;VfxMesh.begin(entity.getPosition(partial));optics.begin();
         p.pushPose();p.translate(0,3.65+.04*Math.sin(age*.06),0);p.mulPose(Axis.YP.rotationDegrees(-yaw));p.mulPose(Axis.ZP.rotation(age*.004f));

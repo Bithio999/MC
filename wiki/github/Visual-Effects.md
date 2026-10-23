@@ -2,7 +2,9 @@
 
 [Main Page](https://github.com/Bithio999/MC/wiki/Home) · [Skills](https://github.com/Bithio999/MC/wiki/Skills) · [Combat mechanics](https://github.com/Bithio999/MC/wiki/Mechanics)
 
-Tensura Myths gives each skill family an individual visual language, using original inscription and surface textures, animated geometry and Tensura’s native magic circles. Effects are full-bright where appropriate and require no shader pack.
+Tensura Myths gives each skill family an individual visual language, using articulated models, original inscription and surface textures, smooth keyframe animation and Tensura’s native magic circles. Effects are full-bright where appropriate and require no shader pack.
+
+The formations combine detailed solid structures with flowing light: engraved storm conductors, coral crests, segmented oil tendons, hinged parchment grimoires, fate looms, recessed codices and reconstructed weapons. Ananke has layered armor, articulated feathers, ritual poses and an ascending phase animation. Alma and Gemma carry animated journals and smithing tools. The summoning scroll and Dawn Testament have three-dimensional item models.
 
 ## Display settings
 
@@ -92,7 +94,7 @@ These in-game views show the geometry in an isolated development world. Some use
 
 ### Thoth
 
-[Thoth](https://github.com/Bithio999/MC/wiki/Thoth) cycles Fire, Water, Lightning, Earth, Wind, Light and Space through flame crowns, caustic ribbons, branching bolts, stone tablets, wind helices, radiant spokes and spatial fractures. Its animated books, counter-rotating seals and held Mana Crucible formation remain. Water represents the shared Water/Ice slot.
+[Thoth](https://github.com/Bithio999/MC/wiki/Thoth) cycles Fire, Water, Lightning, Earth, Wind, Light and Space through flame crowns, caustic ribbons, branching bolts, stone tablets, wind helices, radiant spokes and spatial fractures. Its hinged parchment books, counter-rotating seals, spellbreak obelisks and held Mana Crucible alembic move together. Water represents the shared Water/Ice slot.
 
 ![Thoth’s held Mana Crucible formation](https://github.com/Bithio999/MC/blob/main/wiki/media/thoth-mana-crucible.png?raw=true)
 
@@ -131,3 +133,84 @@ An original six-winged ceremonial armor model has articulated feather spars, emi
 ---
 
 **Categories:** Tensura Myths · Reference
+
+## Equipment and artifacts
+
+Alma carries a journal and rolled field notes; Gemma carries her smithing tools. Their travel equipment moves with them while retaining their normal skins and held items.
+
+![Alma and Gemma’s travel and smithing equipment](https://github.com/Bithio999/MC/blob/main/wiki/media/otherworlder-equipment.png?raw=true)
+
+The Writ of Last Dawn and Dawn Testament have modeled covers, end caps, layered pages and ornamental details.
+
+![Writ of Last Dawn held in first person](https://github.com/Bithio999/MC/blob/main/wiki/media/item-scroll.png?raw=true)
+
+![Dawn Testament held in first person](https://github.com/Bithio999/MC/blob/main/wiki/media/item-testament.png?raw=true)
+
+## Individual formation previews
+
+These staged views show each structure with its accompanying light or fluid effect. Recipient-bound effects use third-person view. Apparent size and pose depend on the camera and captured animation frame; these are visual references, not damage-volume diagrams.
+
+| Formation | Native preview |
+| --- | --- |
+| Oil Lash | ![Oil Lash](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/00-oil_lash.png?raw=true) |
+| Ice spire | ![Ice spire](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/01-glacial_spire.png?raw=true) |
+| Falling icicle | ![Falling icicle](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/02-falling_icicle.png?raw=true) |
+| Crushing Current | ![Crushing Current](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/03-tidal_crest.png?raw=true) |
+| Scarlet Undertow | ![Scarlet Undertow](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/04-coral_vortex.png?raw=true) |
+| Temporal protection | ![Temporal protection](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/05-causal_astrolabe.png?raw=true) |
+| Worldline Sever | ![Worldline Sever](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/06-worldline_blade.png?raw=true) |
+| Event Horizon | ![Event Horizon](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/07-event_horizon_orrery.png?raw=true) |
+| Causal Reversal | ![Causal Reversal](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/08-causal_hourglass.png?raw=true) |
+| Genesis Verdict | ![Genesis Verdict](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/09-singularity_armature.png?raw=true) |
+| Causal impact | ![Causal impact](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/10-chronofracture.png?raw=true) |
+| Loom Needle | ![Loom Needle](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/11-silken_spindle.png?raw=true) |
+| Runic Mine | ![Runic Mine](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/12-runic_igniter.png?raw=true) |
+| Living Grove | ![Living Grove](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/13-living_grove.png?raw=true) |
+| Mirror Aegis | ![Mirror Aegis](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/14-prism_guard.png?raw=true) |
+| Prismatic Lance | ![Prismatic Lance](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/15-prismatic_emitter.png?raw=true) |
+| Plasma Lance | ![Plasma Lance](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/16-plasma_capacitor.png?raw=true) |
+| Thunderhead Furnace | ![Thunderhead Furnace](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/17-storm_engine.png?raw=true) |
+| Cataclysm Front | ![Cataclysm Front](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/18-volcanic_fault.png?raw=true) |
+| Winter Orchard | ![Winter Orchard](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/19-winter_orchard.png?raw=true) |
+| Crystal Bulwark | ![Crystal Bulwark](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/20-crystal_aegis.png?raw=true) |
+| Winter Harvest | ![Winter Harvest](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/21-glacial_blossom.png?raw=true) |
+| Twin Gate | ![Twin Gate](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/22-threshold_gate.png?raw=true) |
+| Parallax Snare | ![Parallax Snare](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/23-parallax_judges.png?raw=true) |
+| Crossroads Edict | ![Crossroads Edict](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/24-crossroads.png?raw=true) |
+| Elemental Lexicon | ![Elemental Lexicon](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/25-lexicon_volumes.png?raw=true) |
+| Spellbreak | ![Spellbreak](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/26-spellbreak_obelisks.png?raw=true) |
+| Mana Crucible | ![Mana Crucible](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/27-mana_alembic.png?raw=true) |
+| Astral Library | ![Astral Library](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/28-astral_volumes.png?raw=true) |
+| Spectrum bolt | ![Spectrum bolt](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/29-spectrum_emitter.png?raw=true) |
+| Briar Grasp | ![Briar Grasp](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/30-briar_corolla.png?raw=true) |
+| Command Detonation | ![Command Detonation](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/31-runic_detonator.png?raw=true) |
+| Mirror splinters | ![Mirror splinters](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/32-mirror_splinters.png?raw=true) |
+| Railbolt | ![Railbolt](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/33-fulgur_conductor.png?raw=true) |
+| Thunder Step | ![Thunder Step](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/34-thunderstep_armature.png?raw=true) |
+| Elemental impact | ![Elemental impact](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/35-elemental_detonation.png?raw=true) |
+| Oil pool | ![Oil pool](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/36-obsidian_vents.png?raw=true) |
+| Aura recovery | ![Aura recovery](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/37-vital_corolla.png?raw=true) |
+| Gate transit | ![Gate transit](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/38-gate_wake.png?raw=true) |
+| Fate Anchor | ![Fate Anchor](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/39-fate_loom.png?raw=true) |
+| Fate Thread | ![Fate Thread](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/40-fate_spindle.png?raw=true) |
+| Loom Transit | ![Loom Transit](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/41-loom_wake.png?raw=true) |
+| Checkmate | ![Checkmate](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/42-checkmate_blades.png?raw=true) |
+| Mirrorsea | ![Mirrorsea](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/43-mirrorsea_lenses.png?raw=true) |
+| Refracted Harpoon | ![Refracted Harpoon](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/44-refracted_harpoon.png?raw=true) |
+| Sovereign Breaker | ![Sovereign Breaker](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/45-sovereign_crest.png?raw=true) |
+| Water Refraction | ![Water Refraction](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/46-refraction_lenses.png?raw=true) |
+| Perennial Seed | ![Perennial Seed](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/47-perennial_corolla.png?raw=true) |
+| Rebirth Bloom | ![Rebirth Bloom](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/48-rebirth_lotus.png?raw=true) |
+| Skill Bank | ![Skill Bank](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/49-skill_bank_codex.png?raw=true) |
+| Artisan Thread | ![Artisan Thread](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/50-artisan_spindle.png?raw=true) |
+| Countermand | ![Countermand](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/51-countermand_tablet.png?raw=true) |
+| Grand Synthesis | ![Grand Synthesis](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/52-grand_synthesis_codices.png?raw=true) |
+| Reconstructed Blade | ![Reconstructed Blade](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/53-reconstructed_sword.png?raw=true) |
+| Reconstructed Lance | ![Reconstructed Lance](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/54-reconstructed_lance.png?raw=true) |
+| Reconstructed Crown | ![Reconstructed Crown](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/55-reconstructed_crown.png?raw=true) |
+| Fatebreaker | ![Fatebreaker](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/56-fatebreaker_armature.png?raw=true) |
+| Starfall Canticle | ![Starfall Canticle](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/57-starfall_armature.png?raw=true) |
+| Eventide Procession | ![Eventide Procession](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/58-procession_censer.png?raw=true) |
+| The Last Dawn | ![The Last Dawn](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/59-last_dawn_orrery.png?raw=true) |
+| Phase ascension | ![Phase ascension](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/60-seraph_ascension.png?raw=true) |
+| Spatial Reposition | ![Spatial Reposition](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/62-seraph_threshold.png?raw=true) |

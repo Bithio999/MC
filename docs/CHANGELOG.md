@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.29.0 — Authored models and animated world visuals
+
+- Add 69 original, editable Blockbench projects and export them through the official editor/GeckoLib plugin: 62 effect rigs, two impact variants, Ananke, two NPC equipment rigs and two ritual item models.
+- Integrate GeckoLib appearance/loop animation, selective emissive materials, translucent crystal/glass and field layouts that preserve the size of individual books, trees and mirrors. Keep custom beams, trails, fluids, exact warnings and black-hole optics where appropriate; add stable warm/cool accretion-side coloration.
+- Replace Ananke’s Java model with layered armor, six articulated feather wings, head tracking, flight/ritual animations, phase crown details and a revival ascent. Preserve confirmed HP/SHP damage flashes and regeneration-first combat lives.
+- Add animated travel/smithing equipment to Alma and Gemma while retaining native bodies, skins, held equipment, poses and subordinate support. Model the Writ of Last Dawn and Dawn Testament in 3D.
+- Add asset-graph validation, artist/export documentation and native visual previews. Require GeckoLib 4.9.3 (4.x). Combat balance, damage, targeting, cooldowns, costs and progression are unchanged.
+
 ## 0.28.0 — Exhaustion-based phases and confirmed damage feedback
 
 - Replace percentage-health phase gates with fatal-defeat revivals. Funded, eligible Infinite Regeneration gets native death-prevention priority. Once it cannot prevent death, the first two defeats advance one phase and refill HP, SHP, magicules and aura to their current caps; the final defeat ends the encounter.

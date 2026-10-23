@@ -52,7 +52,7 @@ Ananke flies after valid targets, fights nearby players and retaliates when atta
 
 Infinite Regeneration takes priority: while funded and able to prevent the incoming death, it keeps Ananke in the current phase and restores wounds using magicules. When it can no longer prevent a fatal defeat, Ananke enters the next phase and immediately refills **HP, SHP, magicules and aura to their current maximums**. This can happen twice. A fatal defeat in phase III ends the encounter once regeneration can no longer prevent it. Native bypass and healing rules still apply.
 
-Each revival cancels the previous attack sequence and announces the new phase with the six-point ascension effect. The new phase has a short attack preparation interval, with ordinary native hit immunity. Nonfatal damage and low-health percentages do not change phases.
+Each revival cancels the previous attack sequence and announces the new phase with an ascending wing animation and six-point ascension effect. The layered armor, six articulated feather wings and crown details move through separate flight and ritual poses. The new phase has a short attack preparation interval, with ordinary native hit immunity. Nonfatal damage and low-health percentages do not change phases.
 
 Successful **HP or SHP damage** makes the model flash Minecraft red, including while Pain Nullification is enabled and while regeneration repairs the hit. Nullified or dodged attacks do not trigger this confirmed-damage flash.
 
@@ -78,7 +78,7 @@ Ananke enables **Arcane Sovereignty**, paying its normal 180-magicule-per-second
 - **Astral Library:** three books take turns firing every 0.25 seconds for ten seconds, cycling Fire, Water, Lightning, Earth, Wind, Light and Space. Each bolt is 800 raw damage before the ordinary 1.5× mastered multiplier and native modifiers. Cost 24,000 magicules; cooldown 35 seconds.
 - **Spellbreak:** 900 raw magic damage before 1.5× mastery, plus Thoth's native interference/drain rules. Godly owners take the damage but are exempt from this mode’s drain and disruption. Cost 6,500 magicules; cooldown 15 seconds. See [Spellbreak's full behavior](Thoth.md#spellbreak).
 
-Moira itself is **Ultimate**, so Lugh's Countermand can seal and interrupt its rites. Thoth is Godly and cannot be sealed by Countermand. Native activation restrictions can also stop a cast. Ananke has finite native resources; the AI pays skill costs and does not refill resources during an active fight.
+Moira itself is **Ultimate**, so Lugh's Countermand can seal and interrupt its rites. Thoth is Godly and cannot be sealed by Countermand. Native activation restrictions can also stop a cast. Ananke has finite native resources; the AI pays skill costs. Full resource refills occur at its two phase revivals.
 
 ### Native skill package
 
@@ -177,6 +177,8 @@ Drink a Dawn Testament for **2.4 seconds** to heal **50% maximum HP**, restore *
 
 ![Ananke’s original six-winged model and halo](../media/ananke.png)
 
+![Ananke ascending into a new phase](../media/ananke-ascension.png)
+
 ![Native HP and spiritual-health bossbars](../media/ananke-bossbars.png)
 
 ![Confirmed damage flashes red while Pain Nullification remains enabled](../media/ananke-hit-feedback.png)
@@ -189,7 +191,7 @@ Drink a Dawn Testament for **2.4 seconds** to heal **50% maximum HP**, restore *
 
 ![The Last Dawn’s dark sun and golden refuge annulus](../media/ananke-last-dawn.png)
 
-[Watch The Last Dawn in the Minecraft client](../media/ananke-last-dawn.mp4).
+
 
 Captures use an isolated validation arena. Warning stills pause the native encounter at specific moments; the clip shows the running cast. No shader pack or external rendering is used.
 

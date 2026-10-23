@@ -3,7 +3,7 @@ loaderVersion="[4,)"
 license="All Rights Reserved"
 [[mods]]
 modId="wildhunt"
-version="0.28.0"
+version="0.29.0"
 displayName="Tensura Myths"
 description='''Godly skills, dual race lineages and Convergent Awakenings for Tensura: Reincarnated. Includes the original hunter skills, evolutions and otherworlders.'''
 [[dependencies.wildhunt]]
@@ -40,6 +40,12 @@ side="BOTH"
 modId="architectury"
 type="required"
 versionRange="[13.0.8,)"
+ordering="AFTER"
+side="BOTH"
+[[dependencies.wildhunt]]
+modId="geckolib"
+type="required"
+versionRange="[4.9.3,5)"
 ordering="AFTER"
 side="BOTH"
 [[mixins]]
