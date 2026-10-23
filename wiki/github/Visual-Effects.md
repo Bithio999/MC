@@ -10,11 +10,15 @@ Ring frames have continuous beveled curves and luminous inlays. Crystals and rec
 
 ## Eschaton and Demiurge
 
-The final Myth has a four-armed sovereign model, an unfolding crescent mantle, a jointed tail and a seven-blade final crown. Smooth tapered crescents replace cuboid arc outlines. Demiurge adds eight independent patterns, including seven elemental star signatures, spatial scripture, hollow fronts with golden gaps, and a world seed beneath a vast celestial canopy. Its lensed accretion disk stays in a stable plane. Red warnings mark damage; a broken creation seal opens a golden refuge.
+The final Myth has a four-armed sovereign model, an unfolding crescent mantle, a jointed tail and a seven-blade final crown. Broad pearl/cyan cleave smears accompany torso windup and recoil. Demiurge adds eight independent patterns: saturated elemental descent plumes, tapered spatial tears between monumental scripture, continuous dark curled fronts with golden openings, and a world seed beneath a vast celestial canopy. The buildup compresses before a sharp nova and broad pressure front. Its lensed accretion disk stays in a stable plane. Red warnings mark damage; a broken creation seal opens a golden refuge.
 
 ![Eschaton’s final form](https://github.com/Bithio999/MC/blob/main/wiki/media/eschaton-final-form.png?raw=true)
 
 ![The End of All Myths with a broken seal refuge](https://github.com/Bithio999/MC/blob/main/wiki/media/eschaton-apocalypse.png?raw=true)
+
+![World-Eater Wake’s curled fronts and golden safe openings](https://github.com/Bithio999/MC/blob/main/wiki/media/eschaton-wake-anime.webp)
+
+[Native Eschaton and Aion motion preview](https://github.com/Bithio999/MC/blob/main/wiki/media/eschaton-aion-anime-preview.mp4). Captured in Minecraft; the reel cuts between staged casts and skips the waiting interval before Causal Reversal’s automatic return.
 
 See [Eschaton](https://github.com/Bithio999/MC/wiki/Eschaton) and [Demiurge](https://github.com/Bithio999/MC/wiki/Demiurge) for gameplay, timing and damage types.
 
@@ -96,11 +100,11 @@ These in-game views show the geometry in an isolated development world. Some use
 
 ### Aion
 
-[Aion](https://github.com/Bithio999/MC/wiki/Aion) — Worldline Sever carries fine gold/violet helical strands and clock collars around its readable aim core. Event Horizon has a dark spherical core, tilted accretion optics, counter-rotating dials and a faint separate pull perimeter. Causal Reversal places a three-dimensional hourglass with flowing sand over its checkpoint clock. Genesis Verdict suspends twenty miniature black holes, bends each through a unique accelerating curve, and homes them continuously onto the moving target and resolves twenty individual detonations. Opaque speed-deformed cores sit inside broad luminous disks whose world orientation stays steady. Lensed rear-disk arches, photon rings, tapered wakes, large starbursts and expanding shock fronts distinguish the phases. Outer blast light is cosmetic; damage radii are documented in the ability article.
+[Aion](https://github.com/Bithio999/MC/wiki/Aion) — Worldline Sever tears a dark spatial seam with saturated gold/violet edges, a narrow white core and travelling time fragments. Event Horizon folds six dark petals toward its lensed center above substantial clock hands, with a faint separate pull perimeter. Causal Reversal places a three-dimensional hourglass over its checkpoint clock and releases a sharp re-entry burst on return. Genesis Verdict suspends twenty miniature black holes, bends each through a unique accelerating curve, and homes them continuously onto the moving target and resolves twenty individual detonations. Opaque speed-deformed cores sit inside broad luminous disks whose world orientation stays steady. Lensed rear-disk arches, photon rings, tapered wakes, large starbursts and expanding shock fronts distinguish the phases. Outer blast light is cosmetic; damage radii are documented in the ability article.
 
-![Aion's twenty-singularity barrage](https://github.com/Bithio999/MC/blob/main/wiki/media/aion-singularity-barrage.gif)
+![Aion's twenty-singularity barrage](https://github.com/Bithio999/MC/blob/main/wiki/media/aion-verdict-anime.webp)
 
-[720p native animation clip](https://github.com/Bithio999/MC/blob/main/wiki/media/aion-singularity-barrage.mp4).
+[720p native motion preview](https://github.com/Bithio999/MC/blob/main/wiki/media/eschaton-aion-anime-preview.mp4).
 
 ![Event Horizon’s dark core and tilted clockwork optics](https://github.com/Bithio999/MC/blob/main/wiki/media/visual-aion.png?raw=true)
 

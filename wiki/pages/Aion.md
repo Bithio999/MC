@@ -121,11 +121,11 @@ Use **Skills → Godly → Ascension** to replace one mastered Myths Ultimate af
 
 ## Visual effects
 
-Worldline Sever carries fine gold/violet helical strands and clock collars around its readable aim core. Event Horizon has a dark spherical core, tilted accretion optics, counter-rotating dials and a faint separate pull perimeter. Causal Reversal places a three-dimensional hourglass with flowing sand over its checkpoint clock. Genesis Verdict suspends twenty black holes, draws them through curved trails and resolves them in layered spatial explosions.
+Worldline Sever tears a dark spatial seam with saturated gold/violet edges, a narrow white core and travelling time fragments. Event Horizon folds six dark petals toward its lensed center above substantial clock hands, with a faint separate pull perimeter. Causal Reversal places a three-dimensional hourglass over its checkpoint clock and releases a sharp re-entry burst on return. Genesis Verdict suspends twenty black holes, draws them through curved trails and resolves them in layered spatial explosions.
 
-![Genesis Verdict's twenty-hole formation, curved flight and detonations](../media/aion-singularity-barrage.gif)
+![Genesis Verdict's twenty-hole formation, curved flight and detonations](../media/aion-verdict-anime.webp)
 
-[Watch the 720p in-game demonstration](../media/aion-singularity-barrage.mp4).
+[Watch the native Eschaton/Aion motion preview](../media/eschaton-aion-anime-preview.mp4). The edited reel includes all four active Aion modes; the waiting interval before the automatic checkpoint return is omitted.
 
 ![The suspended singularity formation](../media/aion-singularity-formation.png)
 

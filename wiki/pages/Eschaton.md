@@ -92,6 +92,8 @@ Seals require collision-free, loaded space. In cramped terrain, unavailable posi
 
 ![The End of All Myths and a broken seal's golden refuge](../media/eschaton-apocalypse.png)
 
+[Watch the native Eschaton/Aion motion preview](../media/eschaton-aion-anime-preview.mp4) for the cleaves, spatial tears, curled fronts and apocalypse release. The footage uses a staged arena; attack geometry and damage are listed in [Demiurge](Demiurge.md).
+
 ### Auxiliary skills
 
 From form II, Eschaton can weave Thoth's **Astral Library**, or **Spellbreak** when the library is unavailable, into some Demiurge casts. Form III adds Aion's **Genesis Verdict**, or **Event Horizon**. These are actual stored native skill activations with their own ordinary costs, cooldowns and targeting rules. They retain the damage types and mastered multipliers documented in [Thoth](Thoth.md) and [Aion](Aion.md).

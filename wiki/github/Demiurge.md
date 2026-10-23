@@ -153,9 +153,11 @@ Eschaton rises toward an apex six blocks above his starting position while a lan
 | Geometry | 56-block damage sphere centered on the saved casting origin |
 | Counterplay | Three destructible Genesis Seals; golden refuges at broken seal positions; all three broken interrupts and staggers |
 
-Creation seals feed a growing black world seed above Eschaton. Smooth gyroscopes, converging streams, a vast perimeter and a final expanding nova make its buildup visible across the arena. Break a seal for a seven-block horizontal, ten-block vertical refuge and a large drain of current reserves. Break all three to cancel the nova and create an eight-second opening. See [creation seals](https://github.com/Bithio999/MC/wiki/Eschaton#creation-seals) for exact resource drains and placement rules.
+Creation seals feed a growing black world seed above Eschaton. A vast canopy, broad converging ribbons, saturated light plumes and rising fragments surround the lensed seed. The formation compresses before its final expanding nova and pressure front, making its buildup visible across the arena. Break a seal for a seven-block horizontal, ten-block vertical refuge and a large drain of current reserves. Break all three to cancel the nova and create an eight-second opening. See [creation seals](https://github.com/Bithio999/MC/wiki/Eschaton#creation-seals) for exact resource drains and placement rules.
 
 ![Demiurge's world seed and golden refuge](https://github.com/Bithio999/MC/blob/main/wiki/media/eschaton-apocalypse.png?raw=true)
+
+[Native motion preview with Eschaton and Aion](https://github.com/Bithio999/MC/blob/main/wiki/media/eschaton-aion-anime-preview.mp4) · [Visual gallery](https://github.com/Bithio999/MC/wiki/Visual-Effects).
 
 ## Interruption and ownership
 

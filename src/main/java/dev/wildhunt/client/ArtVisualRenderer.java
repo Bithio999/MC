@@ -100,7 +100,16 @@ public final class ArtVisualRenderer extends software.bernie.geckolib.renderer.G
         float age=e.barrage().isEmpty()?e.tickCount+partial:e.barrageAge(partial);Vec3 d=e.end(partial);double r=Math.max(.4,Math.abs(d.x));
         p.pushPose();
         switch(rig.placement()){
-            case FINALE->{ }
+            case FINALE->{
+                switch(e.kind()){
+                    case ArtVisualEntity.ESCHATON_EDGE->{p.translate(0,3.5,0);p.mulPose(com.mojang.math.Axis.YP.rotation((float)(-dev.wildhunt.EschatonPattern.facing(e.barrage())+Math.PI/2)));scale(p,1.7,1.7,1.7);}
+                    case ArtVisualEntity.ESCHATON_LOOM->{var at=dev.wildhunt.EschatonPattern.loomStart(e.barrage());p.translate(at.x,at.y-1.5,at.z);scale(p,2,2,2);}
+                    case ArtVisualEntity.ESCHATON_EXCHANGE->{p.translate(0,1.5,0);scale(p,2.2,2.2,2.2);}
+                    case ArtVisualEntity.ESCHATON_THRONEFALL->{var at=dev.wildhunt.EschatonPattern.point(e.barrage(),"landing");p.translate(at.x,at.y+(age<36?16*(1-VfxMesh.smooth(age/36d)):0),at.z);scale(p,3,3,3);}
+                    case ArtVisualEntity.ESCHATON_APOCALYPSE->{p.translate(0,10,0);scale(p,4,4,4);}
+                    case ArtVisualEntity.ESCHATON_ASCENSION->{p.translate(0,2,0);scale(p,4,4,4);}
+                }
+            }
             case FINALE_SHATTER->{double size=Math.max(.3,e.end().x/5);scale(p,size,size,size);}
             case BEAM,LASH,TIP->{
                 Vec3 axis=d.normalize();

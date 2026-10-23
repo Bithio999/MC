@@ -72,8 +72,8 @@ final class SingularityGeometry {
         p.pushPose();p.translate(at.x,at.y,at.z);p.mulPose(new Quaternionf().rotationTo(0,1,0,(float)normal.x,(float)normal.y,(float)normal.z));p.scale((float)radius,(float)radius,(float)radius);
         accretion(p,b,age,seed,node);p.popPose();
         lensedDisk(p,b,at,radius,normal,stretch,cross,age,seed,node);
-        photon(p,b,at,axis,radius*1.035,stretch,cross,.022,tint(IVORY,.78));
-        photon(p,b,at,axis,radius*1.10,stretch,cross,.04,tint(GOLD,.28));
+        photon(p,b,at,axis,radius*1.035,stretch,cross,.055,tint(IVORY,.9));
+        photon(p,b,at,axis,radius*1.10,stretch,cross,.075,tint(GOLD,.45));
     }
     private static void photon(PoseStack p,MultiBufferSource b,Vec3 at,Vec3 axis,double radius,double longitudinal,double transverse,double width,int color){
         var camera=Minecraft.getInstance().getEntityRenderDispatcher().cameraOrientation();
@@ -124,12 +124,18 @@ final class SingularityGeometry {
         for(int n=1;n<=count;n++){
             double t=n/(double)count;Vec3 next=SingularityFlight.position(seed,node,tail+(age-tail)*t,aim);double strength=t*t*grow;
             beam(p,b,previous,next,.3*strength,tint(VIOLET,.35*strength));beam(p,b,previous,next,.07*strength,tint(GOLD,.72*strength));
+            SpectacleMesh.stroke(p,b,previous,next,.15*strength,GOLD,.75*strength);
             previous=next;
         }
     }
     private static void impact(PoseStack p,MultiBufferSource b,Vec3 at,double age,int seed,int node,boolean empowered){
         double t=Math.clamp(age/SingularityFlight.IMPACT_LIFE,0,1),fade=Math.pow(1-t,2),size=empowered?12:10;
         double radius=size*(1-Math.exp(-age*.18)),flash=Math.exp(-age*.32),hot=Math.exp(-age*.14);
+        if(node%4==0 || node==SingularityFlight.COUNT-1)SpectacleMesh.burst(p,b,at,age,28,node==SingularityFlight.COUNT-1?size*1.1:size*.75,VIOLET,seed+node);
+        else{
+            SpectacleMesh.lance(p,b,at.add(0,-1,0),at.add(0,3+radius*.5,0),.7*hot,IVORY,hot);
+            for(int n=0;n<3;n++){double a=n*Math.TAU/3+node*2.399963;Vec3 direction=polar(a,1,.2).normalize();SpectacleMesh.shard(p,b,at.add(direction.scale(radius*.7)),direction,.9,VIOLET,fade);}
+        }
         // Short brilliant ignition, long expanding pressure front: big without permanent whiteout.
         glow(p,b,at,3+flash*7.5,tint(IVORY,.96*flash));glow(p,b,at,2.5+radius*.5,tint(VIOLET,.15*fade));
         billboard(p,b,BURST,at,2.5+radius*.9,2.5+radius*.9,node*2.399963,tint(IVORY,.9*hot),true);

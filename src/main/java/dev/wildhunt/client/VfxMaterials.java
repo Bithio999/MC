@@ -10,7 +10,7 @@ import java.util.Map;
 
 /** Native shaders with linear filtering so fine optical masks do not sparkle under motion. */
 final class VfxMaterials extends RenderStateShard {
-    private static final Map<ResourceLocation,RenderType> ADDITIVE=new HashMap<>(),SURFACE=new HashMap<>();
+    private static final Map<ResourceLocation,RenderType> ADDITIVE=new HashMap<>(),SURFACE=new HashMap<>(),RADIANT=new HashMap<>();
     private VfxMaterials(){super("myths_vfx",()->{},()->{});}
     static RenderType additive(ResourceLocation texture){return ADDITIVE.computeIfAbsent(texture,t->RenderType.create("myths_optics",DefaultVertexFormat.NEW_ENTITY,VertexFormat.Mode.QUADS,1536,false,true,
         RenderType.CompositeState.builder().setShaderState(RENDERTYPE_EYES_SHADER)
@@ -20,4 +20,9 @@ final class VfxMaterials extends RenderStateShard {
         RenderType.CompositeState.builder().setShaderState(RENDERTYPE_ENTITY_TRANSLUCENT_EMISSIVE_SHADER)
             .setTextureState(new TextureStateShard(t,true,false)).setTransparencyState(TRANSLUCENT_TRANSPARENCY)
             .setCullState(NO_CULL).setWriteMaskState(COLOR_WRITE).setOverlayState(OVERLAY).createCompositeState(false)));}
+    /** Straight-alpha emission for the new white-RGB masks; legacy premultiplied optics keep their path. */
+    static RenderType radiant(ResourceLocation texture){return RADIANT.computeIfAbsent(texture,t->RenderType.create("myths_radiance",DefaultVertexFormat.NEW_ENTITY,VertexFormat.Mode.QUADS,1536,false,true,
+        RenderType.CompositeState.builder().setShaderState(RENDERTYPE_EYES_SHADER)
+            .setTextureState(new TextureStateShard(t,true,false)).setTransparencyState(LIGHTNING_TRANSPARENCY)
+            .setCullState(NO_CULL).setWriteMaskState(COLOR_WRITE).createCompositeState(false)));}
 }

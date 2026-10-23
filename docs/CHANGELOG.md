@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.31.0 — Eschaton and Aion spectacle pass
+
+- Establish an anime visual direction for Eschaton and Aion: filled blade smears, curled wave crests, tapered spatial tears, saturated light plumes and distinct local impact bursts.
+- Strengthen Eschaton’s execution windup/recoil and extend the apocalypse animation through its actual buildup and release. Place scripture, wave ribs, exchange vessel and regalia at their respective attack positions. Keep golden safe openings readable.
+- Give Aion torn gold/violet spatial seams, inward-folding gravitational petals and a three-dimensional checkpoint clock. Reinforce the twenty singularities’ trails, photon rims and individual detonations while retaining stable disk orientation and native homing paths.
+- Add separate straight-alpha light materials and four original masks while preserving legacy additive optics. Primary geometry remains visible with reduced particles; optional flares fade near the camera.
+- Publish native motion previews, updated formation photos, editable assets and the refreshed offline wiki. Damage, costs, cooldowns, targeting, progression and boss phase rules are unchanged. Other skill families await review of this direction.
+
 ## 0.30.0 — The Last Myth
 
 - Add Eschaton, the Last Myth: an Origin Sovereign with exactly one billion native EP, 1M HP, 4M SHP, four resource bossbars and three fatal forms. Native Infinite Regeneration takes priority over revival.

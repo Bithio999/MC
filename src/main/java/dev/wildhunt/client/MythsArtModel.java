@@ -23,9 +23,18 @@ final class MythsArtModel extends GeoModel<ArtVisualEntity> {
         if(e.kind()==ArtVisualEntity.ESCHATON_GENESIS){
             for(int n=0;n<7;n++){int index=n;getBone("star_"+n).ifPresent(b->{
                 var plan=e.barrage();double since=e.barrageAge(state.getPartialTick())-EschatonPattern.meteorTick(index);boolean visible=index<plan.getInt("warned") && since<8;
-                b.setHidden(!visible);b.setChildrenHidden(!visible);var at=EschatonPattern.meteor(plan,index).add(0,since<0?16+3*Math.sin(index):Math.max(0,16-since*4),0);
+                double descent=1-Math.pow(Math.clamp((since+32)/32d,0,1),5);
+                b.setHidden(!visible);b.setChildrenHidden(!visible);var at=EschatonPattern.meteor(plan,index).add(0,since<0?(16+3*Math.sin(index))*descent:0,0);
                 b.setPosX((float)(-at.x*16));b.setPosY((float)(at.y*16-8));b.setPosZ((float)(at.z*16));
             });}
+        }
+        if(e.kind()==ArtVisualEntity.ESCHATON_TESTAMENT){
+            double castAge=e.barrageAge(state.getPartialTick()),grow=VfxMesh.smooth(castAge/14d),release=castAge<38?1:Math.max(0,1-(castAge-38)/12);
+            for(int n=0;n<3;n++){int index=n;getBone("scripture_"+n).ifPresent(b->{var at=EschatonPattern.cutCenter(e.barrage(),index).add(0,3-(1-grow)*8,0);b.setPosX((float)(-at.x*16-b.getPivotX()));b.setPosY((float)(at.y*16-b.getPivotY()));b.setPosZ((float)(at.z*16-b.getPivotZ()));float scale=(float)(grow*release);b.updateScale(4*scale,5*scale,4*scale);});}
+        }
+        if(e.kind()==ArtVisualEntity.ESCHATON_WAKE){
+            double castAge=e.barrageAge(state.getPartialTick()),since=castAge-28,radius=EschatonPattern.waveRadius(castAge,0);
+            for(int n=0;n<9;n++){int index=n;getBone("serpent_rib_"+n).ifPresent(b->{double a=index*Math.TAU/9;var at=VfxMesh.polar(a,radius,.1);boolean hide=since<0 || since>44 || EschatonPattern.inGap(at,e.barrage(),0);b.setHidden(hide);b.setChildrenHidden(hide);b.setPosX((float)(-at.x*16-b.getPivotX()));b.setPosZ((float)(at.z*16-b.getPivotZ()));float size=(float)(3*VfxMesh.smooth(since/5)*VfxMesh.smooth((44-since)/6));b.updateScale(size,size,size);});}
         }
         if(e.kind()==ArtVisualEntity.LASH){
             double length=e.end().length(),height=.7+length*.04;

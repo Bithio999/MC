@@ -1,6 +1,6 @@
 # Tensura Myths visual pipeline
 
-The world-visual pipeline (extended in 0.30.0) uses original Blockbench projects exported through Blockbench 5.2.2 and its GeckoLib Models & Animations 4.2.5 plugin. The runtime is GeckoLib 4.9.3 on Minecraft 1.21.1 / NeoForge. No shader pack is required.
+The world-visual pipeline uses original Blockbench projects exported through Blockbench 5.2.2 and its GeckoLib Models & Animations 4.2.5 plugin. The runtime is GeckoLib 4.9.3 on Minecraft 1.21.1 / NeoForge. No shader pack is required.
 
 ## Asset ownership and export
 
@@ -44,6 +44,18 @@ The generator creates `surface_<shape>_<id>_<x>_<y>_<z>_<material>` child bones;
 Genesis Verdict's twenty moving black holes remain a **custom renderer**: velocity-deformed horizons, camera-dependent lens arches and stable world-space disk planes are a better fit for procedural optics than a cube rig. The updated accretion material adds stable warm receding/cool approaching sides while UV flow moves the matter. It keeps all twenty independent trajectories, impacts and damage timings. The authored singularity armature is used by the non-barrage visual path.
 
 Eschaton adds a four-armed articulated sovereign, nine cloth panels, a jointed tail, unfolding crescent mantle and seven floating final-form blades. Its eight Demiurge rigs and two lifecycle effects use shared server/client pattern geometry. Genesis Seals are separate damageable GeoEntities. A 20-chunk tracking channel and expanded bounds preserve arena-wide warnings; the original Aion lens renderer supplies the large world seed with stable accretion planes. The decorative celestial canopy never changes the ground damage boundary.
+
+## Eschaton and Aion: anime visual direction
+
+The 0.31.0 pass gives these two families a hierarchy of large silhouettes, motion accents and close-range detail. Broad blade smears, continuous curled fronts, tapered spatial tears, saturated energy plumes and local impact stars carry the attack. Authored mechanisms and inscriptions provide secondary detail. Eschaton's execution animation now includes torso twist and forearm follow-through; the apocalypse has a sustained ten-second buildup, compression and release.
+
+`SpectacleMesh` separates solid, cel-colored facets from emitted light. Translucent solid faces retain their RGB color and fade through alpha. New white-RGB optical masks use `VfxMaterials.radiant` with native **SRC_ALPHA / ONE** blending. Existing premultiplied optics retain native **ONE / ONE** blending and their original color packing. Using one fade convention for both paths would either dim translucent faces twice or make additive shapes fail to fade. The new stroke mask has no repeated fade along its length, so adjacent curved segments form a continuous edge.
+
+Light plumes use smooth tapered ribbons, while crystal fragments retain faceted solid geometry. The emission halo and local flare reduce opacity close to the camera. The Particles setting reduces optional flares, smoke and motes without removing primary cuts, wave crests, black holes or warnings. World-Eater front strips terminate exactly at the native 22-degree gap boundaries; their solid faces do not intrude into the safe opening. Large curves retain enough segments at arena distance to preserve their silhouette.
+
+Sevenfold Genesis's authored stars follow the same accelerated visual descent as their elemental signature. Null Testament's obelisks occupy the actual three cut centers. The moving wake's ribs follow its first front. The exchange vessel, falling regalia and apocalypse cage occupy their respective channel, landing and seed positions instead of sharing an unscaled root placement.
+
+The gameplay plans, native damage, costs, cooldowns, targeting, twenty singularity trajectories and stable accretion-plane rules are unchanged. Only Eschaton and Aion use this new visual grammar in this release.
 
 ## Verification
 
