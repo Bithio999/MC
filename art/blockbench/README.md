@@ -18,3 +18,5 @@ Set `CHROMIUM_PATH` if Chromium is installed elsewhere. `MODEL=ananke` restricts
 The exporter writes geometry/animation/item JSON. If you paint an atlas, export its PNG separately to `textures/geo`, update the matching `_glowmask.png`, and refresh the embedded preview textures in other projects sharing that atlas. Theme atlases are intentionally shared; a palette edit can affect several rigs.
 
 Runtime exports live under `src/main/resources/assets/wildhunt/{geo,animations}/myths`, `textures/geo`, and `models/item`. See [the rendering workflow](../../docs/VISUAL_PIPELINE.md) for placement, animation and custom-optics boundaries.
+
+Continuous surfaces use `surface_` animation-anchor bones with editable cube previews. The runtime replaces those previews with smooth rings, faceted crystals, curved leaves or beveled boxes; see [the surface contract](../../docs/VISUAL_PIPELINE.md#curved-surfaces). Exporting strips only their preview cubes.

@@ -59,12 +59,32 @@ class Rig:
   c={'origin':[round(at[k]-size[k]/2,4) for k in range(3)],'size':list(size),'uv':{f:{'uv':[mat*32,0],'uv_size':[32,32]} for f in ['north','east','south','west','up','down']}}
   if rot:c.update(rotation=rot,pivot=pivot or list(at))
   next(b for b in self.bones if b['name']==bone).setdefault('cubes',[]).append(c)
+ def surface(self,shape,parent,at,size,mat,rot=None):
+  # The self-describing child bone is an animation anchor for SmoothGeoGeometry.
+  # Its cubes are an editor preview, replaced by a continuous mesh at runtime.
+  dims='_'.join(str(round(v*100)) for v in size)
+  b=self.bone(f'surface_{shape}_{len(self.bones)}_{dims}_{mat}',parent,list(at),rot)
+  return b
  def gem(self,bone,at,size,mat=3):
-  for i in range(3):self.box(bone,[at[0],at[1]+(i-1)*size[1]*.24,at[2]],[size[0]*(1-.28*abs(i-1)),size[1]*.38,size[2]*(1-.28*abs(i-1))],mat,[0,45,0])
+  b=self.surface('gem',bone,at,size,mat)
+  for i in range(7):
+   t=(i+.5)/7;f=max(.05,1-abs(t-.4)/.6)
+   self.box(b,[at[0],at[1]+(t-.5)*size[1],at[2]],[size[0]*f,size[1]/7,size[2]*f],mat,[0,45,0])
+ def leaf(self,bone,at,size,mat=6,rot=None):
+  b=self.surface('leaf',bone,at,size,mat,rot)
+  for i in range(8):
+   t=(i+.5)/8;f=math.sin(t*math.pi)**.65
+   self.box(b,[at[0],at[1]+(t-.5)*size[1],at[2]+math.sin(t*math.pi)*size[2]*.25],[size[0]*f,size[1]/8,size[2]*.18],mat)
+ def bevel(self,bone,at,size,mat=0,rot=None):
+  b=self.surface('box',bone,at,size,mat,rot);edge=min(size)*.16
+  self.box(b,at,[size[0]-edge,size[1],size[2]-edge],mat)
+  self.box(b,at,[size[0],size[1]-edge,size[2]-edge],mat)
+  self.box(b,at,[size[0]-edge,size[1]-edge,size[2]],mat)
  def ring(self,name,r,y=0,segments=12,mat=2,parent='root',tilt=None,width=1.2):
   self.bone(name,parent,[0,y,0],tilt)
-  for n in range(segments):
-   a=n*math.tau/segments;self.box(name,polar(a,r,y),[width,width,2*r*math.sin(math.pi/segments)*1.03],mat,[0,-math.degrees(a),0])
+  b=self.surface('ring',name,[0,y,0],[r,width,width*.64],mat)
+  for n in range(64):
+   a=n*math.tau/64;self.box(b,polar(a,r,y),[width,width*.64,2*r*math.tan(math.pi/64)],mat,[0,-math.degrees(a),0])
   return name
  def spin(self,bone,axis=1,degrees=360):self.motion[bone]={'rotation':{'0.0':[0,0,0],'3.0':[degrees if axis==0 else 0,degrees if axis==1 else 0,degrees if axis==2 else 0]}}
  def sway(self,bone,axis=2,amount=8,phase=0):
@@ -75,7 +95,7 @@ class Rig:
  def save(self):
   geo={'format_version':'1.12.0','minecraft:geometry':[{'description':{'identifier':'geometry.'+self.name,'texture_width':256,'texture_height':128,'visible_bounds_width':128,'visible_bounds_height':64,'visible_bounds_offset':[0,8,0]},'bones':self.bones}]}
   self.anim.setdefault('animation.myths.idle',{'loop':True,'animation_length':3,'bones':self.motion})
-  moving=[b['name'] for b in self.bones if b['name']!='root'][:8]
+  moving=[b['name'] for b in self.bones if b['name']!='root' and not b['name'].startswith('surface_')][:8]
   self.anim.setdefault('animation.myths.appear',{'animation_length':.4,'bones':{b:{'scale':{'0':[.05,.05,.05],'.25':[1.08,1.08,1.08],'.4':[1,1,1]}} for b in moving}})
   write(ASSET/'geo/myths'/f'{self.name}.geo.json',geo);write(ASSET/'animations/myths'/f'{self.name}.animation.json',{'format_version':'1.8.0','geckolib_format_version':2,'animations':self.anim})
   # Native Blockbench project, per-face UVs, embedded original texture and bone keyframes.
@@ -107,7 +127,7 @@ class Rig:
 
 def blossom(r,ice=False):
  for n in range(8):
-  a=n*math.tau/8;b=r.bone('petal_'+str(n),pivot=[0,2,0],rotation=[0,-math.degrees(a),0]);r.box(b,[0,7,7],[3,13,2],6);r.box(b,[0,14,10],[4,7,1],5 if not ice else 4,[30,0,0]);r.gem(b,[0,19,11],[3,6,2],3);r.sway(b,0,12,n*.4)
+  a=n*math.tau/8;b=r.bone('petal_'+str(n),pivot=[0,2,0],rotation=[0,-math.degrees(a),0]);r.leaf(b,[0,9,7],[4,17,2.8],6,[20,0,0]);r.leaf(b,[0,16,10],[5,10,2],5 if not ice else 4,[30,0,0]);r.gem(b,[0,19,11],[2,5,1.5],3);r.sway(b,0,12,n*.4)
  r.gem('root',[0,5,0],[4,9,4],3)
 def loom(r):
  r.gem('root',[0,8,0],[4,12,4],4)
@@ -116,17 +136,17 @@ def loom(r):
 def book(r,name='book',at=None,parent='root'):
  at=at or [0,0,0];r.bone(name,parent,at)
  for s in [-1,1]:
-  b=r.bone(name+('_left' if s<0 else '_right'),name,at,[0,s*23,0]);r.box(b,[at[0]+s*5,at[1],at[2]],[9.5,13,1],2);r.box(b,[at[0]+s*4.8,at[1],at[2]-.8],[8.5,11.5,.8],5);
+  b=r.bone(name+('_left' if s<0 else '_right'),name,at,[0,s*23,0]);r.bevel(b,[at[0]+s*5,at[1],at[2]],[9.5,13,1],2);r.bevel(b,[at[0]+s*4.8,at[1],at[2]-.8],[8.5,11.5,.8],5);
   for line in range(4):r.box(b,[at[0]+s*4.8,at[1]+4-line*2.5,at[2]-1.4],[6-line%2*1.5,.25,.15],3)
   r.sway(b,1,4,s)
  r.box(name,at,[1,14,2],2)
 def spear(r,name='spear',parent='root',at=None):
  at=at or [0,0,0];r.bone(name,parent,at)
- for y,w,l in [(0,1.4,20),(12,4,8),(17,2.6,5),(20,1,3)]:r.box(name,[at[0],at[1]+y,at[2]],[w,l,w],2 if y==0 else 5)
+ r.bevel(name,at,[1.4,20,1.4],2);r.gem(name,[at[0],at[1]+16,at[2]],[4,16,2],5)
  r.box(name,[at[0],at[1]+12,at[2]],[.7,9,.7],3)
- for s in [-1,1]:r.box(name,[at[0]+s*3,at[1]+10,at[2]],[1.2,8,1.4],4,[0,0,-s*25])
+ for s in [-1,1]:r.leaf(name,[at[0]+s*3,at[1]+10,at[2]],[1.6,8,1.4],4,[0,0,-s*25])
 def tablet(r,name='tablet',at=None,parent='root'):
- at=at or [0,0,0];r.bone(name,parent,at);r.box(name,at,[14,18,1.8],2);r.box(name,[at[0],at[1],at[2]-1],[12,16,.4],1)
+ at=at or [0,0,0];r.bone(name,parent,at);r.bevel(name,at,[14,18,1.8],2);r.bevel(name,[at[0],at[1],at[2]-1],[12,16,.4],1)
  for n in range(4):r.box(name,[at[0]-1+(n%2),at[1]+5-n*3,at[2]-1.4],[8-n%2*2,.5,.3],3)
  for s in [-1,1]:r.gem(name,[at[0]+s*6,at[1]+8,at[2]],[2,4,2],4)
  r.sway(name,2,4)
@@ -139,15 +159,17 @@ def effect(name,theme,kind):
   elif kind in ['garden','icegarden']:
    for n in range(5):
     at=polar(n*math.tau/5,11,0);b=r.bone('tree_'+str(n),pivot=at);r.box(b,[at[0],12,at[2]],[2,24,2],6)
-    for t in range(3):r.box(b,[at[0],16+t*4,at[2]],[11-t*2,3,10-t*2],0,[0,n*34,0]);r.gem(b,[at[0],29,at[2]],[3,7,3],3);r.sway(b,2,3,n)
+    for t in range(3):
+     for leaf in range(4):r.leaf(b,[at[0]+math.cos(leaf*math.tau/4+t)*3,17+t*4,at[2]+math.sin(leaf*math.tau/4+t)*3],[4.5-t*.5,9-t,1.5],0,[30,leaf*90+t*57,35])
+    r.gem(b,[at[0],29,at[2]],[3,7,3],3);r.sway(b,2,3,n)
   elif kind=='bulwark':
    for n in range(6):
-    at=polar(n*math.tau/6,14,13);b=r.bone('shield_'+str(n),pivot=at,rotation=[0,-n*60,0]);r.box(b,at,[1.5,25,10],0);r.box(b,[at[0]+.9,at[1],at[2]],[.4,23,1],3);r.gem(b,[at[0],at[1]+13,at[2]],[2,8,4],4);r.sway(b,0,4,n)
+    at=polar(n*math.tau/6,14,13);b=r.bone('shield_'+str(n),pivot=at,rotation=[0,-n*60,0]);r.bevel(b,at,[1.5,25,10],0);r.box(b,[at[0]+.9,at[1],at[2]],[.4,23,1],3);r.gem(b,[at[0],at[1]+13,at[2]],[2,8,4],4);r.sway(b,0,4,n)
   else:blossom(r,kind=='bloom')
  elif kind in ['mirror','shards','mirrorsea','lens']:
   count=3 if kind=='shards' else 6
   for n in range(count):
-   at=polar(n*math.tau/count,13,4 if kind!='mirrorsea' else 18);b=r.bone('glass_'+str(n),pivot=at,rotation=[0,-n*360/count,0]);r.box(b,at,[7,15,.6],0,[0,0,45]);r.box(b,[at[0],at[1],at[2]-.4],[.6,14,.4],3,[0,0,45]);r.sway(b,1,9,n)
+   at=polar(n*math.tau/count,13,4 if kind!='mirrorsea' else 18);b=r.bone('glass_'+str(n),pivot=at,rotation=[0,-n*360/count,0]);r.gem(b,at,[7,15,.6],0);r.box(b,[at[0],at[1],at[2]-.4],[.6,14,.4],3,[0,0,45]);r.sway(b,1,9,n)
  elif kind in ['book','library','lexicon']:
   r.ring('meridian',13,0,16,2,tilt=[48,0,0]);r.spin('meridian',1,90)
   for n in range(3 if kind!='book' else 1):
@@ -172,9 +194,11 @@ def effect(name,theme,kind):
   count=4 if kind=='crossroads' else 1
   for n in range(count):
    at=polar(n*math.tau/count,12 if count>1 else 0,18);b=r.bone('gate_'+str(n),pivot=at,rotation=[90,0,n*90]);
-   for k in range(16):
-    a=k*math.tau/16;r.box(b,[at[0]+math.cos(a)*13,at[1],at[2]+math.sin(a)*13],[2,2,5.2],2,[0,-math.degrees(a),0]);
-    if k%2==0:r.gem(b,[at[0]+math.cos(a)*14,at[1],at[2]+math.sin(a)*14],[2,4,2],4)
+   rim=r.surface('ring',b,at,[13,1.4,.9],2)
+   for k in range(64):
+    a=k*math.tau/64;r.box(rim,[at[0]+math.cos(a)*13,at[1],at[2]+math.sin(a)*13],[1.4,.9,2*13*math.tan(math.pi/64)],2,[0,-math.degrees(a),0])
+   for k in range(8):
+    a=k*math.tau/8;r.gem(b,[at[0]+math.cos(a)*13.5,at[1],at[2]+math.sin(a)*13.5],[1.4,2.8,1.4],4)
    r.sway(b,2,3,n)
  elif kind in ['hourglass','astrolabe','orrery','chronoburst','singularity','dawn','ascend']:
   if kind=='hourglass':
@@ -186,19 +210,19 @@ def effect(name,theme,kind):
    if kind!='singularity':r.gem('root',[0,12,0],[5,13,5],1 if kind=='dawn' else 3)
  elif kind in ['wave','whirl','breaker','oil']:
   for n in range(8):
-   a=n*math.tau/8;at=polar(a,13,3);b=r.bone('crest_'+str(n),pivot=at,rotation=[0,-math.degrees(a),0]);r.box(b,at,[3,5,4],0);r.box(b,[at[0],9,at[2]-2],[2,10,2],5 if kind!='oil' else 4,[25,0,0]);r.gem(b,[at[0],14,at[2]-5],[3,5,3],3);r.sway(b,0,12,n*.7)
+   a=n*math.tau/8;at=polar(a,13,3);b=r.bone('crest_'+str(n),pivot=at,rotation=[0,-math.degrees(a),0]);r.leaf(b,[at[0],7,at[2]-1],[3,14,4],0,[20,0,0]);r.leaf(b,[at[0],11,at[2]-3],[2,9,2],5 if kind!='oil' else 4,[35,0,0]);r.gem(b,[at[0],14,at[2]-5],[1.5,4,1.5],3);r.sway(b,0,12,n*.7)
  elif kind in ['lash']:
   parent='root'
   for n in range(10):
-   at=[0,0,n*2];b=r.bone('tendon_'+str(n),parent,at);r.box(b,[0,0,n*2+1],[6-n*.28,5-n*.2,2.4],0);r.box(b,[0,3,n*2+1],[.6,1,1.8],3);r.box(b,[0,-2,n*2+1],[1,3,1],4,[25,0,0]);r.sway(b,1,4,n*.55)
+   at=[0,0,n*2];b=r.bone('tendon_'+str(n),parent,at);r.box(b,[0,3,n*2+1],[.6,1,1.8],3);r.gem(b,[0,-2,n*2+1],[1,3,1],4);r.sway(b,1,4,n*.55)
  elif kind in ['rail','plasma','step','prism','muzzle']:
   for n in range(3):r.ring('conductor_'+str(n),4+n*1.2,n*3,10,2 if n%2 else 3);r.spin('conductor_'+str(n),1,240 if n%2 else -240)
   for n in range(4):
-   b=r.bone('fin_'+str(n),rotation=[0,n*90,0]);r.box(b,[5,6,0],[1.5,14,2],0);r.box(b,[5.8,6,0],[.4,11,1],3)
+   b=r.bone('fin_'+str(n),rotation=[0,n*90,0]);r.bevel(b,[5,6,0],[1.5,14,2],0);r.box(b,[5.8,6,0],[.4,11,1],3)
  elif kind in ['mine','burst','eruption','stormcloud','crucible','spellbreak','impact']:
   r.ring('base',12,1,12,2);r.spin('base',1,90)
   for n in range(6):
-   at=polar(n*math.tau/6,10,6);b=r.bone('pylon_'+str(n),pivot=at);r.box(b,at,[3,10,3],0);r.gem(b,[at[0],13,at[2]],[2,7,2],3);r.sway(b,2,5,n)
+   at=polar(n*math.tau/6,10,6);b=r.bone('pylon_'+str(n),pivot=at);r.bevel(b,at,[3,10,3],0);r.gem(b,[at[0],13,at[2]],[2,7,2],3);r.sway(b,2,5,n)
   if kind=='crucible':r.ring('collector',8,27,12,4);r.spin('collector',1,-240)
  else:raise ValueError(kind)
  return r
@@ -220,21 +244,21 @@ for theme in ['tide','volcanic']:effect('elemental_detonation_'+theme,theme,'imp
 # Six-winged original Eclipse Seraph: layered armor, articulated flight feathers,
 # recessed faceplate, suspended tabards and phase-specific crown vanes.
 r=Rig('ananke','ananke');r.bone('body',pivot=[0,31,0]);r.box('body',[0,35,0],[13,17,6],1)
-for n in range(4):r.box('body',[0,40-n*4,-3.4],[14-n*.7,4,2],0,[8,0,0]);r.box('body',[0,40-n*4,-4.5],[2,3,.6],2)
+for n in range(4):r.bevel('body',[0,40-n*4,-3.4],[14-n*.7,4,2],0,[8,0,0]);r.box('body',[0,40-n*4,-4.5],[2,3,.6],2)
 r.gem('body',[0,37,-5.1],[3,8,1.4],4);r.box('body',[0,27,0],[15,3,8],2)
 for s in [-1,1]:
- b=r.bone('arm_'+str(s),'body',[s*9,41,0]);r.box(b,[s*10,40,0],[7,6,8],2,[0,0,s*10]);r.box(b,[s*11,34,0],[4,10,4],1);r.box(b,[s*11,29,-.3],[5,7,5],0);r.box(b,[s*11,26,-.3],[4,3,4],2);r.gem(b,[s*11,31,-3],[2,5,1],4)
- r.bone('leg_'+str(s),'root',[s*4,25,0]);b='leg_'+str(s);r.box(b,[s*4,14,0],[5,22,5],1);r.box(b,[s*4,7,0],[5.5,12,6],0);r.box(b,[s*4,2,-1.4],[6,4,8],2)
+ b=r.bone('arm_'+str(s),'body',[s*9,41,0]);r.bevel(b,[s*10,40,0],[7,6,8],2,[0,0,s*10]);r.box(b,[s*11,34,0],[4,10,4],1);r.bevel(b,[s*11,29,-.3],[5,7,5],0);r.box(b,[s*11,26,-.3],[4,3,4],2);r.gem(b,[s*11,31,-3],[2,5,1],4)
+ r.bone('leg_'+str(s),'root',[s*4,25,0]);b='leg_'+str(s);r.box(b,[s*4,14,0],[5,22,5],1);r.bevel(b,[s*4,7,0],[5.5,12,6],0);r.bevel(b,[s*4,2,-1.4],[6,4,8],2)
 for n in range(7):
  b=r.bone('tabard_'+str(n),'body',[(n-3)*2.4,28,4],rotation=[-8,0,(n-3)*7]);r.box(b,[(n-3)*2.4,17,4],[2.8,22-n%2*3,.9],0);r.box(b,[(n-3)*2.4,7+n%2*1.5,4],[3,2,1.3],2);r.sway(b,0,4,n*.5)
-r.bone('head','body',[0,46,0]);r.box('head',[0,50,0],[9,11,8],0);r.box('head',[0,49,-4.3],[7,8,1],1);r.box('head',[0,46,-4.8],[4,2,1.2],2)
+r.bone('head','body',[0,46,0]);r.bevel('head',[0,50,0],[9,11,8],0);r.box('head',[0,49,-4.3],[7,8,1],1);r.box('head',[0,46,-4.8],[4,2,1.2],2)
 for s in [-1,1]:r.box('head',[s*1.8,51,-5],[2.4,.65,.5],4,[0,0,s*8]);r.box('head',[s*4,53,-.5],[2,6,9],2);r.box('head',[s*4,58,-.5],[1.5,6,2],2,[0,0,-s*14])
 r.gem('head',[0,56,-3],[2,6,1.5],3);r.ring('crown_halo',12,58,24,2,'body',tilt=[75,0,0],width=.7);r.spin('crown_halo',1,45)
 for tier in range(3):
  for s in [-1,1]:
   n=tier*2+(s==1);b=r.bone('wing_'+str(n),'body',[s*5,40-tier*5,3],rotation=[-10,s*10,s*(tier-1)*34]);r.box(b,[s*18,40-tier*5,4],[27,2,3],2)
   for f in range(9):
-   x=s*(9+f*3);y=40-tier*5;fb=r.bone('feather_'+str(n)+'_'+str(f),b,[x,y,4],rotation=[0,0,s*(22+f*.8)]);length=19-f*.85;r.box(fb,[x,y-length/2,4],[2.5,length,1.2],0);r.box(fb,[x,y-length/2,3.2],[.65,length+.8,.6],2);r.gem(fb,[x,y-length+1,3.5],[1.3,4,1],4)
+   x=s*(9+f*3);y=40-tier*5;fb=r.bone('feather_'+str(n)+'_'+str(f),b,[x,y,4],rotation=[0,0,s*(22+f*.8)]);length=19-f*.85;r.leaf(fb,[x,y-length/2,4],[2.5,length,1.2],0);r.box(fb,[x,y-length/2,3.2],[.65,length+.8,.6],2);r.gem(fb,[x,y-length+1,3.5],[1.3,4,1],4)
   r.sway(b,2,6,tier*.6);r.motion[b]['position']={'0':[0,0,0],'1.5':[0,1.2,0],'3':[0,0,0]}
 for phase in [2,3]:
  b=r.bone('phase_'+str(phase),'head',[0,57,0]);
@@ -249,13 +273,13 @@ r.anim['animation.ananke.ascend']={'animation_length':1.8,'bones':{'body':{'posi
 r.save()
 # Native NPC bodies/equipment remain native; new animated original accessories.
 for who,theme in [('alma','rune'),('gemma','storm')]:
- r=Rig(who+'_equipment',theme);r.bone('pack',pivot=[0,20,3]);r.box('pack',[0,19,4.8],[7,9,3],0);r.box('pack',[0,23,6.5],[8,2,1],2);r.box('pack',[0,18,6.5],[.7,7,.5],2)
+ r=Rig(who+'_equipment',theme);r.bone('pack',pivot=[0,20,3]);r.bevel('pack',[0,19,4.8],[7,9,3],0);r.box('pack',[0,23,6.5],[8,2,1],2);r.box('pack',[0,18,6.5],[.7,7,.5],2)
  if who=='alma':
   book(r,'journal',[5,18,3],'pack');r.box('pack',[-5,18,3],[2,10,2],5);r.box('pack',[-5,23,3],[2.5,1,2.5],2)
  else:
   for n in range(3):r.box('pack',[n*2-2,24,4],[1,8,1],2);r.box('pack',[n*2-2,28,4],[2.5,1,1.5],6)
  r.sway('pack',2,2);r.save()
-write(SOURCE/'manifest.json',{'schema':1,'effects':manifest,'boss':'ananke','otherworlders':['alma_equipment','gemma_equipment'],'custom_optics':['singularity horizons and stable disks','fluid sheets and caustics','beams and trails','exact boss damage warnings']})
+write(SOURCE/'manifest.json',{'schema':2,'effects':manifest,'boss':'ananke','otherworlders':['alma_equipment','gemma_equipment'],'custom_optics':['bone-attached continuous rings, facets, curved leaves and beveled solids','singularity horizons and stable disks','fluid sheets and caustics','beams and trails','exact boss damage warnings']})
 print(f'Authored {len(PROFILES)} effect rigs, 2 style variants, 1 boss and 2 NPC accessories.')
 
 rows=[f'        new VisualRig({id},"{name}","{theme}",Placement.{placement.upper()})' for id,name,theme,shape,placement in PROFILES]
@@ -275,7 +299,7 @@ for item in ['writ_of_last_dawn','dawn_testament']:
  else:
   r.box('root',[8,8,8],[9,12,3],5)
   for z in [6.3,9.7]:r.box('root',[8,8,z],[10,13,.6],1);r.box('root',[8,8,z],[8.5,11.5,.75],2)
-  r.box('root',[3.2,8,8],[1,13,4],2);r.gem('root',[8,8,5.7],[3,6,.6],4)
+  r.box('root',[3.2,8,8],[1,13,4],2);r.box('root',[8,8,5.7],[3.5,3.5,.6],4,[0,0,45])
  r.save();p=SOURCE/f'{item}.bbmodel';d=json.loads(p.read_text());d['meta']['model_format']='java_block';d['animations']=[];d['textures'][0].update(namespace='wildhunt',folder='item',name='myths_material.png')
  d['display']={'gui':{'rotation':[20,-30,0],'translation':[0,0,0],'scale':[.9,.9,.9]},'ground':{'rotation':[0,0,0],'translation':[0,3,0],'scale':[.6,.6,.6]},'thirdperson_righthand':{'rotation':[0,0,0],'translation':[0,2,0],'scale':[.65,.65,.65]},'firstperson_righthand':{'rotation':[0,-20,0],'translation':[0,2,0],'scale':[.65,.65,.65]}}
  write(SOURCE/'items'/p.name,d);p.unlink()

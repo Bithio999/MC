@@ -2,7 +2,7 @@ plugins {
     id 'java-library'
     id 'net.neoforged.moddev' version '2.0.148'
 }
-version = '0.29.0'
+version = '0.29.1'
 group = 'dev.wildhunt'
 base { archivesName = 'tensura-myths' }
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)

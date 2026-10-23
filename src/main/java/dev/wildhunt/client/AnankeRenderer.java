@@ -20,8 +20,11 @@ public final class AnankeRenderer extends software.bernie.geckolib.renderer.GeoE
     @Override public int getPackedOverlay(AnankeEntity e,float u,float partial){return net.minecraft.client.renderer.texture.OverlayTexture.pack(0,e.hasDamageFeedback());}
     @SubscribeEvent public static void renderers(EntityRenderersEvent.RegisterRenderers event){event.registerEntityRenderer(MythBosses.ANANKE.get(),AnankeRenderer::new);}
     @Override public ResourceLocation getTextureLocation(AnankeEntity entity){return WildHunt.id("textures/geo/ananke.png");}
+    @Override public void renderCubesOfBone(PoseStack p,software.bernie.geckolib.cache.object.GeoBone bone,com.mojang.blaze3d.vertex.VertexConsumer out,int light,int overlay,int color){
+        if(!SmoothGeoGeometry.render(p,bone,out,light,overlay,color))super.renderCubesOfBone(p,bone,out,light,overlay,color);
+    }
     @Override public void render(AnankeEntity entity,float yaw,float partial,PoseStack p,MultiBufferSource b,int light){
-        super.render(entity,yaw,partial,p,b,light);float age=entity.tickCount+partial;VfxMesh.begin(entity.getPosition(partial));optics.begin();
+        VfxMesh.begin(entity.getPosition(partial));super.render(entity,yaw,partial,p,b,light);float age=entity.tickCount+partial;optics.begin();
         p.pushPose();p.translate(0,3.65+.04*Math.sin(age*.06),0);p.mulPose(Axis.YP.rotationDegrees(-yaw));p.mulPose(Axis.ZP.rotation(age*.004f));
         int gold=0xFFFFD486;ring(p,optics,Vec3.ZERO,1.1,.055,0,1,tint(gold,.95));ring(p,optics,Vec3.ZERO,1.32,.035,0,1,tint(gold,.6));
         for(int n=0;n<12;n++){double a=n*Math.PI/6;Vec3 at=new Vec3(Math.cos(a)*1.32,Math.sin(a)*1.32,0);beam(p,optics,at,new Vec3(Math.cos(a)*1.53,Math.sin(a)*1.53,0),.025,tint(gold,.8));}

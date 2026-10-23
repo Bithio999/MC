@@ -31,9 +31,13 @@ final class OtherworlderEquipment extends GeoObjectRenderer<OtherworlderEquipmen
     // Values hold their owner, so a WeakHashMap alone would still retain entities.
     private final java.util.Map<Integer,Gear> gears=new java.util.HashMap<>();
     OtherworlderEquipment(){super(new Model());}
+    @Override public void renderCubesOfBone(PoseStack p,software.bernie.geckolib.cache.object.GeoBone bone,com.mojang.blaze3d.vertex.VertexConsumer out,int light,int overlay,int color){
+        if(!SmoothGeoGeometry.render(p,bone,out,light,overlay,color))super.renderCubesOfBone(p,bone,out,light,overlay,color);
+    }
     void renderEquipment(HunterOtherworlderEntity e,float partial,PoseStack p,MultiBufferSource buffers,int light){
         gears.values().removeIf(g->g.owner.isRemoved() || g.owner.level()!=e.level());
         if(e.isInvisible() || e.isSleeping())return;
+        VfxMesh.begin(e.getPosition(partial));
         var gear=gears.compute(e.getId(),(id,old)->old!=null && old.owner==e?old:new Gear(e));
         p.pushPose();float yaw=net.minecraft.util.Mth.rotLerp(partial,e.yBodyRotO,e.yBodyRot);
         p.mulPose(Axis.YP.rotationDegrees(180-yaw));float scale=e.getScale();p.scale(scale,scale,scale);

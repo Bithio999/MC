@@ -39,6 +39,9 @@ async function download(url){
   },model);
   if(result.item){fs.writeFileSync(path.join(assets,'models/item',path.basename(f,'.bbmodel')+'.json'),JSON.stringify(result.item,null,2)+'\n');console.log(f,'Java item model');continue;}
   if(!result.geo['minecraft:geometry']?.[0]?.bones?.length||!Object.keys(result.animation.animations||{}).length)throw Error('Empty export: '+f+' '+JSON.stringify(result));
+  // Curved-surface bones retain their editor previews in the .bbmodel. Their
+  // runtime vertices come from SmoothGeoGeometry, so don't bake invisible cubes.
+  for(const bone of result.geo['minecraft:geometry'][0].bones)if(bone.name.startsWith('surface_'))delete bone.cubes;
   const name=f.replace('.bbmodel','');
   fs.writeFileSync(path.join(assets,'geo/myths',name+'.geo.json'),JSON.stringify(result.geo,null,2)+'\n');
   fs.writeFileSync(path.join(assets,'animations/myths',name+'.animation.json'),JSON.stringify(result.animation,null,2)+'\n');

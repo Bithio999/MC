@@ -25,6 +25,9 @@ public final class ArtVisualRenderer extends software.bernie.geckolib.renderer.G
         event.registerEntityRenderer(ArtVisualEntity.MYTH_TYPE.get(), ArtVisualRenderer::new);
     }
     @Override public ResourceLocation getTextureLocation(ArtVisualEntity entity) { return getGeoModel().getTextureResource(entity); }
+    @Override public void renderCubesOfBone(PoseStack p,software.bernie.geckolib.cache.object.GeoBone bone,com.mojang.blaze3d.vertex.VertexConsumer out,int light,int overlay,int color){
+        if(!SmoothGeoGeometry.render(p,bone,out,light,overlay,color))super.renderCubesOfBone(p,bone,out,light,overlay,color);
+    }
     @Override public net.minecraft.client.renderer.RenderType getRenderType(ArtVisualEntity e,ResourceLocation texture,MultiBufferSource buffers,float partial){return net.minecraft.client.renderer.RenderType.entityTranslucent(texture);}
     @Override public boolean shouldRender(ArtVisualEntity entity,net.minecraft.client.renderer.culling.Frustum frustum,double x,double y,double z) {
         return entity.kind()==ArtVisualEntity.CAUSAL_RAY && entity.ownedBy(net.minecraft.client.Minecraft.getInstance().player) || super.shouldRender(entity,frustum,x,y,z);
@@ -126,7 +129,11 @@ public final class ArtVisualRenderer extends software.bernie.geckolib.renderer.G
             case RADIAL->{scale(p,Math.min(1.5,r/0.85),1,Math.min(1.5,r/0.85));}
             case HORIZON->{p.translate(0,1,0);scale(p,r*.22,r*.22,r*.22);}
             case ANCHOR->{if(e.kind()==ArtVisualEntity.CAUSAL_ANCHOR)p.translate(0,.15,0);}
-            case GATE->{p.mulPose(com.mojang.math.Axis.YP.rotation((float)d.z));scale(p,r/0.85,r/0.85,1);}
+            case GATE->{
+                p.mulPose(com.mojang.math.Axis.YP.rotation((float)d.z));
+                // Keep the frame centered on the 2.8-block opening as its width changes.
+                double vertical=1.4/(13/16d);p.translate(0,1.4-(18/16d)*vertical,0);scale(p,r/(13/16d),vertical,1);
+            }
             case SKY->{p.translate(0,5,0);scale(p,r*.7,1,r*.7);}
             case SINGULARITY->{p.translate(0,4,0);scale(p,2,2,2);}
             case BREAKER->{double radius=r*Math.clamp(age/40d,0,1);scale(p,radius/0.85,1,radius/0.85);}

@@ -4,7 +4,9 @@
 
 Tensura Myths gives each skill family an individual visual language, using articulated models, original inscription and surface textures, smooth keyframe animation and Tensura’s native magic circles. Effects are full-bright where appropriate and require no shader pack.
 
-The formations combine detailed solid structures with flowing light: engraved storm conductors, coral crests, segmented oil tendons, hinged parchment grimoires, fate looms, recessed codices and reconstructed weapons. Ananke has layered armor, articulated feathers, ritual poses and an ascending phase animation. Alma and Gemma carry animated journals and smithing tools. The summoning scroll and Dawn Testament have three-dimensional item models.
+The formations combine detailed solid structures with flowing light: engraved storm conductors, coral crests, curved oil tendons, hinged parchment grimoires, fate looms, recessed codices and reconstructed weapons. Ananke has layered armor, articulated feathers, ritual poses and an ascending phase animation. Alma and Gemma carry animated journals and smithing tools. The summoning scroll and Dawn Testament have three-dimensional item models.
+
+Ring frames have continuous beveled curves and luminous inlays. Crystals and reconstructed weapon tips taper to actual points; leaves, petals, water crests and feathers use curved surfaces. Book covers, tablets and selected armor edges are beveled. These refinements preserve each skill’s attack footprint and timing.
 
 ## Display settings
 

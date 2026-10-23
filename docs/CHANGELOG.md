@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.29.1 — Smooth model silhouettes
+
+- Replace 73 segmented ring structures with continuous beveled annuli, smooth circumferential normals and luminous inlays, attached to the existing animated bones. Gates, conductors, orreries, meridians and Ananke’s crown use the same path. Janus’s frame and aperture now share their center and opening height.
+- Replace stepped crystal/gem bodies and blunt weapon tips with true facets; curve foliage, petals, water crests and wing feathers. Bevel grimoire covers, codices, selected armor and accessory packs. Remove cuboid shells from Oil Lash’s continuous tube.
+- Cache custom surface vertices at three distance levels; omit editor preview cubes from the exported runtime geometry. Preserve native lighting, glow masks and Ananke’s confirmed hit overlay.
+- Refresh the native visual gallery and offline wiki. Gameplay values, targeting, progression and phase behavior are unchanged.
+
+
 ## 0.29.0 — Authored models and animated world visuals
 
 - Add 69 original, editable Blockbench projects and export them through the official editor/GeckoLib plugin: 62 effect rigs, two impact variants, Ananke, two NPC equipment rigs and two ritual item models.

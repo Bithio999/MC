@@ -112,13 +112,10 @@ final class MythicGeometry {
     }
     private static void gate(PoseStack p,MultiBufferSource b,double r,float age,int life,boolean exit){
         double f=fade(age,life),t=age*.05;int color=exit?GOLD:PURPLE;double height=2.8*f;
-        for(int side:new int[]{-1,1}){
-            List<Vec3> frame=new ArrayList<>();for(int n=0;n<=12;n++){double s=n/12d;frame.add(new Vec3(side*r*f*(1-.2*s*s),height*s,.03*Math.sin(s*Math.PI)));}tube(p,b,frame,.105*f,.085,STONE,exit?0xFF9A7D67:0xFF726885);
-            for(int n=1;n<frame.size();n++)beam(p,b,frame.get(n-1),frame.get(n),.045*f,tint(color,.9*f));
-        }
-        Vec3 topLeft=new Vec3(-r*.8*f,height,0),topRight=new Vec3(r*.8*f,height,0);beam(p,b,topLeft,topRight,.075*f,tint(color,f));
+        p.pushPose();p.translate(0,height*.5,0);p.scale((float)(r*f),(float)(height*.5),1);
+        ring(p,b,Vec3.ZERO,1,.015,0,1,tint(color,.9*f));p.popPose();
         // A recessed, translucent aperture with independent spirals, rather than an opaque screen.
-        for(int layer=0;layer<3;layer++){p.pushPose();p.translate(0,1.4*f,-.025-layer*.045);p.scale(1,1.1f,1);seal(p,b,GATE,Vec3.ZERO,r*.92*f,t*(layer%2==0?.2:-.13),Math.PI/2,tint(color,(.35-layer*.08)*f));p.popPose();}
+        for(int layer=0;layer<3;layer++){p.pushPose();p.translate(0,1.4*f,-.025-layer*.045);p.scale(1,(float)(1.4/(r*.92)),1);seal(p,b,GATE,Vec3.ZERO,r*.92*f,t*(layer%2==0?.2:-.13),Math.PI/2,tint(color,(.35-layer*.08)*f));p.popPose();}
         for(int n=0;n<8;n++){double y=(n*.35+t*.3)%2.8;glow(p,b,new Vec3((n%2==0?-1:1)*r*f,y,.05),.13*f,tint(color,.8*f));}
         seal(p,b,CIRCUIT,new Vec3(0,.04,0),r*.8*f,t*.12,0,tint(color,.45*f));
     }

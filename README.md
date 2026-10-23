@@ -5,12 +5,12 @@ An expanded progression and skills addon for **Tensura 2.0.1.3**, **Minecraft
 
 ## Download
 
-The built addon is included at [releases/tensura-myths-0.29.0.jar](releases/tensura-myths-0.29.0.jar).
+The built addon is included at [releases/tensura-myths-0.29.1.jar](releases/tensura-myths-0.29.1.jar).
 Install it alongside Tensura and its required dependencies on both client and server, including **GeckoLib 4.9.3 (4.x)**.
 
 ## Visuals
 
-World effects and Ananke use original **Blockbench models and GeckoLib animations**, combined with custom fluid surfaces, beams, trails and black-hole optics. The release includes 62 effect rigs, Ananke’s layered six-wing rig, animated NPC equipment and two modeled ritual items. [Visual gallery](wiki/pages/Visual-Effects.md) · [Editable projects](art/blockbench) · [Artist workflow](docs/VISUAL_PIPELINE.md).
+World effects and Ananke use original **Blockbench models and GeckoLib animations**, combined with smooth ring structures, faceted crystals, curved organic surfaces, beveled solid edges, fluid sheets, beams, trails and black-hole optics. The release includes 62 effect rigs, Ananke’s layered six-wing rig, animated NPC equipment and two modeled ritual items. [Visual gallery](wiki/pages/Visual-Effects.md) · [Editable projects](art/blockbench) · [Artist workflow](docs/VISUAL_PIPELINE.md).
 
 ## First Myth boss
 
@@ -89,7 +89,7 @@ An independent secondary grants **10% extra native EP gain**, retaining the prim
 
 ## Updating
 
-Replace the previous addon JAR with **0.29.0** on client and server. Install only one addon version. The `wildhunt` namespace remains stable for existing saves.
+Replace the previous addon JAR with **0.29.1** on client and server. Install only one addon version. The `wildhunt` namespace remains stable for existing saves.
 
 Ordinary elemental attribute bonuses use the strongest source per element; Godly bonuses remain separate. Mirrorbound, Demeter, Janus and Thoth no longer give passive shields; old saved contributions are cleaned automatically. Water Veil, Colossus Carapace and Aion retain their dedicated defenses. Demeter’s second mode is Perennial Seed: a one-use 40% HP/SHP rescue effect.
 
@@ -99,7 +99,7 @@ The [changelog](docs/CHANGELOG.md) records development changes separately from t
 
 ## Wiki
 
-Read the [Tensura Myths Wiki](wiki/README.md) for individual skill/race articles, per-ability damage types, progression and commands. [Download the styled offline edition](releases/tensura-myths-wiki-0.29.0.zip), extract it and open `index.html` for the wiki layout, infoboxes, screenshots and offline search. The [GitHub Wiki edition](wiki/github/Home.md) is prepared for the separate Wiki when it is available; [publishing instructions](docs/WIKI.md).
+Read the [Tensura Myths Wiki](wiki/README.md) for individual skill/race articles, per-ability damage types, progression and commands. [Download the styled offline edition](releases/tensura-myths-wiki-0.29.1.zip), extract it and open `index.html` for the wiki layout, infoboxes, screenshots and offline search. The [GitHub Wiki edition](wiki/github/Home.md) is prepared for the separate Wiki when it is available; [publishing instructions](docs/WIKI.md).
 
 ## Build and test
 
@@ -126,9 +126,9 @@ vertical dashes, through-wall ricochets, momentum preservation, native shield
 breakage and timed recovery, HP/SHP evolution, aura regeneration and native NPC loadouts.
 `./gradlew runClient` starts a development client on a machine with graphics.
 
-The [0.29.0 validation report](docs/VALIDATION-0.29.0.md) covers the full native GameTest suite, Ananke’s resources, AI, warnings, damage, lifecycle and arena integration, 11 JUnit tests, native defense activation and migration, Infinite Regeneration, complete native defenses, tactical behavior and documentation checks.
+The [0.29.1 validation report](docs/VALIDATION-0.29.1.md) covers the full native GameTest suite, Ananke’s resources, AI, warnings, damage, lifecycle and arena integration, 11 JUnit tests, native defense activation and migration, Infinite Regeneration, complete native defenses, tactical behavior and documentation checks.
 
-Install `build/libs/tensura-myths-0.29.0.jar` on **both client and server**,
+Install `build/libs/tensura-myths-0.29.1.jar` on **both client and server**,
 alongside Tensura and its required dependencies. The addon jar is not a complete
 modpack. Additional development dependency versions are in `runtime-mods.lock.json`.
 
