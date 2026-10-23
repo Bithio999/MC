@@ -5,12 +5,20 @@ An expanded progression and skills addon for **Tensura 2.0.1.3**, **Minecraft
 
 ## Download
 
-The built addon is included at [releases/tensura-myths-0.29.1.jar](releases/tensura-myths-0.29.1.jar).
+The built addon is included at [releases/tensura-myths-0.30.0.jar](releases/tensura-myths-0.30.0.jar).
 Install it alongside Tensura and its required dependencies on both client and server, including **GeckoLib 4.9.3 (4.x)**.
 
 ## Visuals
 
-World effects and Ananke use original **Blockbench models and GeckoLib animations**, combined with smooth ring structures, faceted crystals, curved organic surfaces, beveled solid edges, fluid sheets, beams, trails and black-hole optics. The release includes 62 effect rigs, Ananke’s layered six-wing rig, animated NPC equipment and two modeled ritual items. [Visual gallery](wiki/pages/Visual-Effects.md) · [Editable projects](art/blockbench) · [Artist workflow](docs/VISUAL_PIPELINE.md).
+World effects and Myth bosses use original **Blockbench models and GeckoLib animations**, combined with smooth ring structures, faceted crystals, curved organic surfaces, beveled solid edges, fluid sheets, beams, trails and black-hole optics. The release includes 72 effect rigs, both Myth bosses, destructible Genesis Seals, animated NPC equipment and four modeled ritual items. [Visual gallery](wiki/pages/Visual-Effects.md) · [Editable projects](art/blockbench) · [Artist workflow](docs/VISUAL_PIPELINE.md).
+
+## Final Myth
+
+**[Eschaton, the Last Myth](wiki/pages/Eschaton.md)** is an original **1,000,000,000-EP Origin Sovereign** with 1,000,000 HP, 4,000,000 SHP and three fatal-damage forms. His 54-skill package combines the boss-exclusive Godly **Demiurge, God of Genesis**, Aion, Thoth, native Infinite Regeneration and all 44 native resistance/nullification skills. Eight distinct arts culminate in a ten-second apocalypse with destructible creation seals: break them to drain real resources, create golden refuges and interrupt the attack. Four bossbars expose his finite resource economy.
+
+An original four-armed Blockbench/GeckoLib model unfolds its crescent mantle and seven-blade crown through the fight. A celestial canopy, lensed world seed, seven-element stars, expanding gapped fronts and locked spatial corridors use custom rendering for their exact warnings. Confirmed damage flashes red.
+
+Craft **Last Convergence** from four Beacons, two Nether Stars, two Dragon’s Breath and Ananke’s Dawn Testament; use it on a **beacon** in a large open arena. Player victory guarantees the **Crown of the Last Myth**: a one-time 25M base-EP gift and permanent +20% native maximum HP/SHP modifiers. [Encounter and rewards](wiki/pages/Eschaton.md) · [All eight arts and damage types](wiki/pages/Demiurge.md) · [Implementation research](docs/research/FINAL_MYTH_IMPLEMENTATION.md).
 
 ## First Myth boss
 
@@ -89,7 +97,7 @@ An independent secondary grants **10% extra native EP gain**, retaining the prim
 
 ## Updating
 
-Replace the previous addon JAR with **0.29.1** on client and server. Install only one addon version. The `wildhunt` namespace remains stable for existing saves.
+Replace the previous addon JAR with **0.30.0** on client and server. Install only one addon version. The `wildhunt` namespace remains stable for existing saves.
 
 Ordinary elemental attribute bonuses use the strongest source per element; Godly bonuses remain separate. Mirrorbound, Demeter, Janus and Thoth no longer give passive shields; old saved contributions are cleaned automatically. Water Veil, Colossus Carapace and Aion retain their dedicated defenses. Demeter’s second mode is Perennial Seed: a one-use 40% HP/SHP rescue effect.
 
@@ -99,7 +107,7 @@ The [changelog](docs/CHANGELOG.md) records development changes separately from t
 
 ## Wiki
 
-Read the [Tensura Myths Wiki](wiki/README.md) for individual skill/race articles, per-ability damage types, progression and commands. [Download the styled offline edition](releases/tensura-myths-wiki-0.29.1.zip), extract it and open `index.html` for the wiki layout, infoboxes, screenshots and offline search. The [GitHub Wiki edition](wiki/github/Home.md) is prepared for the separate Wiki when it is available; [publishing instructions](docs/WIKI.md).
+Read the [Tensura Myths Wiki](wiki/README.md) for individual skill/race articles, per-ability damage types, progression and commands. [Download the styled offline edition](releases/tensura-myths-wiki-0.30.0.zip), extract it and open `index.html` for the wiki layout, infoboxes, screenshots and offline search. The [GitHub Wiki edition](wiki/github/Home.md) is prepared for the separate Wiki when it is available; [publishing instructions](docs/WIKI.md).
 
 ## Build and test
 
@@ -126,9 +134,9 @@ vertical dashes, through-wall ricochets, momentum preservation, native shield
 breakage and timed recovery, HP/SHP evolution, aura regeneration and native NPC loadouts.
 `./gradlew runClient` starts a development client on a machine with graphics.
 
-The [0.29.1 validation report](docs/VALIDATION-0.29.1.md) covers the full native GameTest suite, Ananke’s resources, AI, warnings, damage, lifecycle and arena integration, 11 JUnit tests, native defense activation and migration, Infinite Regeneration, complete native defenses, tactical behavior and documentation checks.
+The [0.30.0 validation report](docs/VALIDATION-0.30.0.md) covers Eschaton’s real billion EP, native resource economy, fatal forms, eight arts, seals, rewards and arena integration alongside the existing regression suite, asset export checks and native-client visual review.
 
-Install `build/libs/tensura-myths-0.29.1.jar` on **both client and server**,
+Install `build/libs/tensura-myths-0.30.0.jar` on **both client and server**,
 alongside Tensura and its required dependencies. The addon jar is not a complete
 modpack. Additional development dependency versions are in `runtime-mods.lock.json`.
 

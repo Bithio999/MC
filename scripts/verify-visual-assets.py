@@ -8,7 +8,7 @@ manifest=json.loads((source/'manifest.json').read_text());effects=manifest['effe
 assert manifest['schema']==2
 protocol=(ROOT/'src/main/java/dev/wildhunt/ArtVisualEntity.java').read_text()
 ids={int(n) for name,n in re.findall(r'([A-Z][A-Z_]+)\s*=\s*(\d+)',protocol)}
-assert {e['kind'] for e in effects}==ids and len(effects)==len(ids)==62
+assert {e['kind'] for e in effects}==ids and len(effects)==len(ids)==72
 routes=(ROOT/'src/main/java/dev/wildhunt/visual/VisualRig.java').read_text()
 for e in effects:assert f'new VisualRig({e["kind"]},"{e["asset"]}","{e["theme"]}"' in routes,e
 count=cubes=clips=surfaces=rings=0
@@ -18,12 +18,17 @@ for project in sorted(source.glob('*.bbmodel')):
  anim=json.loads((assets/'animations/myths'/f'{name}.animation.json').read_text())['animations']
  bones={b['name']:b for b in geo['bones']};assert len(bones)==len(geo['bones'])
  if name=='ananke':assert {'head','body','phase_2','phase_3',*[f'wing_{n}' for n in range(6)]}<=set(bones)
+ if name=='eschaton':
+  assert {'head','heart','ruin_arms','ruin_mantle','last_crown','worldblade',*[f'last_blade_{n}' for n in range(7)],*[f'tail_{n}' for n in range(10)]}<=set(bones)
+  assert all('animation.eschaton.'+clip in anim for clip in ['advance','edge','conjure','apocalypse','thronefall','stagger','unfold'])
+  assert any(b.startswith('surface_crescent_') for b in bones)
+ if name=='genesis_seal':assert sum(b.startswith('surface_crescent_') for b in bones)>=3
  if name=='oil_lash':assert {f'tendon_{n}' for n in range(10)}<=set(bones)
  if name=='reconstructed_crown':assert {f'blade_{n}' for n in range(7)}<=set(bones)
  for b in bones.values():
   if b['name'].startswith('surface_'):
    parts=b['name'].split('_');assert len(parts)==7,(name,b['name'])
-   assert parts[1] in {'ring','gem','leaf','box'}
+   assert parts[1] in {'ring','crescent','gem','leaf','box'}
    assert all(int(v)>0 for v in parts[3:6]) and 0<=int(parts[6])<8
    assert not b.get('cubes'), 'Preview cubes must not be baked into runtime surfaces'
    assert any(e['name'].startswith(b['name']+'_') for e in p['elements']), 'Missing editor surface preview'
@@ -50,7 +55,7 @@ for project in sorted(source.glob('*.bbmodel')):
  assert image.size==(geo['description']['texture_width'],geo['description']['texture_height'])
  glow=Image.open(tex.with_name(tex.stem+'_glowmask.png'));assert glow.size==image.size and glow.getbbox()
  count+=1;cubes+=len(p['elements']);clips+=len(anim)
-assert count==67,count
+assert count==79,count
 assert rings>=60 and surfaces>=400,(rings,surfaces)
 print(f'{len(ids)} protocol effects covered; {count} Blockbench/export pairs, {cubes} editor cubes and {clips} clips validated.')
 print(f'{surfaces} continuous/faceted surfaces including {rings} smooth rings replace their preview cubes at runtime.')

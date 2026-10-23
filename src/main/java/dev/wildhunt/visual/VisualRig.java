@@ -2,7 +2,7 @@ package dev.wildhunt.visual;
 
 /** Authored rig routing. IDs match the existing synchronized visual protocol. */
 public record VisualRig(int kind,String asset,String theme,Placement placement) {
-    public enum Placement {ANCHOR,ASCEND,BEAM,BLADE,BOSSFAN,BREAKER,CRYSTAL,DAWN,EDGE,FALL,FOLLOW,GATE,HORIZON,LASH,LIBRARY,MARKER,PROCESSION,RADIAL,SINGULARITY,SKY,STARS,TIP,WAVE}
+    public enum Placement {ANCHOR,ASCEND,BEAM,BLADE,BOSSFAN,BREAKER,CRYSTAL,DAWN,EDGE,FALL,FINALE,FINALE_SHATTER,FOLLOW,GATE,HORIZON,LASH,LIBRARY,MARKER,PROCESSION,RADIAL,SINGULARITY,SKY,STARS,TIP,WAVE}
     private static final VisualRig[] ALL={
         new VisualRig(0,"oil_lash","volcanic",Placement.LASH),
         new VisualRig(1,"glacial_spire","winter",Placement.CRYSTAL),
@@ -65,7 +65,17 @@ public record VisualRig(int kind,String asset,String theme,Placement placement) 
         new VisualRig(58,"procession_censer","ananke",Placement.PROCESSION),
         new VisualRig(59,"last_dawn_orrery","ananke",Placement.DAWN),
         new VisualRig(60,"seraph_ascension","ananke",Placement.ASCEND),
-        new VisualRig(62,"seraph_threshold","ananke",Placement.ANCHOR)
+        new VisualRig(62,"seraph_threshold","ananke",Placement.ANCHOR),
+        new VisualRig(63,"origin_execution","eschaton",Placement.FINALE),
+        new VisualRig(64,"origin_star_loom","eschaton",Placement.FINALE),
+        new VisualRig(65,"origin_sevenfold","eschaton",Placement.FINALE),
+        new VisualRig(66,"origin_silent_scripture","eschaton",Placement.FINALE),
+        new VisualRig(67,"origin_serpent_wake","eschaton",Placement.FINALE),
+        new VisualRig(68,"origin_exchange","eschaton",Placement.FINALE),
+        new VisualRig(69,"origin_thronefall","eschaton",Placement.FINALE),
+        new VisualRig(70,"origin_apocalypse","eschaton",Placement.FINALE),
+        new VisualRig(71,"origin_apotheosis","eschaton",Placement.FINALE),
+        new VisualRig(72,"origin_star_shatter","eschaton",Placement.FINALE_SHATTER)
     };
     public static VisualRig forKind(int kind){for(var rig:ALL)if(rig.kind==kind)return rig;return null;}
     public static java.util.List<VisualRig> all(){return java.util.List.of(ALL);}

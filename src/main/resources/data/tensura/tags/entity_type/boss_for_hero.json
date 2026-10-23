@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "wildhunt:ananke"
+    "wildhunt:ananke",
+    "wildhunt:eschaton"
   ]
 }

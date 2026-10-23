@@ -785,5 +785,85 @@
     "damage_id": null,
     "secondary_damage_id": null,
     "anchor": "infinite-regeneration"
+  },
+  {
+    "skill": "Demiurge",
+    "name": "Crownless Edge",
+    "anchor": "crownless-edge",
+    "damage": "Physical aura slash",
+    "damage_id": "tensura:aura_slash",
+    "secondary_damage_id": null,
+    "tier": "Godly",
+    "kind": "Boss cast"
+  },
+  {
+    "skill": "Demiurge",
+    "name": "Astral Loom",
+    "anchor": "astral-loom",
+    "damage": "Light elemental",
+    "damage_id": "tensura:light_elemental",
+    "secondary_damage_id": null,
+    "tier": "Godly",
+    "kind": "Boss cast"
+  },
+  {
+    "skill": "Demiurge",
+    "name": "Sevenfold Genesis",
+    "anchor": "sevenfold-genesis",
+    "damage": "Fire, Water, Lightning, Earth, Wind, Light, Space",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "tier": "Godly",
+    "kind": "Boss cast"
+  },
+  {
+    "skill": "Demiurge",
+    "name": "Null Testament",
+    "anchor": "null-testament",
+    "damage": "Space elemental",
+    "damage_id": "tensura:space_elemental",
+    "secondary_damage_id": null,
+    "tier": "Godly",
+    "kind": "Boss cast"
+  },
+  {
+    "skill": "Demiurge",
+    "name": "World-Eater’s Wake",
+    "anchor": "world-eaters-wake",
+    "damage": "Darkness elemental",
+    "damage_id": "tensura:darkness_elemental",
+    "secondary_damage_id": null,
+    "tier": "Godly",
+    "kind": "Boss cast"
+  },
+  {
+    "skill": "Demiurge",
+    "name": "Primordial Exchange",
+    "anchor": "primordial-exchange",
+    "damage": "None — resource conversion",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "tier": "Godly",
+    "kind": "Boss channel"
+  },
+  {
+    "skill": "Demiurge",
+    "name": "Thronefall",
+    "anchor": "thronefall",
+    "damage": "Earth elemental",
+    "damage_id": "tensura:earth_elemental",
+    "secondary_damage_id": null,
+    "tier": "Godly",
+    "kind": "Boss cast"
+  },
+  {
+    "skill": "Demiurge",
+    "name": "The End of All Myths",
+    "anchor": "the-end-of-all-myths",
+    "damage": "Space elemental",
+    "damage_id": "tensura:space_elemental",
+    "secondary_damage_id": null,
+    "tier": "Godly",
+    "kind": "Boss cast"
   }
 ]

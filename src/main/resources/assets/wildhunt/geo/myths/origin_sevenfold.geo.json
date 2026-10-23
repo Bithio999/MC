@@ -1,0 +1,311 @@
+{
+  "format_version": "1.12.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.origin_sevenfold",
+        "texture_width": 256,
+        "texture_height": 128,
+        "visible_bounds_width": 2,
+        "visible_bounds_height": 2.5,
+        "visible_bounds_offset": [
+          0,
+          0.75,
+          0
+        ]
+      },
+      "bones": [
+        {
+          "name": "root",
+          "pivot": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "name": "star_0",
+          "parent": "root",
+          "pivot": [
+            0,
+            8,
+            0
+          ]
+        },
+        {
+          "name": "surface_gem_2_500_1600_500_3",
+          "parent": "star_0",
+          "pivot": [
+            0,
+            8,
+            0
+          ]
+        },
+        {
+          "name": "star_rail_0",
+          "parent": "star_0",
+          "pivot": [
+            0,
+            8,
+            0
+          ]
+        },
+        {
+          "name": "surface_crescent_4_600_60_50_2",
+          "parent": "star_rail_0",
+          "pivot": [
+            0,
+            8,
+            0
+          ]
+        },
+        {
+          "name": "star_1",
+          "parent": "root",
+          "pivot": [
+            0,
+            8,
+            0
+          ]
+        },
+        {
+          "name": "surface_gem_6_500_1600_500_3",
+          "parent": "star_1",
+          "pivot": [
+            0,
+            8,
+            0
+          ]
+        },
+        {
+          "name": "star_rail_1",
+          "parent": "star_1",
+          "pivot": [
+            0,
+            8,
+            0
+          ],
+          "rotation": [
+            -23,
+            0,
+            0
+          ]
+        },
+        {
+          "name": "surface_crescent_8_600_60_50_2",
+          "parent": "star_rail_1",
+          "pivot": [
+            0,
+            8,
+            0
+          ]
+        },
+        {
+          "name": "star_2",
+          "parent": "root",
+          "pivot": [
+            0,
+            8,
+            0
+          ]
+        },
+        {
+          "name": "surface_gem_10_500_1600_500_3",
+          "parent": "star_2",
+          "pivot": [
+            0,
+            8,
+            0
+          ]
+        },
+        {
+          "name": "star_rail_2",
+          "parent": "star_2",
+          "pivot": [
+            0,
+            8,
+            0
+          ],
+          "rotation": [
+            -46,
+            0,
+            0
+          ]
+        },
+        {
+          "name": "surface_crescent_12_600_60_50_2",
+          "parent": "star_rail_2",
+          "pivot": [
+            0,
+            8,
+            0
+          ]
+        },
+        {
+          "name": "star_3",
+          "parent": "root",
+          "pivot": [
+            0,
+            8,
+            0
+          ]
+        },
+        {
+          "name": "surface_gem_14_500_1600_500_3",
+          "parent": "star_3",
+          "pivot": [
+            0,
+            8,
+            0
+          ]
+        },
+        {
+          "name": "star_rail_3",
+          "parent": "star_3",
+          "pivot": [
+            0,
+            8,
+            0
+          ],
+          "rotation": [
+            -69,
+            0,
+            0
+          ]
+        },
+        {
+          "name": "surface_crescent_16_600_60_50_2",
+          "parent": "star_rail_3",
+          "pivot": [
+            0,
+            8,
+            0
+          ]
+        },
+        {
+          "name": "star_4",
+          "parent": "root",
+          "pivot": [
+            0,
+            8,
+            0
+          ]
+        },
+        {
+          "name": "surface_gem_18_500_1600_500_3",
+          "parent": "star_4",
+          "pivot": [
+            0,
+            8,
+            0
+          ]
+        },
+        {
+          "name": "star_rail_4",
+          "parent": "star_4",
+          "pivot": [
+            0,
+            8,
+            0
+          ],
+          "rotation": [
+            -92,
+            0,
+            0
+          ]
+        },
+        {
+          "name": "surface_crescent_20_600_60_50_2",
+          "parent": "star_rail_4",
+          "pivot": [
+            0,
+            8,
+            0
+          ]
+        },
+        {
+          "name": "star_5",
+          "parent": "root",
+          "pivot": [
+            0,
+            8,
+            0
+          ]
+        },
+        {
+          "name": "surface_gem_22_500_1600_500_3",
+          "parent": "star_5",
+          "pivot": [
+            0,
+            8,
+            0
+          ]
+        },
+        {
+          "name": "star_rail_5",
+          "parent": "star_5",
+          "pivot": [
+            0,
+            8,
+            0
+          ],
+          "rotation": [
+            -115,
+            0,
+            0
+          ]
+        },
+        {
+          "name": "surface_crescent_24_600_60_50_2",
+          "parent": "star_rail_5",
+          "pivot": [
+            0,
+            8,
+            0
+          ]
+        },
+        {
+          "name": "star_6",
+          "parent": "root",
+          "pivot": [
+            0,
+            8,
+            0
+          ]
+        },
+        {
+          "name": "surface_gem_26_500_1600_500_3",
+          "parent": "star_6",
+          "pivot": [
+            0,
+            8,
+            0
+          ]
+        },
+        {
+          "name": "star_rail_6",
+          "parent": "star_6",
+          "pivot": [
+            0,
+            8,
+            0
+          ],
+          "rotation": [
+            -138,
+            0,
+            0
+          ]
+        },
+        {
+          "name": "surface_crescent_28_600_60_50_2",
+          "parent": "star_rail_6",
+          "pivot": [
+            0,
+            8,
+            0
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -23,6 +23,7 @@ public final class ArtVisualRenderer extends software.bernie.geckolib.renderer.G
     @SubscribeEvent public static void register(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(ArtVisualEntity.TYPE.get(), ArtVisualRenderer::new);
         event.registerEntityRenderer(ArtVisualEntity.MYTH_TYPE.get(), ArtVisualRenderer::new);
+        event.registerEntityRenderer(ArtVisualEntity.FINAL_TYPE.get(), ArtVisualRenderer::new);
     }
     @Override public ResourceLocation getTextureLocation(ArtVisualEntity entity) { return getGeoModel().getTextureResource(entity); }
     @Override public void renderCubesOfBone(PoseStack p,software.bernie.geckolib.cache.object.GeoBone bone,com.mojang.blaze3d.vertex.VertexConsumer out,int light,int overlay,int color){
@@ -35,7 +36,8 @@ public final class ArtVisualRenderer extends software.bernie.geckolib.renderer.G
     @Override public void render(ArtVisualEntity entity, float yaw, float partial, PoseStack poses, MultiBufferSource buffers, int light) {
         float age = entity.tickCount + partial;
         VfxMesh.begin(entity.getPosition(partial));batch.begin();
-        if(AnankeGeometry.handles(entity.kind())){AnankeGeometry.render(entity,poses,batch,partial);}
+        if(EschatonGeometry.handles(entity.kind())){EschatonGeometry.render(entity,poses,batch,partial);}
+        else if(AnankeGeometry.handles(entity.kind())){AnankeGeometry.render(entity,poses,batch,partial);}
         else if(entity.kind()==ArtVisualEntity.CAUSAL_VERDICT && !entity.barrage().isEmpty()){SingularityGeometry.render(entity,poses,batch,partial);}
         else if(SovereignGeometry.handles(entity.kind())) {
             poses.pushPose();
@@ -94,10 +96,12 @@ public final class ArtVisualRenderer extends software.bernie.geckolib.renderer.G
         // Fluid surfaces, horizons and exact hit footprints remain procedural. Authored
         // armatures provide solid detail; the twenty moving holes retain their optics.
         if(e.kind()==ArtVisualEntity.CAUSAL_VERDICT && !e.barrage().isEmpty())return;
-        if(e.distanceToSqr(net.minecraft.client.Minecraft.getInstance().gameRenderer.getMainCamera().getPosition())>96*96 && !AnankeGeometry.handles(e.kind()))return;
+        if(e.distanceToSqr(net.minecraft.client.Minecraft.getInstance().gameRenderer.getMainCamera().getPosition())>96*96 && !AnankeGeometry.handles(e.kind()) && !EschatonGeometry.handles(e.kind()))return;
         float age=e.barrage().isEmpty()?e.tickCount+partial:e.barrageAge(partial);Vec3 d=e.end(partial);double r=Math.max(.4,Math.abs(d.x));
         p.pushPose();
         switch(rig.placement()){
+            case FINALE->{ }
+            case FINALE_SHATTER->{double size=Math.max(.3,e.end().x/5);scale(p,size,size,size);}
             case BEAM,LASH,TIP->{
                 Vec3 axis=d.normalize();
                 if(e.kind()==ArtVisualEntity.CAUSAL_RAY && e.ownedBy(net.minecraft.client.Minecraft.getInstance().player)){

@@ -52,7 +52,7 @@ public final class AnankeSupportGameTests {
         var old=SkillAPI.getSkillRegistry().get(ResourceLocation.parse("tensura:self_regeneration"));HunterData.learnReward(b,old);
         var tag=new CompoundTag();b.save(tag);tag.putInt("myth_support_version",1);tag.putLong("myth_renewal_remaining",500);b.discard();
         var copy=(AnankeEntity)EntityType.loadEntityRecursive(tag,h.getLevel(),e->e);h.getLevel().addFreshEntity(copy);
-        h.runAfterDelay(2,()->{enabled(h,copy);h.assertTrue(SkillAPI.getSkillsFrom(copy).getSkill(old).isEmpty(),"Old gradual regeneration survived migration");
+        h.startSequence().thenWaitUntil(()->{enabled(h,copy);h.assertTrue(SkillAPI.getSkillsFrom(copy).getSkill(old).isEmpty(),"Old gradual regeneration survived migration");}).thenExecute(()->{
             var saved=new CompoundTag();copy.save(saved);h.assertTrue(!saved.contains("myth_renewal_remaining") && !copy.isCasting() && saved.getInt("myth_support_version")==2,"Removed recovery state survived migration");h.succeed();});
     }
     @GameTest(template="empty",timeoutTicks=100)

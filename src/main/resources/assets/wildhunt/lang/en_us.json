@@ -100,5 +100,12 @@
   "entity.wildhunt.ananke": "Ananke, the Unwritten End",
   "item.wildhunt.ananke_spawn_egg": "Ananke Spawn Egg",
   "item.wildhunt.writ_of_last_dawn": "Writ of Last Dawn",
-  "item.wildhunt.dawn_testament": "Dawn Testament"
+  "item.wildhunt.dawn_testament": "Dawn Testament",
+  "entity.wildhunt.eschaton": "Eschaton, the Last Myth",
+  "entity.wildhunt.genesis_seal": "Genesis Seal",
+  "item.wildhunt.eschaton_spawn_egg": "Eschaton Spawn Egg",
+  "item.wildhunt.last_convergence": "The Last Convergence",
+  "item.wildhunt.crown_of_the_last_myth": "Crown of the Last Myth",
+  "item.wildhunt.origin_fragment": "Origin Fragment",
+  "wildhunt.skill.demiurge": "Demiurge, God of Genesis"
 }

@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.30.0 — The Last Myth
+
+- Add Eschaton, the Last Myth: an Origin Sovereign with exactly one billion native EP, 1M HP, 4M SHP, four resource bossbars and three fatal forms. Native Infinite Regeneration takes priority over revival.
+- Add boss-exclusive Godly Demiurge with eight paid, independently timed arts, plus actual Aion/Thoth auxiliary casts and the complete native defense package.
+- Add destructible Genesis Seals that drain finite resources, open golden refuges and interrupt the apocalypse with a stagger opening.
+- Add original Blockbench/GeckoLib boss, seal, ten effect rigs and two item models, smooth tapered crescents and custom celestial optics.
+- Add Last Convergence survival ritual, native multiplayer arena, final-kill loot, one-time Crown legacy and fragment rematch/recovery recipes.
+- Add complete boss, race and skill wiki articles with per-ability damage types, encounter strategy and rewards. Preserve existing content and the stable wildhunt namespace.
+
 ## 0.29.1 — Smooth model silhouettes
 
 - Replace 73 segmented ring structures with continuous beveled annuli, smooth circumferential normals and luminous inlays, attached to the existing animated bones. Gates, conductors, orreries, meridians and Ananke’s crown use the same path. Janus’s frame and aperture now share their center and opening height.

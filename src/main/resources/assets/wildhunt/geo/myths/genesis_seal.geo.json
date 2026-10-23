@@ -1,0 +1,152 @@
+{
+  "format_version": "1.12.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.genesis_seal",
+        "texture_width": 256,
+        "texture_height": 128,
+        "visible_bounds_width": 4,
+        "visible_bounds_height": 4.5,
+        "visible_bounds_offset": [
+          0,
+          1.75,
+          0
+        ]
+      },
+      "bones": [
+        {
+          "name": "root",
+          "pivot": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "name": "seed",
+          "parent": "root",
+          "pivot": [
+            0,
+            24,
+            0
+          ]
+        },
+        {
+          "name": "surface_gem_2_1100_3400_1100_3",
+          "parent": "seed",
+          "pivot": [
+            0,
+            24,
+            0
+          ]
+        },
+        {
+          "name": "ward_0",
+          "parent": "root",
+          "pivot": [
+            0,
+            24,
+            0
+          ],
+          "rotation": [
+            -60,
+            0,
+            0
+          ]
+        },
+        {
+          "name": "surface_crescent_4_2000_140_100_2",
+          "parent": "ward_0",
+          "pivot": [
+            0,
+            24,
+            0
+          ]
+        },
+        {
+          "name": "ward_1",
+          "parent": "root",
+          "pivot": [
+            0,
+            24,
+            0
+          ],
+          "rotation": [
+            -97,
+            0,
+            22
+          ]
+        },
+        {
+          "name": "surface_crescent_6_2200_140_100_2",
+          "parent": "ward_1",
+          "pivot": [
+            0,
+            24,
+            0
+          ]
+        },
+        {
+          "name": "ward_2",
+          "parent": "root",
+          "pivot": [
+            0,
+            24,
+            0
+          ],
+          "rotation": [
+            -134,
+            0,
+            44
+          ]
+        },
+        {
+          "name": "surface_crescent_8_2400_140_100_2",
+          "parent": "ward_2",
+          "pivot": [
+            0,
+            24,
+            0
+          ]
+        },
+        {
+          "name": "surface_gem_9_300_1400_300_5",
+          "parent": "root",
+          "pivot": [
+            -10,
+            5,
+            0
+          ]
+        },
+        {
+          "name": "surface_gem_10_300_1400_300_5",
+          "parent": "root",
+          "pivot": [
+            -6.123233995736766e-16,
+            5,
+            10
+          ]
+        },
+        {
+          "name": "surface_gem_11_300_1400_300_5",
+          "parent": "root",
+          "pivot": [
+            10,
+            5,
+            1.2246467991473533e-15
+          ]
+        },
+        {
+          "name": "surface_gem_12_300_1400_300_5",
+          "parent": "root",
+          "pivot": [
+            1.8369701987210296e-15,
+            5,
+            -10
+          ]
+        }
+      ]
+    }
+  ]
+}

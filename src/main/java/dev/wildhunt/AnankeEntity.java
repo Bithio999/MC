@@ -30,7 +30,7 @@ import net.minecraft.world.phys.*;
 import java.util.*;
 
 /** Thirty-million-EP myth. Native resources/skills; readable server-authoritative encounter choreography. */
-public final class AnankeEntity extends Monster implements IArenaBoss, software.bernie.geckolib.animatable.GeoEntity {
+public final class AnankeEntity extends Monster implements MythEncounter, IArenaBoss, software.bernie.geckolib.animatable.GeoEntity {
     private final software.bernie.geckolib.animatable.instance.AnimatableInstanceCache animationCache=software.bernie.geckolib.util.GeckoLibUtil.createInstanceCache(this);
     @Override public software.bernie.geckolib.animatable.instance.AnimatableInstanceCache getAnimatableInstanceCache(){return animationCache;}
     @Override public void registerControllers(software.bernie.geckolib.animation.AnimatableManager.ControllerRegistrar controllers){

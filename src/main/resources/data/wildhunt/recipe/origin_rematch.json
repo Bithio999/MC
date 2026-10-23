@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "wildhunt:origin_fragment"
+    },
+    {
+      "item": "wildhunt:origin_fragment"
+    },
+    {
+      "item": "wildhunt:origin_fragment"
+    },
+    {
+      "item": "wildhunt:origin_fragment"
+    },
+    {
+      "item": "minecraft:nether_star"
+    }
+  ],
+  "result": {
+    "id": "wildhunt:last_convergence",
+    "count": 1
+  }
+}

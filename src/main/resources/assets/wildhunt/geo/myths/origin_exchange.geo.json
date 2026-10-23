@@ -1,0 +1,115 @@
+{
+  "format_version": "1.12.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.origin_exchange",
+        "texture_width": 256,
+        "texture_height": 128,
+        "visible_bounds_width": 3,
+        "visible_bounds_height": 3.5,
+        "visible_bounds_offset": [
+          0,
+          1.25,
+          0
+        ]
+      },
+      "bones": [
+        {
+          "name": "root",
+          "pivot": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "name": "surface_gem_1_800_2000_800_3",
+          "parent": "root",
+          "pivot": [
+            0,
+            18,
+            0
+          ]
+        },
+        {
+          "name": "siphon",
+          "parent": "root",
+          "pivot": [
+            0,
+            18,
+            0
+          ],
+          "rotation": [
+            -90,
+            0,
+            0
+          ]
+        },
+        {
+          "name": "surface_crescent_3_1300_160_110_2",
+          "parent": "siphon",
+          "pivot": [
+            0,
+            18,
+            0
+          ]
+        },
+        {
+          "name": "surface_gem_4_200_1200_200_2",
+          "parent": "root",
+          "pivot": [
+            -11,
+            5,
+            0
+          ]
+        },
+        {
+          "name": "surface_gem_5_200_1200_200_2",
+          "parent": "root",
+          "pivot": [
+            -5.500000000000001,
+            5,
+            9.526279441628825
+          ]
+        },
+        {
+          "name": "surface_gem_6_200_1200_200_2",
+          "parent": "root",
+          "pivot": [
+            5.499999999999997,
+            5,
+            9.526279441628827
+          ]
+        },
+        {
+          "name": "surface_gem_7_200_1200_200_2",
+          "parent": "root",
+          "pivot": [
+            11,
+            5,
+            1.3471114790620886e-15
+          ]
+        },
+        {
+          "name": "surface_gem_8_200_1200_200_2",
+          "parent": "root",
+          "pivot": [
+            5.500000000000005,
+            5,
+            -9.526279441628823
+          ]
+        },
+        {
+          "name": "surface_gem_9_200_1200_200_2",
+          "parent": "root",
+          "pivot": [
+            -5.500000000000001,
+            5,
+            -9.526279441628825
+          ]
+        }
+      ]
+    }
+  ]
+}

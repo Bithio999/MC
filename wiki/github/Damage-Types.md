@@ -75,6 +75,8 @@ Any Godly skill owner gains the shared +35% bonus against non-Godly owners and r
 
 Moira’s [four boss rites](https://github.com/Bithio999/MC/wiki/Moira) use Aura Slash, Light, Darkness and Space. Ananke’s Thoth arts retain the exact player skill source types and ordinary mastered multiplier; Moira’s fixed encounter values have no mastery multiplier.
 
+Demiurge’s [eight final-boss arts](https://github.com/Bithio999/MC/wiki/Demiurge) use physical Aura Slash, Light, the seven-element spectrum, Space, Darkness and Earth. Primordial Exchange deals no damage. Its fixed encounter values receive native combat modifiers without a mastery or EP damage multiplier.
+
 ## Complete reference
 
 [Ability index](https://github.com/Bithio999/MC/wiki/Abilities) · [Skill overview](https://github.com/Bithio999/MC/wiki/Skills) · [Combat mechanics](https://github.com/Bithio999/MC/wiki/Mechanics)

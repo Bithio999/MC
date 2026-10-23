@@ -125,7 +125,7 @@ def render(source, destination, home=False):
                 content = content[:match.start()] + content[match.end():]
             else:
                 portrait = f'<div class="infobox-portrait"><img src="../assets/race/{slug.lower().replace("-", "_")}.png" width="128" height="128" alt="{html.escape(title)} race icon"></div>'
-        elif category == "Bosses" and slug == "Ananke":
+        elif category == "Bosses":
             match = re.search(r'<p><img [^>]*src="../assets/race/[^>]+></p>', content)
             if match:
                 portrait = '<div class="infobox-portrait">' + match[0] + '</div>'
@@ -153,7 +153,7 @@ def render(source, destination, home=False):
     elif category in ("Races", "Convergent races"):
         related_groups = [("Race directory", ["Races"]), ("Race systems", ["Duo-Races", "Convergent-Awakening"]), ("Human / Hunter", ["Evolution", "Awakened-Hunter", "Apex-Hunter", "Sovereign-Hunter"])]
     elif category == "Bosses":
-        related_groups = [("Myth bosses", ["Bosses", "Ananke"]), ("Boss lineage and arts", ["Eclipse-Seraph", "Moira", "Thoth"]), ("Combat reference", ["Abilities", "Damage-Types", "Commands"])]
+        related_groups = [("Myth bosses", ["Bosses", "Ananke", "Eschaton"]), ("Boss lineage and arts", ["Origin-Sovereign", "Demiurge", "Eclipse-Seraph", "Moira", "Thoth"]), ("Combat reference", ["Abilities", "Damage-Types", "Commands"])]
     elif category == "Otherworlders":
         related_groups = [("Otherworlders", ["Otherworlders", "Alma", "Gemma"]), ("Race", ["Awakened-Hunter"])]
     else:
@@ -186,12 +186,12 @@ def render(source, destination, home=False):
 <div class="global-bar"><span>TENSURA MYTHS</span><div><a href="https://tensura.wiki.gg/wiki/Tensura:_Reincarnated_Wiki">Base mod wiki</a><a href="https://github.com/Bithio999/MC">GitHub</a></div></div>
 <header class="masthead"><a class="brand" href="{prefix}index.html"><span class="brand-mark" aria-hidden="true">M</span><span>TENSURA MYTHS<small>Tensura: Reincarnated addon wiki</small></span></a>
 <div class="search"><label for="wiki-search">Search Tensura Myths Wiki</label><input id="wiki-search" type="search" placeholder="Search skills, races, characters…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="search-results" aria-expanded="false"><div id="search-results" role="listbox" aria-label="Search results" hidden></div><span id="search-status" class="sr-only" aria-live="polite"></span></div></header>
-<div class="layout"><button id="navigation-toggle" aria-controls="wiki-navigation" aria-expanded="false">☰ Wiki navigation</button><nav id="wiki-navigation" class="sidebar" aria-label="Wiki navigation">{nav}<div class="sidebar-version">Tensura Myths <strong>0.29.1</strong><br>Minecraft 1.21.1 · NeoForge<br><span>Offline reference edition</span></div></nav>
+<div class="layout"><button id="navigation-toggle" aria-controls="wiki-navigation" aria-expanded="false">☰ Wiki navigation</button><nav id="wiki-navigation" class="sidebar" aria-label="Wiki navigation">{nav}<div class="sidebar-version">Tensura Myths <strong>0.30.0</strong><br>Minecraft 1.21.1 · NeoForge<br><span>Offline reference edition</span></div></nav>
 <main id="article" class="{'main-page' if home else 'article-page'}"><div class="page-tabs"><span aria-current="page">{'Main Page' if home else 'Article'}</span><a href="{'README.md' if home else '../pages/' + source.name}">Read Markdown</a><a href="https://github.com/Bithio999/MC/blob/main/docs/CHANGELOG.md">Changelog</a></div>
 <div class="article-heading"><div class="breadcrumbs"><a href="{prefix}index.html">Tensura Myths Wiki</a>{' / ' + crumb if not home else ''}</div><h1>{html.escape(title)}</h1><p class="subtitle">From the unofficial Tensura Myths Wiki</p></div>
 <div class="article-content">{introduction}{infobox}{toc}{content}</div>{navbox}
 <div class="categories">Categories: <a href="{prefix}index.html">Tensura Myths</a> · {category_link}</div>
-<footer>Unofficial fan addon. Original documentation and portraits. Not affiliated with Capcom or ManasMods.<br>Tensura Myths 0.29.1 · Offline edition · No external services required.</footer></main></div></body></html>'''
+<footer>Unofficial fan addon. Original documentation and portraits. Not affiliated with Capcom or ManasMods.<br>Tensura Myths 0.30.0 · Offline edition · No external services required.</footer></main></div></body></html>'''
     destination.write_text(page)
 
 
@@ -208,7 +208,7 @@ search_entries = list(catalog) + [
 (SITE / "search-index.js").write_text("window.WIKI_PAGES = " + json.dumps(search_entries) + ";\n")
 subprocess.run([sys.executable, str(ROOT / "scripts/export-github-wiki.py")], check=True)
 # Fixed timestamps and sorted entries keep this documentation bundle reproducible.
-archive = ROOT / "releases/tensura-myths-wiki-0.29.1.zip"
+archive = ROOT / "releases/tensura-myths-wiki-0.30.0.zip"
 with zipfile.ZipFile(archive, "w", zipfile.ZIP_DEFLATED) as bundle:
     for path in sorted(WIKI.rglob("*")):
         if path.is_file():

@@ -17,7 +17,7 @@ public final class AnankeBossHud {
     private AnankeBossHud(){}
     @SubscribeEvent public static void progress(CustomizeGuiOverlayEvent.BossEventProgress event){
         String marker=event.getBossEvent().getName().getStyle().getInsertion();
-        if(!"wildhunt:ananke_hp".equals(marker) && !"wildhunt:ananke_shp".equals(marker))return;
+        if(!"wildhunt:ananke_hp".equals(marker) && !"wildhunt:ananke_shp".equals(marker) && (marker==null || !marker.startsWith("wildhunt:eschaton_")))return;
         event.setCanceled(true);var g=event.getGuiGraphics();var boss=event.getBossEvent();int x=Math.max(4,g.guiWidth()-190),y=event.getY();
         String color=boss.getColor().name().toLowerCase(Locale.ROOT);int progress=Math.clamp((int)Math.ceil(182*boss.getProgress()),0,182);
         RenderSystem.enableBlend();

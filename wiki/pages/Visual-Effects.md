@@ -8,6 +8,16 @@ The formations combine detailed solid structures with flowing light: engraved st
 
 Ring frames have continuous beveled curves and luminous inlays. Crystals and reconstructed weapon tips taper to actual points; leaves, petals, water crests and feathers use curved surfaces. Book covers, tablets and selected armor edges are beveled. These refinements preserve each skill’s attack footprint and timing.
 
+## Eschaton and Demiurge
+
+The final Myth has a four-armed sovereign model, an unfolding crescent mantle, a jointed tail and a seven-blade final crown. Smooth tapered crescents replace cuboid arc outlines. Demiurge adds eight independent patterns, including seven elemental star signatures, spatial scripture, hollow fronts with golden gaps, and a world seed beneath a vast celestial canopy. Its lensed accretion disk stays in a stable plane. Red warnings mark damage; a broken creation seal opens a golden refuge.
+
+![Eschaton’s final form](../media/eschaton-final-form.png)
+
+![The End of All Myths with a broken seal refuge](../media/eschaton-apocalypse.png)
+
+See [Eschaton](Eschaton.md) and [Demiurge](Demiurge.md) for gameplay, timing and damage types.
+
 ## Display settings
 
 Minecraft’s **Particles** setting reduces decorative motes, foam and cloud sprites. Primary attack paths, warning footprints, crystal geometry and gate frames remain visible even on **Minimal**. Distant effects use fewer curve segments. These settings do not change damage or server targeting.
@@ -216,3 +226,14 @@ These staged views show each structure with its accompanying light or fluid effe
 | The Last Dawn | ![The Last Dawn](../media/modeled/59-last_dawn_orrery.png) |
 | Phase ascension | ![Phase ascension](../media/modeled/60-seraph_ascension.png) |
 | Spatial Reposition | ![Spatial Reposition](../media/modeled/62-seraph_threshold.png) |
+
+| Crownless Edge | ![Crownless Edge](../media/modeled/63-origin_execution.png) |
+| Astral Loom | ![Astral Loom](../media/modeled/64-origin_star_loom.png) |
+| Sevenfold Genesis | ![Sevenfold Genesis](../media/modeled/65-origin_sevenfold.png) |
+| Null Testament | ![Null Testament](../media/modeled/66-origin_silent_scripture.png) |
+| World-Eater’s Wake | ![World-Eater’s Wake](../media/modeled/67-origin_serpent_wake.png) |
+| Primordial Exchange | ![Primordial Exchange](../media/modeled/68-origin_exchange.png) |
+| Thronefall | ![Thronefall](../media/modeled/69-origin_thronefall.png) |
+| The End of All Myths | ![The End of All Myths](../media/modeled/70-origin_apocalypse.png) |
+| Origin ascension | ![Origin ascension](../media/modeled/71-origin_apotheosis.png) |
+| Genesis Seal shatter | ![Genesis Seal shatter](../media/modeled/72-origin_star_shatter.png) |

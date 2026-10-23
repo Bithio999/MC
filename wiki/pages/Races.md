@@ -4,6 +4,10 @@
 
 **Races** are organized into the Human hunter branch, independent secondary lineages and unified Convergent races. The addon preserves the native race system and requirements.
 
+## Boss-exclusive races
+
+[Origin Sovereign](Origin-Sovereign.md) belongs to the final Myth, [Eschaton](Eschaton.md). [Eclipse Seraph](Eclipse-Seraph.md) belongs to Ananke. Neither is a player evolution, reincarnation roll or secondary-race option.
+
 ## Hunter races
 
 | Race | Stage | HP / SHP racial bonus | Recovery Extra Skill |

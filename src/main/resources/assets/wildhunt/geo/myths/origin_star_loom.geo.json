@@ -1,0 +1,116 @@
+{
+  "format_version": "1.12.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.origin_star_loom",
+        "texture_width": 256,
+        "texture_height": 128,
+        "visible_bounds_width": 4,
+        "visible_bounds_height": 3.5,
+        "visible_bounds_offset": [
+          0,
+          1.25,
+          0
+        ]
+      },
+      "bones": [
+        {
+          "name": "root",
+          "pivot": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "name": "origin",
+          "parent": "root",
+          "pivot": [
+            0,
+            12,
+            0
+          ]
+        },
+        {
+          "name": "surface_gem_2_700_1800_700_3",
+          "parent": "origin",
+          "pivot": [
+            0,
+            12,
+            0
+          ]
+        },
+        {
+          "name": "meridian_0",
+          "parent": "origin",
+          "pivot": [
+            0,
+            12,
+            0
+          ],
+          "rotation": [
+            -45,
+            0,
+            20
+          ]
+        },
+        {
+          "name": "surface_crescent_4_1400_125_80_2",
+          "parent": "meridian_0",
+          "pivot": [
+            0,
+            12,
+            0
+          ]
+        },
+        {
+          "name": "meridian_1",
+          "parent": "origin",
+          "pivot": [
+            0,
+            12,
+            0
+          ],
+          "rotation": [
+            -88,
+            -17,
+            20
+          ]
+        },
+        {
+          "name": "surface_crescent_6_1800_125_80_2",
+          "parent": "meridian_1",
+          "pivot": [
+            0,
+            12,
+            0
+          ]
+        },
+        {
+          "name": "meridian_2",
+          "parent": "origin",
+          "pivot": [
+            0,
+            12,
+            0
+          ],
+          "rotation": [
+            -131,
+            -34,
+            20
+          ]
+        },
+        {
+          "name": "surface_crescent_8_2200_125_80_2",
+          "parent": "meridian_2",
+          "pivot": [
+            0,
+            12,
+            0
+          ]
+        }
+      ]
+    }
+  ]
+}

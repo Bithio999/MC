@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "wildhunt:origin_fragment"
+    },
+    {
+      "item": "wildhunt:origin_fragment"
+    },
+    {
+      "item": "wildhunt:origin_fragment"
+    },
+    {
+      "item": "wildhunt:origin_fragment"
+    },
+    {
+      "item": "minecraft:ghast_tear"
+    },
+    {
+      "item": "minecraft:dragon_breath"
+    }
+  ],
+  "result": {
+    "id": "wildhunt:dawn_testament",
+    "count": 1
+  }
+}

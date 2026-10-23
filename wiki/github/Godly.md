@@ -16,6 +16,10 @@
 
 Godly skills appear in their own category instead of being duplicated in the ordinary Ultimate list. Other mods that only inspect the native type see an Ultimate. They do not automatically recognize the addon’s extra tier or grant it additional authority. The addon does not give Godly skills blanket immunity to other skills.
 
+## Encounter-exclusive Godly
+
+[Demiurge, God of Genesis](https://github.com/Bithio999/MC/wiki/Demiurge) belongs to [Eschaton](https://github.com/Bithio999/MC/wiki/Eschaton). It uses the same Godly classification with native Ultimate compatibility, but is excluded from player slots, synthesis and reincarnation rolls. Its eight arts have fixed encounter values documented separately.
+
 ## Classification passives
 
 Owning **any Godly skill** grants all three passives automatically. They require **no toggle, upkeep, equipped mode or mastery threshold**. Aion, Thoth, Lugh and skills classified through the `wildhunt:godly_skills` tag qualify. Owning multiple Godly skills grants each trait only once. Forgetting the last Godly skill removes the traits.

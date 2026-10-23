@@ -86,6 +86,12 @@
     "tier": "Ultimate"
   },
   {
+    "slug": "Demiurge",
+    "title": "Demiurge, God of Genesis",
+    "category": "Skills",
+    "tier": "Godly"
+  },
+  {
     "slug": "Duo-Races",
     "title": "Duo Races",
     "category": "Races"
@@ -94,6 +100,11 @@
     "slug": "Eclipse-Seraph",
     "title": "Eclipse Seraph",
     "category": "Races"
+  },
+  {
+    "slug": "Eschaton",
+    "title": "Eschaton, the Last Myth",
+    "category": "Bosses"
   },
   {
     "slug": "Evolution",
@@ -680,6 +691,11 @@
     "title": "Moira, Lord of Finality",
     "category": "Skills",
     "tier": "Ultimate"
+  },
+  {
+    "slug": "Origin-Sovereign",
+    "title": "Origin Sovereign",
+    "category": "Races"
   },
   {
     "slug": "Otherworlders",

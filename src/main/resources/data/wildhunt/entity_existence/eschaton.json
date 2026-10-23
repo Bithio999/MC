@@ -1,0 +1,8 @@
+{
+  "type": "wildhunt:eschaton",
+  "spiritualHealth": 4000000,
+  "min_aura": 500000000,
+  "max_aura": 500000000,
+  "min_magicule": 500000000,
+  "max_magicule": 500000000
+}

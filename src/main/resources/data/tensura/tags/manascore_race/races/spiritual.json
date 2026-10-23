@@ -105,6 +105,7 @@
     "wildhunt:convergence/daemon_slime",
     "wildhunt:convergence/vampire_wight",
     "wildhunt:convergence/daemon_vampire",
-    "wildhunt:convergence/daemon_wight"
+    "wildhunt:convergence/daemon_wight",
+    "wildhunt:origin_sovereign"
   ]
 }

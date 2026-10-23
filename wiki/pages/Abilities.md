@@ -86,6 +86,14 @@ The three Godly classification passives are always active, free and non-stacking
 | [Reconstructed Art](Lugh.md#reconstructed-art) | [Lugh, God of Skills](Lugh.md) | Active | Variable normalised physical, elemental or generic magic — see the linked archive/source reference |
 | [Countermand](Lugh.md#countermand) | [Lugh, God of Skills](Lugh.md) | Active | None |
 | [Grand Synthesis](Lugh.md#grand-synthesis) | [Lugh, God of Skills](Lugh.md) | Active | Three bound normalised damage types — see the linked archive/source reference |
+| [Crownless Edge](Demiurge.md#crownless-edge) | [Demiurge, God of Genesis](Demiurge.md) | Boss cast | Physical aura slash — `tensura:aura_slash` |
+| [Astral Loom](Demiurge.md#astral-loom) | [Demiurge, God of Genesis](Demiurge.md) | Boss cast | Light elemental — `tensura:light_elemental` |
+| [Sevenfold Genesis](Demiurge.md#sevenfold-genesis) | [Demiurge, God of Genesis](Demiurge.md) | Boss cast | Fire, Water, Lightning, Earth, Wind, Light, Space |
+| [Null Testament](Demiurge.md#null-testament) | [Demiurge, God of Genesis](Demiurge.md) | Boss cast | Space elemental — `tensura:space_elemental` |
+| [World-Eater’s Wake](Demiurge.md#world-eaters-wake) | [Demiurge, God of Genesis](Demiurge.md) | Boss cast | Darkness elemental — `tensura:darkness_elemental` |
+| [Primordial Exchange](Demiurge.md#primordial-exchange) | [Demiurge, God of Genesis](Demiurge.md) | Boss channel | None — resource conversion |
+| [Thronefall](Demiurge.md#thronefall) | [Demiurge, God of Genesis](Demiurge.md) | Boss cast | Earth elemental — `tensura:earth_elemental` |
+| [The End of All Myths](Demiurge.md#the-end-of-all-myths) | [Demiurge, God of Genesis](Demiurge.md) | Boss cast | Space elemental — `tensura:space_elemental` |
 
 ## Extra abilities
 

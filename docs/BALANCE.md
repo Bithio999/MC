@@ -1,6 +1,6 @@
-# Current balance: 0.29.1
+# Current balance: 0.30.0
 
-0.29.1 changes world visuals and animation only; gameplay values retain the 0.28.0 calibration.
+0.30.0 changes world visuals and animation only; gameplay values retain the 0.28.0 calibration.
 
 This calibration applies the [external Unique audit](research/UNIQUE_PARITY_0.19.md).
 The largest cuts target repeatable direct damage; conditional burst receives
@@ -393,3 +393,7 @@ Funded, eligible native Infinite Regeneration gets death-prevention priority. Af
 Low HP no longer unlocks phases. Current phase persists through save/load, while a fully abandoned fight resets after ten seconds. Minecraft's damage overlay is restored locally on Ananke's model for confirmed HP/SHP losses despite Pain Nullification, without disabling the skill or globally changing Tensura's rendering.
 
 The [research](research/MYTH_BOSS_IMPLEMENTATION.md) compares pinned native profiles and inspected Nightmares/Mysticism implementations. The target is above shipped base-mod bosses; it is not a universal ranking against configured addon bosses. [Full encounter and damage types](../wiki/pages/Ananke.md).
+
+## Final Myth — Eschaton (0.30.0)
+
+Eschaton is deliberately above Ananke: exactly 1B native EP, 1M HP, 4M SHP, three fatal forms and eight fixed-damage Demiurge arts. This encounter addition does not rebalance existing player skills. Its finite 500M AP/500M MP pools, 50M MP/25M AP seal drains and paid 20M AP → 8M MP conversion define the resource economy. Native Infinite Regeneration takes priority over fatal forms. Full values, warning geometry and damage types are in [Demiurge](../wiki/pages/Demiurge.md) and [the encounter guide](../wiki/pages/Eschaton.md). Live multiplayer loadouts remain the tuning reference.

@@ -1,0 +1,69 @@
+{
+  "format_version": "1.8.0",
+  "animations": {
+    "animation.myths.idle": {
+      "loop": true,
+      "animation_length": 3,
+      "bones": {
+        "siphon": {
+          "rotation": {
+            "0.0": {
+              "vector": [
+                0,
+                0,
+                0
+              ]
+            },
+            "3.0": {
+              "vector": [
+                0,
+                0,
+                180
+              ]
+            }
+          }
+        }
+      }
+    },
+    "animation.myths.appear": {
+      "animation_length": 0.4,
+      "bones": {
+        "siphon": {
+          "scale": {
+            "0.0": {
+              "post": {
+                "vector": [
+                  0.05,
+                  0.05,
+                  0.05
+                ]
+              },
+              "lerp_mode": "catmullrom"
+            },
+            "0.25": {
+              "post": {
+                "vector": [
+                  1.08,
+                  1.08,
+                  1.08
+                ]
+              },
+              "lerp_mode": "catmullrom"
+            },
+            "0.4": {
+              "post": {
+                "vector": [
+                  1,
+                  1,
+                  1
+                ]
+              },
+              "lerp_mode": "catmullrom"
+            }
+          }
+        }
+      }
+    }
+  },
+  "geckolib_format_version": 2
+}

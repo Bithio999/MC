@@ -1,0 +1,179 @@
+{
+  "format_version": "1.12.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.origin_execution",
+        "texture_width": 256,
+        "texture_height": 128,
+        "visible_bounds_width": 3,
+        "visible_bounds_height": 3.5,
+        "visible_bounds_offset": [
+          0,
+          1.25,
+          0
+        ]
+      },
+      "bones": [
+        {
+          "name": "root",
+          "pivot": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "name": "regalia",
+          "parent": "root",
+          "pivot": [
+            0,
+            12,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            30
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -0.275,
+                2.5,
+                -2
+              ],
+              "size": [
+                0.55,
+                37,
+                0.3999999999999999
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    96,
+                    0
+                  ],
+                  "uv_size": [
+                    32,
+                    32
+                  ]
+                },
+                "east": {
+                  "uv": [
+                    96,
+                    0
+                  ],
+                  "uv_size": [
+                    32,
+                    32
+                  ]
+                },
+                "south": {
+                  "uv": [
+                    96,
+                    0
+                  ],
+                  "uv_size": [
+                    32,
+                    32
+                  ]
+                },
+                "west": {
+                  "uv": [
+                    96,
+                    0
+                  ],
+                  "uv_size": [
+                    32,
+                    32
+                  ]
+                },
+                "up": {
+                  "uv": [
+                    128,
+                    32
+                  ],
+                  "uv_size": [
+                    -32,
+                    -32
+                  ]
+                },
+                "down": {
+                  "uv": [
+                    128,
+                    32
+                  ],
+                  "uv_size": [
+                    -32,
+                    -32
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "surface_gem_2_600_4800_300_5",
+          "parent": "regalia",
+          "pivot": [
+            0,
+            20,
+            0
+          ]
+        },
+        {
+          "name": "surface_leaf_3_200_1800_200_2",
+          "parent": "regalia",
+          "pivot": [
+            5,
+            2,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            55
+          ]
+        },
+        {
+          "name": "surface_leaf_4_200_1800_200_2",
+          "parent": "regalia",
+          "pivot": [
+            -5,
+            2,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            -55
+          ]
+        },
+        {
+          "name": "edge_guard",
+          "parent": "regalia",
+          "pivot": [
+            0,
+            2,
+            0
+          ],
+          "rotation": [
+            -90,
+            0,
+            0
+          ]
+        },
+        {
+          "name": "surface_crescent_6_700_130_80_2",
+          "parent": "edge_guard",
+          "pivot": [
+            0,
+            2,
+            0
+          ]
+        }
+      ]
+    }
+  ]
+}

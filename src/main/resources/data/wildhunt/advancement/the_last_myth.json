@@ -1,0 +1,27 @@
+{
+  "display": {
+    "icon": {
+      "id": "wildhunt:crown_of_the_last_myth"
+    },
+    "title": "The Last Myth",
+    "description": "Defeat Eschaton, the billion-EP Origin Sovereign.",
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "wildhunt:first_myth",
+  "criteria": {
+    "eschaton": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "type": "wildhunt:eschaton"
+        }
+      }
+    }
+  },
+  "rewards": {
+    "experience": 5000
+  }
+}

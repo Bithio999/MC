@@ -32,6 +32,7 @@ public final class ArtVisualEntity extends Entity implements software.bernie.gec
         FATE_ANCHOR=39,FATE_THREAD=40,LOOM_TRANSIT=41,CHECKMATE_EDGE=42,MIRRORSEA=43,REFRACTED_HARPOON=44,SOVEREIGN_BREAKER=45,WATER_REFRACTION=46,
         PERENNIAL_SEED=47,REBIRTH_BLOOM=48,SKILL_APPRAISAL=49,ARTISAN_THREAD=50,COUNTERMAND=51,GRAND_SYNTHESIS=52,RECONSTRUCTED_BLADE=53,RECONSTRUCTED_LANCE=54,RECONSTRUCTED_CROWN=55;
     public static final int ANANKE_FATEBREAKER=56,ANANKE_STARFALL=57,ANANKE_PROCESSION=58,ANANKE_LAST_DAWN=59,ANANKE_ASCENSION=60,ANANKE_SHIFT=62;
+    public static final int ESCHATON_EDGE=63,ESCHATON_LOOM=64,ESCHATON_GENESIS=65,ESCHATON_TESTAMENT=66,ESCHATON_WAKE=67,ESCHATON_EXCHANGE=68,ESCHATON_THRONEFALL=69,ESCHATON_APOCALYPSE=70,ESCHATON_ASCENSION=71,ESCHATON_SHATTER=72;
     private static final DeferredRegister<EntityType<?>> TYPES = DeferredRegister.create(WildHunt.ID, Registries.ENTITY_TYPE);
     public static final RegistrySupplier<EntityType<ArtVisualEntity>> TYPE = TYPES.register("art_visual", () ->
         EntityType.Builder.<ArtVisualEntity>of(ArtVisualEntity::new, MobCategory.MISC).sized(0.1f, 0.1f)
@@ -41,6 +42,7 @@ public final class ArtVisualEntity extends Entity implements software.bernie.gec
     public static final RegistrySupplier<EntityType<ArtVisualEntity>> MYTH_TYPE=TYPES.register("myth_visual",()->
         EntityType.Builder.<ArtVisualEntity>of(ArtVisualEntity::new,MobCategory.MISC).sized(.1f,.1f)
             .clientTrackingRange(12).updateInterval(1).noSave().noSummon().build("wildhunt:myth_visual"));
+    public static final RegistrySupplier<EntityType<ArtVisualEntity>> FINAL_TYPE=TYPES.register("origin_visual",()->EntityType.Builder.<ArtVisualEntity>of(ArtVisualEntity::new,MobCategory.MISC).sized(.1f,.1f).clientTrackingRange(20).updateInterval(1).noSave().noSummon().build("wildhunt:origin_visual"));
     private static final EntityDataAccessor<Integer> KIND = SynchedEntityData.defineId(ArtVisualEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> LIFETIME = SynchedEntityData.defineId(ArtVisualEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> CASTER_ID = SynchedEntityData.defineId(ArtVisualEntity.class, EntityDataSerializers.INT);
@@ -58,7 +60,7 @@ public final class ArtVisualEntity extends Entity implements software.bernie.gec
         super(type, level); noPhysics = true; setNoGravity(true);
     }
     public static ArtVisualEntity spawn(Level level, int kind, Vec3 start, Vec3 delta, int ticks) {
-        var entity = new ArtVisualEntity(kind>=ANANKE_FATEBREAKER && kind<=ANANKE_SHIFT?MYTH_TYPE.get():TYPE.get(), level); entity.setPos(start);
+        var entity = new ArtVisualEntity(kind>=ESCHATON_EDGE?FINAL_TYPE.get():kind>=ANANKE_FATEBREAKER && kind<=ANANKE_SHIFT?MYTH_TYPE.get():TYPE.get(), level); entity.setPos(start);
         entity.entityData.set(KIND, kind); entity.entityData.set(LIFETIME, ticks);
         entity.entityData.set(END_X, (float)delta.x); entity.entityData.set(END_Y, (float)delta.y); entity.entityData.set(END_Z, (float)delta.z);
         level.addFreshEntity(entity); return entity;
@@ -101,13 +103,18 @@ public final class ArtVisualEntity extends Entity implements software.bernie.gec
     @Override public AABB getBoundingBoxForCulling() {
         // Each star warning can be far from the caster. Cull by its actual saved
         // placement and sky lance, not only the encounter's origin.
+        if(kind()>=ESCHATON_EDGE){
+            var box=new AABB(position(),position()).inflate(68);var plan=barrage();
+            for(int n=0;n<Math.min(7,plan.getInt("warned"));n++){var at=position().add(EschatonPattern.meteor(plan,n));box=box.minmax(new AABB(at,at.add(0,42,0)).inflate(6));}
+            return box;
+        }
         if(kind()==ANANKE_STARFALL && !barrage().isEmpty()){
             var box=new AABB(position(),position());var plan=barrage();
             for(int n=0;n<plan.getInt("warned");n++){var at=position().add(AnankeRites.star(plan,n));box=box.minmax(new AABB(at,at.add(0,20,0)).inflate(4));}
             return box;
         }
         if(kind()==CAUSAL_VERDICT && !barrage().isEmpty())return new AABB(position(),position().add(new Vec3(barrage().getDouble("aim_x"),barrage().getDouble("aim_y"),barrage().getDouble("aim_z")))).inflate(24);return new AABB(position(), position().add(end())).inflate((kind() == WHIRLPOOL || kind() == CAUSAL_SPHERE || kind()>=CAUSAL_DOMAIN) ? Math.abs(end().x) + 12 : kind() == TIDAL_WAVE ? end().y + 3 : 4); }
-    @Override public boolean shouldRenderAtSqrDistance(double distance) { return distance < (kind()==ANANKE_STARFALL ? 192 * 192 : 128 * 128); }
+    @Override public boolean shouldRenderAtSqrDistance(double distance) { return distance < (kind()>=ESCHATON_EDGE?320*320:kind()==ANANKE_STARFALL ? 192 * 192 : 128 * 128); }
     @Override protected void readAdditionalSaveData(CompoundTag tag) {}
     @Override protected void addAdditionalSaveData(CompoundTag tag) {}
 }

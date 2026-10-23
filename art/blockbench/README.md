@@ -1,8 +1,8 @@
 # Editable visual projects
 
-These are original Tensura Myths models, textures and keyframes. Open a `.bbmodel` in **Blockbench 5.2.2**, with **GeckoLib Models & Animations 4.2.5** installed. Textures are embedded in each project. The two projects under `items/` use Blockbench's Java block/item format instead.
+These are original Tensura Myths models, textures and keyframes. Open a `.bbmodel` in **Blockbench 5.2.2**, with **GeckoLib Models & Animations 4.2.5** installed. Textures are embedded in each project. The four projects under `items/` use Blockbench's Java block/item format instead.
 
-The directory contains 62 skill/boss-effect rigs, two impact material variants, Ananke, Alma/Gemma equipment, and two ritual items: **69 projects** in total. `manifest.json` maps the existing network effect IDs to their assets and placement rules. ID 61 remains retired.
+The directory contains 72 skill/boss-effect rigs, two impact material variants, Ananke, Eschaton, Genesis Seal, Alma/Gemma equipment, and four ritual items: **83 projects** in total. `manifest.json` maps the existing network effect IDs to their assets and placement rules. ID 61 remains retired.
 
 The editable projects are the artist-facing source. To export them through the actual editor/plugin, install Playwright and Chromium, then run:
 
@@ -19,4 +19,4 @@ The exporter writes geometry/animation/item JSON. If you paint an atlas, export 
 
 Runtime exports live under `src/main/resources/assets/wildhunt/{geo,animations}/myths`, `textures/geo`, and `models/item`. See [the rendering workflow](../../docs/VISUAL_PIPELINE.md) for placement, animation and custom-optics boundaries.
 
-Continuous surfaces use `surface_` animation-anchor bones with editable cube previews. The runtime replaces those previews with smooth rings, faceted crystals, curved leaves or beveled boxes; see [the surface contract](../../docs/VISUAL_PIPELINE.md#curved-surfaces). Exporting strips only their preview cubes.
+Continuous surfaces use `surface_` animation-anchor bones with editable cube previews. The runtime replaces those previews with smooth rings and tapered crescents, faceted crystals, curved leaves or beveled boxes; see [the surface contract](../../docs/VISUAL_PIPELINE.md#curved-surfaces). Exporting strips only their preview cubes.

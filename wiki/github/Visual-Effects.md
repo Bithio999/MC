@@ -8,6 +8,16 @@ The formations combine detailed solid structures with flowing light: engraved st
 
 Ring frames have continuous beveled curves and luminous inlays. Crystals and reconstructed weapon tips taper to actual points; leaves, petals, water crests and feathers use curved surfaces. Book covers, tablets and selected armor edges are beveled. These refinements preserve each skill’s attack footprint and timing.
 
+## Eschaton and Demiurge
+
+The final Myth has a four-armed sovereign model, an unfolding crescent mantle, a jointed tail and a seven-blade final crown. Smooth tapered crescents replace cuboid arc outlines. Demiurge adds eight independent patterns, including seven elemental star signatures, spatial scripture, hollow fronts with golden gaps, and a world seed beneath a vast celestial canopy. Its lensed accretion disk stays in a stable plane. Red warnings mark damage; a broken creation seal opens a golden refuge.
+
+![Eschaton’s final form](https://github.com/Bithio999/MC/blob/main/wiki/media/eschaton-final-form.png?raw=true)
+
+![The End of All Myths with a broken seal refuge](https://github.com/Bithio999/MC/blob/main/wiki/media/eschaton-apocalypse.png?raw=true)
+
+See [Eschaton](https://github.com/Bithio999/MC/wiki/Eschaton) and [Demiurge](https://github.com/Bithio999/MC/wiki/Demiurge) for gameplay, timing and damage types.
+
 ## Display settings
 
 Minecraft’s **Particles** setting reduces decorative motes, foam and cloud sprites. Primary attack paths, warning footprints, crystal geometry and gate frames remain visible even on **Minimal**. Distant effects use fewer curve segments. These settings do not change damage or server targeting.
@@ -216,3 +226,14 @@ These staged views show each structure with its accompanying light or fluid effe
 | The Last Dawn | ![The Last Dawn](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/59-last_dawn_orrery.png?raw=true) |
 | Phase ascension | ![Phase ascension](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/60-seraph_ascension.png?raw=true) |
 | Spatial Reposition | ![Spatial Reposition](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/62-seraph_threshold.png?raw=true) |
+
+| Crownless Edge | ![Crownless Edge](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/63-origin_execution.png?raw=true) |
+| Astral Loom | ![Astral Loom](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/64-origin_star_loom.png?raw=true) |
+| Sevenfold Genesis | ![Sevenfold Genesis](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/65-origin_sevenfold.png?raw=true) |
+| Null Testament | ![Null Testament](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/66-origin_silent_scripture.png?raw=true) |
+| World-Eater’s Wake | ![World-Eater’s Wake](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/67-origin_serpent_wake.png?raw=true) |
+| Primordial Exchange | ![Primordial Exchange](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/68-origin_exchange.png?raw=true) |
+| Thronefall | ![Thronefall](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/69-origin_thronefall.png?raw=true) |
+| The End of All Myths | ![The End of All Myths](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/70-origin_apocalypse.png?raw=true) |
+| Origin ascension | ![Origin ascension](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/71-origin_apotheosis.png?raw=true) |
+| Genesis Seal shatter | ![Genesis Seal shatter](https://github.com/Bithio999/MC/blob/main/wiki/media/modeled/72-origin_star_shatter.png?raw=true) |

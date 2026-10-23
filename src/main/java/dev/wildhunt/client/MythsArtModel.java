@@ -20,6 +20,13 @@ final class MythsArtModel extends GeoModel<ArtVisualEntity> {
     @Override public void setCustomAnimations(ArtVisualEntity e,long id,software.bernie.geckolib.animation.AnimationState<ArtVisualEntity> state){
         super.setCustomAnimations(e,id,state);
         float age=e.tickCount+state.getPartialTick();
+        if(e.kind()==ArtVisualEntity.ESCHATON_GENESIS){
+            for(int n=0;n<7;n++){int index=n;getBone("star_"+n).ifPresent(b->{
+                var plan=e.barrage();double since=e.barrageAge(state.getPartialTick())-EschatonPattern.meteorTick(index);boolean visible=index<plan.getInt("warned") && since<8;
+                b.setHidden(!visible);b.setChildrenHidden(!visible);var at=EschatonPattern.meteor(plan,index).add(0,since<0?16+3*Math.sin(index):Math.max(0,16-since*4),0);
+                b.setPosX((float)(-at.x*16));b.setPosY((float)(at.y*16-8));b.setPosZ((float)(at.z*16));
+            });}
+        }
         if(e.kind()==ArtVisualEntity.LASH){
             double length=e.end().length(),height=.7+length*.04;
             for(int n=0;n<10;n++){

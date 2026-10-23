@@ -1,0 +1,357 @@
+{
+  "format_version": "1.12.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.origin_serpent_wake",
+        "texture_width": 256,
+        "texture_height": 128,
+        "visible_bounds_width": 4,
+        "visible_bounds_height": 3.5,
+        "visible_bounds_offset": [
+          0,
+          1.25,
+          0
+        ]
+      },
+      "bones": [
+        {
+          "name": "root",
+          "pivot": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "name": "serpent_rib_0",
+          "parent": "root",
+          "pivot": [
+            -14,
+            4,
+            0
+          ]
+        },
+        {
+          "name": "surface_leaf_2_400_2400_200_5",
+          "parent": "serpent_rib_0",
+          "pivot": [
+            -14,
+            13,
+            0
+          ],
+          "rotation": [
+            -35,
+            0,
+            0
+          ]
+        },
+        {
+          "name": "surface_gem_3_200_600_200_3",
+          "parent": "serpent_rib_0",
+          "pivot": [
+            -14,
+            25,
+            -5
+          ]
+        },
+        {
+          "name": "serpent_rib_1",
+          "parent": "root",
+          "pivot": [
+            -10.724622203665692,
+            4,
+            8.999026535611549
+          ],
+          "rotation": [
+            0,
+            40,
+            0
+          ]
+        },
+        {
+          "name": "surface_leaf_5_400_2400_200_5",
+          "parent": "serpent_rib_1",
+          "pivot": [
+            -10.724622203665692,
+            13,
+            8.999026535611549
+          ],
+          "rotation": [
+            -35,
+            0,
+            0
+          ]
+        },
+        {
+          "name": "surface_gem_6_200_600_200_3",
+          "parent": "serpent_rib_1",
+          "pivot": [
+            -10.724622203665692,
+            25,
+            3.9990265356115486
+          ]
+        },
+        {
+          "name": "serpent_rib_2",
+          "parent": "root",
+          "pivot": [
+            -2.4310744873370256,
+            4,
+            13.787308542170912
+          ],
+          "rotation": [
+            0,
+            80,
+            0
+          ]
+        },
+        {
+          "name": "surface_leaf_8_400_2400_200_5",
+          "parent": "serpent_rib_2",
+          "pivot": [
+            -2.4310744873370256,
+            13,
+            13.787308542170912
+          ],
+          "rotation": [
+            -35,
+            0,
+            0
+          ]
+        },
+        {
+          "name": "surface_gem_9_200_600_200_3",
+          "parent": "serpent_rib_2",
+          "pivot": [
+            -2.4310744873370256,
+            25,
+            8.787308542170912
+          ]
+        },
+        {
+          "name": "serpent_rib_3",
+          "parent": "root",
+          "pivot": [
+            6.9999999999999964,
+            4,
+            12.124355652982143
+          ],
+          "rotation": [
+            0,
+            119.99999999999999,
+            0
+          ]
+        },
+        {
+          "name": "surface_leaf_11_400_2400_200_5",
+          "parent": "serpent_rib_3",
+          "pivot": [
+            6.9999999999999964,
+            13,
+            12.124355652982143
+          ],
+          "rotation": [
+            -35,
+            0,
+            0
+          ]
+        },
+        {
+          "name": "surface_gem_12_200_600_200_3",
+          "parent": "serpent_rib_3",
+          "pivot": [
+            6.9999999999999964,
+            25,
+            7.124355652982143
+          ]
+        },
+        {
+          "name": "serpent_rib_4",
+          "parent": "root",
+          "pivot": [
+            13.155696691002717,
+            4,
+            4.788282006559364
+          ],
+          "rotation": [
+            0,
+            160,
+            0
+          ]
+        },
+        {
+          "name": "surface_leaf_14_400_2400_200_5",
+          "parent": "serpent_rib_4",
+          "pivot": [
+            13.155696691002717,
+            13,
+            4.788282006559364
+          ],
+          "rotation": [
+            -35,
+            0,
+            0
+          ]
+        },
+        {
+          "name": "surface_gem_15_200_600_200_3",
+          "parent": "serpent_rib_4",
+          "pivot": [
+            13.155696691002717,
+            25,
+            -0.2117179934406357
+          ]
+        },
+        {
+          "name": "serpent_rib_5",
+          "parent": "root",
+          "pivot": [
+            13.155696691002717,
+            4,
+            -4.788282006559362
+          ],
+          "rotation": [
+            0,
+            200,
+            0
+          ]
+        },
+        {
+          "name": "surface_leaf_17_400_2400_200_5",
+          "parent": "serpent_rib_5",
+          "pivot": [
+            13.155696691002717,
+            13,
+            -4.788282006559362
+          ],
+          "rotation": [
+            -35,
+            0,
+            0
+          ]
+        },
+        {
+          "name": "surface_gem_18_200_600_200_3",
+          "parent": "serpent_rib_5",
+          "pivot": [
+            13.155696691002717,
+            25,
+            -9.788282006559362
+          ]
+        },
+        {
+          "name": "serpent_rib_6",
+          "parent": "root",
+          "pivot": [
+            7.000000000000006,
+            4,
+            -12.124355652982137
+          ],
+          "rotation": [
+            0,
+            239.99999999999997,
+            0
+          ]
+        },
+        {
+          "name": "surface_leaf_20_400_2400_200_5",
+          "parent": "serpent_rib_6",
+          "pivot": [
+            7.000000000000006,
+            13,
+            -12.124355652982137
+          ],
+          "rotation": [
+            -35,
+            0,
+            0
+          ]
+        },
+        {
+          "name": "surface_gem_21_200_600_200_3",
+          "parent": "serpent_rib_6",
+          "pivot": [
+            7.000000000000006,
+            25,
+            -17.12435565298214
+          ]
+        },
+        {
+          "name": "serpent_rib_7",
+          "parent": "root",
+          "pivot": [
+            -2.4310744873370194,
+            4,
+            -13.787308542170914
+          ],
+          "rotation": [
+            0,
+            280,
+            0
+          ]
+        },
+        {
+          "name": "surface_leaf_23_400_2400_200_5",
+          "parent": "serpent_rib_7",
+          "pivot": [
+            -2.4310744873370194,
+            13,
+            -13.787308542170914
+          ],
+          "rotation": [
+            -35,
+            0,
+            0
+          ]
+        },
+        {
+          "name": "surface_gem_24_200_600_200_3",
+          "parent": "serpent_rib_7",
+          "pivot": [
+            -2.4310744873370194,
+            25,
+            -18.787308542170912
+          ]
+        },
+        {
+          "name": "serpent_rib_8",
+          "parent": "root",
+          "pivot": [
+            -10.724622203665689,
+            4,
+            -8.999026535611554
+          ],
+          "rotation": [
+            0,
+            320,
+            0
+          ]
+        },
+        {
+          "name": "surface_leaf_26_400_2400_200_5",
+          "parent": "serpent_rib_8",
+          "pivot": [
+            -10.724622203665689,
+            13,
+            -8.999026535611554
+          ],
+          "rotation": [
+            -35,
+            0,
+            0
+          ]
+        },
+        {
+          "name": "surface_gem_27_200_600_200_3",
+          "parent": "serpent_rib_8",
+          "pivot": [
+            -10.724622203665689,
+            25,
+            -13.999026535611554
+          ]
+        }
+      ]
+    }
+  ]
+}

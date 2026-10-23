@@ -1,6 +1,6 @@
 # Tensura Myths Wiki
 
-An unofficial reference for the **Tensura Myths** addon to **Tensura: Reincarnated**. Minecraft 1.21.1 · NeoForge · Addon 0.29.1.
+An unofficial reference for the **Tensura Myths** addon to **Tensura: Reincarnated**. Minecraft 1.21.1 · NeoForge · Addon 0.30.0.
 
 ## Start here
 
@@ -27,6 +27,8 @@ An unofficial reference for the **Tensura Myths** addon to **Tensura: Reincarnat
 
 ## Myth bosses
 
+[Eschaton, the Last Myth](pages/Eschaton.md) is the **one-billion-EP final boss**: three fatal forms, four resource bars, three Godly Skills and eight Demiurge arts. Break his creation seals to drain his reserves, open golden refuges and interrupt his apocalypse. [Demiurge](pages/Demiurge.md) · [Origin Sovereign](pages/Origin-Sovereign.md) · [Summoning](pages/Eschaton.md#summoning)
+
 [Ananke, the Unwritten End](pages/Ananke.md) is the first Myth: a **30M-EP Eclipse Seraph** with three phases, Moira’s four warned rites and Thoth’s Godly authority. [Boss directory](pages/Bosses.md) · [Summoning and rewards](pages/Ananke.md#summoning)
 
 ## Otherworlders
@@ -41,8 +43,8 @@ Ability articles separate direct elemental hits, additional status damage, heali
 
 ## Open the visual edition
 
-[Download the styled offline wiki](../releases/tensura-myths-wiki-0.29.1.zip), extract it, and open `index.html`. It contains every article, portraits, screenshots and offline search. GitHub readers can use the Markdown links above.
+[Download the styled offline wiki](../releases/tensura-myths-wiki-0.30.0.zip), extract it, and open `index.html`. It contains every article, portraits, screenshots and offline search. GitHub readers can use the Markdown links above.
 
-[Download the addon](../releases/tensura-myths-0.29.1.jar) · [Base mod wiki](https://tensura.wiki.gg/wiki/Tensura:_Reincarnated_Wiki) · [Changelog](../docs/CHANGELOG.md) · [Wiki authoring](../docs/WIKI.md)
+[Download the addon](../releases/tensura-myths-0.30.0.jar) · [Base mod wiki](https://tensura.wiki.gg/wiki/Tensura:_Reincarnated_Wiki) · [Changelog](../docs/CHANGELOG.md) · [Wiki authoring](../docs/WIKI.md)
 
 Unofficial fan addon. Not affiliated with Capcom or ManasMods.

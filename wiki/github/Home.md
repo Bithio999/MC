@@ -1,6 +1,6 @@
 # Tensura Myths Wiki
 
-An unofficial reference for the **Tensura Myths** addon to **Tensura: Reincarnated**. Minecraft 1.21.1 · NeoForge · Addon 0.29.1.
+An unofficial reference for the **Tensura Myths** addon to **Tensura: Reincarnated**. Minecraft 1.21.1 · NeoForge · Addon 0.30.0.
 
 ## Start here
 
@@ -27,6 +27,8 @@ An unofficial reference for the **Tensura Myths** addon to **Tensura: Reincarnat
 
 ## Myth bosses
 
+[Eschaton, the Last Myth](https://github.com/Bithio999/MC/wiki/Eschaton) is the **one-billion-EP final boss**: three fatal forms, four resource bars, three Godly Skills and eight Demiurge arts. Break his creation seals to drain his reserves, open golden refuges and interrupt his apocalypse. [Demiurge](https://github.com/Bithio999/MC/wiki/Demiurge) · [Origin Sovereign](https://github.com/Bithio999/MC/wiki/Origin-Sovereign) · [Summoning](https://github.com/Bithio999/MC/wiki/Eschaton#summoning)
+
 [Ananke, the Unwritten End](https://github.com/Bithio999/MC/wiki/Ananke) is the first Myth: a **30M-EP Eclipse Seraph** with three phases, Moira’s four warned rites and Thoth’s Godly authority. [Boss directory](https://github.com/Bithio999/MC/wiki/Bosses) · [Summoning and rewards](https://github.com/Bithio999/MC/wiki/Ananke#summoning)
 
 ## Otherworlders
@@ -40,4 +42,4 @@ An unofficial reference for the **Tensura Myths** addon to **Tensura: Reincarnat
 Ability articles separate direct elemental hits, additional status damage, healing and utility. Their data tables include damage types, resource costs, cooldowns and acquisition requirements.
 
 
-[Download the styled offline edition](https://github.com/Bithio999/MC/blob/main/releases/tensura-myths-wiki-0.29.1.zip)
+[Download the styled offline edition](https://github.com/Bithio999/MC/blob/main/releases/tensura-myths-wiki-0.30.0.zip)

@@ -43,7 +43,8 @@ final class SmoothGeoGeometry {
             if(lod==2 && shape.equals("leaf")){levels[lod]=levels[1];continue;}
             List<Vertex> mesh=new ArrayList<>();
             switch(shape){
-                case "ring"->ring(mesh,x,y,z,mat,new int[]{96,64,32}[lod]);
+                case "ring"->ring(mesh,x,y,z,mat,new int[]{96,64,32}[lod],false);
+                case "crescent"->ring(mesh,x,y,z,mat,new int[]{96,64,32}[lod],true);
                 case "gem"->gem(mesh,x,y,z,mat);
                 case "leaf"->leaf(mesh,x,y,z,mat,lod==0?16:8);
                 case "box"->box(mesh,x,y,z,mat);
@@ -56,24 +57,25 @@ final class SmoothGeoGeometry {
 
     // Beveled rectangular annulus, smooth around its circumference. Eight profile
     // bands retain a readable metal edge instead of rounding it into a hose.
-    private static void ring(List<Vertex> mesh,double radius,double width,double thickness,int mat,int count){
+    private static void ring(List<Vertex> mesh,double radius,double width,double thickness,int mat,int count,boolean crescent){
         double w=width*.5,h=thickness*.5,b=Math.min(w,h)*.42;
         double[][] profile={{-w,-h+b},{-w+b,-h},{w-b,-h},{w,-h+b},{w,h-b},{w-b,h},{-w+b,h},{-w,h-b}};
         for(int n=0;n<count;n++){
-            double a=n*Math.TAU/count,q=(n+1)*Math.TAU/count;
+            double a=crescent?Math.toRadians(-140+n*280d/count):n*Math.TAU/count,q=crescent?Math.toRadians(-140+(n+1)*280d/count):(n+1)*Math.TAU/count;
+            double ta=crescent?Math.pow(Math.max(0,Math.sin(n*Math.PI/count)),.65):1,tq=crescent?Math.pow(Math.max(0,Math.sin((n+1)*Math.PI/count)),.65):1;
             for(int k=0;k<8;k++){
                 double[] c=profile[k],d=profile[(k+1)%8];
                 double nr=d[1]-c[1],ny=c[0]-d[0],len=Math.hypot(nr,ny);nr/=len;ny/=len;
                 // Clockwise cross section needs outward normals.
                 Vec3 na=new Vec3(Math.cos(a)*nr,ny,Math.sin(a)*nr),nq=new Vec3(Math.cos(q)*nr,ny,Math.sin(q)*nr);
-                face(mesh,ringPoint(a,radius+c[0],c[1]),ringPoint(a,radius+d[0],d[1]),ringPoint(q,radius+d[0],d[1]),ringPoint(q,radius+c[0],c[1]),na,na,nq,nq,mat);
+                face(mesh,ringPoint(a,radius+c[0]*ta,c[1]*ta),ringPoint(a,radius+d[0]*ta,d[1]*ta),ringPoint(q,radius+d[0]*tq,d[1]*tq),ringPoint(q,radius+c[0]*tq,c[1]*tq),na,na,nq,nq,mat);
             }
             // Fine luminous rails on both faces, driven by the same animated bone.
             for(int side:new int[]{-1,1}){
                 double yy=side*(h+.0008),r=radius+width*.19,t=width*.045;
                 Vec3 normal=new Vec3(0,side,0);
-                if(side>0)face(mesh,ringPoint(a,r-t,yy),ringPoint(q,r-t,yy),ringPoint(q,r+t,yy),ringPoint(a,r+t,yy),normal,normal,normal,normal,3);
-                else face(mesh,ringPoint(a,r+t,yy),ringPoint(q,r+t,yy),ringPoint(q,r-t,yy),ringPoint(a,r-t,yy),normal,normal,normal,normal,3);
+                if(side>0)face(mesh,ringPoint(a,radius+(r-t-radius)*ta,yy*ta),ringPoint(q,radius+(r-t-radius)*tq,yy*tq),ringPoint(q,radius+(r+t-radius)*tq,yy*tq),ringPoint(a,radius+(r+t-radius)*ta,yy*ta),normal,normal,normal,normal,3);
+                else face(mesh,ringPoint(a,radius+(r+t-radius)*ta,yy*ta),ringPoint(q,radius+(r+t-radius)*tq,yy*tq),ringPoint(q,radius+(r-t-radius)*tq,yy*tq),ringPoint(a,radius+(r-t-radius)*ta,yy*ta),normal,normal,normal,normal,3);
             }
         }
     }

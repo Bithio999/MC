@@ -41,6 +41,9 @@ Godly IDs are `wildhunt:aion`, `wildhunt:thoth` and `wildhunt:lugh`. Fused race 
 
 | Command | Function |
 | --- | --- |
+| `/myths boss eschaton summon` | Summon the one-billion-EP final Myth in open space |
+| `/myths boss eschaton arena` | Create a native eight-player `eschaton` arena; never overwrite it |
+| `/bossFight join @s eschaton` | Join the prepared final-boss arena under native permissions |
 | `/myths boss summon` | Summon Ananke in front of the operator, if there is room |
 | `/myths boss arena` | Create a native `ananke` boss-fight profile at the operator's position; never overwrite an existing one |
 | `/bossFight join @s ananke` | Native Tensura command to join the prepared arena; requires the base mod's permissions |

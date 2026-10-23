@@ -6,9 +6,12 @@
 
 | Boss | Race | Base EP | HP | SHP | Challenge |
 | --- | --- | ---: | ---: | ---: | --- |
+| [Eschaton, the Last Myth](https://github.com/Bithio999/MC/wiki/Eschaton) | [Origin Sovereign](https://github.com/Bithio999/MC/wiki/Origin-Sovereign) | **1,000,000,000** | 1,000,000 | 4,000,000 | Final Myth; three fatal forms; three Godlies; destructible creation seals |
 | [Ananke, the Unwritten End](https://github.com/Bithio999/MC/wiki/Ananke) | [Eclipse Seraph](https://github.com/Bithio999/MC/wiki/Eclipse-Seraph) | 30,000,000 | 48,000 | 120,000 | Three phases; native Godly authority; four warned rites |
 
 ## Challenging a Myth
+
+Neither Myth spawns naturally. Eschaton is summoned with **Last Convergence** on a **beacon**, using a Dawn Testament from Ananke; see [his encounter guide](https://github.com/Bithio999/MC/wiki/Eschaton).
 
 Ananke does not spawn naturally. Craft a **Writ of Last Dawn** and use it on a **lodestone** in open space on Easy, Normal or Hard. The writ is consumed only after a successful summon. A second ritual fails while another Ananke is within 128 blocks. Ananke has no player-EP entry gate.
 

@@ -14,6 +14,7 @@
     "wildhunt:convergence/dwarf_vampire",
     "wildhunt:convergence/slime_vampire",
     "wildhunt:convergence/vampire_wight",
-    "wildhunt:convergence/daemon_vampire"
+    "wildhunt:convergence/daemon_vampire",
+    "wildhunt:origin_sovereign"
   ]
 }

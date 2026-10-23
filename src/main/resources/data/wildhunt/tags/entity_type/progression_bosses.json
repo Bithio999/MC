@@ -3,6 +3,7 @@
   "values": [
     "#c:bosses",
     "minecraft:wither",
-    "minecraft:ender_dragon"
+    "minecraft:ender_dragon",
+    "wildhunt:eschaton"
   ]
 }

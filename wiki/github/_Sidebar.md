@@ -28,6 +28,8 @@
 - [Boss directory](https://github.com/Bithio999/MC/wiki/Bosses)
 - [Ananke](https://github.com/Bithio999/MC/wiki/Ananke)
 - [Moira, Lord of Finality](https://github.com/Bithio999/MC/wiki/Moira)
+- [Eschaton, the Last Myth](https://github.com/Bithio999/MC/wiki/Eschaton)
+- [Demiurge, God of Genesis](https://github.com/Bithio999/MC/wiki/Demiurge)
 
 ### Otherworlders
 

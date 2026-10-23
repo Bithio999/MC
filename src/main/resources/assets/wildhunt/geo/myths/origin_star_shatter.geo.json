@@ -1,0 +1,300 @@
+{
+  "format_version": "1.12.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.origin_star_shatter",
+        "texture_width": 256,
+        "texture_height": 128,
+        "visible_bounds_width": 3,
+        "visible_bounds_height": 3,
+        "visible_bounds_offset": [
+          0,
+          0.5,
+          0
+        ]
+      },
+      "bones": [
+        {
+          "name": "root",
+          "pivot": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "name": "fragment_0",
+          "parent": "root",
+          "pivot": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "name": "surface_gem_2_150_700_150_5",
+          "parent": "fragment_0",
+          "pivot": [
+            0,
+            6,
+            0
+          ]
+        },
+        {
+          "name": "fragment_1",
+          "parent": "root",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            -21,
+            -37,
+            0
+          ]
+        },
+        {
+          "name": "surface_gem_4_150_700_150_3",
+          "parent": "fragment_1",
+          "pivot": [
+            0,
+            9,
+            0
+          ]
+        },
+        {
+          "name": "fragment_2",
+          "parent": "root",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            -42,
+            -74,
+            0
+          ]
+        },
+        {
+          "name": "surface_gem_6_150_700_150_5",
+          "parent": "fragment_2",
+          "pivot": [
+            0,
+            12,
+            0
+          ]
+        },
+        {
+          "name": "fragment_3",
+          "parent": "root",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            -63,
+            -111,
+            0
+          ]
+        },
+        {
+          "name": "surface_gem_8_150_700_150_3",
+          "parent": "fragment_3",
+          "pivot": [
+            0,
+            6,
+            0
+          ]
+        },
+        {
+          "name": "fragment_4",
+          "parent": "root",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            -84,
+            -148,
+            0
+          ]
+        },
+        {
+          "name": "surface_gem_10_150_700_150_5",
+          "parent": "fragment_4",
+          "pivot": [
+            0,
+            9,
+            0
+          ]
+        },
+        {
+          "name": "fragment_5",
+          "parent": "root",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            -105,
+            -185,
+            0
+          ]
+        },
+        {
+          "name": "surface_gem_12_150_700_150_3",
+          "parent": "fragment_5",
+          "pivot": [
+            0,
+            12,
+            0
+          ]
+        },
+        {
+          "name": "fragment_6",
+          "parent": "root",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            -126,
+            -222,
+            0
+          ]
+        },
+        {
+          "name": "surface_gem_14_150_700_150_5",
+          "parent": "fragment_6",
+          "pivot": [
+            0,
+            6,
+            0
+          ]
+        },
+        {
+          "name": "fragment_7",
+          "parent": "root",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            -147,
+            -259,
+            0
+          ]
+        },
+        {
+          "name": "surface_gem_16_150_700_150_3",
+          "parent": "fragment_7",
+          "pivot": [
+            0,
+            9,
+            0
+          ]
+        },
+        {
+          "name": "fragment_8",
+          "parent": "root",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            -168,
+            -296,
+            0
+          ]
+        },
+        {
+          "name": "surface_gem_18_150_700_150_5",
+          "parent": "fragment_8",
+          "pivot": [
+            0,
+            12,
+            0
+          ]
+        },
+        {
+          "name": "fragment_9",
+          "parent": "root",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            -189,
+            -333,
+            0
+          ]
+        },
+        {
+          "name": "surface_gem_20_150_700_150_3",
+          "parent": "fragment_9",
+          "pivot": [
+            0,
+            6,
+            0
+          ]
+        },
+        {
+          "name": "fragment_10",
+          "parent": "root",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            -210,
+            -370,
+            0
+          ]
+        },
+        {
+          "name": "surface_gem_22_150_700_150_5",
+          "parent": "fragment_10",
+          "pivot": [
+            0,
+            9,
+            0
+          ]
+        },
+        {
+          "name": "fragment_11",
+          "parent": "root",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            -231,
+            -407,
+            0
+          ]
+        },
+        {
+          "name": "surface_gem_24_150_700_150_3",
+          "parent": "fragment_11",
+          "pivot": [
+            0,
+            12,
+            0
+          ]
+        }
+      ]
+    }
+  ]
+}

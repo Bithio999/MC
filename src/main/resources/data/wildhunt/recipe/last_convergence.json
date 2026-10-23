@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "BNB",
+    "DTD",
+    "BNB"
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:beacon"
+    },
+    "N": {
+      "item": "minecraft:nether_star"
+    },
+    "D": {
+      "item": "minecraft:dragon_breath"
+    },
+    "T": {
+      "item": "wildhunt:dawn_testament"
+    }
+  },
+  "result": {
+    "id": "wildhunt:last_convergence",
+    "count": 1
+  }
+}

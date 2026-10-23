@@ -558,9 +558,103 @@
       "kind": 62,
       "shape": "shift",
       "placement": "anchor"
+    },
+    {
+      "asset": "origin_execution",
+      "theme": "eschaton",
+      "bones": 7,
+      "cubes": 80,
+      "kind": 63,
+      "shape": "origin_edge",
+      "placement": "finale"
+    },
+    {
+      "asset": "origin_star_loom",
+      "theme": "eschaton",
+      "bones": 9,
+      "cubes": 175,
+      "kind": 64,
+      "shape": "origin_loom",
+      "placement": "finale"
+    },
+    {
+      "asset": "origin_sevenfold",
+      "theme": "eschaton",
+      "bones": 29,
+      "cubes": 441,
+      "kind": 65,
+      "shape": "origin_genesis",
+      "placement": "finale"
+    },
+    {
+      "asset": "origin_silent_scripture",
+      "theme": "eschaton",
+      "bones": 7,
+      "cubes": 21,
+      "kind": 66,
+      "shape": "origin_cuts",
+      "placement": "finale"
+    },
+    {
+      "asset": "origin_serpent_wake",
+      "theme": "eschaton",
+      "bones": 28,
+      "cubes": 135,
+      "kind": 67,
+      "shape": "origin_wake",
+      "placement": "finale"
+    },
+    {
+      "asset": "origin_exchange",
+      "theme": "eschaton",
+      "bones": 10,
+      "cubes": 105,
+      "kind": 68,
+      "shape": "origin_exchange",
+      "placement": "finale"
+    },
+    {
+      "asset": "origin_thronefall",
+      "theme": "eschaton",
+      "bones": 7,
+      "cubes": 80,
+      "kind": 69,
+      "shape": "origin_dive",
+      "placement": "finale"
+    },
+    {
+      "asset": "origin_apocalypse",
+      "theme": "eschaton",
+      "bones": 15,
+      "cubes": 196,
+      "kind": 70,
+      "shape": "origin_apocalypse",
+      "placement": "finale"
+    },
+    {
+      "asset": "origin_apotheosis",
+      "theme": "eschaton",
+      "bones": 9,
+      "cubes": 175,
+      "kind": 71,
+      "shape": "origin_ascend",
+      "placement": "finale"
+    },
+    {
+      "asset": "origin_star_shatter",
+      "theme": "eschaton",
+      "bones": 25,
+      "cubes": 84,
+      "kind": 72,
+      "shape": "origin_shatter",
+      "placement": "finale_shatter"
     }
   ],
   "boss": "ananke",
+  "final_boss": "eschaton",
+  "weak_points": [
+    "genesis_seal"
+  ],
   "otherworlders": [
     "alma_equipment",
     "gemma_equipment"

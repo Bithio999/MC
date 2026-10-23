@@ -23,6 +23,7 @@ THEMES={
  'gate':['494164','18182e','b99a61','e6dcff','a18fdf','e4dfd6','626482','d9b37e'],
  'thoth':['254a5c','122737','c8a56c','a2f7ff','6b9fac','f1e5c7','51867d','dbc995'],
  'lugh':['40645b','182d31','cca565','fff0c5','a3dcca','eee6cb','6f9183','d1b47b'],
+ 'eschaton':['172434','0a101e','bdaf83','a5fff1','ff919c','e8eee3','3c6873','c6d9d7'],
  'ananke':['cdc7b9','161627','ac7e42','f3c477','9273be','e5ddca','77798b','d7b578'],
 }
 # Atlas tiles: dark enamel, recessed metal, engraved trim, luminous inlay,
@@ -151,7 +152,10 @@ def tablet(r,name='tablet',at=None,parent='root'):
  for s in [-1,1]:r.gem(name,[at[0]+s*6,at[1]+8,at[2]],[2,4,2],4)
  r.sway(name,2,4)
 
+from author_eschaton import PROFILES as FINAL_PROFILES, effect as final_effect, author_boss, author_items
+
 def effect(name,theme,kind):
+ if kind.startswith('origin_'):return final_effect(Rig,name,theme,kind)
  r=Rig(name,theme)
  if kind in ['crystal','icefall','bulwark','bloom','garden','icegarden','briar','seed','rebirth','heal']:
   if kind in ['crystal','icefall']:
@@ -235,6 +239,7 @@ PROFILES=[
 (25,'lexicon_volumes','thoth','lexicon','radial'),(26,'spellbreak_obelisks','thoth','spellbreak','radial'),(27,'mana_alembic','thoth','crucible','follow'),(28,'astral_volumes','thoth','library','library'),(29,'spectrum_emitter','thoth','muzzle','beam'),(30,'briar_corolla','grove','briar','radial'),(31,'runic_detonator','rune','burst','radial'),(32,'mirror_splinters','mirror','shards','radial'),(33,'fulgur_conductor','storm','rail','beam'),(34,'thunderstep_armature','storm','step','beam'),(35,'elemental_detonation','storm','impact','radial'),(36,'obsidian_vents','volcanic','oil','radial'),(37,'vital_corolla','grove','heal','follow'),(38,'gate_wake','gate','transit','beam'),
 (39,'fate_loom','silk','spider','anchor'),(40,'fate_spindle','silk','thread','beam'),(41,'loom_wake','silk','loomstep','beam'),(42,'checkmate_blades','silk','checkmate','edge'),(43,'mirrorsea_lenses','tide','mirrorsea','radial'),(44,'refracted_harpoon','tide','spear','tip'),(45,'sovereign_crest','tide','breaker','breaker'),(46,'refraction_lenses','tide','lens','radial'),(47,'perennial_corolla','grove','seed','marker'),(48,'rebirth_lotus','grove','rebirth','radial'),(49,'skill_bank_codex','lugh','tablet','radial'),(50,'artisan_spindle','lugh','thread','beam'),(51,'countermand_tablet','lugh','seal','marker'),(52,'grand_synthesis_codices','lugh','synthesis','radial'),(53,'reconstructed_sword','lugh','blade','blade'),(54,'reconstructed_lance','lugh','lance','tip'),(55,'reconstructed_crown','lugh','crown','radial'),
 (56,'fatebreaker_armature','ananke','blade','bossfan'),(57,'starfall_armature','ananke','spear','stars'),(58,'procession_censer','ananke','crucible','procession'),(59,'last_dawn_orrery','ananke','dawn','dawn'),(60,'seraph_ascension','ananke','ascend','ascend'),(62,'seraph_threshold','ananke','shift','anchor')]
+PROFILES += FINAL_PROFILES
 manifest=[]
 for id,name,theme,shape,placement in PROFILES:
  row=effect(name,theme,shape).save();row.update(kind=id,shape=shape,placement=placement);manifest.append(row)
@@ -279,8 +284,9 @@ for who,theme in [('alma','rune'),('gemma','storm')]:
  else:
   for n in range(3):r.box('pack',[n*2-2,24,4],[1,8,1],2);r.box('pack',[n*2-2,28,4],[2.5,1,1.5],6)
  r.sway('pack',2,2);r.save()
-write(SOURCE/'manifest.json',{'schema':2,'effects':manifest,'boss':'ananke','otherworlders':['alma_equipment','gemma_equipment'],'custom_optics':['bone-attached continuous rings, facets, curved leaves and beveled solids','singularity horizons and stable disks','fluid sheets and caustics','beams and trails','exact boss damage warnings']})
-print(f'Authored {len(PROFILES)} effect rigs, 2 style variants, 1 boss and 2 NPC accessories.')
+author_boss(Rig)
+write(SOURCE/'manifest.json',{'schema':2,'effects':manifest,'boss':'ananke','final_boss':'eschaton','weak_points':['genesis_seal'],'otherworlders':['alma_equipment','gemma_equipment'],'custom_optics':['bone-attached continuous rings, facets, curved leaves and beveled solids','singularity horizons and stable disks','fluid sheets and caustics','beams and trails','exact boss damage warnings']})
+print(f'Authored {len(PROFILES)} effect rigs, 2 style variants, 2 bosses, 1 weak point and 2 NPC accessories.')
 
 rows=[f'        new VisualRig({id},"{name}","{theme}",Placement.{placement.upper()})' for id,name,theme,shape,placement in PROFILES]
 java='package dev.wildhunt.visual;\n\n/** Authored rig routing. IDs match the existing synchronized visual protocol. */\npublic record VisualRig(int kind,String asset,String theme,Placement placement) {\n    public enum Placement {'+','.join(sorted({p[4].upper() for p in PROFILES}))+'}\n    private static final VisualRig[] ALL={\n'+',\n'.join(rows)+'\n    };\n    public static VisualRig forKind(int kind){for(var rig:ALL)if(rig.kind==kind)return rig;return null;}\n    public static java.util.List<VisualRig> all(){return java.util.List.of(ALL);}\n}\n'
@@ -306,3 +312,5 @@ for item in ['writ_of_last_dawn','dawn_testament']:
  for folder,suffix in [('geo','.geo.json'),('animations','.animation.json')]: (ASSET/folder/'myths'/f'{item}{suffix}').unlink()
 
 (ASSET/'textures/item/myths_material.png').write_bytes((ASSET/'textures/geo/ananke.png').read_bytes())
+
+author_items(Rig)

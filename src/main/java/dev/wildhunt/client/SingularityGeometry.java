@@ -59,6 +59,9 @@ final class SingularityGeometry {
             mesh.addVertex(pose,(float)point.x,(float)point.y,(float)point.z).setColor(0xFF020106).setUv(0,0)
                 .setOverlay(net.minecraft.client.renderer.texture.OverlayTexture.NO_OVERLAY).setLight(15728880).setNormal(pose,0,1,0);
     }
+    static void originSeed(PoseStack p,MultiBufferSource b,Vec3 at,double radius,double age,int seed){
+        hole(p,b,at,new Vec3(0,0,1),radius,1,1,age,seed,20);
+    }
     private static void hole(PoseStack p,MultiBufferSource b,Vec3 at,Vec3 axis,double radius,double stretch,double cross,double age,int seed,int node){
         if(radius<.001)return;
         glow(p,b,at,radius*3.8,tint(GOLD,.075));
