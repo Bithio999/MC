@@ -5,7 +5,7 @@ An expanded progression and skills addon for **Tensura 2.0.1.3**, **Minecraft
 
 ## Download
 
-The built addon is included at [releases/tensura-myths-0.32.0.jar](releases/tensura-myths-0.32.0.jar).
+The built addon is included at [releases/tensura-myths-0.32.1.jar](releases/tensura-myths-0.32.1.jar).
 Install it alongside Tensura and its required dependencies on both client and server, including **GeckoLib 4.9.3 (4.x)**.
 
 ## Visuals
@@ -16,7 +16,7 @@ World effects and Myth bosses use original **Blockbench models and GeckoLib anim
 
 ## Heavenly Restriction
 
-Choose **[Fettered Human](wiki/pages/Fettered-Human.md)** at reincarnation and follow four evolutions to **Heavenbreaker**. The intrinsic Unique **[Chained](wiki/pages/Chained.md)** grants 100× maximum aura, converts natural magicule regeneration into aura, restricts future magical growth/skills, strengthens Battlewills and physical combat, and provides an instant 16-block attacking teleport. Native race and ability menus handle the lineage.
+Choose **[Fettered Human](wiki/pages/Fettered-Human.md)** at reincarnation and follow four evolutions to **Heavenbreaker**. The intrinsic Unique **[Chained](wiki/pages/Chained.md)** grants 5× maximum aura, converts natural magicule regeneration into aura, restricts future magical growth/skills, strengthens Battlewills and physical combat, and provides an instant 16-block attacking teleport. Native race and ability menus handle the lineage. Only Fettered Human grants Chained; later evolutions retain it. This lineage allocates EP growth 90% to aura and 10% to magicules before Chained blocks magicule-capacity growth.
 
 ## Final Myth
 
@@ -99,11 +99,11 @@ Both lineages must finish evolving before [Convergent Awakening](wiki/pages/Conv
 
 All **105 ancestral combinations** have a registered fusion race, name, icon and EP profile. Awakening grants a one-time 25% increase to base aura and magicule caps. **Concordance Pulse** restores 50% maximum HP and SHP without a fixed healing cap, costs 1,500 aura and has a 30-second cooldown.
 
-An independent secondary grants **10% extra native EP gain**, retaining the primary race’s aura/magicule proportions. Default Human/Hunter awards of 6 aura / 3 magicules become **6.6 / 3.3**. Fusion inherits the same bonus with its own growth profile. Human/Hunter retains the normal **2/3 aura, 1/3 magicule** split.
+An independent secondary grants **10% extra native EP gain**, retaining the primary race’s aura/magicule proportions. Default Human/Hunter awards of 6 aura / 3 magicules become **6.6 / 3.3**. Fusion inherits the same bonus with its own growth profile. The standard Human and Hunter lineages retain the normal **2/3 aura, 1/3 magicule** split.
 
 ## Updating
 
-Replace the previous addon JAR with **0.32.0** on client and server. Install only one addon version. The `wildhunt` namespace remains stable for existing saves.
+Replace the previous addon JAR with **0.32.1** on client and server. Install only one addon version. Existing Chained owners automatically receive the 5× multiplier on refresh; their saved base capacity and mastery are preserved. Current aura follows native capacity/overflow handling. The `wildhunt` namespace remains stable for existing saves.
 
 Ordinary elemental attribute bonuses use the strongest source per element; Godly bonuses remain separate. Mirrorbound, Demeter, Janus and Thoth no longer give passive shields; old saved contributions are cleaned automatically. Water Veil, Colossus Carapace and Aion retain their dedicated defenses. Demeter’s second mode is Perennial Seed: a one-use 40% HP/SHP rescue effect.
 
@@ -113,7 +113,7 @@ The [changelog](docs/CHANGELOG.md) records development changes separately from t
 
 ## Wiki
 
-Read the [Tensura Myths Wiki](wiki/README.md) for individual skill/race articles, per-ability damage types, progression and commands. [Download the styled offline edition](releases/tensura-myths-wiki-0.32.0.zip), extract it and open `index.html` for the wiki layout, infoboxes, screenshots and offline search. The [GitHub Wiki edition](wiki/github/Home.md) is prepared for the separate Wiki when it is available; [publishing instructions](docs/WIKI.md).
+Read the [Tensura Myths Wiki](wiki/README.md) for individual skill/race articles, per-ability damage types, progression and commands. [Download the styled offline edition](releases/tensura-myths-wiki-0.32.1.zip), extract it and open `index.html` for the wiki layout, infoboxes, screenshots and offline search. The [GitHub Wiki edition](wiki/github/Home.md) is prepared for the separate Wiki when it is available; [publishing instructions](docs/WIKI.md).
 
 ## Build and test
 
@@ -140,9 +140,9 @@ vertical dashes, through-wall ricochets, momentum preservation, native shield
 breakage and timed recovery, HP/SHP evolution, aura regeneration and native NPC loadouts.
 `./gradlew runClient` starts a development client on a machine with graphics.
 
-The [0.32.0 validation report](docs/VALIDATION-0.32.0.md) records Chained’s resource, inheritance, Battlewill, defense and teleport tests, native-client review, existing gameplay regressions and wiki checks.
+The [0.32.1 validation report](docs/VALIDATION-0.32.1.md) records the Chained rebalance, native EP allocation and evolution-retention checks, gameplay regressions and wiki validation.
 
-Install `build/libs/tensura-myths-0.32.0.jar` on **both client and server**,
+Install `build/libs/tensura-myths-0.32.1.jar` on **both client and server**,
 alongside Tensura and its required dependencies. The addon jar is not a complete
 modpack. Additional development dependency versions are in `runtime-mods.lock.json`.
 

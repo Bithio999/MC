@@ -1,6 +1,6 @@
 # Tensura Myths Wiki
 
-An unofficial reference for the **Tensura Myths** addon to **Tensura: Reincarnated**. Minecraft 1.21.1 · NeoForge · Addon 0.32.0.
+An unofficial reference for the **Tensura Myths** addon to **Tensura: Reincarnated**. Minecraft 1.21.1 · NeoForge · Addon 0.32.1.
 
 ## Start here
 

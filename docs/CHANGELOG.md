@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.32.1 — Chained balance and lineage growth
+
+- Reduce Chained maximum-aura capacity from 100× to 5×, replacing the existing saved modifier without altering base capacity.
+- Rebalance Severance Rush around the smaller pool: path damage = 4 × √(aura paid), arrival damage = 8 × √(aura paid). Payment remains 2% current aura; native Battlewill bonuses still apply.
+- Grant Chained only from Fettered Human. Later evolutions preserve an existing skill and mastery but do not grant or regrant it.
+- Give all five Heavenly Restriction stages 90% aura / 10% magicule EP growth before native caps and Chained’s magicule-growth block. Retain the existing secondary-race bonus and Convergent growth profiles.
+
 ## 0.32.0 — Heavenly Restriction
 
 - Add Fettered Human as a native reincarnation choice with four evolutions: Tempered Vessel, Unshackled, Heavenly Restricted and Heavenbreaker. Fixed base-EP and training milestones use native evolution requirements.

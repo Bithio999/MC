@@ -20,7 +20,7 @@
 
 ## Heavenly Restriction lineage
 
-Start as [Fettered Human](https://github.com/Bithio999/MC/wiki/Fettered-Human), then evolve through [Tempered Vessel](https://github.com/Bithio999/MC/wiki/Tempered-Vessel), [Unshackled](https://github.com/Bithio999/MC/wiki/Unshackled), [Heavenly Restricted](https://github.com/Bithio999/MC/wiki/Heavenly-Restricted) and [Heavenbreaker](https://github.com/Bithio999/MC/wiki/Heavenbreaker). Every stage retains the intrinsic Unique [Chained](https://github.com/Bithio999/MC/wiki/Chained). Fixed base EP, mastered Battlewills and Chained mastery govern this separate starting lineage.
+Start as [Fettered Human](https://github.com/Bithio999/MC/wiki/Fettered-Human), then evolve through [Tempered Vessel](https://github.com/Bithio999/MC/wiki/Tempered-Vessel), [Unshackled](https://github.com/Bithio999/MC/wiki/Unshackled), [Heavenly Restricted](https://github.com/Bithio999/MC/wiki/Heavenly-Restricted) and [Heavenbreaker](https://github.com/Bithio999/MC/wiki/Heavenbreaker). Fettered Human grants [Chained](https://github.com/Bithio999/MC/wiki/Chained); later evolutions retain it without granting it again. The lineage uses a 90% aura / 10% magicule EP split. Fixed base EP, mastered Battlewills and Chained mastery govern this separate starting lineage.
 
 ## Secondary races
 

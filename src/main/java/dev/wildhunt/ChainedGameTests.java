@@ -43,14 +43,62 @@ public final class ChainedGameTests {
         h.assertTrue(WildHunt.CHAINED.get().getColoredName().getString().equals("Chained"),"Colored name exposed a translation key");
         ReincarnationMenu.setRace(p,WildHunt.RESTRICTED.getFirst().get(),true,false);
         h.assertTrue(ChainedState.owned(p),"Race did not grant Chained");near(h,EnergyHelper.getMaxMagicule(p),500,"Initial native magicule pool was blocked before initialization");
-        near(h,EnergyHelper.getMaxAura(p),2_000_000,"Starting aura capacity was not multiplied");
+        near(h,EnergyHelper.getMaxAura(p),100_000,"Starting aura capacity was not multiplied");
         for(int n=0;n<5;n++){var r=WildHunt.RESTRICTED.get(n).get();var i=r.createDefaultInstance();h.assertTrue(r.stage==n && (n==4?i.getNextEvolutions(p).isEmpty():i.getNextEvolutions(p).equals(List.of(WildHunt.RESTRICTED.get(n+1).get()))),"Broken lineage at "+n);h.assertTrue(dev.wildhunt.myths.RaceFamily.from(r).orElseThrow()==dev.wildhunt.myths.RaceFamily.HUMAN,"Human ancestry missing");}
         h.succeed();
     }
     @GameTest(template="empty",timeoutTicks=100)
+    public static void laterEvolutionGrantsNoChainedAndCannotRegrantAForgottenVow(GameTestHelper h){
+        var p=player(h);var storage=SkillAPI.getSkillsFrom(p);
+        for(int n=1;n<5;n++){
+            var race=WildHunt.RESTRICTED.get(n).get();var instance=race.createDefaultInstance();
+            h.assertTrue(race.getIntrinsicSkills(instance,p).isEmpty(),"Later race advertises Chained: "+n);
+            RaceAPI.getRaceFrom(p).setRace(race,false);instance.learnIntrinsicSkills(p);
+            h.assertTrue(!ChainedState.owned(p),"Direct later-stage selection granted Chained: "+n);
+        }
+        ReincarnationMenu.setRace(p,WildHunt.RESTRICTED.getFirst().get(),true,false);
+        h.assertTrue(ChainedState.owned(p),"Fettered Human no longer grants Chained");storage.forgetSkill(WildHunt.CHAINED.get());
+        for(int n=1;n<5;n++){
+            RaceAPI.getRaceFrom(p).setRace(WildHunt.RESTRICTED.get(n).get(),false);
+            h.assertTrue(!ChainedState.owned(p),"Evolution regranted forgotten Chained: "+n);
+        }
+        h.succeed();
+    }
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void lineageUsesNinetyTenNativeEPGrowthBeforeVowAndDuoBonus(GameTestHelper h){
+        var p=player(h);var victim=target(h,p.position().add(5,0,0));
+        p.getAttribute(TensuraAttributes.AURA_GAIN).setBaseValue(100);p.getAttribute(TensuraAttributes.MAGICULE_GAIN).setBaseValue(100);
+        for(int n=0;n<5;n++){
+            RaceAPI.getRaceFrom(p).setRace(WildHunt.RESTRICTED.get(n).get(),false);SkillAPI.getSkillsFrom(p).forgetSkill(WildHunt.CHAINED.get());
+            double a=EnergyHelper.getBaseMaxAura(p),m=EnergyHelper.getBaseMaxMagicule(p);
+            double auraGain=90*p.getAttributeValue(TensuraAttributes.AURA_GAIN)/100,mpGain=90*p.getAttributeValue(TensuraAttributes.MAGICULE_GAIN)/100;
+            io.github.manasmods.tensura.handler.DeathHandler.gainEPEntity(p,victim,90);
+            near(h,EnergyHelper.getBaseMaxAura(p)-a,auraGain*2.7,"Native 90% aura growth at stage "+n);
+            near(h,EnergyHelper.getBaseMaxMagicule(p)-m,mpGain*.3,"Native 10% MP growth at stage "+n);
+        }
+        vow(p,false);double a=EnergyHelper.getMaxAura(p),m=EnergyHelper.getMaxMagicule(p);
+        double auraGain=90*p.getAttributeValue(TensuraAttributes.AURA_GAIN)/100;
+        io.github.manasmods.tensura.handler.DeathHandler.gainEPEntity(p,victim,90);
+        near(h,EnergyHelper.getMaxAura(p)-a,auraGain*2.7*5,"Vow did not multiply only the aura share");near(h,EnergyHelper.getMaxMagicule(p),m,"Blocked MP share escaped the vow");
+        dev.wildhunt.myths.DuoSystem.saveSecondary(p,dev.wildhunt.myths.RaceFamily.SLIME.baseRace().createDefaultInstance());
+        var gains=dev.wildhunt.myths.DuoSystem.gains(p,2,1);near(h,gains.aura(),2.97,"Duo aura split/bonus");near(h,gains.magicules(),.33,"Duo MP split/bonus");
+        var ui=dev.wildhunt.myths.MythsNetwork.snapshot(p,"");near(h,ui.getDouble("aura"),2.97,"UI growth disagrees with awards");near(h,ui.getDouble("magicules"),.33,"UI MP growth disagrees with awards");
+        a=EnergyHelper.getMaxAura(p);io.github.manasmods.tensura.handler.DeathHandler.gainEPEntity(p,victim,90);
+        near(h,EnergyHelper.getMaxAura(p)-a,auraGain*2.97*5,"Native award lost the secondary bonus");near(h,EnergyHelper.getMaxMagicule(p),m,"Secondary bonus bypassed the MP ceiling");
+        // An already-saved 0.32 modifier is replaced, rather than compounded.
+        p.getAttribute(TensuraAttributes.MAX_AURA).addOrReplacePermanentModifier(new AttributeModifier(ChainedState.VOW,99,AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
+        ChainedState.refresh(p);near(h,p.getAttribute(TensuraAttributes.MAX_AURA).getModifier(ChainedState.VOW).amount(),4,"Old save kept the 100x multiplier");h.succeed();
+    }
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void dashDamageUsesRebalancedActualAuraPaymentWithoutAFloor(GameTestHelper h){
+        near(h,ChainedSkill.pathDamage(0),0,"Empty-aura damage floor");near(h,ChainedSkill.arrivalDamage(0),0,"Empty-aura arrival floor");
+        near(h,ChainedSkill.pathDamage(25),20,"Rebalanced path formula");near(h,ChainedSkill.arrivalDamage(25),40,"Rebalanced arrival formula");
+        near(h,ChainedSkill.pathDamage(100),40,"Paid-aura scaling");near(h,ChainedSkill.arrivalDamage(100),80,"Arrival paid-aura scaling");h.succeed();
+    }
+    @GameTest(template="empty",timeoutTicks=100)
     public static void truePassiveCoversBaseModifierAndHelperGainsWhileOffAndUnslotted(GameTestHelper h){
-        var p=player(h);EnergyHelper.setBaseMaxEP(p,2000);var i=vow(p,false);near(h,EnergyHelper.getMaxAura(p),100000,"Ownership multiplier");
-        var ap=p.getAttribute(TensuraAttributes.MAX_AURA);ap.setBaseValue(1025);ap.addOrReplacePermanentModifier(new AttributeModifier(WildHunt.id("chained_test_external_ap"),30,AttributeModifier.Operation.ADD_VALUE));near(h,ap.getValue(),105500,"Modifier gain escaped 100x");
+        var p=player(h);EnergyHelper.setBaseMaxEP(p,2000);var i=vow(p,false);near(h,EnergyHelper.getMaxAura(p),5000,"Ownership multiplier");
+        var ap=p.getAttribute(TensuraAttributes.MAX_AURA);ap.setBaseValue(1025);ap.addOrReplacePermanentModifier(new AttributeModifier(WildHunt.id("chained_test_external_ap"),30,AttributeModifier.Operation.ADD_VALUE));near(h,ap.getValue(),5275,"Modifier gain escaped 5x");
         var mp=p.getAttribute(TensuraAttributes.MAX_MAGICULE);double base=mp.getBaseValue();EnergyHelper.setMaxMagicule(p,10000);near(h,mp.getBaseValue(),base,"Helper raised raw max magicules");mp.setBaseValue(base+25);near(h,mp.getBaseValue(),base,"Direct setter raised magicules");
         mp.addOrReplacePermanentModifier(new AttributeModifier(WildHunt.id("chained_test_external_mp"),99999,AttributeModifier.Operation.ADD_VALUE));near(h,mp.getValue(),1000,"Modifier escaped magicule ceiling");
         h.assertTrue(!i.isToggled() && !WildHunt.CHAINED.get().isInSlot(p,i),"Fixture unexpectedly toggled/slotted");h.succeed();
@@ -120,12 +168,12 @@ public final class ChainedGameTests {
     }
     @GameTest(template="empty",timeoutTicks=100)
     public static void forgettingRemovesOnlyChainedModifiersAndDoesNotCompoundOnReload(GameTestHelper h){
-        var p=player(h);double aura=p.getAttributeValue(TensuraAttributes.MAX_AURA),attack=p.getAttributeValue(Attributes.ATTACK_DAMAGE);var i=vow(p,true);var restored=ManasSkillInstance.fromNBT(i.toNBT());SkillAPI.getSkillsFrom(p).updateSkill(restored,true);ChainedState.initialize(p);near(h,p.getAttributeValue(TensuraAttributes.MAX_AURA),aura*100,"Reload compounded capacity");SkillAPI.getSkillsFrom(p).forgetSkill(WildHunt.CHAINED.get());near(h,p.getAttributeValue(TensuraAttributes.MAX_AURA),aura,"Forgotten aura modifier persisted");near(h,p.getAttributeValue(Attributes.ATTACK_DAMAGE),attack,"Forgotten combat modifier persisted");h.succeed();
+        var p=player(h);double aura=p.getAttributeValue(TensuraAttributes.MAX_AURA),attack=p.getAttributeValue(Attributes.ATTACK_DAMAGE);var i=vow(p,true);var restored=ManasSkillInstance.fromNBT(i.toNBT());SkillAPI.getSkillsFrom(p).updateSkill(restored,true);ChainedState.initialize(p);near(h,p.getAttributeValue(TensuraAttributes.MAX_AURA),aura*5,"Reload compounded capacity");SkillAPI.getSkillsFrom(p).forgetSkill(WildHunt.CHAINED.get());near(h,p.getAttributeValue(TensuraAttributes.MAX_AURA),aura,"Forgotten aura modifier persisted");near(h,p.getAttributeValue(Attributes.ATTACK_DAMAGE),attack,"Forgotten combat modifier persisted");h.succeed();
     }
     @GameTest(template="empty",timeoutTicks=100)
     public static void evolutionMenuUsesFixedBaseEPAndActualMasteredBattlewills(GameTestHelper h){
         var p=player(h);EnergyHelper.setBaseMaxEP(p,2000);var i=vow(p,false);i.setMastery(i.getMaxMastery());var first=WildHunt.RESTRICTED.getFirst().get();var current=first.createDefaultInstance();var next=WildHunt.RESTRICTED.get(1).get();
-        p.getAttribute(TensuraAttributes.MAX_AURA).setBaseValue(98999);h.assertTrue(EnergyHelper.getMaxAura(p)>8_000_000 && first.getEvolutionProgress(current,p,next)<100,"Multiplied capacity bypassed fixed base-EP or training requirements");
+        p.getAttribute(TensuraAttributes.MAX_AURA).setBaseValue(98999);h.assertTrue(EnergyHelper.getMaxAura(p)>100_000 && first.getEvolutionProgress(current,p,next)<100,"Multiplied capacity bypassed fixed base-EP or training requirements");
         HunterData.learnReward(p,UtilityArts.DIAMOND_PATH.get());var art=SkillAPI.getSkillsFrom(p).getSkill(UtilityArts.DIAMOND_PATH.get()).orElseThrow();art.setMastery(art.getMaxMastery());h.assertTrue(first.getEvolutionProgress(current,p,next)<100,"Sub-threshold base EP passed");p.getAttribute(TensuraAttributes.MAX_AURA).setBaseValue(99000);near(h,first.getEvolutionProgress(current,p,next),100,"Native evolution requirements did not complete at the fixed threshold");h.succeed();
     }
     @GameTest(template="empty",timeoutTicks=100)

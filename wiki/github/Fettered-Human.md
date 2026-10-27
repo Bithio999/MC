@@ -23,7 +23,7 @@
 
 ## Traits
 
-The race preserves the player’s appearance and equipment. Stage bonuses replace the preceding stage’s bonuses. Its ordinary Human EP split remains **2/3 aura and 1/3 magicules**, before Chained’s rules: aura capacity is multiplied by 100 and future maximum-magicule gains are blocked. The blocked share is not reassigned. A newly reincarnated Fettered Human has 20,000 base aura and 500 base magicules; Chained makes its aura capacity 2,000,000.
+The race preserves the player’s appearance and equipment. Stage bonuses replace the preceding stage’s bonuses. Its EP growth splits **9/10 to aura and 1/10 to magicules**, before Chained’s rules: aura capacity is multiplied by 5 and future maximum-magicule gains are blocked. The blocked share is not reassigned. A newly reincarnated Fettered Human has 20,000 base aura and 500 base magicules; Chained makes its aura capacity 100,000. A secondary race’s 10% EP bonus preserves these proportions; Convergent races use their own growth profiles.
 
 [Chained](https://github.com/Bithio999/MC/wiki/Chained) governs true resource/learning restrictions, the martial toggle, mastered resistance degradation, in-slot dodge and Severance Rush. The same skill and mastery persist through the lineage.
 
@@ -39,7 +39,7 @@ The intrinsic Unique [Chained](https://github.com/Bithio999/MC/wiki/Chained) sup
 
 Select Fettered Human from Tensura’s native reincarnation race menu. It guarantees Chained and still permits the normal reincarnation skill roll. Progression is available in the normal native evolution menu.
 
-Base EP uses the native unmultiplied capacity values; the 100× aura-capacity modifier does not satisfy a base-EP gate by itself. The milestones are constants, independent of the player’s EP when the lineage is selected.
+Base EP uses the native unmultiplied capacity values; the 5× aura-capacity modifier does not satisfy a base-EP gate by itself. The milestones are constants, independent of the player’s EP when the lineage is selected.
 
 | Stage | Fixed base EP | Mastered Battlewills | Chained mastery |
 | --- | ---: | ---: | ---: |

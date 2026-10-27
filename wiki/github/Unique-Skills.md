@@ -24,7 +24,7 @@ Active modes consume aura. Toggleable passives consume ongoing aura and are sepa
 
 ## Race-exclusive Unique
 
-[Chained](https://github.com/Bithio999/MC/wiki/Chained) belongs to the [Heavenly Restriction lineage](https://github.com/Bithio999/MC/wiki/Fettered-Human). It is guaranteed by that race and does not enter the eight ordinary rollable Uniques.
+[Chained](https://github.com/Bithio999/MC/wiki/Chained) belongs to the [Heavenly Restriction lineage](https://github.com/Bithio999/MC/wiki/Fettered-Human). It is granted only by Fettered Human and retained through evolution and does not enter the eight ordinary rollable Uniques.
 
 ## Related pages
 

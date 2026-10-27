@@ -34,7 +34,7 @@ public final class RestrictedRace extends TensuraRace {
     @Override public Pair<Double,Double> getBaseAuraRange(){return Pair.of(20_000d,20_000d);}
     @Override public Pair<Double,Double> getBaseMagiculeRange(){return Pair.of(500d,500d);}
     @Override public Alignment getAlignment(){return Alignment.DEFAULT;}
-    @Override public List<ManasSkill> getIntrinsicSkills(ManasRaceInstance i,LivingEntity e){return List.of(WildHunt.CHAINED.get());}
+    @Override public List<ManasSkill> getIntrinsicSkills(ManasRaceInstance i,LivingEntity e){return stage==0?List.of(WildHunt.CHAINED.get()):List.of();}
     @Override public List<ManasRace> getNextEvolutions(ManasRaceInstance i,LivingEntity e){return stage==4?List.of():List.of(WildHunt.RESTRICTED.get(stage+1).get());}
     @Override public List<ManasRace> getPreviousEvolutions(ManasRaceInstance i,LivingEntity e){return stage==0?List.of():List.of(WildHunt.RESTRICTED.get(stage-1).get());}
     @Override public ManasRace getDefaultEvolution(ManasRaceInstance i,LivingEntity e){return stage==4?null:WildHunt.RESTRICTED.get(stage+1).get();}

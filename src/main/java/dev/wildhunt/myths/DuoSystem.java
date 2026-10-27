@@ -120,7 +120,11 @@ public final class DuoSystem {
     public static DuoRules.Gains gains(LivingEntity p,double nativeAura,double nativeMagicule) {
         var current=primary(p);
         if(current.isPresent() && current.get().getRace() instanceof FusionRace fusion)return fusion.profile.gains().withDuoBonus();
-        var nativeGains=new DuoRules.Gains(nativeAura,nativeMagicule);
+        // This human lineage keeps DEFAULT alignment's non-growth behavior, but
+        // allocates the same total EP weight 90/10 before the existing duo bonus.
+        double total=nativeAura+nativeMagicule;
+        var nativeGains=current.filter(r->r.getRace() instanceof RestrictedRace).isPresent()
+            ?new DuoRules.Gains(total*.9,total*.1):new DuoRules.Gains(nativeAura,nativeMagicule);
         return secondary(p).isPresent()?nativeGains.withDuoBonus():nativeGains;
     }
     public static double secondaryEvolutionEP(LivingEntity p) {

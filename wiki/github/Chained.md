@@ -10,7 +10,7 @@
 | --- | --- |
 | **Information** | |
 | Skill tier | Unique |
-| Acquisition | Guaranteed intrinsic skill of Fettered Human and all four evolutions |
+| Acquisition | Guaranteed intrinsic skill of Fettered Human only; retained through evolution |
 | Normal reincarnation Unique pool | No; other reincarnation skills still roll normally |
 | Maximum mastery | 1,000 |
 | Active mode | Severance Rush |
@@ -31,7 +31,9 @@
 | Damage ID | None |
 | Activation | Owning the learned skill; independent of toggle and slots |
 
-Your **maximum aura is multiplied by 100**, including base capacity and modifiers from equipment, skills and other sources. This expands capacity; it does not repeatedly refill current aura when toggled or re-equipped. Native hard limits still apply.
+Your **maximum aura is multiplied by 5**, including base capacity and modifiers from equipment, skills and other sources. This expands capacity; it does not repeatedly refill current aura when toggled or re-equipped. Native hard limits still apply.
+
+All five lineage stages allocate normal EP growth **90% to aura and 10% to magicules** before Chained blocks maximum-magicule increases; that blocked 10% is not redirected. A secondary race’s 10% growth bonus preserves this split. Convergent races retain their own growth profiles.
 
 Your existing **maximum magicule capacity is preserved as a ceiling**. Future increases to the base value are blocked, and newly added capacity modifiers cannot raise the effective maximum beyond that ceiling. Current magicules remain usable, and native expenses or losses still apply. The pact does not redirect blocked magicule-capacity gains into aura.
 
@@ -122,10 +124,10 @@ The endpoint stops before solid body collisions, unloaded terrain, the world bor
 Let **A** be the aura actually paid:
 
 - **A = 0.02 × current aura**.
-- **Path damage = 2 × √A**.
-- **Arrival damage = 4 × √A**.
+- **Path damage = 4 × √A**.
+- **Arrival damage = 8 × √A**.
 
-At **1,000,000 current aura**, the cast pays **20,000 aura** and has about **282.84 path damage** plus **565.69 arrival damage** before native handling. With Martial Supremacy enabled, those become about **2,262.74** and **4,525.48**. The formula uses actual aura spent, with no extra EP multiplier or mastery damage multiplier.
+At **100,000 current aura**, the cast pays **2,000 aura** and has about **178.89 path damage** plus **357.77 arrival damage** before native handling. With Martial Supremacy enabled, those become about **1,431.08** and **2,862.17**. The formula uses actual aura spent, with no extra EP multiplier or mastery damage multiplier.
 
 A brief chain separates into broken links along the route, with a pale pressure burst at arrival. The trail remains visible after the instantaneous teleport; it does not move the player over its lifetime.
 
@@ -133,7 +135,7 @@ A brief chain separates into broken links along the route, with a pale pressure 
 
 ## Obtaining and evolution
 
-Select **Fettered Human** in the native reincarnation race menu. Every stage grants Chained as its intrinsic Unique. The lineage proceeds through four native-menu evolutions to [Heavenbreaker](https://github.com/Bithio999/MC/wiki/Heavenbreaker). Chained is separate from the ordinary reincarnation Unique roll.
+Select **Fettered Human** in the native reincarnation race menu. Only Fettered Human grants Chained. Normal evolution retains the existing skill and its mastery, but later stages do not grant or regrant it. Selecting a later stage directly does not award Chained. The lineage proceeds through four native-menu evolutions to [Heavenbreaker](https://github.com/Bithio999/MC/wiki/Heavenbreaker). Chained is separate from the ordinary reincarnation Unique roll.
 
 ## Existing saves and recorded inheritance
 

@@ -2,7 +2,7 @@
 
 [Main Page](../README.md) · [Race directory](Races.md) · [Chained](Chained.md)
 
-**Heavenbreaker** is evolution 4 of four of the **Heavenly Restriction** lineage. A human-looking martial body exchanges magical growth for exceptional physical and aura potential through its intrinsic Unique Skill, **Chained**.
+**Heavenbreaker** is evolution 4 of four of the **Heavenly Restriction** lineage. A human-looking martial body exchanges magical growth for exceptional physical and aura potential through **Chained**, the Unique Skill inherited from Fettered Human.
 
 ![Heavenbreaker](../assets/race/heavenbreaker.png)
 
@@ -12,7 +12,7 @@
 | Registry ID | `wildhunt:heavenbreaker` |
 | Ancestry | Human |
 | Stage | 4 / 4 evolutions |
-| Intrinsic Unique | [Chained](Chained.md) |
+| Retained Unique | [Chained](Chained.md); granted only by Fettered Human |
 | HP racial bonus | +1,000 |
 | SHP racial bonus | +6,600 |
 | Attack bonus | +16 before Chained’s toggle multiplier |
@@ -23,19 +23,19 @@
 
 ## Traits
 
-The race preserves the player’s appearance and equipment. Stage bonuses replace the preceding stage’s bonuses. Its ordinary Human EP split remains **2/3 aura and 1/3 magicules**, before Chained’s rules: aura capacity is multiplied by 100 and future maximum-magicule gains are blocked. The blocked share is not reassigned. A newly reincarnated Fettered Human has 20,000 base aura and 500 base magicules; Chained makes its aura capacity 2,000,000.
+The race preserves the player’s appearance and equipment. Stage bonuses replace the preceding stage’s bonuses. Its EP growth splits **9/10 to aura and 1/10 to magicules**, before Chained’s rules: aura capacity is multiplied by 5 and future maximum-magicule gains are blocked. The blocked share is not reassigned. A newly reincarnated Fettered Human has 20,000 base aura and 500 base magicules; Chained makes its aura capacity 100,000. A secondary race’s 10% EP bonus preserves these proportions; Convergent races use their own growth profiles.
 
 [Chained](Chained.md) governs true resource/learning restrictions, the martial toggle, mastered resistance degradation, in-slot dodge and Severance Rush. The same skill and mastery persist through the lineage.
 
-## Intrinsic skill
+## Retained skill
 
-The intrinsic Unique [Chained](Chained.md) supplies the lineage’s true restriction and martial abilities. Its active [Severance Rush](Chained.md#severance-rush) is an instant teleport that deals native **Aura slash / Battlewill** damage (`tensura:aura_slash`). The race’s attribute bonuses are passive traits with no direct damage.
+Only Fettered Human grants [Chained](Chained.md). This evolution preserves an existing Chained and its mastery but does not grant or regrant it. Chained supplies the lineage’s true restriction and martial abilities. Its active [Severance Rush](Chained.md#severance-rush) is an instant teleport that deals native **Aura slash / Battlewill** damage (`tensura:aura_slash`). The race’s attribute bonuses are passive traits with no direct damage.
 
 ## Evolution
 
-Requires **8,000,000 fixed base EP**, **4 mastered Battlewills, and **mastered Chained**. All requirements must be met in Tensura’s native evolution menu.
+Requires **8,000,000 fixed base EP**, **4 mastered Battlewills**, and **mastered Chained**. All requirements must be met in Tensura’s native evolution menu.
 
-Base EP uses the native unmultiplied capacity values; the 100× aura-capacity modifier does not satisfy a base-EP gate by itself. The milestones are constants, independent of the player’s EP when the lineage is selected.
+Base EP uses the native unmultiplied capacity values; the 5× aura-capacity modifier does not satisfy a base-EP gate by itself. The milestones are constants, independent of the player’s EP when the lineage is selected.
 
 | Stage | Fixed base EP | Mastered Battlewills | Chained mastery |
 | --- | ---: | ---: | ---: |

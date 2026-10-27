@@ -51,7 +51,7 @@ public final class ChainedState {
     }
     public static void refresh(LivingEntity e){
         boolean owner=owned(e),on=owner && active(e),master=on && mastered(e);
-        modifier(e,TensuraAttributes.MAX_AURA,VOW,99,AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL,owner);
+        modifier(e,TensuraAttributes.MAX_AURA,VOW,4,AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL,owner);
         modifier(e,Attributes.ATTACK_DAMAGE,COMBAT,2,AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL,on);
         modifier(e,TensuraAttributes.DODGE_NEGATE_CHANCE,COMBAT,100,AttributeModifier.Operation.ADD_VALUE,master);
         modifier(e,TensuraAttributes.RESISTANCE_DEGRADATION,COMBAT,1,AttributeModifier.Operation.ADD_VALUE,master);
