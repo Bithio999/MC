@@ -15,7 +15,7 @@
 | Maximum mastery | 1,000 |
 | Active mode | Severance Rush |
 | Resource | Aura |
-| Damage type | Physical, also treated as Battlewill |
+| Damage type | Physical |
 | Damage ID | `minecraft:mob_attack` |
 | Toggle upkeep | None |
 
@@ -70,7 +70,7 @@ Enable Chained through Tensura’s normal Ability Selection toggle to gain:
 
 Numeric buffs include native attribute bonuses, such as Diamond Path’s armor, and additional damage supplied by a Battlewill buff, such as Aura Sword. The bonus changes their numeric strength; buff duration, learning costs and resource-conversion rates keep their native values. Repeated refreshes do not multiply an already boosted buff again. Disabling Chained restores each tracked buff’s native amount.
 
-The Physical bonus covers your physical melee, projectiles and skills, including native damage converted to Physical. It does not change your attack attribute. Physical Battlewill hits—including Severance Rush—receive both bonuses for **15×** damage before native defenses and other modifiers. Non-Physical Battlewills retain their **5×** bonus; unrelated elemental/magical damage is not tripled.
+The Physical bonus covers your physical melee, projectiles and skills, including native damage converted to Physical. It does not change your attack attribute. Physical Battlewill hits receive both bonuses for **15×** damage before native defenses and other modifiers. Severance Rush is purely Physical and receives only the **3×** Physical bonus, even while Aura Sword or Ogre Guillotine is active. Non-Physical Battlewills retain their **5×** bonus; unrelated elemental/magical damage is not tripled.
 
 ### Broken Limit
 
@@ -104,7 +104,7 @@ Gain **100% dodge chance against projectiles** and **25% against other incoming 
 
 | Ability information | Value |
 | --- | --- |
-| Damage type | Physical / Battlewill |
+| Damage type | Physical |
 | Damage ID | `minecraft:mob_attack` |
 | Resource cost | **2% of current aura**, paid once |
 | Cooldown | **1 second** |
@@ -122,7 +122,7 @@ Let **A** be the aura actually paid:
 - **Path damage = 1.5 × √A**.
 - **Arrival damage = 3 × √A**.
 
-At **100,000 current aura**, the cast pays **2,000 aura** and has about **67.08 path damage** plus **134.16 arrival damage** before native handling. With Martial Supremacy enabled, those become about **1,006.23** and **2,012.46**. The formula uses actual aura spent, with no extra EP multiplier or mastery damage multiplier.
+At **100,000 current aura**, the cast pays **2,000 aura** and has about **67.08 path damage** plus **134.16 arrival damage** before native handling. With Martial Supremacy enabled, those become about **201.25** and **402.49**. The formula uses actual aura spent, with no extra EP multiplier or mastery damage multiplier.
 
 A brief chain separates into broken links along the route, with a pale pressure burst at arrival. The trail remains visible after the instantaneous teleport; it does not move the player over its lifetime.
 

@@ -32,7 +32,7 @@ EP growth splits **90% aura / 10% magicules**. [Chained](https://github.com/Bith
 
 ## Retained skill
 
-Only Fettered Human grants [Chained](https://github.com/Bithio999/MC/wiki/Chained). This evolution preserves an existing Chained and its mastery but does not grant or regrant it. Chained supplies the lineage’s true restriction and martial abilities. Its active [Severance Rush](https://github.com/Bithio999/MC/wiki/Chained#severance-rush) is an instant teleport that deals native **Physical / Battlewill** damage (`minecraft:mob_attack`). The race’s attribute bonuses are passive traits with no direct damage.
+Only Fettered Human grants [Chained](https://github.com/Bithio999/MC/wiki/Chained). This evolution preserves an existing Chained and its mastery but does not grant or regrant it. Chained supplies the lineage’s true restriction and martial abilities. Its active [Severance Rush](https://github.com/Bithio999/MC/wiki/Chained#severance-rush) is an instant teleport that deals native **Physical** damage (`minecraft:mob_attack`). The race’s attribute bonuses are passive traits with no direct damage.
 
 ## Aura recovery
 

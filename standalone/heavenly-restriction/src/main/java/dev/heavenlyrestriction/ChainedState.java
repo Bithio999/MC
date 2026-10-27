@@ -103,7 +103,7 @@ public final class ChainedState {
         var attacker=RestrictionData.attacker(source);
         if(active(attacker)){
             float multiplier=TensuraDamageHelper.isPhysicalAttack(source)?3:1;
-            if(isDash(source) || TensuraDamageHelper.isBattlewill(source,attacker))multiplier*=5;
+            if(TensuraDamageHelper.isBattlewill(source,attacker))multiplier*=5;
             if(multiplier!=1)amount.set(amount.get()*multiplier);
         }
         return EventResult.pass();

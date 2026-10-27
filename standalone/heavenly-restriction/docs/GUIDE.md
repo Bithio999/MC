@@ -52,7 +52,7 @@ For example, reincarnating with **Martial Master** still allows **Heavenly Eye**
 - **3× numerical Battlewill buff effectiveness**.
 - **3× all outgoing Physical damage**.
 
-Buff duration, ordinary learning costs and conversion rates retain native values. Repeated refreshes do not compound the buff. The Physical bonus covers your melee, physical projectiles, physical skills and native Physical-converted damage without changing the attack attribute. Physical Battlewill hits, including the dash, receive both bonuses for **15×** before other modifiers. Non-Physical Battlewills retain **5×**; unrelated elemental/magical damage is not tripled.
+Buff duration, ordinary learning costs and conversion rates retain native values. Repeated refreshes do not compound the buff. The Physical bonus covers your melee, physical projectiles, physical skills and native Physical-converted damage without changing the attack attribute. Physical Battlewill hits receive both bonuses for **15×** before other modifiers. Severance Rush is purely Physical and receives only the **3×** Physical bonus, even while Aura Sword or Ogre Guillotine is active. Non-Physical Battlewills retain **5×**; unrelated elemental/magical damage is not tripled.
 
 ### Broken Limit
 
@@ -68,7 +68,7 @@ While Chained is equipped in the active ability preset, gain **100% projectile d
 
 ### Severance Rush
 
-**Active — Press. Damage type: Physical / Battlewill (`minecraft:mob_attack`).**
+**Active — Press. Damage type: Physical (`minecraft:mob_attack`).**
 
 Use while **grounded or in water**, like Martial Master. A **16-block eye-level aim ray** ignores fluids and selects a block-snapped landing, with room checked for your body. Slightly downward aim no longer traces your feet into the floor. Unsafe, unloaded or out-of-bounds landings are rejected.
 
@@ -81,7 +81,7 @@ Use while **grounded or in water**, like Martial Master. A **16-block eye-level 
 | Path damage | 1.5 × √A |
 | Arrival damage | 3 × √A |
 
-**A** is aura actually paid. At 100,000 current aura, A = 2,000: approximately **67.08 path + 134.16 arrival damage**, or **1,006.23 + 2,012.46** with Martial Supremacy enabled, before native defenses and damage handling. A victim in both areas receives both hits despite ordinary hurt cooldown. Unavailable landings, airborne activation, cooldown or no usable aura cause no payment. Successful casts start a 1-second cooldown.
+**A** is aura actually paid. At 100,000 current aura, A = 2,000: approximately **67.08 path + 134.16 arrival damage**, or **201.25 + 402.49** with Martial Supremacy enabled, before native defenses and damage handling. A victim in both areas receives both hits despite ordinary hurt cooldown. Unavailable landings, airborne activation, cooldown or no usable aura cause no payment. Successful casts start a 1-second cooldown.
 
 ![Standalone Severance Rush](media/standalone-dash.png)
 

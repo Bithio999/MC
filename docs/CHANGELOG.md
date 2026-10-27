@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.34.5 / standalone 1.0.4 — Purely Physical dash
+
+- Remove Severance Rush’s Battlewill classification and special 5× Battlewill damage path. Retain the 3× Physical bonus while Martial Supremacy is enabled.
+- Prevent Aura Sword and Ogre Guillotine from reclassifying the dash as Battlewill; preserve native Physical handling and other attacks’ normal Battlewill bonuses.
+- Update both addons, wiki damage types, numerical examples and native regression checks.
+
 ## 0.34.4 / standalone 1.0.3 — Physical damage and Chained rejection notices
 
 - Change Severance Rush’s source from Aura Slash to Physical (`minecraft:mob_attack`), matching Martial Master. Retain its Battlewill classification, formula, movement, cost and cooldown.

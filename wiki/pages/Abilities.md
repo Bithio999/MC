@@ -36,7 +36,7 @@
 | [Martial Supremacy](Chained.md#martial-supremacy) | [Chained](Chained.md) | Passive - Toggle | None |
 | [Broken Limit](Chained.md#broken-limit) | [Chained](Chained.md) | Passive - True - Mastered | None |
 | [Unerring Body](Chained.md#unerring-body) | [Chained](Chained.md) | Passive - In-slot | None |
-| [Severance Rush](Chained.md#severance-rush) | [Chained](Chained.md) | Active - Press | Physical / Battlewill — `minecraft:mob_attack` |
+| [Severance Rush](Chained.md#severance-rush) | [Chained](Chained.md) | Active - Press | Physical — `minecraft:mob_attack` |
 
 ## Ultimate abilities
 

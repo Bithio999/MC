@@ -38,7 +38,7 @@ The native-client photograph uses staged resource values for visual review.
 
 ## Intrinsic skill
 
-The intrinsic Unique [Chained](https://github.com/Bithio999/MC/wiki/Chained) supplies the lineage’s true restriction and martial abilities. Its active [Severance Rush](https://github.com/Bithio999/MC/wiki/Chained#severance-rush) is an instant teleport that deals native **Physical / Battlewill** damage (`minecraft:mob_attack`). The race’s attribute bonuses are passive traits with no direct damage.
+The intrinsic Unique [Chained](https://github.com/Bithio999/MC/wiki/Chained) supplies the lineage’s true restriction and martial abilities. Its active [Severance Rush](https://github.com/Bithio999/MC/wiki/Chained#severance-rush) is an instant teleport that deals native **Physical** damage (`minecraft:mob_attack`). The race’s attribute bonuses are passive traits with no direct damage.
 
 ## Evolution
 

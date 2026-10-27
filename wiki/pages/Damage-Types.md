@@ -84,7 +84,7 @@ Demiurge’s [eight final-boss arts](Demiurge.md) use physical Aura Slash, Light
 
 ## Physical
 
-**Damage ID:** `minecraft:mob_attack`. Chained’s Severance Rush uses the same Physical source as Martial Master’s dash. It also counts as Battlewill. Chained’s toggle triples all Physical damage dealt by its owner, including physical projectiles and physical skills; its separate Battlewill bonus stacks on qualifying hits.
+**Damage ID:** `minecraft:mob_attack`. Chained’s Severance Rush uses the same Physical source as Martial Master’s dash. It is purely Physical and does not count as Battlewill, including while Aura Sword or Ogre Guillotine is active. Chained’s toggle triples all Physical damage dealt by its owner, including physical projectiles and physical skills; its separate Battlewill bonus stacks on qualifying hits.
 
 ## Physical aura slash
 

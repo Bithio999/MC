@@ -1,4 +1,4 @@
-**Tensura Myths 0.34.4** · Minecraft 1.21.1 · NeoForge
+**Tensura Myths 0.34.5** · Minecraft 1.21.1 · NeoForge
 
 [Home](https://github.com/Bithio999/MC/wiki) · [Source](https://github.com/Bithio999/MC) · [Base mod wiki](https://tensura.wiki.gg/wiki/Tensura:_Reincarnated_Wiki)
 

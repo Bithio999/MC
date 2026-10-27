@@ -36,7 +36,7 @@
 | [Martial Supremacy](https://github.com/Bithio999/MC/wiki/Chained#martial-supremacy) | [Chained](https://github.com/Bithio999/MC/wiki/Chained) | Passive - Toggle | None |
 | [Broken Limit](https://github.com/Bithio999/MC/wiki/Chained#broken-limit) | [Chained](https://github.com/Bithio999/MC/wiki/Chained) | Passive - True - Mastered | None |
 | [Unerring Body](https://github.com/Bithio999/MC/wiki/Chained#unerring-body) | [Chained](https://github.com/Bithio999/MC/wiki/Chained) | Passive - In-slot | None |
-| [Severance Rush](https://github.com/Bithio999/MC/wiki/Chained#severance-rush) | [Chained](https://github.com/Bithio999/MC/wiki/Chained) | Active - Press | Physical / Battlewill — `minecraft:mob_attack` |
+| [Severance Rush](https://github.com/Bithio999/MC/wiki/Chained#severance-rush) | [Chained](https://github.com/Bithio999/MC/wiki/Chained) | Active - Press | Physical — `minecraft:mob_attack` |
 
 ## Ultimate abilities
 

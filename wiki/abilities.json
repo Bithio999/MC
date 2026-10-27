@@ -911,7 +911,7 @@
     "name": "Severance Rush",
     "tier": "Unique",
     "kind": "Active - Press",
-    "damage": "Physical / Battlewill",
+    "damage": "Physical",
     "damage_id": "minecraft:mob_attack",
     "secondary_damage_id": null,
     "anchor": "severance-rush"
