@@ -21,7 +21,7 @@ public final class GodlyAscensionScreen extends AbilitySelectionScreen {
     @Override protected void init(){
         super.init();
         destination=new SimpleButton(guiLeft+119,guiTop+146,39,12,Component.literal(NAMES[choice]),Component.literal("Choose Godly destination: Aion / Thoth / Lugh.\nThoth combines a mastered Rune Smith.\nLugh combines a mastered Threadweaver."),b->{choice=(choice+1)%IDS.length;refresh();});
-        action=new SimpleButton(guiLeft+160,guiTop+146,61,12,Component.literal("Ascend"),Component.literal("Evolve the selected mastered combination Ultimate into "+NAMES[choice]+".\nRequires true awakening and "+String.format(java.util.Locale.ROOT,"%,.0f",MythsClient.state.getDouble("godly_ep"))+" base EP."+(choice>0?"\nAlso consumes a mastered "+ingredient()+".":"")),b->{
+        action=new SimpleButton(guiLeft+160,guiTop+146,61,12,Component.literal("Ascend"),Component.literal("Evolve the selected mastered combination Ultimate into "+NAMES[choice]+".\nRequires true awakening and "+String.format(java.util.Locale.ROOT,"%,.0f",MythsClient.state.getDouble("godly_ep"))+" total EP."+(choice>0?"\nAlso consumes a mastered "+ingredient()+".":"")),b->{
             if(ready())PacketDistributor.sendToServer(new MythsNetwork.Request("godly",selectedAbility.getSkillId()+"|"+IDS[choice]));
         });
         action.setActiveCheck(this::ready);action.setClickedCheck(()->action.isHovered() && ready());addRenderableWidget(destination);addRenderableWidget(action);

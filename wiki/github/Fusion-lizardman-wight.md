@@ -22,7 +22,7 @@
 | Evolution | — |
 | **Obtaining** | |
 | Awakening | True Hero or True Demon Lord |
-| Base EP | [Lineage-dependent](https://github.com/Bithio999/MC/wiki/Convergent-Awakening#ep-requirement); 10,000,000 minimum by default |
+| Total EP | [Lineage-dependent](https://github.com/Bithio999/MC/wiki/Convergent-Awakening#ep-requirement); 10,000,000 minimum by default |
 | Method | Convergent Awakening |
 
 ## Obtaining

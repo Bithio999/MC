@@ -46,7 +46,7 @@ public final class RestrictedRace extends TensuraRace {
     @Override public ManasRace getDefaultEvolution(ManasRaceInstance i,LivingEntity e){return stage==4?null:WildHunt.RESTRICTED.get(stage+1).get();}
     @Override public Map<EvolutionRequirement,Float> getEvolutionRequirements(ManasRaceInstance i,LivingEntity e){
         if(stage==0)return Map.of();var gates=new LinkedHashMap<EvolutionRequirement,Float>();
-        gates.put(new EvolutionRequirement.EPRequirement(EP[stage]),50f);
+        gates.put(new ProgressionEP.Requirement(EP[stage]),50f);
         gates.put(new Gate("Master "+stage+" Battlewill"+(stage==1?"":"s"),v->(float)ChainedState.masteredBattlewills(v)/stage),25f);
         gates.put(new Gate(stage==4?"Master Chained":"Raise Chained mastery to "+(stage*20)+"%",v->(float)(ChainedState.mastery(v)/(stage==4?1:stage*.2))),25f);
         return gates;

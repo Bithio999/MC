@@ -2,7 +2,7 @@
 
 [Main Page](https://github.com/Bithio999/MC/wiki/Home) · [Skills](https://github.com/Bithio999/MC/wiki/Skills) · [Ability index](https://github.com/Bithio999/MC/wiki/Abilities) · [Damage types](https://github.com/Bithio999/MC/wiki/Damage-Types)
 
-**Skill synthesis** combines two mastered Unique Skills into one new Ultimate. It is available to any race at **2,000,000 base EP**.
+**Skill synthesis** combines two mastered Unique Skills into one new Ultimate. It is available to any race at **2,000,000 total EP**.
 
 ## Recipes
 
@@ -22,7 +22,7 @@ The server checks the complete recipe and EP requirement. An invalid request con
 
 ## Further evolution
 
-Master the resulting Ultimate, become a True Hero or True Demon Lord and reach 12M base EP. **Skills → Godly → Ascension** offers [Aion](https://github.com/Bithio999/MC/wiki/Aion), or [Thoth](https://github.com/Bithio999/MC/wiki/Thoth) when a mastered [Rune Smith](https://github.com/Bithio999/MC/wiki/Rune-Smith) is also available. Lugh additionally combines a mastered [Threadweaver](https://github.com/Bithio999/MC/wiki/Threadweaver). The Godly destination button cycles between Aion, Thoth and Lugh.
+Master the resulting Ultimate, become a True Hero or True Demon Lord and reach 12M total EP. **Skills → Godly → Ascension** offers [Aion](https://github.com/Bithio999/MC/wiki/Aion), or [Thoth](https://github.com/Bithio999/MC/wiki/Thoth) when a mastered [Rune Smith](https://github.com/Bithio999/MC/wiki/Rune-Smith) is also available. Lugh additionally combines a mastered [Threadweaver](https://github.com/Bithio999/MC/wiki/Threadweaver). The Godly destination button cycles between Aion, Thoth and Lugh.
 
 ## Standalone Uniques
 

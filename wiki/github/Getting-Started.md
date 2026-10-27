@@ -21,7 +21,7 @@ Complete Tensura’s ordinary reincarnation flow. All eight Myths Uniques are el
 
 ## First hunter evolution
 
-Stay Human, grow to 100K base EP, and defeat one eligible boss type. Select Awakened Hunter in the evolution menu or use `/wildhunt evolve`. Race progression and skill rolling are independent.
+Stay Human, grow to 100K total EP, and defeat one eligible boss type. Select Awakened Hunter in the evolution menu or use `/wildhunt evolve`. Race progression and skill rolling are independent.
 
 ## Choosing a playstyle
 
@@ -31,7 +31,7 @@ Each skill has a separate toggleable passive in Tensura’s Ability Selection. T
 
 ## In-game help
 
-`/wildhunt guide` explains progression. `/wildhunt status` shows base EP, distinct boss IDs, mastery and passive status. [Command reference](https://github.com/Bithio999/MC/wiki/Commands).
+`/wildhunt guide` explains progression. `/wildhunt status` shows total EP, distinct boss IDs, mastery and passive status. [Command reference](https://github.com/Bithio999/MC/wiki/Commands).
 
 
 ## Beyond the hunter path

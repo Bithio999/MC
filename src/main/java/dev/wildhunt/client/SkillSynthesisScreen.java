@@ -20,8 +20,8 @@ public final class SkillSynthesisScreen extends AbilitySelectionScreen {
     public void refresh(){rebuildWidgets();}
     @Override protected void init(){
         super.init();String title=result().title.split(",")[0];
-        choose=new SimpleButton(guiLeft+119,guiTop+146,48,12,Component.literal(title),Component.literal("Choose recipe: Vritra / Demeter / Janus / Anansi / Aegir.\n"+result().title+"\n"+row().getString("ingredients")+"\nRequires 2M base EP. Both mastered ingredients are combined."),b->{recipe=(recipe+1)%MythicEvolution.ultimates().size();refresh();});
-        synthesize=new SimpleButton(guiLeft+169,guiTop+146,52,12,Component.literal("Combine"),Component.literal(result().title+"\n"+row().getString("ingredients")+"\nRequires 2M base EP. Presets and remaining cooldowns carry over."),b->{if(ready())PacketDistributor.sendToServer(new MythsNetwork.Request("synthesize",result().id()));});
+        choose=new SimpleButton(guiLeft+119,guiTop+146,48,12,Component.literal(title),Component.literal("Choose recipe: Vritra / Demeter / Janus / Anansi / Aegir.\n"+result().title+"\n"+row().getString("ingredients")+"\nRequires 2M total EP. Both mastered ingredients are combined."),b->{recipe=(recipe+1)%MythicEvolution.ultimates().size();refresh();});
+        synthesize=new SimpleButton(guiLeft+169,guiTop+146,52,12,Component.literal("Combine"),Component.literal(result().title+"\n"+row().getString("ingredients")+"\nRequires 2M total EP. Presets and remaining cooldowns carry over."),b->{if(ready())PacketDistributor.sendToServer(new MythsNetwork.Request("synthesize",result().id()));});
         synthesize.setActiveCheck(this::ready);synthesize.setClickedCheck(()->synthesize.isHovered() && ready());addRenderableWidget(choose);addRenderableWidget(synthesize);
     }
     private boolean ready(){return row().getBoolean("ready");}

@@ -17,7 +17,7 @@
 | Passive upkeep | 110 aura / second |
 | Registry ID | `wildhunt:janus` |
 | **Obtaining** | |
-| Method | Synthesis: master both ingredients; 2M base EP |
+| Method | Synthesis: master both ingredients; 2M total EP |
 | **Evolution** | |
 | Evolution | [Aion](https://github.com/Bithio999/MC/wiki/Aion), [Thoth](https://github.com/Bithio999/MC/wiki/Thoth) or [Lugh](https://github.com/Bithio999/MC/wiki/Lugh) |
 
@@ -95,7 +95,7 @@ Choose a field center within 32 blocks. Up to six visible enemies within ten blo
 
 ## Obtaining
 
-Open **Skills → Ultimate → Synthesis**. Choose Janus and combine **[Threadweaver](https://github.com/Bithio999/MC/wiki/Threadweaver) + [Mirrorbound](https://github.com/Bithio999/MC/wiki/Mirrorbound)**, with both mastered and at least **2,000,000 base EP**. Any race can synthesize. Both ingredients are replaced only after native storage accepts the result. Other skills remain learned. All nine presets and the longest remaining ingredient cooldown carry over; the new Ultimate starts with its own mastery.
+Open **Skills → Ultimate → Synthesis**. Choose Janus and combine **[Threadweaver](https://github.com/Bithio999/MC/wiki/Threadweaver) + [Mirrorbound](https://github.com/Bithio999/MC/wiki/Mirrorbound)**, with both mastered and at least **2,000,000 total EP**. Any race can synthesize. Both ingredients are replaced only after native storage accepts the result. Other skills remain learned. All nine presets and the longest remaining ingredient cooldown carry over; the new Ultimate starts with its own mastery.
 
 ## Suggested combo
 

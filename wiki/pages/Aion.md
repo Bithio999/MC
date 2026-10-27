@@ -21,7 +21,7 @@
 | Previous | Any of the five combination Ultimates |
 | Evolution | — |
 | **Obtaining** | |
-| Method | Mastered Myths Ultimate, True Hero or True Demon Lord, 12M base EP |
+| Method | Mastered Myths Ultimate, True Hero or True Demon Lord, 12M total EP |
 
 ## Usage
 

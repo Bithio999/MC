@@ -87,7 +87,7 @@ public final class ChainedState {
     }
     public static EventResult damage(Skills storage,LivingEntity target,DamageSource source,Changeable<Float> amount){
         var attacker=GodlyPassives.attacker(source);
-        if(active(attacker) && (isDash(source) || TensuraDamageHelper.isBattlewill(source,attacker)))amount.set(amount.get()*8);
+        if(active(attacker) && (isDash(source) || TensuraDamageHelper.isBattlewill(source,attacker)))amount.set(amount.get()*5);
         return EventResult.pass();
     }
     public static boolean isDash(DamageSource source){var i=((TensuraDamageSource)source).tensura$getAbilityInstance();return i!=null && i.getSkill()==WildHunt.CHAINED.get();}

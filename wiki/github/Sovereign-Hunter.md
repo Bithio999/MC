@@ -17,12 +17,12 @@
 | Previous | [Apex Hunter](https://github.com/Bithio999/MC/wiki/Apex-Hunter) |
 | Next | — |
 | **Obtaining** | |
-| Base EP gate | 2,000,000 |
+| Total EP gate | 2,000,000 |
 | Distinct bosses | 5 |
 
 ## Obtaining
 
-Begin as Apex Hunter. Reach 2,000,000 base EP and defeat 5 different eligible boss types. Master at least one Myths Unique skill as well. [Boss eligibility and counting](https://github.com/Bithio999/MC/wiki/Evolution#distinct-boss-kills).
+Begin as Apex Hunter. Reach 2,000,000 total EP and defeat 5 different eligible boss types. Master at least one Myths Unique skill as well. [Boss eligibility and counting](https://github.com/Bithio999/MC/wiki/Evolution#distinct-boss-kills).
 
 ## Traits
 
@@ -47,11 +47,11 @@ This stage grants **[Sovereign Rebirth](https://github.com/Bithio999/MC/wiki/Sov
 Base energy uses two thirds aura and one third magicules. Default-alignment kill EP retains Tensura’s native 2:1 split.
 
 
-At 2M base EP, any race can combine two specific mastered Uniques through [Skill synthesis](https://github.com/Bithio999/MC/wiki/Skill-Synthesis). Race evolution does not directly grant a Unique skill.
+At 2M total EP, any race can combine two specific mastered Uniques through [Skill synthesis](https://github.com/Bithio999/MC/wiki/Skill-Synthesis). Race evolution does not directly grant a Unique skill.
 
 ## Evolution
 
-| Race | Base EP | Distinct boss types | Additional requirement |
+| Race | Total EP | Distinct boss types | Additional requirement |
 | --- | ---: | ---: | --- |
 | [Awakened Hunter](https://github.com/Bithio999/MC/wiki/Awakened-Hunter) | 100,000 | 1 | Human |
 | [Apex Hunter](https://github.com/Bithio999/MC/wiki/Apex-Hunter) | 400,000 | 3 | Awakened Hunter |

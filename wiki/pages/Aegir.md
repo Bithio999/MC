@@ -17,7 +17,7 @@
 | Passive upkeep | 110 aura / second |
 | Registry ID | `wildhunt:aegir` |
 | **Obtaining** | |
-| Method | Mastered Scarlet Deluge + Mirrorbound; 2M base EP |
+| Method | Mastered Scarlet Deluge + Mirrorbound; 2M total EP |
 | **Evolution** | |
 | Evolution | Aion; Thoth with Rune Smith; Lugh with Threadweaver |
 
@@ -93,7 +93,7 @@ If Mirrorsea is active, consume it and launch the wave **from its center**, incr
 
 ## Obtaining
 
-Master [Scarlet Deluge](Scarlet-Deluge.md) and [Mirrorbound](Mirrorbound.md), reach **2M base EP**, then choose **Aegir** in **Skills → Ultimate → Synthesis**. Both ingredients are combined; native presets and remaining cooldowns carry over.
+Master [Scarlet Deluge](Scarlet-Deluge.md) and [Mirrorbound](Mirrorbound.md), reach **2M total EP**, then choose **Aegir** in **Skills → Ultimate → Synthesis**. Both ingredients are combined; native presets and remaining cooldowns carry over.
 
 ## Suggested combo
 

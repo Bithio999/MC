@@ -64,7 +64,7 @@ public final class MythsNetwork {
         tag.putString("primary",DuoSystem.primary(p).map(r->r.getDisplayName().getString()).orElse("No race"));
         tag.putString("secondary",DuoSystem.secondary(p).map(r->r.getDisplayName().getString()).orElse("Not selected"));
         tag.putBoolean("converged",DuoSystem.converged(p));tag.putBoolean("awakened",DuoSystem.awakened(p));
-        tag.putDouble("ep",EnergyHelper.getBaseMaxEP(p));tag.putDouble("secondary_ep",MythsConfig.SECONDARY_EP.get());tag.putDouble("convergence_ep",DuoSystem.convergenceEP(p));tag.putDouble("godly_ep",MythsConfig.GODLY_EP.get());
+        tag.putDouble("ep",EnergyHelper.getMaxEP(p));tag.putDouble("secondary_ep",MythsConfig.SECONDARY_EP.get());tag.putDouble("convergence_ep",DuoSystem.convergenceEP(p));tag.putDouble("godly_ep",MythsConfig.GODLY_EP.get());
         tag.putBoolean("primary_final",DuoSystem.primary(p).map(r->DuoSystem.terminal(r,p)).orElse(false));
         tag.putBoolean("secondary_final",DuoSystem.secondary(p).map(r->DuoSystem.terminal(r,p)).orElse(false));
         var alignment=io.github.manasmods.tensura.storage.TensuraStorages.getExistenceFrom(p).getAlignment();
@@ -80,9 +80,9 @@ public final class MythsNetwork {
             for(var next:DuoSystem.options(p,secondary)) {
                 var row=new CompoundTag();row.putString("id",next.getRegistryName().toString());row.putString("race",next.getRegistryName().toString());row.putString("name",next.getName().getString());
                 double required=DuoSystem.secondaryEvolutionEP(p);
-                float progress=(float)Math.min(DuoSystem.nativeProgress(p,secondary,next),Math.min(100,EnergyHelper.getBaseMaxEP(p)/required*100));
+                float progress=(float)Math.min(DuoSystem.nativeProgress(p,secondary,next),Math.min(100,EnergyHelper.getMaxEP(p)/required*100));
                 row.putDouble("progress",progress);row.putBoolean("requirements_met",DuoSystem.secondaryRequirementsMet(p,secondary,next));
-                row.putString("detail",String.format(java.util.Locale.ROOT,"Secondary evolution base EP: %,.0f / %,.0f\n",EnergyHelper.getBaseMaxEP(p),required)+DuoSystem.nativeRequirements(p,secondary,next));
+                row.putString("detail",String.format(java.util.Locale.ROOT,"Secondary evolution total EP: %,.0f / %,.0f\n",EnergyHelper.getMaxEP(p),required)+DuoSystem.nativeRequirements(p,secondary,next));
                 choices.add(row);
             }
             tag.putString("choice_action","evolve");

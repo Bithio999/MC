@@ -27,6 +27,27 @@ import static dev.wildhunt.MythicGameTests.*;
 @GameTestHolder(WildHunt.ID)
 @PrefixGameTestTemplate(false)
 public final class ChainedGameTests {
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void auraGainRateCountsAsBaseEPWhileChainedCapacityBonusCountsAsEffectiveEP(GameTestHelper h){
+        // Reproduce Restricted 2.2.1's +2 TOTAL modifier without loading that addon.
+        var p=player(h);var victim=target(h,p.position().add(5,0,0));EnergyHelper.setBaseMaxEP(p,2000);
+        var gain=p.getAttribute(TensuraAttributes.AURA_GAIN);gain.setBaseValue(1);
+        double before=EnergyHelper.getBaseMaxAura(p);
+        io.github.manasmods.tensura.handler.DeathHandler.gainEPEntity(p,victim,10);
+        double ordinary=EnergyHelper.getBaseMaxAura(p)-before;h.assertTrue(ordinary>0,"Native reference award gave no aura");
+        EnergyHelper.setBaseMaxEP(p,2000);gain.addOrReplacePermanentModifier(new AttributeModifier(WildHunt.id("restricted_reference_gain"),2,AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
+        double base=EnergyHelper.getBaseMaxEP(p),total=EnergyHelper.getMaxEP(p),aura=EnergyHelper.getBaseMaxAura(p),mp=EnergyHelper.getBaseMaxMagicule(p);
+        io.github.manasmods.tensura.handler.DeathHandler.gainEPEntity(p,victim,10);
+        double auraGain=EnergyHelper.getBaseMaxAura(p)-aura,mpGain=EnergyHelper.getBaseMaxMagicule(p)-mp;
+        near(h,auraGain,ordinary*3,"Restricted-style gain multiplier did not enter raw aura capacity");
+        near(h,EnergyHelper.getBaseMaxEP(p)-base,auraGain+mpGain,"Boosted gain missing from base EP");
+        near(h,EnergyHelper.getMaxEP(p)-total,auraGain+mpGain,"Boosted gain missing from total EP");
+        var chained=player(h);ReincarnationMenu.setRace(chained,WildHunt.RESTRICTED.getFirst().get(),true,false);
+        double start=EnergyHelper.getBaseMaxAura(chained),baseBefore=EnergyHelper.getBaseMaxEP(chained),totalBefore=EnergyHelper.getMaxEP(chained);
+        EnergyHelper.setMaxAura(chained,start+100);
+        near(h,EnergyHelper.getBaseMaxEP(chained)-baseBefore,100,"Chained changed raw EP accounting");
+        near(h,EnergyHelper.getMaxEP(chained)-totalBefore,500,"Chained capacity bonus missing from total EP");h.succeed();
+    }
     static ManasSkillInstance vow(net.minecraft.world.entity.LivingEntity p,boolean on){
         HunterData.learnReward(p,WildHunt.CHAINED.get());var i=SkillAPI.getSkillsFrom(p).getSkill(WildHunt.CHAINED.get()).orElseThrow();if(on)i.onToggleOn(p);return i;
     }
@@ -152,8 +173,8 @@ public final class ChainedGameTests {
     @GameTest(template="empty",timeoutTicks=100)
     public static void dashDamageUsesRebalancedActualAuraPaymentWithoutAFloor(GameTestHelper h){
         near(h,ChainedSkill.pathDamage(0),0,"Empty-aura damage floor");near(h,ChainedSkill.arrivalDamage(0),0,"Empty-aura arrival floor");
-        near(h,ChainedSkill.pathDamage(25),17.5,"Rebalanced path formula");near(h,ChainedSkill.arrivalDamage(25),35,"Rebalanced arrival formula");
-        near(h,ChainedSkill.pathDamage(100),35,"Paid-aura scaling");near(h,ChainedSkill.arrivalDamage(100),70,"Arrival paid-aura scaling");h.succeed();
+        near(h,ChainedSkill.pathDamage(25),15,"Rebalanced path formula");near(h,ChainedSkill.arrivalDamage(25),30,"Rebalanced arrival formula");
+        near(h,ChainedSkill.pathDamage(100),30,"Paid-aura scaling");near(h,ChainedSkill.arrivalDamage(100),60,"Arrival paid-aura scaling");h.succeed();
     }
     @GameTest(template="empty",timeoutTicks=100)
     public static void truePassiveCoversBaseModifierAndHelperGainsWhileOffAndUnslotted(GameTestHelper h){
@@ -224,23 +245,23 @@ public final class ChainedGameTests {
     }
     @GameTest(template="empty",timeoutTicks=100)
     public static void toggledBattlewillDamageAndAttackBonusesDoNotMultiplyUnrelatedSkills(GameTestHelper h){
-        var p=player(h);var i=vow(p,false);double attack=p.getAttributeValue(Attributes.ATTACK_DAMAGE);i.onToggleOn(p);near(h,p.getAttributeValue(Attributes.ATTACK_DAMAGE),attack*3,"Attack attribute not tripled");var victim=target(h,p.position().add(3,0,0));var damage=Changeable.of(10f);ChainedState.damage(SkillAPI.getSkillsFrom(victim),victim,WildHunt.CHAINED.get().createSource(i,p,TensuraDamageTypes.AURA_SLASH,0),damage);near(h,damage.get(),80,"Dash not amplified as Battlewill");var ordinary=Changeable.of(10f);ChainedState.damage(SkillAPI.getSkillsFrom(victim),victim,p.damageSources().mobAttack(p),ordinary);near(h,ordinary.get(),10,"Ordinary melee received the separate Battlewill multiplier");h.succeed();
+        var p=player(h);var i=vow(p,false);double attack=p.getAttributeValue(Attributes.ATTACK_DAMAGE);i.onToggleOn(p);near(h,p.getAttributeValue(Attributes.ATTACK_DAMAGE),attack*3,"Attack attribute not tripled");var victim=target(h,p.position().add(3,0,0));var damage=Changeable.of(10f);ChainedState.damage(SkillAPI.getSkillsFrom(victim),victim,WildHunt.CHAINED.get().createSource(i,p,TensuraDamageTypes.AURA_SLASH,0),damage);near(h,damage.get(),50,"Dash not amplified as Battlewill");var ordinary=Changeable.of(10f);ChainedState.damage(SkillAPI.getSkillsFrom(victim),victim,p.damageSources().mobAttack(p),ordinary);near(h,ordinary.get(),10,"Ordinary melee received the separate Battlewill multiplier");h.succeed();
     }
     @GameTest(template="empty",timeoutTicks=100)
     public static void forgettingRemovesOnlyChainedModifiersAndDoesNotCompoundOnReload(GameTestHelper h){
         var p=player(h);double aura=p.getAttributeValue(TensuraAttributes.MAX_AURA),attack=p.getAttributeValue(Attributes.ATTACK_DAMAGE);var i=vow(p,true);var restored=ManasSkillInstance.fromNBT(i.toNBT());SkillAPI.getSkillsFrom(p).updateSkill(restored,true);ChainedState.initialize(p);near(h,p.getAttributeValue(TensuraAttributes.MAX_AURA),aura,"Reload compounded capacity");SkillAPI.getSkillsFrom(p).forgetSkill(WildHunt.CHAINED.get());near(h,p.getAttributeValue(TensuraAttributes.MAX_AURA),aura,"Forgotten aura modifier persisted");near(h,p.getAttributeValue(Attributes.ATTACK_DAMAGE),attack,"Forgotten combat modifier persisted");h.succeed();
     }
     @GameTest(template="empty",timeoutTicks=100)
-    public static void evolutionMenuUsesFixedBaseEPAndActualMasteredBattlewills(GameTestHelper h){
+    public static void evolutionMenuUsesFixedTotalEPAndActualMasteredBattlewills(GameTestHelper h){
         var p=player(h);EnergyHelper.setBaseMaxEP(p,2000);var i=vow(p,false);i.setMastery(i.getMaxMastery());var first=WildHunt.RESTRICTED.getFirst().get();var current=first.createDefaultInstance();var next=WildHunt.RESTRICTED.get(1).get();
-        p.getAttribute(TensuraAttributes.MAX_AURA).setBaseValue(98999);h.assertTrue(EnergyHelper.getMaxAura(p)>100_000 && first.getEvolutionProgress(current,p,next)<100,"Multiplied capacity bypassed fixed base-EP or training requirements");
-        HunterData.learnReward(p,UtilityArts.DIAMOND_PATH.get());var art=SkillAPI.getSkillsFrom(p).getSkill(UtilityArts.DIAMOND_PATH.get()).orElseThrow();art.setMastery(art.getMaxMastery());h.assertTrue(first.getEvolutionProgress(current,p,next)<100,"Sub-threshold base EP passed");p.getAttribute(TensuraAttributes.MAX_AURA).setBaseValue(99000);near(h,first.getEvolutionProgress(current,p,next),100,"Native evolution requirements did not complete at the fixed threshold");h.succeed();
+        p.getAttribute(TensuraAttributes.MAX_AURA).setBaseValue(20599);h.assertTrue(EnergyHelper.getMaxEP(p)<100_000 && first.getEvolutionProgress(current,p,next)<100,"Evolution ignored the fixed total-EP or training requirements");
+        HunterData.learnReward(p,UtilityArts.DIAMOND_PATH.get());var art=SkillAPI.getSkillsFrom(p).getSkill(UtilityArts.DIAMOND_PATH.get()).orElseThrow();art.setMastery(art.getMaxMastery());h.assertTrue(first.getEvolutionProgress(current,p,next)<100,"Sub-threshold total EP passed");p.getAttribute(TensuraAttributes.MAX_AURA).setBaseValue(20600);h.assertTrue(EnergyHelper.getBaseMaxEP(p)<100_000,"Fixture no longer distinguishes base and total EP");near(h,first.getEvolutionProgress(current,p,next),100,"Native evolution requirements did not complete at the fixed threshold");h.succeed();
     }
     @GameTest(template="empty",timeoutTicks=100)
     public static void auraSwordDamageBonusIsTripledWithoutChangingItsDuration(GameTestHelper h){
         var p=player(h);var i=vow(p,true);var art=MeleeArts.AURA_SWORD.get();HunterData.learnReward(p,art);var a=SkillAPI.getSkillsFrom(p).getSkill(art).orElseThrow();a.onPressed(p,0,0);var effect=p.getEffect(TensuraMobEffects.getReference(TensuraMobEffects.AURA_SWORD));h.assertTrue(effect!=null && ChainedBuffs.source(effect)==art,"Native Aura Sword source was not recorded");
         var victim=target(h,p.position().add(3,0,0));var source=p.damageSources().mobAttack(p);double weapon=io.github.manasmods.manascore.attribute.api.ManasCoreAttributeUtils.getWeaponDamage(p,victim,source);var config=io.github.manasmods.manascore.config.ConfigRegistry.getConfig(io.github.manasmods.tensura.config.ability.BattlewillConfig.class);
-        double expected=(30+weapon*config.AuraSword.attackMultiplier*3)*8;var amount=Changeable.of(30f);SkillEvents.SKILL_DAMAGE_PRE_CALCULATION.invoker().calculate(SkillAPI.getSkillsFrom(victim),victim,source,amount);near(h,amount.get(),expected,"Aura Sword incremental damage was not tripled before the Battlewill multiplier");h.assertTrue(effect.getAmplifier()==0,"Buff level/duration was changed instead of numeric effectiveness");h.succeed();
+        double expected=(30+weapon*config.AuraSword.attackMultiplier*3)*5;var amount=Changeable.of(30f);SkillEvents.SKILL_DAMAGE_PRE_CALCULATION.invoker().calculate(SkillAPI.getSkillsFrom(victim),victim,source,amount);near(h,amount.get(),expected,"Aura Sword incremental damage was not tripled before the Battlewill multiplier");h.assertTrue(effect.getAmplifier()==0,"Buff level/duration was changed instead of numeric effectiveness");h.succeed();
     }
     @GameTest(template="empty",timeoutTicks=100)
     public static void ordinaryResistanceAndNullificationAcquisitionSpendAuraWithoutReducingMagiculeCapacity(GameTestHelper h){

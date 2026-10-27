@@ -22,14 +22,14 @@ public final class MythicEvolution {
         default->List.of();
     };}
     public static boolean ready(LivingEntity e,MythicKind result){
-        double ep=EnergyHelper.getBaseMaxEP(e);var storage=SkillAPI.getSkillsFrom(e);var recipe=ingredients(result);
+        double ep=EnergyHelper.getMaxEP(e);var storage=SkillAPI.getSkillsFrom(e);var recipe=ingredients(result);
         return ultimates().contains(result) && Double.isFinite(ep) && ep>=SYNTHESIS_EP && storage.getSkill(WildHunt.MYTHIC.get(result).get()).isEmpty() && recipe.stream().allMatch(s->storage.getSkill(s).map(i->i.isMastered(e)).orElse(false));
     }
     public static String synthesize(ServerPlayer p,String id){
         var kind=ultimates().stream().filter(k->id.equals(k.id()) || id.equals(WildHunt.id(k.id()).toString())).findFirst();
         if(kind.isEmpty())return "Choose Vritra, Demeter, Janus, Anansi or Aegir.";
         var result=kind.get();
-        if(!ready(p,result))return result.title+" requires 2M base EP and mastery of both "+ingredients(result).stream().map(s->s.getName().getString()).reduce((a,b)->a+" + "+b).orElse("")+". An owned result cannot be synthesized twice.";
+        if(!ready(p,result))return result.title+" requires 2M total EP and mastery of both "+ingredients(result).stream().map(s->s.getName().getString()).reduce((a,b)->a+" + "+b).orElse("")+". An owned result cannot be synthesized twice.";
         var skills=SkillAPI.getSkillsFrom(p);var sources=ingredients(result).stream().map(s->skills.getSkill(s).orElseThrow()).toList();
         if(!replace(p,sources,WildHunt.MYTHIC.get(result).get(),false))return "The native skill system rejected synthesis. Your ingredients are unchanged.";
         dev.wildhunt.myths.MythsVisuals.convergence(p.serverLevel(),p.position().add(0,1,0),result.color,0xF4E7C0);

@@ -33,11 +33,11 @@ Only Fettered Human grants [Chained](Chained.md). This evolution preserves an ex
 
 ## Evolution
 
-Requires **8,000,000 fixed base EP**, **4 mastered Battlewills**, and **mastered Chained**. All requirements must be met in Tensura’s native evolution menu.
+Requires **8,000,000 fixed total EP**, **4 mastered Battlewills**, and **mastered Chained**. All requirements must be met in Tensura’s native evolution menu.
 
-Base EP uses the native unmultiplied capacity values; the 5× aura-capacity modifier does not satisfy a base-EP gate by itself. The milestones are constants, independent of the player’s EP when the lineage is selected.
+Evolution checks **total EP**: effective maximum aura plus effective maximum magicules, as shown in Status. Chained’s bonus aura capacity counts. The milestones remain fixed constants, independent of the player’s EP when the lineage is selected.
 
-| Stage | Fixed base EP | Mastered Battlewills | Chained mastery |
+| Stage | Fixed total EP | Mastered Battlewills | Chained mastery |
 | --- | ---: | ---: | ---: |
 | [Fettered Human](Fettered-Human.md) | Starting selection | — | — |
 | [Tempered Vessel](Tempered-Vessel.md) | 100,000 | 1 | 20% |

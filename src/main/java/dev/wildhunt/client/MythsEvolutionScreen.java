@@ -72,7 +72,7 @@ public final class MythsEvolutionScreen extends EvolutionScreen {
         if(!convergence && state.getString("choice_action").equals("evolve"))return row().getString("detail");
         String text=(confirming?"Confirm permanent ancestry: "+selectedEvolution.getName().getString()+"\n":"")+"Primary final: "+yes(state.getBoolean("primary_final"))+"\n";
         if(convergence)text+="Secondary final: "+yes(state.getBoolean("secondary_final"))+"\n";
-        text+="True Hero / True Demon Lord: "+yes(state.getBoolean("awakened"))+"\nBase EP: "+String.format(Locale.ROOT,"%,.0f / %,.0f",state.getDouble("ep"),state.getDouble(convergence?"convergence_ep":"secondary_ep"));
+        text+="True Hero / True Demon Lord: "+yes(state.getBoolean("awakened"))+"\nTotal EP: "+String.format(Locale.ROOT,"%,.0f / %,.0f",state.getDouble("ep"),state.getDouble(convergence?"convergence_ep":"secondary_ep"));
         return text+(convergence?"\nResult: "+state.getString("fusion_name")+"\nGrowth: "+state.getDouble("fusion_aura")+" aura / "+state.getDouble("fusion_magicules")+" magicules, +10% EP gain":"\n"+row().getString("detail"));
     }
     private static String yes(boolean b){return b?"Yes":"No";}
@@ -105,7 +105,7 @@ public final class MythsEvolutionScreen extends EvolutionScreen {
         RenderHelper.drawScrollingText(g,font,name,guiLeft+7,guiTop+35,70,0xffe8c56f);
         if(mx>=guiLeft+6 && mx<guiLeft+79 && my>=guiTop+34 && my<guiTop+47)setTooltipForNextRenderPass(name);
         double ep=state.getDouble("ep");
-        RenderHelper.drawTextWithTooltip(g,font,"EP: "+RenderHelper.getShortenedNumber(ep).getString(),guiLeft+13,guiTop+144,0xffffaa00,mx,my,Component.literal(String.format(Locale.ROOT,"Base EP: %,.0f",ep)),this);
+        RenderHelper.drawTextWithTooltip(g,font,"EP: "+RenderHelper.getShortenedNumber(ep).getString(),guiLeft+13,guiTop+144,0xffffaa00,mx,my,Component.literal(String.format(Locale.ROOT,"Total EP: %,.0f",ep)),this);
     }
     @Override public boolean mouseClicked(double x,double y,int button) {var before=selectedEvolution;boolean result=super.mouseClicked(x,y,button);if(before!=selectedEvolution){confirming=false;rebuildWidgets();}return result;}
 }

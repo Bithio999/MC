@@ -80,7 +80,7 @@ Roll through Tensura’s normal reincarnation pool alongside the other seven Myt
 
 ## Evolution
 
-Combine with Mirrorbound for [Janus](Janus.md), or with Rune Smith for [Anansi](Anansi.md), at 2M base EP and mastery of both ingredients. A mastered Threadweaver can also be combined with a mastered Ultimate during [Lugh](Lugh.md) ascension.
+Combine with Mirrorbound for [Janus](Janus.md), or with Rune Smith for [Anansi](Anansi.md), at 2M total EP and mastery of both ingredients. A mastered Threadweaver can also be combined with a mastered Ultimate during [Lugh](Lugh.md) ascension.
 
 ## Suggested combo
 

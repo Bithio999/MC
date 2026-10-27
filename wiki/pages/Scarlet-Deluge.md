@@ -87,7 +87,7 @@ Roll through Tensura’s normal reincarnation system. These Uniques join the con
 
 ## Evolution
 
-Combine mastered Scarlet Deluge and [Mirrorbound](Mirrorbound.md) at 2M base EP through [Skill synthesis](Skill-Synthesis.md) to obtain [Aegir, Lord of the Abyss](Aegir.md).
+Combine mastered Scarlet Deluge and [Mirrorbound](Mirrorbound.md) at 2M total EP through [Skill synthesis](Skill-Synthesis.md) to obtain [Aegir, Lord of the Abyss](Aegir.md).
 
 ## Suggested combo
 

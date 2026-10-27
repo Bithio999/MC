@@ -2,7 +2,7 @@
 
 [Main Page](https://github.com/Bithio999/MC/wiki/Home) · [Skills](https://github.com/Bithio999/MC/wiki/Skills) · [Ability index](https://github.com/Bithio999/MC/wiki/Abilities) · [Damage types](https://github.com/Bithio999/MC/wiki/Damage-Types)
 
-**Ultimate Skills** combine two mastered Uniques at **2M base EP**, through **Skills → Ultimate → Synthesis**. The addon provides five distinct kits; any race can synthesize them.
+**Ultimate Skills** combine two mastered Uniques at **2M total EP**, through **Skills → Ultimate → Synthesis**. The addon provides five distinct kits; any race can synthesize them.
 
 ## Skills
 
@@ -24,7 +24,7 @@ Three active modes use aura; the separate native toggle charges aura upkeep. Dam
 
 ## Evolution
 
-Master one of these Ultimates, become a True Hero or True Demon Lord and reach 12M base EP to obtain [Aion](https://github.com/Bithio999/MC/wiki/Aion), or additionally combine a mastered [Rune Smith](https://github.com/Bithio999/MC/wiki/Rune-Smith) for [Thoth](https://github.com/Bithio999/MC/wiki/Thoth), or combine a mastered [Threadweaver](https://github.com/Bithio999/MC/wiki/Threadweaver) for [Lugh](https://github.com/Bithio999/MC/wiki/Lugh).
+Master one of these Ultimates, become a True Hero or True Demon Lord and reach 12M total EP to obtain [Aion](https://github.com/Bithio999/MC/wiki/Aion), or additionally combine a mastered [Rune Smith](https://github.com/Bithio999/MC/wiki/Rune-Smith) for [Thoth](https://github.com/Bithio999/MC/wiki/Thoth), or combine a mastered [Threadweaver](https://github.com/Bithio999/MC/wiki/Threadweaver) for [Lugh](https://github.com/Bithio999/MC/wiki/Lugh).
 
 ## Boss-intrinsic Ultimates
 

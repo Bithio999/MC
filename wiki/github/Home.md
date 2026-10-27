@@ -1,6 +1,6 @@
 # Tensura Myths Wiki
 
-An unofficial reference for the **Tensura Myths** addon to **Tensura: Reincarnated**. Minecraft 1.21.1 · NeoForge · Addon 0.33.0.
+An unofficial reference for the **Tensura Myths** addon to **Tensura: Reincarnated**. Minecraft 1.21.1 · NeoForge · Addon 0.34.0.
 
 ## Start here
 
@@ -11,8 +11,8 @@ An unofficial reference for the **Tensura Myths** addon to **Tensura: Reincarnat
 | Tier | Directory | Obtaining |
 | --- | --- | --- |
 | Unique | [Eight reincarnation skills](https://github.com/Bithio999/MC/wiki/Unique-Skills) | Starting-skill rolls |
-| Ultimate | [Five combination skills](https://github.com/Bithio999/MC/wiki/Ultimate-Skills) | Two specific mastered Uniques, 2M base EP |
-| Godly | [Aion, Thoth and Lugh](https://github.com/Bithio999/MC/wiki/Godly) | Mastered combination Ultimate, true awakening, 12M base EP; Thoth also uses Rune Smith; Lugh uses Threadweaver |
+| Ultimate | [Five combination skills](https://github.com/Bithio999/MC/wiki/Ultimate-Skills) | Two specific mastered Uniques, 2M total EP |
+| Godly | [Aion, Thoth and Lugh](https://github.com/Bithio999/MC/wiki/Godly) | Mastered combination Ultimate, true awakening, 12M total EP; Thoth also uses Rune Smith; Lugh uses Threadweaver |
 | Extra | [Three aura recovery skills](https://github.com/Bithio999/MC/wiki/Aura-Regeneration) | Hunter evolution |
 
 [Skill overview](https://github.com/Bithio999/MC/wiki/Skills) · [Skill synthesis](https://github.com/Bithio999/MC/wiki/Skill-Synthesis) · [Every active and passive ability](https://github.com/Bithio999/MC/wiki/Abilities) · [Damage types](https://github.com/Bithio999/MC/wiki/Damage-Types)

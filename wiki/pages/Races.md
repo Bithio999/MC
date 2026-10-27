@@ -20,11 +20,11 @@
 
 ## Heavenly Restriction lineage
 
-Start as [Fettered Human](Fettered-Human.md), then evolve through [Tempered Vessel](Tempered-Vessel.md), [Unshackled](Unshackled.md), [Heavenly Restricted](Heavenly-Restricted.md) and [Heavenbreaker](Heavenbreaker.md). Fettered Human grants [Chained](Chained.md); later evolutions retain it without granting it again. The lineage uses a 90% aura / 10% magicule EP split. Fixed base EP, mastered Battlewills and Chained mastery govern this separate starting lineage.
+Start as [Fettered Human](Fettered-Human.md), then evolve through [Tempered Vessel](Tempered-Vessel.md), [Unshackled](Unshackled.md), [Heavenly Restricted](Heavenly-Restricted.md) and [Heavenbreaker](Heavenbreaker.md). Fettered Human grants [Chained](Chained.md); later evolutions retain it without granting it again. The lineage uses a 90% aura / 10% magicule EP split. Fixed total EP, mastered Battlewills and Chained mastery govern this separate starting lineage.
 
 ## Secondary races
 
-[Choose a secondary lineage](Duo-Races.md) after completing the primary evolution path, reaching true awakening and 5M base EP. Each further secondary evolution requires native conditions and a new 2.5M-EP growth interval. A secondary adds 10% EP growth and displays alongside the primary in Status.
+[Choose a secondary lineage](Duo-Races.md) after completing the primary evolution path, reaching true awakening and 5M total EP. Each further secondary evolution requires native conditions and a new 2.5M-EP growth interval. A secondary adds 10% EP growth and displays alongside the primary in Status.
 
 ## Convergent races
 

@@ -87,7 +87,7 @@ Roll through Tensura’s normal reincarnation system. These Uniques join the con
 
 ## Evolution
 
-Combine the mastered skill with a mastered **Verdant Keeper** at **2M base EP** to create [Demeter](Demeter.md), using **Skills → Ultimate → Synthesis**. Both ingredients are replaced and presets/cooldowns carry over. No race requirement applies.
+Combine the mastered skill with a mastered **Verdant Keeper** at **2M total EP** to create [Demeter](Demeter.md), using **Skills → Ultimate → Synthesis**. Both ingredients are replaced and presets/cooldowns carry over. No race requirement applies.
 
 ## Suggested combo
 

@@ -67,7 +67,7 @@ Learning a Godly skill also clears existing non-Godly interference on the next s
 
 ## Obtaining
 
-Master one of the addon’s [five combination Ultimates](Ultimate-Skills.md), become a True Hero or True Demon Lord and reach **12,000,000 base EP**. Open **Skills → Godly → Ascension**, select your mastered Ultimate and choose **Aion**, **Thoth** or **Lugh** with the destination button. Thoth additionally requires a mastered [Rune Smith](Rune-Smith.md), which is combined into the result. Lugh instead combines a mastered [Threadweaver](Threadweaver.md).
+Master one of the addon’s [five combination Ultimates](Ultimate-Skills.md), become a True Hero or True Demon Lord and reach **12,000,000 total EP**. Open **Skills → Godly → Ascension**, select your mastered Ultimate and choose **Aion**, **Thoth** or **Lugh** with the destination button. Thoth additionally requires a mastered [Rune Smith](Rune-Smith.md), which is combined into the result. Lugh instead combines a mastered [Threadweaver](Threadweaver.md).
 
 The chosen Ultimate is replaced; Thoth also replaces Rune Smith, while Lugh also replaces Threadweaver. All nine presets retain references to the evolved skill; its longest remaining cooldown carries to the new modes, except Thoth’s cooldown-free Mana Crucible. Godly ascension is separate from Duo Races and does not require a fusion. It is not a reincarnation roll, does not consume EP and grants no free magicule or aura pool.
 

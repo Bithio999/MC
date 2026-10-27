@@ -6,7 +6,7 @@
 
 The alternate branch is **Human → Awakened Hunter → Apex Hunter → Sovereign Hunter**. Every stage keeps a human appearance. The base Human’s original Tensura evolution choices remain available.
 
-| Stage | Previous | Base EP | Distinct bosses | Additional requirement |
+| Stage | Previous | Total EP | Distinct bosses | Additional requirement |
 | --- | --- | ---: | ---: | --- |
 | [Awakened Hunter](https://github.com/Bithio999/MC/wiki/Awakened-Hunter) | Human | 100,000 | 1 | — |
 | [Apex Hunter](https://github.com/Bithio999/MC/wiki/Apex-Hunter) | Awakened Hunter | 400,000 | 3 | — |
@@ -36,7 +36,7 @@ Eligible types are listed in `wildhunt:progression_bosses`: the shared `c:bosses
 
 ## Evolving
 
-Use Tensura’s evolution menu or `/wildhunt evolve` after meeting the same gates. Check `/wildhunt status` for the recorded type IDs, base EP and mastery progress. Skill acquisition is independent: bosses never award Unique skills.
+Use Tensura’s evolution menu or `/wildhunt evolve` after meeting the same gates. Check `/wildhunt status` for the recorded type IDs, total EP and mastery progress. Skill acquisition is independent: bosses never award Unique skills.
 
 ---
 

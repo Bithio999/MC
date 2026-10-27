@@ -7,7 +7,7 @@ Player progression commands affect the issuing player, need no operator permissi
 | Command | Function |
 | --- | --- |
 | `/wildhunt` or `/wildhunt guide` | Show the brief gameplay guide |
-| `/wildhunt status` | Show race stage, base EP, distinct boss IDs, mastery and learned-art resources |
+| `/wildhunt status` | Show race stage, total EP, distinct boss IDs, mastery and learned-art resources |
 | `/wildhunt evolve` | Advance one hunter stage if eligible |
 | `/wildhunt ascend vritra` | Combine mastered Storm Crown + Black Flame |
 | `/wildhunt ascend demeter` | Combine mastered Verdant Keeper + Frostbound Colossus |
@@ -19,7 +19,7 @@ Each learned art reports its passive name, ON/OFF state and aura upkeep per seco
 
 ## Synthesis requirements
 
-Any race can synthesize at **2M base EP** with both specific ingredients mastered. The result is learned before both sources are removed. Invalid requests consume nothing. The same server rules power **Skills → Ultimate → Synthesis**. See [Skill synthesis](https://github.com/Bithio999/MC/wiki/Skill-Synthesis).
+Any race can synthesize at **2M total EP** with both specific ingredients mastered. The result is learned before both sources are removed. Invalid requests consume nothing. The same server rules power **Skills → Ultimate → Synthesis**. See [Skill synthesis](https://github.com/Bithio999/MC/wiki/Skill-Synthesis).
 
 ## Myths progression
 

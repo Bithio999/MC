@@ -6,15 +6,15 @@
 
 ## Obtaining
 
-Open Tensura’s menu and select the **Convergent Awakening tab on the right**, below the Secondary Race tab. Both lineages must be at a final stage with no further native evolution. You must also be a **True Hero or True Demon Lord** and meet the **lineage-dependent base EP requirement** shown in that tab. A base or partially evolved secondary cannot awaken.
+Open Tensura’s menu and select the **Convergent Awakening tab on the right**, below the Secondary Race tab. Both lineages must be at a final stage with no further native evolution. You must also be a **True Hero or True Demon Lord** and meet the **lineage-dependent total EP requirement** shown in that tab. A base or partially evolved secondary cannot awaken.
 
 The primary becomes the actual fused native race. Its predecessor state and the secondary’s native state are saved for inherited reactions and ticks. The fusion has no next evolution. The independent secondary racial key stops operating; the normal racial key uses **Concordance Pulse** instead.
 
 ## EP requirement
 
-By default, the requirement is **125% of the highest EP gate leading up to the awakening**, with a **10,000,000 base EP minimum**. This includes native EP requirements along both current lineage paths and the added cumulative EP gate of the last completed secondary evolution. It uses fixed required EP, never current EP, EP at selection or saved EP at an earlier evolution. Choosing the lineage at a higher EP does not raise the requirement.
+By default, the requirement is **125% of the highest EP gate leading up to the awakening**, with a **10,000,000 total EP minimum**. This includes native EP requirements along both current lineage paths and the added cumulative EP gate of the last completed secondary evolution. The threshold uses fixed preceding requirements; eligibility compares your total EP against it. EP at selection or saved EP at an earlier evolution does not raise the threshold. Choosing the lineage at a higher EP does not raise the requirement.
 
-`Required base EP = max(10,000,000, ceil(highest preceding evolution EP gate × 1.25))`
+`Required total EP = max(10,000,000, ceil(highest preceding evolution EP gate × 1.25))`
 
 For example, completing Slime’s two secondary evolutions at the fixed 7.5M and 10M gates gives a **12.5M EP awakening requirement**, provided neither native lineage has a higher gate. A native evolution requiring 40M raises awakening to **50M** instead. Both races must still reach their final evolution, and the true awakening requirement remains.
 

@@ -17,12 +17,12 @@
 | Previous | [Apex Hunter](Apex-Hunter.md) |
 | Next | — |
 | **Obtaining** | |
-| Base EP gate | 2,000,000 |
+| Total EP gate | 2,000,000 |
 | Distinct bosses | 5 |
 
 ## Obtaining
 
-Begin as Apex Hunter. Reach 2,000,000 base EP and defeat 5 different eligible boss types. Master at least one Myths Unique skill as well. [Boss eligibility and counting](Evolution.md#distinct-boss-kills).
+Begin as Apex Hunter. Reach 2,000,000 total EP and defeat 5 different eligible boss types. Master at least one Myths Unique skill as well. [Boss eligibility and counting](Evolution.md#distinct-boss-kills).
 
 ## Traits
 
@@ -47,11 +47,11 @@ This stage grants **[Sovereign Rebirth](Sovereign-Rebirth.md)** as a native Extr
 Base energy uses two thirds aura and one third magicules. Default-alignment kill EP retains Tensura’s native 2:1 split.
 
 
-At 2M base EP, any race can combine two specific mastered Uniques through [Skill synthesis](Skill-Synthesis.md). Race evolution does not directly grant a Unique skill.
+At 2M total EP, any race can combine two specific mastered Uniques through [Skill synthesis](Skill-Synthesis.md). Race evolution does not directly grant a Unique skill.
 
 ## Evolution
 
-| Race | Base EP | Distinct boss types | Additional requirement |
+| Race | Total EP | Distinct boss types | Additional requirement |
 | --- | ---: | ---: | --- |
 | [Awakened Hunter](Awakened-Hunter.md) | 100,000 | 1 | Human |
 | [Apex Hunter](Apex-Hunter.md) | 400,000 | 3 | Awakened Hunter |

@@ -17,7 +17,7 @@
 | Passive upkeep | 180 magicules / second |
 | Registry ID | `wildhunt:thoth` |
 | **Obtaining** | |
-| Method | Mastered combination Ultimate + mastered Rune Smith; true awakening; 12M base EP |
+| Method | Mastered combination Ultimate + mastered Rune Smith; true awakening; 12M total EP |
 | **Evolution** | |
 | Evolution | — |
 
@@ -130,7 +130,7 @@ Lexicon raises a three-volume casting formation above counter-rotating inscripti
 
 ## Obtaining
 
-Open **Skills → Godly → Ascension**, select one mastered [combination Ultimate](Ultimate-Skills.md), choose **Thoth**, then Ascend. Also master [Rune Smith](Rune-Smith.md), become a True Hero or True Demon Lord and reach **12,000,000 base EP**. Both the selected Ultimate and Rune Smith are combined into Thoth. Other skills remain learned. Presets and the longest remaining cooldown carry over. Owning Aion does not prevent earning Thoth using another valid source Ultimate.
+Open **Skills → Godly → Ascension**, select one mastered [combination Ultimate](Ultimate-Skills.md), choose **Thoth**, then Ascend. Also master [Rune Smith](Rune-Smith.md), become a True Hero or True Demon Lord and reach **12,000,000 total EP**. Both the selected Ultimate and Rune Smith are combined into Thoth. Other skills remain learned. Presets and the longest remaining cooldown carry over. Owning Aion does not prevent earning Thoth using another valid source Ultimate.
 
 ## Suggested combo
 

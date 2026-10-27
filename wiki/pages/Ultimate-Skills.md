@@ -2,7 +2,7 @@
 
 [Main Page](../README.md) · [Skills](Skills.md) · [Ability index](Abilities.md) · [Damage types](Damage-Types.md)
 
-**Ultimate Skills** combine two mastered Uniques at **2M base EP**, through **Skills → Ultimate → Synthesis**. The addon provides five distinct kits; any race can synthesize them.
+**Ultimate Skills** combine two mastered Uniques at **2M total EP**, through **Skills → Ultimate → Synthesis**. The addon provides five distinct kits; any race can synthesize them.
 
 ## Skills
 
@@ -24,7 +24,7 @@ Three active modes use aura; the separate native toggle charges aura upkeep. Dam
 
 ## Evolution
 
-Master one of these Ultimates, become a True Hero or True Demon Lord and reach 12M base EP to obtain [Aion](Aion.md), or additionally combine a mastered [Rune Smith](Rune-Smith.md) for [Thoth](Thoth.md), or combine a mastered [Threadweaver](Threadweaver.md) for [Lugh](Lugh.md).
+Master one of these Ultimates, become a True Hero or True Demon Lord and reach 12M total EP to obtain [Aion](Aion.md), or additionally combine a mastered [Rune Smith](Rune-Smith.md) for [Thoth](Thoth.md), or combine a mastered [Threadweaver](Threadweaver.md) for [Lugh](Lugh.md).
 
 ## Boss-intrinsic Ultimates
 

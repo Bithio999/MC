@@ -5,7 +5,7 @@ An expanded progression and skills addon for **Tensura 2.0.1.3**, **Minecraft
 
 ## Download
 
-The built addon is included at [releases/tensura-myths-0.33.0.jar](releases/tensura-myths-0.33.0.jar).
+The built addon is included at [releases/tensura-myths-0.34.0.jar](releases/tensura-myths-0.34.0.jar).
 Install it alongside Tensura and its required dependencies on both client and server, including **GeckoLib 4.9.3 (4.x)**.
 
 ## Visuals
@@ -13,6 +13,10 @@ Install it alongside Tensura and its required dependencies on both client and se
 World effects and Myth bosses use original **Blockbench models and GeckoLib animations**, combined with smooth ring structures, faceted crystals, curved organic surfaces, beveled solid edges, fluid sheets, beams, trails and black-hole optics. The release includes 72 effect rigs, both Myth bosses, destructible Genesis Seals, animated NPC equipment and four modeled ritual items. [Visual gallery](wiki/pages/Visual-Effects.md) · [Editable projects](art/blockbench) · [Artist workflow](docs/VISUAL_PIPELINE.md).
 
 **Eschaton and Aion** now use broad anime silhouettes, sharper impacts and stronger anticipation/release animation. This is the focused visual review pass before extending the direction to other skills. [Native motion preview](wiki/media/eschaton-aion-anime-preview.mp4) · [Review and comparison](docs/VISUAL-REVIEW-0.31.0.md).
+
+## Progression EP
+
+Myths race evolution, secondary selection/evolution, Convergent Awakening, Ultimate synthesis and Godly ascension use **total EP**, matching the native Status menu: effective maximum aura + effective maximum magicules. Aura-capacity bonuses count; current resource depletion does not reduce EP. Threshold values remain fixed.
 
 ## Battlewill evolution
 
@@ -53,7 +57,7 @@ The Unique calibration follows the [native/addon Unique audit](docs/research/UNI
 | [Verdant Keeper](wiki/pages/Verdant-Keeper.md) | Allied HP/SHP grove and root control | Living Grove; Briar Grasp |
 | [Mirrorbound](wiki/pages/Mirrorbound.md) | Splitting light and missile reflection | Prismatic Lance; Mirror Aegis |
 
-**[Skill synthesis](wiki/pages/Skill-Synthesis.md)** combines two mastered Uniques at **2M base EP**, available to any race through **Skills → Ultimate → Synthesis**:
+**[Skill synthesis](wiki/pages/Skill-Synthesis.md)** combines two mastered Uniques at **2M total EP**, available to any race through **Skills → Ultimate → Synthesis**:
 
 | Combination Ultimate | Mastered ingredients | New kit |
 | --- | --- | --- |
@@ -65,7 +69,7 @@ The Unique calibration follows the [native/addon Unique audit](docs/research/UNI
 
 The result replaces both ingredients, preserves all nine presets and inherits the longest outstanding source cooldown. Unrelated skills remain learned. New Ultimates have three active arts and a separate toggle; their kits do not reuse their ingredients’ modes.
 
-**[Godly Skills](wiki/pages/Godly.md)** appear in their own native skill-menu category while retaining Ultimate classification for compatibility. Master a combination Ultimate, become a True Hero or True Demon Lord and reach **12M base EP**. In **Skills → Godly → Ascension**, choose:
+**[Godly Skills](wiki/pages/Godly.md)** appear in their own native skill-menu category while retaining Ultimate classification for compatibility. Master a combination Ultimate, become a True Hero or True Demon Lord and reach **12M total EP**. In **Skills → Godly → Ascension**, choose:
 
 - **[Aion, God of Causality](wiki/pages/Aion.md):** smooth channelled Worldline Sever, Event Horizon, upward-only Causal Reversal and Genesis Verdict’s twenty curved, exploding black holes; recovering barriers and proximity slowing.
 - **[Lugh, God of Skills](wiki/pages/Lugh.md):** a persistent Skill Bank with direct, searchable Pride-style controls and passive collection of damaging techniques within 64 blocks, three bindable reconstructed arts, temporary sealing of one recent non-Godly technique, and a combined Grand Synthesis. Inspect each technique’s damage, damage type and form. All-Skilled adds 49 native learning/mastery points per gain and halves other skills’ cooldown recovery time, excluding Lugh. Starts with three usable techniques; also combines a mastered Threadweaver.
@@ -83,7 +87,7 @@ The hunter branch preserves the player’s appearance and appears alongside nati
 
 | Evolution | Requirements | Stage bonuses |
 | --- | --- | --- |
-| Awakened Hunter | Human; 100K base EP; 1 distinct boss type | +100 HP, +400 SHP, +2 attack, +5% movement, +0.1 knockback resistance |
+| Awakened Hunter | Human; 100K total EP; 1 distinct boss type | +100 HP, +400 SHP, +2 attack, +5% movement, +0.1 knockback resistance |
 | Apex Hunter | Awakened; 400K EP; 3 distinct boss types | +500 HP, +3,200 SHP, +4 attack, +10% movement, +0.2 knockback resistance |
 | Sovereign Hunter | Apex; 2M EP; 5 distinct boss types; one mastered Myths Unique | +1,000 HP, +6,600 SHP, +6 attack, +15% movement, +0.3 knockback resistance |
 
@@ -95,7 +99,7 @@ Each stage grants an aura-only recovery Extra: **Hunter’s Recovery → Apex Re
 
 ## Duo Races and Convergent Awakening
 
-[Duo Races](wiki/pages/Duo-Races.md) unlock at a final primary evolution, True Hero/True Demon Lord and **5M base EP**. Choose another native ancestral family using the **Secondary Race tab on the right of Tensura’s menu**. Half-strength shared attributes, intrinsic skills and a separately bound racial action complement the primary. Status shows **Primary Race/Secondary Race**.
+[Duo Races](wiki/pages/Duo-Races.md) unlock at a final primary evolution, True Hero/True Demon Lord and **5M total EP**. Choose another native ancestral family using the **Secondary Race tab on the right of Tensura’s menu**. Half-strength shared attributes, intrinsic skills and a separately bound racial action complement the primary. Status shows **Primary Race/Secondary Race**.
 
 Secondary evolution thresholds are fixed: **5M + 2.5M × stage** gives **7.5M, 10M, 12.5M, 15M…**. Native weighted requirements also apply. Your current EP, EP when selecting the race and saved past EP never raise a gate. “Be named” means receiving a Tensura name yourself, not naming other mobs.
 
@@ -107,7 +111,7 @@ An independent secondary grants **10% extra native EP gain**, retaining the prim
 
 ## Updating
 
-Replace the previous addon JAR with **0.33.0** on client and server. Install only one addon version. Existing Chained owners retain their saved base capacity and mastery. Their historical 20,000 starting aura is excluded from Chained’s multiplier; earned growth still gets 5×. Only a fresh reincarnation uses the new starting ranges. Current aura follows native capacity/overflow handling. The `wildhunt` namespace remains stable for existing saves.
+Replace the previous addon JAR with **0.34.0** on client and server. Install only one addon version. Existing Chained owners retain their saved base capacity and mastery. Their historical 20,000 starting aura is excluded from Chained’s multiplier; earned growth still gets 5×. Only a fresh reincarnation uses the new starting ranges. Current aura follows native capacity/overflow handling. The `wildhunt` namespace remains stable for existing saves.
 
 Ordinary elemental attribute bonuses use the strongest source per element; Godly bonuses remain separate. Mirrorbound, Demeter, Janus and Thoth no longer give passive shields; old saved contributions are cleaned automatically. Water Veil, Colossus Carapace and Aion retain their dedicated defenses. Demeter’s second mode is Perennial Seed: a one-use 40% HP/SHP rescue effect.
 
@@ -117,7 +121,7 @@ The [changelog](docs/CHANGELOG.md) records development changes separately from t
 
 ## Wiki
 
-Read the [Tensura Myths Wiki](wiki/README.md) for individual skill/race articles, per-ability damage types, progression and commands. [Download the styled offline edition](releases/tensura-myths-wiki-0.33.0.zip), extract it and open `index.html` for the wiki layout, infoboxes, screenshots and offline search. The [GitHub Wiki edition](wiki/github/Home.md) is prepared for the separate Wiki when it is available; [publishing instructions](docs/WIKI.md).
+Read the [Tensura Myths Wiki](wiki/README.md) for individual skill/race articles, per-ability damage types, progression and commands. [Download the styled offline edition](releases/tensura-myths-wiki-0.34.0.zip), extract it and open `index.html` for the wiki layout, infoboxes, screenshots and offline search. The [GitHub Wiki edition](wiki/github/Home.md) is prepared for the separate Wiki when it is available; [publishing instructions](docs/WIKI.md).
 
 ## Build and test
 
@@ -144,9 +148,9 @@ vertical dashes, through-wall ricochets, momentum preservation, native shield
 breakage and timed recovery, HP/SHP evolution, aura regeneration and native NPC loadouts.
 `./gradlew runClient` starts a development client on a machine with graphics.
 
-The [0.33.0 validation report](docs/VALIDATION-0.33.0.md) records native Battlewill progression, flight parity and lifecycle checks, the Chained active nerf, gameplay regressions and wiki validation.
+The [0.34.0 validation report](docs/VALIDATION-0.34.0.md) records total-EP progression gates, Chained’s revised damage, native gameplay regressions, wiki checks and Restricted EP research.
 
-Install `build/libs/tensura-myths-0.33.0.jar` on **both client and server**,
+Install `build/libs/tensura-myths-0.34.0.jar` on **both client and server**,
 alongside Tensura and its required dependencies. The addon jar is not a complete
 modpack. Additional development dependency versions are in `runtime-mods.lock.json`.
 

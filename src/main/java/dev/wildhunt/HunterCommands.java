@@ -33,7 +33,7 @@ public final class HunterCommands {
     private static int status(CommandContext<CommandSourceStack> ctx) throws com.mojang.brigadier.exceptions.CommandSyntaxException {
         var player = ctx.getSource().getPlayerOrException();
         ctx.getSource().sendSuccess(() -> Component.literal("Wild Hunt | Stage " + HunterData.stage(player)
-            + "/3 | EP " + (long) EnergyHelper.getBaseMaxEP(player) + " | Distinct bosses " + HunterData.bossKills(player).size()
+            + "/3 | EP " + (long) EnergyHelper.getMaxEP(player) + " | Distinct bosses " + HunterData.bossKills(player).size()
             + " | Mastered " + HunterData.mastered(player) + "/8"), false);
         ctx.getSource().sendSuccess(() -> Component.literal("Defeated: " + String.join(", ", HunterData.bossKills(player))), false);
         for (Apex apex : Apex.values()) {
@@ -51,7 +51,7 @@ public final class HunterCommands {
         var player = ctx.getSource().getPlayerOrException();
         int stage = HunterData.stage(player);
         if ((stage == 0 && !HunterData.human(player)) || !HunterProgression.canEvolve(stage,
-                EnergyHelper.getBaseMaxEP(player), HunterData.bossKills(player).size(), HunterData.mastered(player))) {
+                EnergyHelper.getMaxEP(player), HunterData.bossKills(player).size(), HunterData.mastered(player))) {
             ctx.getSource().sendFailure(Component.literal("Evolution requirements unmet. Use /wildhunt status and /wildhunt guide."));
             return 0;
         }

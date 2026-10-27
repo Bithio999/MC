@@ -40,8 +40,8 @@ public final class DuoSystem {
     public static String select(ServerPlayer p,RaceFamily family) {
         var first=primary(p);
         if(first.isEmpty() || primaryFamily(p).isEmpty())return "Your primary race has no supported native lineage.";
-        if(!DuoRules.eligible(terminal(first.get(),p),awakened(p),EnergyHelper.getBaseMaxEP(p),MythsConfig.SECONDARY_EP.get(),secondary(p).isPresent()))
-            return "Selection requires a final primary evolution, True Hero or True Demon Lord awakening, "+Math.round(MythsConfig.SECONDARY_EP.get())+" base EP, and an empty secondary slot.";
+        if(!DuoRules.eligible(terminal(first.get(),p),awakened(p),EnergyHelper.getMaxEP(p),MythsConfig.SECONDARY_EP.get(),secondary(p).isPresent()))
+            return "Selection requires a final primary evolution, True Hero or True Demon Lord awakening, "+Math.round(MythsConfig.SECONDARY_EP.get())+" total EP, and an empty secondary slot.";
         if(primaryFamily(p).get()==family)return "Choose a different ancestral race family.";
         var instance=family.baseRace().createDefaultInstance();
         data(p).putInt("secondary_stage",0);
@@ -63,7 +63,7 @@ public final class DuoSystem {
         var current=secondary(p); if(current.isEmpty() || converged(p))return "No independent secondary race to evolve.";
         var target=options(p,current.get()).stream().filter(r->targetId.equals(r.getRegistryName())).findFirst();
         if(target.isEmpty())return "That is not a valid next secondary evolution.";
-        if(!Double.isFinite(EnergyHelper.getBaseMaxEP(p)) || EnergyHelper.getBaseMaxEP(p)<secondaryEvolutionEP(p))return "Secondary evolution requires "+Math.round(secondaryEvolutionEP(p))+" base EP for this secondary stage.";
+        if(!Double.isFinite(EnergyHelper.getMaxEP(p)) || EnergyHelper.getMaxEP(p)<secondaryEvolutionEP(p))return "Secondary evolution requires "+Math.round(secondaryEvolutionEP(p))+" total EP for this secondary stage.";
         if(nativeProgress(p,current.get(),target.get())<100)return "The native secondary evolution requirements are not met.\n"+nativeRequirements(p,current.get(),target.get());
         var next=target.get().createDefaultInstance(); next.deserialize(current.get().serialize(new CompoundTag()));
         data(p).putInt("secondary_stage",data(p).getInt("secondary_stage")+1);
@@ -71,33 +71,36 @@ public final class DuoSystem {
         ((io.github.manasmods.manascore.storage.api.StorageHolder)p).manasCore$sync(); return "Secondary race evolved into "+target.get().getName().getString()+".";
     }
     public static float nativeProgress(LivingEntity p,ManasRaceInstance instance,ManasRace next) {
-        float value=instance.getEvolutionProgress(p,next);return Float.isNaN(value)?0:Math.clamp(value,0,100);
+        float value=ProgressionEP.withTotalRequirements(p,()->instance.getEvolutionProgress(p,next));return Float.isNaN(value)?0:Math.clamp(value,0,100);
     }
     public static boolean secondaryRequirementsMet(LivingEntity p,ManasRaceInstance instance,ManasRace next) {
-        double ep=EnergyHelper.getBaseMaxEP(p);
+        double ep=EnergyHelper.getMaxEP(p);
         return Double.isFinite(ep) && ep>=secondaryEvolutionEP(p) && nativeProgress(p,instance,next)>=100;
     }
     /** Native weights are intentional (Daemon Lord totals 150); do not turn alternatives into mandatory gates. */
     public static String nativeRequirements(LivingEntity p,ManasRaceInstance instance,ManasRace next) {
-        var text=new StringBuilder(String.format(Locale.ROOT,"Native progress: %.0f / 100 weighted points (100 required).",nativeProgress(p,instance,next)));
-        if(next instanceof io.github.manasmods.tensura.race.TensuraRace race) {
-            var requirements=new ArrayList<>(race.getEvolutionRequirements(instance,p).entrySet());
-            requirements.sort(Comparator.comparing(entry->entry.getKey().getRequirementComponent(instance,p).getString()));
-            for(var entry:requirements) {
-                var requirement=entry.getKey();float progress=requirement.getProgress(instance,p);
-                progress=Float.isNaN(progress)?0:Math.clamp(progress,0,1);
-                String label=requirement instanceof io.github.manasmods.tensura.race.template.EvolutionRequirement.NamedRequirement
-                    ?"Be named yourself through Tensura (naming other mobs does not count)":requirement.getRequirementComponent(instance,p).getString();
-                text.append(String.format(Locale.ROOT,"\n%s: %s (+%.0f / %.0f points)",label,progress>=1?"Met":"Not met",progress*entry.getValue(),entry.getValue()));
+        return ProgressionEP.withTotalRequirements(p,()->{
+            var text=new StringBuilder(String.format(Locale.ROOT,"Native progress: %.0f / 100 weighted points (100 required).",nativeProgress(p,instance,next)));
+            if(next instanceof io.github.manasmods.tensura.race.TensuraRace race) {
+                var requirements=new ArrayList<>(race.getEvolutionRequirements(instance,p).entrySet());
+                requirements.sort(Comparator.comparing(entry->entry.getKey().getRequirementComponent(instance,p).getString()));
+                for(var entry:requirements) {
+                    var requirement=entry.getKey();float progress=requirement.getProgress(instance,p);
+                    progress=Float.isNaN(progress)?0:Math.clamp(progress,0,1);
+                    String label=requirement instanceof io.github.manasmods.tensura.race.template.EvolutionRequirement.EPRequirement ep
+                        ?ProgressionEP.label(ep.getRequirement()).getString():requirement instanceof io.github.manasmods.tensura.race.template.EvolutionRequirement.NamedRequirement
+                        ?"Be named yourself through Tensura (naming other mobs does not count)":requirement.getRequirementComponent(instance,p).getString();
+                    text.append(String.format(Locale.ROOT,"\n%s: %s (+%.0f / %.0f points)",label,progress>=1?"Met":"Not met",progress*entry.getValue(),entry.getValue()));
+                }
             }
-        }
-        return text.toString();
+            return text.toString();
+        });
     }
     public static String convergence(ServerPlayer p) {
         var a=primary(p); var b=secondary(p);
         if(a.isEmpty() || b.isEmpty() || converged(p) || data(p).getBoolean("awakened"))return "Two independent lineages are required; Convergent Awakening can happen only once.";
-        if(!terminal(a.get(),p) || !terminal(b.get(),p) || !awakened(p) || !Double.isFinite(EnergyHelper.getBaseMaxEP(p)) || EnergyHelper.getBaseMaxEP(p)<convergenceEP(p))
-            return "Both races must reach their final evolution. True Hero or True Demon Lord and "+Math.round(convergenceEP(p))+" base EP are required for these lineages.";
+        if(!terminal(a.get(),p) || !terminal(b.get(),p) || !awakened(p) || !Double.isFinite(EnergyHelper.getMaxEP(p)) || EnergyHelper.getMaxEP(p)<convergenceEP(p))
+            return "Both races must reach their final evolution. True Hero or True Demon Lord and "+Math.round(convergenceEP(p))+" total EP are required for these lineages.";
         var first=RaceFamily.byKey(data(p).getString("primary_family")); var second=secondaryFamily(p);
         if(first.isEmpty() || second.isEmpty() || first.equals(second))return "The lineage combination is invalid.";
         var profile=FusionCatalog.profile(first.get(),second.get()); var destination=FusionCatalog.RACES.get(profile.key()).get();

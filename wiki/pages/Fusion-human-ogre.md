@@ -22,7 +22,7 @@
 | Evolution | — |
 | **Obtaining** | |
 | Awakening | True Hero or True Demon Lord |
-| Base EP | [Lineage-dependent](Convergent-Awakening.md#ep-requirement); 10,000,000 minimum by default |
+| Total EP | [Lineage-dependent](Convergent-Awakening.md#ep-requirement); 10,000,000 minimum by default |
 | Method | Convergent Awakening |
 
 ## Obtaining

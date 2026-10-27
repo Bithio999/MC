@@ -12,7 +12,7 @@ Open Tensura’s menu and select the **Secondary Race tab on the right**, direct
 | --- | --- |
 | Primary evolution | Final stage: no next native evolution |
 | Awakening | True Hero **or** True Demon Lord |
-| Base EP | At least 5,000,000 |
+| Total EP | At least 5,000,000 |
 | Secondary slot | Empty |
 | Ancestry | Different from the primary family |
 
@@ -26,9 +26,9 @@ The secondary starts at its native base race. Select its next stage from the **S
 
 Each secondary evolution has a **fixed stage threshold**, independent of the player’s current EP, EP at selection or EP when evolving:
 
-**Required base EP = secondaryRaceEP + secondaryEvolutionEPStep × (completed secondary evolutions + 1)**
+**Required total EP = secondaryRaceEP + secondaryEvolutionEPStep × (completed secondary evolutions + 1)**
 
-With defaults, the first evolution requires **7.5M**, the second **10M**, the third **12.5M**, and the fourth **15M** base EP. Choosing the secondary at 5M or 100M gives the same requirements. Native weighted evolution requirements must also be met. The menu and server share these fixed gates. Server owners can configure `secondaryRaceEP` and `secondaryEvolutionEPStep`.
+With defaults, the first evolution requires **7.5M**, the second **10M**, the third **12.5M**, and the fourth **15M** total EP. Choosing the secondary at 5M or 100M gives the same requirements. Native weighted evolution requirements must also be met. The menu and server share these fixed gates. Server owners can configure `secondaryRaceEP` and `secondaryEvolutionEPStep`.
 
 
 Native branching remains available. If a chosen Goblin branch becomes an Oni, its recorded secondary ancestry remains Goblin for the eventual fusion. Secondary Human can also follow the hunter branch and earn its distinct boss credits.
@@ -39,7 +39,7 @@ Assign **Secondary racial ability** under **Controls → Key Binds → Tensura M
 
 ## Evolution requirement checklist
 
-The Secondary Race tab shows each candidate’s **live native requirement contribution**, whether it is met, and the additional base EP gate. The list updates while open without resetting the search, scroll position or a pending ancestry confirmation. The server checks the same native weighted progress when you choose Evolve.
+The Secondary Race tab shows each candidate’s **live native requirement contribution**, whether it is met, and the additional total EP gate. The list updates while open without resetting the search, scroll position or a pending ancestry confirmation. The server checks the same native weighted progress when you choose Evolve.
 
 Native requirements are **weighted**, with **100 points required**. They are not always an all-of checklist. In particular, Tensura 2.0.1.3 assigns Daemon Lord three contributions of 50 points each, so any two supply the required 100. This preserves the base mod’s alternatives.
 
@@ -73,7 +73,7 @@ The native Status menu shows the current independent lineages as **Primary Race/
 
 ![Primary and secondary race names in the native Status menu](https://github.com/Bithio999/MC/blob/main/wiki/media/duo-status.png?raw=true)
 
-![Arch Daemon’s fixed 12.5M next-stage gate for a player with 20M base EP](https://github.com/Bithio999/MC/blob/main/wiki/media/secondary-requirements.png?raw=true)
+![Arch Daemon’s fixed 12.5M next-stage gate for a player with 20M total EP](https://github.com/Bithio999/MC/blob/main/wiki/media/secondary-requirements.png?raw=true)
 
 ## Awakening
 

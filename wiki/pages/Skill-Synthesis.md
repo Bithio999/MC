@@ -2,7 +2,7 @@
 
 [Main Page](../README.md) · [Skills](Skills.md) · [Ability index](Abilities.md) · [Damage types](Damage-Types.md)
 
-**Skill synthesis** combines two mastered Unique Skills into one new Ultimate. It is available to any race at **2,000,000 base EP**.
+**Skill synthesis** combines two mastered Unique Skills into one new Ultimate. It is available to any race at **2,000,000 total EP**.
 
 ## Recipes
 
@@ -22,7 +22,7 @@ The server checks the complete recipe and EP requirement. An invalid request con
 
 ## Further evolution
 
-Master the resulting Ultimate, become a True Hero or True Demon Lord and reach 12M base EP. **Skills → Godly → Ascension** offers [Aion](Aion.md), or [Thoth](Thoth.md) when a mastered [Rune Smith](Rune-Smith.md) is also available. Lugh additionally combines a mastered [Threadweaver](Threadweaver.md). The Godly destination button cycles between Aion, Thoth and Lugh.
+Master the resulting Ultimate, become a True Hero or True Demon Lord and reach 12M total EP. **Skills → Godly → Ascension** offers [Aion](Aion.md), or [Thoth](Thoth.md) when a mastered [Rune Smith](Rune-Smith.md) is also available. Lugh additionally combines a mastered [Threadweaver](Threadweaver.md). The Godly destination button cycles between Aion, Thoth and Lugh.
 
 ## Standalone Uniques
 

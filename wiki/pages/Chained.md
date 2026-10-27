@@ -35,6 +35,8 @@ Your **later maximum-aura gains are multiplied by 5**, including growth and capa
 
 With no other capacity multipliers, **maximum aura = starting aura + 5 × later aura-capacity gains**. For example, a starting roll of 1,800 aura followed by 100 raw aura growth gives 2,300 maximum aura. Other capacity multipliers retain their normal effects. The exemption persists through evolution, toggling and save/load; forgetting and relearning Chained does not recapture earned aura as a new starting pool. A new native reincarnation roll establishes a new starting pool. Native hard limits still apply. This expands capacity without repeatedly refilling current aura.
 
+**Total EP**, shown in the native status menu, includes effective maximum aura and magicules, so Chained’s bonus capacity contributes. Myths progression gates use this **total EP**, including the bonus. **Base EP** still describes unmultiplied capacity for raw growth accounting. Without other modifiers or caps, 100 raw aura growth adds 100 base EP and 500 total EP while Chained is owned.
+
 All five lineage stages allocate normal EP growth **90% to aura and 10% to magicules** before Chained blocks maximum-magicule increases; that blocked 10% is not redirected. A secondary race’s 10% growth bonus preserves this split. Convergent races retain their own growth profiles.
 
 Your existing **maximum magicule capacity is preserved as a ceiling**. Future increases to the base value are blocked, and newly added capacity modifiers cannot raise the effective maximum beyond that ceiling. Current magicules remain usable, and native expenses or losses still apply. The pact does not redirect blocked magicule-capacity gains into aura.
@@ -71,7 +73,7 @@ Enable Chained through Tensura’s normal Ability Selection toggle to gain:
 | Battlewill learning points | +9 |
 | Battlewill mastery points | +9 |
 | Resistance/Nullification learning points | +19 |
-| Battlewill damage | **8×** |
+| Battlewill damage | **5×** |
 | Numeric Battlewill buff effectiveness | **3×** |
 | Attack-damage attribute | **3×** |
 
@@ -126,10 +128,10 @@ The endpoint stops before solid body collisions, unloaded terrain, the world bor
 Let **A** be the aura actually paid:
 
 - **A = 0.02 × current aura**.
-- **Path damage = 3.5 × √A**.
-- **Arrival damage = 7 × √A**.
+- **Path damage = 3 × √A**.
+- **Arrival damage = 6 × √A**.
 
-At **100,000 current aura**, the cast pays **2,000 aura** and has about **156.52 path damage** plus **313.05 arrival damage** before native handling. With Martial Supremacy enabled, those become about **1,252.20** and **2,504.40**. The formula uses actual aura spent, with no extra EP multiplier or mastery damage multiplier.
+At **100,000 current aura**, the cast pays **2,000 aura** and has about **134.16 path damage** plus **268.33 arrival damage** before native handling. With Martial Supremacy enabled, those become about **670.82** and **1,341.64**. The formula uses actual aura spent, with no extra EP multiplier or mastery damage multiplier.
 
 A brief chain separates into broken links along the route, with a pale pressure burst at arrival. The trail remains visible after the instantaneous teleport; it does not move the player over its lifetime.
 

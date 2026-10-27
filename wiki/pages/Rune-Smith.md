@@ -82,7 +82,7 @@ Roll through Tensura’s normal reincarnation pool alongside the other seven Myt
 
 ## Evolution
 
-Combine with mastered Threadweaver for [Anansi](Anansi.md) through synthesis at 2M base EP. A mastered Rune Smith is also the additional ingredient for [Thoth](Thoth.md).
+Combine with mastered Threadweaver for [Anansi](Anansi.md) through synthesis at 2M total EP. A mastered Rune Smith is also the additional ingredient for [Thoth](Thoth.md).
 
 ## Suggested combo
 

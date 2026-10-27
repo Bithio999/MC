@@ -27,7 +27,8 @@
     "ChainedResistanceAttributesMixin",
     "ChainedAcquisitionMixin",
     "AirSovereigntyMasteryMixin",
-    "AirSovereigntyFlightMixin"
+    "AirSovereigntyFlightMixin",
+    "SecondaryTotalEPMixin"
   ],
   "injectors": {
     "defaultRequire": 1

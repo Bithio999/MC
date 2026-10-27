@@ -17,7 +17,7 @@
 | Passive upkeep | 120 aura / second |
 | Registry ID | `wildhunt:vritra` |
 | **Obtaining** | |
-| Method | Synthesis: master both ingredients; 2M base EP |
+| Method | Synthesis: master both ingredients; 2M total EP |
 | **Evolution** | |
 | Evolution | [Aion](Aion.md), [Thoth](Thoth.md) or [Lugh](Lugh.md) |
 
@@ -93,7 +93,7 @@ Send seven warned eruptions forward at four-block spacing, reaching 28 blocks. E
 
 ## Obtaining
 
-Open **Skills → Ultimate → Synthesis**. Choose Vritra and combine **[Storm Crown](Storm-Crown.md) + [Black Flame](Black-Flame.md)**, with both mastered and at least **2,000,000 base EP**. Any race can synthesize. Both ingredients are replaced only after native storage accepts the result. Other skills remain learned. All nine presets and the longest remaining ingredient cooldown carry over; the new Ultimate starts with its own mastery.
+Open **Skills → Ultimate → Synthesis**. Choose Vritra and combine **[Storm Crown](Storm-Crown.md) + [Black Flame](Black-Flame.md)**, with both mastered and at least **2,000,000 total EP**. Any race can synthesize. Both ingredients are replaced only after native storage accepts the result. Other skills remain learned. All nine presets and the longest remaining ingredient cooldown carry over; the new Ultimate starts with its own mastery.
 
 ## Suggested combo
 

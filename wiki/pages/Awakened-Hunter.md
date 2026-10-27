@@ -17,12 +17,12 @@
 | Previous | Human |
 | Next | [Apex Hunter](Apex-Hunter.md) |
 | **Obtaining** | |
-| Base EP gate | 100,000 |
+| Total EP gate | 100,000 |
 | Distinct bosses | 1 |
 
 ## Obtaining
 
-Begin as Human. Reach 100,000 base EP and defeat 1 different eligible boss types. No trial, skill roll or skill mastery is required for this stage. [Boss eligibility and counting](Evolution.md#distinct-boss-kills).
+Begin as Human. Reach 100,000 total EP and defeat 1 different eligible boss types. No trial, skill roll or skill mastery is required for this stage. [Boss eligibility and counting](Evolution.md#distinct-boss-kills).
 
 ## Traits
 
@@ -51,7 +51,7 @@ Continue building a distinct-boss record toward the next stage. You can roll and
 
 ## Evolution
 
-| Race | Base EP | Distinct boss types | Additional requirement |
+| Race | Total EP | Distinct boss types | Additional requirement |
 | --- | ---: | ---: | --- |
 | [Awakened Hunter](Awakened-Hunter.md) | 100,000 | 1 | Human |
 | [Apex Hunter](Apex-Hunter.md) | 400,000 | 3 | Awakened Hunter |

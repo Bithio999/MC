@@ -82,7 +82,7 @@ Roll through Tensura’s normal reincarnation pool alongside the other seven Myt
 
 ## Evolution
 
-Combine with mastered Threadweaver for [Janus](https://github.com/Bithio999/MC/wiki/Janus), or with mastered Scarlet Deluge for [Aegir](https://github.com/Bithio999/MC/wiki/Aegir), through synthesis at 2M base EP.
+Combine with mastered Threadweaver for [Janus](https://github.com/Bithio999/MC/wiki/Janus), or with mastered Scarlet Deluge for [Aegir](https://github.com/Bithio999/MC/wiki/Aegir), through synthesis at 2M total EP.
 
 ## Suggested combo
 

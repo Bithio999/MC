@@ -17,7 +17,7 @@
 | Passive upkeep | 110 aura / second |
 | Registry ID | `wildhunt:demeter` |
 | **Obtaining** | |
-| Method | Synthesis: master both ingredients; 2M base EP |
+| Method | Synthesis: master both ingredients; 2M total EP |
 | **Evolution** | |
 | Evolution | [Aion](Aion.md), [Thoth](Thoth.md) or [Lugh](Lugh.md) |
 
@@ -95,7 +95,7 @@ Select up to six enemy positions within twelve blocks of your orchard, or an aim
 
 ## Obtaining
 
-Open **Skills → Ultimate → Synthesis**. Choose Demeter and combine **[Verdant Keeper](Verdant-Keeper.md) + [Frostbound Colossus](Frostbound-Colossus.md)**, with both mastered and at least **2,000,000 base EP**. Any race can synthesize. Both ingredients are replaced only after native storage accepts the result. Other skills remain learned. All nine presets and the longest remaining ingredient cooldown carry over; the new Ultimate starts with its own mastery.
+Open **Skills → Ultimate → Synthesis**. Choose Demeter and combine **[Verdant Keeper](Verdant-Keeper.md) + [Frostbound Colossus](Frostbound-Colossus.md)**, with both mastered and at least **2,000,000 total EP**. Any race can synthesize. Both ingredients are replaced only after native storage accepts the result. Other skills remain learned. All nine presets and the longest remaining ingredient cooldown carry over; the new Ultimate starts with its own mastery.
 
 ## Suggested combo
 

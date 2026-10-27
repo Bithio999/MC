@@ -18,7 +18,7 @@
 | Maximum mastery | 50,000 |
 | Registry ID | `wildhunt:lugh` |
 | **Obtaining** | |
-| Method | Mastered combination Ultimate + mastered Threadweaver; true awakening; 12M base EP |
+| Method | Mastered combination Ultimate + mastered Threadweaver; true awakening; 12M total EP |
 | **Evolution** | |
 | Evolution | — |
 
@@ -160,7 +160,7 @@ Death, forgetting, relogging or dimension changes cancel pending strikes. The at
 
 ## Obtaining
 
-Master any of the [five combination Ultimates](Ultimate-Skills.md) and [Threadweaver](Threadweaver.md), become a **True Hero or True Demon Lord**, and reach **12M base EP**. Open **Skills → Godly → Ascension**, select the source Ultimate, cycle the destination to **Lugh**, then Ascend.
+Master any of the [five combination Ultimates](Ultimate-Skills.md) and [Threadweaver](Threadweaver.md), become a **True Hero or True Demon Lord**, and reach **12M total EP**. Open **Skills → Godly → Ascension**, select the source Ultimate, cycle the destination to **Lugh**, then Ascend.
 
 Both the selected Ultimate and Threadweaver are combined. Presets and the longest remaining cooldown carry over. EP is a requirement, not a payment. The server's `godlyEP` setting controls the default gate. Owning Aion or Thoth does not prevent a separate valid Lugh ascension.
 

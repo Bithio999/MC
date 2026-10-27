@@ -17,7 +17,7 @@
 | Passive upkeep | 100 aura / second |
 | Registry ID | `wildhunt:anansi` |
 | **Obtaining** | |
-| Method | Mastered Threadweaver + Rune Smith; 2M base EP |
+| Method | Mastered Threadweaver + Rune Smith; 2M total EP |
 | **Evolution** | |
 | Evolution | Aion; Thoth with Rune Smith; Lugh with Threadweaver |
 
@@ -89,7 +89,7 @@ Consume the current network and display its fixed closing lattice. After **1.2 s
 
 ## Obtaining
 
-Master [Threadweaver](https://github.com/Bithio999/MC/wiki/Threadweaver) and [Rune Smith](https://github.com/Bithio999/MC/wiki/Rune-Smith), reach **2M base EP**, then open **Skills → Ultimate → Synthesis** and choose **Anansi**. Both ingredients are combined. Native presets and the longest remaining cooldown are preserved.
+Master [Threadweaver](https://github.com/Bithio999/MC/wiki/Threadweaver) and [Rune Smith](https://github.com/Bithio999/MC/wiki/Rune-Smith), reach **2M total EP**, then open **Skills → Ultimate → Synthesis** and choose **Anansi**. Both ingredients are combined. Native presets and the longest remaining cooldown are preserved.
 
 ## Suggested combo
 

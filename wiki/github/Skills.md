@@ -9,8 +9,8 @@
 | Tier | Skills | Obtaining | Resource |
 | --- | --- | --- | --- |
 | [Unique](https://github.com/Bithio999/MC/wiki/Unique-Skills) | Storm Crown, Scarlet Deluge, Black Flame, Frostbound Colossus, Threadweaver, Rune Smith, Verdant Keeper, Mirrorbound | Reincarnation rolls | Aura |
-| [Ultimate](https://github.com/Bithio999/MC/wiki/Ultimate-Skills) | Vritra, Demeter, Janus, Anansi, Aegir | Two specific mastered Uniques; 2M base EP; [Synthesis](https://github.com/Bithio999/MC/wiki/Skill-Synthesis) | Aura |
-| [Godly](https://github.com/Bithio999/MC/wiki/Godly) | Aion, Thoth, Lugh | Mastered combination Ultimate; true awakening; 12M base EP; Thoth also combines mastered Rune Smith; Lugh combines mastered Threadweaver | Magicules; Mana Crucible converts aura |
+| [Ultimate](https://github.com/Bithio999/MC/wiki/Ultimate-Skills) | Vritra, Demeter, Janus, Anansi, Aegir | Two specific mastered Uniques; 2M total EP; [Synthesis](https://github.com/Bithio999/MC/wiki/Skill-Synthesis) | Aura |
+| [Godly](https://github.com/Bithio999/MC/wiki/Godly) | Aion, Thoth, Lugh | Mastered combination Ultimate; true awakening; 12M total EP; Thoth also combines mastered Rune Smith; Lugh combines mastered Threadweaver | Magicules; Mana Crucible converts aura |
 | [Extra](https://github.com/Bithio999/MC/wiki/Aura-Regeneration) | Hunter’s Recovery, Apex Renewal, Sovereign Rebirth | Hunter race evolution | Aura |
 
 ## Battlewills

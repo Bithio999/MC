@@ -42,9 +42,9 @@ The intrinsic Unique [Chained](https://github.com/Bithio999/MC/wiki/Chained) sup
 
 Select Fettered Human from Tensura’s native reincarnation race menu. It guarantees Chained and still permits the normal reincarnation skill roll. Progression is available in the normal native evolution menu.
 
-Base EP uses the native unmultiplied capacity values; the 5× aura-capacity modifier does not satisfy a base-EP gate by itself. The milestones are constants, independent of the player’s EP when the lineage is selected.
+Evolution checks **total EP**: effective maximum aura plus effective maximum magicules, as shown in Status. Chained’s bonus aura capacity counts. The milestones remain fixed constants, independent of the player’s EP when the lineage is selected.
 
-| Stage | Fixed base EP | Mastered Battlewills | Chained mastery |
+| Stage | Fixed total EP | Mastered Battlewills | Chained mastery |
 | --- | ---: | ---: | ---: |
 | [Fettered Human](https://github.com/Bithio999/MC/wiki/Fettered-Human) | Starting selection | — | — |
 | [Tempered Vessel](https://github.com/Bithio999/MC/wiki/Tempered-Vessel) | 100,000 | 1 | 20% |

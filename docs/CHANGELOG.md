@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.34.0 — Total EP progression and Chained tuning
+
+- Set Severance Rush path damage to 3 × √(aura paid) and arrival damage to 6 × √(aura paid).
+- Reduce Chained’s toggled Battlewill damage multiplier from 8× to 5×. Attack damage and numeric Battlewill buff multipliers remain 3×.
+- Update in-game descriptions and wiki damage examples.
+- Switch Myths hunter/restricted evolution, secondary selection/evolution, Convergent Awakening, synthesis and Godly ascension gates and menus to effective total EP. Keep numeric thresholds fixed.
+- Apply total EP to native secondary evolution requirements while retaining their original weights, branches and non-EP conditions.
+- Document Mysticism Restricted’s aura-gain/EP behavior and the distinction between raw growth and effective capacity.
+
 ## 0.33.0 — Air Sovereignty
 
 - Add Air Sovereignty, a native Battlewill progression from permanent mastered Air Float / Air Flight. Unlock a learnable entry through the native mastery callback, with discovery for existing masters. Retain the predecessor.
