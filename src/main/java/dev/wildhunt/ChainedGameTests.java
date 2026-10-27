@@ -94,6 +94,24 @@ public final class ChainedGameTests {
         h.assertTrue(SkillAPI.getSkillsFrom(second).getSkill(WildHunt.REGENERATION.getFirst().get()).isPresent(),"Secondary-lineage migration missed recovery");
         h.assertTrue(!HunterData.learnReward(second,WildHunt.REGENERATION.getLast().get()),"Recovery exemption escaped its scope or stage");h.succeed();
     }
+    private static final class MessagePlayer extends net.neoforged.neoforge.common.util.FakePlayer {
+        final java.util.List<net.minecraft.network.chat.Component> messages=new java.util.ArrayList<>();
+        MessagePlayer(net.minecraft.server.level.ServerLevel level){super(level,new com.mojang.authlib.GameProfile(java.util.UUID.randomUUID(),"ChainedGateTest"));}
+        @Override public void sendSystemMessage(net.minecraft.network.chat.Component message){if(messages!=null)messages.add(message);}
+    }
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void blockedAcquisitionExplainsChainedWithoutChargingOrSpamming(GameTestHelper h){
+        var p=new MessagePlayer(h.getLevel());EnergyHelper.setBaseMaxEP(p,10000);vow(p,false);p.messages.clear();
+        var storage=SkillAPI.getSkillsFrom(p);var energy=TensuraStorages.getExistenceFrom(p);double maxMP=EnergyHelper.getBaseMaxMagicule(p),aura=energy.getAura(),magicules=energy.getMagicule();
+        var blocked=UniqueSkills.MUSICIAN.get();h.assertTrue(!storage.learnSkill(blocked.createDefaultInstance()),"Blocked Unique was learned");
+        h.assertTrue(p.messages.size()==1 && p.messages.getFirst().getString().contains("Chained") && p.messages.getFirst().getString().contains(blocked.getName().getString()),"Missing named Chained rejection message");
+        storage.learnSkill(blocked.createDefaultInstance());storage.updateSkill(blocked.createDefaultInstance(),true);h.assertTrue(p.messages.size()==1,"Repeated same-skill failures spammed chat");
+        var extra=ExtraSkills.MAGIC_SENSE.get();storage.updateSkill(extra.createDefaultInstance(),true);h.assertTrue(p.messages.size()==2 && p.messages.getLast().getString().contains(extra.getName().getString()),"Update-path rejection had no named explanation");
+        var latent=ExtraSkills.HEAVENLY_EYE.get().createDefaultInstance();latent.setMastery(-1);ExtraSkills.HEAVENLY_EYE.get().addLearnPoint(latent,p,0,1);h.assertTrue(p.messages.size()==3 && latent.getMastery()<0,"Latent learning rejection was silent or completed");
+        var message=Changeable.of(net.minecraft.network.chat.Component.empty());ChainedState.unlock(blocked.createDefaultInstance(),p,message);h.assertTrue(message.isPresent() && message.get().getString().contains("Chained"),"Unlock event did not provide the custom reason");
+        h.assertTrue(storage.getSkill(blocked).isEmpty() && storage.getSkill(extra).isEmpty(),"Blocked skill entered storage");near(h,EnergyHelper.getBaseMaxMagicule(p),maxMP,"Rejected skill spent permanent MP");near(h,energy.getAura(),aura,"Rejected skill spent aura");near(h,energy.getMagicule(),magicules,"Rejected skill spent current MP");
+        int messages=p.messages.size();h.assertTrue(HunterData.learnReward(p,UtilityArts.DIAMOND_PATH.get()) && HunterData.learnReward(p,ResistanceSkills.POISON_RESISTANCE.get()),"Allowed acquisition failed");h.assertTrue(p.messages.subList(messages,p.messages.size()).stream().noneMatch(m->m.getString().startsWith("Chained blocks")),"Allowed acquisition emitted a rejection");h.succeed();
+    }
     static ManasSkillInstance vow(net.minecraft.world.entity.LivingEntity p,boolean on){
         HunterData.learnReward(p,WildHunt.CHAINED.get());var i=SkillAPI.getSkillsFrom(p).getSkill(WildHunt.CHAINED.get()).orElseThrow();if(on)i.onToggleOn(p);return i;
     }
@@ -313,7 +331,7 @@ public final class ChainedGameTests {
     public static void dashPaysOnceUsesNativeLandingAndRespectsOneSecondCooldown(GameTestHelper h){
         // FakePlayer connections deliberately discard teleports; use a living native caster.
         var anchor=player(h);var p=target(h,anchor.position());EnergyHelper.setBaseMaxEP(p,2000);TensuraStorages.getExistenceFrom(p).setMagicule(1000);var i=vow(p,false);p.setOnGround(true);p.setYRot(-90);p.setXRot(0);Vec3 start=p.position();var energy=TensuraStorages.getExistenceFrom(p);energy.setAura(1000);var path=target(h,start.add(8,0,0));var arrival=target(h,start.add(16,0,0));var outside=target(h,start.add(8,0,4));
-        afterTracking(h,List.of(p,path,arrival,outside),()->{p.setOnGround(true);double before=energy.getAura();WildHunt.CHAINED.get().onPressed(i,p,0,0);h.assertTrue(p.getX()-start.x>=14 && p.getX()-start.x<=18,"Native block-snapped landing did not follow the aim reach");near(h,energy.getAura(),before*.98,"Dash charged more/less than 2% current aura");h.assertTrue(path.getHealth()<1024 && arrival.getHealth()<path.getHealth() && outside.getHealth()==1024,"Path/arrival double hit or radius incorrect");h.assertTrue(TensuraDamageHelper.isBattlewill(WildHunt.CHAINED.get().createSource(i,p,TensuraDamageTypes.AURA_SLASH,0),p),"Dash is not native Battlewill damage");double aura=energy.getAura();var landed=p.position();ChainedState.refresh(p);h.assertTrue(i.getCoolDown(0)==1,"Dash did not retain its 1-second cooldown");WildHunt.CHAINED.get().onPressed(i,p,0,0);near(h,energy.getAura(),aura,"Cooldown allowed another payment");h.assertTrue(p.position().equals(landed),"Cooldown allowed another teleport");i.decreaseCoolDown(1,0);p.setOnGround(true);WildHunt.CHAINED.get().onPressed(i,p,0,0);near(h,energy.getAura(),aura*.98,"Ready dash did not charge 2% of remaining aura");h.succeed();});
+        afterTracking(h,List.of(p,path,arrival,outside),()->{p.setOnGround(true);double before=energy.getAura();var observed=new DamageSource[1];java.util.function.Consumer<net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent> observer=event->{if(event.getEntity()==path)observed[0]=event.getSource();};net.neoforged.neoforge.common.NeoForge.EVENT_BUS.addListener(observer);try{WildHunt.CHAINED.get().onPressed(i,p,0,0);}finally{net.neoforged.neoforge.common.NeoForge.EVENT_BUS.unregister(observer);}h.assertTrue(observed[0]!=null && observed[0].is(DamageTypes.MOB_ATTACK) && TensuraDamageHelper.isPhysicalAttack(observed[0]),"Actual dash did not emit Physical damage");h.assertTrue(p.getX()-start.x>=14 && p.getX()-start.x<=18,"Native block-snapped landing did not follow the aim reach");near(h,energy.getAura(),before*.98,"Dash charged more/less than 2% current aura");h.assertTrue(path.getHealth()<1024 && arrival.getHealth()<path.getHealth() && outside.getHealth()==1024,"Path/arrival double hit or radius incorrect");h.assertTrue(TensuraDamageHelper.isBattlewill(WildHunt.CHAINED.get().createSource(i,p,DamageTypes.MOB_ATTACK,0),p),"Dash is not native Battlewill damage");double aura=energy.getAura();var landed=p.position();ChainedState.refresh(p);h.assertTrue(i.getCoolDown(0)==1,"Dash did not retain its 1-second cooldown");WildHunt.CHAINED.get().onPressed(i,p,0,0);near(h,energy.getAura(),aura,"Cooldown allowed another payment");h.assertTrue(p.position().equals(landed),"Cooldown allowed another teleport");i.decreaseCoolDown(1,0);p.setOnGround(true);WildHunt.CHAINED.get().onPressed(i,p,0,0);near(h,energy.getAura(),aura*.98,"Ready dash did not charge 2% of remaining aura");h.succeed();});
     }
     @GameTest(template="empty",timeoutTicks=100)
     public static void dashStopsBeforeSolidWallsAndBlockedDashIsFree(GameTestHelper h){
@@ -321,8 +339,25 @@ public final class ChainedGameTests {
         WildHunt.CHAINED.get().onPressed(i,p,0,0);h.assertTrue(p.getX()>start.x && p.getX()<wall.getX(),"Dash crossed a solid wall");i.setCoolDown(0,0);var cell=p.blockPosition();for(int x=-1;x<=1;x++)for(int y=0;y<=4;y++)for(int z=-1;z<=1;z++)if(x!=0 || z!=0 || y>=2)h.getLevel().setBlockAndUpdate(cell.offset(x,y,z),net.minecraft.world.level.block.Blocks.STONE.defaultBlockState());double aura=energy.getAura();p.setOnGround(true);WildHunt.CHAINED.get().onPressed(i,p,0,0);near(h,energy.getAura(),aura,"Fully blocked landing spent aura");h.assertTrue(!i.onCoolDown(0),"Fully blocked landing spent cooldown");h.succeed();
     }
     @GameTest(template="empty",timeoutTicks=100)
-    public static void toggledBattlewillDamageAndAttackBonusesDoNotMultiplyUnrelatedSkills(GameTestHelper h){
-        var p=player(h);var i=vow(p,false);double attack=p.getAttributeValue(Attributes.ATTACK_DAMAGE);i.onToggleOn(p);near(h,p.getAttributeValue(Attributes.ATTACK_DAMAGE),attack*3,"Attack attribute not tripled");var victim=target(h,p.position().add(3,0,0));var damage=Changeable.of(10f);ChainedState.damage(SkillAPI.getSkillsFrom(victim),victim,WildHunt.CHAINED.get().createSource(i,p,TensuraDamageTypes.AURA_SLASH,0),damage);near(h,damage.get(),50,"Dash not amplified as Battlewill");var ordinary=Changeable.of(10f);ChainedState.damage(SkillAPI.getSkillsFrom(victim),victim,p.damageSources().mobAttack(p),ordinary);near(h,ordinary.get(),10,"Ordinary melee received the separate Battlewill multiplier");h.succeed();
+    public static void physicalAndBattlewillBonusesCoverOwnedDamageWithoutChangingAttackStat(GameTestHelper h){
+        var p=player(h);var i=vow(p,false);double attack=p.getAttributeValue(Attributes.ATTACK_DAMAGE);
+        p.getAttribute(Attributes.ATTACK_DAMAGE).addOrReplacePermanentModifier(new AttributeModifier(ChainedState.COMBAT,2,AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
+        i.onToggleOn(p);near(h,p.getAttributeValue(Attributes.ATTACK_DAMAGE),attack,"Retired attack-stat modifier survived migration");
+        var victim=target(h,p.position().add(3,0,0));
+        var melee=p.damageSources().mobAttack(p);damageCase(h,p,victim,melee,30,"Ordinary Physical melee");
+        var arrow=new Arrow(h.getLevel(),p,new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.ARROW),null);
+        var projectile=p.damageSources().arrow(arrow,p);damageCase(h,p,victim,projectile,30,"Owned Physical projectile");
+        var skill=UniqueSkills.MARTIAL_MASTER.get();var physicalSkill=skill.createSource(skill.createDefaultInstance(),p,DamageTypes.MOB_ATTACK,0);damageCase(h,p,victim,physicalSkill,30,"Physical skill");
+        var magical=TensuraDamageTypes.getEntityDamageSource(p.level(),TensuraDamageTypes.FIRE_ELEMENTAL,p);damageCase(h,p,victim,magical,10,"Elemental damage was incorrectly tripled");
+        var converted=TensuraDamageTypes.getEntityDamageSource(p.level(),TensuraDamageTypes.FIRE_ELEMENTAL,p);((TensuraDamageSource)converted).tensura$setPhysicalConverted();damageCase(h,p,victim,converted,30,"Native physical conversion");
+        var dash=WildHunt.CHAINED.get().createSource(i,p,DamageTypes.MOB_ATTACK,0);
+        h.assertTrue(TensuraDamageHelper.isPhysicalAttack(dash) && TensuraDamageHelper.isBattlewill(dash,p),"Physical dash lost Battlewill classification");damageCase(h,p,victim,dash,150,"Physical Battlewill bonuses did not stack once each");
+        var battlewill=MeleeArts.AURA_SWORD.get();var elementalBattlewill=battlewill.createSource(battlewill.createDefaultInstance(),p,TensuraDamageTypes.FIRE_ELEMENTAL,0);damageCase(h,p,victim,elementalBattlewill,50,"Non-Physical Battlewill bonus changed");
+        var other=player(h);damageCase(h,p,victim,other.damageSources().mobAttack(other),10,"Another attacker's Physical damage was boosted");
+        i.onToggleOff(p);damageCase(h,p,victim,projectile,10,"Physical bonus persisted with toggle off");damageCase(h,p,victim,dash,10,"Dash bonuses persisted with toggle off");near(h,p.getAttributeValue(Attributes.ATTACK_DAMAGE),attack,"Physical bonus changed the attack attribute");h.succeed();
+    }
+    private static void damageCase(GameTestHelper h,net.minecraft.world.entity.LivingEntity owner,net.minecraft.world.entity.LivingEntity victim,DamageSource source,double expected,String label){
+        var amount=Changeable.of(10f);SkillEvents.SKILL_DAMAGE_PRE_CALCULATION.invoker().calculate(SkillAPI.getSkillsFrom(victim),victim,source,amount);near(h,amount.get(),expected,label);
     }
     @GameTest(template="empty",timeoutTicks=100)
     public static void forgettingRemovesOnlyChainedModifiersAndDoesNotCompoundOnReload(GameTestHelper h){
@@ -338,7 +373,7 @@ public final class ChainedGameTests {
     public static void auraSwordDamageBonusIsTripledWithoutChangingItsDuration(GameTestHelper h){
         var p=player(h);var i=vow(p,true);var art=MeleeArts.AURA_SWORD.get();HunterData.learnReward(p,art);var a=SkillAPI.getSkillsFrom(p).getSkill(art).orElseThrow();a.onPressed(p,0,0);var effect=p.getEffect(TensuraMobEffects.getReference(TensuraMobEffects.AURA_SWORD));h.assertTrue(effect!=null && ChainedBuffs.source(effect)==art,"Native Aura Sword source was not recorded");
         var victim=target(h,p.position().add(3,0,0));var source=p.damageSources().mobAttack(p);double weapon=io.github.manasmods.manascore.attribute.api.ManasCoreAttributeUtils.getWeaponDamage(p,victim,source);var config=io.github.manasmods.manascore.config.ConfigRegistry.getConfig(io.github.manasmods.tensura.config.ability.BattlewillConfig.class);
-        double expected=(30+weapon*config.AuraSword.attackMultiplier*3)*5;var amount=Changeable.of(30f);SkillEvents.SKILL_DAMAGE_PRE_CALCULATION.invoker().calculate(SkillAPI.getSkillsFrom(victim),victim,source,amount);near(h,amount.get(),expected,"Aura Sword incremental damage was not tripled before the Battlewill multiplier");h.assertTrue(effect.getAmplifier()==0,"Buff level/duration was changed instead of numeric effectiveness");h.succeed();
+        double expected=(30+weapon*config.AuraSword.attackMultiplier*3)*15;var amount=Changeable.of(30f);SkillEvents.SKILL_DAMAGE_PRE_CALCULATION.invoker().calculate(SkillAPI.getSkillsFrom(victim),victim,source,amount);near(h,amount.get(),expected,"Aura Sword incremental damage was not tripled before the Battlewill multiplier");h.assertTrue(effect.getAmplifier()==0,"Buff level/duration was changed instead of numeric effectiveness");h.succeed();
     }
     @GameTest(template="empty",timeoutTicks=100)
     public static void ordinaryResistanceAndNullificationAcquisitionSpendAuraWithoutReducingMagiculeCapacity(GameTestHelper h){

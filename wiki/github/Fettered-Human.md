@@ -18,7 +18,7 @@
 | Intrinsic Unique | [Chained](https://github.com/Bithio999/MC/wiki/Chained) |
 | HP racial bonus | +0 |
 | SHP racial bonus | +0 |
-| Attack bonus | +0 before Chained’s toggle multiplier |
+| Attack bonus | +0 |
 | Movement bonus | +0% of base movement |
 | Knockback resistance bonus | +0 |
 | Previous evolution | None; selected at reincarnation |
@@ -38,7 +38,7 @@ The native-client photograph uses staged resource values for visual review.
 
 ## Intrinsic skill
 
-The intrinsic Unique [Chained](https://github.com/Bithio999/MC/wiki/Chained) supplies the lineage’s true restriction and martial abilities. Its active [Severance Rush](https://github.com/Bithio999/MC/wiki/Chained#severance-rush) is an instant teleport that deals native **Aura slash / Battlewill** damage (`tensura:aura_slash`). The race’s attribute bonuses are passive traits with no direct damage.
+The intrinsic Unique [Chained](https://github.com/Bithio999/MC/wiki/Chained) supplies the lineage’s true restriction and martial abilities. Its active [Severance Rush](https://github.com/Bithio999/MC/wiki/Chained#severance-rush) is an instant teleport that deals native **Physical / Battlewill** damage (`minecraft:mob_attack`). The race’s attribute bonuses are passive traits with no direct damage.
 
 ## Evolution
 

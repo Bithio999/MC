@@ -16,6 +16,7 @@
 | [Earth](#earth) | `tensura:earth_elemental` | Rune Smith, Verdant Keeper, Anansi, Thoth, Lugh |
 | [Light](#light) | `tensura:light_elemental` | Mirrorbound, Thoth, Lugh, Moira |
 | [Wind](#wind) | `tensura:wind_elemental` | Thoth, Lugh |
+| [Physical](#physical) | `minecraft:mob_attack` | Chained’s Severance Rush |
 | [Physical aura slash](#physical-aura-slash) | `tensura:aura_slash` | Lugh, Moira |
 | [Darkness](#darkness) | `tensura:darkness_elemental` | Lugh, Moira |
 | [Gravity](#gravity) | `tensura:gravity_elemental` | Lugh |
@@ -80,6 +81,10 @@ Demiurge’s [eight final-boss arts](https://github.com/Bithio999/MC/wiki/Demiur
 ## Complete reference
 
 [Ability index](https://github.com/Bithio999/MC/wiki/Abilities) · [Skill overview](https://github.com/Bithio999/MC/wiki/Skills) · [Combat mechanics](https://github.com/Bithio999/MC/wiki/Mechanics)
+
+## Physical
+
+**Damage ID:** `minecraft:mob_attack`. Chained’s Severance Rush uses the same Physical source as Martial Master’s dash. It also counts as Battlewill. Chained’s toggle triples all Physical damage dealt by its owner, including physical projectiles and physical skills; its separate Battlewill bonus stacks on qualifying hits.
 
 ## Physical aura slash
 

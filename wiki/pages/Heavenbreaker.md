@@ -16,7 +16,7 @@
 | Retained Unique | [Chained](Chained.md); granted only by Fettered Human |
 | HP racial bonus | +1,000 |
 | SHP racial bonus | +6,600 |
-| Attack bonus | +16 before Chained’s toggle multiplier |
+| Attack bonus | +16 |
 | Movement bonus | +30% of base movement |
 | Knockback resistance bonus | +0.6 |
 | Previous evolution | [Heavenly Restricted](Heavenly-Restricted.md) |
@@ -32,7 +32,7 @@ EP growth splits **90% aura / 10% magicules**. [Chained](Chained.md#heavenly-res
 
 ## Retained skill
 
-Only Fettered Human grants [Chained](Chained.md). This evolution preserves an existing Chained and its mastery but does not grant or regrant it. Chained supplies the lineage’s true restriction and martial abilities. Its active [Severance Rush](Chained.md#severance-rush) is an instant teleport that deals native **Aura slash / Battlewill** damage (`tensura:aura_slash`). The race’s attribute bonuses are passive traits with no direct damage.
+Only Fettered Human grants [Chained](Chained.md). This evolution preserves an existing Chained and its mastery but does not grant or regrant it. Chained supplies the lineage’s true restriction and martial abilities. Its active [Severance Rush](Chained.md#severance-rush) is an instant teleport that deals native **Physical / Battlewill** damage (`minecraft:mob_attack`). The race’s attribute bonuses are passive traits with no direct damage.
 
 ## Aura recovery
 

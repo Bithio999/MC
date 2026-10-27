@@ -13,7 +13,7 @@ import net.minecraft.world.entity.LivingEntity;
 @Mixin(TensuraSkill.class)
 public abstract class ChainedLearningMixin {
     @Inject(method="addLearnPoint(Lio/github/manasmods/manascore/skill/api/ManasSkillInstance;Lnet/minecraft/world/entity/LivingEntity;ID)Z",at=@At("HEAD"),cancellable=true,remap=false)
-    private void restriction$blockedLearning(ManasSkillInstance i,LivingEntity owner,int mode,double point,CallbackInfoReturnable<Boolean> out){if(i.getMastery()<0 && !ChainedState.canLearn(owner,i))out.setReturnValue(false);}
+    private void restriction$blockedLearning(ManasSkillInstance i,LivingEntity owner,int mode,double point,CallbackInfoReturnable<Boolean> out){if(i.getMastery()<0 && !ChainedState.canLearn(owner,i)){ChainedState.notifyBlocked(owner,i);out.setReturnValue(false);}}
     @Inject(method="getDefaultLearningIncrement",at=@At("RETURN"),cancellable=true,remap=false)
     private void restriction$learning(ManasSkillInstance i,LivingEntity owner,int mode,CallbackInfoReturnable<Double> out){if((Object)this instanceof Battlewill && ChainedState.active(owner))out.setReturnValue(out.getReturnValue()+9);}
     @Inject(method="getDefaultMasteryIncrement",at=@At("RETURN"),cancellable=true,remap=false)

@@ -15,8 +15,8 @@
 | Maximum mastery | 1,000 |
 | Active mode | Severance Rush |
 | Resource | Aura |
-| Damage type | Aura slash, treated as Battlewill |
-| Damage ID | `tensura:aura_slash` |
+| Damage type | Physical, also treated as Battlewill |
+| Damage ID | `minecraft:mob_attack` |
 | Toggle upkeep | None |
 
 ## Usage
@@ -39,6 +39,8 @@ Chained trades magical growth and unrestricted skill learning for much greater a
 - **Restricted learning:** you can gain Battlewills, resistances/nullifications, reincarnation-granted skills and their derived skills, and the lineage’s aura-recovery skills. Skills you already own are retained.
 - **Aura-paid resistances:** acquiring resistances or nullifications spends the configured cost in current aura instead of permanent magicule capacity. Free grants stay free.
 
+Blocked acquisition attempts show a red **“Chained blocks [skill]”** message explaining the allowed skill categories. Repeated attempts for the same skill are limited to one notice per second.
+
 For example, reincarnating with **Martial Master** still lets you gain **Heavenly Eye**. Myths synthesis and Godly ascension are also allowed when every ingredient comes from your recorded reincarnation skills.
 
 A fresh Fettered Human starts with **1,500–2,000 aura** and **50–100 magicules**: **1,550–2,100 EP**, before other reincarnation rewards. With no other modifiers, maximum aura is **starting aura + 5 × later gains**. This increases capacity, not your current aura balance.
@@ -51,7 +53,7 @@ EP growth splits **90% aura / 10% magicules**; Chained blocks the magicule share
 
 | Ability information | Value |
 | --- | --- |
-| Damage type | None directly; strengthens native Battlewill damage |
+| Damage type | None directly; strengthens Physical and Battlewill damage |
 | Damage ID | None |
 | Resource cost | None |
 
@@ -64,11 +66,11 @@ Enable Chained through Tensura’s normal Ability Selection toggle to gain:
 | Resistance/Nullification learning points | +19 |
 | Battlewill damage | **5×** |
 | Numeric Battlewill buff effectiveness | **3×** |
-| Attack-damage attribute | **3×** |
+| All outgoing Physical damage | **3×** |
 
 Numeric buffs include native attribute bonuses, such as Diamond Path’s armor, and additional damage supplied by a Battlewill buff, such as Aura Sword. The bonus changes their numeric strength; buff duration, learning costs and resource-conversion rates keep their native values. Repeated refreshes do not multiply an already boosted buff again. Disabling Chained restores each tracked buff’s native amount.
 
-Battlewill-enhanced melee can benefit from both the tripled attack attribute and the Battlewill multiplier. Ordinary melee without a Battlewill component receives the attack-attribute bonus. Native defenses, damage calculation and allowed inherited skills can further affect the result.
+The Physical bonus covers your physical melee, projectiles and skills, including native damage converted to Physical. It does not change your attack attribute. Physical Battlewill hits—including Severance Rush—receive both bonuses for **15×** damage before native defenses and other modifiers. Non-Physical Battlewills retain their **5×** bonus; unrelated elemental/magical damage is not tripled.
 
 ### Broken Limit
 
@@ -102,8 +104,8 @@ Gain **100% dodge chance against projectiles** and **25% against other incoming 
 
 | Ability information | Value |
 | --- | --- |
-| Damage type | Aura slash / Battlewill |
-| Damage ID | `tensura:aura_slash` |
+| Damage type | Physical / Battlewill |
+| Damage ID | `minecraft:mob_attack` |
 | Resource cost | **2% of current aura**, paid once |
 | Cooldown | **1 second** |
 | Movement | Instant teleport with **16-block aim reach**, using Martial Master’s landing logic |
@@ -120,7 +122,7 @@ Let **A** be the aura actually paid:
 - **Path damage = 1.5 × √A**.
 - **Arrival damage = 3 × √A**.
 
-At **100,000 current aura**, the cast pays **2,000 aura** and has about **67.08 path damage** plus **134.16 arrival damage** before native handling. With Martial Supremacy enabled, those become about **335.41** and **670.82**. The formula uses actual aura spent, with no extra EP multiplier or mastery damage multiplier.
+At **100,000 current aura**, the cast pays **2,000 aura** and has about **67.08 path damage** plus **134.16 arrival damage** before native handling. With Martial Supremacy enabled, those become about **1,006.23** and **2,012.46**. The formula uses actual aura spent, with no extra EP multiplier or mastery damage multiplier.
 
 A brief chain separates into broken links along the route, with a pale pressure burst at arrival. The trail remains visible after the instantaneous teleport; it does not move the player over its lifetime.
 

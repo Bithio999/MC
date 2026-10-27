@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.34.4 / standalone 1.0.3 — Physical damage and Chained rejection notices
+
+- Change Severance Rush’s source from Aura Slash to Physical (`minecraft:mob_attack`), matching Martial Master. Retain its Battlewill classification, formula, movement, cost and cooldown.
+- Replace the 3× attack-attribute bonus with 3× all outgoing native Physical damage, including physical projectiles, skills and converted damage. Stack it once with the existing 5× Battlewill bonus on hits that qualify as both. Remove the old attack-stat modifier from existing saves.
+- Send a named, localized red explanation when Chained blocks learn, update or latent-learning acquisition paths. Limit repeated identical notices to once per second and preserve rejection before acquisition costs.
+- Update both distributions, damage-type documentation, numerical examples and native regressions.
+
 ## 0.34.3 / standalone 1.0.2 — Native dash movement and baseline regeneration
 
 - Replace Chained’s swept-body travel with Martial Master’s native eye-level targeting, fluid-ignoring ray, adjacent landing block and replacement fallback. Retain Chained’s 16-block aim reach, aura cost, damage and hit radii. Require ground/water activation and validate the landing body.

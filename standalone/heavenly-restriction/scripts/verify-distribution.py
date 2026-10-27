@@ -5,7 +5,7 @@ import json, re, struct, tomllib, zipfile
 
 root = Path(__file__).resolve().parents[1]
 resources = root / 'src/main/resources'
-jar = root / 'build/libs/tensura-heavenly-restriction-1.0.2.jar'
+jar = root / 'build/libs/tensura-heavenly-restriction-1.0.3.jar'
 assets = resources / 'assets/heavenlyrestriction'
 required_art = [*(f'textures/race/{name}.png' for name in (
     'fettered_human', 'tempered_vessel', 'unshackled', 'heavenly_restricted', 'heavenbreaker')),
@@ -29,7 +29,7 @@ for name in config['mixins']:
 with zipfile.ZipFile(jar) as z:
     names = set(z.namelist())
     mods = tomllib.loads(z.read('META-INF/neoforge.mods.toml').decode())
-    assert [(m['modId'], m['version']) for m in mods['mods']] == [('heavenlyrestriction', '1.0.2')]
+    assert [(m['modId'], m['version']) for m in mods['mods']] == [('heavenlyrestriction', '1.0.3')]
     assert any(d['modId'] == 'tensura' and d['type'] == 'required' for d in mods['dependencies']['heavenlyrestriction'])
     assert any(d['modId'] == 'wildhunt' and d['type'] == 'incompatible' for d in mods['dependencies']['heavenlyrestriction'])
     assert not any(n.startswith('dev/wildhunt/') or 'StandaloneReview' in n for n in names)
@@ -38,4 +38,4 @@ with zipfile.ZipFile(jar) as z:
     for name in ['ChainedDash', 'ChainedSkill', 'ChainedState', 'RestrictedRace', 'AuraRegenerationSkill', 'AirSovereigntyArt']:
         assert 'dev/heavenlyrestriction/' + name + '.class' in names
     assert not any(n.endswith('.jar') for n in names), 'Dependency jars must not be redistributed inside the addon'
-print('Independent 1.0.2 JAR, native dependency metadata, all extracted icons/rigs/animations and mixin classes verified; no Myths classes, bundled dependencies or review fixtures.')
+print('Independent 1.0.3 JAR, native dependency metadata, all extracted icons/rigs/animations and mixin classes verified; no Myths classes, bundled dependencies or review fixtures.')

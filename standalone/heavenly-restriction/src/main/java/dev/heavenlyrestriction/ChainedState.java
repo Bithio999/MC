@@ -30,9 +30,22 @@ public final class ChainedState {
         var data=RestrictionData.of(e);var list=data.getList("chained_inheritance",Tag.TAG_STRING);var key=StringTag.valueOf(skill.getRegistryName().toString());
         if(!list.contains(key)){list.add(key);data.put("chained_inheritance",list);}
     }
+    private record BlockedNotice(String skill,long time){}
+    private static final java.util.Map<LivingEntity,BlockedNotice> BLOCKED_NOTICES=java.util.Collections.synchronizedMap(new java.util.WeakHashMap<>());
+    public static MutableComponent blockedMessage(ManasSkill skill){
+        return net.minecraft.network.chat.Component.translatableWithFallback(HeavenlyRestriction.ID+".chained.blocked_skill",
+            "Chained blocks %s. You can only acquire Battlewills, resistances/nullifications, inherited reincarnation skills, and racial aura recovery.",skill.getName()).withStyle(net.minecraft.ChatFormatting.RED);
+    }
+    public static void notifyBlocked(LivingEntity owner,ManasSkillInstance skill){
+        if(!(owner instanceof net.minecraft.server.level.ServerPlayer player) || owner.level().isClientSide())return;
+        String id=skill.getSkillId().toString();long now=owner.level().getGameTime();var previous=BLOCKED_NOTICES.get(owner);
+        if(previous!=null && previous.skill().equals(id) && now>=previous.time() && now-previous.time()<20)return;
+        BLOCKED_NOTICES.put(owner,new BlockedNotice(id,now));player.sendSystemMessage(blockedMessage(skill.getSkill()));
+    }
     public static EventResult unlock(ManasSkillInstance i,LivingEntity e,Changeable<MutableComponent> message){
         if(e.level().isClientSide())return EventResult.pass();
-        return canLearn(e,i)?EventResult.pass():EventResult.interruptFalse();
+        if(canLearn(e,i))return EventResult.pass();
+        message.set(blockedMessage(i.getSkill()));notifyBlocked(e,i);return EventResult.interruptFalse();
     }
     public static boolean canLearn(LivingEntity e,ManasSkillInstance i){return e.level().isClientSide() || !owned(e) || ChainedContext.inherited(e) || ChainedContext.permitsRecovery(e,i.getSkill()) || i.getSkill()==HeavenlyRestriction.CHAINED.get() || i.getSkill() instanceof Battlewill || i.getSkill() instanceof ResistSkill || inherited(e,i.getSkill()) || i.getParentSkill()!=null && inherited(e,i.getParentSkill());}
     public static double magiculeCeiling(LivingEntity e,double original){
@@ -74,7 +87,8 @@ public final class ChainedState {
         // the initial pool stays unmultiplied; all subsequent gains get 5x.
         modifier(e,TensuraAttributes.MAX_AURA,START,owner?-.8*Math.min(startingAura(e),Math.max(0,e.getAttribute(TensuraAttributes.MAX_AURA).getBaseValue())):0,AttributeModifier.Operation.ADD_VALUE,owner);
         modifier(e,TensuraAttributes.MAX_AURA,VOW,4,AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL,owner);
-        modifier(e,Attributes.ATTACK_DAMAGE,COMBAT,2,AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL,on);
+        // Remove the retired attack-stat multiplier from existing saves.
+        modifier(e,Attributes.ATTACK_DAMAGE,COMBAT,0,AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL,false);
         modifier(e,TensuraAttributes.DODGE_NEGATE_CHANCE,COMBAT,100,AttributeModifier.Operation.ADD_VALUE,master);
         modifier(e,TensuraAttributes.RESISTANCE_DEGRADATION,COMBAT,1,AttributeModifier.Operation.ADD_VALUE,master);
         ChainedBuffs.refresh(e);
@@ -87,7 +101,11 @@ public final class ChainedState {
     }
     public static EventResult damage(Skills storage,LivingEntity target,DamageSource source,Changeable<Float> amount){
         var attacker=RestrictionData.attacker(source);
-        if(active(attacker) && (isDash(source) || TensuraDamageHelper.isBattlewill(source,attacker)))amount.set(amount.get()*5);
+        if(active(attacker)){
+            float multiplier=TensuraDamageHelper.isPhysicalAttack(source)?3:1;
+            if(isDash(source) || TensuraDamageHelper.isBattlewill(source,attacker))multiplier*=5;
+            if(multiplier!=1)amount.set(amount.get()*multiplier);
+        }
         return EventResult.pass();
     }
     public static boolean isDash(DamageSource source){var i=((TensuraDamageSource)source).tensura$getAbilityInstance();return i!=null && i.getSkill()==HeavenlyRestriction.CHAINED.get();}
