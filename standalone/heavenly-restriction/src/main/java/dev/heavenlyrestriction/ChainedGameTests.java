@@ -260,11 +260,26 @@ public final class ChainedGameTests {
         i.onToggleOn(p);near(h,p.getArmorValue()-armor,nativeBonus*3,"Battlewill buff not tripled");ChainedState.refresh(p);near(h,p.getArmorValue()-armor,nativeBonus*3,"Refresh compounded buff");i.onToggleOff(p);near(h,p.getArmorValue()-armor,nativeBonus,"Toggle cleanup removed native/foreign armor");h.succeed();
     }
     @GameTest(template="empty",timeoutTicks=100)
-    public static void masteredToggleLowersNullificationOneTierAndBypassesDodgeOnlyWhileActive(GameTestHelper h){
-        var p=player(h);var i=vow(p,true);i.setMastery(i.getMaxMastery());ChainedState.refresh(p);var source=HeavenlyRestriction.CHAINED.get().createSource(i,p,TensuraDamageTypes.FIRE_ELEMENTAL,0);
-        var resist=(ResistSkill)ResistanceSkills.HEAT_RESISTANCE.get();var nul=(ResistSkill)ResistanceSkills.HEAT_NULLIFICATION.get();h.assertTrue(resist.isResistanceBypass(source),"Resistance retained its tier");h.assertTrue(!nul.isNullificationBypass(source),"Chained erased nullification instead of lowering one tier");h.assertTrue(((TensuraDamageSource)source).tensura$isDodgeBypass(),"Live mastered source does not bypass native dodge");
-        i.onToggleOff(p);h.assertTrue(!resist.isResistanceBypass(source) && !((TensuraDamageSource)source).tensura$isDodgeBypass(),"Mastered traits leaked after toggle off");h.succeed();
+    public static void masteredTruePassiveWorksOffAndUnslottedAndEndsOnForget(GameTestHelper h){
+        var p=player(h);var i=vow(p,false);i.setMastery(i.getMaxMastery()-1);ChainedState.refresh(p);
+        var source=HeavenlyRestriction.CHAINED.get().createSource(i,p,TensuraDamageTypes.FIRE_ELEMENTAL,0);
+        var resist=(ResistSkill)ResistanceSkills.HEAT_RESISTANCE.get();var nul=(ResistSkill)ResistanceSkills.HEAT_NULLIFICATION.get();
+        h.assertTrue(!resist.isResistanceBypass(source) && !((TensuraDamageSource)source).tensura$isDodgeBypass(),"Unmastered Chained gained Broken Limit");
+        i.setMastery(i.getMaxMastery());ChainedState.refresh(p);
+        h.assertTrue(!i.isToggled() && !HeavenlyRestriction.CHAINED.get().isInSlot(p,i),"True-passive fixture is toggled or slotted");
+        h.assertTrue(resist.isResistanceBypass(source),"Mastered true passive retained resistance while off");
+        h.assertTrue(!nul.isNullificationBypass(source),"Broken Limit erased nullification instead of lowering one tier");
+        h.assertTrue(((TensuraDamageSource)source).tensura$isDodgeBypass(),"Mastered true passive retained dodge while off");
+        near(h,p.getAttribute(TensuraAttributes.DODGE_NEGATE_CHANCE).getModifier(ChainedState.COMBAT).amount(),100,"Off-toggle dodge-negation attribute");
+        near(h,p.getAttribute(TensuraAttributes.RESISTANCE_DEGRADATION).getModifier(ChainedState.COMBAT).amount(),1,"Off-toggle degradation attribute");
+        i.onToggleOn(p);i.onToggleOff(p);
+        h.assertTrue(ChainedState.mastered(p) && resist.isResistanceBypass(source) && ((TensuraDamageSource)source).tensura$isDodgeBypass(),"Turning Martial Supremacy off disabled Broken Limit");
+        h.assertTrue(p.getAttribute(Attributes.ATTACK_DAMAGE).getModifier(ChainedState.COMBAT)==null,"True passive kept the toggled attack buff");
+        SkillAPI.getSkillsFrom(p).forgetSkill(HeavenlyRestriction.CHAINED.get());
+        h.assertTrue(!ChainedState.mastered(p) && !resist.isResistanceBypass(source) && !((TensuraDamageSource)source).tensura$isDodgeBypass(),"Forgotten Chained retained Broken Limit");
+        h.assertTrue(p.getAttribute(TensuraAttributes.DODGE_NEGATE_CHANCE).getModifier(ChainedState.COMBAT)==null && p.getAttribute(TensuraAttributes.RESISTANCE_DEGRADATION).getModifier(ChainedState.COMBAT)==null,"Forgetting retained mastered attributes");h.succeed();
     }
+
     @GameTest(template="empty",timeoutTicks=100)
     public static void slottedDodgeGuaranteesProjectilesAndLeavesOperatorDamageAvailable(GameTestHelper h){
         var p=player(h);var i=vow(p,false);TensuraStorages.getAbilityFrom(p).setAbilitySlot(0,0,HeavenlyRestriction.CHAINED.get(),0);var shooter=target(h,p.position().add(8,0,0));var arrow=new Arrow(h.getLevel(),shooter,new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.ARROW),null);var source=p.damageSources().arrow(arrow,shooter);
@@ -317,8 +332,8 @@ public final class ChainedGameTests {
     }
     @GameTest(template="empty",timeoutTicks=100)
     public static void masteredStatusDegradationMatchesLowerTierAndDoesNotAffectAnotherCaster(GameTestHelper h){
-        var p=player(h);var i=vow(p,false);i.setMastery(i.getMaxMastery());var recipient=target(h,p.position().add(4,0,0));var other=target(h,p.position().add(8,0,0));var nul=ResistanceSkills.POISON_NULLIFICATION.get();var n=nul.createDefaultInstance();n.setToggled(true);var effect=Changeable.of(new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.POISON,100));
-        h.assertTrue(!nul.onEffectAdded(n,recipient,p,effect),"Native poison immunity fixture");i.onToggleOn(p);var lower=ResistanceSkills.POISON_RESISTANCE.get();boolean expected=!((ChainedResistanceView)lower).restriction$immuneEffects(lower.createDefaultInstance(),recipient).contains(effect.get().getEffect());h.assertTrue(nul.onEffectAdded(n,recipient,p,effect)==expected,"Status immunity did not become its actual lower tier");h.assertTrue(!nul.onEffectAdded(n,recipient,other,effect),"Degradation leaked to another caster");h.succeed();
+        var p=player(h);var i=vow(p,false);i.setMastery(i.getMaxMastery()-1);var recipient=target(h,p.position().add(4,0,0));var other=target(h,p.position().add(8,0,0));var nul=ResistanceSkills.POISON_NULLIFICATION.get();var n=nul.createDefaultInstance();n.setToggled(true);var effect=Changeable.of(new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.POISON,100));
+        h.assertTrue(!nul.onEffectAdded(n,recipient,p,effect),"Native poison immunity fixture");i.setMastery(i.getMaxMastery());ChainedState.refresh(p);h.assertTrue(!i.isToggled(),"Status true-passive fixture is toggled");var lower=ResistanceSkills.POISON_RESISTANCE.get();boolean expected=!((ChainedResistanceView)lower).restriction$immuneEffects(lower.createDefaultInstance(),recipient).contains(effect.get().getEffect());h.assertTrue(nul.onEffectAdded(n,recipient,p,effect)==expected,"Status immunity did not become its actual lower tier");h.assertTrue(!nul.onEffectAdded(n,recipient,other,effect),"Degradation leaked to another caster");h.succeed();
     }
     @GameTest(template="empty",timeoutTicks=100)
     public static void existingSpiritualCapacityLimitCannotBeRemovedToGrowMagiculesAfterTheVow(GameTestHelper h){

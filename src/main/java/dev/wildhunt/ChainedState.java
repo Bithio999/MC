@@ -15,14 +15,14 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.*;
 import java.util.Optional;
 
-/** The vow belongs to skill ownership. Only its combat enhancements require the toggle. */
+/** The vow and mastered Broken Limit follow ownership; Martial Supremacy uses the toggle. */
 public final class ChainedState {
     public static final ResourceLocation VOW=WildHunt.id("chained_vow"),START=WildHunt.id("chained_starting_aura"),COMBAT=WildHunt.id("chained_combat");
     private ChainedState(){}
     public static Optional<ManasSkillInstance> instance(LivingEntity e){return e==null?Optional.empty():SkillAPI.getSkillsFrom(e).getSkill(WildHunt.CHAINED.get()).filter(i->i.getMastery()>=0);}
     public static boolean owned(LivingEntity e){return instance(e).isPresent();}
     public static boolean active(LivingEntity e){return instance(e).filter(i->i.isToggled() && i.getSkill().canInteractSkill(i,e)).isPresent();}
-    public static boolean mastered(LivingEntity e){return instance(e).filter(i->active(e) && i.isMastered(e)).isPresent();}
+    public static boolean mastered(LivingEntity e){return instance(e).filter(i->i.isMastered(e)).isPresent();}
     public static double mastery(LivingEntity e){return instance(e).map(i->Math.clamp(i.getMastery()/i.getMaxMastery(),0,1)).orElse(0d);}
     public static long masteredBattlewills(LivingEntity e){return SkillAPI.getSkillsFrom(e).getLearnedSkills().stream().filter(i->i.getSkill() instanceof Battlewill && i.isMastered(e)).count();}
     public static boolean inherited(LivingEntity e,ManasSkill skill){return e!=null && skill!=null && HunterData.of(e).getList("chained_inheritance",Tag.TAG_STRING).contains(StringTag.valueOf(skill.getRegistryName().toString()));}
@@ -70,7 +70,7 @@ public final class ChainedState {
     public static void refresh(LivingEntity e){
         if(e.level().isClientSide())return;
         instance(e).filter(i->i.onCoolDown(0)).ifPresent(i->i.setCoolDown(0,0));
-        boolean owner=owned(e),on=owner && active(e),master=on && mastered(e);
+        boolean owner=owned(e),on=owner && active(e),master=mastered(e);
         // (base - 0.8 * starting pool + later additions) * 5:
         // the initial pool stays unmultiplied; all subsequent gains get 5x.
         modifier(e,TensuraAttributes.MAX_AURA,START,owner?-.8*Math.min(startingAura(e),Math.max(0,e.getAttribute(TensuraAttributes.MAX_AURA).getBaseValue())):0,AttributeModifier.Operation.ADD_VALUE,owner);

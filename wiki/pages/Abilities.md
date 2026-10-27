@@ -34,7 +34,7 @@
 | [Mirror Aegis](Mirrorbound.md#mirror-aegis) | [Mirrorbound](Mirrorbound.md) | Active | None — reflected projectiles retain their own attack type |
 | [Heavenly Restriction](Chained.md#heavenly-restriction) | [Chained](Chained.md) | Passive - True | None |
 | [Martial Supremacy](Chained.md#martial-supremacy) | [Chained](Chained.md) | Passive - Toggle | None |
-| [Broken Limit](Chained.md#broken-limit) | [Chained](Chained.md) | Passive - Toggle - Mastered | None |
+| [Broken Limit](Chained.md#broken-limit) | [Chained](Chained.md) | Passive - True - Mastered | None |
 | [Unerring Body](Chained.md#unerring-body) | [Chained](Chained.md) | Passive - In-slot | None |
 | [Severance Rush](Chained.md#severance-rush) | [Chained](Chained.md) | Active - Press | Aura slash / Battlewill — `tensura:aura_slash` |
 

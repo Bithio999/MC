@@ -890,7 +890,7 @@
     "skill": "Chained",
     "name": "Broken Limit",
     "tier": "Unique",
-    "kind": "Passive - Toggle - Mastered",
+    "kind": "Passive - True - Mastered",
     "damage": "None",
     "damage_id": null,
     "secondary_damage_id": null,

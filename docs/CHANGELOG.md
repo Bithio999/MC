@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.34.2 / standalone 1.0.1 — Broken Limit true passive
+
+- Make mastered Broken Limit active whenever Chained is owned, independently of toggle and slots. Resistance/nullification degradation, attributable status degradation and dodge bypass follow this rule.
+- Retain Martial Supremacy’s toggle requirement for its damage, buffs and training bonuses. Remove Broken Limit when Chained is forgotten.
+- Update both mod distributions, their skill descriptions and gameplay regression checks. Simplify Heavenly Restriction’s wiki explanation and lineage traits.
+
 ## Standalone addon — Heavenly Restriction 1.0.0
 
 - Add an independent `standalone/heavenly-restriction` Gradle project and release JAR requiring Tensura, without requiring Tensura Myths.

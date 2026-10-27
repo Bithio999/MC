@@ -31,31 +31,19 @@
 | Damage ID | None |
 | Activation | Owning the learned skill; independent of toggle and slots |
 
-Your **later maximum-aura gains are multiplied by 5**, including growth and capacity supplied by equipment, skills and other sources. Your actual starting aura roll is saved and **excluded from Chained’s multiplier**. A fresh Fettered Human rolls **1,500–2,000 aura** and **50–100 magicules**, for **1,550–2,100 starting EP** before separate reincarnation rewards.
+Chained trades magical growth and unrestricted skill learning for much greater aura capacity. These effects always apply while you own it:
 
-With no other capacity multipliers, **maximum aura = starting aura + 5 × later aura-capacity gains**. For example, a starting roll of 1,800 aura followed by 100 raw aura growth gives 2,300 maximum aura. Other capacity multipliers retain their normal effects. The exemption persists through evolution, toggling and save/load; forgetting and relearning Chained does not recapture earned aura as a new starting pool. A new native reincarnation roll establishes a new starting pool. Native hard limits still apply. This expands capacity without repeatedly refilling current aura.
+- **5× aura growth:** later maximum-aura gains are multiplied by five. Your starting aura is not multiplied.
+- **No maximum-magicule gains:** keep your existing capacity, but it cannot increase. Current magicules remain usable; costs and losses still apply.
+- **Regeneration conversion:** natural magicule regeneration restores aura instead, even when your magicules are full.
+- **Restricted learning:** you can gain Battlewills, resistances/nullifications, reincarnation-granted skills and their derived skills, and the lineage’s aura-recovery skills. Skills you already own are retained.
+- **Aura-paid resistances:** acquiring resistances or nullifications spends the configured cost in current aura instead of permanent magicule capacity. Free grants stay free.
 
-**Total EP**, shown in the native status menu, includes effective maximum aura and magicules, so Chained’s bonus capacity contributes. Myths progression gates use this **total EP**, including the bonus. **Base EP** still describes unmultiplied capacity for raw growth accounting. Without other modifiers or caps, 100 raw aura growth adds 100 base EP and 500 total EP while Chained is owned.
+For example, reincarnating with **Martial Master** still lets you gain **Heavenly Eye**. Myths synthesis and Godly ascension are also allowed when every ingredient comes from your recorded reincarnation skills.
 
-All five lineage stages allocate normal EP growth **90% to aura and 10% to magicules** before Chained blocks maximum-magicule increases; that blocked 10% is not redirected. A secondary race’s 10% growth bonus preserves this split. Convergent races retain their own growth profiles.
+A fresh Fettered Human starts with **1,500–2,000 aura** and **50–100 magicules**: **1,550–2,100 EP**, before other reincarnation rewards. With no other modifiers, maximum aura is **starting aura + 5 × later gains**. This increases capacity, not your current aura balance.
 
-Your existing **maximum magicule capacity is preserved as a ceiling**. Future increases to the base value are blocked, and newly added capacity modifiers cannot raise the effective maximum beyond that ceiling. Current magicules remain usable, and native expenses or losses still apply. The pact does not redirect blocked magicule-capacity gains into aura.
-
-Natural magicule regeneration instead **adds its actual regeneration amount to aura regeneration**. It uses the local area’s magicules, the native magicule-regeneration multiplier and applicable sleep recovery. The conversion also works when your magicule pool is full. It does not restore current magicules; native spiritual maintenance and excess-energy decay retain their own rules.
-
-New abilities are restricted to:
-
-- Battlewills.
-- Resistance and Nullification skills.
-- Skills genuinely granted by reincarnation, and skills subsequently granted through their native ability callbacks or inherited parent chain.
-- Chained itself.
-- The lineage’s racial aura-recovery grants: Hunter’s Recovery at Unshackled, Apex Renewal at Heavenly Restricted, and Sovereign Rebirth at Heavenbreaker. This exception does not open unrelated Extra Skills.
-
-**Resistance and Nullification acquisition costs are paid from current aura**, using Tensura’s configured acquisition amount and acquisition-cost gamerule. They do not consume permanent magicule capacity. Native free reward grants remain free. This applies when a latent resistance finishes learning and when it upgrades to Nullification.
-
-Myths synthesis and Godly ascension retain this exemption when all consumed ingredients descend from recorded reincarnation skills.
-
-For example, a reincarnation-granted **Martial Master** can still grant **Heavenly Eye**. Ordinary unrelated Extra/Unique/Ultimate grants and copied magical abilities are blocked before the normal learning API can spend acquisition magicules. Skills already owned when Chained is acquired remain owned and usable under their normal rules.
+EP growth splits **90% aura / 10% magicules**; Chained blocks the magicule share without redirecting it. Its bonus aura counts toward **total EP** in Status and evolution requirements. Native limits still apply. Secondary-race growth bonuses preserve this split; Convergent races use their own profiles.
 
 ### Martial Supremacy
 
@@ -84,17 +72,17 @@ Battlewill-enhanced melee can benefit from both the tripled attack attribute and
 
 ### Broken Limit
 
-[Passive - Toggle - Mastered] — **Broken Limit**
+[Passive - True - Mastered] — **Broken Limit**
 
 | Ability information | Value |
 | --- | --- |
 | Damage type | None directly |
 | Damage ID | None |
-| Requirement | Chained mastered and toggled on |
+| Requirement | Chained mastered and owned; independent of toggle and slots |
 
 Your own hits lower defensive skills by **one tier**: **Resistance → no resistance**, **Nullification → Resistance**. Numeric resistance attributes are bypassed for those hits. Attributable status effects use the corresponding lower-tier immunity rules. The target’s learned skills are retained. Native barriers, authority and other defenses continue to apply.
 
-Your damage sources also **ignore dodge**, including projectiles attributed to you. This is a live toggle trait; turning it off removes the bypass from subsequent damage handling.
+Your damage sources also **ignore dodge**, including projectiles attributed to you. Broken Limit is always active while you own mastered Chained, even with Chained toggled off and unequipped. Forgetting Chained removes it. Martial Supremacy’s damage/training bonuses still require the toggle.
 
 ### Unerring Body
 

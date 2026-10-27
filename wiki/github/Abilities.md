@@ -34,7 +34,7 @@
 | [Mirror Aegis](https://github.com/Bithio999/MC/wiki/Mirrorbound#mirror-aegis) | [Mirrorbound](https://github.com/Bithio999/MC/wiki/Mirrorbound) | Active | None — reflected projectiles retain their own attack type |
 | [Heavenly Restriction](https://github.com/Bithio999/MC/wiki/Chained#heavenly-restriction) | [Chained](https://github.com/Bithio999/MC/wiki/Chained) | Passive - True | None |
 | [Martial Supremacy](https://github.com/Bithio999/MC/wiki/Chained#martial-supremacy) | [Chained](https://github.com/Bithio999/MC/wiki/Chained) | Passive - Toggle | None |
-| [Broken Limit](https://github.com/Bithio999/MC/wiki/Chained#broken-limit) | [Chained](https://github.com/Bithio999/MC/wiki/Chained) | Passive - Toggle - Mastered | None |
+| [Broken Limit](https://github.com/Bithio999/MC/wiki/Chained#broken-limit) | [Chained](https://github.com/Bithio999/MC/wiki/Chained) | Passive - True - Mastered | None |
 | [Unerring Body](https://github.com/Bithio999/MC/wiki/Chained#unerring-body) | [Chained](https://github.com/Bithio999/MC/wiki/Chained) | Passive - In-slot | None |
 | [Severance Rush](https://github.com/Bithio999/MC/wiki/Chained#severance-rush) | [Chained](https://github.com/Bithio999/MC/wiki/Chained) | Active - Press | Aura slash / Battlewill — `tensura:aura_slash` |
 

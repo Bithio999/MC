@@ -28,11 +28,15 @@ Registry ID: `heavenlyrestriction:chained`. Maximum mastery: **1,000**. Use Tens
 
 **Passive — True. Damage type: None.**
 
-Owning the learned skill applies **5× later maximum-aura gains** from growth, equipment and skills while preserving the starting aura pool unmultiplied. Without other multipliers, maximum aura is **starting aura + 5 × later capacity gains**. This does not repeatedly refill current aura. Native attribute limits still apply.
+Chained trades magical growth and unrestricted skill learning for greater aura capacity. While you own it:
 
-Maximum magicules cannot increase beyond the existing ceiling. Current magicules remain usable; native capacity costs/losses still apply. Natural magicule regeneration instead contributes its actual regeneration amount to aura, including native area/sleep effects. Spiritual maintenance and excess-energy decay retain native behavior.
+- **5× aura growth:** later maximum-aura gains are multiplied by five; starting aura is unchanged.
+- **No maximum-magicule gains:** keep your existing capacity, but it cannot increase. Current magicules remain usable; costs and losses still apply.
+- **Regeneration conversion:** natural magicule regeneration restores aura instead, even when magicules are full.
+- **Restricted learning:** Battlewills, resistances/nullifications, reincarnation skills and their derived grants, and the lineage’s aura-recovery skills remain available. Previously owned skills are retained.
+- **Aura-paid resistances:** acquiring resistances/nullifications spends the configured cost in current aura instead of permanent magicule capacity. Free grants stay free.
 
-New skills are limited to **Battlewills**, **resistances/nullifications**, recorded **reincarnation skills and their native derived grants**, and the lineage's specific racial recovery grants. Existing skills remain usable. For example, a reincarnation-granted Martial Master can grant Heavenly Eye; unrelated Extra/Unique/Ultimate gifts are blocked. Resistance/nullification acquisition pays the configured cost from **current aura**, instead of permanently spending maximum magicules. Free native rewards remain free.
+For example, reincarnating with **Martial Master** still allows **Heavenly Eye**. Chained’s bonus capacity counts toward total EP; it does not repeatedly refill current aura. Native limits still apply.
 
 ### Martial Supremacy
 
@@ -48,9 +52,9 @@ Buff duration, ordinary learning costs and conversion rates retain native values
 
 ### Broken Limit
 
-**Passive — Toggle — Mastered. Damage type: None directly.**
+**Passive — True — Mastered. Damage type: None directly.**
 
-Your own hits lower **Resistance → none** and **Nullification → Resistance**, bypass numeric resistance attributes, and ignore dodge. Attributable status effects use the lower tier's immunity rules. This does not delete skills or erase native barriers. Disabling the toggle removes this trait from subsequent damage handling.
+Your own hits lower **Resistance → none** and **Nullification → Resistance**, bypass numeric resistance attributes, and ignore dodge. Attributable status effects use the lower tier's immunity rules. This does not delete skills or erase native barriers. This remains active while you own mastered Chained, even with its toggle off and the skill unequipped. Forgetting Chained removes it. Martial Supremacy’s damage/training bonuses still require the toggle.
 
 ### Unerring Body
 
