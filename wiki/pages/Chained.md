@@ -31,7 +31,9 @@
 | Damage ID | None |
 | Activation | Owning the learned skill; independent of toggle and slots |
 
-Your **maximum aura is multiplied by 5**, including base capacity and modifiers from equipment, skills and other sources. This expands capacity; it does not repeatedly refill current aura when toggled or re-equipped. Native hard limits still apply.
+Your **later maximum-aura gains are multiplied by 5**, including growth and capacity supplied by equipment, skills and other sources. Your actual starting aura roll is saved and **excluded from Chained’s multiplier**. A fresh Fettered Human rolls **1,500–2,000 aura** and **50–100 magicules**, for **1,550–2,100 starting EP** before separate reincarnation rewards.
+
+With no other capacity multipliers, **maximum aura = starting aura + 5 × later aura-capacity gains**. For example, a starting roll of 1,800 aura followed by 100 raw aura growth gives 2,300 maximum aura. Other capacity multipliers retain their normal effects. The exemption persists through evolution, toggling and save/load; forgetting and relearning Chained does not recapture earned aura as a new starting pool. A new native reincarnation roll establishes a new starting pool. Native hard limits still apply. This expands capacity without repeatedly refilling current aura.
 
 All five lineage stages allocate normal EP growth **90% to aura and 10% to magicules** before Chained blocks maximum-magicule increases; that blocked 10% is not redirected. A secondary race’s 10% growth bonus preserves this split. Convergent races retain their own growth profiles.
 

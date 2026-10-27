@@ -25,6 +25,9 @@ public final class ChainedBuffs {
     }
     public static AttributeModifier modifier(LivingEntity owner,AttributeInstance attribute,AttributeModifier value,boolean permanent){
         if(owner==null || owner.level().isClientSide() || REPLAY.get() || ChainedContext.battlewill(owner)==null)return value;
+        // A capacity change inside a Battlewill callback can refresh Chained.
+        // Its own pact/combat modifiers are not buffs supplied by that Battlewill.
+        if(value.id().equals(ChainedState.VOW) || value.id().equals(ChainedState.START) || value.id().equals(ChainedState.COMBAT))return value;
         var list=HunterData.of(owner).getList("chained_buffs",Tag.TAG_COMPOUND);String id=BuiltInRegistries.ATTRIBUTE.getKey(attribute.getAttribute().value()).toString(),key=value.id().toString();
         CompoundTag record=null;for(var v:list){var t=(CompoundTag)v;if(t.getString("attribute").equals(id) && t.getString("modifier").equals(key)){record=t;break;}}
         if(record==null){record=new CompoundTag();record.putString("attribute",id);record.putString("modifier",key);list.add(record);}

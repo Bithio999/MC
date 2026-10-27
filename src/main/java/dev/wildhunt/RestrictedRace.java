@@ -31,8 +31,14 @@ public final class RestrictedRace extends TensuraRace {
     @Override public MutableComponent getName(){return Component.literal(NAMES[stage]);}
     @Override public MutableComponent getRaceDescription(){return Component.literal("A human body forged by a binding heavenly restriction. "+(stage==0?"Starting race":"Evolution "+stage+"/4")+". Chained exchanges magical growth and unrestricted skill acquisition for overwhelming aura and martial potential.");}
     @Override public ResourceLocation getRaceIcon(){return WildHunt.id("textures/race/"+IDS[stage]+".png");}
-    @Override public Pair<Double,Double> getBaseAuraRange(){return Pair.of(20_000d,20_000d);}
-    @Override public Pair<Double,Double> getBaseMagiculeRange(){return Pair.of(500d,500d);}
+    @Override public Pair<Double,Double> getBaseAuraRange(){return Pair.of(1_500d,2_000d);}
+    @Override public Pair<Double,Double> getBaseMagiculeRange(){return Pair.of(50d,100d);}
+    @Override public void resetExistenceData(LivingEntity e){
+        super.resetExistenceData(e);
+        // Capture only the native race roll, before separate reincarnation rewards.
+        ChainedState.recordStartingAura(e,io.github.manasmods.tensura.util.EnergyHelper.getBaseMaxAura(e));
+        ChainedState.refresh(e);
+    }
     @Override public Alignment getAlignment(){return Alignment.DEFAULT;}
     @Override public List<ManasSkill> getIntrinsicSkills(ManasRaceInstance i,LivingEntity e){return stage==0?List.of(WildHunt.CHAINED.get()):List.of();}
     @Override public List<ManasRace> getNextEvolutions(ManasRaceInstance i,LivingEntity e){return stage==4?List.of():List.of(WildHunt.RESTRICTED.get(stage+1).get());}

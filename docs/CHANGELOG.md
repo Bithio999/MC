@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.32.2 — Fettered Human starting pools
+
+- Roll 1,500–2,000 base starting aura and 50–100 base starting magicules through the native race initialization.
+- Save the actual starting aura and exclude it from Chained’s 5× multiplier. Subsequent aura-capacity gains still receive 5× scaling.
+- Preserve the exemption through evolution, reload, toggle changes and forgetting/relearning. A fresh reincarnation replaces the saved starting roll and magicule ceiling.
+- Migrate existing Chained owners using their historical 20,000 starting aura without rerolling capacity or discarding earned EP.
+
 ## 0.32.1 — Chained balance and lineage growth
 
 - Reduce Chained maximum-aura capacity from 100× to 5×, replacing the existing saved modifier without altering base capacity.

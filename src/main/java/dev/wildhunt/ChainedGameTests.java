@@ -42,10 +42,70 @@ public final class ChainedGameTests {
         h.assertTrue(!ReincarnationMenu.getSkillPool().contains(WildHunt.CHAINED.get()),"Race-exclusive Chained entered ordinary Unique rolls");
         h.assertTrue(WildHunt.CHAINED.get().getColoredName().getString().equals("Chained"),"Colored name exposed a translation key");
         ReincarnationMenu.setRace(p,WildHunt.RESTRICTED.getFirst().get(),true,false);
-        h.assertTrue(ChainedState.owned(p),"Race did not grant Chained");near(h,EnergyHelper.getMaxMagicule(p),500,"Initial native magicule pool was blocked before initialization");
-        near(h,EnergyHelper.getMaxAura(p),100_000,"Starting aura capacity was not multiplied");
+        h.assertTrue(ChainedState.owned(p),"Race did not grant Chained");
+        double aura=EnergyHelper.getBaseMaxAura(p),mp=EnergyHelper.getBaseMaxMagicule(p);
+        h.assertTrue(aura>=1500 && aura<=2000 && mp>=50 && mp<=100,"Starting roll outside the new ranges");
+        near(h,EnergyHelper.getMaxAura(p),aura,"Chained multiplied the starting aura");near(h,EnergyHelper.getMaxMagicule(p),mp,"Initial native magicule pool was blocked before initialization");
+        near(h,TensuraStorages.getExistenceFrom(p).getAura(),aura,"Starting current aura differs from its native roll");
+        near(h,EnergyHelper.getMaxEP(p),aura+mp,"Starting total EP includes a phantom multiplier");
         for(int n=0;n<5;n++){var r=WildHunt.RESTRICTED.get(n).get();var i=r.createDefaultInstance();h.assertTrue(r.stage==n && (n==4?i.getNextEvolutions(p).isEmpty():i.getNextEvolutions(p).equals(List.of(WildHunt.RESTRICTED.get(n+1).get()))),"Broken lineage at "+n);h.assertTrue(dev.wildhunt.myths.RaceFamily.from(r).orElseThrow()==dev.wildhunt.myths.RaceFamily.HUMAN,"Human ancestry missing");}
         h.succeed();
+    }
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void startingRollStaysUnmultipliedWhileSubsequentSourcesGetFiveTimes(GameTestHelper h){
+        var p=player(h);ReincarnationMenu.setRace(p,WildHunt.RESTRICTED.getFirst().get(),true,false);
+        double start=EnergyHelper.getBaseMaxAura(p);var ap=p.getAttribute(TensuraAttributes.MAX_AURA);
+        EnergyHelper.setMaxAura(p,start+100);near(h,EnergyHelper.getMaxAura(p),start+500,"Helper gain not multiplied independently of the birth pool");
+        var equipment=WildHunt.id("chained_post_birth_equipment");ap.addOrReplacePermanentModifier(new AttributeModifier(equipment,50,AttributeModifier.Operation.ADD_VALUE));
+        near(h,EnergyHelper.getMaxAura(p),start+750,"Equipment gain not multiplied");
+        var multiplier=WildHunt.id("chained_foreign_capacity_multiplier");ap.addOrReplacePermanentModifier(new AttributeModifier(multiplier,1,AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
+        near(h,EnergyHelper.getMaxAura(p),(start+750)*2,"Foreign multiplier did not preserve the starting exemption");
+        ap.removeModifier(multiplier);ap.removeModifier(equipment);near(h,EnergyHelper.getMaxAura(p),start+500,"Removing equipment inflated the baseline");
+        var i=SkillAPI.getSkillsFrom(p).getSkill(WildHunt.CHAINED.get()).orElseThrow();
+        var restored=ManasSkillInstance.fromNBT(i.toNBT());SkillAPI.getSkillsFrom(p).updateSkill(restored,true);ChainedState.initialize(p);
+        near(h,EnergyHelper.getMaxAura(p),start+500,"Reload recaptured earned aura as starting aura");
+        i=restored;i.onToggleOff(p);i.onToggleOn(p);ChainedState.refresh(p);near(h,EnergyHelper.getMaxAura(p),start+500,"Toggle/refresh changed the exemption");
+        SkillAPI.getSkillsFrom(p).forgetSkill(WildHunt.CHAINED.get());near(h,EnergyHelper.getMaxAura(p),start+100,"Forgetting left an exemption modifier");
+        vow(p,false);near(h,EnergyHelper.getMaxAura(p),start+500,"Relearning recaptured earned aura or lost the starting exemption");h.succeed();
+    }
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void repeatedNativeBirthsRollBothNewRangesAndResetOnlyTheirStartingExemption(GameTestHelper h){
+        var p=player(h);var race=WildHunt.RESTRICTED.getFirst().get();var rolls=new HashSet<Double>();
+        near(h,race.getMinBaseAura(),1500,"Aura lower range");near(h,race.getMaxBaseAura(),2000,"Aura upper range");near(h,race.getMinBaseMagicule(),50,"MP lower range");near(h,race.getMaxBaseMagicule(),100,"MP upper range");
+        for(int n=0;n<8;n++){
+            p.getRandom().setSeed(n*7919+37);ReincarnationMenu.setRace(p,race,true,false);
+            double a=EnergyHelper.getBaseMaxAura(p),m=EnergyHelper.getBaseMaxMagicule(p);rolls.add(a);
+            h.assertTrue(a>=1500 && a<=2000 && m>=50 && m<=100,"Rebirth roll outside range");
+            near(h,EnergyHelper.getMaxAura(p),a,"Rebirth retained a stale or multiplied starting pool");near(h,EnergyHelper.getMaxMagicule(p),m,"Rebirth retained the preceding magicule ceiling");
+            EnergyHelper.setMaxAura(p,a+25);near(h,EnergyHelper.getMaxAura(p),a+125,"Post-rebirth aura gain not multiplied");
+        }
+        h.assertTrue(rolls.size()>1,"Starting aura range never produced different rolls");h.succeed();
+    }
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void oldLineageOwnerExcludesHistoricalBirthAuraWithoutRerollingEarnedEP(GameTestHelper h){
+        var p=player(h);RaceAPI.getRaceFrom(p).setRace(WildHunt.RESTRICTED.get(2).get(),false);
+        EnergyHelper.setMaxAura(p,25_000);var i=vow(p,false);i.setMastery(700);
+        HunterData.of(p).remove("chained_starting_aura");i.getOrCreateTag().remove("starting_aura");
+        p.getAttribute(TensuraAttributes.MAX_AURA).removeModifier(ChainedState.START);
+        ChainedState.initialize(p);near(h,EnergyHelper.getBaseMaxAura(p),25_000,"Migration discarded earned aura");
+        near(h,EnergyHelper.getMaxAura(p),20_000+5*5000,"Migration multiplied the legacy birth pool or exempted earned aura");near(h,i.getMastery(),700,"Migration reset mastery");
+        ChainedState.refresh(p);near(h,EnergyHelper.getMaxAura(p),45_000,"Repeated refresh compounded migration");
+        RaceAPI.getRaceFrom(p).setRace(dev.wildhunt.myths.RaceFamily.HUMAN.baseRace(),false);
+        HunterData.of(p).remove("chained_starting_aura");i.getOrCreateTag().remove("starting_aura");ChainedState.initialize(p);
+        near(h,EnergyHelper.getMaxAura(p),45_000,"Changing race prevented a legacy Chained owner from migrating");
+        HunterData.of(p).remove("chained_starting_aura");i.getOrCreateTag().remove("starting_aura");EnergyHelper.setMaxAura(p,10_000);
+        near(h,EnergyHelper.getMaxAura(p),10_000,"Legacy loss produced a negative starting exemption");
+        EnergyHelper.setMaxAura(p,15_000);near(h,EnergyHelper.getMaxAura(p),15_000,"Legacy starting-pool recovery was multiplied");
+        EnergyHelper.setMaxAura(p,25_000);near(h,EnergyHelper.getMaxAura(p),45_000,"Legacy later growth stopped receiving 5x");h.succeed();
+    }
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void auraLossBelowStartingPoolAndItsRecoveryDoNotMultiplyRemainingBirthAura(GameTestHelper h){
+        var p=player(h);ReincarnationMenu.setRace(p,WildHunt.RESTRICTED.getFirst().get(),true,false);
+        double start=EnergyHelper.getBaseMaxAura(p);
+        try(var scope=ChainedContext.ability(p,UtilityArts.DIAMOND_PATH.get())){EnergyHelper.setMaxAura(p,start*.5);}
+        near(h,EnergyHelper.getMaxAura(p),start*.5,"Loss/Battlewill callback tripled or left a stale starting exemption");
+        EnergyHelper.setMaxAura(p,start);near(h,EnergyHelper.getMaxAura(p),start,"Recovering the birth pool multiplied it");
+        EnergyHelper.setMaxAura(p,start+50);near(h,EnergyHelper.getMaxAura(p),start+250,"Later growth did not resume at 5x");h.succeed();
     }
     @GameTest(template="empty",timeoutTicks=100)
     public static void laterEvolutionGrantsNoChainedAndCannotRegrantAForgottenVow(GameTestHelper h){
@@ -97,8 +157,8 @@ public final class ChainedGameTests {
     }
     @GameTest(template="empty",timeoutTicks=100)
     public static void truePassiveCoversBaseModifierAndHelperGainsWhileOffAndUnslotted(GameTestHelper h){
-        var p=player(h);EnergyHelper.setBaseMaxEP(p,2000);var i=vow(p,false);near(h,EnergyHelper.getMaxAura(p),5000,"Ownership multiplier");
-        var ap=p.getAttribute(TensuraAttributes.MAX_AURA);ap.setBaseValue(1025);ap.addOrReplacePermanentModifier(new AttributeModifier(WildHunt.id("chained_test_external_ap"),30,AttributeModifier.Operation.ADD_VALUE));near(h,ap.getValue(),5275,"Modifier gain escaped 5x");
+        var p=player(h);EnergyHelper.setBaseMaxEP(p,2000);var i=vow(p,false);near(h,EnergyHelper.getMaxAura(p),1000,"Starting capacity was multiplied");
+        var ap=p.getAttribute(TensuraAttributes.MAX_AURA);ap.setBaseValue(1025);ap.addOrReplacePermanentModifier(new AttributeModifier(WildHunt.id("chained_test_external_ap"),30,AttributeModifier.Operation.ADD_VALUE));near(h,ap.getValue(),1275,"Modifier gain escaped 5x");
         var mp=p.getAttribute(TensuraAttributes.MAX_MAGICULE);double base=mp.getBaseValue();EnergyHelper.setMaxMagicule(p,10000);near(h,mp.getBaseValue(),base,"Helper raised raw max magicules");mp.setBaseValue(base+25);near(h,mp.getBaseValue(),base,"Direct setter raised magicules");
         mp.addOrReplacePermanentModifier(new AttributeModifier(WildHunt.id("chained_test_external_mp"),99999,AttributeModifier.Operation.ADD_VALUE));near(h,mp.getValue(),1000,"Modifier escaped magicule ceiling");
         h.assertTrue(!i.isToggled() && !WildHunt.CHAINED.get().isInSlot(p,i),"Fixture unexpectedly toggled/slotted");h.succeed();
@@ -168,7 +228,7 @@ public final class ChainedGameTests {
     }
     @GameTest(template="empty",timeoutTicks=100)
     public static void forgettingRemovesOnlyChainedModifiersAndDoesNotCompoundOnReload(GameTestHelper h){
-        var p=player(h);double aura=p.getAttributeValue(TensuraAttributes.MAX_AURA),attack=p.getAttributeValue(Attributes.ATTACK_DAMAGE);var i=vow(p,true);var restored=ManasSkillInstance.fromNBT(i.toNBT());SkillAPI.getSkillsFrom(p).updateSkill(restored,true);ChainedState.initialize(p);near(h,p.getAttributeValue(TensuraAttributes.MAX_AURA),aura*5,"Reload compounded capacity");SkillAPI.getSkillsFrom(p).forgetSkill(WildHunt.CHAINED.get());near(h,p.getAttributeValue(TensuraAttributes.MAX_AURA),aura,"Forgotten aura modifier persisted");near(h,p.getAttributeValue(Attributes.ATTACK_DAMAGE),attack,"Forgotten combat modifier persisted");h.succeed();
+        var p=player(h);double aura=p.getAttributeValue(TensuraAttributes.MAX_AURA),attack=p.getAttributeValue(Attributes.ATTACK_DAMAGE);var i=vow(p,true);var restored=ManasSkillInstance.fromNBT(i.toNBT());SkillAPI.getSkillsFrom(p).updateSkill(restored,true);ChainedState.initialize(p);near(h,p.getAttributeValue(TensuraAttributes.MAX_AURA),aura,"Reload compounded capacity");SkillAPI.getSkillsFrom(p).forgetSkill(WildHunt.CHAINED.get());near(h,p.getAttributeValue(TensuraAttributes.MAX_AURA),aura,"Forgotten aura modifier persisted");near(h,p.getAttributeValue(Attributes.ATTACK_DAMAGE),attack,"Forgotten combat modifier persisted");h.succeed();
     }
     @GameTest(template="empty",timeoutTicks=100)
     public static void evolutionMenuUsesFixedBaseEPAndActualMasteredBattlewills(GameTestHelper h){
@@ -207,8 +267,8 @@ public final class ChainedGameTests {
     }
     @GameTest(template="empty",timeoutTicks=100)
     public static void nativeRaceChangesPreserveTheVowAndReplaceAllFourEvolutionBonuses(GameTestHelper h){
-        var p=player(h);ReincarnationMenu.setRace(p,WildHunt.RESTRICTED.getFirst().get(),true,false);var i=SkillAPI.getSkillsFrom(p).getSkill(WildHunt.CHAINED.get()).orElseThrow();i.setMastery(i.getMaxMastery());double mp=EnergyHelper.getMaxMagicule(p);double[] hp={0,100,300,600,1000};
-        for(int n=1;n<5;n++){RaceAPI.getRaceFrom(p).setRace(WildHunt.RESTRICTED.get(n).get(),false);h.assertTrue(ChainedState.owned(p) && ChainedState.mastery(p)==1,"Evolution lost Chained or mastery");near(h,EnergyHelper.getMaxMagicule(p),mp,"Evolution raised the forbidden pool");near(h,p.getAttribute(Attributes.MAX_HEALTH).getModifier(WildHunt.id("restricted_vitality")).amount(),hp[n],"Racial health modifiers accumulated");}
+        var p=player(h);ReincarnationMenu.setRace(p,WildHunt.RESTRICTED.getFirst().get(),true,false);var i=SkillAPI.getSkillsFrom(p).getSkill(WildHunt.CHAINED.get()).orElseThrow();i.setMastery(i.getMaxMastery());double mp=EnergyHelper.getMaxMagicule(p),start=HunterData.of(p).getDouble("chained_starting_aura");double[] hp={0,100,300,600,1000};
+        for(int n=1;n<5;n++){RaceAPI.getRaceFrom(p).setRace(WildHunt.RESTRICTED.get(n).get(),false);h.assertTrue(ChainedState.owned(p) && ChainedState.mastery(p)==1,"Evolution lost Chained or mastery");near(h,EnergyHelper.getMaxMagicule(p),mp,"Evolution raised the forbidden pool");near(h,HunterData.of(p).getDouble("chained_starting_aura"),start,"Evolution reset the starting aura exemption");near(h,p.getAttribute(Attributes.MAX_HEALTH).getModifier(WildHunt.id("restricted_vitality")).amount(),hp[n],"Racial health modifiers accumulated");}
         h.assertTrue(RaceAPI.getRaceFrom(p).getRace().orElseThrow().getNextEvolutions(p).isEmpty(),"Final race still has an evolution");h.succeed();
     }
     @GameTest(template="empty",timeoutTicks=100)

@@ -17,7 +17,7 @@ import java.util.Optional;
 
 /** The vow belongs to skill ownership. Only its combat enhancements require the toggle. */
 public final class ChainedState {
-    public static final ResourceLocation VOW=WildHunt.id("chained_vow"),COMBAT=WildHunt.id("chained_combat");
+    public static final ResourceLocation VOW=WildHunt.id("chained_vow"),START=WildHunt.id("chained_starting_aura"),COMBAT=WildHunt.id("chained_combat");
     private ChainedState(){}
     public static Optional<ManasSkillInstance> instance(LivingEntity e){return e==null?Optional.empty():SkillAPI.getSkillsFrom(e).getSkill(WildHunt.CHAINED.get()).filter(i->i.getMastery()>=0);}
     public static boolean owned(LivingEntity e){return instance(e).isPresent();}
@@ -39,7 +39,25 @@ public final class ChainedState {
         if(e==null || ChainedContext.initializing(e))return original;
         return instance(e).map(i->i.getOrCreateTag().contains("magicule_ceiling")?Math.min(original,i.getOrCreateTag().getDouble("magicule_ceiling")):original).orElse(original);
     }
+    public static void recordStartingAura(LivingEntity e,double amount){
+        if(e.level().isClientSide() || !Double.isFinite(amount) || amount<0)return;
+        HunterData.of(e).putDouble("chained_starting_aura",amount);
+        instance(e).ifPresent(i->{i.getOrCreateTag().putDouble("starting_aura",amount);i.markDirty();});
+    }
+    private static double startingAura(LivingEntity e){
+        var data=HunterData.of(e);
+        if(data.contains("chained_starting_aura"))return data.getDouble("chained_starting_aura");
+        var i=instance(e).orElseThrow();var tag=i.getOrCreateTag();
+        double base=io.github.manasmods.tensura.util.EnergyHelper.getBaseMaxAura(e);
+        // Pre-0.32.2 lineage births used a fixed 20,000 raw aura. Exclude that
+        // historical starting pool without rerolling it or discarding earned EP.
+        boolean legacy=tag.contains("magicule_ceiling");
+        double start=tag.contains("starting_aura")?tag.getDouble("starting_aura"):legacy?20_000:base;
+        recordStartingAura(e,Math.max(0,start));return Math.max(0,start);
+    }
     public static void initialize(LivingEntity e){
+        if(e.level().isClientSide())return;
+        if(owned(e))startingAura(e);
         instance(e).ifPresent(i->{if(!i.getOrCreateTag().contains("magicule_ceiling")){i.getOrCreateTag().putDouble("magicule_ceiling",io.github.manasmods.tensura.util.EnergyHelper.getMaxMagicule(e));i.markDirty();}});refresh(e);
     }
     public static void finishInitialRace(LivingEntity e){
@@ -50,7 +68,11 @@ public final class ChainedState {
         var old=a.getModifier(id);if(old==null || old.amount()!=value)a.addOrReplacePermanentModifier(new AttributeModifier(id,value,op));
     }
     public static void refresh(LivingEntity e){
+        if(e.level().isClientSide())return;
         boolean owner=owned(e),on=owner && active(e),master=on && mastered(e);
+        // (base - 0.8 * starting pool + later additions) * 5:
+        // the initial pool stays unmultiplied; all subsequent gains get 5x.
+        modifier(e,TensuraAttributes.MAX_AURA,START,owner?-.8*Math.min(startingAura(e),Math.max(0,e.getAttribute(TensuraAttributes.MAX_AURA).getBaseValue())):0,AttributeModifier.Operation.ADD_VALUE,owner);
         modifier(e,TensuraAttributes.MAX_AURA,VOW,4,AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL,owner);
         modifier(e,Attributes.ATTACK_DAMAGE,COMBAT,2,AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL,on);
         modifier(e,TensuraAttributes.DODGE_NEGATE_CHANCE,COMBAT,100,AttributeModifier.Operation.ADD_VALUE,master);
@@ -59,7 +81,7 @@ public final class ChainedState {
     }
     public static void remove(LivingEntity e){
         for(var h:java.util.List.of(TensuraAttributes.MAX_AURA,Attributes.ATTACK_DAMAGE,TensuraAttributes.DODGE_NEGATE_CHANCE,TensuraAttributes.RESISTANCE_DEGRADATION)){
-            var a=e.getAttribute(h);if(a!=null){a.removeModifier(VOW);a.removeModifier(COMBAT);}
+            var a=e.getAttribute(h);if(a!=null){a.removeModifier(VOW);a.removeModifier(START);a.removeModifier(COMBAT);}
         }
         ChainedBuffs.refresh(e,false);
     }

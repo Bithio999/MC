@@ -25,7 +25,7 @@ public abstract class ChainedReincarnationMixin {
     private static void myths$initializeStartingPools(Player player,ManasRace race,boolean resetEP,boolean grantUnique,Operation<Void> original){
         if(!resetEP){original.call(player,race,false,grantUnique);return;}
         try(var birth=ChainedContext.reincarnation(player,null)){
-            if(race instanceof RestrictedRace && !ChainedState.owned(player)){
+            if(race instanceof RestrictedRace){
                 try(var scope=ChainedContext.initialRace(player)){original.call(player,race,true,grantUnique);ChainedState.finishInitialRace(player);}
             }else original.call(player,race,true,grantUnique);
         }

@@ -1,6 +1,6 @@
 # Tensura Myths Wiki
 
-An unofficial reference for the **Tensura Myths** addon to **Tensura: Reincarnated**. Minecraft 1.21.1 · NeoForge · Addon 0.32.1.
+An unofficial reference for the **Tensura Myths** addon to **Tensura: Reincarnated**. Minecraft 1.21.1 · NeoForge · Addon 0.32.2.
 
 ## Start here
 
@@ -19,7 +19,7 @@ An unofficial reference for the **Tensura Myths** addon to **Tensura: Reincarnat
 
 ## Heavenly Restriction
 
-The [Fettered Human](https://github.com/Bithio999/MC/wiki/Fettered-Human) starting race has four evolutions ending in [Heavenbreaker](https://github.com/Bithio999/MC/wiki/Heavenbreaker). Its intrinsic Unique [Chained](https://github.com/Bithio999/MC/wiki/Chained) trades magical growth and unrestricted skills for aura capacity, Battlewill combat and an instant attacking teleport.
+The [Fettered Human](https://github.com/Bithio999/MC/wiki/Fettered-Human) starting race has four evolutions ending in [Heavenbreaker](https://github.com/Bithio999/MC/wiki/Heavenbreaker). Its intrinsic Unique [Chained](https://github.com/Bithio999/MC/wiki/Chained) trades magical growth and unrestricted skills for 5× later aura-capacity gains, Battlewill combat and an instant attacking teleport. Starting aura rolls of 1,500–2,000 are unmultiplied; starting magicules roll 50–100.
 
 ## Races
 
