@@ -69,7 +69,6 @@ public final class ChainedState {
     }
     public static void refresh(LivingEntity e){
         if(e.level().isClientSide())return;
-        instance(e).filter(i->i.onCoolDown(0)).ifPresent(i->i.setCoolDown(0,0));
         boolean owner=owned(e),on=owner && active(e),master=mastered(e);
         // (base - 0.8 * starting pool + later additions) * 5:
         // the initial pool stays unmultiplied; all subsequent gains get 5x.

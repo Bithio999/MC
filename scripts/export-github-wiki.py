@@ -43,7 +43,7 @@ def export(output):
             # The Wiki page describes reading and contributing; publishing mechanics
             # remain in the repository's authoring guide.
             text = text.split('## Open the visual edition')[0]
-            text += '\n[Download the styled offline edition](' + REPO + '/blob/main/releases/tensura-myths-wiki-0.34.2.zip)\n'
+            text += '\n[Download the styled offline edition](' + REPO + '/blob/main/releases/tensura-myths-wiki-0.34.3.zip)\n'
         text = re.sub(r'(!?\[[^\]]*\]\()([^\s)]+)(\))', lambda m: m[1] + url(m[2]) + m[3], text)
         text = re.sub(r'(src=")([^"]+)(")', lambda m: m[1] + url(m[2]) + m[3], text)
         text = text.replace('improve the Markdown articles in `wiki/pages`', 'improve the [Markdown articles](' + REPO + '/tree/main/wiki/pages)')
@@ -59,7 +59,7 @@ def export(output):
             sidebar += f'- [{label}]({WIKI_URL}/{slug})\n'
         sidebar += '\n'
     (output / '_Sidebar.md').write_text(sidebar)
-    (output / '_Footer.md').write_text(f'**Tensura Myths 0.34.2** · Minecraft 1.21.1 · NeoForge\n\n[Home]({WIKI_URL}) · [Source]({REPO}) · [Base mod wiki](https://tensura.wiki.gg/wiki/Tensura:_Reincarnated_Wiki)\n\nUnofficial fan addon. Original documentation and portraits. Not affiliated with Capcom or ManasMods.\n')
+    (output / '_Footer.md').write_text(f'**Tensura Myths 0.34.3** · Minecraft 1.21.1 · NeoForge\n\n[Home]({WIKI_URL}) · [Source]({REPO}) · [Base mod wiki](https://tensura.wiki.gg/wiki/Tensura:_Reincarnated_Wiki)\n\nUnofficial fan addon. Original documentation and portraits. Not affiliated with Capcom or ManasMods.\n')
     print(f'Exported {len(sources)} GitHub Wiki pages, sidebar, and footer to {output.relative_to(ROOT) if output.is_relative_to(ROOT) else output}.')
 
 

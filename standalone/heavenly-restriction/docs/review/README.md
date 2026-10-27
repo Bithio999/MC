@@ -1,6 +1,6 @@
 # Optional client review
 
-This fixture is excluded from normal source sets and release JARs. It automatically tests a real local player's 16-block dash/payment, then renders the copied dash and GeckoLib recovery bloom, saves two screenshots to `docs/media`, and exits.
+This fixture is excluded from normal source sets and release JARs. It automatically compares a real player's downward dash against native Martial Master, verifies client/server landing synchronization, aura payment and the 1-second cooldown/recast, then renders the copied dash and GeckoLib recovery bloom, saves two screenshots to `docs/media`, and exits.
 
 Run it only against the disposable **Restriction Validation** development world. After the native test server has stopped, copy its isolated `run/world` to `run/saves/Restriction Validation` once, then run:
 

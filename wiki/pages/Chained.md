@@ -35,7 +35,7 @@ Chained trades magical growth and unrestricted skill learning for much greater a
 
 - **5× aura growth:** later maximum-aura gains are multiplied by five. Your starting aura is not multiplied.
 - **No maximum-magicule gains:** keep your existing capacity, but it cannot increase. Current magicules remain usable; costs and losses still apply.
-- **Regeneration conversion:** natural magicule regeneration restores aura instead, even when your magicules are full.
+- **Regeneration conversion:** keep normal **1× magicule regeneration** and redirect only the bonus above 1× into aura. Rates below 1× retain their penalties; sleep recovery stays with its normal resource.
 - **Restricted learning:** you can gain Battlewills, resistances/nullifications, reincarnation-granted skills and their derived skills, and the lineage’s aura-recovery skills. Skills you already own are retained.
 - **Aura-paid resistances:** acquiring resistances or nullifications spends the configured cost in current aura instead of permanent magicule capacity. Free grants stay free.
 
@@ -105,14 +105,14 @@ Gain **100% dodge chance against projectiles** and **25% against other incoming 
 | Damage type | Aura slash / Battlewill |
 | Damage ID | `tensura:aura_slash` |
 | Resource cost | **2% of current aura**, paid once |
-| Cooldown | **None** |
-| Movement | Instant teleport up to **16 blocks** along your look direction |
+| Cooldown | **1 second** |
+| Movement | Instant teleport with **16-block aim reach**, using Martial Master’s landing logic |
 | Path damage radius | **3 blocks** |
 | Arrival damage radius | **4 blocks** |
 
-Teleport instantly along your aim, like Martial Master’s movement art. The same activation resolves one hit along the route and an additional hit at the destination. A victim caught in both receives both hits, including inside the ordinary hurt cooldown. Each victim receives at most one path hit and one arrival hit.
+Use while **on the ground or in water**, like Martial Master’s movement art. An eye-level aim ray ignores fluids and selects a nearby landing block, with room checked for your body. Your landing snaps to the block position rather than tracing your feet through the ground. The same activation resolves one hit along the route and an additional hit at the destination. A victim caught in both receives both hits, including inside the ordinary hurt cooldown. Each victim receives at most one path hit and one arrival hit.
 
-The endpoint stops before solid body collisions, unloaded terrain, the world border or the build-height boundary. Looking upward or downward changes the teleport direction. If there is no usable movement or no aura, the cast spends no aura. The teleport is not a timed channel or a movement-over-time attack. There is no skill cooldown; each successive press spends 2% of the aura remaining at that moment.
+Unsafe or unavailable landings, airborne activation and casts attempted during cooldown spend no aura. Each successful press pays once and starts a **1-second cooldown**. The teleport is instant, not a timed channel or a movement-over-time attack.
 
 Let **A** be the aura actually paid:
 

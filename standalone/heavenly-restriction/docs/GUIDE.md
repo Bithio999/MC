@@ -32,7 +32,7 @@ Chained trades magical growth and unrestricted skill learning for greater aura c
 
 - **5× aura growth:** later maximum-aura gains are multiplied by five; starting aura is unchanged.
 - **No maximum-magicule gains:** keep your existing capacity, but it cannot increase. Current magicules remain usable; costs and losses still apply.
-- **Regeneration conversion:** natural magicule regeneration restores aura instead, even when magicules are full.
+- **Regeneration conversion:** retain normal **1× magicule regeneration** and redirect only its bonus above 1× to aura. Lower rates keep their penalties, and normal sleep recovery stays with its resource.
 - **Restricted learning:** Battlewills, resistances/nullifications, reincarnation skills and their derived grants, and the lineage’s aura-recovery skills remain available. Previously owned skills are retained.
 - **Aura-paid resistances:** acquiring resistances/nullifications spends the configured cost in current aura instead of permanent magicule capacity. Free grants stay free.
 
@@ -66,18 +66,18 @@ While Chained is equipped in the active ability preset, gain **100% projectile d
 
 **Active — Press. Damage type: Aura slash / Battlewill (`tensura:aura_slash`).**
 
-Teleport instantly up to **16 blocks** along your full look direction. The endpoint stops before solid body collisions, unloaded terrain, the world border and build-height limits.
+Use while **grounded or in water**, like Martial Master. A **16-block eye-level aim ray** ignores fluids and selects a block-snapped landing, with room checked for your body. Slightly downward aim no longer traces your feet into the floor. Unsafe, unloaded or out-of-bounds landings are rejected.
 
 | Parameter | Value |
 | --- | --- |
 | Cost | 2% of current aura, paid once per successful press |
-| Cooldown | None |
+| Cooldown | 1 second |
 | Path radius | 3 blocks |
 | Arrival radius | 4 blocks |
 | Path damage | 1.5 × √A |
 | Arrival damage | 3 × √A |
 
-**A** is aura actually paid. At 100,000 current aura, A = 2,000: approximately **67.08 path + 134.16 arrival damage**, or **335.41 + 670.82** with Martial Supremacy enabled, before native defenses and damage handling. A victim in both areas receives both hits despite ordinary hurt cooldown. Fully blocked movement or no usable aura causes no payment. Consecutive presses immediately use the remaining current aura.
+**A** is aura actually paid. At 100,000 current aura, A = 2,000: approximately **67.08 path + 134.16 arrival damage**, or **335.41 + 670.82** with Martial Supremacy enabled, before native defenses and damage handling. A victim in both areas receives both hits despite ordinary hurt cooldown. Unavailable landings, airborne activation, cooldown or no usable aura cause no payment. Successful casts start a 1-second cooldown.
 
 ![Standalone Severance Rush](media/standalone-dash.png)
 

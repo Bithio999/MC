@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.34.3 / standalone 1.0.2 — Native dash movement and baseline regeneration
+
+- Replace Chained’s swept-body travel with Martial Master’s native eye-level targeting, fluid-ignoring ray, adjacent landing block and replacement fallback. Retain Chained’s 16-block aim reach, aura cost, damage and hit radii. Require ground/water activation and validate the landing body.
+- Give Severance Rush a 1-second cooldown and stop clearing its timer during passive refresh. Failed/cooldown-blocked casts do not spend aura. Add the native instant-movement sound and hand swing.
+- Preserve normal 1× magicule regeneration and convert only its bonus above 1× to aura. Keep lower-rate penalties, native MP sleep recovery, spiritual maintenance and excess-energy decay.
+- Update both addons, gameplay guides, native reference tests and the isolated real-player review.
+
 ## 0.34.2 / standalone 1.0.1 — Broken Limit true passive
 
 - Make mastered Broken Limit active whenever Chained is owned, independently of toggle and slots. Resistance/nullification degradation, attributable status degradation and dodge bypass follow this rule.
