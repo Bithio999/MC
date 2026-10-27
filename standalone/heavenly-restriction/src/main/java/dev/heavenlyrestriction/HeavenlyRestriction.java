@@ -1,0 +1,37 @@
+package dev.heavenlyrestriction;
+
+import dev.architectury.registry.registries.*;
+import io.github.manasmods.manascore.race.api.*;
+import io.github.manasmods.manascore.skill.api.*;
+import net.minecraft.resources.ResourceLocation;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.common.NeoForge;
+import java.util.List;
+
+/** Independently registered addon: no Tensura Myths classes or registries are required. */
+@Mod(HeavenlyRestriction.ID)
+public final class HeavenlyRestriction {
+    public static final String ID="heavenlyrestriction";
+    private static final Registrar<ManasRace> RACES=RaceAPI.getRaceRegistry();
+    private static final Registrar<ManasSkill> SKILLS=SkillAPI.getSkillRegistry();
+    public static final RegistrySupplier<ChainedSkill> CHAINED=SKILLS.register(id("chained"),ChainedSkill::new);
+    public static final RegistrySupplier<AirSovereigntyArt> AIR_SOVEREIGNTY=SKILLS.register(id("air_sovereignty"),AirSovereigntyArt::new);
+    public static final List<RegistrySupplier<RestrictedRace>> RESTRICTED=java.util.stream.IntStream.range(0,5).mapToObj(stage->RACES.register(id(RestrictedRace.IDS[stage]),()->new RestrictedRace(stage))).toList();
+    public static final List<RegistrySupplier<AuraRegenerationSkill>> REGENERATION=List.of(
+        SKILLS.register(id("hunters_recovery"),()->new AuraRegenerationSkill(1)),
+        SKILLS.register(id("apex_renewal"),()->new AuraRegenerationSkill(2)),
+        SKILLS.register(id("sovereign_rebirth"),()->new AuraRegenerationSkill(3)));
+    public HeavenlyRestriction(net.neoforged.bus.api.IEventBus modBus){
+        ArtVisualEntity.register();
+        SkillEvents.UNLOCK_SKILL.register(ChainedState::unlock);
+        SkillEvents.SKILL_DAMAGE_PRE_CALCULATION.register(ChainedState::damage);
+        NeoForge.EVENT_BUS.addListener(RestrictionEvents::tick);
+        NeoForge.EVENT_BUS.addListener(RestrictionEvents::login);
+        NeoForge.EVENT_BUS.addListener(RestrictionEvents::onClone);
+        NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.LOWEST,AirSovereigntyArt::clonePlayer);
+        NeoForge.EVENT_BUS.addListener(AirSovereigntyArt::login);
+        NeoForge.EVENT_BUS.addListener(ChainedCommands::register);
+        NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.HIGHEST,(net.neoforged.neoforge.event.entity.living.LivingDeathEvent event)->AuraRegenerationSkill.onDeath(event));
+    }
+    public static ResourceLocation id(String path){return ResourceLocation.fromNamespaceAndPath(ID,path);}
+}

@@ -8,6 +8,10 @@ An expanded progression and skills addon for **Tensura 2.0.1.3**, **Minecraft
 The built addon is included at [releases/tensura-myths-0.34.1.jar](releases/tensura-myths-0.34.1.jar).
 Install it alongside Tensura and its required dependencies on both client and server, including **GeckoLib 4.9.3 (4.x)**.
 
+## Standalone Heavenly Restriction addon
+
+The race, Chained, its three aura recovery skills and Air Sovereignty are also available as **[Tensura: Heavenly Restriction](standalone/heavenly-restriction/README.md)**. [Download standalone 1.0.0](releases/tensura-heavenly-restriction-1.0.0.jar). It requires Tensura and its dependencies, runs without Tensura Myths, and uses separate registry IDs. Use either addon in an instance; the full Myths release above retains all its content.
+
 ## Visuals
 
 World effects and Myth bosses use original **Blockbench models and GeckoLib animations**, combined with smooth ring structures, faceted crystals, curved organic surfaces, beveled solid edges, fluid sheets, beams, trails and black-hole optics. The release includes 72 effect rigs, both Myth bosses, destructible Genesis Seals, animated NPC equipment and four modeled ritual items. [Visual gallery](wiki/pages/Visual-Effects.md) · [Editable projects](art/blockbench) · [Artist workflow](docs/VISUAL_PIPELINE.md).

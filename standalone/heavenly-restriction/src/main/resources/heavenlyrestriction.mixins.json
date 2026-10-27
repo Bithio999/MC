@@ -1,0 +1,28 @@
+{
+  "required": true,
+  "package": "dev.heavenlyrestriction.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "ChainedReincarnationMixin",
+    "ChainedDamageBuffMixin",
+    "ChainedDodgeMixin",
+    "ChainedResistanceMixin",
+    "ChainedBattlewillDamageMixin",
+    "ChainedAbilityContextMixin",
+    "ChainedLearningMixin",
+    "ChainedEffectMixin",
+    "ChainedAttributeMixin",
+    "ChainedAcquisitionMixin",
+    "ChainedRegenerationMixin",
+    "ChainedLearningGateMixin",
+    "ChainedResistanceAttributesMixin",
+    "AirSovereigntyMasteryMixin",
+    "AirSovereigntyFlightMixin",
+    "AuraHealingMixin",
+    "IndependentDamageMixin",
+    "RestrictionEnergyMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

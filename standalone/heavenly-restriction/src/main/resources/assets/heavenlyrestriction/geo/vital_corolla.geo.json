@@ -1,0 +1,441 @@
+{
+  "format_version": "1.12.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.vital_corolla",
+        "texture_width": 256,
+        "texture_height": 128,
+        "visible_bounds_width": 3,
+        "visible_bounds_height": 2.5,
+        "visible_bounds_offset": [
+          0,
+          0.75,
+          0
+        ]
+      },
+      "bones": [
+        {
+          "name": "root",
+          "pivot": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "name": "petal_0",
+          "parent": "root",
+          "pivot": [
+            0,
+            2,
+            0
+          ]
+        },
+        {
+          "name": "surface_leaf_2_400_1700_280_6",
+          "parent": "petal_0",
+          "pivot": [
+            0,
+            9,
+            7
+          ],
+          "rotation": [
+            -20,
+            0,
+            0
+          ]
+        },
+        {
+          "name": "surface_leaf_3_500_1000_200_5",
+          "parent": "petal_0",
+          "pivot": [
+            0,
+            16,
+            10
+          ],
+          "rotation": [
+            -30,
+            0,
+            0
+          ]
+        },
+        {
+          "name": "surface_gem_4_200_500_150_3",
+          "parent": "petal_0",
+          "pivot": [
+            0,
+            19,
+            11
+          ]
+        },
+        {
+          "name": "petal_1",
+          "parent": "root",
+          "pivot": [
+            0,
+            2,
+            0
+          ],
+          "rotation": [
+            0,
+            45,
+            0
+          ]
+        },
+        {
+          "name": "surface_leaf_6_400_1700_280_6",
+          "parent": "petal_1",
+          "pivot": [
+            0,
+            9,
+            7
+          ],
+          "rotation": [
+            -20,
+            0,
+            0
+          ]
+        },
+        {
+          "name": "surface_leaf_7_500_1000_200_5",
+          "parent": "petal_1",
+          "pivot": [
+            0,
+            16,
+            10
+          ],
+          "rotation": [
+            -30,
+            0,
+            0
+          ]
+        },
+        {
+          "name": "surface_gem_8_200_500_150_3",
+          "parent": "petal_1",
+          "pivot": [
+            0,
+            19,
+            11
+          ]
+        },
+        {
+          "name": "petal_2",
+          "parent": "root",
+          "pivot": [
+            0,
+            2,
+            0
+          ],
+          "rotation": [
+            0,
+            90,
+            0
+          ]
+        },
+        {
+          "name": "surface_leaf_10_400_1700_280_6",
+          "parent": "petal_2",
+          "pivot": [
+            0,
+            9,
+            7
+          ],
+          "rotation": [
+            -20,
+            0,
+            0
+          ]
+        },
+        {
+          "name": "surface_leaf_11_500_1000_200_5",
+          "parent": "petal_2",
+          "pivot": [
+            0,
+            16,
+            10
+          ],
+          "rotation": [
+            -30,
+            0,
+            0
+          ]
+        },
+        {
+          "name": "surface_gem_12_200_500_150_3",
+          "parent": "petal_2",
+          "pivot": [
+            0,
+            19,
+            11
+          ]
+        },
+        {
+          "name": "petal_3",
+          "parent": "root",
+          "pivot": [
+            0,
+            2,
+            0
+          ],
+          "rotation": [
+            0,
+            135,
+            0
+          ]
+        },
+        {
+          "name": "surface_leaf_14_400_1700_280_6",
+          "parent": "petal_3",
+          "pivot": [
+            0,
+            9,
+            7
+          ],
+          "rotation": [
+            -20,
+            0,
+            0
+          ]
+        },
+        {
+          "name": "surface_leaf_15_500_1000_200_5",
+          "parent": "petal_3",
+          "pivot": [
+            0,
+            16,
+            10
+          ],
+          "rotation": [
+            -30,
+            0,
+            0
+          ]
+        },
+        {
+          "name": "surface_gem_16_200_500_150_3",
+          "parent": "petal_3",
+          "pivot": [
+            0,
+            19,
+            11
+          ]
+        },
+        {
+          "name": "petal_4",
+          "parent": "root",
+          "pivot": [
+            0,
+            2,
+            0
+          ],
+          "rotation": [
+            0,
+            180,
+            0
+          ]
+        },
+        {
+          "name": "surface_leaf_18_400_1700_280_6",
+          "parent": "petal_4",
+          "pivot": [
+            0,
+            9,
+            7
+          ],
+          "rotation": [
+            -20,
+            0,
+            0
+          ]
+        },
+        {
+          "name": "surface_leaf_19_500_1000_200_5",
+          "parent": "petal_4",
+          "pivot": [
+            0,
+            16,
+            10
+          ],
+          "rotation": [
+            -30,
+            0,
+            0
+          ]
+        },
+        {
+          "name": "surface_gem_20_200_500_150_3",
+          "parent": "petal_4",
+          "pivot": [
+            0,
+            19,
+            11
+          ]
+        },
+        {
+          "name": "petal_5",
+          "parent": "root",
+          "pivot": [
+            0,
+            2,
+            0
+          ],
+          "rotation": [
+            0,
+            225,
+            0
+          ]
+        },
+        {
+          "name": "surface_leaf_22_400_1700_280_6",
+          "parent": "petal_5",
+          "pivot": [
+            0,
+            9,
+            7
+          ],
+          "rotation": [
+            -20,
+            0,
+            0
+          ]
+        },
+        {
+          "name": "surface_leaf_23_500_1000_200_5",
+          "parent": "petal_5",
+          "pivot": [
+            0,
+            16,
+            10
+          ],
+          "rotation": [
+            -30,
+            0,
+            0
+          ]
+        },
+        {
+          "name": "surface_gem_24_200_500_150_3",
+          "parent": "petal_5",
+          "pivot": [
+            0,
+            19,
+            11
+          ]
+        },
+        {
+          "name": "petal_6",
+          "parent": "root",
+          "pivot": [
+            0,
+            2,
+            0
+          ],
+          "rotation": [
+            0,
+            270,
+            0
+          ]
+        },
+        {
+          "name": "surface_leaf_26_400_1700_280_6",
+          "parent": "petal_6",
+          "pivot": [
+            0,
+            9,
+            7
+          ],
+          "rotation": [
+            -20,
+            0,
+            0
+          ]
+        },
+        {
+          "name": "surface_leaf_27_500_1000_200_5",
+          "parent": "petal_6",
+          "pivot": [
+            0,
+            16,
+            10
+          ],
+          "rotation": [
+            -30,
+            0,
+            0
+          ]
+        },
+        {
+          "name": "surface_gem_28_200_500_150_3",
+          "parent": "petal_6",
+          "pivot": [
+            0,
+            19,
+            11
+          ]
+        },
+        {
+          "name": "petal_7",
+          "parent": "root",
+          "pivot": [
+            0,
+            2,
+            0
+          ],
+          "rotation": [
+            0,
+            315,
+            0
+          ]
+        },
+        {
+          "name": "surface_leaf_30_400_1700_280_6",
+          "parent": "petal_7",
+          "pivot": [
+            0,
+            9,
+            7
+          ],
+          "rotation": [
+            -20,
+            0,
+            0
+          ]
+        },
+        {
+          "name": "surface_leaf_31_500_1000_200_5",
+          "parent": "petal_7",
+          "pivot": [
+            0,
+            16,
+            10
+          ],
+          "rotation": [
+            -30,
+            0,
+            0
+          ]
+        },
+        {
+          "name": "surface_gem_32_200_500_150_3",
+          "parent": "petal_7",
+          "pivot": [
+            0,
+            19,
+            11
+          ]
+        },
+        {
+          "name": "surface_gem_33_400_900_400_3",
+          "parent": "root",
+          "pivot": [
+            0,
+            5,
+            0
+          ]
+        }
+      ]
+    }
+  ]
+}
