@@ -20,7 +20,7 @@ public final class ChainedSkill extends Skill {
     @Override public MutableComponent getName(){return Component.literal("Chained");}
     @Override public MutableComponent getColoredName(){return getName().withStyle(net.minecraft.ChatFormatting.GOLD);}
     @Override public ResourceLocation getSkillIcon(){return WildHunt.id("textures/skill/chained.png");}
-    @Override public MutableComponent getSkillDescription(){return Component.literal("Heavenly Restriction. True passive: 5x aura-capacity gains from every source, excluding the saved starting aura pool; no future maximum-magicule gains; natural magicule regeneration becomes aura regeneration. New skills are restricted to resistances/nullifications and your recorded reincarnation skills and their derived grants; Battlewills remain learnable. Resistance/Nullification acquisition costs current aura instead of permanent magicules. Toggle: +9 Battlewill learning/mastery points, +19 resistance learning points, 5x Battlewill damage, 3x numeric Battlewill buffs and 3x attack damage. Mastered toggle: lower enemy resistance/nullification by one tier for your hits and ignore dodge. In slot: 100% projectile dodge, 25% other dodge, subject to explicit source bypass. Press: Severance Rush, an instant, collision-safe 16-block teleport, with 3-block path and 4-block arrival hits. Costs 2% current aura; path damage is 3 times the square root of aura spent, arrival damage is twice that.");}
+    @Override public MutableComponent getSkillDescription(){return Component.literal("Heavenly Restriction. True passive: 5x aura-capacity gains from every source, excluding the saved starting aura pool; no future maximum-magicule gains; natural magicule regeneration becomes aura regeneration. New skills are restricted to resistances/nullifications and your recorded reincarnation skills and their derived grants; Battlewills remain learnable; later lineage evolutions also grant aura recovery. Resistance/Nullification acquisition costs current aura instead of permanent magicules. Toggle: +9 Battlewill learning/mastery points, +19 resistance learning points, 5x Battlewill damage, 3x numeric Battlewill buffs and 3x attack damage. Mastered toggle: lower enemy resistance/nullification by one tier for your hits and ignore dodge. In slot: 100% projectile dodge, 25% other dodge, subject to explicit source bypass. Press: Severance Rush, an instant, collision-safe 16-block teleport, with 3-block path and 4-block arrival hits. Costs 2% current aura; no cooldown; path damage is 1.5 times the square root of aura spent, arrival damage is twice that.");}
     @Override public int getMaxMastery(){return 1_000;}
     @Override public double getDefaultAcquiringMagiculeCost(){return 0;}
     @Override public double getMagiculeCost(LivingEntity e,ManasSkillInstance i,int mode){return 0;}
@@ -38,17 +38,17 @@ public final class ChainedSkill extends Skill {
         if(!isInSlot(e,i) || source.is(DamageTypeTags.BYPASSES_INVULNERABILITY) || ((TensuraDamageSource)source).tensura$isDodgeBypass() || ChainedState.mastered(GodlyPassives.attacker(source)))return true;
         return e.getRandom().nextDouble()>=(source.getDirectEntity() instanceof Projectile || source.is(DamageTypeTags.IS_PROJECTILE)?1:.25);
     }
-    public static float pathDamage(double spent){return (float)(3*Math.sqrt(Math.max(0,spent)));}
+    public static float pathDamage(double spent){return (float)(1.5*Math.sqrt(Math.max(0,spent)));}
     public static float arrivalDamage(double spent){return pathDamage(spent)*2;}
     @Override public void onPressed(ManasSkillInstance i,LivingEntity caster,int slot,int mode){
-        if(!(caster.level() instanceof ServerLevel level) || mode!=0 || i.onCoolDown(0) || !canInteractSkill(i,caster) || !canActivateSkill(i,caster,0))return;
+        if(!(caster.level() instanceof ServerLevel level) || mode!=0 || !canInteractSkill(i,caster) || !canActivateSkill(i,caster,0))return;
         Vec3 start=caster.position(),direction=caster.getLookAngle().normalize(),end=start;
         for(double distance=.25;distance<=16;distance+=.25){var at=start.add(direction.scale(distance));
             var box=caster.getBoundingBox().move(at.subtract(start));
             if(box.minY<level.getMinBuildHeight() || box.maxY>level.getMaxBuildHeight() || !level.hasChunkAt(BlockPos.containing(at)) || !level.getWorldBorder().isWithinBounds(box) || !level.noCollision(caster,box))break;end=at;}
         if(end.distanceToSqr(start)<.0625)return;
         var energy=TensuraStorages.getExistenceFrom(caster);double spent=getAuraCost(caster,i,0);if(!Double.isFinite(spent) || spent<=0 || energy.getAura()<spent)return;
-        energy.setAura(energy.getAura()-spent);energy.markDirty();i.setCoolDown(6,0);addMasteryPoint(i,caster);
+        energy.setAura(energy.getAura()-spent);energy.markDirty();i.setCoolDown(0,0);addMasteryPoint(i,caster);
         Vec3 from=start.add(0,caster.getBbHeight()*.5,0),to=end.add(0,caster.getBbHeight()*.5,0),travel=to.subtract(from);double length=travel.lengthSqr();
         for(var target:level.getEntitiesOfClass(LivingEntity.class,new AABB(from,to).inflate(4),e->HunterData.canHarm(caster,e))){
             Vec3 center=target.getBoundingBox().getCenter(),closest=from.add(travel.scale(Math.clamp(center.subtract(from).dot(travel)/length,0,1)));

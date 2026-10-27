@@ -2,7 +2,7 @@
 
 [Main Page](https://github.com/Bithio999/MC/wiki/Home) · [Skills](https://github.com/Bithio999/MC/wiki/Skills) · [Ability index](https://github.com/Bithio999/MC/wiki/Abilities) · [Damage types](https://github.com/Bithio999/MC/wiki/Damage-Types)
 
-**Apex Renewal** is an aura-powered Extra Skill granted by [Apex Hunter](https://github.com/Bithio999/MC/wiki/Apex-Hunter). It provides recovery inspired by native Ultraspeed Regeneration.
+**Apex Renewal** is an aura-powered Extra Skill granted by [Apex Hunter](https://github.com/Bithio999/MC/wiki/Apex-Hunter) or [Heavenly Restricted](https://github.com/Bithio999/MC/wiki/Heavenly-Restricted). It provides recovery inspired by native Ultraspeed Regeneration.
 
 | Skill data | Apex Renewal |
 | --- | --- |
@@ -13,12 +13,12 @@
 | Activation | Passive toggle |
 | Registry ID | `wildhunt:apex_renewal` |
 | **Obtaining** | |
-| Race | [Apex Hunter](https://github.com/Bithio999/MC/wiki/Apex-Hunter) |
+| Race | [Apex Hunter](https://github.com/Bithio999/MC/wiki/Apex-Hunter) or [Heavenly Restricted](https://github.com/Bithio999/MC/wiki/Heavenly-Restricted) |
 | Acquisition cost | No permanent magicule cost |
 
 ## Obtaining
 
-Evolve into [Apex Hunter](https://github.com/Bithio999/MC/wiki/Apex-Hunter). Native racial learning grants and enables this tier. It is not a separate reincarnation Unique roll.
+Evolve into [Apex Hunter](https://github.com/Bithio999/MC/wiki/Apex-Hunter) or [Heavenly Restricted](https://github.com/Bithio999/MC/wiki/Heavenly-Restricted). Native racial learning grants and enables this tier. It is not a separate reincarnation Unique roll. The Heavenly Restriction lineage explicitly permits this racial grant despite Chained’s learning restriction; existing eligible characters receive missing tiers after upgrading.
 
 ## Usage
 

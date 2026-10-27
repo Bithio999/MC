@@ -2,7 +2,7 @@
 
 [Main Page](../README.md) · [Skills](Skills.md) · [Ability index](Abilities.md) · [Damage types](Damage-Types.md)
 
-**Apex Renewal** is an aura-powered Extra Skill granted by [Apex Hunter](Apex-Hunter.md). It provides recovery inspired by native Ultraspeed Regeneration.
+**Apex Renewal** is an aura-powered Extra Skill granted by [Apex Hunter](Apex-Hunter.md) or [Heavenly Restricted](Heavenly-Restricted.md). It provides recovery inspired by native Ultraspeed Regeneration.
 
 | Skill data | Apex Renewal |
 | --- | --- |
@@ -13,12 +13,12 @@
 | Activation | Passive toggle |
 | Registry ID | `wildhunt:apex_renewal` |
 | **Obtaining** | |
-| Race | [Apex Hunter](Apex-Hunter.md) |
+| Race | [Apex Hunter](Apex-Hunter.md) or [Heavenly Restricted](Heavenly-Restricted.md) |
 | Acquisition cost | No permanent magicule cost |
 
 ## Obtaining
 
-Evolve into [Apex Hunter](Apex-Hunter.md). Native racial learning grants and enables this tier. It is not a separate reincarnation Unique roll.
+Evolve into [Apex Hunter](Apex-Hunter.md) or [Heavenly Restricted](Heavenly-Restricted.md). Native racial learning grants and enables this tier. It is not a separate reincarnation Unique roll. The Heavenly Restriction lineage explicitly permits this racial grant despite Chained’s learning restriction; existing eligible characters receive missing tiers after upgrading.
 
 ## Usage
 

@@ -18,6 +18,7 @@ public final class ApexTimers {
                 player.setHealth(Math.min(health, player.getMaxHealth()));
             }
         });
+        RestrictedRace.migrateRecovery(player);
         MythicEvolution.migrate(player);
         var storage = SkillAPI.getSkillsFrom(player);
         for (var instance : storage.getLearnedSkills()) {
@@ -57,7 +58,7 @@ public final class ApexTimers {
         if(entity instanceof net.minecraft.server.level.ServerPlayer p)AirSovereigntyArt.tick(p);
         GodlyPassives.tick(entity);AuraRegenerationSkill.tick(entity);GodlySkill.tickSlow(entity);MythicArts.tickTarget(entity);
         if(entity.tickCount%10==0 && ChainedState.owned(entity))ChainedState.refresh(entity);
-        if(entity.tickCount%20==0)MythicEvolution.migrate(entity);
+        if(entity.tickCount%20==0){if(entity instanceof net.minecraft.server.level.ServerPlayer)RestrictedRace.migrateRecovery(entity);MythicEvolution.migrate(entity);}
         var data = entity.getPersistentData().getCompound("wildhunt");
         // Legacy marks no longer affect any attack and can be discarded on load.
         if (data.contains("oil_stacks") || data.contains("rime_stacks"))

@@ -49,6 +49,7 @@ New abilities are restricted to:
 - Resistance and Nullification skills.
 - Skills genuinely granted by reincarnation, and skills subsequently granted through their native ability callbacks or inherited parent chain.
 - Chained itself.
+- The lineage’s racial aura-recovery grants: Hunter’s Recovery at Unshackled, Apex Renewal at Heavenly Restricted, and Sovereign Rebirth at Heavenbreaker. This exception does not open unrelated Extra Skills.
 
 **Resistance and Nullification acquisition costs are paid from current aura**, using Tensura’s configured acquisition amount and acquisition-cost gamerule. They do not consume permanent magicule capacity. Native free reward grants remain free. This applies when a latent resistance finishes learning and when it upgrades to Nullification.
 
@@ -116,22 +117,22 @@ Gain **100% dodge chance against projectiles** and **25% against other incoming 
 | Damage type | Aura slash / Battlewill |
 | Damage ID | `tensura:aura_slash` |
 | Resource cost | **2% of current aura**, paid once |
-| Cooldown | **6 seconds** |
+| Cooldown | **None** |
 | Movement | Instant teleport up to **16 blocks** along your look direction |
 | Path damage radius | **3 blocks** |
 | Arrival damage radius | **4 blocks** |
 
 Teleport instantly along your aim, like Martial Master’s movement art. The same activation resolves one hit along the route and an additional hit at the destination. A victim caught in both receives both hits, including inside the ordinary hurt cooldown. Each victim receives at most one path hit and one arrival hit.
 
-The endpoint stops before solid body collisions, unloaded terrain, the world border or the build-height boundary. Looking upward or downward changes the teleport direction. If there is no usable movement or no aura, the cast spends no aura or cooldown. The teleport is not a timed channel or a movement-over-time attack.
+The endpoint stops before solid body collisions, unloaded terrain, the world border or the build-height boundary. Looking upward or downward changes the teleport direction. If there is no usable movement or no aura, the cast spends no aura. The teleport is not a timed channel or a movement-over-time attack. There is no skill cooldown; each successive press spends 2% of the aura remaining at that moment.
 
 Let **A** be the aura actually paid:
 
 - **A = 0.02 × current aura**.
-- **Path damage = 3 × √A**.
-- **Arrival damage = 6 × √A**.
+- **Path damage = 1.5 × √A**.
+- **Arrival damage = 3 × √A**.
 
-At **100,000 current aura**, the cast pays **2,000 aura** and has about **134.16 path damage** plus **268.33 arrival damage** before native handling. With Martial Supremacy enabled, those become about **670.82** and **1,341.64**. The formula uses actual aura spent, with no extra EP multiplier or mastery damage multiplier.
+At **100,000 current aura**, the cast pays **2,000 aura** and has about **67.08 path damage** plus **134.16 arrival damage** before native handling. With Martial Supremacy enabled, those become about **335.41** and **670.82**. The formula uses actual aura spent, with no extra EP multiplier or mastery damage multiplier.
 
 A brief chain separates into broken links along the route, with a pale pressure burst at arrival. The trail remains visible after the instantaneous teleport; it does not move the player over its lifetime.
 

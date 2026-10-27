@@ -2,7 +2,7 @@
 
 [Main Page](https://github.com/Bithio999/MC/wiki/Home) · [Skills](https://github.com/Bithio999/MC/wiki/Skills) · [Ability index](https://github.com/Bithio999/MC/wiki/Abilities) · [Damage types](https://github.com/Bithio999/MC/wiki/Damage-Types)
 
-**Sovereign Rebirth** is an aura-powered Extra Skill granted by [Sovereign Hunter](https://github.com/Bithio999/MC/wiki/Sovereign-Hunter). It provides recovery inspired by native Infinite Regeneration.
+**Sovereign Rebirth** is an aura-powered Extra Skill granted by [Sovereign Hunter](https://github.com/Bithio999/MC/wiki/Sovereign-Hunter) or [Heavenbreaker](https://github.com/Bithio999/MC/wiki/Heavenbreaker). It provides recovery inspired by native Infinite Regeneration.
 
 | Skill data | Sovereign Rebirth |
 | --- | --- |
@@ -13,12 +13,12 @@
 | Activation | Passive toggle |
 | Registry ID | `wildhunt:sovereign_rebirth` |
 | **Obtaining** | |
-| Race | [Sovereign Hunter](https://github.com/Bithio999/MC/wiki/Sovereign-Hunter) |
+| Race | [Sovereign Hunter](https://github.com/Bithio999/MC/wiki/Sovereign-Hunter) or [Heavenbreaker](https://github.com/Bithio999/MC/wiki/Heavenbreaker) |
 | Acquisition cost | No permanent magicule cost |
 
 ## Obtaining
 
-Evolve into [Sovereign Hunter](https://github.com/Bithio999/MC/wiki/Sovereign-Hunter). Native racial learning grants and enables this tier. It is not a separate reincarnation Unique roll.
+Evolve into [Sovereign Hunter](https://github.com/Bithio999/MC/wiki/Sovereign-Hunter) or [Heavenbreaker](https://github.com/Bithio999/MC/wiki/Heavenbreaker). Native racial learning grants and enables this tier. It is not a separate reincarnation Unique roll. The Heavenly Restriction lineage explicitly permits this racial grant despite Chained’s learning restriction; existing eligible characters receive missing tiers after upgrading.
 
 ## Usage
 

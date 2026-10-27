@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.34.1 — Restricted recovery and cooldown-free dash
+
+- Grant Hunter’s Recovery at Unshackled, Apex Renewal at Heavenly Restricted, and Sovereign Rebirth at Heavenbreaker through native racial learning. Retain earlier tiers; only the strongest toggled tier heals.
+- Permit only these racial recovery grants through Chained’s learning restriction. Migrate missing eligible recovery tiers on existing characters without regranting Chained.
+- Halve Severance Rush damage to 1.5 × √(aura paid) along the path and 3 × √(aura paid) at arrival. Remove the dash cooldown, including old saved cooldowns, while retaining its 2% current-aura cost.
+- Update the race and skill wiki articles and release download links.
+
 ## 0.34.0 — Total EP progression and Chained tuning
 
 - Set Severance Rush path damage to 3 × √(aura paid) and arrival damage to 6 × √(aura paid).

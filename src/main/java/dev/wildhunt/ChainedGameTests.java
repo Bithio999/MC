@@ -48,6 +48,52 @@ public final class ChainedGameTests {
         near(h,EnergyHelper.getBaseMaxEP(chained)-baseBefore,100,"Chained changed raw EP accounting");
         near(h,EnergyHelper.getMaxEP(chained)-totalBefore,500,"Chained capacity bonus missing from total EP");h.succeed();
     }
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void restrictedEvolutionsGrantOnlyTheirRecoveryTiersThroughTheVow(GameTestHelper h){
+        var p=player(h);ReincarnationMenu.setRace(p,WildHunt.RESTRICTED.getFirst().get(),true,false);
+        var skills=SkillAPI.getSkillsFrom(p);double mp=EnergyHelper.getMaxMagicule(p);
+        // The shared combat fixture starts as Sovereign Hunter; remove its retained recovery skills.
+        for(var recovery:WildHunt.REGENERATION)skills.forgetSkill(recovery.get());
+        for(int stage=1;stage<=4;stage++){
+            var race=WildHunt.RESTRICTED.get(stage).get();RaceAPI.getRaceFrom(p).setRace(race,false);
+            race.learnIntrinsicSkills(race.createDefaultInstance(),p);
+            for(int tier=1;tier<=3;tier++){
+                var recovery=WildHunt.REGENERATION.get(tier-1).get();var learned=skills.getSkill(recovery);
+                h.assertTrue(learned.isPresent()==(tier<stage),"Wrong recovery tier at evolution "+stage+", tier "+tier);
+                if(learned.isPresent())h.assertTrue(learned.get().isToggled(),"New recovery was not enabled");
+                h.assertTrue(!ChainedState.inherited(p,recovery),"Racial recovery incorrectly became a reincarnation root");
+            }
+            near(h,EnergyHelper.getMaxMagicule(p),mp,"Racial recovery spent magicule capacity");
+            h.assertTrue(!HunterData.learnReward(p,ExtraSkills.MAGIC_SENSE.get()),"Racial exemption leaked to unrelated Extras");
+        }
+        var energy=TensuraStorages.getExistenceFrom(p);energy.setAura(10000);energy.setMagicule(0);
+        energy.setSpiritualHealth(p.getAttributeValue(TensuraAttributes.MAX_SPIRITUAL_HEALTH)-10);p.setHealth(p.getMaxHealth()-20);p.tickCount=20;
+        AuraRegenerationSkill.tick(p);
+        near(h,p.getHealth(),p.getMaxHealth(),"Restricted Sovereign Rebirth did not heal HP");
+        near(h,energy.getSpiritualHealth(),p.getAttributeValue(TensuraAttributes.MAX_SPIRITUAL_HEALTH),"Restricted Sovereign Rebirth did not heal SHP");
+        near(h,energy.getAura(),9300,"Recovery tiers stacked or used the wrong cost");near(h,energy.getMagicule(),0,"Aura recovery used magicules");h.succeed();
+    }
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void existingRestrictedRecoveryMigrationPreservesMasteryAndDisabledToggles(GameTestHelper h){
+        var p=player(h);ReincarnationMenu.setRace(p,WildHunt.RESTRICTED.getFirst().get(),true,false);
+        var race=WildHunt.RESTRICTED.getLast().get();RaceAPI.getRaceFrom(p).setRace(race,false);
+        var storage=SkillAPI.getSkillsFrom(p);
+        // Recreate an existing save that reached the last stage before recovery was added.
+        for(var skill:WildHunt.REGENERATION)storage.forgetSkill(skill.get());
+        race.learnIntrinsicSkills(race.createDefaultInstance(),p);
+        var existing=storage.getSkill(WildHunt.REGENERATION.getFirst().get()).orElseThrow();existing.setMastery(73);existing.onToggleOff(p);
+        storage.forgetSkill(WildHunt.REGENERATION.get(1).get());storage.forgetSkill(WildHunt.REGENERATION.getLast().get());
+        HunterData.of(p).remove("restricted_recovery_stage");RestrictedRace.migrateRecovery(p);
+        for(var skill:WildHunt.REGENERATION)h.assertTrue(storage.getSkill(skill.get()).isPresent(),"Migration missed a lower recovery tier");
+        var first=storage.getSkill(WildHunt.REGENERATION.getFirst().get()).orElseThrow();near(h,first.getMastery(),73,"Migration replaced existing mastery");h.assertTrue(!first.isToggled(),"Migration enabled a previously disabled tier");
+        RestrictedRace.migrateRecovery(p);near(h,first.getMastery(),73,"Migration reset mastery");h.assertTrue(!first.isToggled(),"Migration re-enabled an existing disabled tier");
+        var second=player(h);ReincarnationMenu.setRace(second,WildHunt.RESTRICTED.getFirst().get(),true,false);
+        for(var recovery:WildHunt.REGENERATION)SkillAPI.getSkillsFrom(second).forgetSkill(recovery.get());
+        dev.wildhunt.myths.DuoSystem.saveSecondary(second,WildHunt.RESTRICTED.get(2).get().createDefaultInstance());
+        RestrictedRace.migrateRecovery(second);
+        h.assertTrue(SkillAPI.getSkillsFrom(second).getSkill(WildHunt.REGENERATION.getFirst().get()).isPresent(),"Secondary-lineage migration missed recovery");
+        h.assertTrue(!HunterData.learnReward(second,WildHunt.REGENERATION.getLast().get()),"Recovery exemption escaped its scope or stage");h.succeed();
+    }
     static ManasSkillInstance vow(net.minecraft.world.entity.LivingEntity p,boolean on){
         HunterData.learnReward(p,WildHunt.CHAINED.get());var i=SkillAPI.getSkillsFrom(p).getSkill(WildHunt.CHAINED.get()).orElseThrow();if(on)i.onToggleOn(p);return i;
     }
@@ -133,7 +179,7 @@ public final class ChainedGameTests {
         var p=player(h);var storage=SkillAPI.getSkillsFrom(p);
         for(int n=1;n<5;n++){
             var race=WildHunt.RESTRICTED.get(n).get();var instance=race.createDefaultInstance();
-            h.assertTrue(race.getIntrinsicSkills(instance,p).isEmpty(),"Later race advertises Chained: "+n);
+            h.assertTrue(!race.getIntrinsicSkills(instance,p).contains(WildHunt.CHAINED.get()),"Later race advertises Chained: "+n);
             RaceAPI.getRaceFrom(p).setRace(race,false);instance.learnIntrinsicSkills(p);
             h.assertTrue(!ChainedState.owned(p),"Direct later-stage selection granted Chained: "+n);
         }
@@ -173,8 +219,8 @@ public final class ChainedGameTests {
     @GameTest(template="empty",timeoutTicks=100)
     public static void dashDamageUsesRebalancedActualAuraPaymentWithoutAFloor(GameTestHelper h){
         near(h,ChainedSkill.pathDamage(0),0,"Empty-aura damage floor");near(h,ChainedSkill.arrivalDamage(0),0,"Empty-aura arrival floor");
-        near(h,ChainedSkill.pathDamage(25),15,"Rebalanced path formula");near(h,ChainedSkill.arrivalDamage(25),30,"Rebalanced arrival formula");
-        near(h,ChainedSkill.pathDamage(100),30,"Paid-aura scaling");near(h,ChainedSkill.arrivalDamage(100),60,"Arrival paid-aura scaling");h.succeed();
+        near(h,ChainedSkill.pathDamage(25),7.5,"Rebalanced path formula");near(h,ChainedSkill.arrivalDamage(25),15,"Rebalanced arrival formula");
+        near(h,ChainedSkill.pathDamage(100),15,"Paid-aura scaling");near(h,ChainedSkill.arrivalDamage(100),30,"Arrival paid-aura scaling");h.succeed();
     }
     @GameTest(template="empty",timeoutTicks=100)
     public static void truePassiveCoversBaseModifierAndHelperGainsWhileOffAndUnslotted(GameTestHelper h){
@@ -236,7 +282,7 @@ public final class ChainedGameTests {
     public static void dashPaysOnceTravelsSixteenAndAddsArrivalDamageInsideNativeHurtCooldown(GameTestHelper h){
         // FakePlayer connections deliberately discard teleports; use a living native caster.
         var anchor=player(h);var p=target(h,anchor.position());EnergyHelper.setBaseMaxEP(p,2000);TensuraStorages.getExistenceFrom(p).setMagicule(1000);var i=vow(p,false);p.setYRot(-90);p.setXRot(0);Vec3 start=p.position();var energy=TensuraStorages.getExistenceFrom(p);energy.setAura(1000);var path=target(h,start.add(8,0,0));var arrival=target(h,start.add(16,0,0));var outside=target(h,start.add(8,0,4));
-        afterTracking(h,List.of(p,path,arrival,outside),()->{double before=energy.getAura();WildHunt.CHAINED.get().onPressed(i,p,0,0);near(h,p.getX()-start.x,16,"Dash length");near(h,energy.getAura(),before*.98,"Dash charged more/less than 2% current aura");h.assertTrue(path.getHealth()<1024 && arrival.getHealth()<path.getHealth() && outside.getHealth()==1024,"Path/arrival double hit or radius incorrect");h.assertTrue(TensuraDamageHelper.isBattlewill(WildHunt.CHAINED.get().createSource(i,p,TensuraDamageTypes.AURA_SLASH,0),p),"Dash is not native Battlewill damage");double aura=energy.getAura();WildHunt.CHAINED.get().onPressed(i,p,0,0);near(h,energy.getAura(),aura,"Cooldown allowed another payment");h.succeed();});
+        afterTracking(h,List.of(p,path,arrival,outside),()->{double before=energy.getAura();WildHunt.CHAINED.get().onPressed(i,p,0,0);near(h,p.getX()-start.x,16,"Dash length");near(h,energy.getAura(),before*.98,"Dash charged more/less than 2% current aura");h.assertTrue(path.getHealth()<1024 && arrival.getHealth()<path.getHealth() && outside.getHealth()==1024,"Path/arrival double hit or radius incorrect");h.assertTrue(TensuraDamageHelper.isBattlewill(WildHunt.CHAINED.get().createSource(i,p,TensuraDamageTypes.AURA_SLASH,0),p),"Dash is not native Battlewill damage");double aura=energy.getAura();i.setCoolDown(6,0);WildHunt.CHAINED.get().onPressed(i,p,0,0);near(h,p.getX()-start.x,32,"Consecutive press did not teleport immediately");near(h,energy.getAura(),aura*.98,"Consecutive press did not pay exactly 2% again");h.assertTrue(!i.onCoolDown(0),"Dash retained a cooldown");h.succeed();});
     }
     @GameTest(template="empty",timeoutTicks=100)
     public static void dashStopsBeforeSolidWallsAndBlockedDashIsFree(GameTestHelper h){

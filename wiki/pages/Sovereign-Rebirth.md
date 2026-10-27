@@ -2,7 +2,7 @@
 
 [Main Page](../README.md) · [Skills](Skills.md) · [Ability index](Abilities.md) · [Damage types](Damage-Types.md)
 
-**Sovereign Rebirth** is an aura-powered Extra Skill granted by [Sovereign Hunter](Sovereign-Hunter.md). It provides recovery inspired by native Infinite Regeneration.
+**Sovereign Rebirth** is an aura-powered Extra Skill granted by [Sovereign Hunter](Sovereign-Hunter.md) or [Heavenbreaker](Heavenbreaker.md). It provides recovery inspired by native Infinite Regeneration.
 
 | Skill data | Sovereign Rebirth |
 | --- | --- |
@@ -13,12 +13,12 @@
 | Activation | Passive toggle |
 | Registry ID | `wildhunt:sovereign_rebirth` |
 | **Obtaining** | |
-| Race | [Sovereign Hunter](Sovereign-Hunter.md) |
+| Race | [Sovereign Hunter](Sovereign-Hunter.md) or [Heavenbreaker](Heavenbreaker.md) |
 | Acquisition cost | No permanent magicule cost |
 
 ## Obtaining
 
-Evolve into [Sovereign Hunter](Sovereign-Hunter.md). Native racial learning grants and enables this tier. It is not a separate reincarnation Unique roll.
+Evolve into [Sovereign Hunter](Sovereign-Hunter.md) or [Heavenbreaker](Heavenbreaker.md). Native racial learning grants and enables this tier. It is not a separate reincarnation Unique roll. The Heavenly Restriction lineage explicitly permits this racial grant despite Chained’s learning restriction; existing eligible characters receive missing tiers after upgrading.
 
 ## Usage
 

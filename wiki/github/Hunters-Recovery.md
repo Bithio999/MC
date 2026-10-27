@@ -2,7 +2,7 @@
 
 [Main Page](https://github.com/Bithio999/MC/wiki/Home) · [Skills](https://github.com/Bithio999/MC/wiki/Skills) · [Ability index](https://github.com/Bithio999/MC/wiki/Abilities) · [Damage types](https://github.com/Bithio999/MC/wiki/Damage-Types)
 
-**Hunter’s Recovery** is an aura-powered Extra Skill granted by [Awakened Hunter](https://github.com/Bithio999/MC/wiki/Awakened-Hunter). It provides recovery inspired by native Self Regeneration.
+**Hunter’s Recovery** is an aura-powered Extra Skill granted by [Awakened Hunter](https://github.com/Bithio999/MC/wiki/Awakened-Hunter) or [Unshackled](https://github.com/Bithio999/MC/wiki/Unshackled). It provides recovery inspired by native Self Regeneration.
 
 | Skill data | Hunter’s Recovery |
 | --- | --- |
@@ -13,12 +13,12 @@
 | Activation | Passive toggle |
 | Registry ID | `wildhunt:hunters_recovery` |
 | **Obtaining** | |
-| Race | [Awakened Hunter](https://github.com/Bithio999/MC/wiki/Awakened-Hunter) |
+| Race | [Awakened Hunter](https://github.com/Bithio999/MC/wiki/Awakened-Hunter) or [Unshackled](https://github.com/Bithio999/MC/wiki/Unshackled) |
 | Acquisition cost | No permanent magicule cost |
 
 ## Obtaining
 
-Evolve into [Awakened Hunter](https://github.com/Bithio999/MC/wiki/Awakened-Hunter). Native racial learning grants and enables this tier. It is not a separate reincarnation Unique roll.
+Evolve into [Awakened Hunter](https://github.com/Bithio999/MC/wiki/Awakened-Hunter) or [Unshackled](https://github.com/Bithio999/MC/wiki/Unshackled). Native racial learning grants and enables this tier. It is not a separate reincarnation Unique roll. The Heavenly Restriction lineage explicitly permits this racial grant despite Chained’s learning restriction; existing eligible characters receive missing tiers after upgrading.
 
 ## Usage
 

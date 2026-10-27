@@ -12,6 +12,7 @@
 | Registry ID | `wildhunt:unshackled` |
 | Ancestry | Human |
 | Stage | 2 / 4 evolutions |
+| Recovery Extra | [Hunter’s Recovery](https://github.com/Bithio999/MC/wiki/Hunters-Recovery) |
 | Retained Unique | [Chained](https://github.com/Bithio999/MC/wiki/Chained); granted only by Fettered Human |
 | HP racial bonus | +300 |
 | SHP racial bonus | +1,600 |
@@ -30,6 +31,10 @@ The race preserves the player’s appearance and equipment. Stage bonuses replac
 ## Retained skill
 
 Only Fettered Human grants [Chained](https://github.com/Bithio999/MC/wiki/Chained). This evolution preserves an existing Chained and its mastery but does not grant or regrant it. Chained supplies the lineage’s true restriction and martial abilities. Its active [Severance Rush](https://github.com/Bithio999/MC/wiki/Chained#severance-rush) is an instant teleport that deals native **Aura slash / Battlewill** damage (`tensura:aura_slash`). The race’s attribute bonuses are passive traits with no direct damage.
+
+## Aura recovery
+
+This stage grants and enables [Hunter’s Recovery](https://github.com/Bithio999/MC/wiki/Hunters-Recovery) through native racial learning, without a magicule acquisition cost. Earlier aura-recovery tiers remain learned; only the strongest toggled tier heals. These racial grants are specifically permitted by Chained. Existing characters receive missing eligible tiers automatically after upgrading.
 
 ## Evolution
 

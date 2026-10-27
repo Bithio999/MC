@@ -35,12 +35,33 @@ public final class RestrictedRace extends TensuraRace {
     @Override public Pair<Double,Double> getBaseMagiculeRange(){return Pair.of(50d,100d);}
     @Override public void resetExistenceData(LivingEntity e){
         super.resetExistenceData(e);
+        HunterData.of(e).remove("restricted_recovery_stage");
         // Capture only the native race roll, before separate reincarnation rewards.
         ChainedState.recordStartingAura(e,io.github.manasmods.tensura.util.EnergyHelper.getBaseMaxAura(e));
         ChainedState.refresh(e);
     }
     @Override public Alignment getAlignment(){return Alignment.DEFAULT;}
-    @Override public List<ManasSkill> getIntrinsicSkills(ManasRaceInstance i,LivingEntity e){return stage==0?List.of(WildHunt.CHAINED.get()):List.of();}
+    @Override public List<ManasSkill> getIntrinsicSkills(ManasRaceInstance i,LivingEntity e){return stage==0?List.of(WildHunt.CHAINED.get()):java.util.stream.IntStream.range(0,Math.max(0,stage-1)).mapToObj(n->(ManasSkill)WildHunt.REGENERATION.get(n).get()).toList();}
+    @Override public void learnIntrinsicSkills(ManasRaceInstance i,LivingEntity e){
+        // Exempt only these named racial recovery grants, not arbitrary Extra skills.
+        try(var scope=ChainedContext.racialRecovery(e,Math.max(0,stage-1))){super.learnIntrinsicSkills(i,e);}
+    }
+    public static void migrateRecovery(LivingEntity e){
+        if(e.level().isClientSide())return;
+        var primary=dev.wildhunt.myths.DuoSystem.primary(e);
+        var secondary=dev.wildhunt.myths.DuoSystem.secondary(e);
+        var best=java.util.stream.Stream.concat(primary.stream(),secondary.stream())
+            .filter(i->i.getRace() instanceof RestrictedRace r && r.stage>=2)
+            .max(java.util.Comparator.comparingInt(i->((RestrictedRace)i.getRace()).stage));
+        if(best.isEmpty())return;
+        var instance=best.get();var race=(RestrictedRace)instance.getRace();var data=HunterData.of(e);
+        if(data.getInt("restricted_recovery_stage")>=race.stage)return;
+        race.learnIntrinsicSkills(instance,e);
+        if(race.getIntrinsicSkills(instance,e).stream().allMatch(s->io.github.manasmods.manascore.skill.api.SkillAPI.getSkillsFrom(e).getSkill(s).isPresent())){
+            data.putInt("restricted_recovery_stage",race.stage);
+            if(secondary.isPresent() && best.get()==secondary.get())dev.wildhunt.myths.DuoSystem.saveSecondary(e,instance);
+        }
+    }
     @Override public List<ManasRace> getNextEvolutions(ManasRaceInstance i,LivingEntity e){return stage==4?List.of():List.of(WildHunt.RESTRICTED.get(stage+1).get());}
     @Override public List<ManasRace> getPreviousEvolutions(ManasRaceInstance i,LivingEntity e){return stage==0?List.of():List.of(WildHunt.RESTRICTED.get(stage-1).get());}
     @Override public ManasRace getDefaultEvolution(ManasRaceInstance i,LivingEntity e){return stage==4?null:WildHunt.RESTRICTED.get(stage+1).get();}

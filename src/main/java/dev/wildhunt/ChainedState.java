@@ -34,7 +34,7 @@ public final class ChainedState {
         if(e.level().isClientSide())return EventResult.pass();
         return canLearn(e,i)?EventResult.pass():EventResult.interruptFalse();
     }
-    public static boolean canLearn(LivingEntity e,ManasSkillInstance i){return e.level().isClientSide() || !owned(e) || ChainedContext.inherited(e) || i.getSkill()==WildHunt.CHAINED.get() || i.getSkill() instanceof Battlewill || i.getSkill() instanceof ResistSkill || inherited(e,i.getSkill()) || i.getParentSkill()!=null && inherited(e,i.getParentSkill());}
+    public static boolean canLearn(LivingEntity e,ManasSkillInstance i){return e.level().isClientSide() || !owned(e) || ChainedContext.inherited(e) || ChainedContext.permitsRecovery(e,i.getSkill()) || i.getSkill()==WildHunt.CHAINED.get() || i.getSkill() instanceof Battlewill || i.getSkill() instanceof ResistSkill || inherited(e,i.getSkill()) || i.getParentSkill()!=null && inherited(e,i.getParentSkill());}
     public static double magiculeCeiling(LivingEntity e,double original){
         if(e==null || ChainedContext.initializing(e))return original;
         return instance(e).map(i->i.getOrCreateTag().contains("magicule_ceiling")?Math.min(original,i.getOrCreateTag().getDouble("magicule_ceiling")):original).orElse(original);
@@ -69,6 +69,7 @@ public final class ChainedState {
     }
     public static void refresh(LivingEntity e){
         if(e.level().isClientSide())return;
+        instance(e).filter(i->i.onCoolDown(0)).ifPresent(i->i.setCoolDown(0,0));
         boolean owner=owned(e),on=owner && active(e),master=on && mastered(e);
         // (base - 0.8 * starting pool + later additions) * 5:
         // the initial pool stays unmultiplied; all subsequent gains get 5x.

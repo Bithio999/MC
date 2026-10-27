@@ -2,7 +2,7 @@
 
 [Main Page](../README.md) · [Skills](Skills.md) · [Ability index](Abilities.md) · [Damage types](Damage-Types.md)
 
-**Hunter’s Recovery** is an aura-powered Extra Skill granted by [Awakened Hunter](Awakened-Hunter.md). It provides recovery inspired by native Self Regeneration.
+**Hunter’s Recovery** is an aura-powered Extra Skill granted by [Awakened Hunter](Awakened-Hunter.md) or [Unshackled](Unshackled.md). It provides recovery inspired by native Self Regeneration.
 
 | Skill data | Hunter’s Recovery |
 | --- | --- |
@@ -13,12 +13,12 @@
 | Activation | Passive toggle |
 | Registry ID | `wildhunt:hunters_recovery` |
 | **Obtaining** | |
-| Race | [Awakened Hunter](Awakened-Hunter.md) |
+| Race | [Awakened Hunter](Awakened-Hunter.md) or [Unshackled](Unshackled.md) |
 | Acquisition cost | No permanent magicule cost |
 
 ## Obtaining
 
-Evolve into [Awakened Hunter](Awakened-Hunter.md). Native racial learning grants and enables this tier. It is not a separate reincarnation Unique roll.
+Evolve into [Awakened Hunter](Awakened-Hunter.md) or [Unshackled](Unshackled.md). Native racial learning grants and enables this tier. It is not a separate reincarnation Unique roll. The Heavenly Restriction lineage explicitly permits this racial grant despite Chained’s learning restriction; existing eligible characters receive missing tiers after upgrading.
 
 ## Usage
 
