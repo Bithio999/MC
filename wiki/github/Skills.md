@@ -2,7 +2,7 @@
 
 [Main Page](https://github.com/Bithio999/MC/wiki/Home) · [Skills](https://github.com/Bithio999/MC/wiki/Skills) · [Ability index](https://github.com/Bithio999/MC/wiki/Abilities) · [Damage types](https://github.com/Bithio999/MC/wiki/Damage-Types)
 
-**Tensura Myths** provides **eight Unique Skills, five combination Ultimates, three Godly Skills and three aura recovery Extra Skills**.
+**Tensura Myths** provides **eight rollable Unique Skills, the race-exclusive Chained, five combination Ultimates, three Godly Skills, three aura recovery Extra Skills and Air Sovereignty, a Battlewill evolution**.
 
 ## Skill tiers
 
@@ -12,6 +12,10 @@
 | [Ultimate](https://github.com/Bithio999/MC/wiki/Ultimate-Skills) | Vritra, Demeter, Janus, Anansi, Aegir | Two specific mastered Uniques; 2M base EP; [Synthesis](https://github.com/Bithio999/MC/wiki/Skill-Synthesis) | Aura |
 | [Godly](https://github.com/Bithio999/MC/wiki/Godly) | Aion, Thoth, Lugh | Mastered combination Ultimate; true awakening; 12M base EP; Thoth also combines mastered Rune Smith; Lugh combines mastered Threadweaver | Magicules; Mana Crucible converts aura |
 | [Extra](https://github.com/Bithio999/MC/wiki/Aura-Regeneration) | Hunter’s Recovery, Apex Renewal, Sovereign Rebirth | Hunter race evolution | Aura |
+
+## Battlewills
+
+[Air Sovereignty](https://github.com/Bithio999/MC/wiki/Air-Sovereignty) evolves from mastered Air Float / Air Flight and enables aura-powered free flight. Use the normal Battlewill category and native learning system. See the [Battlewill directory](https://github.com/Bithio999/MC/wiki/Battlewills).
 
 ## Using skills
 

@@ -25,7 +25,9 @@
     "ChainedDodgeMixin",
     "ChainedLearningGateMixin",
     "ChainedResistanceAttributesMixin",
-    "ChainedAcquisitionMixin"
+    "ChainedAcquisitionMixin",
+    "AirSovereigntyMasteryMixin",
+    "AirSovereigntyFlightMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.33.0 — Air Sovereignty
+
+- Add Air Sovereignty, a native Battlewill progression from permanent mastered Air Float / Air Flight. Unlock a learnable entry through the native mastery callback, with discovery for existing masters. Retain the predecessor.
+- Add press-controlled free flight using the same vanilla movement/permissions as Gravity Manipulation, paid with aura. Default activation and airborne-second costs are 30 aura, derived from the predecessor’s configured aura/magicule sum. Stopping is free.
+- Integrate native flight authorization and clean up on depletion, interference, movement/area restrictions, skill removal and respawn. Preserve other native flight permissions and support Chained’s learning/mastery bonuses.
+- Reduce Chained Severance Rush damage by 12.5%: path = 3.5 × √(aura paid), arrival = 7 × √(aura paid). Retain its 2% current-aura cost, instant teleport, range, radii and cooldown.
+- Add an original pixel icon and Battlewill wiki articles with per-ability damage fields.
+
 ## 0.32.2 — Fettered Human starting pools
 
 - Roll 1,500–2,000 base starting aura and 50–100 base starting magicules through the native race initialization.

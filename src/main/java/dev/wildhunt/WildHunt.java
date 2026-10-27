@@ -17,6 +17,7 @@ public final class WildHunt {
     public static final String ID = "wildhunt";
     private static final Registrar<ManasRace> RACES = RaceAPI.getRaceRegistry();
     private static final Registrar<ManasSkill> SKILLS = SkillAPI.getSkillRegistry();
+    public static final RegistrySupplier<AirSovereigntyArt> AIR_SOVEREIGNTY=SKILLS.register(id("air_sovereignty"),AirSovereigntyArt::new);
     public static final RegistrySupplier<ChainedSkill> CHAINED=SKILLS.register(id("chained"),ChainedSkill::new);
     public static final List<RegistrySupplier<RestrictedRace>> RESTRICTED=java.util.stream.IntStream.range(0,5).mapToObj(stage->RACES.register(id(RestrictedRace.IDS[stage]),()->new RestrictedRace(stage))).toList();
     public static final List<RegistrySupplier<HunterRace>> HUNTERS = List.of(
@@ -69,6 +70,8 @@ public final class WildHunt {
         NeoForge.EVENT_BUS.addListener(MythBossCommands::register);
         NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.LOWEST, HunterEvents::onKill);
         NeoForge.EVENT_BUS.addListener(HunterEvents::onClone);
+        NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.LOWEST,AirSovereigntyArt::clonePlayer);
+        NeoForge.EVENT_BUS.addListener(AirSovereigntyArt::login);
         NeoForge.EVENT_BUS.addListener(HunterCommands::register);
         NeoForge.EVENT_BUS.addListener(ChainedCommands::register);
         NeoForge.EVENT_BUS.addListener(ApexTimers::onEntityTick);

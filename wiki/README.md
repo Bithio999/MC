@@ -1,6 +1,6 @@
 # Tensura Myths Wiki
 
-An unofficial reference for the **Tensura Myths** addon to **Tensura: Reincarnated**. Minecraft 1.21.1 · NeoForge · Addon 0.32.2.
+An unofficial reference for the **Tensura Myths** addon to **Tensura: Reincarnated**. Minecraft 1.21.1 · NeoForge · Addon 0.33.0.
 
 ## Start here
 
@@ -16,6 +16,10 @@ An unofficial reference for the **Tensura Myths** addon to **Tensura: Reincarnat
 | Extra | [Three aura recovery skills](pages/Aura-Regeneration.md) | Hunter evolution |
 
 [Skill overview](pages/Skills.md) · [Skill synthesis](pages/Skill-Synthesis.md) · [Every active and passive ability](pages/Abilities.md) · [Damage types](pages/Damage-Types.md)
+
+## Battlewills
+
+Master **Air Float / Air Flight** to unlock **[Air Sovereignty](pages/Air-Sovereignty.md)**: native free flight paid entirely in aura. [Battlewill directory](pages/Battlewills.md).
 
 ## Heavenly Restriction
 
@@ -47,8 +51,8 @@ Ability articles separate direct elemental hits, additional status damage, heali
 
 ## Open the visual edition
 
-[Download the styled offline wiki](../releases/tensura-myths-wiki-0.32.2.zip), extract it, and open `index.html`. It contains every article, portraits, screenshots and offline search. GitHub readers can use the Markdown links above.
+[Download the styled offline wiki](../releases/tensura-myths-wiki-0.33.0.zip), extract it, and open `index.html`. It contains every article, portraits, screenshots and offline search. GitHub readers can use the Markdown links above.
 
-[Download the addon](../releases/tensura-myths-0.32.2.jar) · [Base mod wiki](https://tensura.wiki.gg/wiki/Tensura:_Reincarnated_Wiki) · [Changelog](../docs/CHANGELOG.md) · [Wiki authoring](../docs/WIKI.md)
+[Download the addon](../releases/tensura-myths-0.33.0.jar) · [Base mod wiki](https://tensura.wiki.gg/wiki/Tensura:_Reincarnated_Wiki) · [Changelog](../docs/CHANGELOG.md) · [Wiki authoring](../docs/WIKI.md)
 
 Unofficial fan addon. Not affiliated with Capcom or ManasMods.

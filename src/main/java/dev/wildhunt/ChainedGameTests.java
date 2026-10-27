@@ -152,8 +152,8 @@ public final class ChainedGameTests {
     @GameTest(template="empty",timeoutTicks=100)
     public static void dashDamageUsesRebalancedActualAuraPaymentWithoutAFloor(GameTestHelper h){
         near(h,ChainedSkill.pathDamage(0),0,"Empty-aura damage floor");near(h,ChainedSkill.arrivalDamage(0),0,"Empty-aura arrival floor");
-        near(h,ChainedSkill.pathDamage(25),20,"Rebalanced path formula");near(h,ChainedSkill.arrivalDamage(25),40,"Rebalanced arrival formula");
-        near(h,ChainedSkill.pathDamage(100),40,"Paid-aura scaling");near(h,ChainedSkill.arrivalDamage(100),80,"Arrival paid-aura scaling");h.succeed();
+        near(h,ChainedSkill.pathDamage(25),17.5,"Rebalanced path formula");near(h,ChainedSkill.arrivalDamage(25),35,"Rebalanced arrival formula");
+        near(h,ChainedSkill.pathDamage(100),35,"Paid-aura scaling");near(h,ChainedSkill.arrivalDamage(100),70,"Arrival paid-aura scaling");h.succeed();
     }
     @GameTest(template="empty",timeoutTicks=100)
     public static void truePassiveCoversBaseModifierAndHelperGainsWhileOffAndUnslotted(GameTestHelper h){

@@ -54,6 +54,7 @@ public final class ApexTimers {
     }
     public static void onEntityTick(EntityTickEvent.Post event) {
         if (!(event.getEntity() instanceof LivingEntity entity) || entity.level().isClientSide()) return;
+        if(entity instanceof net.minecraft.server.level.ServerPlayer p)AirSovereigntyArt.tick(p);
         GodlyPassives.tick(entity);AuraRegenerationSkill.tick(entity);GodlySkill.tickSlow(entity);MythicArts.tickTarget(entity);
         if(entity.tickCount%10==0 && ChainedState.owned(entity))ChainedState.refresh(entity);
         if(entity.tickCount%20==0)MythicEvolution.migrate(entity);

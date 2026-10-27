@@ -17,6 +17,12 @@
     "tier": "Godly"
   },
   {
+    "slug": "Air-Sovereignty",
+    "title": "Air Sovereignty",
+    "category": "Skills",
+    "tier": "Battlewill"
+  },
+  {
     "slug": "Alma",
     "title": "Alma",
     "category": "Otherworlders"
@@ -52,6 +58,11 @@
     "slug": "Awakened-Hunter",
     "title": "Awakened Hunter",
     "category": "Races"
+  },
+  {
+    "slug": "Battlewills",
+    "title": "Battlewills",
+    "category": "Reference"
   },
   {
     "slug": "Black-Flame",
@@ -680,7 +691,7 @@
   },
   {
     "slug": "Hunters-Recovery",
-    "title": "Hunter\u2019s Recovery",
+    "title": "Hunter’s Recovery",
     "category": "Skills",
     "tier": "Extra"
   },

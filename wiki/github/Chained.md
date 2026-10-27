@@ -126,10 +126,10 @@ The endpoint stops before solid body collisions, unloaded terrain, the world bor
 Let **A** be the aura actually paid:
 
 - **A = 0.02 × current aura**.
-- **Path damage = 4 × √A**.
-- **Arrival damage = 8 × √A**.
+- **Path damage = 3.5 × √A**.
+- **Arrival damage = 7 × √A**.
 
-At **100,000 current aura**, the cast pays **2,000 aura** and has about **178.89 path damage** plus **357.77 arrival damage** before native handling. With Martial Supremacy enabled, those become about **1,431.08** and **2,862.17**. The formula uses actual aura spent, with no extra EP multiplier or mastery damage multiplier.
+At **100,000 current aura**, the cast pays **2,000 aura** and has about **156.52 path damage** plus **313.05 arrival damage** before native handling. With Martial Supremacy enabled, those become about **1,252.20** and **2,504.40**. The formula uses actual aura spent, with no extra EP multiplier or mastery damage multiplier.
 
 A brief chain separates into broken links along the route, with a pale pressure burst at arrival. The trail remains visible after the instantaneous teleport; it does not move the player over its lifetime.
 

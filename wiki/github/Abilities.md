@@ -108,6 +108,12 @@ The three Godly classification passives are always active, free and non-stacking
 | [Apex Renewal](https://github.com/Bithio999/MC/wiki/Apex-Renewal#passive) | [Apex Renewal](https://github.com/Bithio999/MC/wiki/Apex-Renewal) | Passive | None |
 | [Sovereign Rebirth](https://github.com/Bithio999/MC/wiki/Sovereign-Rebirth#passive) | [Sovereign Rebirth](https://github.com/Bithio999/MC/wiki/Sovereign-Rebirth) | Passive | None |
 
+## Battlewill arts
+
+| Ability | Parent skill / system | Activation | Damage type |
+| --- | --- | --- | --- |
+| [Sovereign Flight](https://github.com/Bithio999/MC/wiki/Air-Sovereignty#sovereign-flight) | [Air Sovereignty](https://github.com/Bithio999/MC/wiki/Air-Sovereignty) | Active - Press | None |
+
 ## Racial abilities
 
 | Ability | Parent skill / system | Activation | Damage type |

@@ -1,6 +1,6 @@
 # Tensura Myths Wiki
 
-An unofficial reference for the **Tensura Myths** addon to **Tensura: Reincarnated**. Minecraft 1.21.1 · NeoForge · Addon 0.32.2.
+An unofficial reference for the **Tensura Myths** addon to **Tensura: Reincarnated**. Minecraft 1.21.1 · NeoForge · Addon 0.33.0.
 
 ## Start here
 
@@ -16,6 +16,10 @@ An unofficial reference for the **Tensura Myths** addon to **Tensura: Reincarnat
 | Extra | [Three aura recovery skills](https://github.com/Bithio999/MC/wiki/Aura-Regeneration) | Hunter evolution |
 
 [Skill overview](https://github.com/Bithio999/MC/wiki/Skills) · [Skill synthesis](https://github.com/Bithio999/MC/wiki/Skill-Synthesis) · [Every active and passive ability](https://github.com/Bithio999/MC/wiki/Abilities) · [Damage types](https://github.com/Bithio999/MC/wiki/Damage-Types)
+
+## Battlewills
+
+Master **Air Float / Air Flight** to unlock **[Air Sovereignty](https://github.com/Bithio999/MC/wiki/Air-Sovereignty)**: native free flight paid entirely in aura. [Battlewill directory](https://github.com/Bithio999/MC/wiki/Battlewills).
 
 ## Heavenly Restriction
 

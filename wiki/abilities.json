@@ -171,7 +171,7 @@
   },
   {
     "skill": "Hunters-Recovery",
-    "name": "Hunter\u2019s Recovery",
+    "name": "Hunter’s Recovery",
     "tier": "Extra",
     "kind": "Passive",
     "damage": "None",
@@ -343,7 +343,7 @@
     "name": "Mirror Aegis",
     "tier": "Unique",
     "kind": "Active",
-    "damage": "None \u2014 reflected projectiles retain their own attack type",
+    "damage": "None — reflected projectiles retain their own attack type",
     "damage_id": null,
     "secondary_damage_id": null,
     "damage_ids": [],
@@ -571,7 +571,7 @@
     "name": "Divine Authority",
     "tier": "Godly",
     "kind": "Passive",
-    "damage": "Modifier \u2014 original damage type",
+    "damage": "Modifier — original damage type",
     "damage_id": null,
     "secondary_damage_id": null,
     "anchor": "divine-authority"
@@ -581,7 +581,7 @@
     "name": "Absolute Penetration",
     "tier": "Godly",
     "kind": "Passive",
-    "damage": "Modifier \u2014 original damage type",
+    "damage": "Modifier — original damage type",
     "damage_id": null,
     "secondary_damage_id": null,
     "anchor": "absolute-penetration"
@@ -661,7 +661,7 @@
     "name": "Mirrorsea",
     "tier": "Ultimate",
     "kind": "Active",
-    "damage": "None \u2014 reflected projectiles retain their attack type",
+    "damage": "None — reflected projectiles retain their attack type",
     "damage_id": null,
     "secondary_damage_id": null,
     "anchor": "mirrorsea"
@@ -771,7 +771,7 @@
     "name": "Spatial Reposition",
     "tier": "Boss",
     "kind": "Boss movement",
-    "damage": "None \u2014 movement only",
+    "damage": "None — movement only",
     "damage_id": null,
     "secondary_damage_id": null,
     "anchor": "spatial-reposition"
@@ -781,7 +781,7 @@
     "name": "Infinite Regeneration",
     "tier": "Boss",
     "kind": "Native passive",
-    "damage": "None \u2014 recovery only",
+    "damage": "None — recovery only",
     "damage_id": null,
     "secondary_damage_id": null,
     "anchor": "infinite-regeneration"
@@ -828,7 +828,7 @@
   },
   {
     "skill": "Demiurge",
-    "name": "World-Eater\u2019s Wake",
+    "name": "World-Eater’s Wake",
     "anchor": "world-eaters-wake",
     "damage": "Darkness elemental",
     "damage_id": "tensura:darkness_elemental",
@@ -840,7 +840,7 @@
     "skill": "Demiurge",
     "name": "Primordial Exchange",
     "anchor": "primordial-exchange",
-    "damage": "None \u2014 resource conversion",
+    "damage": "None — resource conversion",
     "damage_id": null,
     "secondary_damage_id": null,
     "tier": "Godly",
@@ -915,5 +915,15 @@
     "damage_id": "tensura:aura_slash",
     "secondary_damage_id": null,
     "anchor": "severance-rush"
+  },
+  {
+    "skill": "Air-Sovereignty",
+    "name": "Sovereign Flight",
+    "tier": "Battlewill",
+    "kind": "Active - Press",
+    "damage": "None",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "anchor": "sovereign-flight"
   }
 ]

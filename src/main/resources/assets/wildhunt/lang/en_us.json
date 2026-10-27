@@ -114,5 +114,7 @@
   "wildhunt.race.tempered_vessel": "Tempered Vessel",
   "wildhunt.race.unshackled": "Unshackled",
   "wildhunt.race.heavenly_restricted": "Heavenly Restricted",
-  "wildhunt.race.heavenbreaker": "Heavenbreaker"
+  "wildhunt.race.heavenbreaker": "Heavenbreaker",
+  "wildhunt.skill.air_sovereignty": "Air Sovereignty",
+  "wildhunt.skill.mode.air_sovereignty.flight": "Sovereign Flight"
 }

@@ -15,6 +15,7 @@
 - [Godly Skills](https://github.com/Bithio999/MC/wiki/Godly)
 - [Extra Skills](https://github.com/Bithio999/MC/wiki/Aura-Regeneration)
 - [Ability index](https://github.com/Bithio999/MC/wiki/Abilities)
+- [Battlewills](https://github.com/Bithio999/MC/wiki/Battlewills)
 
 ### Races
 
