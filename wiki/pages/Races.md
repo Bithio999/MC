@@ -18,6 +18,10 @@
 
 [Human evolution](Evolution.md) explains boss credit, EP and mastery gates. Bonuses replace earlier stages.
 
+## Heavenly Restriction lineage
+
+Start as [Fettered Human](Fettered-Human.md), then evolve through [Tempered Vessel](Tempered-Vessel.md), [Unshackled](Unshackled.md), [Heavenly Restricted](Heavenly-Restricted.md) and [Heavenbreaker](Heavenbreaker.md). Every stage retains the intrinsic Unique [Chained](Chained.md). Fixed base EP, mastered Battlewills and Chained mastery govern this separate starting lineage.
+
 ## Secondary races
 
 [Choose a secondary lineage](Duo-Races.md) after completing the primary evolution path, reaching true awakening and 5M base EP. Each further secondary evolution requires native conditions and a new 2.5M-EP growth interval. A secondary adds 10% EP growth and displays alongside the primary in Status.

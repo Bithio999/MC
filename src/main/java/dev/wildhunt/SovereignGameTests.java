@@ -123,8 +123,10 @@ public final class SovereignGameTests {
     }
     @GameTest(template="empty",timeoutTicks=100)
     public static void anansiNetworkArmsCutsOncePerSecondAndLimitsAnchors(GameTestHelper h){
-        var p=player(h);var target=new Probe(h,p.position().add(10,0,0));var i=learn(p,MythicKind.ANANSI);long now=h.getLevel().getGameTime();anchor(i,p.position().add(6,0,-4),now);anchor(i,p.position().add(14,0,4),now);
+        var p=player(h);var target=new Probe(h,p.position().add(10,0,0));var i=learn(p,MythicKind.ANANSI);
         afterTracking(h,List.of(target),()->{
+            // Start the real 12-tick arming window after entity-index promotion.
+            long now=h.getLevel().getGameTime();anchor(i,p.position().add(6,0,-4),now);anchor(i,p.position().add(14,0,4),now);
             tick(p,i);h.assertTrue(target.sources.isEmpty(),"Unarmed threads dealt damage");for(var value:i.getOrCreateTag().getList("anchors",Tag.TAG_COMPOUND))((CompoundTag)value).putLong("armed",0);
             tick(p,i);tick(p,i);h.assertTrue(target.sources.size()==1 && target.sources.getFirst().is(TensuraDamageTypes.SPACE_ELEMENTAL),"Thread did not cut or applied repeated same-tick damage");
             for(int n=0;n<4;n++){i.setCoolDown(0,0);cast(p,i,0);}h.assertTrue(i.getOrCreateTag().getList("anchors",Tag.TAG_COMPOUND).size()==3,"Network exceeded its three-anchor bound");h.succeed();

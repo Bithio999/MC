@@ -55,6 +55,7 @@ public final class ApexTimers {
     public static void onEntityTick(EntityTickEvent.Post event) {
         if (!(event.getEntity() instanceof LivingEntity entity) || entity.level().isClientSide()) return;
         GodlyPassives.tick(entity);AuraRegenerationSkill.tick(entity);GodlySkill.tickSlow(entity);MythicArts.tickTarget(entity);
+        if(entity.tickCount%10==0 && ChainedState.owned(entity))ChainedState.refresh(entity);
         if(entity.tickCount%20==0)MythicEvolution.migrate(entity);
         var data = entity.getPersistentData().getCompound("wildhunt");
         // Legacy marks no longer affect any attack and can be discarded on load.

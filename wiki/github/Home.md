@@ -1,6 +1,6 @@
 # Tensura Myths Wiki
 
-An unofficial reference for the **Tensura Myths** addon to **Tensura: Reincarnated**. Minecraft 1.21.1 · NeoForge · Addon 0.31.0.
+An unofficial reference for the **Tensura Myths** addon to **Tensura: Reincarnated**. Minecraft 1.21.1 · NeoForge · Addon 0.32.0.
 
 ## Start here
 
@@ -16,6 +16,10 @@ An unofficial reference for the **Tensura Myths** addon to **Tensura: Reincarnat
 | Extra | [Three aura recovery skills](https://github.com/Bithio999/MC/wiki/Aura-Regeneration) | Hunter evolution |
 
 [Skill overview](https://github.com/Bithio999/MC/wiki/Skills) · [Skill synthesis](https://github.com/Bithio999/MC/wiki/Skill-Synthesis) · [Every active and passive ability](https://github.com/Bithio999/MC/wiki/Abilities) · [Damage types](https://github.com/Bithio999/MC/wiki/Damage-Types)
+
+## Heavenly Restriction
+
+The [Fettered Human](https://github.com/Bithio999/MC/wiki/Fettered-Human) starting race has four evolutions ending in [Heavenbreaker](https://github.com/Bithio999/MC/wiki/Heavenbreaker). Its intrinsic Unique [Chained](https://github.com/Bithio999/MC/wiki/Chained) trades magical growth and unrestricted skills for aura capacity, Battlewill combat and an instant attacking teleport.
 
 ## Races
 
@@ -42,4 +46,4 @@ An unofficial reference for the **Tensura Myths** addon to **Tensura: Reincarnat
 Ability articles separate direct elemental hits, additional status damage, healing and utility. Their data tables include damage types, resource costs, cooldowns and acquisition requirements.
 
 
-[Download the styled offline edition](https://github.com/Bithio999/MC/blob/main/releases/tensura-myths-wiki-0.31.0.zip)
+[Download the styled offline edition](https://github.com/Bithio999/MC/blob/main/releases/tensura-myths-wiki-0.32.0.zip)

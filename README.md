@@ -5,7 +5,7 @@ An expanded progression and skills addon for **Tensura 2.0.1.3**, **Minecraft
 
 ## Download
 
-The built addon is included at [releases/tensura-myths-0.31.0.jar](releases/tensura-myths-0.31.0.jar).
+The built addon is included at [releases/tensura-myths-0.32.0.jar](releases/tensura-myths-0.32.0.jar).
 Install it alongside Tensura and its required dependencies on both client and server, including **GeckoLib 4.9.3 (4.x)**.
 
 ## Visuals
@@ -13,6 +13,10 @@ Install it alongside Tensura and its required dependencies on both client and se
 World effects and Myth bosses use original **Blockbench models and GeckoLib animations**, combined with smooth ring structures, faceted crystals, curved organic surfaces, beveled solid edges, fluid sheets, beams, trails and black-hole optics. The release includes 72 effect rigs, both Myth bosses, destructible Genesis Seals, animated NPC equipment and four modeled ritual items. [Visual gallery](wiki/pages/Visual-Effects.md) · [Editable projects](art/blockbench) · [Artist workflow](docs/VISUAL_PIPELINE.md).
 
 **Eschaton and Aion** now use broad anime silhouettes, sharper impacts and stronger anticipation/release animation. This is the focused visual review pass before extending the direction to other skills. [Native motion preview](wiki/media/eschaton-aion-anime-preview.mp4) · [Review and comparison](docs/VISUAL-REVIEW-0.31.0.md).
+
+## Heavenly Restriction
+
+Choose **[Fettered Human](wiki/pages/Fettered-Human.md)** at reincarnation and follow four evolutions to **Heavenbreaker**. The intrinsic Unique **[Chained](wiki/pages/Chained.md)** grants 100× maximum aura, converts natural magicule regeneration into aura, restricts future magical growth/skills, strengthens Battlewills and physical combat, and provides an instant 16-block attacking teleport. Native race and ability menus handle the lineage.
 
 ## Final Myth
 
@@ -99,7 +103,7 @@ An independent secondary grants **10% extra native EP gain**, retaining the prim
 
 ## Updating
 
-Replace the previous addon JAR with **0.31.0** on client and server. Install only one addon version. The `wildhunt` namespace remains stable for existing saves.
+Replace the previous addon JAR with **0.32.0** on client and server. Install only one addon version. The `wildhunt` namespace remains stable for existing saves.
 
 Ordinary elemental attribute bonuses use the strongest source per element; Godly bonuses remain separate. Mirrorbound, Demeter, Janus and Thoth no longer give passive shields; old saved contributions are cleaned automatically. Water Veil, Colossus Carapace and Aion retain their dedicated defenses. Demeter’s second mode is Perennial Seed: a one-use 40% HP/SHP rescue effect.
 
@@ -109,7 +113,7 @@ The [changelog](docs/CHANGELOG.md) records development changes separately from t
 
 ## Wiki
 
-Read the [Tensura Myths Wiki](wiki/README.md) for individual skill/race articles, per-ability damage types, progression and commands. [Download the styled offline edition](releases/tensura-myths-wiki-0.31.0.zip), extract it and open `index.html` for the wiki layout, infoboxes, screenshots and offline search. The [GitHub Wiki edition](wiki/github/Home.md) is prepared for the separate Wiki when it is available; [publishing instructions](docs/WIKI.md).
+Read the [Tensura Myths Wiki](wiki/README.md) for individual skill/race articles, per-ability damage types, progression and commands. [Download the styled offline edition](releases/tensura-myths-wiki-0.32.0.zip), extract it and open `index.html` for the wiki layout, infoboxes, screenshots and offline search. The [GitHub Wiki edition](wiki/github/Home.md) is prepared for the separate Wiki when it is available; [publishing instructions](docs/WIKI.md).
 
 ## Build and test
 
@@ -136,9 +140,9 @@ vertical dashes, through-wall ricochets, momentum preservation, native shield
 breakage and timed recovery, HP/SHP evolution, aura regeneration and native NPC loadouts.
 `./gradlew runClient` starts a development client on a machine with graphics.
 
-The [0.31.0 validation report](docs/VALIDATION-0.31.0.md) records the Eschaton/Aion native visual review, Blockbench export and asset checks, full gameplay regression and offline wiki checks.
+The [0.32.0 validation report](docs/VALIDATION-0.32.0.md) records Chained’s resource, inheritance, Battlewill, defense and teleport tests, native-client review, existing gameplay regressions and wiki checks.
 
-Install `build/libs/tensura-myths-0.31.0.jar` on **both client and server**,
+Install `build/libs/tensura-myths-0.32.0.jar` on **both client and server**,
 alongside Tensura and its required dependencies. The addon jar is not a complete
 modpack. Additional development dependency versions are in `runtime-mods.lock.json`.
 

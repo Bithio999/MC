@@ -65,6 +65,12 @@
     "category": "Bosses"
   },
   {
+    "slug": "Chained",
+    "title": "Chained",
+    "category": "Skills",
+    "tier": "Unique"
+  },
+  {
     "slug": "Commands",
     "title": "Commands",
     "category": "Reference"
@@ -109,6 +115,11 @@
   {
     "slug": "Evolution",
     "title": "Human evolution",
+    "category": "Races"
+  },
+  {
+    "slug": "Fettered-Human",
+    "title": "Fettered Human",
     "category": "Races"
   },
   {
@@ -658,6 +669,16 @@
     "category": "Skills"
   },
   {
+    "slug": "Heavenbreaker",
+    "title": "Heavenbreaker",
+    "category": "Races"
+  },
+  {
+    "slug": "Heavenly-Restricted",
+    "title": "Heavenly Restricted",
+    "category": "Races"
+  },
+  {
     "slug": "Hunters-Recovery",
     "title": "Hunter\u2019s Recovery",
     "category": "Skills",
@@ -747,6 +768,11 @@
     "tier": "Unique"
   },
   {
+    "slug": "Tempered-Vessel",
+    "title": "Tempered Vessel",
+    "category": "Races"
+  },
+  {
     "slug": "Thoth",
     "title": "Thoth, God of Magic",
     "category": "Skills",
@@ -767,6 +793,11 @@
     "slug": "Unique-Skills",
     "title": "Unique Skills",
     "category": "Skills"
+  },
+  {
+    "slug": "Unshackled",
+    "title": "Unshackled",
+    "category": "Races"
   },
   {
     "slug": "Verdant-Keeper",

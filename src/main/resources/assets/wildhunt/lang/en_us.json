@@ -107,5 +107,12 @@
   "item.wildhunt.last_convergence": "The Last Convergence",
   "item.wildhunt.crown_of_the_last_myth": "Crown of the Last Myth",
   "item.wildhunt.origin_fragment": "Origin Fragment",
-  "wildhunt.skill.demiurge": "Demiurge, God of Genesis"
+  "wildhunt.skill.demiurge": "Demiurge, God of Genesis",
+  "wildhunt.skill.chained": "Chained",
+  "wildhunt.skill.mode.chained.severance_rush": "Severance Rush",
+  "wildhunt.race.fettered_human": "Fettered Human",
+  "wildhunt.race.tempered_vessel": "Tempered Vessel",
+  "wildhunt.race.unshackled": "Unshackled",
+  "wildhunt.race.heavenly_restricted": "Heavenly Restricted",
+  "wildhunt.race.heavenbreaker": "Heavenbreaker"
 }

@@ -2,7 +2,7 @@
 
 [Main Page](../README.md) · [Skills](Skills.md) · [Ability index](Abilities.md) · [Damage types](Damage-Types.md)
 
-**Unique Skills** are one of the addon’s skill tiers. All eight Uniques are rollable in Tensura’s configured reincarnation primary pool; no particular result is guaranteed.
+**Unique Skills** are one of the addon’s skill tiers. Eight Uniques are rollable in Tensura’s configured reincarnation primary pool; no particular result is guaranteed.
 
 ## Skills
 
@@ -21,6 +21,10 @@
 ## Usage
 
 Active modes consume aura. Toggleable passives consume ongoing aura and are separate from mode cycling. Each skill article lists costs, cooldowns, individual damage types, effects and limits.
+
+## Race-exclusive Unique
+
+[Chained](Chained.md) belongs to the [Heavenly Restriction lineage](Fettered-Human.md). It is guaranteed by that race and does not enter the eight ordinary rollable Uniques.
 
 ## Related pages
 

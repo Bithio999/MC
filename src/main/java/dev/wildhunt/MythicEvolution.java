@@ -37,7 +37,12 @@ public final class MythicEvolution {
     }
     public static boolean replace(LivingEntity e,List<ManasSkillInstance> sources,ManasSkill destination,boolean preserveMastery){
         var storage=SkillAPI.getSkillsFrom(e);var existing=storage.getSkill(destination);boolean newly=existing.isEmpty();
-        if(newly && !HunterData.learnReward(e,destination))return false;
+        if(newly){
+            boolean inherited=!sources.isEmpty() && sources.stream().allMatch(i->ChainedState.inherited(e,i.getSkill()));
+            try(var scope=inherited?ChainedContext.reincarnation(e,destination):ChainedContext.ability(e,destination)){
+                if(!HunterData.learnReward(e,destination))return false;
+            }
+        }
         var target=storage.getSkill(destination).orElseThrow();int remaining=sources.stream().flatMap(i->i.getCooldownList().stream()).mapToInt(Integer::intValue).max().orElse(0);
         if(preserveMastery){double fraction=sources.stream().mapToDouble(i->i.getMastery()/Math.max(1,i.getMaxMastery())).max().orElse(0);target.setMastery(Math.max(target.getMastery(),fraction*target.getMaxMastery()));}
         for(int mode=0;mode<target.getModes();mode++)target.setCoolDown(destination instanceof MythicSkill skill && skill.kind==MythicKind.THOTH && mode==2?0:Math.max(remaining,target.getCoolDown(mode)),mode);

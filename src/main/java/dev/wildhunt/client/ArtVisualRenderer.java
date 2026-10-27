@@ -36,7 +36,8 @@ public final class ArtVisualRenderer extends software.bernie.geckolib.renderer.G
     @Override public void render(ArtVisualEntity entity, float yaw, float partial, PoseStack poses, MultiBufferSource buffers, int light) {
         float age = entity.tickCount + partial;
         VfxMesh.begin(entity.getPosition(partial));batch.begin();
-        if(EschatonGeometry.handles(entity.kind())){EschatonGeometry.render(entity,poses,batch,partial);}
+        if(entity.kind()==ArtVisualEntity.CHAINED_RUSH){ChainedGeometry.render(poses,batch,entity.end(partial),age);}
+        else if(EschatonGeometry.handles(entity.kind())){EschatonGeometry.render(entity,poses,batch,partial);}
         else if(AnankeGeometry.handles(entity.kind())){AnankeGeometry.render(entity,poses,batch,partial);}
         else if(entity.kind()==ArtVisualEntity.CAUSAL_VERDICT && !entity.barrage().isEmpty()){SingularityGeometry.render(entity,poses,batch,partial);}
         else if(SovereignGeometry.handles(entity.kind())) {

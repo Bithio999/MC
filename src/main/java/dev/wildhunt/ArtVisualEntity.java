@@ -33,6 +33,7 @@ public final class ArtVisualEntity extends Entity implements software.bernie.gec
         PERENNIAL_SEED=47,REBIRTH_BLOOM=48,SKILL_APPRAISAL=49,ARTISAN_THREAD=50,COUNTERMAND=51,GRAND_SYNTHESIS=52,RECONSTRUCTED_BLADE=53,RECONSTRUCTED_LANCE=54,RECONSTRUCTED_CROWN=55;
     public static final int ANANKE_FATEBREAKER=56,ANANKE_STARFALL=57,ANANKE_PROCESSION=58,ANANKE_LAST_DAWN=59,ANANKE_ASCENSION=60,ANANKE_SHIFT=62;
     public static final int ESCHATON_EDGE=63,ESCHATON_LOOM=64,ESCHATON_GENESIS=65,ESCHATON_TESTAMENT=66,ESCHATON_WAKE=67,ESCHATON_EXCHANGE=68,ESCHATON_THRONEFALL=69,ESCHATON_APOCALYPSE=70,ESCHATON_ASCENSION=71,ESCHATON_SHATTER=72;
+    public static final int CHAINED_RUSH=73;
     private static final DeferredRegister<EntityType<?>> TYPES = DeferredRegister.create(WildHunt.ID, Registries.ENTITY_TYPE);
     public static final RegistrySupplier<EntityType<ArtVisualEntity>> TYPE = TYPES.register("art_visual", () ->
         EntityType.Builder.<ArtVisualEntity>of(ArtVisualEntity::new, MobCategory.MISC).sized(0.1f, 0.1f)

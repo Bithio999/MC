@@ -17,6 +17,8 @@ public final class WildHunt {
     public static final String ID = "wildhunt";
     private static final Registrar<ManasRace> RACES = RaceAPI.getRaceRegistry();
     private static final Registrar<ManasSkill> SKILLS = SkillAPI.getSkillRegistry();
+    public static final RegistrySupplier<ChainedSkill> CHAINED=SKILLS.register(id("chained"),ChainedSkill::new);
+    public static final List<RegistrySupplier<RestrictedRace>> RESTRICTED=java.util.stream.IntStream.range(0,5).mapToObj(stage->RACES.register(id(RestrictedRace.IDS[stage]),()->new RestrictedRace(stage))).toList();
     public static final List<RegistrySupplier<HunterRace>> HUNTERS = List.of(
         RACES.register(id("awakened_hunter"), () -> new HunterRace(1)),
         RACES.register(id("apex_hunter"), () -> new HunterRace(2)),
@@ -54,6 +56,8 @@ public final class WildHunt {
         io.github.manasmods.manascore.skill.api.SkillEvents.ACTIVATE_SKILL.register(LughArts::activate);
         io.github.manasmods.manascore.skill.api.SkillEvents.SKILL_UPDATE_COOLDOWN.register(LughArts::cooldown);
         io.github.manasmods.manascore.skill.api.SkillEvents.SKILL_DAMAGE_PRE_CALCULATION.register(GodlyPassives::modifyDamage);
+        io.github.manasmods.manascore.skill.api.SkillEvents.UNLOCK_SKILL.register(ChainedState::unlock);
+        io.github.manasmods.manascore.skill.api.SkillEvents.SKILL_DAMAGE_PRE_CALCULATION.register(ChainedState::damage);
         NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent e)->{GodlySkill.clearTransient(e.getEntity());MythicArts.clearTransient(e.getEntity());});
         NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerChangedDimensionEvent e)->{GodlySkill.clearTransient(e.getEntity());MythicArts.clearTransient(e.getEntity());});
         NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerRespawnEvent e)->{GodlySkill.clearTransient(e.getEntity());MythicArts.clearTransient(e.getEntity());});
@@ -66,6 +70,7 @@ public final class WildHunt {
         NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.LOWEST, HunterEvents::onKill);
         NeoForge.EVENT_BUS.addListener(HunterEvents::onClone);
         NeoForge.EVENT_BUS.addListener(HunterCommands::register);
+        NeoForge.EVENT_BUS.addListener(ChainedCommands::register);
         NeoForge.EVENT_BUS.addListener(ApexTimers::onEntityTick);
         NeoForge.EVENT_BUS.addListener(ApexTimers::onLogin);
         NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.HIGHEST, (net.neoforged.neoforge.event.entity.living.LivingDeathEvent event) -> AuraRegenerationSkill.onDeath(event));

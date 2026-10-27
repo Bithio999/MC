@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.32.0 — Heavenly Restriction
+
+- Add Fettered Human as a native reincarnation choice with four evolutions: Tempered Vessel, Unshackled, Heavenly Restricted and Heavenbreaker. Fixed base-EP and training milestones use native evolution requirements.
+- Add the intrinsic Unique Chained: ownership-based magical-growth/skill restrictions, 100× aura capacity and converted natural regeneration; a martial combat toggle; mastered one-tier defense degradation and dodge bypass; in-slot projectile/general evasion.
+- Pay native configured Resistance/Nullification acquisition costs with current aura while preserving native free grants.
+- Track actual reincarnation roots and native derived grants. Keep Battlewills and Resistance/Nullification acquisition available. Add operator certification for known inheritance in older saves.
+- Add Severance Rush, an instant 16-block teleport with separate 3-block path and 4-block arrival hits, costing 2% current aura. Its square-root resource formula is Battlewill damage.
+- Add original pixel icons, a procedural broken-chain teleport wake, race/skill wiki articles and native integration tests.
+
 ## 0.31.0 — Eschaton and Aion spectacle pass
 
 - Establish an anime visual direction for Eschaton and Aion: filled blade smears, curled wave crests, tapered spatial tears, saturated light plumes and distinct local impact bursts.

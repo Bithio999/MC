@@ -20,6 +20,7 @@
 
 - [Race directory](https://github.com/Bithio999/MC/wiki/Races)
 - [Hunter evolution](https://github.com/Bithio999/MC/wiki/Evolution)
+- [Heavenly Restriction](https://github.com/Bithio999/MC/wiki/Fettered-Human)
 - [Secondary races](https://github.com/Bithio999/MC/wiki/Duo-Races)
 - [Convergent Awakening](https://github.com/Bithio999/MC/wiki/Convergent-Awakening)
 

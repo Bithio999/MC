@@ -214,10 +214,14 @@ public final class MythicGameTests {
             var i=learn(p,MythicKind.THOTH);long start=h.getLevel().getGameTime();cast(p,i,3);var tag=i.getOrCreateTag();
             h.assertTrue(tag.getLong("library_until")==start+200 && i.getCoolDown(3)==35,"Library changed duration or cooldown");
             for(int elapsed=0;elapsed<=201;elapsed++){final int age=elapsed;h.runAfterDelay(elapsed,()->{
+                var previousBolts=new java.util.HashSet<java.util.UUID>();
+                for(var entity:h.getLevel().getAllEntities())if(entity instanceof ArtVisualEntity v && v.kind()==ArtVisualEntity.SPELL_RAY)previousBolts.add(v.getUUID());
                 tick(p,i);
                 if(age>=10 && age<200 && (age-10)%5==0){
-                    int chapter=(age-10)/5;var formation=(ArtVisualEntity)h.getLevel().getEntity(tag.getUUID("library_visual"));h.assertTrue(formation.style()==chapter,"Book colours lost the actual server volley");var bolts=h.getLevel().getEntitiesOfClass(ArtVisualEntity.class,p.getBoundingBox().inflate(35),v->v.kind()==ArtVisualEntity.SPELL_RAY && v.tickCount==0);
-                    h.assertTrue(bolts.size()==1 && bolts.getFirst().style()==chapter%7,"Bolt visual lost its actual damage element at chapter "+chapter);
+                    int chapter=(age-10)/5;var formation=(ArtVisualEntity)h.getLevel().getEntity(tag.getUUID("library_visual"));h.assertTrue(formation.style()==chapter,"Book colours lost the actual server volley");var bolts=new java.util.ArrayList<ArtVisualEntity>();
+                    // Identify the cast's new ray independently of entity tick/promotion order.
+                    for(var entity:h.getLevel().getAllEntities())if(entity instanceof ArtVisualEntity v && v.kind()==ArtVisualEntity.SPELL_RAY && !previousBolts.contains(v.getUUID()) && v.distanceToSqr(p)<35*35)bolts.add(v);
+                    h.assertTrue(bolts.size()==1 && bolts.getFirst().style()==chapter%7,"Bolt visual lost its actual damage element at chapter "+chapter+": new styles="+bolts.stream().map(ArtVisualEntity::style).toList());
                 }
                 if(age==201){String[] ids={"fire_elemental","water_elemental","lightning_elemental","earth_elemental","wind_elemental","light_elemental","space_elemental"};
                     h.assertTrue(target.sources.size()==38,"Library cadence is wrong: "+target.sources.size());

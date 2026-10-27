@@ -32,6 +32,7 @@ public enum RaceFamily {
     public ManasRace baseRace() { return RaceAPI.getRaceRegistry().get(ResourceLocation.fromNamespaceAndPath("tensura", base)); }
     public ManasRace finalRace() { return RaceAPI.getRaceRegistry().get(ResourceLocation.fromNamespaceAndPath("tensura", terminal)); }
     public static Optional<RaceFamily> from(ManasRace race) {
+        if(race instanceof dev.wildhunt.RestrictedRace)return Optional.of(HUMAN);
         var id=race.getRegistryName();
         if(id==null) return Optional.empty();
         if(id.getNamespace().equals("wildhunt") && Set.of("awakened_hunter","apex_hunter","sovereign_hunter").contains(id.getPath()))return Optional.of(HUMAN);

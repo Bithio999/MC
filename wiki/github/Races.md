@@ -18,6 +18,10 @@
 
 [Human evolution](https://github.com/Bithio999/MC/wiki/Evolution) explains boss credit, EP and mastery gates. Bonuses replace earlier stages.
 
+## Heavenly Restriction lineage
+
+Start as [Fettered Human](https://github.com/Bithio999/MC/wiki/Fettered-Human), then evolve through [Tempered Vessel](https://github.com/Bithio999/MC/wiki/Tempered-Vessel), [Unshackled](https://github.com/Bithio999/MC/wiki/Unshackled), [Heavenly Restricted](https://github.com/Bithio999/MC/wiki/Heavenly-Restricted) and [Heavenbreaker](https://github.com/Bithio999/MC/wiki/Heavenbreaker). Every stage retains the intrinsic Unique [Chained](https://github.com/Bithio999/MC/wiki/Chained). Fixed base EP, mastered Battlewills and Chained mastery govern this separate starting lineage.
+
 ## Secondary races
 
 [Choose a secondary lineage](https://github.com/Bithio999/MC/wiki/Duo-Races) after completing the primary evolution path, reaching true awakening and 5M base EP. Each further secondary evolution requires native conditions and a new 2.5M-EP growth interval. A secondary adds 10% EP growth and displays alongside the primary in Status.

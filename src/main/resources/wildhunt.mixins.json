@@ -12,7 +12,20 @@
     "GodlyResistanceAttributesMixin",
     "ElementalBonusesMixin",
     "LughCountermandMixin",
-    "SingularityDamageMixin"
+    "SingularityDamageMixin",
+    "ChainedAttributeMixin",
+    "ChainedAbilityContextMixin",
+    "ChainedReincarnationMixin",
+    "ChainedLearningMixin",
+    "ChainedRegenerationMixin",
+    "ChainedResistanceMixin",
+    "ChainedBattlewillDamageMixin",
+    "ChainedEffectMixin",
+    "ChainedDamageBuffMixin",
+    "ChainedDodgeMixin",
+    "ChainedLearningGateMixin",
+    "ChainedResistanceAttributesMixin",
+    "ChainedAcquisitionMixin"
   ],
   "injectors": {
     "defaultRequire": 1

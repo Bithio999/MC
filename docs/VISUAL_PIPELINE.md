@@ -57,6 +57,10 @@ Sevenfold Genesis's authored stars follow the same accelerated visual descent as
 
 The gameplay plans, native damage, costs, cooldowns, targeting, twenty singularity trajectories and stable accretion-plane rules are unchanged. Only Eschaton and Aion use this new visual grammar in this release.
 
+## Chained teleport wake
+
+Severance Rush uses one additional procedural effect (ID 73): broken chain half-links, separating fragments, a brief speed seam and a four-block arrival pressure burst. The entity records the actual collision-limited journey; player movement has already completed instantly. This deformation is drawn directly, without adding an authored rig or changing the 83 existing editor projects. The graph validator checks this explicit procedural route alongside the 72 authored effect routes.
+
 ## Verification
 
 `python scripts/verify-visual-assets.py` verifies complete protocol coverage, runtime routing, unique bones, parent graphs, UV limits, texture dimensions, luminous masks, animation/bone references and editor/export correspondence, surface marker dimensions and ring coverage. It also checks both Java-item exports. A dedicated server run exercises gameplay and server-side animatable classes without loading client renderers. Client review uses the isolated **Myths Validation** world and an opt-in preview fixture; that fixture is excluded from release JARs.
