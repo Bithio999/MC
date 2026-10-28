@@ -2,7 +2,7 @@
 
 ## 0.35.2 / standalone 1.1.2 — Fettered reincarnation blacklist
 
-- Filter Fettered Human’s main, bonus and locked-skill reincarnation candidates when an ability costs magicules. Inspect ordinary/mastered modes and native inline costs; ignore acquisition prices and magicule gains.
+- Filter Fettered Human’s main, bonus and locked-skill reincarnation candidates when an ability costs magicules. Inspect ordinary/mastered modes, native inline costs and Myths multilayer absorption costs; ignore acquisition prices and magicule gains.
 - Add server-configured extra exclusions and explicit exceptions. Existing skills, intrinsic Chained, other races and native eligibility checks retain their behavior.
 - Document default eligibility and third-party edge cases; add native reincarnation regression tests.
 

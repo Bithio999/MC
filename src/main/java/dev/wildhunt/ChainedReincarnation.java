@@ -5,6 +5,7 @@ import io.github.manasmods.manascore.skill.api.*;
 import io.github.manasmods.tensura.ability.TensuraSkill;
 import io.github.manasmods.manascore.config.ConfigRegistry;
 import io.github.manasmods.tensura.config.ability.skill.UniqueSkillConfig;
+import io.github.manasmods.tensura.ability.skill.extra.MultilayerBarrierSkill;
 import net.minecraft.world.entity.player.Player;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +30,8 @@ public final class ChainedReincarnation {
         return hasMagiculeCost(skill,player);
     }
     public static boolean hasMagiculeCost(ManasSkill skill,Player player){
+        // Native barrier absorption spends MP even though these arts activate with aura.
+        if(skill instanceof ApexSkill apex && apex.barrierCapacity()>0 && MultilayerBarrierSkill.CONFIG.magiculeCost>0)return true;
         if(nativeInlineCost(skill))return true;
         if(!(skill instanceof TensuraSkill tensura))return false;
         try{

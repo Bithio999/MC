@@ -45,7 +45,7 @@ The intrinsic Unique [Chained](https://github.com/Bithio999/MC/wiki/Chained) sup
 
 When rolling as Fettered Human, a Unique is excluded if any of its own abilities costs **magicules**, including mastered modes and native passive/upkeep costs. Aura-only and free skills remain eligible. A skill’s acquisition price does not count as an ability cost.
 
-The default native pool leaves **20 eligible Uniques**, including Martial Master, Great Sage, Observer and Pride. All eight aura-based Myths Uniques remain eligible. Both main and bonus pools use the restriction. Intrinsic Chained is guaranteed; already owned skills and their recorded inheritance remain. With `skillBeforeRace`, a roll completed before race selection remains an already owned skill.
+The default native pool leaves **20 eligible Uniques**, including Martial Master, Great Sage, Observer and Pride. Six Myths Uniques remain eligible. Scarlet Deluge and Frostbound Colossus are excluded because their multilayer barriers spend magicules when absorbing damage, despite aura-only activation. Both main and bonus pools use the restriction. Intrinsic Chained is guaranteed; already owned skills and their recorded inheritance remain. With `skillBeforeRace`, a roll completed before race selection remains an already owned skill.
 
 Other races keep their normal pools. Server operators can configure the rule in `config/tensura-myths-reincarnation.toml`, or `config/tensura-heavenly-restriction-reincarnation.toml` for the standalone addon. A same-named file in the world’s `serverconfig/` folder can override the default.
 

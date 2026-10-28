@@ -39,12 +39,12 @@ For example, adding `"tensura:creator"` to `extraBlacklist` excludes Creator wit
 
 The pinned native defaults leave **20** eligible starting Uniques: Analyst, Berserker, Commander, Cook, Creator, Fighter, Gourmand, Great Sage, Martial Master, Mathematician, Observer, Pride, Reflector, Researcher, Royal Beast, Seeker, Seer, Spearhead, Survivor and Tuner. **34** native starting Uniques are excluded.
 
-All **eight** aura-based Myths Uniques remain eligible: Storm Crown, Scarlet Deluge, Black Flame, Frostbound Colossus, Threadweaver, Rune Smith, Verdant Keeper and Mirrorbound. The standalone addon does not register these Myths skills. Other installed addons remain subject to their configured pools and exposed costs.
+**Six** Myths Uniques remain eligible: Storm Crown, Black Flame, Threadweaver, Rune Smith, Verdant Keeper and Mirrorbound. **Scarlet Deluge and Frostbound Colossus are excluded** because their multilayer barriers spend native magicules when absorbing damage, despite aura-only activation. If the native multilayer absorption price is configured to zero, that exclusion no longer applies. The standalone addon does not register these Myths skills. Other installed addons remain subject to their configured pools and exposed costs.
 
 [Measured registry-ID snapshot](research/FETTERED_REINCARNATION_0.35.2.json). This is a reference snapshot; changing native ability prices or the override lists can change eligibility.
 
 ## Detection and addon edge cases
 
-The automatic check inspects detached instances at ordinary and maximum mastery, with their toggle flag off and on, querying every declared mode through `TensuraSkill.getMagiculeCost`. It never executes an ability or applies toggle effects. It also reads the pinned native costs charged directly inside effects: Berserk, Chef, Greed, Healer, Infinity Prison, Lust, Reaper, Reverser, Sloth, Suppressor, Traveler and Unyielding.
+The automatic check inspects detached instances at ordinary and maximum mastery, with their toggle flag off and on, querying every declared mode through `TensuraSkill.getMagiculeCost`. It never executes an ability or applies toggle effects. For Myths, it checks native absorption costs on Apex skills with multilayer barriers. It also reads the pinned native costs charged directly inside effects: Berserk, Chef, Greed, Healer, Infinity Prison, Lust, Reaper, Reverser, Sloth, Suppressor, Traveler and Unyielding.
 
 Third-party skills that spend magicules internally without exposing their costs need an `extraBlacklist` entry until an adapter is added. Copied techniques, derived skills and external spells are not recursively treated as abilities of the rolled skill. A cost query that fails is logged once and excluded conservatively; `allowlist` provides an explicit override.

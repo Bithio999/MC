@@ -22,6 +22,19 @@ import static dev.wildhunt.ChainedGameTests.near;
 @GameTestHolder(WildHunt.ID)
 @PrefixGameTestTemplate(false)
 public final class ChainedReincarnationGameTests {
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void nativeBarrierAbsorptionCountsAsAMagiculeCostForMythsUniques(GameTestHelper h){
+        var p=fettered(h);double price=io.github.manasmods.tensura.ability.skill.extra.MultilayerBarrierSkill.CONFIG.magiculeCost;
+        try{
+            io.github.manasmods.tensura.ability.skill.extra.MultilayerBarrierSkill.CONFIG.magiculeCost=1;
+            var pool=ReincarnationMenu.getReincarnationSkills(ReincarnationMenu.getSkillPool(),h.getLevel(),true,p);
+            for(var apex:List.of(Apex.UTH_DUNA,Apex.JIN_DAHAAD))h.assertTrue(!pool.contains(WildHunt.UNIQUE.get(apex).get()),"Magicule-paid absorption survived filtering: "+apex);
+            h.assertTrue(pool.contains(WildHunt.UNIQUE.get(Apex.REY_DAU).get()) && pool.contains(WildHunt.UNIQUE.get(Apex.NU_UDRA).get()),"Aura-only arts were excluded");
+            io.github.manasmods.tensura.ability.skill.extra.MultilayerBarrierSkill.CONFIG.magiculeCost=0;
+            for(var apex:List.of(Apex.UTH_DUNA,Apex.JIN_DAHAAD))h.assertTrue(!ChainedReincarnation.hasMagiculeCost(WildHunt.UNIQUE.get(apex).get(),p),"Free absorption retained a cached MP cost");
+        }finally{io.github.manasmods.tensura.ability.skill.extra.MultilayerBarrierSkill.CONFIG.magiculeCost=price;}
+        h.succeed();
+    }
     private static ServerPlayer fettered(GameTestHelper h){var p=player(h);ReincarnationMenu.setRace(p,WildHunt.RESTRICTED.getFirst().get(),true,false);return p;}
     @GameTest(template="empty",timeoutTicks=100)
     public static void nativePoolsFilterEveryMagiculeModeWithoutChangingGlobalPoolsOrResources(GameTestHelper h){
