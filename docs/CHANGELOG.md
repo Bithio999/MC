@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.34.8 / standalone 1.0.7 — Terrain and headroom landings
+
+- Fix grounded dash failures under leaf canopies and low ceilings: retry blocked preferred destinations at valid standing heights or closer along the aim direction. Read actual block collision surfaces for slabs, stairs and partial blocks. Keep fallback sight lines clear of walls and roofs.
+- Allow short safe stops at nearby enemies and walls. Remove the arbitrary quarter-block minimum and retry exact block contact when snapping chooses a point behind the caster.
+- Preserve successful native landings, the grounded/water gate, targeting, Physical damage, exclusive damage bonuses, aura cost and cooldown. Reject genuinely unavailable landings without spending aura.
+- Add native regressions and expand the isolated real-client targeting review with the reported no-dummy forest case, low ceilings and uneven ground.
+
 ## 0.34.7 / standalone 1.0.6 — Exclusive damage branches
 
 - Follow Mysticism Restricted’s explicit Battlewill-source check and mutually exclusive branches: damage sourced from a Battlewill ability receives 5×; otherwise Physical damage receives 3×. Remove their 15× stacking.

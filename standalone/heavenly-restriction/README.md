@@ -1,13 +1,13 @@
 # Tensura: Heavenly Restriction
 
-An independent **NeoForge 1.21.1 addon for Tensura: Reincarnated**, extracted from Tensura Myths, with the 0.34.7 exclusive damage bonus update. It includes the Heavenly Restriction race lineage, its skills, and Air Sovereignty. **Tensura Myths is not required.**
+An independent **NeoForge 1.21.1 addon for Tensura: Reincarnated**, extracted from Tensura Myths, with the 0.34.8 terrain-aware dash update. It includes the Heavenly Restriction race lineage, its skills, and Air Sovereignty. **Tensura Myths is not required.**
 
-[Download 1.0.6](../../releases/tensura-heavenly-restriction-1.0.6.jar) · [Gameplay guide](docs/GUIDE.md) · [Validation](docs/VALIDATION-1.0.6.md)
+[Download 1.0.7](../../releases/tensura-heavenly-restriction-1.0.7.jar) · [Gameplay guide](docs/GUIDE.md) · [Validation](docs/VALIDATION-1.0.7.md)
 
 ## Included content
 
 - **Fettered Human → Tempered Vessel → Unshackled → Heavenly Restricted → Heavenbreaker**, through Tensura's reincarnation and evolution menus.
-- **Chained**, granted only by Fettered Human and retained through evolution, with 5× later aura-capacity gains. Its combat toggle grants 5× damage sourced from Battlewill abilities, or 3× other outgoing Physical damage. These bonuses use exclusive branches. Aura Sword is excluded from the separate 3× buff-effectiveness bonus; the dash supports upward aiming and stops before aimed enemies.
+- **Chained**, granted only by Fettered Human and retained through evolution, with 5× later aura-capacity gains. Its combat toggle grants 5× damage sourced from Battlewill abilities, or 3× other outgoing Physical damage. These bonuses use exclusive branches. Aura Sword is excluded from the separate 3× buff-effectiveness bonus; the dash supports upward aiming, finds safe standing room around terrain and canopies, and stops before aimed enemies.
 - **Hunter's Recovery**, **Apex Renewal**, and **Sovereign Rebirth**, granted at evolutions two, three, and four. Only the strongest enabled recovery tier heals.
 - **Air Sovereignty**, the aura-powered Battlewill evolution of mastered native Air Flight / Air Float.
 - The original race/skill icons, broken-chain teleport visual, recovery bloom's Blockbench/GeckoLib rig, smooth surface rendering, and aura-flight particles.
@@ -22,7 +22,7 @@ Use **Java 21**, **Minecraft 1.21.1**, and **NeoForge 21.1.209 or later in the 2
 
 1. **Tensura: Reincarnated 2.0.1.3** and its dependencies, including **ManasCore 4.0.0.2**, **Architectury 13.0.8+**, **SmartBrainLib**, and **TerraBlender**.
 2. **GeckoLib 4.9.3** (4.x).
-3. **tensura-heavenly-restriction-1.0.6.jar**.
+3. **tensura-heavenly-restriction-1.0.7.jar**.
 
 Use this addon **instead of Tensura Myths**. The loader rejects installing both because both implement the same Chained and Battlewill hooks. The full Tensura Myths mod remains available separately with all its existing content.
 
@@ -38,7 +38,7 @@ python3 scripts/fetch-runtime.py
 ./gradlew build runGameTestServer
 ```
 
-Java 21 is required. The fetch script verifies the exact runtime dependency hashes in `runtime-mods.lock.json`. Gradle resolves the pinned Tensura, ManasCore and Architectury versions. Output: `build/libs/tensura-heavenly-restriction-1.0.6.jar`.
+Java 21 is required. The fetch script verifies the exact runtime dependency hashes in `runtime-mods.lock.json`. Gradle resolves the pinned Tensura, ManasCore and Architectury versions. Output: `build/libs/tensura-heavenly-restriction-1.0.7.jar`.
 
 `./gradlew runClient` starts an isolated development client. Native tests cover the extracted mechanics and prove that Tensura Myths is absent. Optional visual-review code in `docs/review` is excluded from regular builds; see its instructions.
 

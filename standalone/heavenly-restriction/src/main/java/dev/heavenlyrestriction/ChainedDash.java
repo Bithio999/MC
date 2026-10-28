@@ -44,21 +44,44 @@ public final class ChainedDash {
         Vec3 end=ObjectSelectionHelper.getFloorPos(cell);
         if(!level.getBlockState(cell).canBeReplaced())end=ObjectSelectionHelper.getFloorPos(cell.above());
         if(level.getBlockState(cell).is(TensuraBlockTags.SKILL_NOT_TELEPORTABLE))return Optional.empty();
-        return safe(level,caster,end)?Optional.of(end):Optional.empty();
+        var landing=safeNear(level,caster,end,look,Double.NEGATIVE_INFINITY);
+        if(landing.isPresent())return landing;
+        // A nearby surface can snap to a block center behind the caster. Retry its exact
+        // contact position instead of teleporting backward or rejecting available space.
+        Vec3 contact=hit.getLocation().subtract(look.scale(caster.getBbWidth()*.5+.05));
+        Vec3 feet=contact.subtract(0,caster.getEyeHeight(),0);
+        if(hit.getDirection()==net.minecraft.core.Direction.UP)feet=new Vec3(feet.x,hit.getLocation().y,feet.z);
+        return safeNear(level,caster,feet,look,Double.NEGATIVE_INFINITY);
     }
+    private static final double LANDING_STEP=.25,VERTICAL_SEARCH=1.5,MIN_MOVE=.001;
     private static Optional<Vec3> safeNear(ServerLevel level,LivingEntity caster,Vec3 end,Vec3 look,double floor){
-        // Small landing-only backoff handles tight corners; never sweep the feet along the ray.
-        for(int step=0;step<=4;step++){
-            Vec3 candidate=end.subtract(look.scale(step*.25));
-            candidate=new Vec3(candidate.x,Math.max(candidate.y,floor),candidate.z);
-            if(candidate.distanceToSqr(caster.position())>REACH*REACH+.001 || candidate.subtract(caster.position()).dot(look)<.25)continue;
-            if(safe(level,caster,candidate))return Optional.of(candidate);
+        if(forward(caster,end,look) && safe(level,caster,end))return Optional.of(end);
+        // Preserve successful native destinations; on failure, find standing room progressively
+        // closer to the caster. Query real collision surfaces so slabs/stairs/snow are not rounded.
+        double distance=end.distanceTo(caster.position());
+        for(double backoff=0;backoff<=distance;backoff+=LANDING_STEP){
+            Vec3 base=end.subtract(look.scale(backoff));base=new Vec3(base.x,Math.max(base.y,floor),base.z);
+            if(!level.hasChunkAt(net.minecraft.core.BlockPos.containing(base)))continue;
+            var heights=new java.util.TreeSet<Double>();heights.add(base.y);heights.add(caster.getY());
+            var probe=caster.getBoundingBox().move(base.subtract(caster.position())).inflate(0,VERTICAL_SEARCH+.001,0);
+            for(var shape:level.getBlockCollisions(caster,probe))for(var box:shape.toAabbs())heights.add(box.maxY);
+            final Vec3 at=base;
+            var ordered=heights.stream().filter(y->y>=floor && Math.abs(y-at.y)<=VERTICAL_SEARCH).sorted(java.util.Comparator.comparingDouble(y->Math.abs(y-at.y))).toList();
+            for(double height:ordered){
+                Vec3 candidate=new Vec3(base.x,height,base.z);
+                if(forward(caster,candidate,look) && safe(level,caster,candidate) && clearView(level,caster,candidate))return Optional.of(candidate);
+            }
         }
         return Optional.empty();
+    }
+    private static boolean forward(LivingEntity caster,Vec3 end,Vec3 look){return end.subtract(caster.position()).dot(look)>=MIN_MOVE;}
+    private static boolean clearView(ServerLevel level,LivingEntity caster,Vec3 end){
+        // Vertical adjustments must stay on this side of walls and canopies, never on their roof.
+        return level.clip(new ClipContext(caster.getEyePosition(),end.add(0,caster.getEyeHeight(),0),ClipContext.Block.COLLIDER,ClipContext.Fluid.NONE,caster)).getType()==HitResult.Type.MISS;
     }
     private static boolean safe(ServerLevel level,LivingEntity caster,Vec3 end){
         var cell=net.minecraft.core.BlockPos.containing(end);
         var body=caster.getBoundingBox().move(end.subtract(caster.position()));
-        return body.minY>=level.getMinBuildHeight() && body.maxY<=level.getMaxBuildHeight() && level.hasChunkAt(cell) && level.getWorldBorder().isWithinBounds(body) && !level.getBlockState(cell).is(TensuraBlockTags.SKILL_NOT_TELEPORTABLE) && level.noCollision(caster,body) && end.distanceToSqr(caster.position())>=.0625;
+        return body.minY>=level.getMinBuildHeight() && body.maxY<=level.getMaxBuildHeight() && level.hasChunkAt(cell) && level.getWorldBorder().isWithinBounds(body) && !level.getBlockState(cell).is(TensuraBlockTags.SKILL_NOT_TELEPORTABLE) && level.noCollision(caster,body) && end.distanceToSqr(caster.position())>=MIN_MOVE*MIN_MOVE;
     }
 }

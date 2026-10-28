@@ -5,12 +5,12 @@ An expanded progression and skills addon for **Tensura 2.0.1.3**, **Minecraft
 
 ## Download
 
-The built addon is included at [releases/tensura-myths-0.34.7.jar](releases/tensura-myths-0.34.7.jar).
+The built addon is included at [releases/tensura-myths-0.34.8.jar](releases/tensura-myths-0.34.8.jar).
 Install it alongside Tensura and its required dependencies on both client and server, including **GeckoLib 4.9.3 (4.x)**.
 
 ## Standalone Heavenly Restriction addon
 
-The race, Chained, its three aura recovery skills and Air Sovereignty are also available as **[Tensura: Heavenly Restriction](standalone/heavenly-restriction/README.md)**. [Download standalone 1.0.6](releases/tensura-heavenly-restriction-1.0.6.jar). It requires Tensura and its dependencies, runs without Tensura Myths, and uses separate registry IDs. Use either addon in an instance; the full Myths release above retains all its content.
+The race, Chained, its three aura recovery skills and Air Sovereignty are also available as **[Tensura: Heavenly Restriction](standalone/heavenly-restriction/README.md)**. [Download standalone 1.0.7](releases/tensura-heavenly-restriction-1.0.7.jar). It requires Tensura and its dependencies, runs without Tensura Myths, and uses separate registry IDs. Use either addon in an instance; the full Myths release above retains all its content.
 
 ## Visuals
 
@@ -28,7 +28,7 @@ Master **Air Float / Air Flight** to unlock **[Air Sovereignty](wiki/pages/Air-S
 
 ## Heavenly Restriction
 
-Choose **[Fettered Human](wiki/pages/Fettered-Human.md)** at reincarnation and follow four evolutions to **Heavenbreaker**. The intrinsic Unique **[Chained](wiki/pages/Chained.md)** grants 5× later aura-capacity gains while leaving the starting aura roll unmultiplied, retains 1× magicule regeneration and converts its bonus above 1× into aura, restricts future magical growth/skills, multiplies Battlewill-ability damage by 5× or other outgoing Physical damage by 3× using separate branches, and provides a purely Physical attacking teleport with 16-block aim reach, reliable upward air aiming, a stop before the aimed enemy and a 1-second cooldown. The dash receives the 3× Physical bonus, without the 5× Battlewill bonus. Native race and ability menus handle the lineage. Only Fettered Human grants Chained; later evolutions retain it. Unshackled, Heavenly Restricted and Heavenbreaker grant Hunter’s Recovery, Apex Renewal and Sovereign Rebirth respectively. This lineage starts with 1,500–2,000 aura and 50–100 magicules (1,550–2,100 EP before separate reincarnation rewards), and allocates EP growth 90% to aura and 10% to magicules before Chained blocks magicule-capacity growth.
+Choose **[Fettered Human](wiki/pages/Fettered-Human.md)** at reincarnation and follow four evolutions to **Heavenbreaker**. The intrinsic Unique **[Chained](wiki/pages/Chained.md)** grants 5× later aura-capacity gains while leaving the starting aura roll unmultiplied, retains 1× magicule regeneration and converts its bonus above 1× into aura, restricts future magical growth/skills, multiplies Battlewill-ability damage by 5× or other outgoing Physical damage by 3× using separate branches, and provides a purely Physical attacking teleport with 16-block aim reach, upward air aiming, safe landings around canopies and uneven ground, a stop before the aimed enemy and a 1-second cooldown. The dash receives the 3× Physical bonus, without the 5× Battlewill bonus. Native race and ability menus handle the lineage. Only Fettered Human grants Chained; later evolutions retain it. Unshackled, Heavenly Restricted and Heavenbreaker grant Hunter’s Recovery, Apex Renewal and Sovereign Rebirth respectively. This lineage starts with 1,500–2,000 aura and 50–100 magicules (1,550–2,100 EP before separate reincarnation rewards), and allocates EP growth 90% to aura and 10% to magicules before Chained blocks magicule-capacity growth.
 
 ## Final Myth
 
@@ -115,7 +115,7 @@ An independent secondary grants **10% extra native EP gain**, retaining the prim
 
 ## Updating
 
-Replace the previous addon JAR with **0.34.7** on client and server. Install only one addon version. Existing Chained owners retain their saved base capacity and mastery. Their historical 20,000 starting aura is excluded from Chained’s multiplier; earned growth still gets 5×. Only a fresh reincarnation uses the new starting ranges. Current aura follows native capacity/overflow handling. The `wildhunt` namespace remains stable for existing saves.
+Replace the previous addon JAR with **0.34.8** on client and server. Install only one addon version. Existing Chained owners retain their saved base capacity and mastery. Their historical 20,000 starting aura is excluded from Chained’s multiplier; earned growth still gets 5×. Only a fresh reincarnation uses the new starting ranges. Current aura follows native capacity/overflow handling. The `wildhunt` namespace remains stable for existing saves.
 
 Ordinary elemental attribute bonuses use the strongest source per element; Godly bonuses remain separate. Mirrorbound, Demeter, Janus and Thoth no longer give passive shields; old saved contributions are cleaned automatically. Water Veil, Colossus Carapace and Aion retain their dedicated defenses. Demeter’s second mode is Perennial Seed: a one-use 40% HP/SHP rescue effect.
 
@@ -125,7 +125,7 @@ The [changelog](docs/CHANGELOG.md) records development changes separately from t
 
 ## Wiki
 
-Read the [Tensura Myths Wiki](wiki/README.md) for individual skill/race articles, per-ability damage types, progression and commands. [Download the styled offline edition](releases/tensura-myths-wiki-0.34.7.zip), extract it and open `index.html` for the wiki layout, infoboxes, screenshots and offline search. The [GitHub Wiki edition](wiki/github/Home.md) is prepared for the separate Wiki when it is available; [publishing instructions](docs/WIKI.md).
+Read the [Tensura Myths Wiki](wiki/README.md) for individual skill/race articles, per-ability damage types, progression and commands. [Download the styled offline edition](releases/tensura-myths-wiki-0.34.8.zip), extract it and open `index.html` for the wiki layout, infoboxes, screenshots and offline search. The [GitHub Wiki edition](wiki/github/Home.md) is prepared for the separate Wiki when it is available; [publishing instructions](docs/WIKI.md).
 
 ## Build and test
 
@@ -152,9 +152,9 @@ vertical dashes, through-wall ricochets, momentum preservation, native shield
 breakage and timed recovery, HP/SHP evolution, aura regeneration and native NPC loadouts.
 `./gradlew runClient` starts a development client on a machine with graphics.
 
-The [0.34.7 validation report](docs/VALIDATION-0.34.7.md) records exclusive Battlewill/Physical damage branches, native Aura Slash and Aura Sword reference checks, and gameplay regressions.
+The [0.34.8 validation report](docs/VALIDATION-0.34.8.md) records the forest-canopy reproduction, terrain/headroom and short-stop fixes, and native gameplay regressions.
 
-Install `build/libs/tensura-myths-0.34.7.jar` on **both client and server**,
+Install `build/libs/tensura-myths-0.34.8.jar` on **both client and server**,
 alongside Tensura and its required dependencies. The addon jar is not a complete
 modpack. Additional development dependency versions are in `runtime-mods.lock.json`.
 

@@ -72,7 +72,7 @@ While Chained is equipped in the active ability preset, gain **100% projectile d
 
 **Active — Press. Damage type: Physical (`minecraft:mob_attack`).**
 
-Use while **grounded or in water**, like Martial Master. A **16-block eye-level aim ray** ignores fluids and stops just before the nearest aimed hostile mob or eligible player. Allies, off-axis enemies and targets behind blocks do not capture the aim. Block hits retain Martial Master’s adjacent-block landing; open-air aim uses your look direction relative to your feet, including slight upward angles. Air/enemy landings may back off by up to one block to make room; body clearance is checked without sweeping your feet through the ground. Unsafe, unloaded or out-of-bounds landings are rejected.
+Use while **grounded or in water**, like Martial Master. A **16-block eye-level aim ray** ignores fluids and stops just before the nearest aimed hostile mob or eligible player. Allies, off-axis enemies and targets behind blocks do not capture the aim. Block hits retain Martial Master’s adjacent-block landing; open-air aim uses your look direction relative to your feet, including slight upward angles. When a destination is obstructed, the dash can shorten to a clear forward landing and adjust to the actual height of slabs, raised blocks or nearby ground. Low canopies and ceilings are handled through body clearance and a clear eye path, without sweeping your feet through the ground. Short safe stops at nearby enemies or walls are allowed. Unsafe, unloaded or out-of-bounds destinations are avoided; if no safe landing exists, the cast is rejected.
 
 | Parameter | Value |
 | --- | --- |
@@ -83,7 +83,7 @@ Use while **grounded or in water**, like Martial Master. A **16-block eye-level 
 | Path damage | 1.5 × √A |
 | Arrival damage | 3 × √A |
 
-**A** is aura actually paid. At 100,000 current aura, A = 2,000: approximately **67.08 path + 134.16 arrival damage**, or **201.25 + 402.49** with Martial Supremacy enabled, before native defenses and damage handling. A victim in both areas receives both hits despite ordinary hurt cooldown. Unavailable landings, airborne activation, cooldown or no usable aura cause no payment. Successful casts start a 1-second cooldown.
+**A** is aura actually paid. At 100,000 current aura, A = 2,000: approximately **67.08 path + 134.16 arrival damage**, or **201.25 + 402.49** with Martial Supremacy enabled, before native defenses and damage handling. A victim in both areas receives both hits despite ordinary hurt cooldown. If no safe landing is available, or activation is airborne, on cooldown or without usable aura, no payment occurs. Successful casts start a 1-second cooldown.
 
 ![Standalone Severance Rush](media/standalone-dash.png)
 

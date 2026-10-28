@@ -77,4 +77,48 @@ public final class ChainedDashGameTests {
         }finally{scoreboard.removePlayerTeam(team);}
         h.succeed();});
     }
+
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void slightUpwardAimUnderTwoBlockCeilingFindsAForwardLanding(GameTestHelper h){
+        var anchor=player(h);var start=anchor.position().add(0,30,0);var p=target(h,start);runway(h,start);EnergyHelper.setBaseMaxEP(p,100000);var i=vow(p,false);var energy=TensuraStorages.getExistenceFrom(p);
+        for(int x=-2;x<=20;x++)for(int z=-2;z<=2;z++)h.getLevel().setBlockAndUpdate(BlockPos.containing(start).offset(x,2,z),Blocks.STONE.defaultBlockState());
+        p.setOnGround(true);p.setYRot(-90);p.setXRot(-1);energy.setAura(10000);WildHunt.CHAINED.get().onPressed(i,p,0,0);
+        h.assertTrue(p.getX()>start.x+10,"Slight upward aim rejected a traversable two-block corridor");near(h,p.getY(),start.y,"Dash left the corridor's standing height");near(h,energy.getAura(),9800,"Corridor dash payment");h.assertTrue(i.getCoolDown(0)==1,"Corridor dash cooldown");h.succeed();
+    }
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void airAimCanLandOnSlabAndOneBlockRiseInsteadOfFailing(GameTestHelper h){
+        var anchor=player(h);var start=anchor.position().add(0,30,0);var p=target(h,start);runway(h,start);EnergyHelper.setBaseMaxEP(p,100000);var i=vow(p,false);var energy=TensuraStorages.getExistenceFrom(p);
+        for(var block:new net.minecraft.world.level.block.Block[]{Blocks.STONE_SLAB,Blocks.STONE}){
+            for(int x=10;x<=20;x++)for(int z=-2;z<=2;z++)h.getLevel().setBlockAndUpdate(BlockPos.containing(start).offset(x,0,z),block.defaultBlockState());
+            p.setPos(start);p.setOnGround(true);p.setYRot(-90);p.setXRot(0);i.setCoolDown(0,0);energy.setAura(10000);WildHunt.CHAINED.get().onPressed(i,p,0,0);
+            h.assertTrue(p.getX()>start.x+10,"Air aim rejected an unobstructed landing on "+block);near(h,p.getY(),start.y+(block==Blocks.STONE_SLAB?.5:1),"Dash did not use actual support height");near(h,energy.getAura(),9800,"Raised landing payment");h.assertTrue(i.getCoolDown(0)==1,"Raised landing cooldown");
+        }
+        h.succeed();
+    }
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void closeEnemyStillAllowsAShortSafeDash(GameTestHelper h){
+        var anchor=player(h);var start=anchor.position().add(0,30,0);var p=target(h,start);runway(h,start);EnergyHelper.setBaseMaxEP(p,100000);var i=vow(p,false);var energy=TensuraStorages.getExistenceFrom(p);var victim=target(h,start.add(1,0,0));
+        afterTracking(h,java.util.List.of(p,victim),()->{
+            p.setOnGround(true);p.setYRot(-90);p.setXRot(0);energy.setAura(10000);WildHunt.CHAINED.get().onPressed(i,p,0,0);
+            h.assertTrue(p.getX()>start.x+.01 && p.getX()<victim.getBoundingBox().minX,"Close enemy rejected a short safe dash");h.assertTrue(!p.getBoundingBox().intersects(victim.getBoundingBox()),"Close enemy landing overlaps its body");h.assertTrue(victim.getHealth()<1024,"Close enemy did not receive the dash hit");near(h,energy.getAura(),9800,"Close enemy payment");h.assertTrue(i.getCoolDown(0)==1,"Close enemy cooldown");h.succeed();
+        });
+    }
+
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void levelAimUnderBirchCanopyFindsStandingRoomWithoutADummy(GameTestHelper h){
+        var anchor=player(h);var start=anchor.position().add(0,30,0);var p=target(h,start);runway(h,start);EnergyHelper.setBaseMaxEP(p,100000);var i=vow(p,false);var energy=TensuraStorages.getExistenceFrom(p);
+        var leaves=Blocks.BIRCH_LEAVES.defaultBlockState().setValue(net.minecraft.world.level.block.LeavesBlock.PERSISTENT,true);
+        for(int x=6;x<=18;x++)for(int z=-2;z<=2;z++)h.getLevel().setBlockAndUpdate(BlockPos.containing(start).offset(x,2,z),leaves);
+        for(int y=0;y<=4;y++)h.getLevel().setBlockAndUpdate(BlockPos.containing(start).offset(12,y,0),Blocks.BIRCH_LOG.defaultBlockState());
+        p.setOnGround(true);p.setYRot(-90);p.setXRot(0);energy.setAura(10000);WildHunt.CHAINED.get().onPressed(i,p,0,0);
+        h.assertTrue(p.getX()>start.x+8 && p.getX()<start.x+12,"Level forest aim rejected standing room before a trunk under leaves");near(h,p.getY(),start.y,"Forest landing put the head in the canopy");near(h,energy.getAura(),9800,"Forest dash payment");h.assertTrue(i.getCoolDown(0)==1,"Forest dash cooldown");h.succeed();
+    }
+
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void closeWallUsesExactContactRatherThanASnappedPointBehindCaster(GameTestHelper h){
+        var anchor=player(h);var start=anchor.position().add(.6,30,.5);var p=target(h,start);runway(h,start);EnergyHelper.setBaseMaxEP(p,100000);var i=vow(p,false);var energy=TensuraStorages.getExistenceFrom(p);
+        for(int y=0;y<4;y++)for(int z=-1;z<=1;z++)h.getLevel().setBlockAndUpdate(BlockPos.containing(start).offset(1,y,z),Blocks.STONE.defaultBlockState());
+        p.setOnGround(true);p.setYRot(-90);p.setXRot(0);energy.setAura(10000);WildHunt.CHAINED.get().onPressed(i,p,0,0);
+        h.assertTrue(p.getX()>start.x+.01 && p.getX()<BlockPos.containing(start).getX()+.71,"Close wall cast failed or moved backward");near(h,p.getY(),start.y,"Close wall cast moved vertically instead of into the safe gap");h.assertTrue(h.getLevel().noCollision(p,p.getBoundingBox()),"Close wall landing intersects stone");near(h,energy.getAura(),9800,"Close wall payment");h.assertTrue(i.getCoolDown(0)==1,"Close wall cooldown");h.succeed();
+    }
 }
