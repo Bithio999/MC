@@ -36,7 +36,9 @@ public final class ArtVisualRenderer extends software.bernie.geckolib.renderer.G
     @Override public void render(ArtVisualEntity entity, float yaw, float partial, PoseStack poses, MultiBufferSource buffers, int light) {
         float age = entity.tickCount + partial;
         VfxMesh.begin(entity.getPosition(partial));batch.begin();
-        if(entity.kind()==ArtVisualEntity.CHAINED_RUSH){ChainedGeometry.render(poses,batch,entity.end(partial),age);}
+        if(entity.kind()==ArtVisualEntity.UNBOUND_STANCE){poses.pushPose();if(entity.caster()!=null){Vec3 at=entity.caster().getPosition(partial).subtract(entity.getPosition(partial));poses.translate(at.x,at.y,at.z);}UnboundGeometry.stance(poses,batch,entity.end(partial),age);poses.popPose();}
+        else if(entity.kind()==ArtVisualEntity.UNBOUND_SLASH){UnboundGeometry.slash(poses,batch,entity.end(partial),age);}
+        else if(entity.kind()==ArtVisualEntity.CHAINED_RUSH){ChainedGeometry.render(poses,batch,entity.end(partial),age);}
         else if(EschatonGeometry.handles(entity.kind())){EschatonGeometry.render(entity,poses,batch,partial);}
         else if(AnankeGeometry.handles(entity.kind())){AnankeGeometry.render(entity,poses,batch,partial);}
         else if(entity.kind()==ArtVisualEntity.CAUSAL_VERDICT && !entity.barrage().isEmpty()){SingularityGeometry.render(entity,poses,batch,partial);}

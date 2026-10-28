@@ -15,12 +15,13 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.phys.*;
 
-public final class ChainedSkill extends Skill {
-    public ChainedSkill(){super(SkillType.UNIQUE);}
+public class ChainedSkill extends Skill {
+    public ChainedSkill(){this(SkillType.UNIQUE);}
+    protected ChainedSkill(SkillType type){super(type);}
     @Override public MutableComponent getName(){return Component.literal("Chained");}
     @Override public MutableComponent getColoredName(){return getName().withStyle(net.minecraft.ChatFormatting.GOLD);}
     @Override public ResourceLocation getSkillIcon(){return WildHunt.id("textures/skill/chained.png");}
-    @Override public MutableComponent getSkillDescription(){return Component.literal("Heavenly Restriction. True passive: 5x aura-capacity gains from every source, excluding the saved starting aura pool; no future maximum-magicule gains; retain up to 1 magicule per second and convert all remaining natural, area, rate and sleep regeneration into aura; current magicules cannot exceed their effective maximum. New skills are restricted to resistances/nullifications and your recorded reincarnation skills and their derived grants; Battlewills remain learnable; later lineage evolutions also grant aura recovery. Resistance/Nullification acquisition costs current aura instead of permanent magicules. Toggle: +9 Battlewill learning/mastery points, +19 resistance learning points, 5x damage from Battlewill abilities; otherwise 3x outgoing Physical damage. These damage bonuses do not stack. 3x numeric Battlewill buffs except Aura Sword. True passive, mastered: Broken Limit lowers enemy resistance/nullification by one tier for your hits and ignores dodge, independent of toggle and slots. In slot: 100% projectile dodge, 25% other dodge, subject to explicit source bypass. Press: Severance Rush, an instant teleport with a 16-block aim reach that stops before an aimed enemy, ignores fluids, supports upward air aim, and finds standing room around terrain and low ceilings, with 3-block path and 4-block arrival hits. Costs 2% current aura; 1-second cooldown; path damage is 1.5 times the square root of aura spent, arrival damage is twice that. The dash deals only Physical damage, not Battlewill.");}
+    @Override public MutableComponent getSkillDescription(){return Component.literal("Heavenly Restriction. True passive: 5x aura-capacity gains from every source, excluding the saved starting aura pool; no future maximum-magicule gains; retain up to 1 magicule per second and convert all remaining natural, area, rate and sleep regeneration into aura; current magicules cannot exceed their effective maximum. Unfinished skills remain visible and can gain learning points, but blocked skills cannot finish learning. New skills are restricted to resistances/nullifications and your recorded reincarnation skills and their derived grants; Battlewills remain learnable; later lineage evolutions also grant aura recovery. Resistance/Nullification acquisition costs current aura instead of permanent magicules. Toggle: +9 Battlewill learning/mastery points, +19 resistance learning points, 5x damage from Battlewill abilities; otherwise 3x outgoing Physical damage. These damage bonuses do not stack. 3x numeric Battlewill buffs except Aura Sword. True passive, mastered: Broken Limit lowers enemy resistance/nullification by one tier for your hits and ignores dodge, independent of toggle and slots. In slot: 10% incoming damage reduction, 100% projectile dodge and 25% other dodge, subject to native bypass rules. Press: Severance Rush, an instant teleport with a 16-block aim reach that stops before an aimed enemy, ignores fluids, supports upward air aim, and finds standing room around terrain and low ceilings, with 3-block path and 4-block arrival hits. Costs 2% current aura; 1-second cooldown; path damage is 1.5 times the square root of aura spent, arrival damage is twice that. The dash deals only Physical damage, not Battlewill.");}
     @Override public int getMaxMastery(){return 1_000;}
     @Override public double getDefaultAcquiringMagiculeCost(){return 0;}
     @Override public double getMagiculeCost(LivingEntity e,ManasSkillInstance i,int mode){return 0;}
@@ -30,13 +31,18 @@ public final class ChainedSkill extends Skill {
     @Override public boolean canBeToggled(ManasSkillInstance i,LivingEntity e){return i.getMastery()>=0;}
     @Override public boolean canTick(ManasSkillInstance i,LivingEntity e){return true;}
     @Override public void onLearnSkill(ManasSkillInstance i,LivingEntity e){super.onLearnSkill(i,e);ChainedState.initialize(e);}
-    @Override public void onTick(ManasSkillInstance i,LivingEntity e){if(!e.level().isClientSide())ChainedState.refresh(e);}
+    @Override public void onTick(ManasSkillInstance i,LivingEntity e){if(!e.level().isClientSide()){ChainedState.refresh(e);ChainedEvolution.discover(e);}}
     @Override public void onToggleOn(ManasSkillInstance i,LivingEntity e){i.setToggled(true);ChainedState.refresh(e);}
     @Override public void onToggleOff(ManasSkillInstance i,LivingEntity e){i.setToggled(false);ChainedState.refresh(e);}
-    @Override public void onForgetSkill(ManasSkillInstance i,LivingEntity e){super.onForgetSkill(i,e);ChainedState.remove(e);}
+    @Override public void onForgetSkill(ManasSkillInstance i,LivingEntity e){super.onForgetSkill(i,e);if(i.getMastery()>=0)ChainedState.remove(e);}
     @Override public boolean onBeingDamaged(ManasSkillInstance i,LivingEntity e,DamageSource source,float amount){
-        if(!isInSlot(e,i) || source.is(DamageTypeTags.BYPASSES_INVULNERABILITY) || ((TensuraDamageSource)source).tensura$isDodgeBypass() || ChainedState.mastered(GodlyPassives.attacker(source)))return true;
-        return e.getRandom().nextDouble()>=(source.getDirectEntity() instanceof Projectile || source.is(DamageTypeTags.IS_PROJECTILE)?1:.25);
+        if(i.getMastery()<0 || !isInSlot(e,i) || source.is(DamageTypeTags.BYPASSES_INVULNERABILITY) || ((TensuraDamageSource)source).tensura$isDodgeBypass() || ChainedState.mastered(GodlyPassives.attacker(source)))return true;
+        return e.getRandom().nextDouble()>=(source.getDirectEntity() instanceof Projectile || source.is(DamageTypeTags.IS_PROJECTILE)?1:ChainedState.ultimate(e)?.5:.25);
+    }
+    @Override public boolean onTakenDamage(ManasSkillInstance i,LivingEntity e,DamageSource source,io.github.manasmods.manascore.network.api.util.Changeable<Float> amount){
+        if(i.getMastery()>=0 && isInSlot(e,i) && !source.is(DamageTypeTags.BYPASSES_INVULNERABILITY) && ((TensuraDamageSource)source).tensura$getBarrierBypassLevel()<2)
+            amount.set(amount.get()*(ChainedState.ultimate(e)?.7f:.9f));
+        return true;
     }
     public static float pathDamage(double spent){return (float)(1.5*Math.sqrt(Math.max(0,spent)));}
     public static float arrivalDamage(double spent){return pathDamage(spent)*2;}

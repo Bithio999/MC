@@ -39,7 +39,7 @@ Chained trades magical growth and unrestricted skill learning for much greater a
 - **Restricted learning:** you can gain Battlewills, resistances/nullifications, reincarnation-granted skills and their derived skills, and the lineage’s aura-recovery skills. Skills you already own are retained.
 - **Aura-paid resistances:** acquiring resistances or nullifications spends the configured cost in current aura instead of permanent magicule capacity. Free grants stay free.
 
-Blocked acquisition attempts show a red **“Chained blocks [skill]”** message explaining the allowed skill categories. Repeated attempts for the same skill are limited to one notice per second.
+Unfinished skills remain visible in the native menu and can accumulate learning points. Attempting to finish a blocked skill leaves it unfinished and shows **“Cannot acquire [skill].”**, with the skill name in its native tier color. Repeated attempts for the same skill are limited to one notice per second.
 
 For example, reincarnating with **Martial Master** still lets you gain **Heavenly Eye**. Myths synthesis and Godly ascension are also allowed when every ingredient comes from your recorded reincarnation skills.
 
@@ -98,7 +98,7 @@ Your damage sources also **ignore dodge**, including projectiles attributed to y
 | Damage ID | None |
 | Requirement | Chained equipped in the active ability preset |
 
-Gain **100% dodge chance against projectiles** and **25% against other incoming damage**. The latter includes non-projectile magic and environmental hits. This passive works with Chained’s combat toggle off. Explicit source-level dodge bypass and operator/void-style invulnerability bypass still take priority; another mastered, enabled Chained owner can bypass it.
+Gain **10% incoming damage reduction**, **100% dodge chance against projectiles** and **25% against other incoming damage**. The damage reduction follows Strengthen Body’s native rules: invulnerability-bypassing damage and barrier bypass level 2 or greater ignore it. The latter includes non-projectile magic and environmental hits. This passive works with Chained’s combat toggle off. Explicit source-level dodge bypass and operator/void-style invulnerability bypass still take priority; another mastered, enabled Chained owner can bypass it.
 
 ### Severance Rush
 
@@ -133,6 +133,8 @@ A brief chain separates into broken links along the route, with a pale pressure 
 ## Obtaining and evolution
 
 Select **Fettered Human** in the native reincarnation race menu. Only Fettered Human grants Chained. Normal evolution retains the existing skill and its mastery, but later stages do not grant or regrant it. Selecting a later stage directly does not award Chained. The lineage proceeds through four native-menu evolutions to [Heavenbreaker](https://github.com/Bithio999/MC/wiki/Heavenbreaker). Chained is separate from the ordinary reincarnation Unique roll.
+
+At **Heavenbreaker**, with **Chained fully mastered** and **True Demon Lord or True Hero** status, a native Ultimate-menu entry unlocks [Unbound](https://github.com/Bithio999/MC/wiki/Unbound). Equip its evolution entry and activate it to replace Chained. Mastery, toggle, presets, aura exemption, magicule ceiling and dash cooldown carry over. No extra EP payment is required.
 
 ## Existing saves and recorded inheritance
 

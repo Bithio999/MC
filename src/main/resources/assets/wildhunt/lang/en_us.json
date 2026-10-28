@@ -115,7 +115,7 @@
   "wildhunt.race.unshackled": "Unshackled",
   "wildhunt.race.heavenly_restricted": "Heavenly Restricted",
   "wildhunt.race.heavenbreaker": "Heavenbreaker",
-  "wildhunt.skill.air_sovereignty": "Air Sovereignty",
-  "wildhunt.skill.mode.air_sovereignty.flight": "Sovereign Flight",
-  "wildhunt.chained.blocked_skill": "Chained blocks %s. You can only acquire Battlewills, resistances/nullifications, inherited reincarnation skills, and racial aura recovery."
+  "wildhunt.skill.air_sovereignty": "Air Walk",
+  "wildhunt.skill.mode.air_sovereignty.flight": "Air Walk",
+  "wildhunt.chained.blocked_skill": "Cannot acquire %s."
 }

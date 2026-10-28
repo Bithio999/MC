@@ -32,7 +32,7 @@ public final class ChainedBuffs {
         CompoundTag record=null;for(var v:list){var t=(CompoundTag)v;if(t.getString("attribute").equals(id) && t.getString("modifier").equals(key)){record=t;break;}}
         if(record==null){record=new CompoundTag();record.putString("attribute",id);record.putString("modifier",key);list.add(record);}
         record.putDouble("original",value.amount());record.putInt("operation",value.operation().ordinal());record.putBoolean("permanent",permanent);
-        double amount=value.amount()*(ChainedState.active(owner)?3:1);record.putDouble("applied",amount);HunterData.of(owner).put("chained_buffs",list);
+        double amount=value.amount()*(ChainedState.active(owner)?ChainedState.buffMultiplier(owner):1);record.putDouble("applied",amount);HunterData.of(owner).put("chained_buffs",list);
         return new AttributeModifier(value.id(),amount,value.operation());
     }
     public static void refresh(LivingEntity owner){refresh(owner,ChainedState.active(owner));}
@@ -42,7 +42,7 @@ public final class ChainedBuffs {
         REPLAY.set(true);try{
             for(int n=list.size()-1;n>=0;n--){var t=list.getCompound(n);var holder=BuiltInRegistries.ATTRIBUTE.getHolder(ResourceLocation.parse(t.getString("attribute")));var a=holder.map(owner::getAttribute).orElse(null);var id=ResourceLocation.parse(t.getString("modifier"));var old=a==null?null:a.getModifier(id);
                 if(old==null || Math.abs(old.amount()-t.getDouble("applied"))>1e-8){list.remove(n);continue;}
-                double wanted=t.getDouble("original")*(active?3:1);if(Math.abs(old.amount()-wanted)<1e-8)continue;
+                double wanted=t.getDouble("original")*(active?ChainedState.buffMultiplier(owner):1);if(Math.abs(old.amount()-wanted)<1e-8)continue;
                 var value=new AttributeModifier(id,wanted,old.operation());if(t.getBoolean("permanent"))a.addOrReplacePermanentModifier(value);else a.addOrUpdateTransientModifier(value);t.putDouble("applied",wanted);
             }
         }finally{REPLAY.remove();}

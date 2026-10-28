@@ -19,7 +19,12 @@ import java.util.Optional;
 public final class ChainedState {
     public static final ResourceLocation VOW=HeavenlyRestriction.id("chained_vow"),START=HeavenlyRestriction.id("chained_starting_aura"),COMBAT=HeavenlyRestriction.id("chained_combat");
     private ChainedState(){}
-    public static Optional<ManasSkillInstance> instance(LivingEntity e){return e==null?Optional.empty():SkillAPI.getSkillsFrom(e).getSkill(HeavenlyRestriction.CHAINED.get()).filter(i->i.getMastery()>=0);}
+    public static Optional<ManasSkillInstance> instance(LivingEntity e){
+        if(e==null)return Optional.empty();var skills=SkillAPI.getSkillsFrom(e);
+        return skills.getSkill(HeavenlyRestriction.UNBOUND.get()).filter(i->i.getMastery()>=0).or(()->skills.getSkill(HeavenlyRestriction.CHAINED.get()).filter(i->i.getMastery()>=0));
+    }
+    public static boolean ultimate(LivingEntity e){return instance(e).filter(i->i.getSkill()==HeavenlyRestriction.UNBOUND.get()).isPresent();}
+    public static double buffMultiplier(LivingEntity e){return ultimate(e)?4:3;}
     public static boolean owned(LivingEntity e){return instance(e).isPresent();}
     public static boolean active(LivingEntity e){return instance(e).filter(i->i.isToggled() && i.getSkill().canInteractSkill(i,e)).isPresent();}
     public static boolean mastered(LivingEntity e){return instance(e).filter(i->i.isMastered(e)).isPresent();}
@@ -34,7 +39,7 @@ public final class ChainedState {
     private static final java.util.Map<LivingEntity,BlockedNotice> BLOCKED_NOTICES=java.util.Collections.synchronizedMap(new java.util.WeakHashMap<>());
     public static MutableComponent blockedMessage(ManasSkill skill){
         return net.minecraft.network.chat.Component.translatableWithFallback(HeavenlyRestriction.ID+".chained.blocked_skill",
-            "Chained blocks %s. You can only acquire Battlewills, resistances/nullifications, inherited reincarnation skills, and racial aura recovery.",skill.getName()).withStyle(net.minecraft.ChatFormatting.RED);
+            "Cannot acquire %s.",skill instanceof io.github.manasmods.tensura.ability.TensuraSkill t?t.getColoredName():skill.getName());
     }
     public static void notifyBlocked(LivingEntity owner,ManasSkillInstance skill){
         if(!(owner instanceof net.minecraft.server.level.ServerPlayer player) || owner.level().isClientSide())return;
@@ -44,10 +49,10 @@ public final class ChainedState {
     }
     public static EventResult unlock(ManasSkillInstance i,LivingEntity e,Changeable<MutableComponent> message){
         if(e.level().isClientSide())return EventResult.pass();
-        if(canLearn(e,i))return EventResult.pass();
+        if(i.getMastery()<0 || canLearn(e,i))return EventResult.pass();
         message.set(blockedMessage(i.getSkill()));notifyBlocked(e,i);return EventResult.interruptFalse();
     }
-    public static boolean canLearn(LivingEntity e,ManasSkillInstance i){return e.level().isClientSide() || !owned(e) || ChainedContext.inherited(e) || ChainedContext.permitsRecovery(e,i.getSkill()) || i.getSkill()==HeavenlyRestriction.CHAINED.get() || i.getSkill() instanceof Battlewill || i.getSkill() instanceof ResistSkill || inherited(e,i.getSkill()) || i.getParentSkill()!=null && inherited(e,i.getParentSkill());}
+    public static boolean canLearn(LivingEntity e,ManasSkillInstance i){return e.level().isClientSide() || !owned(e) || ChainedContext.inherited(e) || ChainedContext.permitsRecovery(e,i.getSkill()) || i.getSkill()==HeavenlyRestriction.CHAINED.get() || i.getSkill()==HeavenlyRestriction.UNBOUND.get() && ChainedEvolution.ready(e) || i.getSkill() instanceof Battlewill || i.getSkill() instanceof ResistSkill || inherited(e,i.getSkill()) || i.getParentSkill()!=null && inherited(e,i.getParentSkill());}
     public static double magiculeCeiling(LivingEntity e,double original){
         if(e==null || ChainedContext.initializing(e))return original;
         return instance(e).map(i->i.getOrCreateTag().contains("magicule_ceiling")?Math.min(original,i.getOrCreateTag().getDouble("magicule_ceiling")):original).orElse(original);
@@ -115,11 +120,12 @@ public final class ChainedState {
             // Match Restricted's mutually exclusive branches and explicit Battlewill source check.
             var ability=((TensuraDamageSource)source).tensura$getAbilityInstance();
             float multiplier=1;
-            if(ability!=null && ability.getSkill() instanceof Battlewill)multiplier=5;
-            else if(TensuraDamageHelper.isPhysicalAttack(source))multiplier=3;
+            if(ability!=null && ability.getSkill() instanceof Battlewill)multiplier=ultimate(attacker)?8:5;
+            else if(TensuraDamageHelper.isPhysicalAttack(source))multiplier=ultimate(attacker)?5:3;
             if(multiplier!=1)amount.set(amount.get()*multiplier);
         }
+        UnboundCritical.apply(attacker,target,source,amount);
         return EventResult.pass();
     }
-    public static boolean isDash(DamageSource source){var i=((TensuraDamageSource)source).tensura$getAbilityInstance();return i!=null && i.getSkill()==HeavenlyRestriction.CHAINED.get();}
+    public static boolean isDash(DamageSource source){var i=((TensuraDamageSource)source).tensura$getAbilityInstance();return i!=null && i.getSkill() instanceof ChainedSkill;}
 }

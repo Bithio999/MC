@@ -11,7 +11,7 @@ import software.bernie.geckolib.animatable.GeoEntity;
 
 /** Two bounded visual protocols only. This entity cannot collide, hurt or edit the world. */
 public final class ArtVisualEntity extends Entity implements GeoEntity {
-    public static final int HEALING_PULSE=0,CHAINED_RUSH=1;
+    public static final int HEALING_PULSE=0,CHAINED_RUSH=1,UNBOUND_STANCE=2,UNBOUND_SLASH=3;
     private static final DeferredRegister<EntityType<?>> TYPES=DeferredRegister.create(HeavenlyRestriction.ID,Registries.ENTITY_TYPE);
     public static final RegistrySupplier<EntityType<ArtVisualEntity>> TYPE=TYPES.register("art_visual",()->EntityType.Builder.<ArtVisualEntity>of(ArtVisualEntity::new,MobCategory.MISC).sized(.1f,.1f).clientTrackingRange(8).updateInterval(1).noSave().noSummon().build("heavenlyrestriction:art_visual"));
     private static final EntityDataAccessor<Integer> KIND=SynchedEntityData.defineId(ArtVisualEntity.class,EntityDataSerializers.INT),LIFE=SynchedEntityData.defineId(ArtVisualEntity.class,EntityDataSerializers.INT),STYLE=SynchedEntityData.defineId(ArtVisualEntity.class,EntityDataSerializers.INT),CASTER=SynchedEntityData.defineId(ArtVisualEntity.class,EntityDataSerializers.INT);

@@ -33,7 +33,7 @@ public final class ArtVisualEntity extends Entity implements software.bernie.gec
         PERENNIAL_SEED=47,REBIRTH_BLOOM=48,SKILL_APPRAISAL=49,ARTISAN_THREAD=50,COUNTERMAND=51,GRAND_SYNTHESIS=52,RECONSTRUCTED_BLADE=53,RECONSTRUCTED_LANCE=54,RECONSTRUCTED_CROWN=55;
     public static final int ANANKE_FATEBREAKER=56,ANANKE_STARFALL=57,ANANKE_PROCESSION=58,ANANKE_LAST_DAWN=59,ANANKE_ASCENSION=60,ANANKE_SHIFT=62;
     public static final int ESCHATON_EDGE=63,ESCHATON_LOOM=64,ESCHATON_GENESIS=65,ESCHATON_TESTAMENT=66,ESCHATON_WAKE=67,ESCHATON_EXCHANGE=68,ESCHATON_THRONEFALL=69,ESCHATON_APOCALYPSE=70,ESCHATON_ASCENSION=71,ESCHATON_SHATTER=72;
-    public static final int CHAINED_RUSH=73;
+    public static final int CHAINED_RUSH=73,UNBOUND_STANCE=74,UNBOUND_SLASH=75;
     private static final DeferredRegister<EntityType<?>> TYPES = DeferredRegister.create(WildHunt.ID, Registries.ENTITY_TYPE);
     public static final RegistrySupplier<EntityType<ArtVisualEntity>> TYPE = TYPES.register("art_visual", () ->
         EntityType.Builder.<ArtVisualEntity>of(ArtVisualEntity::new, MobCategory.MISC).sized(0.1f, 0.1f)
@@ -61,7 +61,7 @@ public final class ArtVisualEntity extends Entity implements software.bernie.gec
         super(type, level); noPhysics = true; setNoGravity(true);
     }
     public static ArtVisualEntity spawn(Level level, int kind, Vec3 start, Vec3 delta, int ticks) {
-        var entity = new ArtVisualEntity(kind>=ESCHATON_EDGE?FINAL_TYPE.get():kind>=ANANKE_FATEBREAKER && kind<=ANANKE_SHIFT?MYTH_TYPE.get():TYPE.get(), level); entity.setPos(start);
+        var entity = new ArtVisualEntity(kind>=ESCHATON_EDGE && kind<=ESCHATON_SHATTER?FINAL_TYPE.get():kind>=ANANKE_FATEBREAKER && kind<=ANANKE_SHIFT?MYTH_TYPE.get():TYPE.get(), level); entity.setPos(start);
         entity.entityData.set(KIND, kind); entity.entityData.set(LIFETIME, ticks);
         entity.entityData.set(END_X, (float)delta.x); entity.entityData.set(END_Y, (float)delta.y); entity.entityData.set(END_Z, (float)delta.z);
         level.addFreshEntity(entity); return entity;

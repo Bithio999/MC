@@ -24,6 +24,8 @@ public final class ArtVisualRenderer extends software.bernie.geckolib.renderer.G
     @Override protected void applyRotations(ArtVisualEntity e,PoseStack p,float age,float rotation,float partial,float scale){}
     @Override public void render(ArtVisualEntity e,float yaw,float partial,PoseStack p,MultiBufferSource buffers,int light){
         float age=e.tickCount+partial;VfxMesh.begin(e.getPosition(partial));batch.begin();
+        if(e.kind()==ArtVisualEntity.UNBOUND_STANCE){p.pushPose();if(e.caster()!=null){Vec3 at=e.caster().getPosition(partial).subtract(e.getPosition(partial));p.translate(at.x,at.y,at.z);}UnboundGeometry.stance(p,batch,e.end(),age);p.popPose();batch.flush(buffers);return;}
+        if(e.kind()==ArtVisualEntity.UNBOUND_SLASH){UnboundGeometry.slash(p,batch,e.end(),age);batch.flush(buffers);return;}
         if(e.kind()==ArtVisualEntity.CHAINED_RUSH){ChainedGeometry.render(p,batch,e.end(),age);batch.flush(buffers);return;}
         p.pushPose();if(e.caster()!=null){Vec3 delta=e.caster().getPosition(partial).subtract(e.getPosition(partial));p.translate(delta.x,delta.y,delta.z);}
         double f=fade(age,e.lifetime()),r=e.end().x*(.65+.35*smooth(age/e.lifetime()));int style=e.style(),color=style==0?0xFF9FDEAA:style==1?0xFFBFE69D:0xFFFFD784;

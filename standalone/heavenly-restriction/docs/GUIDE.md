@@ -36,9 +36,7 @@ Chained trades magical growth and unrestricted skill learning for greater aura c
 - **Restricted learning:** Battlewills, resistances/nullifications, reincarnation skills and their derived grants, and the lineage’s aura-recovery skills remain available. Previously owned skills are retained.
 - **Aura-paid resistances:** acquiring resistances/nullifications spends the configured cost in current aura instead of permanent magicule capacity. Free grants stay free.
 
-Blocked acquisition shows a red **“Chained blocks [skill]”** message explaining the allowed categories. Repeated attempts for the same skill show at most one notice per second.
-
-![Chained’s named acquisition rejection in the client](media/chained-block-message.png)
+Unfinished skills remain visible in the native menu and can gain learning points. Chained blocks final acquisition, retaining the unfinished entry and showing **“Cannot acquire [skill].”** with the skill name in its native tier color. Repeated attempts for the same skill show at most one notice per second.
 
 For example, reincarnating with **Martial Master** still allows **Heavenly Eye**. The saved birth roll remains unchanged. Permanent aura-capacity losses reduce its remaining exemption; later gains still receive 5×, even below the original birth amount. Chained’s bonus capacity counts toward total EP; it does not repeatedly refill current aura. Regeneration restores current reserves without adding maximum capacity or EP. Native limits still apply.
 
@@ -66,7 +64,7 @@ Your own hits lower **Resistance → none** and **Nullification → Resistance**
 
 **Passive — In-slot. Damage type: None.**
 
-While Chained is equipped in the active ability preset, gain **100% projectile dodge** and **25% dodge against other damage**. Explicit dodge bypass and invulnerability-bypassing damage still take priority. It works with the combat toggle disabled.
+While Chained is equipped in the active ability preset, gain **10% incoming damage reduction**, **100% projectile dodge** and **25% dodge against other damage**. Damage reduction follows Strengthen Body’s rules: invulnerability bypass and barrier bypass level 2 or greater ignore it. Explicit dodge bypass and invulnerability-bypassing damage still take priority. It works with the combat toggle disabled.
 
 ### Severance Rush
 
@@ -87,6 +85,30 @@ Use while **grounded or in water**, like Martial Master. A **16-block eye-level 
 
 ![Standalone Severance Rush](media/standalone-dash.png)
 
+## Unbound — Ultimate Skill
+
+Registry ID: `heavenlyrestriction:unbound`. At **Heavenbreaker**, with **Chained fully mastered** and **True Demon Lord or True Hero** status, Unbound appears in the native **Skills → Ultimate** menu. Equip and activate the evolution entry. Chained is replaced; its completed mastery, toggle, presets, dash cooldown, magicule ceiling and aura exemption carry over. There is no extra EP threshold or payment.
+
+Unbound retains all Heavenly Restriction vows and Severance Rush, with these upgrades:
+
+| Passive | Ultimate strength |
+| --- | --- |
+| Martial Supremacy — Toggle | **8×** Battlewill ability damage; otherwise **5×** Physical damage; **4×** numeric Battlewill buffs except Aura Sword |
+| Broken Limit — True, Mastered | Existing one-tier degradation and dodge bypass; **all player attacks critically hit**, using native critical multiplier, default **1.5×**, counted once |
+| Unerring Body — In-slot | **30%** damage reduction; **100%** projectile dodge; **50%** other dodge |
+
+Training bonuses remain +9 Battlewill learning/mastery and +19 resistance learning. Damage branches stay exclusive; Physical Battlewills do not receive both multipliers. All damage types remain the original attack’s type. Body reduction retains Strengthen Body’s invulnerability/barrier-bypass exceptions.
+
+### Counter
+
+**Active — Press. Damage type: Physical (`minecraft:mob_attack`).**
+
+Enter a defensive stance for **3 seconds**, with movement speed **0**. Entry costs **10% current aura** and starts a **10-second cooldown**. The first eligible enemy hit, including a direct spiritual attack, is completely negated before dodge/HP/SHP damage, then releases a massive instantaneous slash toward the attacker that ignores blocks without destroying them. It extends at least 16 blocks and up to 4 blocks beyond the attacker, capped at **64 blocks**, with a **3-block hit radius** and one hit per enemy.
+
+**Base damage = 10 × negated incoming damage + 6 × √(aura paid on entry)**. The incoming amount is measured before defenses. The slash receives Unbound’s Physical multiplier when toggled and its one native critical multiplier. At 10,000 current aura and a 20-damage hit, base damage is **389.74**, or **2,923.02** with the toggle and default critical multiplier, before defenses and other modifiers.
+
+Press again to cancel early for free, including during cooldown. Cancellation or timeout releases no slash and does not refund the entry cost; cooldown continues. Environmental/self/allied and operator/void damage do not trigger it. Death, logout, dimension changes, suppression and forgetting the skill clean up the stance. Client stance/cancellation state synchronizes.
+
 ## Aura recovery — Extra Skills
 
 **Passive — Toggle. Damage type: None for every tier.** Native racial learning grants/enables each new tier without permanent magicule acquisition costs. Earlier tiers remain learned; only the strongest enabled tier heals. Full applicable health costs nothing. Recovery is limited by available aura, funding HP before SHP.
@@ -103,15 +125,15 @@ All recovery respects interaction suppression and severance maximum HP. The firs
 
 ![Standalone recovery bloom](media/standalone-recovery.png)
 
-## Air Sovereignty — Battlewill
+## Air Walk — Battlewill
 
 **Active — Press. Damage type: None.** Registry ID: `heavenlyrestriction:air_sovereignty`. Maximum mastery: **400**.
 
-Permanently master native **Air Flight** (also called **Air Float**) to unlock Air Sovereignty as a learnable entry in Tensura's Battlewill menu. Train it normally; the predecessor stays learned. Temporary, borrowed, detached and unmastered predecessors do not unlock it. Existing masters are discovered on login or a server tick.
+Permanently master native **Air Flight** (also called **Air Float**) to unlock Air Walk as a learnable entry in Tensura's Battlewill menu. Train it normally; the predecessor stays learned. Temporary, borrowed, detached and unmastered predecessors do not unlock it. Existing masters are discovered on login or a server tick.
 
 Press to start or stop free flight using the same native flight flags as Gravity Manipulation. Move normally, jump to ascend, sneak to descend and release movement to hover. Releasing the skill key does not end flight.
 
-Activation and each second actually flying cost the sum of Air Flight's configured aura and magicule costs, paid entirely in **aura**: **30 aura by default**. Stopping is free; idle/landed flight permission has no upkeep. No magicules, gravity damage or elemental bonus are involved. Chained's learning/mastery bonuses apply.
+Activation and each second actually flying cost the sum of Air Flight's configured aura and magicule costs, paid entirely in **aura**: **30 aura by default**, halved to **15 aura when mastered**. Stopping is free; idle/landed flight permission has no upkeep. No magicules, gravity damage or elemental bonus are involved. Chained's learning/mastery bonuses apply.
 
 Depletion, interference, movement/area restrictions, forgetting the skill and respawn revoke this flight lease. Other valid native flight sources, equipment and creative flight are preserved. Saved enabled state cannot authorize free flight without the matching server lease.
 

@@ -100,17 +100,17 @@ public final class ChainedGameTests {
         @Override public void sendSystemMessage(net.minecraft.network.chat.Component message){if(messages!=null)messages.add(message);}
     }
     @GameTest(template="empty",timeoutTicks=100)
-    public static void blockedAcquisitionExplainsChainedWithoutChargingOrSpamming(GameTestHelper h){
+    public static void blockedAcquisitionUsesAConciseColoredNoticeWithoutChargingOrSpamming(GameTestHelper h){
         var p=new MessagePlayer(h.getLevel());EnergyHelper.setBaseMaxEP(p,10000);vow(p,false);p.messages.clear();
         var storage=SkillAPI.getSkillsFrom(p);var energy=TensuraStorages.getExistenceFrom(p);double maxMP=EnergyHelper.getBaseMaxMagicule(p),aura=energy.getAura(),magicules=energy.getMagicule();
         var blocked=UniqueSkills.MUSICIAN.get();h.assertTrue(!storage.learnSkill(blocked.createDefaultInstance()),"Blocked Unique was learned");
-        h.assertTrue(p.messages.size()==1 && p.messages.getFirst().getString().contains("Chained") && p.messages.getFirst().getString().contains(blocked.getName().getString()),"Missing named Chained rejection message");
+        h.assertTrue(p.messages.size()==1 && p.messages.getFirst().getString().contains("Cannot acquire") && p.messages.getFirst().getString().contains(blocked.getName().getString()),"Missing concise acquisition rejection message");
         storage.learnSkill(blocked.createDefaultInstance());storage.updateSkill(blocked.createDefaultInstance(),true);h.assertTrue(p.messages.size()==1,"Repeated same-skill failures spammed chat");
         var extra=ExtraSkills.MAGIC_SENSE.get();storage.updateSkill(extra.createDefaultInstance(),true);h.assertTrue(p.messages.size()==2 && p.messages.getLast().getString().contains(extra.getName().getString()),"Update-path rejection had no named explanation");
         var latent=ExtraSkills.HEAVENLY_EYE.get().createDefaultInstance();latent.setMastery(-1);ExtraSkills.HEAVENLY_EYE.get().addLearnPoint(latent,p,0,1);h.assertTrue(p.messages.size()==3 && latent.getMastery()<0,"Latent learning rejection was silent or completed");
-        var message=Changeable.of(net.minecraft.network.chat.Component.empty());ChainedState.unlock(blocked.createDefaultInstance(),p,message);h.assertTrue(message.isPresent() && message.get().getString().contains("Chained"),"Unlock event did not provide the custom reason");
+        var message=Changeable.of(net.minecraft.network.chat.Component.empty());ChainedState.unlock(blocked.createDefaultInstance(),p,message);h.assertTrue(message.isPresent() && message.get().getString().contains("Cannot acquire"),"Unlock event did not provide the concise notice");
         h.assertTrue(storage.getSkill(blocked).isEmpty() && storage.getSkill(extra).isEmpty(),"Blocked skill entered storage");near(h,EnergyHelper.getBaseMaxMagicule(p),maxMP,"Rejected skill spent permanent MP");near(h,energy.getAura(),aura,"Rejected skill spent aura");near(h,energy.getMagicule(),magicules,"Rejected skill spent current MP");
-        int messages=p.messages.size();h.assertTrue(HunterData.learnReward(p,UtilityArts.DIAMOND_PATH.get()) && HunterData.learnReward(p,ResistanceSkills.POISON_RESISTANCE.get()),"Allowed acquisition failed");h.assertTrue(p.messages.subList(messages,p.messages.size()).stream().noneMatch(m->m.getString().startsWith("Chained blocks")),"Allowed acquisition emitted a rejection");h.succeed();
+        int messages=p.messages.size();h.assertTrue(HunterData.learnReward(p,UtilityArts.DIAMOND_PATH.get()) && HunterData.learnReward(p,ResistanceSkills.POISON_RESISTANCE.get()),"Allowed acquisition failed");h.assertTrue(p.messages.subList(messages,p.messages.size()).stream().noneMatch(m->m.getString().startsWith("Cannot acquire")),"Allowed acquisition emitted a rejection");h.succeed();
     }
     static ManasSkillInstance vow(net.minecraft.world.entity.LivingEntity p,boolean on){
         HunterData.learnReward(p,WildHunt.CHAINED.get());var i=SkillAPI.getSkillsFrom(p).getSkill(WildHunt.CHAINED.get()).orElseThrow();if(on)i.onToggleOn(p);return i;

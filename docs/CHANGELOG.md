@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.35.0 / standalone 1.1.0 — Unbound
+
+- Rename Air Sovereignty to Air Walk while preserving its registry ID; mastered activation and flying upkeep cost half aura.
+- Retain unfinished blocked skills in the native menu and allow training, rejecting final acquisition before acquisition costs. Use a concise tier-colored skill-name notice.
+- Give slotted Chained 10% damage reduction following Strengthen Body’s native bypass rules.
+- Add Unbound, the native-menu Ultimate evolution of mastered Chained at Heavenbreaker with True Hero or True Demon Lord status. Preserve pact data, completed mastery, toggle, presets and dash cooldown.
+- Upgrade Battlewill / other Physical damage to separate 8× / 5× branches, numeric Battlewill buffs to 4× except Aura Sword, and in-slot defense to 30% reduction / 50% non-projectile dodge. Broken Limit makes all player attacks critical without duplicating native melee criticals.
+- Add Counter: three-second rooted stance, one negated enemy hit, terrain-piercing Physical slash, 10-second cooldown and 10% current-aura entry cost. Free early cancellation, native suppression/lifecycle cleanup and synchronized client state.
+
 ## 0.34.9 / standalone 1.0.8 — Resource and EP growth fixes
 
 - Apply capacity-growth blocking only on the server, so authoritative attribute synchronization can update the client’s displayed maximum.

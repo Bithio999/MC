@@ -26,6 +26,10 @@ Three active modes use aura; the separate native toggle charges aura upkeep. Dam
 
 Master one of these Ultimates, become a True Hero or True Demon Lord and reach 12M total EP to obtain [Aion](Aion.md), or additionally combine a mastered [Rune Smith](Rune-Smith.md) for [Thoth](Thoth.md), or combine a mastered [Threadweaver](Threadweaver.md) for [Lugh](Lugh.md).
 
+## Race-exclusive Ultimate
+
+[Unbound](Unbound.md) evolves from mastered [Chained](Chained.md) at Heavenbreaker with True Demon Lord or True Hero status. It retains the aura pact and dash, upgrades the martial passives and adds Counter. Its native Ultimate-menu evolution has no synthesis ingredients or extra EP payment.
+
 ## Boss-intrinsic Ultimates
 
 [Moira, Lord of Finality](Moira.md) belongs to [Ananke](Ananke.md). Its four native Ultimate rites are encounter mechanics, with no player roll, synthesis or slotting route. It is separate from the five playable combinations above.

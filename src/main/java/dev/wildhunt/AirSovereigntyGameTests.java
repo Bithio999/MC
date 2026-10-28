@@ -34,7 +34,7 @@ public final class AirSovereigntyGameTests {
     public static void nativeBattlewillCategoryHasARealNameAndNoMagiculeCost(GameTestHelper h){
         var p=player(h);var i=learn(p);var art=WildHunt.AIR_SOVEREIGNTY.get();
         h.assertTrue(art instanceof Battlewill && i.is(TensuraSkillTags.BATTLEWILL),"New art lost native Battlewill classification");
-        h.assertTrue(art.getColoredName().getString().equals("Air Sovereignty") && i.getMaxMastery()==400,"Name/mastery does not use native Battlewill behavior");
+        h.assertTrue(art.getColoredName().getString().equals("Air Walk") && i.getMaxMastery()==400,"Name/mastery does not use native Battlewill behavior");
         near(h,art.getMagiculeCost(p,i,0),0,"Flight requests MP");h.assertTrue(!WildHunt.rollableUniques().contains(art),"Battlewill entered Unique rolls");h.succeed();
     }
     @GameTest(template="empty",timeoutTicks=100)

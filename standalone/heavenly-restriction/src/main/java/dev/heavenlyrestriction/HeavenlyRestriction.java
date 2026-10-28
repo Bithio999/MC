@@ -14,6 +14,7 @@ public final class HeavenlyRestriction {
     public static final String ID="heavenlyrestriction";
     private static final Registrar<ManasRace> RACES=RaceAPI.getRaceRegistry();
     private static final Registrar<ManasSkill> SKILLS=SkillAPI.getSkillRegistry();
+    public static final RegistrySupplier<UnboundSkill> UNBOUND=SKILLS.register(id("unbound"),UnboundSkill::new);
     public static final RegistrySupplier<ChainedSkill> CHAINED=SKILLS.register(id("chained"),ChainedSkill::new);
     public static final RegistrySupplier<AirSovereigntyArt> AIR_SOVEREIGNTY=SKILLS.register(id("air_sovereignty"),AirSovereigntyArt::new);
     public static final List<RegistrySupplier<RestrictedRace>> RESTRICTED=java.util.stream.IntStream.range(0,5).mapToObj(stage->RACES.register(id(RestrictedRace.IDS[stage]),()->new RestrictedRace(stage))).toList();
@@ -31,6 +32,12 @@ public final class HeavenlyRestriction {
         NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.LOWEST,AirSovereigntyArt::clonePlayer);
         NeoForge.EVENT_BUS.addListener(AirSovereigntyArt::login);
         NeoForge.EVENT_BUS.addListener(ChainedCommands::register);
+        NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.HIGHEST,UnboundCounter::incoming);
+        NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.LOWEST,UnboundCritical::critical);
+        NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.LOWEST,(net.neoforged.neoforge.event.entity.living.LivingDeathEvent e)->UnboundCounter.clear(e.getEntity()));
+        NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerLoggedOutEvent e)->UnboundCounter.clear(e.getEntity()));
+        NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerChangedDimensionEvent e)->UnboundCounter.clear(e.getEntity()));
+        NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerRespawnEvent e)->UnboundCounter.clear(e.getEntity()));
         NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.HIGHEST,(net.neoforged.neoforge.event.entity.living.LivingDeathEvent event)->AuraRegenerationSkill.onDeath(event));
     }
     public static ResourceLocation id(String path){return ResourceLocation.fromNamespaceAndPath(ID,path);}

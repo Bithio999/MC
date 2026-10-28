@@ -66,6 +66,12 @@
 | [Starfall Canticle](Moira.md#starfall-canticle) | [Moira, Lord of Finality](Moira.md) | Boss cast | Light elemental — `tensura:light_elemental` |
 | [Eventide Procession](Moira.md#eventide-procession) | [Moira, Lord of Finality](Moira.md) | Boss cast | Darkness elemental — `tensura:darkness_elemental` |
 | [The Last Dawn](Moira.md#the-last-dawn) | [Moira, Lord of Finality](Moira.md) | Boss cast | Space elemental — `tensura:space_elemental` |
+| [Heavenly Restriction](Unbound.md#heavenly-restriction) | [Unbound](Unbound.md) | Passive - True | None |
+| [Martial Supremacy](Unbound.md#martial-supremacy) | [Unbound](Unbound.md) | Passive - Toggle | None |
+| [Broken Limit](Unbound.md#broken-limit) | [Unbound](Unbound.md) | Passive - True - Mastered | None |
+| [Unerring Body](Unbound.md#unerring-body) | [Unbound](Unbound.md) | Passive - In-slot | None |
+| [Severance Rush](Unbound.md#severance-rush) | [Unbound](Unbound.md) | Active - Press | Physical — `minecraft:mob_attack` |
+| [Counter](Unbound.md#counter) | [Unbound](Unbound.md) | Active - Press | Physical — `minecraft:mob_attack` |
 
 ## Godly abilities
 
@@ -112,7 +118,7 @@ The three Godly classification passives are always active, free and non-stacking
 
 | Ability | Parent skill / system | Activation | Damage type |
 | --- | --- | --- | --- |
-| [Sovereign Flight](Air-Sovereignty.md#sovereign-flight) | [Air Sovereignty](Air-Sovereignty.md) | Active - Press | None |
+| [Air Walk](Air-Walk.md#air-walk) | [Air Walk](Air-Walk.md) | Active - Press | None |
 
 ## Racial abilities
 

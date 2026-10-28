@@ -2,5 +2,5 @@
   "heavenlyrestriction.skill.hunters_recovery": "Hunter's Recovery",
   "heavenlyrestriction.skill.apex_renewal": "Apex Renewal",
   "heavenlyrestriction.skill.sovereign_rebirth": "Sovereign Rebirth",
-  "heavenlyrestriction.chained.blocked_skill": "Chained blocks %s. You can only acquire Battlewills, resistances/nullifications, inherited reincarnation skills, and racial aura recovery."
+  "heavenlyrestriction.chained.blocked_skill": "Cannot acquire %s."
 }

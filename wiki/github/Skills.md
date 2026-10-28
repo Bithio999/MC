@@ -2,7 +2,7 @@
 
 [Main Page](https://github.com/Bithio999/MC/wiki/Home) · [Skills](https://github.com/Bithio999/MC/wiki/Skills) · [Ability index](https://github.com/Bithio999/MC/wiki/Abilities) · [Damage types](https://github.com/Bithio999/MC/wiki/Damage-Types)
 
-**Tensura Myths** provides **eight rollable Unique Skills, the race-exclusive Chained, five combination Ultimates, three Godly Skills, three aura recovery Extra Skills and Air Sovereignty, a Battlewill evolution**.
+**Tensura Myths** provides **eight rollable Unique Skills, the race-exclusive Chained, five combination Ultimates, three Godly Skills, three aura recovery Extra Skills and Air Walk, a Battlewill evolution**.
 
 ## Skill tiers
 
@@ -15,7 +15,7 @@
 
 ## Battlewills
 
-[Air Sovereignty](https://github.com/Bithio999/MC/wiki/Air-Sovereignty) evolves from mastered Air Float / Air Flight and enables aura-powered free flight. Use the normal Battlewill category and native learning system. See the [Battlewill directory](https://github.com/Bithio999/MC/wiki/Battlewills).
+[Air Walk](https://github.com/Bithio999/MC/wiki/Air-Walk) evolves from mastered Air Float / Air Flight and enables aura-powered free flight. Use the normal Battlewill category and native learning system. See the [Battlewill directory](https://github.com/Bithio999/MC/wiki/Battlewills).
 
 ## Using skills
 
@@ -40,3 +40,5 @@ The [ability index](https://github.com/Bithio999/MC/wiki/Abilities) records ever
 ---
 
 **Categories:** Tensura Myths · Skills
+
+[Unbound](https://github.com/Bithio999/MC/wiki/Unbound) is the race-exclusive Ultimate evolution of mastered [Chained](https://github.com/Bithio999/MC/wiki/Chained), unlocked at Heavenbreaker with True Demon Lord or True Hero status.

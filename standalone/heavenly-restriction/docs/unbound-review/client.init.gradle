@@ -1,0 +1,5 @@
+gradle.projectsEvaluated {
+    rootProject.sourceSets.main.java.srcDir(rootProject.file('docs/unbound-review'))
+    rootProject.neoForge.runs.getByName('client').programArgument('--quickPlaySingleplayer')
+    rootProject.neoForge.runs.getByName('client').programArgument('Restriction Validation')
+}

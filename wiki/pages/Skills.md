@@ -2,7 +2,7 @@
 
 [Main Page](../README.md) · [Skills](Skills.md) · [Ability index](Abilities.md) · [Damage types](Damage-Types.md)
 
-**Tensura Myths** provides **eight rollable Unique Skills, the race-exclusive Chained, five combination Ultimates, three Godly Skills, three aura recovery Extra Skills and Air Sovereignty, a Battlewill evolution**.
+**Tensura Myths** provides **eight rollable Unique Skills, the race-exclusive Chained, five combination Ultimates, three Godly Skills, three aura recovery Extra Skills and Air Walk, a Battlewill evolution**.
 
 ## Skill tiers
 
@@ -15,7 +15,7 @@
 
 ## Battlewills
 
-[Air Sovereignty](Air-Sovereignty.md) evolves from mastered Air Float / Air Flight and enables aura-powered free flight. Use the normal Battlewill category and native learning system. See the [Battlewill directory](Battlewills.md).
+[Air Walk](Air-Walk.md) evolves from mastered Air Float / Air Flight and enables aura-powered free flight. Use the normal Battlewill category and native learning system. See the [Battlewill directory](Battlewills.md).
 
 ## Using skills
 
@@ -40,3 +40,5 @@ The [ability index](Abilities.md) records every move’s damage type. Healing, b
 ---
 
 **Categories:** Tensura Myths · Skills
+
+[Unbound](Unbound.md) is the race-exclusive Ultimate evolution of mastered [Chained](Chained.md), unlocked at Heavenbreaker with True Demon Lord or True Hero status.

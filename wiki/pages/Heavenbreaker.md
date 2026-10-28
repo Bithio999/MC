@@ -57,3 +57,7 @@ As the final Human-family branch, Heavenbreaker can meet the primary-lineage com
 ---
 
 **Categories:** Tensura Myths · Races
+
+## Ultimate evolution
+
+With fully mastered [Chained](Chained.md) and True Demon Lord or True Hero status, unlock [Unbound](Unbound.md) through the native Ultimate skill menu.

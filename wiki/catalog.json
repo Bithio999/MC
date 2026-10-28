@@ -18,7 +18,12 @@
   },
   {
     "slug": "Air-Sovereignty",
-    "title": "Air Sovereignty",
+    "title": "Air Walk",
+    "category": "Reference"
+  },
+  {
+    "slug": "Air-Walk",
+    "title": "Air Walk",
     "category": "Skills",
     "tier": "Battlewill"
   },
@@ -691,7 +696,7 @@
   },
   {
     "slug": "Hunters-Recovery",
-    "title": "Hunter’s Recovery",
+    "title": "Hunter\u2019s Recovery",
     "category": "Skills",
     "tier": "Extra"
   },
@@ -799,6 +804,12 @@
     "slug": "Ultimate-Skills",
     "title": "Ultimate Skills",
     "category": "Skills"
+  },
+  {
+    "slug": "Unbound",
+    "title": "Unbound",
+    "category": "Skills",
+    "tier": "Ultimate"
   },
   {
     "slug": "Unique-Skills",

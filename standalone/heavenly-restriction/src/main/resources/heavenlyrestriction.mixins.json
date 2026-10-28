@@ -22,7 +22,8 @@
     "IndependentDamageMixin",
     "RestrictionEnergyMixin",
     "ChainedReserveMixin",
-    "ChainedStatCommandMixin"
+    "ChainedStatCommandMixin",
+    "UnboundCriticalMixin"
   ],
   "injectors": {
     "defaultRequire": 1

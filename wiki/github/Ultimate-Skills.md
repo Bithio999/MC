@@ -26,6 +26,10 @@ Three active modes use aura; the separate native toggle charges aura upkeep. Dam
 
 Master one of these Ultimates, become a True Hero or True Demon Lord and reach 12M total EP to obtain [Aion](https://github.com/Bithio999/MC/wiki/Aion), or additionally combine a mastered [Rune Smith](https://github.com/Bithio999/MC/wiki/Rune-Smith) for [Thoth](https://github.com/Bithio999/MC/wiki/Thoth), or combine a mastered [Threadweaver](https://github.com/Bithio999/MC/wiki/Threadweaver) for [Lugh](https://github.com/Bithio999/MC/wiki/Lugh).
 
+## Race-exclusive Ultimate
+
+[Unbound](https://github.com/Bithio999/MC/wiki/Unbound) evolves from mastered [Chained](https://github.com/Bithio999/MC/wiki/Chained) at Heavenbreaker with True Demon Lord or True Hero status. It retains the aura pact and dash, upgrades the martial passives and adds Counter. Its native Ultimate-menu evolution has no synthesis ingredients or extra EP payment.
+
 ## Boss-intrinsic Ultimates
 
 [Moira, Lord of Finality](https://github.com/Bithio999/MC/wiki/Moira) belongs to [Ananke](https://github.com/Bithio999/MC/wiki/Ananke). Its four native Ultimate rites are encounter mechanics, with no player roll, synthesis or slotting route. It is separate from the five playable combinations above.

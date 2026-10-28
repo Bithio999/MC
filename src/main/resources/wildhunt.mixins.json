@@ -30,7 +30,8 @@
     "AirSovereigntyFlightMixin",
     "SecondaryTotalEPMixin",
     "ChainedReserveMixin",
-    "ChainedStatCommandMixin"
+    "ChainedStatCommandMixin",
+    "UnboundCriticalMixin"
   ],
   "injectors": {
     "defaultRequire": 1

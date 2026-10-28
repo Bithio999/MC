@@ -1,6 +1,6 @@
 # Tensura Myths Wiki
 
-An unofficial reference for the **Tensura Myths** addon to **Tensura: Reincarnated**. Minecraft 1.21.1 · NeoForge · Addon 0.34.9.
+An unofficial reference for the **Tensura Myths** addon to **Tensura: Reincarnated**. Minecraft 1.21.1 · NeoForge · Addon 0.35.0.
 
 ## Start here
 
@@ -19,11 +19,13 @@ An unofficial reference for the **Tensura Myths** addon to **Tensura: Reincarnat
 
 ## Battlewills
 
-Master **Air Float / Air Flight** to unlock **[Air Sovereignty](https://github.com/Bithio999/MC/wiki/Air-Sovereignty)**: native free flight paid entirely in aura. [Battlewill directory](https://github.com/Bithio999/MC/wiki/Battlewills).
+Master **Air Float / Air Flight** to unlock **[Air Walk](https://github.com/Bithio999/MC/wiki/Air-Walk)**: native free flight paid entirely in aura. [Battlewill directory](https://github.com/Bithio999/MC/wiki/Battlewills).
 
 ## Heavenly Restriction
 
 The [Fettered Human](https://github.com/Bithio999/MC/wiki/Fettered-Human) starting race has four evolutions ending in [Heavenbreaker](https://github.com/Bithio999/MC/wiki/Heavenbreaker). Its intrinsic Unique [Chained](https://github.com/Bithio999/MC/wiki/Chained) trades magical growth and unrestricted skills for 5× later aura-capacity gains, Battlewill combat and an instant attacking teleport. Starting aura rolls of 1,500–2,000 are unmultiplied; starting magicules roll 50–100. Unshackled, Heavenly Restricted and Heavenbreaker grant Hunter’s Recovery, Apex Renewal and Sovereign Rebirth respectively.
+
+[Unbound](https://github.com/Bithio999/MC/wiki/Unbound) evolves from mastered Chained at Heavenbreaker with True Hero or True Demon Lord status. Its martial passives and Counter use the native Ultimate skill menu.
 
 ## Races
 
@@ -50,4 +52,4 @@ The [Fettered Human](https://github.com/Bithio999/MC/wiki/Fettered-Human) starti
 Ability articles separate direct elemental hits, additional status damage, healing and utility. Their data tables include damage types, resource costs, cooldowns and acquisition requirements.
 
 
-[Download the styled offline edition](https://github.com/Bithio999/MC/blob/main/releases/tensura-myths-wiki-0.34.9.zip)
+[Download the styled offline edition](https://github.com/Bithio999/MC/blob/main/releases/tensura-myths-wiki-0.35.0.zip)

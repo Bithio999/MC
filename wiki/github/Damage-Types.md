@@ -16,7 +16,7 @@
 | [Earth](#earth) | `tensura:earth_elemental` | Rune Smith, Verdant Keeper, Anansi, Thoth, Lugh |
 | [Light](#light) | `tensura:light_elemental` | Mirrorbound, Thoth, Lugh, Moira |
 | [Wind](#wind) | `tensura:wind_elemental` | Thoth, Lugh |
-| [Physical](#physical) | `minecraft:mob_attack` | Chained’s Severance Rush |
+| [Physical](#physical) | `minecraft:mob_attack` | Chained / Unbound’s Severance Rush; Unbound’s Counter |
 | [Physical aura slash](#physical-aura-slash) | `tensura:aura_slash` | Lugh, Moira |
 | [Darkness](#darkness) | `tensura:darkness_elemental` | Lugh, Moira |
 | [Gravity](#gravity) | `tensura:gravity_elemental` | Lugh |

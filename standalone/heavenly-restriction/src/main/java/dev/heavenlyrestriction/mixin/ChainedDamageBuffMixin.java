@@ -14,10 +14,10 @@ import org.spongepowered.asm.mixin.injection.At;
 public abstract class ChainedDamageBuffMixin {
     @WrapOperation(method="*",at=@At(value="INVOKE",target="Lio/github/manasmods/tensura/effect/template/DamageAction;onDamagingEntity(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/damagesource/DamageSource;Lio/github/manasmods/manascore/network/api/util/Changeable;)Z"),remap=false)
     private static boolean restriction$offensiveBuff(DamageAction action,LivingEntity owner,LivingEntity target,DamageSource source,Changeable<Float> amount,Operation<Boolean> original){
-        float before=amount.get();boolean result=original.call(action,owner,target,source,amount);if(ChainedBuffs.damageBuff(owner,action))amount.set(Math.max(0,before+(amount.get()-before)*3));return result;
+        float before=amount.get();boolean result=original.call(action,owner,target,source,amount);if(ChainedBuffs.damageBuff(owner,action))amount.set((float)Math.max(0,before+(amount.get()-before)*dev.heavenlyrestriction.ChainedState.buffMultiplier(owner)));return result;
     }
     @WrapOperation(method="*",at=@At(value="INVOKE",target="Lio/github/manasmods/tensura/effect/template/DamageAction;onBeingDamaged(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/damagesource/DamageSource;Lio/github/manasmods/manascore/network/api/util/Changeable;)Z"),remap=false)
     private static boolean restriction$defensiveBuff(DamageAction action,LivingEntity owner,DamageSource source,Changeable<Float> amount,Operation<Boolean> original){
-        float before=amount.get();boolean result=original.call(action,owner,source,amount);if(ChainedBuffs.damageBuff(owner,action))amount.set(Math.max(0,before+(amount.get()-before)*3));return result;
+        float before=amount.get();boolean result=original.call(action,owner,source,amount);if(ChainedBuffs.damageBuff(owner,action))amount.set((float)Math.max(0,before+(amount.get()-before)*dev.heavenlyrestriction.ChainedState.buffMultiplier(owner)));return result;
     }
 }

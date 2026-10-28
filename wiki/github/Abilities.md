@@ -66,6 +66,12 @@
 | [Starfall Canticle](https://github.com/Bithio999/MC/wiki/Moira#starfall-canticle) | [Moira, Lord of Finality](https://github.com/Bithio999/MC/wiki/Moira) | Boss cast | Light elemental — `tensura:light_elemental` |
 | [Eventide Procession](https://github.com/Bithio999/MC/wiki/Moira#eventide-procession) | [Moira, Lord of Finality](https://github.com/Bithio999/MC/wiki/Moira) | Boss cast | Darkness elemental — `tensura:darkness_elemental` |
 | [The Last Dawn](https://github.com/Bithio999/MC/wiki/Moira#the-last-dawn) | [Moira, Lord of Finality](https://github.com/Bithio999/MC/wiki/Moira) | Boss cast | Space elemental — `tensura:space_elemental` |
+| [Heavenly Restriction](https://github.com/Bithio999/MC/wiki/Unbound#heavenly-restriction) | [Unbound](https://github.com/Bithio999/MC/wiki/Unbound) | Passive - True | None |
+| [Martial Supremacy](https://github.com/Bithio999/MC/wiki/Unbound#martial-supremacy) | [Unbound](https://github.com/Bithio999/MC/wiki/Unbound) | Passive - Toggle | None |
+| [Broken Limit](https://github.com/Bithio999/MC/wiki/Unbound#broken-limit) | [Unbound](https://github.com/Bithio999/MC/wiki/Unbound) | Passive - True - Mastered | None |
+| [Unerring Body](https://github.com/Bithio999/MC/wiki/Unbound#unerring-body) | [Unbound](https://github.com/Bithio999/MC/wiki/Unbound) | Passive - In-slot | None |
+| [Severance Rush](https://github.com/Bithio999/MC/wiki/Unbound#severance-rush) | [Unbound](https://github.com/Bithio999/MC/wiki/Unbound) | Active - Press | Physical — `minecraft:mob_attack` |
+| [Counter](https://github.com/Bithio999/MC/wiki/Unbound#counter) | [Unbound](https://github.com/Bithio999/MC/wiki/Unbound) | Active - Press | Physical — `minecraft:mob_attack` |
 
 ## Godly abilities
 
@@ -112,7 +118,7 @@ The three Godly classification passives are always active, free and non-stacking
 
 | Ability | Parent skill / system | Activation | Damage type |
 | --- | --- | --- | --- |
-| [Sovereign Flight](https://github.com/Bithio999/MC/wiki/Air-Sovereignty#sovereign-flight) | [Air Sovereignty](https://github.com/Bithio999/MC/wiki/Air-Sovereignty) | Active - Press | None |
+| [Air Walk](https://github.com/Bithio999/MC/wiki/Air-Walk#air-walk) | [Air Walk](https://github.com/Bithio999/MC/wiki/Air-Walk) | Active - Press | None |
 
 ## Racial abilities
 

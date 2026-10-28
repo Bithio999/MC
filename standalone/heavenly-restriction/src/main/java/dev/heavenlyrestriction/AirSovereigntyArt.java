@@ -23,16 +23,16 @@ import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 /** Native creative-flight movement, earned through Battlewill mastery and paid in aura. */
 public final class AirSovereigntyArt extends Battlewill {
     private static final String ENABLED="air_sovereignty_enabled",LEASE="air_sovereignty_flight",TICKS="air_sovereignty_ticks";
-    @Override public MutableComponent getName(){return Component.literal("Air Sovereignty");}
+    @Override public MutableComponent getName(){return Component.literal("Air Walk");}
     @Override public MutableComponent getColoredName(){return getName().withStyle(ChatFormatting.RED);}
     @Override public ResourceLocation getSkillIcon(){return HeavenlyRestriction.id("textures/battlewill/air_sovereignty.png");}
-    @Override public MutableComponent getSkillDescription(){return Component.literal("Evolution of mastered Air Flight (Air Float). Press to start or stop free flight like Gravity Manipulation: hover, move freely, jump to ascend and sneak to descend. Activation and each second spent flying cost the sum of Air Flight's configured aura and magicule costs, paid entirely in aura (30 by default). Stopping is free. No magicule cost, gravity-element boost or damage. Learn the evolved art through the normal ability menu. Native interference and movement restrictions still apply.");}
+    @Override public MutableComponent getSkillDescription(){return Component.literal("Evolution of mastered Air Flight (Air Float). Press to start or stop free flight like Gravity Manipulation: hover, move freely, jump to ascend and sneak to descend. Activation and each second spent flying cost the sum of Air Flight's configured aura and magicule costs, paid entirely in aura (30 by default, halved to 15 when mastered). Stopping is free. No magicule cost, gravity-element boost or damage. Learn the evolved art through the normal ability menu. Native interference and movement restrictions still apply.");}
     @Override public double getAuraCost(LivingEntity e,ManasSkillInstance i,int mode){
         var config=ConfigRegistry.getConfig(BattlewillConfig.class).AirFlight;
-        return Math.max(0,config.auraCost)+Math.max(0,config.magiculeCost);
+        return (Math.max(0,config.auraCost)+Math.max(0,config.magiculeCost))*(i.isMastered(e)?.5:1);
     }
     @Override public double getMagiculeCost(LivingEntity e,ManasSkillInstance i,int mode){return 0;}
-    @Override public Component getModeName(ManasSkillInstance i,int mode){return Component.literal("Sovereign Flight");}
+    @Override public Component getModeName(ManasSkillInstance i,int mode){return Component.literal("Air Walk");}
     @Override public String getModeId(ManasSkillInstance i,int mode){return "air_sovereignty.flight";}
 
     /** Native Formhide -> Haze uses the same mastery-to-learning-instance progression. */
@@ -107,7 +107,7 @@ public final class AirSovereigntyArt extends Battlewill {
         }
     }
     public static void clonePlayer(PlayerEvent.Clone event){
-        // RestrictionEvents copies the persistent root first. Respawning ends this flight lease.
+        // HunterEvents copies the persistent root first. Respawning ends this flight lease.
         if(!event.getEntity().level().isClientSide())stop(event.getEntity());
     }
 }

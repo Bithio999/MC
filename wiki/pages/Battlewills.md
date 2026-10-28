@@ -6,7 +6,7 @@
 
 | Predecessor | Evolution | Requirement | Function | Damage type |
 | --- | --- | --- | --- | --- |
-| Air Float / Air Flight (`tensura:air_flight`) | [Air Sovereignty](Air-Sovereignty.md) | Master the permanent predecessor; complete native learning | Press-controlled free flight using aura | None |
+| Air Float / Air Flight (`tensura:air_flight`) | [Air Walk](Air-Walk.md) | Master the permanent predecessor; complete native learning | Press-controlled free flight using aura | None |
 
 The predecessor stays available when its evolution is unlocked. Temporary or copied sub-instances cannot unlock permanent progression. Existing masters receive the learnable evolution automatically.
 
