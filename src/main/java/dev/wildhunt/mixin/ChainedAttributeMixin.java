@@ -13,12 +13,17 @@ public abstract class ChainedAttributeMixin {
     @ModifyVariable(method="setBaseValue",at=@At("HEAD"),argsOnly=true)
     private double myths$blockMagiculeGrowth(double proposed){
         var a=(AttributeInstance)(Object)this;var e=((TensuraAttributeInstance)this).tensura$getOwner();
-        return e!=null && a.getAttribute().equals(TensuraAttributes.MAX_MAGICULE) && proposed>a.getBaseValue() && ChainedState.owned(e) && !ChainedContext.initializing(e)?a.getBaseValue():proposed;
+        return e!=null && !e.level().isClientSide() && a.getAttribute().equals(TensuraAttributes.MAX_MAGICULE) && proposed>a.getBaseValue() && ChainedState.owned(e) && !ChainedContext.initializing(e)?a.getBaseValue():proposed;
+    }
+    @Inject(method="setBaseValue",at=@At("HEAD"))
+    private void myths$captureStartingExemption(CallbackInfo out){
+        var a=(AttributeInstance)(Object)this;var e=((TensuraAttributeInstance)this).tensura$getOwner();
+        if(e!=null && !e.level().isClientSide() && a.getAttribute().equals(TensuraAttributes.MAX_AURA) && ChainedState.owned(e) && !ChainedContext.initializing(e))ChainedState.remainingStartingAura(e);
     }
     @Inject(method="setBaseValue",at=@At("RETURN"))
     private void myths$updateStartingExemption(CallbackInfo out){
         var a=(AttributeInstance)(Object)this;var e=((TensuraAttributeInstance)this).tensura$getOwner();
-        if(e!=null && a.getAttribute().equals(TensuraAttributes.MAX_AURA) && ChainedState.owned(e))ChainedState.refresh(e);
+        if(e!=null && !e.level().isClientSide() && a.getAttribute().equals(TensuraAttributes.MAX_AURA) && ChainedState.owned(e))ChainedState.refresh(e);
     }
     @Inject(method="getValue",at=@At("RETURN"),cancellable=true)
     private void myths$capAllMagiculeSources(CallbackInfoReturnable<Double> out){

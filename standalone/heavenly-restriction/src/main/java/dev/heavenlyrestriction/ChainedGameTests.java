@@ -177,17 +177,17 @@ public final class ChainedGameTests {
         near(h,EnergyHelper.getMaxAura(p),45_000,"Changing race prevented a legacy Chained owner from migrating");
         RestrictionData.of(p).remove("chained_starting_aura");i.getOrCreateTag().remove("starting_aura");EnergyHelper.setMaxAura(p,10_000);
         near(h,EnergyHelper.getMaxAura(p),10_000,"Legacy loss produced a negative starting exemption");
-        EnergyHelper.setMaxAura(p,15_000);near(h,EnergyHelper.getMaxAura(p),15_000,"Legacy starting-pool recovery was multiplied");
-        EnergyHelper.setMaxAura(p,25_000);near(h,EnergyHelper.getMaxAura(p),45_000,"Legacy later growth stopped receiving 5x");h.succeed();
+        EnergyHelper.setMaxAura(p,15_000);near(h,EnergyHelper.getMaxAura(p),35_000,"Legacy capacity gain lost 5x after a permanent loss");
+        EnergyHelper.setMaxAura(p,25_000);near(h,EnergyHelper.getMaxAura(p),85_000,"Legacy later growth stopped receiving 5x");h.succeed();
     }
     @GameTest(template="empty",timeoutTicks=100)
-    public static void auraLossBelowStartingPoolAndItsRecoveryDoNotMultiplyRemainingBirthAura(GameTestHelper h){
+    public static void permanentAuraLossReducesTheExemptionAndLaterGainsRemainFivefold(GameTestHelper h){
         var p=player(h);ReincarnationMenu.setRace(p,HeavenlyRestriction.RESTRICTED.getFirst().get(),true,false);
         double start=EnergyHelper.getBaseMaxAura(p);
         try(var scope=ChainedContext.ability(p,UtilityArts.DIAMOND_PATH.get())){EnergyHelper.setMaxAura(p,start*.5);}
         near(h,EnergyHelper.getMaxAura(p),start*.5,"Loss/Battlewill callback tripled or left a stale starting exemption");
-        EnergyHelper.setMaxAura(p,start);near(h,EnergyHelper.getMaxAura(p),start,"Recovering the birth pool multiplied it");
-        EnergyHelper.setMaxAura(p,start+50);near(h,EnergyHelper.getMaxAura(p),start+250,"Later growth did not resume at 5x");h.succeed();
+        EnergyHelper.setMaxAura(p,start);near(h,EnergyHelper.getMaxAura(p),start*3,"Subsequent growth below the original birth roll lost 5x");
+        EnergyHelper.setMaxAura(p,start+50);near(h,EnergyHelper.getMaxAura(p),start*3+250,"Later growth did not remain at 5x");h.succeed();
     }
     @GameTest(template="empty",timeoutTicks=100)
     public static void laterEvolutionGrantsNoChainedAndCannotRegrantAForgottenVow(GameTestHelper h){
@@ -267,25 +267,16 @@ public final class ChainedGameTests {
         i.onToggleOff(p);r.setMastery(-100);resist.addLearnPoint(r,p,0,1);near(h,r.getMastery(),-99,"Resistance bonus leaked with toggle off");h.succeed();
     }
     @GameTest(template="empty",timeoutTicks=100)
-    public static void magiculeRegenRetainsOneAndConvertsOnlyBonusWhilePreservingNativeRules(GameTestHelper h){
-        var p=player(h);vow(p,false);var energy=TensuraStorages.getExistenceFrom(p);var rate=p.getAttribute(TensuraAttributes.MAGICULE_REGENERATION_MULTIPLIER);
-        double max=EnergyHelper.getMaxMagicule(p),unit=200*EnergyHelper.CONFIG.areaMagiculeRegen;
+    public static void flatMagiculeRegenerationPreservesLowRatesCapsAndUnrelatedOwners(GameTestHelper h){
+        var p=player(h);vow(p,false);var energy=TensuraStorages.getExistenceFrom(p);var rate=p.getAttribute(TensuraAttributes.MAGICULE_REGENERATION_MULTIPLIER);double max=EnergyHelper.getMaxMagicule(p),unit=200*EnergyHelper.CONFIG.areaMagiculeRegen;
         try{
             var method=io.github.manasmods.tensura.storage.ep.ExistenceStorage.class.getDeclaredMethod("handleMagiculeRegen",io.github.manasmods.tensura.storage.ep.IExistence.class,net.minecraft.world.entity.LivingEntity.class,double.class,double.class);method.setAccessible(true);
-            energy.setSleepModeTime(-1);rate.setBaseValue(3);energy.setAura(0);energy.setMagicule(max);method.invoke(null,energy,p,200d,max);
-            near(h,energy.getAura(),unit*2,"Full magicules prevented bonus conversion");near(h,energy.getMagicule(),max,"Full magicules overflowed");
-            energy.setAura(0);energy.setMagicule(0);method.invoke(null,energy,p,200d,max);
-            near(h,energy.getAura(),unit*2,"Bonus rate did not go to aura");near(h,energy.getMagicule(),Math.min(max,unit),"Baseline 1x magicule regeneration lost");
-            rate.setBaseValue(1);energy.setAura(0);energy.setMagicule(0);method.invoke(null,energy,p,200d,max);
-            near(h,energy.getAura(),0,"Baseline was duplicated into aura");near(h,energy.getMagicule(),Math.min(max,unit),"1x MP rate did not regenerate");
-            rate.setBaseValue(.5);energy.setAura(0);energy.setMagicule(0);method.invoke(null,energy,p,200d,max);
-            near(h,energy.getAura(),0,"Sub-baseline rate generated a bonus");near(h,energy.getMagicule(),Math.min(max,unit*.5),"A regeneration penalty was overwritten");
-            rate.setBaseValue(3);energy.setSleepModeTime(10);energy.setAura(0);energy.setMagicule(0);method.invoke(null,energy,p,200d,max);
-            near(h,energy.getAura(),unit*2,"Native sleep MP bonus was also converted");near(h,energy.getMagicule(),Math.min(max,unit+max*EnergyHelper.CONFIG.sleepModeMagicule),"Native MP sleep recovery lost");
-            energy.setSleepModeTime(-1);double overflow=max+200;energy.setMagicule(overflow);method.invoke(null,energy,p,200d,max);
-            near(h,energy.getMagicule(),Math.max(max,overflow-EnergyHelper.CONFIG.exceedMaxLost),"Native excess-MP decay changed");
-            var other=player(h);var nativeEnergy=TensuraStorages.getExistenceFrom(other);other.getAttribute(TensuraAttributes.MAGICULE_REGENERATION_MULTIPLIER).setBaseValue(3);nativeEnergy.setSleepModeTime(-1);nativeEnergy.setAura(0);nativeEnergy.setMagicule(0);method.invoke(null,nativeEnergy,other,200d,EnergyHelper.getMaxMagicule(other));
-            near(h,nativeEnergy.getMagicule(),Math.min(EnergyHelper.getMaxMagicule(other),unit*3),"Unrelated owner's native MP rate changed");near(h,nativeEnergy.getAura(),0,"Unrelated owner's MP was converted");
+            energy.setSleepModeTime(-1);rate.setBaseValue(3);energy.setAura(0);energy.setMagicule(max);method.invoke(null,energy,p,200d,max);near(h,energy.getAura(),unit*3-.5,"Full MP prevented area/rate conversion");near(h,energy.getMagicule(),max,"Full MP overflowed");
+            energy.setAura(0);energy.setMagicule(0);method.invoke(null,energy,p,200d,max);near(h,energy.getAura(),unit*3-.5,"Complete regeneration output was not converted");near(h,energy.getMagicule(),.5,"Retained MP exceeded its half-second budget");
+            rate.setBaseValue(.5);energy.setAura(0);energy.setMagicule(0);double poor=.1/EnergyHelper.CONFIG.areaMagiculeRegen;method.invoke(null,energy,p,poor,max);near(h,energy.getAura(),0,"Sub-budget regeneration created excess aura");near(h,energy.getMagicule(),.05,"Low-area regeneration penalty was overwritten");
+            energy.setMagicule(max+200);near(h,energy.getMagicule(),max,"Chained reserve writer allowed an overfill");
+            var other=player(h);var nativeEnergy=TensuraStorages.getExistenceFrom(other);other.getAttribute(TensuraAttributes.MAGICULE_REGENERATION_MULTIPLIER).setBaseValue(3);nativeEnergy.setSleepModeTime(-1);nativeEnergy.setAura(0);nativeEnergy.setMagicule(0);double otherMax=EnergyHelper.getMaxMagicule(other);method.invoke(null,nativeEnergy,other,200d,otherMax);near(h,nativeEnergy.getMagicule(),Math.min(otherMax,unit*3),"Unrelated owner's native MP rate changed");near(h,nativeEnergy.getAura(),0,"Unrelated owner's MP was converted");
+            nativeEnergy.setMagicule(otherMax+200);method.invoke(null,nativeEnergy,other,200d,otherMax);near(h,nativeEnergy.getMagicule(),Math.max(otherMax,otherMax+200-EnergyHelper.CONFIG.exceedMaxLost),"Unrelated owner's native overflow decay changed");
         }catch(ReflectiveOperationException ex){throw new IllegalStateException(ex);}h.succeed();
     }
     @GameTest(template="empty",timeoutTicks=100)

@@ -1,8 +1,8 @@
 # Tensura: Heavenly Restriction
 
-An independent **NeoForge 1.21.1 addon for Tensura: Reincarnated**, extracted from Tensura Myths, with the 0.34.8 terrain-aware dash update. It includes the Heavenly Restriction race lineage, its skills, and Air Sovereignty. **Tensura Myths is not required.**
+An independent **NeoForge 1.21.1 addon for Tensura: Reincarnated**, extracted from Tensura Myths, with the 0.34.9 resource and EP-growth update. It includes the Heavenly Restriction race lineage, its skills, and Air Sovereignty. **Tensura Myths is not required.**
 
-[Download 1.0.7](../../releases/tensura-heavenly-restriction-1.0.7.jar) · [Gameplay guide](docs/GUIDE.md) · [Validation](docs/VALIDATION-1.0.7.md)
+[Download 1.0.8](../../releases/tensura-heavenly-restriction-1.0.8.jar) · [Gameplay guide](docs/GUIDE.md) · [Validation](docs/VALIDATION-1.0.8.md)
 
 ## Included content
 
@@ -14,7 +14,7 @@ An independent **NeoForge 1.21.1 addon for Tensura: Reincarnated**, extracted fr
 
 **Broken Limit** is a **Passive — True — Mastered** ability: resistance degradation and dodge bypass remain active while mastered Chained is owned, independently of toggle and slots.
 
-The current Chained dash uses a **16-block eye ray**, retains native block-surface landings, supports upward air aiming and stops before the aimed enemy, has a **1-second cooldown**, costs **2% of current aura**, and deals **Physical damage** at **1.5√A path / 3√A arrival damage**, with A the aura paid. EP growth remains **90% aura / 10% magicules**, with Chained blocking subsequent magicule-capacity growth. Fixed evolution gates check **total EP** shown in Status. Chained retains normal **1× magicule regeneration** and converts only the bonus above it to aura; native penalties, sleep recovery and spiritual/overflow rules remain in effect.
+The current Chained dash uses a **16-block eye ray**, retains native block-surface landings, supports upward air aiming and stops before the aimed enemy, has a **1-second cooldown**, costs **2% of current aura**, and deals **Physical damage** at **1.5√A path / 3√A arrival damage**, with A the aura paid. EP growth remains **90% aura / 10% magicules**, with Chained blocking subsequent magicule-capacity growth. Fixed evolution gates check **total EP** shown in Status. Chained retains up to **1 magicule per second** and converts all remaining computed biome/rate/sleep regeneration to aura. Current magicules are capped at their effective maximum; native low-rate penalties and spiritual maintenance remain. Positive `ep max add` commands follow 90/10, and future aura-capacity gains retain 5× after permanent losses.
 
 ## Installation
 
@@ -22,7 +22,7 @@ Use **Java 21**, **Minecraft 1.21.1**, and **NeoForge 21.1.209 or later in the 2
 
 1. **Tensura: Reincarnated 2.0.1.3** and its dependencies, including **ManasCore 4.0.0.2**, **Architectury 13.0.8+**, **SmartBrainLib**, and **TerraBlender**.
 2. **GeckoLib 4.9.3** (4.x).
-3. **tensura-heavenly-restriction-1.0.7.jar**.
+3. **tensura-heavenly-restriction-1.0.8.jar**.
 
 Use this addon **instead of Tensura Myths**. The loader rejects installing both because both implement the same Chained and Battlewill hooks. The full Tensura Myths mod remains available separately with all its existing content.
 
@@ -38,7 +38,7 @@ python3 scripts/fetch-runtime.py
 ./gradlew build runGameTestServer
 ```
 
-Java 21 is required. The fetch script verifies the exact runtime dependency hashes in `runtime-mods.lock.json`. Gradle resolves the pinned Tensura, ManasCore and Architectury versions. Output: `build/libs/tensura-heavenly-restriction-1.0.7.jar`.
+Java 21 is required. The fetch script verifies the exact runtime dependency hashes in `runtime-mods.lock.json`. Gradle resolves the pinned Tensura, ManasCore and Architectury versions. Output: `build/libs/tensura-heavenly-restriction-1.0.8.jar`.
 
 `./gradlew runClient` starts an isolated development client. Native tests cover the extracted mechanics and prove that Tensura Myths is absent. Optional visual-review code in `docs/review` is excluded from regular builds; see its instructions.
 

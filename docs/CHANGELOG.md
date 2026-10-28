@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.34.9 / standalone 1.0.8 — Resource and EP growth fixes
+
+- Apply capacity-growth blocking only on the server, so authoritative attribute synchronization can update the client’s displayed maximum.
+- Cap Chained owners’ current magicules at the effective maximum, including direct and combined EP writes; reconcile saved overfill. Keep initial race setup and unrelated owners’ native rules intact.
+- Retain up to 1 magicule per second and convert the rest of computed regeneration, including biome output, rate multipliers and sleep recovery, to aura. Preserve slower rates, native aura recovery and spiritual maintenance.
+- Apply 90/10 to both positive native `ep max add` variants. Keep Chained’s magicule-capacity block and 5× aura capacity, including after lowering EP. Track the remaining birth exemption separately from the original saved birth roll and restore it from skill tags when needed.
+- Add exact-command, actual Ancient Forest biome, reserve-cap and migration regression checks, an isolated real-client resource review, and updated documentation.
+
 ## 0.34.8 / standalone 1.0.7 — Terrain and headroom landings
 
 - Fix grounded dash failures under leaf canopies and low ceilings: retry blocked preferred destinations at valid standing heights or closer along the aim direction. Read actual block collision surfaces for slabs, stairs and partial blocks. Keep fallback sight lines clear of walls and roofs.

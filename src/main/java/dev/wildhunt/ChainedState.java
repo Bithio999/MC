@@ -55,7 +55,8 @@ public final class ChainedState {
     public static void recordStartingAura(LivingEntity e,double amount){
         if(e.level().isClientSide() || !Double.isFinite(amount) || amount<0)return;
         HunterData.of(e).putDouble("chained_starting_aura",amount);
-        instance(e).ifPresent(i->{i.getOrCreateTag().putDouble("starting_aura",amount);i.markDirty();});
+        HunterData.of(e).putDouble("chained_remaining_starting_aura",amount);
+        instance(e).ifPresent(i->{i.getOrCreateTag().putDouble("starting_aura",amount);i.getOrCreateTag().putDouble("remaining_starting_aura",amount);i.markDirty();});
     }
     private static double startingAura(LivingEntity e){
         var data=HunterData.of(e);
@@ -66,7 +67,16 @@ public final class ChainedState {
         // historical starting pool without rerolling it or discarding earned EP.
         boolean legacy=tag.contains("magicule_ceiling");
         double start=tag.contains("starting_aura")?tag.getDouble("starting_aura"):legacy?20_000:base;
-        recordStartingAura(e,Math.max(0,start));return Math.max(0,start);
+        double remaining=tag.contains("remaining_starting_aura")?tag.getDouble("remaining_starting_aura"):data.contains("chained_remaining_starting_aura")?data.getDouble("chained_remaining_starting_aura"):start;
+        recordStartingAura(e,Math.max(0,start));remaining=Math.max(0,Math.min(start,remaining));
+        HunterData.of(e).putDouble("chained_remaining_starting_aura",remaining);tag.putDouble("remaining_starting_aura",remaining);i.markDirty();return Math.max(0,start);
+    }
+    public static double remainingStartingAura(LivingEntity e){
+        double start=startingAura(e);var data=HunterData.of(e);var instance=instance(e).orElseThrow();var tag=instance.getOrCreateTag();
+        double remaining=data.contains("chained_remaining_starting_aura")?data.getDouble("chained_remaining_starting_aura"):tag.contains("remaining_starting_aura")?tag.getDouble("remaining_starting_aura"):start;
+        double value=Math.max(0,Math.min(Math.min(remaining,start),io.github.manasmods.tensura.util.EnergyHelper.getBaseMaxAura(e)));
+        if(!data.contains("chained_remaining_starting_aura") || data.getDouble("chained_remaining_starting_aura")!=value || !tag.contains("remaining_starting_aura") || tag.getDouble("remaining_starting_aura")!=value){data.putDouble("chained_remaining_starting_aura",value);tag.putDouble("remaining_starting_aura",value);instance.markDirty();}
+        return value;
     }
     public static void initialize(LivingEntity e){
         if(e.level().isClientSide())return;
@@ -83,15 +93,15 @@ public final class ChainedState {
     public static void refresh(LivingEntity e){
         if(e.level().isClientSide())return;
         boolean owner=owned(e),on=owner && active(e),master=mastered(e);
-        // (base - 0.8 * starting pool + later additions) * 5:
-        // the initial pool stays unmultiplied; all subsequent gains get 5x.
-        modifier(e,TensuraAttributes.MAX_AURA,START,owner?-.8*Math.min(startingAura(e),Math.max(0,e.getAttribute(TensuraAttributes.MAX_AURA).getBaseValue())):0,AttributeModifier.Operation.ADD_VALUE,owner);
+        // Exempt only the remaining birth pool. Permanent losses shrink its exemption;
+        // subsequent raw capacity gains always receive 5x, even below the old birth roll.
+        modifier(e,TensuraAttributes.MAX_AURA,START,owner?-.8*remainingStartingAura(e):0,AttributeModifier.Operation.ADD_VALUE,owner);
         modifier(e,TensuraAttributes.MAX_AURA,VOW,4,AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL,owner);
         // Remove the retired attack-stat multiplier from existing saves.
         modifier(e,Attributes.ATTACK_DAMAGE,COMBAT,0,AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL,false);
         modifier(e,TensuraAttributes.DODGE_NEGATE_CHANCE,COMBAT,100,AttributeModifier.Operation.ADD_VALUE,master);
         modifier(e,TensuraAttributes.RESISTANCE_DEGRADATION,COMBAT,1,AttributeModifier.Operation.ADD_VALUE,master);
-        ChainedBuffs.refresh(e);
+        ChainedBuffs.refresh(e);ChainedResources.reconcile(e);
     }
     public static void remove(LivingEntity e){
         for(var h:java.util.List.of(TensuraAttributes.MAX_AURA,Attributes.ATTACK_DAMAGE,TensuraAttributes.DODGE_NEGATE_CHANCE,TensuraAttributes.RESISTANCE_DEGRADATION)){

@@ -1,10 +1,9 @@
 package dev.wildhunt.mixin;
 
-import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import com.llamalad7.mixinextras.injector.wrapoperation.*;
 import com.llamalad7.mixinextras.sugar.Local;
-import dev.wildhunt.ChainedState;
+import dev.wildhunt.*;
 import io.github.manasmods.tensura.ability.SkillUtils;
-import io.github.manasmods.tensura.registry.attribute.TensuraAttributes;
 import io.github.manasmods.tensura.storage.ep.*;
 import io.github.manasmods.tensura.util.EnergyHelper;
 import net.minecraft.world.entity.LivingEntity;
@@ -12,21 +11,20 @@ import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-/** Keep native baseline MP regeneration, sleep recovery and spiritual/overflow rules intact. */
+/** Retain a flat 1 MP/second and convert all remaining native area/rate/sleep recovery. */
 @Mixin(ExistenceStorage.class)
 public abstract class ChainedRegenerationMixin {
     @Shadow(remap=false) private static boolean isAffectedByEnergyLost(LivingEntity owner){throw new AssertionError();}
     @Inject(method="handleMagiculeRegen",at=@At("HEAD"),remap=false)
-    private static void myths$convertBonus(IExistence storage,LivingEntity owner,double areaMagicule,double maxMagicule,CallbackInfo out){
+    private static void myths$convert(IExistence storage,LivingEntity owner,double areaMagicule,double maxMagicule,CallbackInfo out){
         if(!ChainedState.owned(owner) || storage.isSpiritualForm() && !SkillUtils.inSpiritualWorld(owner.level().dimension()) && isAffectedByEnergyLost(owner))return;
-        double bonus=Math.max(0,owner.getAttributeValue(TensuraAttributes.MAGICULE_REGENERATION_MULTIPLIER)-1);
-        double amount=Math.max(0,areaMagicule*EnergyHelper.CONFIG.areaMagiculeRegen*bonus);
+        double amount=Math.max(0,ChainedResources.regeneration(storage,owner,areaMagicule)-ChainedResources.RETAINED_MP_PER_PULSE);
         double value=Math.min(EnergyHelper.getMaxAura(owner),storage.getAura()+amount);
         if(value>storage.getAura()){storage.setAura(value);storage.markDirty();}
     }
-    @ModifyExpressionValue(method="handleMagiculeRegen",at=@At(value="INVOKE",target="Lnet/minecraft/world/entity/LivingEntity;getAttributeValue(Lnet/minecraft/core/Holder;)D"),remap=false)
-    private static double myths$retainBaseline(double original,@Local(argsOnly=true) LivingEntity owner){
-        // Preserve rates below 1 too: the pact must not cancel native regeneration penalties.
-        return ChainedState.owned(owner)?Math.min(1,original):original;
+    @WrapOperation(method="handleMagiculeRegen",at=@At(value="INVOKE",target="Lio/github/manasmods/tensura/storage/ep/IExistence;setMagicule(D)V",ordinal=2),remap=false)
+    private static void myths$retainFlatRate(IExistence storage,double proposed,Operation<Void> original,@Local(argsOnly=true) LivingEntity owner,@Local(argsOnly=true,ordinal=0) double areaMagicule){
+        if(ChainedState.owned(owner))proposed=Math.min(EnergyHelper.getMaxMagicule(owner),storage.getMagicule()+Math.min(ChainedResources.regeneration(storage,owner,areaMagicule),ChainedResources.RETAINED_MP_PER_PULSE));
+        original.call(storage,proposed);
     }
 }

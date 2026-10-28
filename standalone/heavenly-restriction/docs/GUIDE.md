@@ -18,7 +18,7 @@ Starting base aura rolls **1,500–2,000**, starting base magicules **50–100**
 
 EP means effective maximum aura plus effective maximum magicules, as displayed in Status, including Chained's bonus capacity. Spending current energy does not lower it. All requirements must be met; thresholds do not scale with the player's current EP. Each evolution replaces the previous stage's attribute bonuses. Each stage also adds +4 attack, +7.5% base movement and +0.15 knockback resistance compared with the preceding one. Appearance and equipment stay human-like.
 
-Native EP growth uses a **90% aura / 10% magicule** allocation before native gain modifiers, caps and Chained's restriction. The blocked magicule share is not redirected. Ordinary native races keep their normal growth split.
+Native EP growth uses a **90% aura / 10% magicule** allocation before native gain modifiers, caps and Chained's restriction. The blocked magicule share is not redirected. Positive native `ep max add` commands also use this split. With Chained, `tensura edit stat @s ep max add 1000` adds 900 raw aura capacity, yielding **4,500 effective aura capacity**; the 100-magicule share is blocked. The optional `true` argument retains native refilling of current reserves. Ordinary native races keep their normal growth split.
 
 ## Chained — Unique Skill
 
@@ -32,7 +32,7 @@ Chained trades magical growth and unrestricted skill learning for greater aura c
 
 - **5× aura growth:** later maximum-aura gains are multiplied by five; starting aura is unchanged.
 - **No maximum-magicule gains:** keep your existing capacity, but it cannot increase. Current magicules remain usable; costs and losses still apply.
-- **Regeneration conversion:** retain normal **1× magicule regeneration** and redirect only its bonus above 1× to aura. Lower rates keep their penalties, and normal sleep recovery stays with its resource.
+- **Regeneration conversion:** retain up to **1 magicule per second**; all remaining computed magicule regeneration becomes aura, including biome output, rate bonuses and sleep recovery. Conversion continues with full magicules; slower/zero rates are not boosted. Current magicules cannot exceed their effective maximum.
 - **Restricted learning:** Battlewills, resistances/nullifications, reincarnation skills and their derived grants, and the lineage’s aura-recovery skills remain available. Previously owned skills are retained.
 - **Aura-paid resistances:** acquiring resistances/nullifications spends the configured cost in current aura instead of permanent magicule capacity. Free grants stay free.
 
@@ -40,7 +40,7 @@ Blocked acquisition shows a red **“Chained blocks [skill]”** message explain
 
 ![Chained’s named acquisition rejection in the client](media/chained-block-message.png)
 
-For example, reincarnating with **Martial Master** still allows **Heavenly Eye**. Chained’s bonus capacity counts toward total EP; it does not repeatedly refill current aura. Native limits still apply.
+For example, reincarnating with **Martial Master** still allows **Heavenly Eye**. The saved birth roll remains unchanged. Permanent aura-capacity losses reduce its remaining exemption; later gains still receive 5×, even below the original birth amount. Chained’s bonus capacity counts toward total EP; it does not repeatedly refill current aura. Regeneration restores current reserves without adding maximum capacity or EP. Native limits still apply.
 
 ### Martial Supremacy
 

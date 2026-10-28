@@ -20,7 +20,9 @@
     "AirSovereigntyFlightMixin",
     "AuraHealingMixin",
     "IndependentDamageMixin",
-    "RestrictionEnergyMixin"
+    "RestrictionEnergyMixin",
+    "ChainedReserveMixin",
+    "ChainedStatCommandMixin"
   ],
   "injectors": {
     "defaultRequire": 1

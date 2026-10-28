@@ -35,7 +35,7 @@ Chained trades magical growth and unrestricted skill learning for much greater a
 
 - **5× aura growth:** later maximum-aura gains are multiplied by five. Your starting aura is not multiplied.
 - **No maximum-magicule gains:** keep your existing capacity, but it cannot increase. Current magicules remain usable; costs and losses still apply.
-- **Regeneration conversion:** keep normal **1× magicule regeneration** and redirect only the bonus above 1× into aura. Rates below 1× retain their penalties; sleep recovery stays with its normal resource.
+- **Regeneration conversion:** retain up to **1 magicule per second** and convert the remaining computed magicule regeneration into aura. Biome/area output, regeneration multipliers and sleep recovery are included, even when magicules are full. Slower regeneration is not boosted. Current magicules are capped at their effective maximum.
 - **Restricted learning:** you can gain Battlewills, resistances/nullifications, reincarnation-granted skills and their derived skills, and the lineage’s aura-recovery skills. Skills you already own are retained.
 - **Aura-paid resistances:** acquiring resistances or nullifications spends the configured cost in current aura instead of permanent magicule capacity. Free grants stay free.
 
@@ -45,7 +45,7 @@ For example, reincarnating with **Martial Master** still lets you gain **Heavenl
 
 A fresh Fettered Human starts with **1,500–2,000 aura** and **50–100 magicules**: **1,550–2,100 EP**, before other reincarnation rewards. With no other modifiers, maximum aura is **starting aura + 5 × later gains**. This increases capacity, not your current aura balance.
 
-EP growth splits **90% aura / 10% magicules**; Chained blocks the magicule share without redirecting it. Its bonus aura counts toward **total EP** in Status and evolution requirements. Native limits still apply. Secondary-race growth bonuses preserve this split; Convergent races use their own profiles.
+EP growth splits **90% aura / 10% magicules**; Chained blocks the magicule share without redirecting it. Positive native `ep max add` commands use the same 90/10 split. Adding 1,000 EP grants 900 raw aura capacity, yielding **4,500 effective aura capacity** with Chained; the 100-magicule share is blocked. Its bonus aura counts toward **total EP** in Status and evolution requirements. The original birth roll remains saved; permanent losses reduce only its remaining exemption, so subsequent capacity gains still receive 5× after EP is lowered. Regeneration restores current aura and does not create maximum capacity or EP. Native limits still apply. Secondary-race growth bonuses preserve this split; Convergent races use their own profiles.
 
 ### Martial Supremacy
 

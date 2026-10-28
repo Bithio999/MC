@@ -28,7 +28,9 @@
     "ChainedAcquisitionMixin",
     "AirSovereigntyMasteryMixin",
     "AirSovereigntyFlightMixin",
-    "SecondaryTotalEPMixin"
+    "SecondaryTotalEPMixin",
+    "ChainedReserveMixin",
+    "ChainedStatCommandMixin"
   ],
   "injectors": {
     "defaultRequire": 1
