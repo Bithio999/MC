@@ -48,6 +48,8 @@ public final class ChainedBuffs {
         }finally{REPLAY.remove();}
     }
     public static boolean damageBuff(LivingEntity owner,Object action){
+        // Aura Sword keeps its native added damage; only the outgoing damage bonuses apply to it.
+        if(action==io.github.manasmods.tensura.registry.effect.TensuraMobEffects.AURA_SWORD.get())return false;
         return ChainedState.active(owner) && owner.getActiveEffects().stream().anyMatch(e->e.getEffect().value()==action && e.getEffect().value().isBeneficial() && source(e)!=null);
     }
 }

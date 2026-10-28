@@ -65,10 +65,10 @@ Enable Chained through Tensura’s normal Ability Selection toggle to gain:
 | Battlewill mastery points | +9 |
 | Resistance/Nullification learning points | +19 |
 | Battlewill damage | **5×** |
-| Numeric Battlewill buff effectiveness | **3×** |
+| Numeric Battlewill buff effectiveness | **3×**, except Aura Sword |
 | All outgoing Physical damage | **3×** |
 
-Numeric buffs include native attribute bonuses, such as Diamond Path’s armor, and additional damage supplied by a Battlewill buff, such as Aura Sword. The bonus changes their numeric strength; buff duration, learning costs and resource-conversion rates keep their native values. Repeated refreshes do not multiply an already boosted buff again. Disabling Chained restores each tracked buff’s native amount.
+Numeric buffs include native attribute bonuses, such as Diamond Path’s armor. **Aura Sword is excluded from the 3× buff-effectiveness bonus:** it adds its normal configured weapon-damage bonus. Applicable outgoing Physical and Battlewill damage multipliers still apply to its hits. The bonus changes their numeric strength; buff duration, learning costs and resource-conversion rates keep their native values. Repeated refreshes do not multiply an already boosted buff again. Disabling Chained restores each tracked buff’s native amount.
 
 The Physical bonus covers your physical melee, projectiles and skills, including native damage converted to Physical. It does not change your attack attribute. Physical Battlewill hits receive both bonuses for **15×** damage before native defenses and other modifiers. Severance Rush is purely Physical and receives only the **3×** Physical bonus, even while Aura Sword or Ogre Guillotine is active. Non-Physical Battlewills retain their **5×** bonus; unrelated elemental/magical damage is not tripled.
 
@@ -108,11 +108,11 @@ Gain **100% dodge chance against projectiles** and **25% against other incoming 
 | Damage ID | `minecraft:mob_attack` |
 | Resource cost | **2% of current aura**, paid once |
 | Cooldown | **1 second** |
-| Movement | Instant teleport with **16-block aim reach**, using Martial Master’s landing logic |
+| Movement | Instant teleport with **16-block aim reach**; stops before an aimed enemy |
 | Path damage radius | **3 blocks** |
 | Arrival damage radius | **4 blocks** |
 
-Use while **on the ground or in water**, like Martial Master’s movement art. An eye-level aim ray ignores fluids and selects a nearby landing block, with room checked for your body. Your landing snaps to the block position rather than tracing your feet through the ground. The same activation resolves one hit along the route and an additional hit at the destination. A victim caught in both receives both hits, including inside the ordinary hurt cooldown. Each victim receives at most one path hit and one arrival hit.
+Use while **on the ground or in water**, like Martial Master’s movement art. An eye-level aim ray ignores fluids. Aiming at a hostile mob or eligible player stops the dash just in front of the nearest target, leaving room for your body. Targets behind blocks, allies and targets off the aim ray do not capture it. Block surfaces use Martial Master’s adjacent-block landing logic; aiming into open air uses the look direction from your feet, including slightly upward aim. Tight air/enemy landings can back off by up to one block to find room. Your feet are never swept through the ground. The same activation resolves one hit along the route and an additional hit at the destination. A victim caught in both receives both hits, including inside the ordinary hurt cooldown. Each victim receives at most one path hit and one arrival hit.
 
 Unsafe or unavailable landings, airborne activation and casts attempted during cooldown spend no aura. Each successful press pays once and starts a **1-second cooldown**. The teleport is instant, not a timed channel or a movement-over-time attack.
 

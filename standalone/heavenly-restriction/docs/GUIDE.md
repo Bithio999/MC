@@ -49,10 +49,10 @@ For example, reincarnating with **Martial Master** still allows **Heavenly Eye**
 - +9 Battlewill learning and mastery points.
 - +19 resistance/nullification learning points.
 - **5× Battlewill damage**.
-- **3× numerical Battlewill buff effectiveness**.
+- **3× numerical Battlewill buff effectiveness**, excluding Aura Sword.
 - **3× all outgoing Physical damage**.
 
-Buff duration, ordinary learning costs and conversion rates retain native values. Repeated refreshes do not compound the buff. The Physical bonus covers your melee, physical projectiles, physical skills and native Physical-converted damage without changing the attack attribute. Physical Battlewill hits receive both bonuses for **15×** before other modifiers. Severance Rush is purely Physical and receives only the **3×** Physical bonus, even while Aura Sword or Ogre Guillotine is active. Non-Physical Battlewills retain **5×**; unrelated elemental/magical damage is not tripled.
+Aura Sword retains its normal configured added damage; Chained does not triple that buff separately. Applicable outgoing Physical and Battlewill multipliers still affect its hits. Buff duration, ordinary learning costs and conversion rates retain native values. Repeated refreshes do not compound the buff. The Physical bonus covers your melee, physical projectiles, physical skills and native Physical-converted damage without changing the attack attribute. Physical Battlewill hits receive both bonuses for **15×** before other modifiers. Severance Rush is purely Physical and receives only the **3×** Physical bonus, even while Aura Sword or Ogre Guillotine is active. Non-Physical Battlewills retain **5×**; unrelated elemental/magical damage is not tripled.
 
 ### Broken Limit
 
@@ -70,7 +70,7 @@ While Chained is equipped in the active ability preset, gain **100% projectile d
 
 **Active — Press. Damage type: Physical (`minecraft:mob_attack`).**
 
-Use while **grounded or in water**, like Martial Master. A **16-block eye-level aim ray** ignores fluids and selects a block-snapped landing, with room checked for your body. Slightly downward aim no longer traces your feet into the floor. Unsafe, unloaded or out-of-bounds landings are rejected.
+Use while **grounded or in water**, like Martial Master. A **16-block eye-level aim ray** ignores fluids and stops just before the nearest aimed hostile mob or eligible player. Allies, off-axis enemies and targets behind blocks do not capture the aim. Block hits retain Martial Master’s adjacent-block landing; open-air aim uses your look direction relative to your feet, including slight upward angles. Air/enemy landings may back off by up to one block to make room; body clearance is checked without sweeping your feet through the ground. Unsafe, unloaded or out-of-bounds landings are rejected.
 
 | Parameter | Value |
 | --- | --- |

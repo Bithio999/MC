@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.34.6 / standalone 1.0.5 — Aura Sword and dash targeting
+
+- Exclude Aura Sword from Chained’s 3× buff-effectiveness bonus. Preserve its native added damage, applicable outgoing damage multipliers and other Battlewill buff bonuses.
+- Handle open-air dash aim without synthetic block-face offsets; support slight upward angles with feet-relative aim and safe landing checks. Stop just before the first hostile mob/player on the aim ray, respecting blocks and allies. Add a small landing backoff for tight corners.
+- Preserve native downward block targeting, fluids, damage, cost, cooldown and unsuccessful-cast resource rules.
+- Document Mysticism Restricted 2.2.1’s mutually exclusive Battlewill and direct Physical damage branches, with source/version references. Update both builds, guides and gameplay tests.
+
 ## 0.34.5 / standalone 1.0.4 — Purely Physical dash
 
 - Remove Severance Rush’s Battlewill classification and special 5× Battlewill damage path. Retain the 3× Physical bonus while Martial Supremacy is enabled.

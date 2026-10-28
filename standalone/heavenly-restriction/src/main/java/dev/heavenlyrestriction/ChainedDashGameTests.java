@@ -16,13 +16,13 @@ import static dev.heavenlyrestriction.ChainedGameTests.*;
 @PrefixGameTestTemplate(false)
 public final class ChainedDashGameTests {
     @GameTest(template="empty",timeoutTicks=100)
-    public static void downwardAndLevelAimMatchAnActualNativeMartialMasterCast(GameTestHelper h){
+    public static void downwardBlockAimMatchesAnActualNativeMartialMasterCast(GameTestHelper h){
         var anchor=player(h);var p=target(h,anchor.position().add(30,0,0));var start=p.position();
         for(int x=-2;x<=20;x++)for(int z=-2;z<=2;z++)h.getLevel().setBlockAndUpdate(BlockPos.containing(start).offset(x,-1,z),Blocks.STONE.defaultBlockState());
         EnergyHelper.setBaseMaxEP(p,100000);var energy=TensuraStorages.getExistenceFrom(p);var nativeSkill=UniqueSkills.MARTIAL_MASTER.get();var reference=nativeSkill.createDefaultInstance();
         double original=MartialMasterSkill.CONFIG.ultraDistance;MartialMasterSkill.CONFIG.ultraDistance=ChainedDash.REACH;
         try{
-            for(float pitch:new float[]{8,35,0}){
+            for(float pitch:new float[]{8,35}){
                 p.setPos(start);p.setOnGround(true);p.setYRot(-90);p.setXRot(pitch);energy.setAura(10000);energy.setMagicule(10000);
                 nativeSkill.onPressed(reference,p,0,0);var expected=p.position();h.assertTrue(expected.distanceToSqr(start)>.25,"Native reference did not move");
                 p.setPos(start);p.setOnGround(true);energy.setAura(10000);var chained=vow(p,false);chained.setCoolDown(0,0);HeavenlyRestriction.CHAINED.get().onPressed(chained,p,0,0);
@@ -38,5 +38,43 @@ public final class ChainedDashGameTests {
         HeavenlyRestriction.CHAINED.get().onPressed(i,p,0,0);h.assertTrue(p.position().equals(start) && energy.getAura()==10000 && !i.onCoolDown(0),"Airborne activation moved or charged despite native movement gate");
         for(int x=3;x<=5;x++)for(int y=0;y<4;y++)for(int z=-1;z<=1;z++)h.getLevel().setBlockAndUpdate(BlockPos.containing(start).offset(x,y,z),Blocks.WATER.defaultBlockState());
         p.setOnGround(true);HeavenlyRestriction.CHAINED.get().onPressed(i,p,0,0);h.assertTrue(p.getX()-start.x>12,"Water stopped the fluid-ignoring native aim ray");h.succeed();
+    }
+
+    private static void runway(GameTestHelper h,net.minecraft.world.phys.Vec3 start){
+        for(int x=-2;x<=20;x++)for(int z=-2;z<=2;z++)h.getLevel().setBlockAndUpdate(BlockPos.containing(start).offset(x,-1,z),Blocks.STONE.defaultBlockState());
+    }
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void levelAndUpwardAirAimCastAtFullReachAndPayOnce(GameTestHelper h){
+        var anchor=player(h);var start=anchor.position().add(0,30,0);var p=target(h,start);runway(h,start);EnergyHelper.setBaseMaxEP(p,100000);var i=vow(p,false);var energy=TensuraStorages.getExistenceFrom(p);
+        for(float pitch:new float[]{0,-1,-3,-5,-15,-45,-80}){
+            p.setPos(start);p.setYRot(-90);p.setXRot(pitch);p.setOnGround(true);i.setCoolDown(0,0);energy.setAura(10000);var expected=start.add(p.getLookAngle().scale(ChainedDash.REACH));
+            HeavenlyRestriction.CHAINED.get().onPressed(i,p,0,0);near(h,p.position().distanceTo(expected),0,"Air aim failed at pitch "+pitch);near(h,energy.getAura(),9800,"Air cast payment at pitch "+pitch);h.assertTrue(i.getCoolDown(0)==1,"Air cast cooldown");
+        }
+        h.succeed();
+    }
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void enemyAimStopsBeforeNearestBodyAndStillDealsArrivalDamage(GameTestHelper h){
+        var anchor=player(h);var start=anchor.position().add(0,30,0);var p=target(h,start);runway(h,start);EnergyHelper.setBaseMaxEP(p,100000);var i=vow(p,false);var energy=TensuraStorages.getExistenceFrom(p);energy.setAura(10000);var nearTarget=target(h,start.add(8,0,0));var farTarget=target(h,start.add(14,0,0));
+        afterTracking(h,java.util.List.of(p,nearTarget,farTarget),()->{
+            p.setYRot(-90);p.setXRot(0);p.setOnGround(true);energy.setAura(10000);HeavenlyRestriction.CHAINED.get().onPressed(i,p,0,0);
+            h.assertTrue(p.getX()>start.x+6 && p.getX()<nearTarget.getBoundingBox().minX,"Dash passed the aimed enemy or stopped too early");h.assertTrue(!p.getBoundingBox().intersects(nearTarget.getBoundingBox()),"Caster overlaps aimed enemy");h.assertTrue(nearTarget.getHealth()<1024 && farTarget.getHealth()==1024,"Dash did not stop its damage route at the first aimed enemy");near(h,energy.getAura(),9800,"Enemy-targeted cast paid incorrectly");h.assertTrue(i.getCoolDown(0)==1,"Enemy-targeted cooldown");h.succeed();
+        });
+    }
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void downwardEnemyAimLandsAtItsFeetInsteadOfInsideTheFloor(GameTestHelper h){
+        var anchor=player(h);var start=anchor.position().add(0,30,0);var p=target(h,start);runway(h,start);var victim=target(h,start.add(8,0,0));p.setOnGround(true);p.setYRot(-90);p.setXRot(8);
+        afterTracking(h,java.util.List.of(p,victim),()->{p.setOnGround(true);var end=ChainedDash.destination(p).orElseThrow();h.assertTrue(end.x>start.x+6 && end.x<victim.getX(),"Downward enemy aim missed target stop: "+end+" from "+start);near(h,end.y,start.y,"Enemy aim lowered the feet into the floor");h.assertTrue(h.getLevel().noCollision(p,p.getBoundingBox().move(end.subtract(start))),"Enemy landing collides");h.succeed();});
+    }
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void alliesAndOffAxisEnemiesDoNotCaptureAimAndWallsOccludeTargets(GameTestHelper h){
+        var anchor=player(h);var start=anchor.position().add(0,30,0);var p=target(h,start);runway(h,start);var ally=target(h,start.add(5,0,0));var offAxis=target(h,start.add(7,0,2));var enemy=target(h,start.add(12,0,0));
+        afterTracking(h,java.util.List.of(p,ally,offAxis,enemy),()->{
+        var scoreboard=h.getLevel().getScoreboard();var team=scoreboard.addPlayerTeam("dash_"+java.util.UUID.randomUUID().toString().substring(0,8));scoreboard.addPlayerToTeam(p.getScoreboardName(),team);scoreboard.addPlayerToTeam(ally.getScoreboardName(),team);
+        try{
+            p.setYRot(-90);p.setXRot(0);p.setOnGround(true);var end=ChainedDash.destination(p).orElseThrow();h.assertTrue(end.x>start.x+10 && end.x<enemy.getX(),"Ally/off-axis enemy captured the aim: "+end+" from "+start);
+            for(int y=0;y<4;y++)for(int z=-1;z<=1;z++)h.getLevel().setBlockAndUpdate(BlockPos.containing(start).offset(8,y,z),Blocks.STONE.defaultBlockState());
+            end=ChainedDash.destination(p).orElseThrow();h.assertTrue(end.x<start.x+8,"Enemy behind wall captured the aim");
+        }finally{scoreboard.removePlayerTeam(team);}
+        h.succeed();});
     }
 }
