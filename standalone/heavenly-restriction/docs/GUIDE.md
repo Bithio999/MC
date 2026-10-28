@@ -48,11 +48,13 @@ For example, reincarnating with **Martial Master** still allows **Heavenly Eye**
 
 - +9 Battlewill learning and mastery points.
 - +19 resistance/nullification learning points.
-- **5× Battlewill damage**.
+- **5× damage sourced from Battlewill abilities**, taking priority over Physical.
 - **3× numerical Battlewill buff effectiveness**, excluding Aura Sword.
-- **3× all outgoing Physical damage**.
+- **3× other outgoing Physical damage**; these damage bonuses do not stack.
 
-Aura Sword retains its normal configured added damage; Chained does not triple that buff separately. Applicable outgoing Physical and Battlewill multipliers still affect its hits. Buff duration, ordinary learning costs and conversion rates retain native values. Repeated refreshes do not compound the buff. The Physical bonus covers your melee, physical projectiles, physical skills and native Physical-converted damage without changing the attack attribute. Physical Battlewill hits receive both bonuses for **15×** before other modifiers. Severance Rush is purely Physical and receives only the **3×** Physical bonus, even while Aura Sword or Ogre Guillotine is active. Non-Physical Battlewills retain **5×**; unrelated elemental/magical damage is not tripled.
+Aura Sword retains its normal configured added damage; Chained does not triple that buff separately. Each hit then uses its applicable outgoing damage branch. Buff duration, ordinary learning costs and conversion rates retain native values. Repeated refreshes do not compound the buff. Damage takes one branch: a source carrying a Battlewill ability receives **5×**; otherwise Physical melee, projectiles, skills and converted damage receive **3×**. The attack attribute is unchanged. Aura Sword/Ogre Guillotine on ordinary melee does not change this source check. Severance Rush receives **3×**. Elemental Battlewills receive **5×**; unrelated elemental/magical damage receives neither.
+
+A native diamond-sword Aura Slash deals **35 normally / 70 mastered**, before defenses and other modifiers. A controlled 7-damage ordinary hit plus Aura Sword’s native 7-damage increment gives **(7 + 7) × 3 = 42**, excluding racial attack bonuses and other modifiers.
 
 ### Broken Limit
 

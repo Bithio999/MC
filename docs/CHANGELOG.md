@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.34.7 / standalone 1.0.6 — Exclusive damage branches
+
+- Follow Mysticism Restricted’s explicit Battlewill-source check and mutually exclusive branches: damage sourced from a Battlewill ability receives 5×; otherwise Physical damage receives 3×. Remove their 15× stacking.
+- Ordinary melee with Aura Sword or Ogre Guillotine uses the Physical branch. Preserve the all-Physical coverage for other projectiles/skills and Chained’s Physical-only dash. Keep Aura Sword excluded from numerical buff tripling.
+- Add actual native diamond-sword Aura Slash casts and update native damage regressions, in-game descriptions, guides and wiki examples.
+
 ## 0.34.6 / standalone 1.0.5 — Aura Sword and dash targeting
 
 - Exclude Aura Sword from Chained’s 3× buff-effectiveness bonus. Preserve its native added damage, applicable outgoing damage multipliers and other Battlewill buff bonuses.

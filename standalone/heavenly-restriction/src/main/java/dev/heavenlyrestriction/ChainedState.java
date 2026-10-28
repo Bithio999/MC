@@ -102,8 +102,11 @@ public final class ChainedState {
     public static EventResult damage(Skills storage,LivingEntity target,DamageSource source,Changeable<Float> amount){
         var attacker=RestrictionData.attacker(source);
         if(active(attacker)){
-            float multiplier=TensuraDamageHelper.isPhysicalAttack(source)?3:1;
-            if(TensuraDamageHelper.isBattlewill(source,attacker))multiplier*=5;
+            // Match Restricted's mutually exclusive branches and explicit Battlewill source check.
+            var ability=((TensuraDamageSource)source).tensura$getAbilityInstance();
+            float multiplier=1;
+            if(ability!=null && ability.getSkill() instanceof Battlewill)multiplier=5;
+            else if(TensuraDamageHelper.isPhysicalAttack(source))multiplier=3;
             if(multiplier!=1)amount.set(amount.get()*multiplier);
         }
         return EventResult.pass();

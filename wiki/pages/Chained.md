@@ -64,13 +64,15 @@ Enable Chained through Tensura’s normal Ability Selection toggle to gain:
 | Battlewill learning points | +9 |
 | Battlewill mastery points | +9 |
 | Resistance/Nullification learning points | +19 |
-| Battlewill damage | **5×** |
+| Damage from Battlewill abilities | **5×**, takes priority over the Physical branch |
 | Numeric Battlewill buff effectiveness | **3×**, except Aura Sword |
-| All outgoing Physical damage | **3×** |
+| Other outgoing Physical damage | **3×** |
 
-Numeric buffs include native attribute bonuses, such as Diamond Path’s armor. **Aura Sword is excluded from the 3× buff-effectiveness bonus:** it adds its normal configured weapon-damage bonus. Applicable outgoing Physical and Battlewill damage multipliers still apply to its hits. The bonus changes their numeric strength; buff duration, learning costs and resource-conversion rates keep their native values. Repeated refreshes do not multiply an already boosted buff again. Disabling Chained restores each tracked buff’s native amount.
+Numeric buffs include native attribute bonuses, such as Diamond Path’s armor. **Aura Sword is excluded from the 3× buff-effectiveness bonus:** it adds its normal configured weapon-damage bonus. Each hit then uses its applicable outgoing damage branch. The bonus changes their numeric strength; buff duration, learning costs and resource-conversion rates keep their native values. Repeated refreshes do not multiply an already boosted buff again. Disabling Chained restores each tracked buff’s native amount.
 
-The Physical bonus covers your physical melee, projectiles and skills, including native damage converted to Physical. It does not change your attack attribute. Physical Battlewill hits receive both bonuses for **15×** damage before native defenses and other modifiers. Severance Rush is purely Physical and receives only the **3×** Physical bonus, even while Aura Sword or Ogre Guillotine is active. Non-Physical Battlewills retain their **5×** bonus; unrelated elemental/magical damage is not tripled.
+Damage bonuses use **separate branches**: a hit sourced from a Battlewill ability receives **5×** damage, even if it is also Physical. Otherwise, Physical melee, projectiles and skills receive **3×**, including native damage converted to Physical. These multipliers **do not stack** and do not change your attack attribute. Aura Sword or Ogre Guillotine on an ordinary melee hit does not make that hit a Battlewill-ability source. Severance Rush is purely Physical and receives **3×**; non-Physical Battlewills receive **5×**, and unrelated elemental/magical damage gets neither bonus.
+
+With a diamond sword and native default coefficients, Aura Slash deals **35 normally / 70 mastered**, before defenses and other modifiers. An ordinary 7-damage melee hit plus Aura Sword’s native 7-damage increment receives the Physical branch: **(7 + 7) × 3 = 42**, excluding racial attack bonuses and other modifiers.
 
 ### Broken Limit
 
