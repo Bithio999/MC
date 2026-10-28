@@ -15,6 +15,10 @@ import java.util.*;
 
 @Mixin(ReincarnationMenu.class)
 public abstract class ChainedReincarnationMixin {
+    @Inject(method="getReincarnationSkills",at=@At("RETURN"),cancellable=true,remap=false)
+    private static void myths$restrictedRolls(List<ManasSkill> pool,ServerLevel level,boolean ignoreGameRule,Player roller,CallbackInfoReturnable<List<ManasSkill>> out){
+        out.setReturnValue(ChainedReincarnation.filter(out.getReturnValue(),roller));
+    }
     @Inject(method={"getRacePool","getRandomRacePool"},at=@At("RETURN"),cancellable=true,remap=false)
     private void myths$startingRace(CallbackInfoReturnable<List<ManasRace>> out){var list=new ArrayList<>(out.getReturnValue());var race=WildHunt.RESTRICTED.getFirst().get();if(!list.contains(race))list.add(race);out.setReturnValue(List.copyOf(list));}
     @WrapMethod(method="grantedUniqueSkill",remap=false)

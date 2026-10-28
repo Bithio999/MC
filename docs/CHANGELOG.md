@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.35.2 / standalone 1.1.2 — Fettered reincarnation blacklist
+
+- Filter Fettered Human’s main, bonus and locked-skill reincarnation candidates when an ability costs magicules. Inspect ordinary/mastered modes and native inline costs; ignore acquisition prices and magicule gains.
+- Add server-configured extra exclusions and explicit exceptions. Existing skills, intrinsic Chained, other races and native eligibility checks retain their behavior.
+- Document default eligibility and third-party edge cases; add native reincarnation regression tests.
+
 ## 0.35.1 — Airborne dash and race selection
 
 - Chained and Unbound can use Severance Rush in midair. The 16-block aim, enemy stopping, safe terrain checks, 2% current-aura cost, Physical damage and one-second cooldown remain.

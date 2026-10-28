@@ -41,6 +41,24 @@ The native-client photograph uses staged resource values for visual review.
 
 The intrinsic Unique [Chained](Chained.md) supplies the lineage’s true restriction and martial abilities. Its active [Severance Rush](Chained.md#severance-rush) is an instant teleport that deals native **Physical** damage (`minecraft:mob_attack`). The race’s attribute bonuses are passive traits with no direct damage.
 
+## Reincarnation skill pool
+
+When rolling as Fettered Human, a Unique is excluded if any of its own abilities costs **magicules**, including mastered modes and native passive/upkeep costs. Aura-only and free skills remain eligible. A skill’s acquisition price does not count as an ability cost.
+
+The default native pool leaves **20 eligible Uniques**, including Martial Master, Great Sage, Observer and Pride. All eight aura-based Myths Uniques remain eligible. Both main and bonus pools use the restriction. Intrinsic Chained is guaranteed; already owned skills and their recorded inheritance remain. With `skillBeforeRace`, a roll completed before race selection remains an already owned skill.
+
+Other races keep their normal pools. Server operators can configure the rule in `config/tensura-myths-reincarnation.toml`, or `config/tensura-heavenly-restriction-reincarnation.toml` for the standalone addon. A same-named file in the world’s `serverconfig/` folder can override the default.
+
+```toml
+blockMagiculeCosts = true
+extraBlacklist = []
+allowlist = []
+```
+
+`extraBlacklist` adds excluded skill registry IDs and takes priority. `allowlist` exempts registry IDs from automatic cost checks, while keeping native pool and Truly Unique requirements. Restart the server or reopen the world after editing. Third-party skills with hidden internal costs can be added to `extraBlacklist`.
+
+The default native eligible Uniques are Analyst, Berserker, Commander, Cook, Creator, Fighter, Gourmand, Great Sage, Martial Master, Mathematician, Observer, Pride, Reflector, Researcher, Royal Beast, Seeker, Seer, Spearhead, Survivor and Tuner.
+
 ## Evolution
 
 ![Fettered Human in the native reincarnation menu](../media/fettered-human-selection-0.35.1.png)

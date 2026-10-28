@@ -6,6 +6,8 @@
 
 Select **Fettered Human** (**Hard**) in Tensura's native reincarnation race menu. It grants **Chained** separately from the normal reincarnation Unique roll. Subsequent evolutions retain the same skill/mastery and never regrant a forgotten Chained.
 
+Random reincarnation Uniques are filtered for Fettered Human: if any of a skill’s own abilities consumes magicules, it cannot roll. Aura-only and free skills remain eligible; acquisition prices do not count. Existing skills remain. Both main and bonus rolls use this rule. See [blacklist configuration and native eligible skills](../../../docs/REINCARNATION-BLACKLIST.md).
+
 Starting base aura rolls **1,500–2,000**, starting base magicules **50–100**, for **1,550–2,100 starting EP** before other reincarnation rewards. Chained excludes the saved starting aura from its multiplier.
 
 | Race | Fixed total EP | Mastered Battlewills | Chained mastery | HP / SHP racial bonus | Newly granted skill |
