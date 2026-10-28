@@ -8,7 +8,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
 import java.util.*;
 
-/** Native learning entry, followed by a reward-first replacement of the permanent predecessor. */
+/** Automatic native learning completion, followed by reward-first predecessor replacement. */
 public final class ChainedEvolution {
     private ChainedEvolution(){}
     public static boolean ready(LivingEntity e){
@@ -19,8 +19,16 @@ public final class ChainedEvolution {
     }
     public static void discover(LivingEntity e){
         if(e.level().isClientSide() || !ready(e))return;
-        var skills=SkillAPI.getSkillsFrom(e);if(skills.getSkill(HeavenlyRestriction.UNBOUND.get()).isPresent())return;
-        var learning=HeavenlyRestriction.UNBOUND.get().createLearningInstance(e);learning.setMastery(-1);learning.getOrCreateTag().putBoolean("NoMagiculeCost",true);SkillHelper.learnSkill(e,learning);
+        var skills=SkillAPI.getSkillsFrom(e);
+        if(skills.getSkill(HeavenlyRestriction.UNBOUND.get()).isEmpty()){
+            var learning=HeavenlyRestriction.UNBOUND.get().createLearningInstance(e);learning.setMastery(-1);SkillHelper.learnSkill(e,learning);
+        }
+        // Complete the actual stored entry through native unlock callbacks. This also
+        // upgrades unfinished entries saved by earlier versions, without charging MP.
+        skills.getSkill(HeavenlyRestriction.UNBOUND.get()).filter(i->i.getMastery()<0 && !i.isTemporarySkill() && !i.isSubInstance()).ifPresent(i->{
+            i.getOrCreateTag().putBoolean("NoMagiculeCost",true);
+            HeavenlyRestriction.UNBOUND.get().addLearnPoint(i,e,0,Math.max(1,-i.getMastery()));
+        });
     }
     public static void finish(LivingEntity e,ManasSkillInstance target){
         if(e.level().isClientSide() || target.getMastery()<0)return;

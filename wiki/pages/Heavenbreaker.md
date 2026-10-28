@@ -60,4 +60,4 @@ As the final Human-family branch, Heavenbreaker can meet the primary-lineage com
 
 ## Ultimate evolution
 
-With fully mastered [Chained](Chained.md) and True Demon Lord or True Hero status, unlock [Unbound](Unbound.md) through the native Ultimate skill menu.
+With fully mastered [Chained](Chained.md) and True Demon Lord or True Hero status, Chained automatically evolves into mastered [Unbound](Unbound.md).

@@ -36,7 +36,7 @@ public final class UnboundGameTests {
     }
     private static ManasSkillInstance evolve(GameTestHelper h,ServerPlayer p){
         prepare(p);ChainedEvolution.discover(p);var i=SkillAPI.getSkillsFrom(p).getSkill(WildHunt.UNBOUND.get()).orElseThrow();
-        h.assertTrue(WildHunt.UNBOUND.get().addLearnPoint(i,p,0,1),"Native final learning step did not complete evolution");return i;
+        h.assertTrue(i.isMastered(p) && SkillAPI.getSkillsFrom(p).getSkill(WildHunt.CHAINED.get()).isEmpty(),"Automatic evolution did not complete");return i;
     }
     @GameTest(template="empty",timeoutTicks=100)
     public static void ultimateDashWorksInMidairAndStopsBeforeAnEnemy(GameTestHelper h){
@@ -74,28 +74,60 @@ public final class UnboundGameTests {
         h.assertTrue(colors.contains(UniqueSkills.MUSICIAN.get().getColoredName().getStyle().getColor()),"Skill name lost native tier color");h.succeed();
     }
     @GameTest(template="empty",timeoutTicks=100)
-    public static void ultimateDiscoveryRequiresEveryGateAndPreservesTheOriginalOnFailure(GameTestHelper h){
-        var p=player(h);var old=prepare(p);var energy=TensuraStorages.getExistenceFrom(p);energy.setTrueHero(false);energy.setTrueDemonLord(false);
-        ChainedEvolution.discover(p);h.assertTrue(SkillAPI.getSkillsFrom(p).getSkill(WildHunt.UNBOUND.get()).isEmpty(),"Unlocked without awakening status");
-        energy.setTrueDemonLord(true);old.setMastery(old.getMaxMastery()-1);ChainedEvolution.discover(p);h.assertTrue(!ChainedEvolution.ready(p),"Unmastered Chained passed gate");
-        old.setMastery(old.getMaxMastery());RaceAPI.getRaceFrom(p).setRace(WildHunt.RESTRICTED.get(3).get(),false);ChainedEvolution.discover(p);h.assertTrue(!ChainedEvolution.ready(p),"Earlier race passed gate");
-        RaceAPI.getRaceFrom(p).setRace(WildHunt.RESTRICTED.getLast().get(),false);ChainedEvolution.discover(p);var i=SkillAPI.getSkillsFrom(p).getSkill(WildHunt.UNBOUND.get()).orElseThrow();
-        h.assertTrue(i.getMastery()<0 && !ChainedState.ultimate(p),"Discovery granted ultimate powers early");energy.setTrueDemonLord(false);
-        h.assertTrue(!WildHunt.UNBOUND.get().addLearnPoint(i,p,0,1000) && i.getMastery()<0 && SkillAPI.getSkillsFrom(p).getSkill(old.getSkill()).isPresent(),"Lost gate consumed predecessor");h.succeed();
+    public static void automaticEvolutionRequiresEveryGateAndPreservesTheOriginalOnFailure(GameTestHelper h){
+        var p=player(h);var old=prepare(p);var energy=TensuraStorages.getExistenceFrom(p);var skills=SkillAPI.getSkillsFrom(p);energy.setTrueHero(false);energy.setTrueDemonLord(false);
+        ChainedEvolution.discover(p);h.assertTrue(skills.getSkill(WildHunt.UNBOUND.get()).isEmpty(),"Evolved without awakening status");
+        energy.setTrueDemonLord(true);old.setMastery(old.getMaxMastery()-1);ChainedEvolution.discover(p);h.assertTrue(skills.getSkill(WildHunt.UNBOUND.get()).isEmpty(),"Unmastered Chained evolved");
+        old.setMastery(old.getMaxMastery());RaceAPI.getRaceFrom(p).setRace(WildHunt.RESTRICTED.get(3).get(),false);ChainedEvolution.discover(p);h.assertTrue(skills.getSkill(WildHunt.UNBOUND.get()).isEmpty(),"Earlier race evolved");
+        h.assertTrue(skills.getSkill(old.getSkill()).orElseThrow()==old,"Failed gates consumed predecessor");
+        RaceAPI.getRaceFrom(p).setRace(WildHunt.RESTRICTED.getLast().get(),false);ChainedEvolution.discover(p);var i=skills.getSkill(WildHunt.UNBOUND.get()).orElseThrow();
+        h.assertTrue(i.isMastered(p) && ChainedState.ultimate(p) && skills.getSkill(old.getSkill()).isEmpty(),"True Demon Lord did not evolve automatically");h.succeed();
     }
     @GameTest(template="empty",timeoutTicks=100)
-    public static void nativeMenuEvolutionPreservesResourcesMasteryToggleCooldownAndAllPresets(GameTestHelper h){
+    public static void automaticEvolutionPreservesResourcesMasteryToggleCooldownAndAllPresets(GameTestHelper h){
         var p=player(h);var old=prepare(p);old.onToggleOn(p);old.setCoolDown(1,0);ChainedState.remember(p,old.getSkill());
-        var ability=TensuraStorages.getAbilityFrom(p);for(int preset=0;preset<9;preset++)ability.setAbilitySlot(preset,1,old.getSkill(),0);
+        var ability=TensuraStorages.getAbilityFrom(p);for(int preset=0;preset<9;preset++)for(int slot=0;slot<3;slot++)ability.setAbilitySlot(preset,slot,old.getSkill(),0);
         p.getAttribute(TensuraAttributes.MAX_MAGICULE).setBaseValue(0);
+        var energy=TensuraStorages.getExistenceFrom(p);energy.setAura(500);energy.setMagicule(0);
         double aura=EnergyHelper.getMaxAura(p),mp=EnergyHelper.getMaxMagicule(p),starting=old.getOrCreateTag().getDouble("starting_aura");
-        ChainedEvolution.discover(p);var skills=SkillAPI.getSkillsFrom(p);var next=skills.getSkill(WildHunt.UNBOUND.get()).orElseThrow();ability.setAbilitySlot(0,0,next.getSkill(),0);
-        skills.startHoldSkill(next,0,0);
-        h.assertTrue(next.getMastery()>=0 && next.isMastered(p) && next.isToggled() && next.getModes()==2,"Native activation failed to inherit completed mastery/toggle");
+        // No equip, press or learning input: the existing skill tick is sufficient.
+        old.getSkill().onTick(old,p);var skills=SkillAPI.getSkillsFrom(p);var next=skills.getSkill(WildHunt.UNBOUND.get()).orElseThrow();
+        h.assertTrue(next.isMastered(p) && next.isToggled() && next.getModes()==2,"Automatic evolution failed to inherit completed mastery/toggle");
         h.assertTrue(skills.getSkill(WildHunt.CHAINED.get()).isEmpty() && ChainedState.instance(p).orElseThrow()==next,"Evolution retained both vows");
         near(h,EnergyHelper.getMaxAura(p),aura,"Evolution changed aura capacity");near(h,EnergyHelper.getMaxMagicule(p),mp,"Evolution recaptured magicule ceiling");near(h,next.getOrCreateTag().getDouble("starting_aura"),starting,"Lost birth exemption");
+        near(h,energy.getAura(),500,"Evolution charged current aura");near(h,energy.getMagicule(),0,"Evolution charged current MP");
         h.assertTrue(next.getCoolDown(0)==1 && ChainedState.inherited(p,next.getSkill()),"Lost cooldown or inheritance");
-        for(int preset=0;preset<9;preset++)h.assertTrue(ability.getAbilitySlot(preset,1).getSkill()==next.getSkill(),"Preset was not migrated");h.succeed();
+        for(int preset=0;preset<9;preset++)for(int slot=0;slot<3;slot++)h.assertTrue(ability.getAbilitySlot(preset,slot).getSkill()==next.getSkill(),"Preset was not migrated");
+        next.setCoolDown(7,0);next.onToggleOff(p);ChainedEvolution.discover(p);next.getSkill().onTick(next,p);
+        h.assertTrue(skills.getSkill(next.getSkill()).orElseThrow()==next && !next.isToggled() && next.getCoolDown(0)==7,"Repeated tick reset the completed evolution");h.succeed();
+    }
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void automaticEvolutionCompletesLegacyLearningEntriesOnlyAfterAllGates(GameTestHelper h){
+        var p=player(h);var old=prepare(p);var energy=TensuraStorages.getExistenceFrom(p);energy.setTrueHero(false);
+        var skills=SkillAPI.getSkillsFrom(p);var legacy=WildHunt.UNBOUND.get().createLearningInstance(p);legacy.setMastery(-100);
+        h.assertTrue(skills.learnSkill(legacy),"Legacy learning entry fixture failed");ChainedEvolution.discover(p);
+        h.assertTrue(legacy.getMastery()==-100 && skills.getSkill(old.getSkill()).isPresent(),"Legacy entry completed before awakening");
+        energy.setTrueHero(true);old.getSkill().onTick(old,p);
+        h.assertTrue(skills.getSkill(legacy.getSkill()).orElseThrow()==legacy && legacy.isMastered(p) && skills.getSkill(old.getSkill()).isEmpty(),"Saved learning entry was not automatically completed");h.succeed();
+    }
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void borrowedChainedCannotTriggerAutomaticEvolution(GameTestHelper h){
+        var p=player(h);var old=prepare(p);old.setRemoveTime(100);ChainedEvolution.discover(p);
+        h.assertTrue(SkillAPI.getSkillsFrom(p).getSkill(WildHunt.UNBOUND.get()).isEmpty(),"Temporary Chained evolved permanently");
+        old.setRemoveTime(-1);old.setParentSkill(UniqueSkills.CREATOR.get());ChainedEvolution.discover(p);
+        h.assertTrue(SkillAPI.getSkillsFrom(p).getSkill(WildHunt.UNBOUND.get()).isEmpty(),"Derived Chained evolved permanently");h.succeed();
+    }
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void liveUnslottedSkillTicksEvolveWithoutInput(GameTestHelper h){
+        var anchor=player(h);var owner=target(h,anchor.position().add(0,25,0));
+        RaceAPI.getRaceFrom(owner).setRace(WildHunt.RESTRICTED.getLast().get(),false);
+        HunterData.learnReward(owner,WildHunt.CHAINED.get());var skills=SkillAPI.getSkillsFrom(owner);var old=skills.getSkill(WildHunt.CHAINED.get()).orElseThrow();
+        old.onToggleOff(owner);old.setMastery(old.getMaxMastery());TensuraStorages.getExistenceFrom(owner).setTrueHero(true);
+        // Let the server tick a tracked owner. No discover, activation or manual learning.
+        h.startSequence().thenWaitUntil(()->h.assertTrue(skills.getSkill(WildHunt.UNBOUND.get()).filter(i->i.isMastered(owner)).isPresent(),"Waiting for automatic server tick evolution")).thenExecute(()->{
+            var next=skills.getSkill(WildHunt.UNBOUND.get()).orElseThrow();
+            h.assertTrue(next.isMastered(owner) && !next.isToggled() && skills.getSkill(old.getSkill()).isEmpty(),"Native ticks did not automatically evolve an unslotted, untoggled Chained");h.succeed();
+        });
     }
     @GameTest(template="empty",timeoutTicks=100)
     public static void ultimateDamageUsesEightOrFiveAndCritsWithToggleOffToo(GameTestHelper h){
@@ -111,7 +143,7 @@ public final class UnboundGameTests {
     @GameTest(template="empty",timeoutTicks=100)
     public static void evolvedNumericBattlewillBuffBecomesFourfoldWithoutCompounding(GameTestHelper h){
         var p=player(h);var old=prepare(p);old.onToggleOff(p);var art=UtilityArts.DIAMOND_PATH.get();HunterData.learnReward(p,art);var a=SkillAPI.getSkillsFrom(p).getSkill(art).orElseThrow();double armor=p.getArmorValue();a.onPressed(p,0,0);double nativeBonus=p.getArmorValue()-armor;
-        old.onToggleOn(p);near(h,p.getArmorValue()-armor,nativeBonus*3,"Original buff strength");ChainedEvolution.discover(p);var i=SkillAPI.getSkillsFrom(p).getSkill(WildHunt.UNBOUND.get()).orElseThrow();WildHunt.UNBOUND.get().addLearnPoint(i,p,0,1);
+        old.onToggleOn(p);near(h,p.getArmorValue()-armor,nativeBonus*3,"Original buff strength");ChainedEvolution.discover(p);var i=SkillAPI.getSkillsFrom(p).getSkill(WildHunt.UNBOUND.get()).orElseThrow();
         ChainedState.refresh(p);near(h,p.getArmorValue()-armor,nativeBonus*4,"Ultimate did not upgrade a live native buff");ChainedState.refresh(p);near(h,p.getArmorValue()-armor,nativeBonus*4,"Refresh compounded ultimate buff");i.onToggleOff(p);near(h,p.getArmorValue()-armor,nativeBonus,"Ultimate toggle did not restore native buff");h.succeed();
     }
     @GameTest(template="empty",timeoutTicks=100)

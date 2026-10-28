@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.35.4 / standalone 1.1.4 — Automatic Unbound evolution
+
+- Automatically evolve permanent, fully mastered Chained into mastered Unbound at Heavenbreaker with True Hero or True Demon Lord status. No manual learning, equipping or activation is required.
+- Complete saved unfinished Unbound entries once the same gates are met. Preserve toggles, all nine presets, dash cooldown, inheritance, capacity ceiling and aura exemption; charge no resources.
+
 ## 0.35.3 / standalone 1.1.3 — Skill-taking blacklist and Creator
 
 - Exclude target-skill stealing, copying and harvesting from Fettered Human reincarnation rolls. Add an extensible skill tag and independent `blockSkillTaking` setting. Pride remains exempt.

@@ -11,7 +11,7 @@
 | **Information** | |
 | Skill tier | Ultimate |
 | Acquisition | Heavenbreaker + fully mastered Chained + True Demon Lord or True Hero |
-| Native menu | Skills → Ultimate; equip and activate the evolution entry |
+| Native menu | Skills → Ultimate; learned automatically |
 | Maximum mastery | 1,000; completed Chained mastery carries over |
 | Active modes | Severance Rush; Counter |
 | Resource | Aura |
@@ -23,7 +23,7 @@
 
 ## Obtaining
 
-Reach **Heavenbreaker**, fully master your permanent **Chained**, and become a **True Demon Lord or True Hero**. An unfinished Unbound entry appears in Tensura’s normal Ultimate skill list. Equip and activate the entry to evolve. All requirements are rechecked at completion; there is no additional EP threshold or EP payment.
+Reach **Heavenbreaker**, fully master your permanent **Chained**, and become a **True Demon Lord or True Hero**. Chained automatically evolves into fully learned, mastered Unbound on the next server check, even while unequipped or untoggled. No menu activation, learning input, additional EP threshold or resource payment is required. Unbound appears in Tensura’s normal Ultimate skill list.
 
 Unbound replaces Chained and retains its completed mastery, toggle state, recorded inheritance, saved aura exemption, magicule ceiling and remaining Severance Rush cooldown. Chained slots across all nine presets become Unbound’s Severance Rush slots. The native Ultimate classification supplies normal Ultimate compatibility; this is not a Godly skill.
 

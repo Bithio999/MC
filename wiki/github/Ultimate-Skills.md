@@ -28,7 +28,7 @@ Master one of these Ultimates, become a True Hero or True Demon Lord and reach 1
 
 ## Race-exclusive Ultimate
 
-[Unbound](https://github.com/Bithio999/MC/wiki/Unbound) evolves from mastered [Chained](https://github.com/Bithio999/MC/wiki/Chained) at Heavenbreaker with True Demon Lord or True Hero status. It retains the aura pact and dash, upgrades the martial passives and adds Counter. Its native Ultimate-menu evolution has no synthesis ingredients or extra EP payment.
+[Unbound](https://github.com/Bithio999/MC/wiki/Unbound) evolves from mastered [Chained](https://github.com/Bithio999/MC/wiki/Chained) at Heavenbreaker with True Demon Lord or True Hero status. It retains the aura pact and dash, upgrades the martial passives and adds Counter. The evolution happens automatically, with no synthesis ingredients, manual learning or extra resource payment.
 
 ## Boss-intrinsic Ultimates
 

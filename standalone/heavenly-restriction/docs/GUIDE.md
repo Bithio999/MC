@@ -91,7 +91,7 @@ Use while **on the ground, in midair or in water**. A **16-block eye-level aim r
 
 ## Unbound — Ultimate Skill
 
-Registry ID: `heavenlyrestriction:unbound`. At **Heavenbreaker**, with **Chained fully mastered** and **True Demon Lord or True Hero** status, Unbound appears in the native **Skills → Ultimate** menu. Equip and activate the evolution entry. Chained is replaced; its completed mastery, toggle, presets, dash cooldown, magicule ceiling and aura exemption carry over. There is no extra EP threshold or payment.
+Registry ID: `heavenlyrestriction:unbound`. At **Heavenbreaker**, with **Chained fully mastered** and **True Demon Lord or True Hero** status, Chained automatically evolves into fully learned, mastered Unbound, even while unequipped or untoggled. Unbound appears in the native **Skills → Ultimate** menu. No activation or learning input is required. Chained is replaced; its completed mastery, toggle, presets, dash cooldown, magicule ceiling and aura exemption carry over. There is no extra EP threshold or payment.
 
 Unbound retains all Heavenly Restriction vows and Severance Rush, with these upgrades:
 

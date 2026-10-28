@@ -134,7 +134,7 @@ A brief chain separates into broken links along the route, with a pale pressure 
 
 Select **Fettered Human** in the native reincarnation race menu. Only Fettered Human grants Chained. Normal evolution retains the existing skill and its mastery, but later stages do not grant or regrant it. Selecting a later stage directly does not award Chained. The lineage proceeds through four native-menu evolutions to [Heavenbreaker](https://github.com/Bithio999/MC/wiki/Heavenbreaker). Chained is separate from the ordinary reincarnation Unique roll.
 
-At **Heavenbreaker**, with **Chained fully mastered** and **True Demon Lord or True Hero** status, a native Ultimate-menu entry unlocks [Unbound](https://github.com/Bithio999/MC/wiki/Unbound). Equip its evolution entry and activate it to replace Chained. Mastery, toggle, presets, aura exemption, magicule ceiling and dash cooldown carry over. No extra EP payment is required.
+At **Heavenbreaker**, with **Chained fully mastered** and **True Demon Lord or True Hero** status, Chained automatically evolves into mastered [Unbound](https://github.com/Bithio999/MC/wiki/Unbound), even while unequipped or untoggled. Mastery, toggle, presets, aura exemption, magicule ceiling and dash cooldown carry over. No extra EP payment is required.
 
 ## Existing saves and recorded inheritance
 

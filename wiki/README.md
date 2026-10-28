@@ -1,6 +1,6 @@
 # Tensura Myths Wiki
 
-An unofficial reference for the **Tensura Myths** addon to **Tensura: Reincarnated**. Minecraft 1.21.1 · NeoForge · Addon 0.35.3.
+An unofficial reference for the **Tensura Myths** addon to **Tensura: Reincarnated**. Minecraft 1.21.1 · NeoForge · Addon 0.35.4.
 
 ## Start here
 
@@ -53,8 +53,8 @@ Ability articles separate direct elemental hits, additional status damage, heali
 
 ## Open the visual edition
 
-[Download the styled offline wiki](../releases/tensura-myths-wiki-0.35.3.zip), extract it, and open `index.html`. It contains every article, portraits, screenshots and offline search. GitHub readers can use the Markdown links above.
+[Download the styled offline wiki](../releases/tensura-myths-wiki-0.35.4.zip), extract it, and open `index.html`. It contains every article, portraits, screenshots and offline search. GitHub readers can use the Markdown links above.
 
-[Download the addon](../releases/tensura-myths-0.35.3.jar) · [Base mod wiki](https://tensura.wiki.gg/wiki/Tensura:_Reincarnated_Wiki) · [Changelog](../docs/CHANGELOG.md) · [Wiki authoring](../docs/WIKI.md)
+[Download the addon](../releases/tensura-myths-0.35.4.jar) · [Base mod wiki](https://tensura.wiki.gg/wiki/Tensura:_Reincarnated_Wiki) · [Changelog](../docs/CHANGELOG.md) · [Wiki authoring](../docs/WIKI.md)
 
 Unofficial fan addon. Not affiliated with Capcom or ManasMods.
