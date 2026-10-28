@@ -8,10 +8,12 @@ manifest=json.loads((source/'manifest.json').read_text());effects=manifest['effe
 assert manifest['schema']==2
 protocol=(ROOT/'src/main/java/dev/wildhunt/ArtVisualEntity.java').read_text()
 ids={int(n) for name,n in re.findall(r'([A-Z][A-Z_]+)\s*=\s*(\d+)',protocol)}
-# The chain wake is procedural geometry: deforming links have no authored rig.
-procedural={73}
-assert {e['kind'] for e in effects}==ids-procedural and len(effects)==72 and len(ids)==73
+# Chain links and the Ultimate's pressure stance/slash use custom deforming geometry.
+procedural={73,74,75}
+assert {e['kind'] for e in effects}==ids-procedural and len(effects)==72 and len(ids)==75
 assert 'ChainedGeometry.render' in (ROOT/'src/main/java/dev/wildhunt/client/ArtVisualRenderer.java').read_text()
+assert 'UnboundGeometry.stance' in (ROOT/'src/main/java/dev/wildhunt/client/ArtVisualRenderer.java').read_text()
+assert 'UnboundGeometry.slash' in (ROOT/'src/main/java/dev/wildhunt/client/ArtVisualRenderer.java').read_text()
 routes=(ROOT/'src/main/java/dev/wildhunt/visual/VisualRig.java').read_text()
 for e in effects:assert f'new VisualRig({e["kind"]},"{e["asset"]}","{e["theme"]}"' in routes,e
 count=cubes=clips=surfaces=rings=0
@@ -60,7 +62,7 @@ for project in sorted(source.glob('*.bbmodel')):
  count+=1;cubes+=len(p['elements']);clips+=len(anim)
 assert count==79,count
 assert rings>=60 and surfaces>=400,(rings,surfaces)
-print(f'{len(ids)} protocol effects covered (one procedural chain wake); {count} Blockbench/export pairs, {cubes} editor cubes and {clips} clips validated.')
+print(f'{len(ids)} protocol effects covered ({len(procedural)} procedural effects); {count} Blockbench/export pairs, {cubes} editor cubes and {clips} clips validated.')
 print(f'{surfaces} continuous/faceted surfaces including {rings} smooth rings replace their preview cubes at runtime.')
 for project in sorted((source/'items').glob('*.bbmodel')):
  p=json.loads(project.read_text());m=json.loads((assets/'models/item'/f'{project.stem}.json').read_text())

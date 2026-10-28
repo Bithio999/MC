@@ -39,6 +39,20 @@ public final class UnboundGameTests {
         h.assertTrue(WildHunt.UNBOUND.get().addLearnPoint(i,p,0,1),"Native final learning step did not complete evolution");return i;
     }
     @GameTest(template="empty",timeoutTicks=100)
+    public static void ultimateDashWorksInMidairAndStopsBeforeAnEnemy(GameTestHelper h){
+        // Native FakePlayer deliberately ignores connection teleports. Use a tracked living
+        // owner for movement assertions; the opt-in client covers a real evolved player.
+        var anchor=player(h);var start=anchor.position().add(0,35,0);var p=target(h,start);EnergyHelper.setBaseMaxEP(p,100000);
+        HunterData.learnReward(p,WildHunt.UNBOUND.get());var i=SkillAPI.getSkillsFrom(p).getSkill(WildHunt.UNBOUND.get()).orElseThrow();var victim=target(h,start.add(8,0,0));
+        afterTracking(h,List.of(p,victim),()->{
+            p.setOnGround(false);p.setYRot(-90);p.setXRot(0);TensuraStorages.getExistenceFrom(p).setAura(10000);
+            WildHunt.UNBOUND.get().onPressed(i,p,0,0);
+            h.assertTrue(p.getX()>start.x+6 && p.getX()<victim.getBoundingBox().minX,"Airborne Ultimate dash did not stop before target: start="+start+" end="+p.position()+" destination="+ChainedDash.destination(p)+" mastery="+i.getMastery()+" cooldown="+i.getCoolDown(0)+" interact="+i.canInteractSkill(p)+" activate="+i.canActivateSkill(p,0)+" aura="+TensuraStorages.getExistenceFrom(p).getAura());
+            h.assertTrue(!p.getBoundingBox().intersects(victim.getBoundingBox()) && victim.getHealth()<1024,"Airborne dash failed its safe landing/damage");
+            near(h,TensuraStorages.getExistenceFrom(p).getAura(),9800,"Ultimate airborne dash cost");h.assertTrue(i.getCoolDown(0)==1,"Ultimate airborne cooldown");h.succeed();
+        });
+    }
+    @GameTest(template="empty",timeoutTicks=100)
     public static void airWalkMasteryHalvesActivationAndFlyingUpkeep(GameTestHelper h){
         var p=player(h);HunterData.learnReward(p,WildHunt.AIR_SOVEREIGNTY.get());var i=SkillAPI.getSkillsFrom(p).getSkill(WildHunt.AIR_SOVEREIGNTY.get()).orElseThrow();var art=WildHunt.AIR_SOVEREIGNTY.get();
         var energy=TensuraStorages.getExistenceFrom(p);double normal=art.getAuraCost(p,i,0);i.setMastery(i.getMaxMastery());near(h,art.getAuraCost(p,i,0),normal*.5,"Mastered cost was not halved");

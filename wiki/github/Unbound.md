@@ -19,6 +19,8 @@
 | Damage ID | `minecraft:mob_attack` |
 | Toggle upkeep | None |
 
+![Unbound in the native Ultimate menu](https://github.com/Bithio999/MC/blob/main/wiki/media/unbound-icon-0.35.1.png?raw=true)
+
 ## Obtaining
 
 Reach **Heavenbreaker**, fully master your permanent **Chained**, and become a **True Demon Lord or True Hero**. An unfinished Unbound entry appears in Tensura’s normal Ultimate skill list. Equip and activate the entry to evolve. All requirements are rechecked at completion; there is no additional EP threshold or EP payment.
@@ -102,7 +104,7 @@ Gain **30% incoming damage reduction**, **100% projectile dodge**, and **50% dod
 | Base path damage | **1.5 × √A** |
 | Base arrival damage | **3 × √A** |
 
-**A** is aura actually spent. Targeting, grounded/water activation, enemy stopping, terrain clearance and independent path/arrival hits follow [Chained’s Severance Rush](https://github.com/Bithio999/MC/wiki/Chained#severance-rush). With Martial Supremacy enabled and the default critical multiplier, player damage is base × **5 × 1.5**. The dash has no Battlewill classification or EP scaling.
+**A** is aura actually spent. Targeting, ground/midair/water activation, enemy stopping, terrain clearance and independent path/arrival hits follow [Chained’s Severance Rush](https://github.com/Bithio999/MC/wiki/Chained#severance-rush). With Martial Supremacy enabled and the default critical multiplier, player damage is base × **5 × 1.5**. The dash has no Battlewill classification or EP scaling.
 
 ### Counter
 

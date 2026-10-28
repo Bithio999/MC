@@ -1,0 +1,9 @@
+gradle.projectsEvaluated {
+    rootProject.sourceSets.main.java.srcDir(rootProject.file('docs/airborne-review'))
+    rootProject.neoForge.runs.getByName('client').programArgument('--quickPlaySingleplayer')
+    rootProject.neoForge.runs.getByName('client').programArgument('Restriction Validation')
+    rootProject.neoForge.runs.getByName('client').programArgument('--width')
+    rootProject.neoForge.runs.getByName('client').programArgument('1280')
+    rootProject.neoForge.runs.getByName('client').programArgument('--height')
+    rootProject.neoForge.runs.getByName('client').programArgument('720')
+}

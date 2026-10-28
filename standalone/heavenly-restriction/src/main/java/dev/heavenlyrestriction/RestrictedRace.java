@@ -29,7 +29,7 @@ public final class RestrictedRace extends TensuraRace {
         addAttributeModifier(Attributes.KNOCKBACK_RESISTANCE,HeavenlyRestriction.id("restricted_poise"),stage*.15,AttributeModifier.Operation.ADD_VALUE);
     }
     @Override public MutableComponent getName(){return Component.literal(NAMES[stage]);}
-    @Override public MutableComponent getRaceDescription(){return Component.literal("A human body forged by a binding heavenly restriction. "+(stage==0?"Starting race":"Evolution "+stage+"/4")+". Chained exchanges magical growth and unrestricted skill acquisition for overwhelming aura and martial potential.");}
+    @Override public MutableComponent getRaceDescription(){return Component.literal(stage==0?"A human bound by Heavenly Restriction. Chained trades magical growth and unrestricted skill learning for immense aura growth and physical power. Four evolutions await.":"A human body forged by a binding heavenly restriction. Evolution "+stage+"/4. Chained exchanges magical growth and unrestricted skill acquisition for overwhelming aura and martial potential.");}
     @Override public ResourceLocation getRaceIcon(){return HeavenlyRestriction.id("textures/race/"+IDS[stage]+".png");}
     @Override public Pair<Double,Double> getBaseAuraRange(){return Pair.of(1_500d,2_000d);}
     @Override public Pair<Double,Double> getBaseMagiculeRange(){return Pair.of(50d,100d);}

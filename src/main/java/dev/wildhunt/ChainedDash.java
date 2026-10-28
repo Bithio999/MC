@@ -15,7 +15,7 @@ public final class ChainedDash {
     public static final double REACH=16;
     private ChainedDash(){}
     public static Optional<Vec3> destination(LivingEntity caster){
-        if(!(caster.level() instanceof ServerLevel level) || !caster.onGround() && !caster.isInWaterOrBubble())return Optional.empty();
+        if(!(caster.level() instanceof ServerLevel level))return Optional.empty();
         var hit=ObjectSelectionHelper.getPlayerPOVHitResult(level,caster,ClipContext.Fluid.NONE,REACH);
         Vec3 eye=caster.getEyePosition(),look=caster.getLookAngle();
         double distance=hit.getType()==HitResult.Type.BLOCK?eye.distanceTo(hit.getLocation()):REACH;

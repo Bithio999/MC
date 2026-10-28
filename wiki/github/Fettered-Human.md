@@ -12,6 +12,7 @@
 | Registry ID | `wildhunt:fettered_human` |
 | Ancestry | Human |
 | Stage | Starting race |
+| Reincarnation difficulty | Hard |
 | Starting base aura | 1,500–2,000; unaffected by Chained |
 | Starting base magicules | 50–100 |
 | Starting EP | 1,550–2,100 before separate reincarnation rewards |
@@ -41,6 +42,10 @@ The native-client photograph uses staged resource values for visual review.
 The intrinsic Unique [Chained](https://github.com/Bithio999/MC/wiki/Chained) supplies the lineage’s true restriction and martial abilities. Its active [Severance Rush](https://github.com/Bithio999/MC/wiki/Chained#severance-rush) is an instant teleport that deals native **Physical** damage (`minecraft:mob_attack`). The race’s attribute bonuses are passive traits with no direct damage.
 
 ## Evolution
+
+![Fettered Human in the native reincarnation menu](https://github.com/Bithio999/MC/blob/main/wiki/media/fettered-human-selection-0.35.1.png?raw=true)
+
+The reincarnation panel shows **Hard** difficulty, starting resource ranges, Chained and the race description.
 
 Select Fettered Human from Tensura’s native reincarnation race menu. It guarantees Chained and still permits the normal reincarnation skill roll. Progression is available in the normal native evolution menu.
 

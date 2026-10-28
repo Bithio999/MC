@@ -33,11 +33,22 @@ public final class ChainedDashGameTests {
         h.succeed();
     }
     @GameTest(template="empty",timeoutTicks=100)
-    public static void airborneActivationIsFreeAndWaterDoesNotStopTheAimRay(GameTestHelper h){
-        var anchor=player(h);var p=target(h,anchor.position().add(30,0,0));var start=p.position();EnergyHelper.setBaseMaxEP(p,100000);var i=vow(p,false);var energy=TensuraStorages.getExistenceFrom(p);energy.setAura(10000);p.setYRot(-90);p.setXRot(0);p.setOnGround(false);
-        HeavenlyRestriction.CHAINED.get().onPressed(i,p,0,0);h.assertTrue(p.position().equals(start) && energy.getAura()==10000 && !i.onCoolDown(0),"Airborne activation moved or charged despite native movement gate");
+    public static void airborneDashWorksAtEveryPitchAndChargesExactlyOnce(GameTestHelper h){
+        var anchor=player(h);var start=anchor.position().add(0,40,0);var p=target(h,start);EnergyHelper.setBaseMaxEP(p,100000);var i=vow(p,false);var energy=TensuraStorages.getExistenceFrom(p);
+        for(float pitch:new float[]{-90,-45,0,45,90}){
+            p.setPos(start);p.setOnGround(false);p.setYRot(-90);p.setXRot(pitch);i.setCoolDown(0,0);energy.setAura(10000);
+            var expected=start.add(p.getLookAngle().scale(ChainedDash.REACH));
+            HeavenlyRestriction.CHAINED.get().onPressed(i,p,0,0);
+            near(h,p.position().distanceTo(expected),0,"Airborne aim failed at pitch "+pitch);near(h,energy.getAura(),9800,"Airborne cast did not pay once");h.assertTrue(i.getCoolDown(0)==1,"Airborne cast lost its one-second cooldown");
+            var landed=p.position();HeavenlyRestriction.CHAINED.get().onPressed(i,p,0,0);h.assertTrue(p.position().equals(landed) && energy.getAura()==9800,"Cooldown allowed a second airborne cast");
+        }
+        h.succeed();
+    }
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void airborneDashIgnoresWaterAlongTheAimRay(GameTestHelper h){
+        var anchor=player(h);var start=anchor.position().add(0,30,0);var p=target(h,start);EnergyHelper.setBaseMaxEP(p,100000);var i=vow(p,false);var energy=TensuraStorages.getExistenceFrom(p);energy.setAura(10000);p.setYRot(-90);p.setXRot(0);p.setOnGround(false);
         for(int x=3;x<=5;x++)for(int y=0;y<4;y++)for(int z=-1;z<=1;z++)h.getLevel().setBlockAndUpdate(BlockPos.containing(start).offset(x,y,z),Blocks.WATER.defaultBlockState());
-        p.setOnGround(true);HeavenlyRestriction.CHAINED.get().onPressed(i,p,0,0);h.assertTrue(p.getX()-start.x>12,"Water stopped the fluid-ignoring native aim ray");h.succeed();
+        HeavenlyRestriction.CHAINED.get().onPressed(i,p,0,0);near(h,p.getX()-start.x,16,"Water stopped the airborne aim ray");near(h,energy.getAura(),9800,"Water ray cast payment");h.succeed();
     }
 
     private static void runway(GameTestHelper h,net.minecraft.world.phys.Vec3 start){

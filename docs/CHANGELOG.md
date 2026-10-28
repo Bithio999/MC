@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.35.1 — Airborne dash and race selection
+
+- Chained and Unbound can use Severance Rush in midair. The 16-block aim, enemy stopping, safe terrain checks, 2% current-aura cost, Physical damage and one-second cooldown remain.
+- Fettered Human’s native reincarnation panel shows Hard difficulty, starting aura/magicule ranges, Chained and a concise race description.
+- Unbound has its own centered gold broken-shackle icon.
+- The independent Heavenly Restriction addon receives the same changes in 1.1.1.
+
 ## 0.35.0 / standalone 1.1.0 — Unbound
 
 - Rename Air Sovereignty to Air Walk while preserving its registry ID; mastered activation and flying upkeep cost half aura.

@@ -4,7 +4,7 @@
 
 ## Reincarnation and evolution
 
-Select **Fettered Human** in Tensura's native reincarnation race menu. It grants **Chained** separately from the normal reincarnation Unique roll. Subsequent evolutions retain the same skill/mastery and never regrant a forgotten Chained.
+Select **Fettered Human** (**Hard**) in Tensura's native reincarnation race menu. It grants **Chained** separately from the normal reincarnation Unique roll. Subsequent evolutions retain the same skill/mastery and never regrant a forgotten Chained.
 
 Starting base aura rolls **1,500–2,000**, starting base magicules **50–100**, for **1,550–2,100 starting EP** before other reincarnation rewards. Chained excludes the saved starting aura from its multiplier.
 
@@ -70,7 +70,7 @@ While Chained is equipped in the active ability preset, gain **10% incoming dama
 
 **Active — Press. Damage type: Physical (`minecraft:mob_attack`).**
 
-Use while **grounded or in water**, like Martial Master. A **16-block eye-level aim ray** ignores fluids and stops just before the nearest aimed hostile mob or eligible player. Allies, off-axis enemies and targets behind blocks do not capture the aim. Block hits retain Martial Master’s adjacent-block landing; open-air aim uses your look direction relative to your feet, including slight upward angles. When a destination is obstructed, the dash can shorten to a clear forward landing and adjust to the actual height of slabs, raised blocks or nearby ground. Low canopies and ceilings are handled through body clearance and a clear eye path, without sweeping your feet through the ground. Short safe stops at nearby enemies or walls are allowed. Unsafe, unloaded or out-of-bounds destinations are avoided; if no safe landing exists, the cast is rejected.
+Use while **on the ground, in midair or in water**. A **16-block eye-level aim ray** ignores fluids and stops just before the nearest aimed hostile mob or eligible player. Allies, off-axis enemies and targets behind blocks do not capture the aim. Block hits retain Martial Master’s adjacent-block landing; open-air aim uses your look direction relative to your feet, including slight upward angles. When a destination is obstructed, the dash can shorten to a clear forward landing and adjust to the actual height of slabs, raised blocks or nearby ground. Low canopies and ceilings are handled through body clearance and a clear eye path, without sweeping your feet through the ground. Short safe stops at nearby enemies or walls are allowed. Unsafe, unloaded or out-of-bounds destinations are avoided; if no safe landing exists, the cast is rejected.
 
 | Parameter | Value |
 | --- | --- |
