@@ -2,7 +2,7 @@
 
 An independent **NeoForge 1.21.1 addon for Tensura: Reincarnated**, extracted from Tensura Myths, with the Unbound Ultimate evolution and Air Walk update. It includes the Heavenly Restriction race lineage, Chained and its Unbound Ultimate evolution, aura recovery skills, and Air Walk. **Tensura Myths is not required.**
 
-[Download 1.1.4](../../releases/tensura-heavenly-restriction-1.1.4.jar) · [Gameplay guide](docs/GUIDE.md) · [Validation](docs/VALIDATION-1.1.4.md)
+[Download 1.1.5](../../releases/tensura-heavenly-restriction-1.1.5.jar) · [Gameplay guide](docs/GUIDE.md) · [Validation](docs/VALIDATION-1.1.5.md)
 
 ## Included content
 
@@ -18,13 +18,19 @@ At Heavenbreaker, fully mastered permanent Chained automatically evolves into ma
 
 The current Chained dash uses a **16-block eye ray**, retains native block-surface landings, supports upward air aiming and stops before the aimed enemy, has a **1-second cooldown**, costs **2% of current aura**, and deals **Physical damage** at **1.5√A path / 3√A arrival damage**, with A the aura paid. EP growth remains **90% aura / 10% magicules**, with Chained blocking subsequent magicule-capacity growth. Fixed evolution gates check **total EP** shown in Status. Chained retains up to **1 magicule per second** and converts all remaining computed biome/rate/sleep regeneration to aura. Current magicules are capped at their effective maximum; native low-rate penalties and spiritual maintenance remain. Positive `ep max add` commands follow 90/10, and future aura-capacity gains retain 5× after permanent losses.
 
+## Inverted Spear of Heaven
+
+The standalone includes the spear with **80 attack damage / 1.6 attack speed**, matching Hihiirokane Sword. It is a **2% additional ominous-vault reward** with built-in **Nullification I**: shatter native barriers, clear skill status effects and prevent skill activation for **2 seconds**.
+
+Chained/Unbound dash and Counter carry main-hand weapon damage, enchantments and engraving hit effects. Equipped Unerring Body also grants Fear, Slowness, Burden and Haki immunity. See the [gameplay guide](docs/GUIDE.md).
+
 ## Installation
 
 Use **Java 21**, **Minecraft 1.21.1**, and **NeoForge 21.1.209 or later in the 21.1 line**. Install on both the client and server:
 
 1. **Tensura: Reincarnated 2.0.1.3** and its dependencies, including **ManasCore 4.0.0.2**, **Architectury 13.0.8+**, **SmartBrainLib**, and **TerraBlender**.
 2. **GeckoLib 4.9.3** (4.x).
-3. **tensura-heavenly-restriction-1.1.4.jar**.
+3. **tensura-heavenly-restriction-1.1.5.jar**.
 
 Use this addon **instead of Tensura Myths**. The loader rejects installing both because both implement the same Chained and Battlewill hooks. The full Tensura Myths mod remains available separately with all its existing content.
 
@@ -40,7 +46,7 @@ python3 scripts/fetch-runtime.py
 ./gradlew build runGameTestServer
 ```
 
-Java 21 is required. The fetch script verifies the exact runtime dependency hashes in `runtime-mods.lock.json`. Gradle resolves the pinned Tensura, ManasCore and Architectury versions. Output: `build/libs/tensura-heavenly-restriction-1.1.4.jar`.
+Java 21 is required. The fetch script verifies the exact runtime dependency hashes in `runtime-mods.lock.json`. Gradle resolves the pinned Tensura, ManasCore and Architectury versions. Output: `build/libs/tensura-heavenly-restriction-1.1.5.jar`.
 
 `./gradlew runClient` starts an isolated development client. Native tests cover the extracted mechanics and prove that Tensura Myths is absent. Optional visual-review code in `docs/review` is excluded from regular builds; see its instructions.
 

@@ -1,0 +1,13 @@
+{
+  "type": "heavenlyrestriction:ominous_heavenly_spear",
+  "conditions": [
+    {
+      "condition": "neoforge:loot_table_id",
+      "loot_table_id": "minecraft:chests/trial_chambers/reward_ominous"
+    },
+    {
+      "condition": "minecraft:random_chance",
+      "chance": 0.02
+    }
+  ]
+}

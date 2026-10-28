@@ -1,6 +1,6 @@
 # Tensura Myths Wiki
 
-An unofficial reference for the **Tensura Myths** addon to **Tensura: Reincarnated**. Minecraft 1.21.1 · NeoForge · Addon 0.35.4.
+An unofficial reference for the **Tensura Myths** addon to **Tensura: Reincarnated**. Minecraft 1.21.1 · NeoForge · Addon 0.35.5.
 
 ## Start here
 
@@ -27,6 +27,10 @@ The [Fettered Human](https://github.com/Bithio999/MC/wiki/Fettered-Human) starti
 
 [Unbound](https://github.com/Bithio999/MC/wiki/Unbound) evolves from mastered Chained at Heavenbreaker with True Hero or True Demon Lord status. Its martial passives and Counter use the native Ultimate skill menu.
 
+## Equipment
+
+[Inverted Spear of Heaven](https://github.com/Bithio999/MC/wiki/Inverted-Spear-of-Heaven) is a rare ominous-vault weapon with Hihiirokane Sword stats. Its unique [Nullification engraving](https://github.com/Bithio999/MC/wiki/Nullification) shatters barriers, removes skill status effects and prevents skill activation for two seconds. [Weapon directory](https://github.com/Bithio999/MC/wiki/Weapons).
+
 ## Races
 
 [Race directory](https://github.com/Bithio999/MC/wiki/Races) covers the Human hunter branch and all **105 Convergent races**, grouped by ancestry.
@@ -52,4 +56,4 @@ The [Fettered Human](https://github.com/Bithio999/MC/wiki/Fettered-Human) starti
 Ability articles separate direct elemental hits, additional status damage, healing and utility. Their data tables include damage types, resource costs, cooldowns and acquisition requirements.
 
 
-[Download the styled offline edition](https://github.com/Bithio999/MC/blob/main/releases/tensura-myths-wiki-0.35.0.zip)
+[Download the styled offline edition](https://github.com/Bithio999/MC/blob/main/releases/tensura-myths-wiki-0.35.5.zip)

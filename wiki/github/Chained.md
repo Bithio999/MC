@@ -100,6 +100,8 @@ Your damage sources also **ignore dodge**, including projectiles attributed to y
 
 Gain **10% incoming damage reduction**, **100% dodge chance against projectiles** and **25% against other incoming damage**. The damage reduction follows Strengthen Body’s native rules: invulnerability-bypassing damage and barrier bypass level 2 or greater ignore it. The latter includes non-projectile magic and environmental hits. This passive works with Chained’s combat toggle off. Explicit source-level dodge bypass and operator/void-style invulnerability bypass still take priority; another mastered, enabled Chained owner can bypass it.
 
+You are also **immune to Fear, Slowness and Burden**, including effects already present when this passive becomes equipped. Native **Haki effects and forced movement** cannot affect you. These immunities require the skill in the active preset and work with Martial Supremacy off.
+
 ### Severance Rush
 
 [Active - Press] — **Severance Rush**
@@ -118,17 +120,21 @@ Use while **on the ground, in midair or in water**. An eye-level aim ray ignores
 
 If no safe forward landing is available, the cast spends no aura. Airborne activation and casts attempted during cooldown also spend no aura. Each successful press pays once and starts a **1-second cooldown**. The teleport is instant, not a timed channel or a movement-over-time attack.
 
-Let **A** be the aura actually paid:
+Let **A** be the aura actually paid and **W** the main-hand weapon contribution, including item modifiers, enchantment damage and applicable engraving modifiers:
 
 - **A = 0.02 × current aura**.
-- **Path damage = 1.5 × √A**.
-- **Arrival damage = 3 × √A**.
+- **Path damage = 1.5 × √A + W**.
+- **Arrival damage = 3 × √A + W**.
 
-At **100,000 current aura**, the cast pays **2,000 aura** and has about **67.08 path damage** plus **134.16 arrival damage** before native handling. With Martial Supremacy enabled, those become about **201.25** and **402.49**. The formula uses actual aura spent, with no extra EP multiplier or mastery damage multiplier.
+With an empty main hand, at **100,000 current aura**, the cast pays **2,000 aura** and has about **67.08 path damage** plus **134.16 arrival damage** before native handling. With Martial Supremacy enabled, those become about **201.25** and **402.49**. The formula uses actual aura spent, with no extra EP multiplier or mastery damage multiplier.
+
+Each path and arrival hit adds **W** separately and runs successful weapon-hit callbacks, including vanilla post-hit enchantments and native Tensura engravings. An empty main hand contributes zero. [Inverted Spear of Heaven](https://github.com/Bithio999/MC/wiki/Inverted-Spear-of-Heaven) also applies its Nullification engraving. These additions retain Physical classification and the separate Chained/Unbound multiplier branches.
 
 A brief chain separates into broken links along the route, with a pale pressure burst at arrival. The trail remains visible after the instantaneous teleport; it does not move the player over its lifetime.
 
 ![Severance Rush’s broken-chain trail and arrival impact](https://github.com/Bithio999/MC/blob/main/wiki/media/chained-teleport.png?raw=true)
+
+Additional damage triggered by an engraving retains that engraving’s native damage type.
 
 ## Obtaining and evolution
 

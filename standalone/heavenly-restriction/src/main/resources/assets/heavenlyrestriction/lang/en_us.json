@@ -2,5 +2,13 @@
   "heavenlyrestriction.skill.hunters_recovery": "Hunter's Recovery",
   "heavenlyrestriction.skill.apex_renewal": "Apex Renewal",
   "heavenlyrestriction.skill.sovereign_rebirth": "Sovereign Rebirth",
-  "heavenlyrestriction.chained.blocked_skill": "Cannot acquire %s."
+  "heavenlyrestriction.chained.blocked_skill": "Cannot acquire %s.",
+  "item.heavenlyrestriction.inverted_spear_of_heaven": "Inverted Spear of Heaven",
+  "item.heavenlyrestriction.inverted_spear_of_heaven.desc": "Attacks made with this weapon shatter any form of barriers instantly, remove all skill status effects, and inflict a debuff that prevents the target from activating skills for 2 seconds.",
+  "enchantment.heavenlyrestriction.nullification": "Nullification",
+  "effect.heavenlyrestriction.nullification": "Nullification",
+  "item.heavenlyrestriction.inverted_spear_of_heaven.desc.1": "Attacks made with this weapon shatter any",
+  "item.heavenlyrestriction.inverted_spear_of_heaven.desc.2": "form of barriers instantly, remove all skill",
+  "item.heavenlyrestriction.inverted_spear_of_heaven.desc.3": "status effects, and inflict a debuff that",
+  "item.heavenlyrestriction.inverted_spear_of_heaven.desc.4": "prevents skill activation for 2 seconds."
 }

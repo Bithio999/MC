@@ -1,6 +1,6 @@
 # Tensura Myths Wiki
 
-An unofficial reference for the **Tensura Myths** addon to **Tensura: Reincarnated**. Minecraft 1.21.1 · NeoForge · Addon 0.35.4.
+An unofficial reference for the **Tensura Myths** addon to **Tensura: Reincarnated**. Minecraft 1.21.1 · NeoForge · Addon 0.35.5.
 
 ## Start here
 
@@ -26,6 +26,10 @@ Master **Air Float / Air Flight** to unlock **[Air Walk](pages/Air-Walk.md)**: n
 The [Fettered Human](pages/Fettered-Human.md) starting race has four evolutions ending in [Heavenbreaker](pages/Heavenbreaker.md). Its intrinsic Unique [Chained](pages/Chained.md) trades magical growth and unrestricted skills for 5× later aura-capacity gains, Battlewill combat and an instant attacking teleport. Starting aura rolls of 1,500–2,000 are unmultiplied; starting magicules roll 50–100. Unshackled, Heavenly Restricted and Heavenbreaker grant Hunter’s Recovery, Apex Renewal and Sovereign Rebirth respectively.
 
 [Unbound](pages/Unbound.md) evolves from mastered Chained at Heavenbreaker with True Hero or True Demon Lord status. Its martial passives and Counter use the native Ultimate skill menu.
+
+## Equipment
+
+[Inverted Spear of Heaven](pages/Inverted-Spear-of-Heaven.md) is a rare ominous-vault weapon with Hihiirokane Sword stats. Its unique [Nullification engraving](pages/Nullification.md) shatters barriers, removes skill status effects and prevents skill activation for two seconds. [Weapon directory](pages/Weapons.md).
 
 ## Races
 
@@ -53,8 +57,8 @@ Ability articles separate direct elemental hits, additional status damage, heali
 
 ## Open the visual edition
 
-[Download the styled offline wiki](../releases/tensura-myths-wiki-0.35.4.zip), extract it, and open `index.html`. It contains every article, portraits, screenshots and offline search. GitHub readers can use the Markdown links above.
+[Download the styled offline wiki](../releases/tensura-myths-wiki-0.35.5.zip), extract it, and open `index.html`. It contains every article, portraits, screenshots and offline search. GitHub readers can use the Markdown links above.
 
-[Download the addon](../releases/tensura-myths-0.35.4.jar) · [Base mod wiki](https://tensura.wiki.gg/wiki/Tensura:_Reincarnated_Wiki) · [Changelog](../docs/CHANGELOG.md) · [Wiki authoring](../docs/WIKI.md)
+[Download the addon](../releases/tensura-myths-0.35.5.jar) · [Base mod wiki](https://tensura.wiki.gg/wiki/Tensura:_Reincarnated_Wiki) · [Changelog](../docs/CHANGELOG.md) · [Wiki authoring](../docs/WIKI.md)
 
 Unofficial fan addon. Not affiliated with Capcom or ManasMods.

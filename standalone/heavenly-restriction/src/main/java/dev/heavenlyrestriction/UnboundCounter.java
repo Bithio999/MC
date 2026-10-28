@@ -57,11 +57,11 @@ public final class UnboundCounter {
         clear(e);var level=(ServerLevel)e.level();
         Vec3 start=e.getBoundingBox().getCenter(),aim=attacker.getBoundingBox().getCenter().subtract(start);
         if(aim.lengthSqr()<1e-6)aim=e.getLookAngle();Vec3 travel=aim.normalize().scale(Math.min(64,Math.max(16,aim.length()+4)));double length=travel.lengthSqr();
+        Nullification.sweep(e,start,start.add(travel),3);
         for(var target:level.getEntitiesOfClass(LivingEntity.class,new AABB(start,start.add(travel)).inflate(3),t->RestrictionData.canHarm(e,t))){
             Vec3 center=target.getBoundingBox().getCenter(),closest=start.add(travel.scale(Math.clamp(center.subtract(start).dot(travel)/length,0,1)));
             if(center.distanceToSqr(closest)>9)continue;
-            var source=i.getSkill() instanceof UnboundSkill skill?skill.createSource(i,e,DamageTypes.MOB_ATTACK,1):null;if(source==null)continue;
-            ((TensuraDamageSource)source).tensura$setAuraCost(stance.spent);((IndependentHitSource)source).restriction$independentHit();target.hurt(source,damage(incoming,stance.spent));
+            ChainedWeaponArts.hit(i,e,target,1,damage(incoming,stance.spent),stance.spent);
         }
         ArtVisualEntity.spawn(level,ArtVisualEntity.UNBOUND_SLASH,start,travel,18);
         level.playSound(null,e.blockPosition(),SoundEvents.TRIDENT_THUNDER.value(),SoundSource.PLAYERS,1.5f,1.35f);

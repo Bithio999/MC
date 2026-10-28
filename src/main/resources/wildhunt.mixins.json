@@ -32,7 +32,11 @@
     "ChainedReserveMixin",
     "ChainedStatCommandMixin",
     "UnboundCriticalMixin",
-    "ChainedCreatorMixin"
+    "ChainedCreatorMixin",
+    "UnerringHakiMixin",
+    "UnerringHakiPushMixin",
+    "NullificationBarrierMixin",
+    "NullificationActivationMixin"
   ],
   "injectors": {
     "defaultRequire": 1

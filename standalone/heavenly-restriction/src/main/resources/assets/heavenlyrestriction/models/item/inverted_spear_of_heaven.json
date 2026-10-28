@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "heavenlyrestriction:item/inverted_spear_of_heaven"
+  }
+}

@@ -25,6 +25,12 @@
 - [Secondary races](https://github.com/Bithio999/MC/wiki/Duo-Races)
 - [Convergent Awakening](https://github.com/Bithio999/MC/wiki/Convergent-Awakening)
 
+### Equipment
+
+- [Weapons](https://github.com/Bithio999/MC/wiki/Weapons)
+- [Inverted Spear of Heaven](https://github.com/Bithio999/MC/wiki/Inverted-Spear-of-Heaven)
+- [Nullification engraving](https://github.com/Bithio999/MC/wiki/Nullification)
+
 ### Myth bosses
 
 - [Boss directory](https://github.com/Bithio999/MC/wiki/Bosses)

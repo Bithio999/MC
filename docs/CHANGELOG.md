@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.35.5 / standalone 1.1.5 — Heavenly Arsenal
+
+- Equipped Unerring Body blocks Fear, Slowness, Burden, native Haki fields and Haki forced movement, for both Chained and Unbound. Existing listed debuffs are cleansed.
+- Dash path/arrival and Counter hits add main-hand weapon damage with item modifiers, enchantment damage, vanilla post-hit effects and native engraving callbacks. Counter uses the weapon at release; unarmed formulas retain their values.
+- Add Inverted Spear of Heaven with Hihiirokane Sword attack stats, built-in native Nullification engraving, original pixel art and a 2% additive ominous-vault reward. Nullification shatters native barrier defenses/entities, strips skill status effects and prevents activation for two seconds.
+
 ## 0.35.4 / standalone 1.1.4 — Automatic Unbound evolution
 
 - Automatically evolve permanent, fully mastered Chained into mastered Unbound at Heavenbreaker with True Hero or True Demon Lord status. No manual learning, equipping or activation is required.

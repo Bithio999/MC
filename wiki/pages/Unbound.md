@@ -27,6 +27,8 @@ Reach **Heavenbreaker**, fully master your permanent **Chained**, and become a *
 
 Unbound replaces Chained and retains its completed mastery, toggle state, recorded inheritance, saved aura exemption, magicule ceiling and remaining Severance Rush cooldown. Chained slots across all nine presets become Unbound’s Severance Rush slots. The native Ultimate classification supplies normal Ultimate compatibility; this is not a Godly skill.
 
+Additional damage triggered by an engraving retains that engraving’s native damage type.
+
 ## Usage
 
 ### Heavenly Restriction
@@ -89,6 +91,8 @@ Your attacks lower **Resistance → none** and **Nullification → Resistance**,
 
 Gain **30% incoming damage reduction**, **100% projectile dodge**, and **50% dodge against other damage**. Works with Martial Supremacy off. Reduction follows native Strengthen Body rules: invulnerability-bypassing damage and barrier bypass level **2 or greater** ignore it. Explicit dodge bypass still overrides dodge.
 
+You are also **immune to Fear, Slowness and Burden**, including effects already present when this passive becomes equipped. Native **Haki effects and forced movement** cannot affect you. These immunities require the skill in the active preset and work with Martial Supremacy off.
+
 ### Severance Rush
 
 [Active - Press] — **Severance Rush**
@@ -101,10 +105,10 @@ Gain **30% incoming damage reduction**, **100% projectile dodge**, and **50% dod
 | Cooldown | **1 second** |
 | Movement | Instant teleport; **16-block aim reach** |
 | Path / arrival radius | **3 / 4 blocks** |
-| Base path damage | **1.5 × √A** |
-| Base arrival damage | **3 × √A** |
+| Base path damage | **1.5 × √A + W** |
+| Base arrival damage | **3 × √A + W** |
 
-**A** is aura actually spent. Targeting, ground/midair/water activation, enemy stopping, terrain clearance and independent path/arrival hits follow [Chained’s Severance Rush](Chained.md#severance-rush). With Martial Supremacy enabled and the default critical multiplier, player damage is base × **5 × 1.5**. The dash has no Battlewill classification or EP scaling.
+**A** is aura actually spent; **W** is the main-hand weapon contribution described in Chained’s dash. Targeting, ground/midair/water activation, enemy stopping, terrain clearance and independent path/arrival hits follow [Chained’s Severance Rush](Chained.md#severance-rush). With Martial Supremacy enabled and the default critical multiplier, player damage is base × **5 × 1.5**. The dash has no Battlewill classification or EP scaling.
 
 ### Counter
 
@@ -120,12 +124,14 @@ Gain **30% incoming damage reduction**, **100% projectile dodge**, and **50% dod
 | Movement speed during stance | **0** |
 | Slash range | Up to **64 blocks**, aimed toward the attacker |
 | Slash hit radius | **3 blocks** |
-| Base damage | **10 × D + 6 × √A** |
+| Base damage | **10 × D + 6 × √A + W** |
 | Early cancellation | Press again; free, including during cooldown |
+
+**W** is the main-hand weapon contribution **when Counter releases**, including item modifiers and enchantment damage. Successful hits run vanilla and native Tensura engraving callbacks. Wielding the [Inverted Spear of Heaven](Inverted-Spear-of-Heaven.md) applies its Nullification engraving.
 
 **D** is the first eligible enemy hit’s incoming damage before defenses; **A** is aura paid when entering the stance. That hit, including a direct spiritual attack, is completely negated before dodge, HP or SHP damage, the stance ends, and a massive instantaneous slash cuts toward the attacker through blocks. The slash extends at least 16 blocks and up to 4 blocks beyond the attacker, capped at 64 blocks. Enemies in its corridor receive one hit each; ordinary hurt cooldown does not erase that hit. Terrain stays intact.
 
-For a **20-damage** incoming hit with **10,000 current aura** on entry, A = 1,000 and base slash damage is approximately **389.74**. With Martial Supremacy enabled and a default 1.5× critical multiplier, this becomes about **2,923.02**, before defenses and other modifiers. The base includes at least **10× the negated hit** plus aura scaling; it has no extra EP multiplier.
+With an empty main hand, for a **20-damage** incoming hit with **10,000 current aura** on entry, A = 1,000 and base slash damage is approximately **389.74**. With Martial Supremacy enabled and a default 1.5× critical multiplier, this becomes about **2,923.02**, before defenses and other modifiers. The base includes at least **10× the negated hit** plus aura scaling; it has no extra EP multiplier.
 
 Environmental, self, allied and operator/void damage do not trigger Counter. Press again to cancel early, or let the three seconds expire; neither releases a slash or refunds entry cost. The cooldown remains. Death, logout, dimension changes, forgetting Unbound and native suppression end the stance and restore movement. The stance and its free cancellation state synchronize to the client.
 

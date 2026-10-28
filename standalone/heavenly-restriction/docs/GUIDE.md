@@ -82,12 +82,24 @@ Use while **on the ground, in midair or in water**. A **16-block eye-level aim r
 | Cooldown | 1 second |
 | Path radius | 3 blocks |
 | Arrival radius | 4 blocks |
-| Path damage | 1.5 × √A |
-| Arrival damage | 3 × √A |
+| Path damage | 1.5 × √A + W |
+| Arrival damage | 3 × √A + W |
 
 **A** is aura actually paid. At 100,000 current aura, A = 2,000: approximately **67.08 path + 134.16 arrival damage**, or **201.25 + 402.49** with Martial Supremacy enabled, before native defenses and damage handling. A victim in both areas receives both hits despite ordinary hurt cooldown. If no safe landing is available, or activation is airborne, on cooldown or without usable aura, no payment occurs. Successful casts start a 1-second cooldown.
 
 ![Standalone Severance Rush](media/standalone-dash.png)
+
+## Weapon-bearing arts and body immunities
+
+While Chained or Unbound is equipped in the active preset, Unerring Body prevents Fear, Slowness, Burden and native Haki effects/forced movement. Existing Fear/Slowness/Burden is cleansed on equip updates; these immunities work while the combat toggle is off.
+
+Each dash path/arrival hit and Counter adds main-hand weapon damage to its aura-based formula before normal Physical modifiers. Item attribute modifiers, enchantment damage, successful vanilla post-hit effects and Tensura engraving callbacks apply. Unarmed casts add zero weapon damage. Counter uses the weapon held when it releases.
+
+## Inverted Spear of Heaven
+
+`heavenlyrestriction:inverted_spear_of_heaven` has the Hihiirokane Sword’s default **80 attack damage**, **1.6 attack speed** and **3,600 durability**. It is a fire-resistant Rare weapon with **Nullification I**. Each **ominous vault** reward has an independent **2% chance** to add one spear, preserving normal rewards. Ordinary vaults do not grant it. It is also in the Combat creative tab.
+
+Its main-hand melee, dash and Counter hits shatter native physical, magical, multilayer and entity barriers, remove tagged/source-attributed skill status effects and prevent skill activation for **2 seconds / 40 ticks**. A new hit refreshes the visible debuff. It does not forget skills or clear unrelated potion effects; merely holding it does not empower unrelated spells.
 
 ## Unbound — Ultimate Skill
 
@@ -109,7 +121,7 @@ Training bonuses remain +9 Battlewill learning/mastery and +19 resistance learni
 
 Enter a defensive stance for **3 seconds**, with movement speed **0**. Entry costs **10% current aura** and starts a **10-second cooldown**. The first eligible enemy hit, including a direct spiritual attack, is completely negated before dodge/HP/SHP damage, then releases a massive instantaneous slash toward the attacker that ignores blocks without destroying them. It extends at least 16 blocks and up to 4 blocks beyond the attacker, capped at **64 blocks**, with a **3-block hit radius** and one hit per enemy.
 
-**Base damage = 10 × negated incoming damage + 6 × √(aura paid on entry)**. The incoming amount is measured before defenses. The slash receives Unbound’s Physical multiplier when toggled and its one native critical multiplier. At 10,000 current aura and a 20-damage hit, base damage is **389.74**, or **2,923.02** with the toggle and default critical multiplier, before defenses and other modifiers.
+**Base damage = 10 × negated incoming damage + 6 × √(aura paid on entry) + W**. The incoming amount is measured before defenses. The slash receives Unbound’s Physical multiplier when toggled and its one native critical multiplier. With an empty main hand (W = 0), at 10,000 current aura and a 20-damage hit, base damage is **389.74**, or **2,923.02** with the toggle and default critical multiplier, before defenses and other modifiers.
 
 Press again to cancel early for free, including during cooldown. Cancellation or timeout releases no slash and does not refund the entry cost; cooldown continues. Environmental/self/allied and operator/void damage do not trigger it. Death, logout, dimension changes, suppression and forgetting the skill clean up the stance. Client stance/cancellation state synchronizes.
 

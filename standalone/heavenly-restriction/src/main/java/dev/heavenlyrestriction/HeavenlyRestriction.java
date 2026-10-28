@@ -23,6 +23,7 @@ public final class HeavenlyRestriction {
         SKILLS.register(id("apex_renewal"),()->new AuraRegenerationSkill(2)),
         SKILLS.register(id("sovereign_rebirth"),()->new AuraRegenerationSkill(3)));
     public HeavenlyRestriction(net.neoforged.bus.api.IEventBus modBus,net.neoforged.fml.ModContainer container){
+        HeavenlyArsenal.register(modBus);
         container.registerConfig(net.neoforged.fml.config.ModConfig.Type.SERVER,ChainedReincarnationConfig.SPEC,"tensura-heavenly-restriction-reincarnation.toml");
         ArtVisualEntity.register();
         SkillEvents.UNLOCK_SKILL.register(ChainedState::unlock);

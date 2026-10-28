@@ -45,6 +45,7 @@ public final class WildHunt {
     }
     public static final RegistrySupplier<GodlySkill> GODLY = SKILLS.register(id("aion"), GodlySkill::new);
     public WildHunt(net.neoforged.bus.api.IEventBus modBus, net.neoforged.fml.ModContainer container) {
+        HeavenlyArsenal.register(modBus);
         container.registerConfig(net.neoforged.fml.config.ModConfig.Type.SERVER,ChainedReincarnationConfig.SPEC,"tensura-myths-reincarnation.toml");
         container.registerConfig(net.neoforged.fml.config.ModConfig.Type.SERVER,dev.wildhunt.myths.MythsConfig.SPEC,"tensura-myths-server.toml");
         dev.wildhunt.myths.FusionCatalog.init();

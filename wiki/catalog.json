@@ -701,6 +701,11 @@
     "tier": "Extra"
   },
   {
+    "slug": "Inverted-Spear-of-Heaven",
+    "title": "Inverted Spear of Heaven",
+    "category": "Equipment"
+  },
+  {
     "slug": "Janus",
     "title": "Janus, Lord of Crossroads",
     "category": "Skills",
@@ -728,6 +733,11 @@
     "title": "Moira, Lord of Finality",
     "category": "Skills",
     "tier": "Ultimate"
+  },
+  {
+    "slug": "Nullification",
+    "title": "Nullification",
+    "category": "Equipment"
   },
   {
     "slug": "Origin-Sovereign",
@@ -837,5 +847,10 @@
     "title": "Vritra, Lord of Cataclysm",
     "category": "Skills",
     "tier": "Ultimate"
+  },
+  {
+    "slug": "Weapons",
+    "title": "Weapons",
+    "category": "Equipment"
   }
 ]

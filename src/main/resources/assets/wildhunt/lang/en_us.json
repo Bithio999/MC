@@ -117,5 +117,13 @@
   "wildhunt.race.heavenbreaker": "Heavenbreaker",
   "wildhunt.skill.air_sovereignty": "Air Walk",
   "wildhunt.skill.mode.air_sovereignty.flight": "Air Walk",
-  "wildhunt.chained.blocked_skill": "Cannot acquire %s."
+  "wildhunt.chained.blocked_skill": "Cannot acquire %s.",
+  "item.wildhunt.inverted_spear_of_heaven": "Inverted Spear of Heaven",
+  "item.wildhunt.inverted_spear_of_heaven.desc": "Attacks made with this weapon shatter any form of barriers instantly, remove all skill status effects, and inflict a debuff that prevents the target from activating skills for 2 seconds.",
+  "enchantment.wildhunt.nullification": "Nullification",
+  "effect.wildhunt.nullification": "Nullification",
+  "item.wildhunt.inverted_spear_of_heaven.desc.1": "Attacks made with this weapon shatter any",
+  "item.wildhunt.inverted_spear_of_heaven.desc.2": "form of barriers instantly, remove all skill",
+  "item.wildhunt.inverted_spear_of_heaven.desc.3": "status effects, and inflict a debuff that",
+  "item.wildhunt.inverted_spear_of_heaven.desc.4": "prevents skill activation for 2 seconds."
 }

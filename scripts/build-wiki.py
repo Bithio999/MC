@@ -32,7 +32,7 @@ metadata = {item["slug"]: item for item in catalog}
 abilities = json.loads((WIKI / "abilities.json").read_text())
 # Ship only original addon art; the HTML never relies on the source tree.
 textures = ROOT / "src/main/resources/assets/wildhunt/textures"
-for directory in ("skill", "race", "battlewill", "entity/otherworlder"):
+for directory in ("skill", "race", "battlewill", "entity/otherworlder", "item", "mob_effect"):
     target = WIKI / "assets" / directory
     target.mkdir(parents=True, exist_ok=True)
     for source in sorted((textures / directory).rglob("*.png")):
@@ -108,7 +108,7 @@ def render(source, destination, home=False):
     infobox = ""
     category = metadata.get(slug, {}).get("category", "Reference")
     table = re.search(r"<table>.*?</table>", content, flags=re.S)
-    if table and any(kind + " data" in table[0] for kind in ("Skill", "Race", "NPC", "Boss")):
+    if table and any(kind + " data" in table[0] for kind in ("Skill", "Race", "NPC", "Boss", "Weapon", "Engraving")):
         data = table[0]
         category = metadata.get(slug, {}).get("category", category)
         content = content[:table.start()] + content[table.end():]
@@ -127,6 +127,11 @@ def render(source, destination, home=False):
                 portrait = f'<div class="infobox-portrait"><img src="../assets/race/{slug.lower().replace("-", "_")}.png" width="128" height="128" alt="{html.escape(title)} race icon"></div>'
         elif category == "Bosses":
             match = re.search(r'<p><img [^>]*src="../assets/race/[^>]+></p>', content)
+            if match:
+                portrait = '<div class="infobox-portrait">' + match[0] + '</div>'
+                content = content[:match.start()] + content[match.end():]
+        elif category == "Equipment":
+            match = re.search(r'<p><img [^>]*src="../assets/item/[^>]+></p>', content)
             if match:
                 portrait = '<div class="infobox-portrait">' + match[0] + '</div>'
                 content = content[:match.start()] + content[match.end():]
@@ -154,6 +159,8 @@ def render(source, destination, home=False):
         related_groups = [("Race directory", ["Races"]), ("Race systems", ["Duo-Races", "Convergent-Awakening"]), ("Human / Hunter", ["Evolution", "Awakened-Hunter", "Apex-Hunter", "Sovereign-Hunter"])]
     elif category == "Bosses":
         related_groups = [("Myth bosses", ["Bosses", "Ananke", "Eschaton"]), ("Boss lineage and arts", ["Origin-Sovereign", "Demiurge", "Eclipse-Seraph", "Moira", "Thoth"]), ("Combat reference", ["Abilities", "Damage-Types", "Commands"])]
+    elif category == "Equipment":
+        related_groups = [("Equipment", ["Weapons", "Inverted-Spear-of-Heaven", "Nullification"]), ("Weapon arts", ["Chained", "Unbound", "Damage-Types"])]
     elif category == "Otherworlders":
         related_groups = [("Otherworlders", ["Otherworlders", "Alma", "Gemma"]), ("Race", ["Awakened-Hunter"])]
     else:
@@ -168,7 +175,7 @@ def render(source, destination, home=False):
         ancestry = " · ".join(f'<a href="{link("Races", prefix)}#{family}-ancestry">{family.title()} ancestry</a>' for family in slug.removeprefix("Fusion-").split("-"))
         related += '<div class="navbox-row"><strong>Ancestries</strong><div>' + ancestry + '</div></div>'
     navbox = f'<nav class="related-box" aria-label="Related {category.lower()}"><strong>Tensura Myths · {category}</strong>{related}</nav>' if not home else ""
-    parent = "Skills" if category == "Skills" else "Races" if category in ("Races", "Convergent races") else "Otherworlders" if category == "Otherworlders" else "Bosses" if category == "Bosses" else "Mechanics"
+    parent = "Skills" if category == "Skills" else "Races" if category in ("Races", "Convergent races") else "Otherworlders" if category == "Otherworlders" else "Bosses" if category == "Bosses" else "Weapons" if category == "Equipment" else "Mechanics"
     crumb = f'<a href="{link(parent, prefix)}">{category}</a>'
     if category == "Convergent races":
         crumb = f'<a href="{link("Races", prefix)}">Races</a> / <a href="{link("Convergent-Awakening", prefix)}">Convergent races</a>'
@@ -187,12 +194,12 @@ def render(source, destination, home=False):
 <div class="global-bar"><span>TENSURA MYTHS</span><div><a href="https://tensura.wiki.gg/wiki/Tensura:_Reincarnated_Wiki">Base mod wiki</a><a href="https://github.com/Bithio999/MC">GitHub</a></div></div>
 <header class="masthead"><a class="brand" href="{prefix}index.html"><span class="brand-mark" aria-hidden="true">M</span><span>TENSURA MYTHS<small>Tensura: Reincarnated addon wiki</small></span></a>
 <div class="search"><label for="wiki-search">Search Tensura Myths Wiki</label><input id="wiki-search" type="search" placeholder="Search skills, races, characters…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="search-results" aria-expanded="false"><div id="search-results" role="listbox" aria-label="Search results" hidden></div><span id="search-status" class="sr-only" aria-live="polite"></span></div></header>
-<div class="layout"><button id="navigation-toggle" aria-controls="wiki-navigation" aria-expanded="false">☰ Wiki navigation</button><nav id="wiki-navigation" class="sidebar" aria-label="Wiki navigation">{nav}<div class="sidebar-version">Tensura Myths <strong>0.35.4</strong><br>Minecraft 1.21.1 · NeoForge<br><span>Offline reference edition</span></div></nav>
+<div class="layout"><button id="navigation-toggle" aria-controls="wiki-navigation" aria-expanded="false">☰ Wiki navigation</button><nav id="wiki-navigation" class="sidebar" aria-label="Wiki navigation">{nav}<div class="sidebar-version">Tensura Myths <strong>0.35.5</strong><br>Minecraft 1.21.1 · NeoForge<br><span>Offline reference edition</span></div></nav>
 <main id="article" class="{'main-page' if home else 'article-page'}"><div class="page-tabs"><span aria-current="page">{'Main Page' if home else 'Article'}</span><a href="{'README.md' if home else '../pages/' + source.name}">Read Markdown</a><a href="https://github.com/Bithio999/MC/blob/main/docs/CHANGELOG.md">Changelog</a></div>
 <div class="article-heading"><div class="breadcrumbs"><a href="{prefix}index.html">Tensura Myths Wiki</a>{' / ' + crumb if not home else ''}</div><h1>{html.escape(title)}</h1><p class="subtitle">From the unofficial Tensura Myths Wiki</p></div>
 <div class="article-content">{introduction}{infobox}{toc}{content}</div>{navbox}
 <div class="categories">Categories: <a href="{prefix}index.html">Tensura Myths</a> · {category_link}</div>
-<footer>Unofficial fan addon. Original documentation and portraits. Not affiliated with Capcom or ManasMods.<br>Tensura Myths 0.35.4 · Offline edition · No external services required.</footer></main></div></body></html>'''
+<footer>Unofficial fan addon. Original documentation and portraits. Not affiliated with Capcom or ManasMods.<br>Tensura Myths 0.35.5 · Offline edition · No external services required.</footer></main></div></body></html>'''
     destination.write_text(page)
 
 
@@ -209,7 +216,7 @@ search_entries = [item for item in catalog if item["slug"] != "Air-Sovereignty"]
 (SITE / "search-index.js").write_text("window.WIKI_PAGES = " + json.dumps(search_entries) + ";\n")
 subprocess.run([sys.executable, str(ROOT / "scripts/export-github-wiki.py")], check=True)
 # Fixed timestamps and sorted entries keep this documentation bundle reproducible.
-archive = ROOT / "releases/tensura-myths-wiki-0.35.4.zip"
+archive = ROOT / "releases/tensura-myths-wiki-0.35.5.zip"
 with zipfile.ZipFile(archive, "w", zipfile.ZIP_DEFLATED) as bundle:
     for path in sorted(WIKI.rglob("*")):
         if path.is_file():

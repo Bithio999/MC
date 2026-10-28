@@ -9,7 +9,7 @@ public final class RestrictionEvents {
     private RestrictionEvents(){}
     public static void tick(EntityTickEvent.Post event){
         if(!(event.getEntity() instanceof LivingEntity e) || e.level().isClientSide())return;
-        UnboundCounter.tick(e);if(e.tickCount%20==0)ChainedEvolution.discover(e);AuraRegenerationSkill.tick(e);
+        UnerringBody.tick(e);UnboundCounter.tick(e);if(e.tickCount%20==0)ChainedEvolution.discover(e);AuraRegenerationSkill.tick(e);
         if(e.tickCount%10==0 && ChainedState.owned(e))ChainedState.refresh(e);
         if(e instanceof ServerPlayer p){AirSovereigntyArt.tick(p);if(e.tickCount%20==0)RestrictedRace.migrateRecovery(p);}
     }
