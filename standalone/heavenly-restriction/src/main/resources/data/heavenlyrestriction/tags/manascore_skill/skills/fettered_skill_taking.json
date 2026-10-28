@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    "tensura:analyst",
+    "tensura:chosen_one",
+    "tensura:degenerate",
+    "tensura:gluttony",
+    "tensura:gourmet",
+    "tensura:great_sage",
+    "tensura:predator",
+    "tensura:seeker",
+    "tensura:spearhead",
+    "tensura:starved",
+    "tensura:unyielding",
+    "tensura:usurper"
+  ]
+}

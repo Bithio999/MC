@@ -35,12 +35,38 @@ public final class ChainedReincarnationGameTests {
         }finally{io.github.manasmods.tensura.ability.skill.extra.MultilayerBarrierSkill.CONFIG.magiculeCost=price;}
         h.succeed();
     }
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void targetSkillCopyingAndHarvestingAreExcludedWithPrideExempt(GameTestHelper h){
+        var p=fettered(h);var pool=ReincarnationMenu.getReincarnationSkills(ReincarnationMenu.getSkillPool(),h.getLevel(),true,p);
+        for(var skill:List.of(UniqueSkills.ANALYST.get(),UniqueSkills.GREAT_SAGE.get(),UniqueSkills.SEEKER.get(),UniqueSkills.SPEARHEAD.get()))h.assertTrue(ChainedReincarnation.takesTargetSkills(skill) && !pool.contains(skill),"Free skill-taking ability survived: "+skill.getRegistryName());
+        h.assertTrue(!ChainedReincarnation.takesTargetSkills(UniqueSkills.PRIDE.get()) && pool.contains(UniqueSkills.PRIDE.get()) && pool.contains(UniqueSkills.CREATOR.get()),"Pride exception or independent Creator was lost");h.succeed();
+    }
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void skillTakingRuleIsIndependentOfCostsAndSupportsExplicitOverrides(GameTestHelper h){
+        var p=fettered(h);boolean cost=ChainedReincarnationConfig.BLOCK_MAGICULE_COSTS.get(),taking=ChainedReincarnationConfig.BLOCK_SKILL_TAKING.get();var allowed=ChainedReincarnationConfig.ALLOWLIST.get();
+        try{
+            ChainedReincarnationConfig.BLOCK_MAGICULE_COSTS.set(false);h.assertTrue(ChainedReincarnation.blocked(UniqueSkills.USURPER.get(),p),"Disabling cost checks allowed a skill thief");
+            ChainedReincarnationConfig.ALLOWLIST.set(List.of("tensura:usurper"));h.assertTrue(!ChainedReincarnation.blocked(UniqueSkills.USURPER.get(),p),"Explicit operator exception ignored");
+            ChainedReincarnationConfig.ALLOWLIST.set(List.of());ChainedReincarnationConfig.BLOCK_SKILL_TAKING.set(false);h.assertTrue(!ChainedReincarnation.blocked(UniqueSkills.USURPER.get(),p),"Both automatic rules disabled but skill remained blocked");
+            ChainedReincarnationConfig.BLOCK_MAGICULE_COSTS.set(true);h.assertTrue(ChainedReincarnation.blocked(UniqueSkills.USURPER.get(),p),"Cost rule was disabled by the skill-taking switch");
+        }finally{ChainedReincarnationConfig.BLOCK_MAGICULE_COSTS.set(cost);ChainedReincarnationConfig.BLOCK_SKILL_TAKING.set(taking);ChainedReincarnationConfig.ALLOWLIST.set(allowed);}h.succeed();
+    }
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void nativeRollKeepsPrideWhileRejectingFreeTargetSkillSources(GameTestHelper h){
+        var p=player(h);var c=ReincarnationMenu.CONFIG.Skills;var primary=c.startingSkills;int number=c.skillNumber;var black=ChainedReincarnationConfig.BLACKLIST.get();
+        try{
+            c.startingSkills=List.of("tensura:analyst","tensura:great_sage","tensura:seeker","tensura:spearhead","tensura:pride");c.skillNumber=1;
+            ChainedReincarnationConfig.BLACKLIST.set(ReincarnationMenu.getSkillPool().stream().map(v->v.getRegistryName().toString()).filter(id->!c.startingSkills.contains(id)).toList());
+            ReincarnationMenu.setRace(p,WildHunt.RESTRICTED.getFirst().get(),true,true);h.assertTrue(SkillAPI.getSkillsFrom(p).getSkill(UniqueSkills.PRIDE.get()).isPresent(),"Native roll lost Pride exception");
+            for(var skill:List.of(UniqueSkills.ANALYST.get(),UniqueSkills.GREAT_SAGE.get(),UniqueSkills.SEEKER.get(),UniqueSkills.SPEARHEAD.get()))h.assertTrue(SkillAPI.getSkillsFrom(p).getSkill(skill).isEmpty(),"Native roll granted a target-skill source");
+        }finally{c.startingSkills=primary;c.skillNumber=number;ChainedReincarnationConfig.BLACKLIST.set(black);}h.succeed();
+    }
     private static ServerPlayer fettered(GameTestHelper h){var p=player(h);ReincarnationMenu.setRace(p,WildHunt.RESTRICTED.getFirst().get(),true,false);return p;}
     @GameTest(template="empty",timeoutTicks=100)
     public static void nativePoolsFilterEveryMagiculeModeWithoutChangingGlobalPoolsOrResources(GameTestHelper h){
         var p=fettered(h);var primary=ReincarnationMenu.getSkillPool();var secondary=ReincarnationMenu.getSecondSkillPool();var pool=ReincarnationMenu.getReincarnationSkills(primary,h.getLevel(),true,p);
         var bonus=ReincarnationMenu.getReincarnationSkills(secondary,h.getLevel(),true,p);double mp=EnergyHelper.getMaxMagicule(p),ap=TensuraStorages.getExistenceFrom(p).getAura();int owned=SkillAPI.getSkillsFrom(p).getLearnedSkills().size();
-        for(var skill:List.of(UniqueSkills.MARTIAL_MASTER.get(),UniqueSkills.ANALYST.get(),UniqueSkills.OBSERVER.get()))h.assertTrue(pool.contains(skill),"Aura/free skill incorrectly excluded: "+skill.getRegistryName());
+        for(var skill:List.of(UniqueSkills.MARTIAL_MASTER.get(),UniqueSkills.CREATOR.get(),UniqueSkills.OBSERVER.get()))h.assertTrue(pool.contains(skill),"Aura/free skill incorrectly excluded: "+skill.getRegistryName());
         for(var skill:List.of(UniqueSkills.HEALER.get(),UniqueSkills.MUSICIAN.get(),UniqueSkills.REVERSER.get(),UniqueSkills.UNYIELDING.get(),UniqueSkills.REAPER.get(),UniqueSkills.SNIPER.get()))h.assertTrue(!pool.contains(skill),"Magicule skill survived filtering: "+skill.getRegistryName());
         h.assertTrue(bonus.stream().noneMatch(s->ChainedReincarnation.hasMagiculeCost(s,p)),"Second pool bypassed filter");
         for(int n=0;n<3;n++)ChainedReincarnation.filter(primary,p);
@@ -98,11 +124,11 @@ public final class ChainedReincarnationGameTests {
     public static void actualNativeBirthAndBonusRollCannotGrantBlacklistedSkills(GameTestHelper h){
         var p=player(h);var c=ReincarnationMenu.CONFIG.Skills;var primary=c.startingSkills;var secondary=c.secondSkills;int number=c.skillNumber;double chance=c.additionalUniqueChance;var oldBlack=ChainedReincarnationConfig.BLACKLIST.get();
         try{
-            c.startingSkills=List.of("tensura:healer","tensura:martial_master","tensura:analyst");c.secondSkills=List.of("tensura:healer","tensura:observer");c.skillNumber=2;c.additionalUniqueChance=100;
-            ChainedReincarnationConfig.BLACKLIST.set(ReincarnationMenu.getSkillPool().stream().map(v->v.getRegistryName().toString()).filter(id->!List.of("tensura:healer","tensura:martial_master","tensura:analyst").contains(id)).toList());
+            c.startingSkills=List.of("tensura:healer","tensura:martial_master","tensura:creator");c.secondSkills=List.of("tensura:healer","tensura:observer");c.skillNumber=2;c.additionalUniqueChance=100;
+            ChainedReincarnationConfig.BLACKLIST.set(ReincarnationMenu.getSkillPool().stream().map(v->v.getRegistryName().toString()).filter(id->!List.of("tensura:healer","tensura:martial_master","tensura:creator").contains(id)).toList());
             ReincarnationMenu.setRace(p,WildHunt.RESTRICTED.getFirst().get(),true,true);
             var skills=SkillAPI.getSkillsFrom(p);h.assertTrue(skills.getSkill(UniqueSkills.HEALER.get()).isEmpty(),"Native birth rolled a blacklisted skill");h.assertTrue(skills.getSkill(UniqueSkills.OBSERVER.get()).isPresent(),"Second pool did not use its allowed candidate");
-            h.assertTrue(skills.getSkill(UniqueSkills.MARTIAL_MASTER.get()).isPresent() || skills.getSkill(UniqueSkills.ANALYST.get()).isPresent(),"Primary pool lost its valid roll");h.assertTrue(skills.getSkill(WildHunt.CHAINED.get()).isPresent(),"Guaranteed racial Chained was filtered");
+            h.assertTrue(skills.getSkill(UniqueSkills.MARTIAL_MASTER.get()).isPresent() || skills.getSkill(UniqueSkills.CREATOR.get()).isPresent(),"Primary pool lost its valid roll");h.assertTrue(skills.getSkill(WildHunt.CHAINED.get()).isPresent(),"Guaranteed racial Chained was filtered");
         }finally{c.startingSkills=primary;c.secondSkills=secondary;c.skillNumber=number;c.additionalUniqueChance=chance;ChainedReincarnationConfig.BLACKLIST.set(oldBlack);}
         h.succeed();
     }

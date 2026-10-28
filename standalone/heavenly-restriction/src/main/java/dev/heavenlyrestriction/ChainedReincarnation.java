@@ -6,12 +6,14 @@ import io.github.manasmods.tensura.ability.TensuraSkill;
 import io.github.manasmods.manascore.config.ConfigRegistry;
 import io.github.manasmods.tensura.config.ability.skill.UniqueSkillConfig;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.tags.TagKey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.*;
 
 /** Read-only cost inspection. Never casts, learns, toggles or removes a real skill. */
 public final class ChainedReincarnation {
+    public static final TagKey<ManasSkill> SKILL_TAKING=TagKey.create(SkillAPI.getSkillRegistryKey(),HeavenlyRestriction.id("fettered_skill_taking"));
     private static final Logger LOG=LoggerFactory.getLogger(ChainedReincarnation.class);
     private static final Set<ManasSkill> WARNED=Collections.newSetFromMap(new IdentityHashMap<>());
     private ChainedReincarnation(){}
@@ -25,8 +27,14 @@ public final class ChainedReincarnation {
     public static boolean blocked(ManasSkill skill,Player player){
         String id=skill.getRegistryName().toString();
         if(ChainedReincarnationConfig.BLACKLIST.get().contains(id))return true;
-        if(!ChainedReincarnationConfig.BLOCK_MAGICULE_COSTS.get() || ChainedReincarnationConfig.ALLOWLIST.get().contains(id))return false;
-        return hasMagiculeCost(skill,player);
+        if(ChainedReincarnationConfig.ALLOWLIST.get().contains(id))return false;
+        return ChainedReincarnationConfig.BLOCK_SKILL_TAKING.get() && takesTargetSkills(skill)
+            || ChainedReincarnationConfig.BLOCK_MAGICULE_COSTS.get() && hasMagiculeCost(skill,player);
+    }
+    public static boolean takesTargetSkills(ManasSkill skill){
+        var id=skill.getRegistryName();
+        // Pride's technique bank is an explicit design exception, including tag additions.
+        return id!=null && !id.toString().equals("tensura:pride") && SkillAPI.getSkillRegistry().delegate(id).is(SKILL_TAKING);
     }
     public static boolean hasMagiculeCost(ManasSkill skill,Player player){
         if(nativeInlineCost(skill))return true;

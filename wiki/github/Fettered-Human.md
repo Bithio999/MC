@@ -43,21 +43,26 @@ The intrinsic Unique [Chained](https://github.com/Bithio999/MC/wiki/Chained) sup
 
 ## Reincarnation skill pool
 
-When rolling as Fettered Human, a Unique is excluded if any of its own abilities costs **magicules**, including mastered modes and native passive/upkeep costs. Aura-only and free skills remain eligible. A skill’s acquisition price does not count as an ability cost.
+When rolling as Fettered Human, a Unique is excluded if any of its own abilities costs **magicules**, including mastered modes and native passive/upkeep costs. Skills that steal, copy or harvest target skills are also excluded, including projectile analysis. **Pride is exempt from this skill-taking rule.** Aura-only and free skills remain eligible if they do not take target skills. A skill’s acquisition price does not count as an ability cost.
 
-The default native pool leaves **20 eligible Uniques**, including Martial Master, Great Sage, Observer and Pride. Six Myths Uniques remain eligible. Scarlet Deluge and Frostbound Colossus are excluded because their multilayer barriers spend magicules when absorbing damage, despite aura-only activation. Both main and bonus pools use the restriction. Intrinsic Chained is guaranteed; already owned skills and their recorded inheritance remain. With `skillBeforeRace`, a roll completed before race selection remains an already owned skill.
+The default native pool leaves **16 eligible Uniques**, including Martial Master, Creator, Observer and Pride. Analyst, Great Sage, Seeker and Spearhead are excluded by the skill-taking rule. Six Myths Uniques remain eligible. Scarlet Deluge and Frostbound Colossus are excluded because their multilayer barriers spend magicules when absorbing damage, despite aura-only activation. Both main and bonus pools use the restriction. Intrinsic Chained is guaranteed; already owned skills and their recorded inheritance remain. With `skillBeforeRace`, a roll completed before race selection remains an already owned skill.
 
 Other races keep their normal pools. Server operators can configure the rule in `config/tensura-myths-reincarnation.toml`, or `config/tensura-heavenly-restriction-reincarnation.toml` for the standalone addon. A same-named file in the world’s `serverconfig/` folder can override the default.
 
 ```toml
 blockMagiculeCosts = true
+blockSkillTaking = true
 extraBlacklist = []
 allowlist = []
 ```
 
-`extraBlacklist` adds excluded skill registry IDs and takes priority. `allowlist` exempts registry IDs from automatic cost checks, while keeping native pool and Truly Unique requirements. Restart the server or reopen the world after editing. Third-party skills with hidden internal costs can be added to `extraBlacklist`.
+`extraBlacklist` adds excluded skill registry IDs and takes priority. `allowlist` exempts registry IDs from both automatic rules, while keeping native pool and Truly Unique requirements. Restart the server or reopen the world after editing. Third-party skills with hidden internal costs can be added to `extraBlacklist`.
 
-The default native eligible Uniques are Analyst, Berserker, Commander, Cook, Creator, Fighter, Gourmand, Great Sage, Martial Master, Mathematician, Observer, Pride, Reflector, Researcher, Royal Beast, Seeker, Seer, Spearhead, Survivor and Tuner.
+The default native eligible Uniques are Berserker, Commander, Cook, Creator, Fighter, Gourmand, Martial Master, Mathematician, Observer, Pride, Reflector, Researcher, Royal Beast, Seer, Survivor and Tuner.
+
+## Creator compatibility
+
+A permanent Creator recorded from reincarnation can generate temporary native skills under Chained or Unbound. The native creation menu retains its duration, cooldown, replacement and mastered renewal rules. Generated abilities still use their normal resource costs. The roll blacklist applies to reincarnation, not Creator’s generation list.
 
 ## Evolution
 

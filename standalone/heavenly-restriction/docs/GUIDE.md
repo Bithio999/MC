@@ -6,7 +6,7 @@
 
 Select **Fettered Human** (**Hard**) in Tensura's native reincarnation race menu. It grants **Chained** separately from the normal reincarnation Unique roll. Subsequent evolutions retain the same skill/mastery and never regrant a forgotten Chained.
 
-Random reincarnation Uniques are filtered for Fettered Human: if any of a skill’s own abilities consumes magicules, it cannot roll. Aura-only and free skills remain eligible; acquisition prices do not count. Existing skills remain. Both main and bonus rolls use this rule. See [blacklist configuration and native eligible skills](../../../docs/REINCARNATION-BLACKLIST.md).
+Random reincarnation Uniques are filtered for Fettered Human: if any of a skill’s own abilities consumes magicules, it cannot roll. Target-skill stealing, copying and harvesting are also excluded; Pride is exempt. Aura-only and free skills that do not take target skills remain eligible; acquisition prices do not count. Existing skills remain. Both main and bonus rolls use this rule. See [blacklist configuration and native eligible skills](../../../docs/REINCARNATION-BLACKLIST.md).
 
 Starting base aura rolls **1,500–2,000**, starting base magicules **50–100**, for **1,550–2,100 starting EP** before other reincarnation rewards. Chained excludes the saved starting aura from its multiplier.
 
@@ -21,6 +21,8 @@ Starting base aura rolls **1,500–2,000**, starting base magicules **50–100**
 EP means effective maximum aura plus effective maximum magicules, as displayed in Status, including Chained's bonus capacity. Spending current energy does not lower it. All requirements must be met; thresholds do not scale with the player's current EP. Each evolution replaces the previous stage's attribute bonuses. Each stage also adds +4 attack, +7.5% base movement and +0.15 knockback resistance compared with the preceding one. Appearance and equipment stay human-like.
 
 Native EP growth uses a **90% aura / 10% magicule** allocation before native gain modifiers, caps and Chained's restriction. The blocked magicule share is not redirected. Positive native `ep max add` commands also use this split. With Chained, `tensura edit stat @s ep max add 1000` adds 900 raw aura capacity, yielding **4,500 effective aura capacity**; the 100-magicule share is blocked. The optional `true` argument retains native refilling of current reserves. Ordinary native races keep their normal growth split.
+
+A reincarnated Creator can use its native menu to generate temporary skills under Chained or Unbound. Native timers, replacement, renewal and cooldowns remain; generated abilities retain their own resource costs. The roll blacklist does not filter Creator’s generation menu.
 
 ## Chained — Unique Skill
 

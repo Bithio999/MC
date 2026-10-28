@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.35.3 / standalone 1.1.3 — Skill-taking blacklist and Creator
+
+- Exclude target-skill stealing, copying and harvesting from Fettered Human reincarnation rolls. Add an extensible skill tag and independent `blockSkillTaking` setting. Pride remains exempt.
+- Analyst, Great Sage, Seeker and Spearhead leave the default eligible pool, leaving 16 native and six Myths Uniques.
+- Restore the inheritance scope across Creator’s native creation-menu packet for a permanent reincarnation Creator. Preserve native temporary generation, replacement, renewal and cooldowns; reject forged metadata and unrelated grants.
+
 ## 0.35.2 / standalone 1.1.2 — Fettered reincarnation blacklist
 
 - Filter Fettered Human’s main, bonus and locked-skill reincarnation candidates when an ability costs magicules. Inspect ordinary/mastered modes, native inline costs and Myths multilayer absorption costs; ignore acquisition prices and magicule gains.

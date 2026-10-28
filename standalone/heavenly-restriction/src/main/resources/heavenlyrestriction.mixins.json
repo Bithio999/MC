@@ -23,7 +23,8 @@
     "RestrictionEnergyMixin",
     "ChainedReserveMixin",
     "ChainedStatCommandMixin",
-    "UnboundCriticalMixin"
+    "UnboundCriticalMixin",
+    "ChainedCreatorMixin"
   ],
   "injectors": {
     "defaultRequire": 1
