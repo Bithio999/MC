@@ -17,6 +17,8 @@ import static dev.heavenlyrestriction.ChainedGameTests.near;
 @PrefixGameTestTemplate(false)
 public final class NeoOtherworldGameTests {
     @GameTest(template="empty",timeoutTicks=100)
+    public static void masterySharesOneThirtySecondIntervalAcrossEveryBuild(GameTestHelper h){SchemaGameTests.masterySharesOneThirtySecondIntervalAcrossEveryBuild(h);}
+    @GameTest(template="empty",timeoutTicks=100)
     public static void regenerativePartialBillsPreserveTheOriginalRecoveryUnits(GameTestHelper h){SchemaGameTests.regenerativePartialBillsPreserveTheOriginalRecoveryUnits(h);}
     @GameTest(template="empty",timeoutTicks=100)
     public static void regenerativeWeightsShareAllSlotsAndPersistTheNewEffect(GameTestHelper h){SchemaGameTests.regenerativeWeightsShareAllSlotsAndPersistTheNewEffect(h);}

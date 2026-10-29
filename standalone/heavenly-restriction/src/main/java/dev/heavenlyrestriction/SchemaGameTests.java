@@ -213,4 +213,14 @@ public final class SchemaGameTests {
         e.setAura(25);missing=EnergyHelper.isOutOfAuraConsuming(p,100);near(h,100-missing,25/1.05,"Partial aura recovery units");h.succeed();
     }
 
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void masterySharesOneThirtySecondIntervalAcrossEveryBuild(GameTestHelper h){
+        var p=player(h);var i=learnTree(p,new int[]{3,1,2,0,0,0},false);double gain=p.getAttributeValue(TensuraAttributes.ABILITY_MASTERY_GAIN);long now=p.level().getGameTime();
+        SchemaArt.train(p,1);near(h,i.getMastery(),gain,"First qualifying recovery did not train");
+        i.getOrCreateTag().putLong("SchemaLastTraining",now-599);SchemaArt.train(p,1);SchemaArt.trainHealing(p,1);SchemaArt.trainStrength(p);near(h,i.getMastery(),gain,"Training occurred before 30 seconds");
+        i.getOrCreateTag().putLong("SchemaLastTraining",now-600);SchemaArt.trainHealing(p,1);near(h,i.getMastery(),2*gain,"Training did not resume at 600 ticks");SchemaArt.trainStrength(p);SchemaArt.train(p,1);near(h,i.getMastery(),2*gain,"Different effects bypassed the shared interval");
+        SchemaArt.save(p,new int[]{2,3,1,0,0,0},1);i.onToggleOff(p);i.onToggleOn(p);SchemaArt.trainStrength(p);near(h,i.getMastery(),2*gain,"Editing/toggling reset the timer");
+        var restored=ManasSkillInstance.fromNBT(i.toNBT());h.assertTrue(restored.getOrCreateTag().getLong("SchemaLastTraining")==now,"Serialization lost the last training time");h.succeed();
+    }
+
 }

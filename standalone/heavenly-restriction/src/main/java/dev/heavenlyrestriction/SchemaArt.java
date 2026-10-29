@@ -21,6 +21,7 @@ import java.util.*;
 /** Persisted, ordered Battlewill builds. Positive attenuation never discounts a drawback. */
 public final class SchemaArt extends Battlewill {
     public static final int SLOTS=6,MITOCHONDRIAL=1,STRENGTH=2,REGENERATIVE=3;
+    public static final int TRAINING_INTERVAL_TICKS=600;
     private static final String TREE="SchemaTree",REVISION="SchemaRevision",TRAIN="SchemaLastTraining";
     private static final ResourceLocation REGEN=HeavenlyRestriction.id("schema_regeneration");
     private static final ResourceLocation ATTACK=HeavenlyRestriction.id("schema_strength");
@@ -36,7 +37,7 @@ public final class SchemaArt extends Battlewill {
     @Override public boolean canBeToggled(ManasSkillInstance i,LivingEntity e){return i.getMastery()>=0;}
     @Override public String getModeId(ManasSkillInstance i,int mode){return "schema.build";}
     @Override public Component getModeName(ManasSkillInstance i,int mode){return Component.literal("Build");}
-    @Override public MutableComponent getSkillDescription(){return Component.literal("Learn: 1000 points. Master: 2000 points. Toggle to activate your saved Schema Tree; press Build to organize up to six effects, including repeated effects. Positive slots after the full-strength slots have 50%, 25%, 12.5%... power. Every 400 mastery unlocks another full-strength slot, reaching all six at 2000. Mitochondrial Build: +500% aura regeneration and -5% all outgoing damage per stack. Strength Build: +5 base attack damage and +2% damage taken per stack. Regenerative Build: +20% HP and SHP healing received and +5% aura/magicule costs per stack. Drawbacks always apply at full strength. Train by actually recovering aura landing hits with Strength Build, or receiving healing with Regenerative Build active. No activation or upkeep cost.");}
+    @Override public MutableComponent getSkillDescription(){return Component.literal("Learn: 1000 points. Master: 2000 points. Toggle to activate your saved Schema Tree; press Build to organize up to six effects, including repeated effects. Positive slots after the full-strength slots have 50%, 25%, 12.5%... power. Every 400 mastery unlocks another full-strength slot, reaching all six at 2000. Mitochondrial Build: +500% aura regeneration and -5% all outgoing damage per stack. Strength Build: +5 base attack damage and +2% damage taken per stack. Regenerative Build: +20% HP and SHP healing received and +5% aura/magicule costs per stack. Drawbacks always apply at full strength. Train by actually recovering aura, landing hits with Strength Build, or receiving healing with Regenerative Build active. Mastery can increase at most once every 30 seconds, shared across all effects. No activation or upkeep cost.");}
     public static int fullSlots(double mastery){return 1+Math.min(5,(int)(Math.max(0,mastery)/400));}
     public static double weight(int order,double mastery){int full=fullSlots(mastery);return order<full?1:Math.scalb(1d,-(order-full+1));}
     public static int[] build(ManasSkillInstance i){
@@ -108,7 +109,7 @@ public final class SchemaArt extends Battlewill {
         if(recovered<=0 || owner.level().isClientSide())return;
         active(owner).filter(i->count(build(i))>0 && !i.isMastered(owner)).ifPresent(i->{
             long now=owner.level().getGameTime();var tag=i.getOrCreateTag();
-            if(!tag.contains(TRAIN) || now-tag.getLong(TRAIN)>=20){tag.putLong(TRAIN,now);i.addMasteryPoint(owner);i.markDirty();SkillAPI.getSkillsFrom(owner).checkAndMarkDirty(i);refresh(owner);}
+            if(!tag.contains(TRAIN) || now-tag.getLong(TRAIN)>=TRAINING_INTERVAL_TICKS){tag.putLong(TRAIN,now);i.addMasteryPoint(owner);i.markDirty();SkillAPI.getSkillsFrom(owner).checkAndMarkDirty(i);refresh(owner);}
         });
     }
     @Override public void onToggleOn(ManasSkillInstance i,LivingEntity e){i.setToggled(true);refresh(e);}

@@ -72,7 +72,7 @@ At zero mastery, the six positive-effect weights are **100%, 50%, 25%, 12.5%, 6.
 | 1,600–1,999 | 5 |
 | 2,000 | All 6 |
 
-Mastery is gained while an enabled, populated build actually restores aura, when you land a damaging hit with Strength Build active, or when you receive HP/SHP recovery with Regenerative Build active, at most once per second through the normal mastery-point system. Opening the menu, saving, toggling and sitting idle at full aura do not grant free mastery. Native aptitude and Chained/Unbound Battlewill training bonuses apply.
+Mastery is gained while an enabled, populated build actually restores aura, when you land a damaging hit with Strength Build active, or when you receive HP/SHP recovery with Regenerative Build active, at most once every **30 seconds (600 game ticks)** through the normal mastery-point system. Opening the menu, saving, toggling and sitting idle at full aura do not grant free mastery. The timer is shared across aura recovery, Strength hits and Regenerative healing. Editing the tree, toggling or saving/reloading does not reset it. Native aptitude and Chained/Unbound Battlewill bonuses still affect the amount gained per training tick.
 
 ## Schema Tree effects
 
@@ -120,7 +120,7 @@ Positive slot weights and mastery apply to the healing bonus. The cost drawback 
 | Six stacks, zero mastery | +39.375% | 1.39375× | 130% |
 | Six stacks, full mastery | +120% | 2.2× | 130% |
 
-Values above are before Chained/Unbound’s positive Battlewill buff bonus, which applies once. Native healing suppression still applies; Schema’s bonus does not create over-healing beyond HP/SHP limits. Disabling or forgetting Schema removes its healing and cost effects. Actual HP/SHP recovery trains mastery through the existing shared, once-per-second training limit.
+Values above are before Chained/Unbound’s positive Battlewill buff bonus, which applies once. Native healing suppression still applies; Schema’s bonus does not create over-healing beyond HP/SHP limits. Disabling or forgetting Schema removes its healing and cost effects. Actual HP/SHP recovery trains mastery through the existing shared, once-every-30-seconds training limit.
 
 For example, repeating **Regenerative → Mitochondrial → Strength** twice at zero mastery gives **+22.5% healing**, **+281.25% aura regeneration**, **+1.40625 base attack**, **−10% damage dealt**, **+4% damage taken** and **+10% resource costs**. At full mastery the benefits become **+40% healing**, **+1,000% aura regeneration** and **+10 attack**, with the same drawbacks.
 

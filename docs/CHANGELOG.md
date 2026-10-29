@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.35.11 / standalone 1.1.12 — Schema training interval
+
+- Change Schema mastery training from once per second to once every 30 seconds (600 game ticks). All recovery, Strength hits and Regenerative healing share the same persisted timer. Native mastery-point bonuses and saved progress are retained.
+- Update the in-game description and wiki, and verify the 599/600-tick boundary plus cross-effect, toggle/edit and serialization behavior.
+
 ## 0.35.10 / standalone 1.1.11 — Regenerative Build
 
 - Add Regenerative Build to Schema: +20% HP and SHP healing received, with +5% aura and magicule costs per stack. Positive bonuses share the existing six-slot/mastery weights; costs remain full strength.
