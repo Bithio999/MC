@@ -17,6 +17,24 @@ import static dev.heavenlyrestriction.ChainedGameTests.near;
 @PrefixGameTestTemplate(false)
 public final class NeoOtherworldGameTests {
     @GameTest(template="empty",timeoutTicks=100)
+    public static void regenerativePartialBillsPreserveTheOriginalRecoveryUnits(GameTestHelper h){SchemaGameTests.regenerativePartialBillsPreserveTheOriginalRecoveryUnits(h);}
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void regenerativeWeightsShareAllSlotsAndPersistTheNewEffect(GameTestHelper h){SchemaGameTests.regenerativeWeightsShareAllSlotsAndPersistTheNewEffect(h);}
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void regenerativeBoostsHealAndDirectHpRestoresOnceButHonorsCancellation(GameTestHelper h){SchemaGameTests.regenerativeBoostsHealAndDirectHpRestoresOnceButHonorsCancellation(h);}
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void regenerativeBoostsNativeSpiritualRegenAndDirectRestoresWithACap(GameTestHelper h){SchemaGameTests.regenerativeBoostsNativeSpiritualRegenAndDirectRestoresWithACap(h);}
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void regenerativeCostsAreAtomicAndTheConsumingOverloadsChargeOnce(GameTestHelper h){SchemaGameTests.regenerativeCostsAreAtomicAndTheConsumingOverloadsChargeOnce(h);}
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void regenerativeDoesNotTaxFreeActionsHostileDrainsOrCreativeCosts(GameTestHelper h){SchemaGameTests.regenerativeDoesNotTaxFreeActionsHostileDrainsOrCreativeCosts(h);}
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void chainedBoostsRegenerativeHealingButNeverItsResourcePenalty(GameTestHelper h){SchemaGameTests.chainedBoostsRegenerativeHealingButNeverItsResourcePenalty(h);}
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void regenerativeSurchargeAlsoAppliesToManualDashAndCounterPayments(GameTestHelper h){SchemaGameTests.regenerativeSurchargeAlsoAppliesToManualDashAndCounterPayments(h);}
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void actualHealingTrainsRegenerativeAndToggleForgetRemoveItsEffects(GameTestHelper h){SchemaGameTests.actualHealingTrainsRegenerativeAndToggleForgetRemoveItsEffects(h);}
+    @GameTest(template="empty",timeoutTicks=100)
     public static void mixedEffectsShareTheirOrderedWeightsAndPersistBothIds(GameTestHelper h){SchemaGameTests.mixedEffectsShareTheirOrderedWeightsAndPersistBothIds(h);}
     @GameTest(template="empty",timeoutTicks=100)
     public static void strengthAddsToWeaponBaseAndCleansOnlyItsOwnModifier(GameTestHelper h){SchemaGameTests.strengthAddsToWeaponBaseAndCleansOnlyItsOwnModifier(h);}

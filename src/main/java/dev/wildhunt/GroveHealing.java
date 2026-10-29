@@ -42,7 +42,7 @@ final class GroveHealing {
         if(price<=0 || !Double.isFinite(price))return;
         var energy=TensuraStorages.getExistenceFrom(caster);
         double before=Math.max(0,energy.getAura());
-        double reserved=caster.hasInfiniteMaterials()?price:Math.min(before,price);
+        double reserved=caster.hasInfiniteMaterials()?price:Math.min(before/SchemaArt.costFactor(caster),price);
         if(reserved<=0)return;
         double fraction=reserved/price;
         if(EnergyHelper.isOutOfEnergy(caster,reserved,0))return;
@@ -60,10 +60,10 @@ final class GroveHealing {
             var targetEnergy=TensuraStorages.getExistenceFrom(target);
             double initial=targetEnergy.getSpiritualHealth();
             double shp=Math.min(plan.shp()*fraction,Math.max(0,maxSHP(target)-initial));
-            if(shp>0){targetEnergy.setSpiritualHealth(initial+shp);targetEnergy.markDirty();used+=Math.max(0,targetEnergy.getSpiritualHealth()-initial)*shpRate;}
+            if(shp>0){targetEnergy.setSpiritualHealth(initial+shp);targetEnergy.markDirty();used+=Math.min(shp,Math.max(0,targetEnergy.getSpiritualHealth()-initial))*shpRate;}
         }
         // Refund only this reservation, preserving aura received/spent by other handlers.
-        double refund=Math.min(paid,Math.max(0,reserved-used));
+        double refund=Math.min(paid,Math.max(0,reserved-used)*(paid/reserved));
         if(refund>0){energy.setAura(Math.min(EnergyHelper.getMaxAura(caster),energy.getAura()+refund));energy.markDirty();}
     }
 }

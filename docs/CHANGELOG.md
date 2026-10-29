@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.35.10 / standalone 1.1.11 — Regenerative Build
+
+- Add Regenerative Build to Schema: +20% HP and SHP healing received, with +5% aura and magicule costs per stack. Positive bonuses share the existing six-slot/mastery weights; costs remain full strength.
+- Support native healing, direct HP/SHP restores and spiritual regeneration at their final writers, avoiding duplicate boosts and preserving healing cancellation and limits. Train only through actual recovery.
+- Apply the payment surcharge before native affordability checks, once per payment. Cover consuming overloads, Chained/Unbound manual payments, aura recovery budgets and Chained aura acquisition. Full Myths also adjusts Mana Crucible and Grove budgeting/refunds.
+- Add the third Build choice and healing/cost previews, preserve existing saved trees, and update the wiki, native integration tests and real-client fixture.
+
 ## 0.35.9 / standalone 1.1.10 — Schema Strength Build
 
 - Lower Mitochondrial Build’s outgoing-damage drawback from 10% to 5% per stack.

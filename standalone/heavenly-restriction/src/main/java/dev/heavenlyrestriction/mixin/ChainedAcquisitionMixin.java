@@ -20,7 +20,7 @@ public abstract class ChainedAcquisitionMixin {
     @WrapMethod(method="lambda$init$0",remap=false)
     private static EventResult restriction$auraAcquisition(ManasSkillInstance i,LivingEntity owner,Changeable<MutableComponent> message,Operation<EventResult> original){
         if(!(i.getSkill() instanceof ResistSkill skill) || !ChainedState.owned(owner) || i.getMastery()<0 || i.isTemporarySkill() || i.getTag()!=null && i.getTag().getBoolean("NoMagiculeCost"))return original.call(i,owner,message);
-        double cost=Math.max(0,skill.getAcquiringMagiculeCost(i)*owner.level().getGameRules().getInt(TensuraGameRules.MP_SKILL_COST)/100d);
+        double cost=dev.heavenlyrestriction.SchemaArt.cost(owner,Math.max(0,skill.getAcquiringMagiculeCost(i)*owner.level().getGameRules().getInt(TensuraGameRules.MP_SKILL_COST)/100d));
         var energy=TensuraStorages.getExistenceFrom(owner);
         if(!Double.isFinite(cost) || energy.getAura()<cost){if(owner instanceof net.minecraft.server.level.ServerPlayer)owner.sendSystemMessage(Component.literal("Chained requires "+cost+" aura to acquire "+skill.getName().getString()+"."));return EventResult.interruptFalse();}
         // Native reward handling skips its MP bill and clears this one-use flag itself.

@@ -71,7 +71,7 @@ public final class AuraRegenerationSkill extends Skill {
         var energy = TensuraStorages.getExistenceFrom(entity);
         double shp = tier == 3 ? Math.max(0, entity.getAttributeValue(TensuraAttributes.MAX_SPIRITUAL_HEALTH) - energy.getSpiritualHealth()) : 0;
         if (missing == 0 && shp == 0) return;
-        double budget = Math.max(0, energy.getAura());
+        double budget = Math.max(0, energy.getAura()) / SchemaArt.costFactor(entity);
         double hp = Math.min(missing, budget / hpCost); budget -= hp * hpCost;
         double spirit = Math.min(shp, budget / shpCost);
         double cost = hp * hpCost + spirit * shpCost;

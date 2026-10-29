@@ -41,10 +41,11 @@ final class ManaCrucible {
         if(now<=tag.getLong("crucible_last_tick"))return true;
         tag.putLong("crucible_last_tick",now);
         var energy=TensuraStorages.getExistenceFrom(e);double max=EnergyHelper.getMaxMagicule(e);
+        double unitCost=SchemaArt.cost(e,AURA_PER_MAGICULE);
         double transfer=Math.min(max*MAGICULE_FRACTION_PER_SECOND/20,
-            Math.min(energy.getAura()/AURA_PER_MAGICULE,max-energy.getMagicule()));
+            Math.min(energy.getAura()/unitCost,max-energy.getMagicule()));
         if(!(transfer>0)){stop(i,e);return false;}
-        energy.setAura(Math.max(0,energy.getAura()-transfer*AURA_PER_MAGICULE));
+        energy.setAura(Math.max(0,energy.getAura()-transfer*unitCost));
         energy.setMagicule(Math.min(max,energy.getMagicule()+transfer));energy.markDirty();
         int paid=tag.getInt("crucible_paid_ticks")+1;
         if(paid>=20){s.addMasteryPoint(i,e);paid=0;}

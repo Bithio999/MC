@@ -2,7 +2,7 @@
 
 [Main Page](https://github.com/Bithio999/MC/wiki/Home) · [Battlewills](https://github.com/Bithio999/MC/wiki/Battlewills) · [Chained](https://github.com/Bithio999/MC/wiki/Chained)
 
-**Schema** is a Battlewill inspired by the Schema system from *Infinite Mage*. Organize biological effects into a six-slot **Schema Tree**, then toggle the art to activate the saved build. Choose **Mitochondrial Build** for aura regeneration or **Strength Build** for base attack damage. Mix them to balance their benefits and drawbacks.
+**Schema** is a Battlewill inspired by the Schema system from *Infinite Mage*. Organize biological effects into a six-slot **Schema Tree**, then toggle the art to activate the saved build. Choose **Mitochondrial Build** for aura regeneration, **Strength Build** for base attack damage, or **Regenerative Build** for HP and SHP healing. Mix them to balance their benefits and drawbacks.
 
 ![Schema](https://github.com/Bithio999/MC/blob/main/wiki/assets/battlewill/schema.png?raw=true)
 
@@ -53,11 +53,11 @@ Toggle Schema with Tensura’s normal passive control. Both bonuses and drawback
 | Costs | None |
 | Save | Apply |
 
-Press **Build** to open the Schema Tree. Select a slot and use **Add Mito**, **Add Str.**, **Remove**, **Up**, **Down**, or **Clear** to organize the draft. **Apply** saves it on the server and updates an active passive immediately. **Close** discards unapplied edits. Builds persist with the learned skill.
+Press **Build** to open the Schema Tree. Select a slot and use **Add Mito**, **Add Str.**, **Add Regen**, **Remove**, **Up**, **Down**, or **Clear** to organize the draft. **Apply** saves it on the server and updates an active passive immediately. **Close** discards unapplied edits. Builds persist with the learned skill.
 
-The menu previews each effect’s positive effectiveness, aura regeneration, base attack damage, outgoing-damage reduction and incoming-damage increase. Empty slots do not bypass diminishing returns. Both effects share the same six-slot sequence: placing Strength first makes a following Mitochondrial effect receive the second slot’s weight.
+The menu previews each effect’s positive effectiveness, aura regeneration, base attack damage, healing received, outgoing/incoming damage and resource costs. Empty slots do not bypass diminishing returns. All three effects share the same six-slot sequence: placing Strength first makes a following Mitochondrial effect receive the second slot’s weight.
 
-![Initial mixed build](https://github.com/Bithio999/MC/blob/main/wiki/media/schema-strength-initial-build.png?raw=true)
+![Three-effect tree at zero mastery](https://github.com/Bithio999/MC/blob/main/wiki/media/schema-regenerative-initial-build.png?raw=true)
 
 ## Stacking and mastery
 
@@ -72,7 +72,7 @@ At zero mastery, the six positive-effect weights are **100%, 50%, 25%, 12.5%, 6.
 | 1,600–1,999 | 5 |
 | 2,000 | All 6 |
 
-Mastery is gained while an enabled, populated build actually restores aura, or when you land a damaging hit with Strength Build active, at most once per second through the normal mastery-point system. Opening the menu, saving, toggling and sitting idle at full aura do not grant free mastery. Native aptitude and Chained/Unbound Battlewill training bonuses apply.
+Mastery is gained while an enabled, populated build actually restores aura, when you land a damaging hit with Strength Build active, or when you receive HP/SHP recovery with Regenerative Build active, at most once per second through the normal mastery-point system. Opening the menu, saving, toggling and sitting idle at full aura do not grant free mastery. Native aptitude and Chained/Unbound Battlewill training bonuses apply.
 
 ## Schema Tree effects
 
@@ -106,7 +106,25 @@ The incoming-damage drawback adds **2 percentage points per stack**, unaffected 
 
 These are baseline values before Chained/Unbound’s positive-buff bonus. Each Strength stack occupies one of the six shared slots. At zero mastery, alternating Strength/Mitochondrial in slots 1–6 gives **+6.5625 base attack**, **+328.125% aura regeneration**, **−15% damage dealt** and **+6% damage taken**. At full mastery the same build gives **+15 base attack** and **+1,500% regeneration**, with the same drawbacks.
 
-![Mastered mixed build](https://github.com/Bithio999/MC/blob/main/wiki/media/schema-strength-mastered-build.png?raw=true)
+### Regenerative Build
+
+**+20% HP and SHP healing received; +5% aura and magicule costs per stack.**
+
+The positive bonus improves recovery on the Schema user, including natural regeneration, food and potions, healing skills, direct HP restores and SHP regeneration/restores. It applies once to the final recovery amount. Healing performed on another character uses that recipient’s own build. Aura and magicule regeneration are resource recovery; Mitochondrial Build continues to handle aura regeneration.
+
+Positive slot weights and mastery apply to the healing bonus. The cost drawback adds **5 percentage points per Regenerative stack**, without a mastery discount or Chained/Unbound drawback multiplier. It affects native ability payments, recurring payments and the addon’s manual aura payments, including dash, Counter and aura regeneration skills. Affordability is checked with the adjusted bill; free actions remain free. Native partial payments retain their correctly funded healing/shield fraction, including at empty reserves. Enemy drains and resource/stat edits are not ability costs. Full Myths also accounts for the surcharge in Mana Crucible’s conversion price and Grove’s healing reservations/refunds.
+
+| Build | Healing received bonus | Healing multiplier | Aura / magicule cost |
+| --- | --- | --- | --- |
+| One stack | +20% | 1.2× | 105% |
+| Six stacks, zero mastery | +39.375% | 1.39375× | 130% |
+| Six stacks, full mastery | +120% | 2.2× | 130% |
+
+Values above are before Chained/Unbound’s positive Battlewill buff bonus, which applies once. Native healing suppression still applies; Schema’s bonus does not create over-healing beyond HP/SHP limits. Disabling or forgetting Schema removes its healing and cost effects. Actual HP/SHP recovery trains mastery through the existing shared, once-per-second training limit.
+
+For example, repeating **Regenerative → Mitochondrial → Strength** twice at zero mastery gives **+22.5% healing**, **+281.25% aura regeneration**, **+1.40625 base attack**, **−10% damage dealt**, **+4% damage taken** and **+10% resource costs**. At full mastery the benefits become **+40% healing**, **+1,000% aura regeneration** and **+10 attack**, with the same drawbacks.
+
+![Mastered three-effect tree](https://github.com/Bithio999/MC/blob/main/wiki/media/schema-regenerative-mastered-build.png?raw=true)
 
 ## Related
 

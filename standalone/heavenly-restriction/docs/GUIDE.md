@@ -165,14 +165,15 @@ Example: `/heavenlyrestriction chained inherit PlayerName tensura:martial_master
 
 ## Schema
 
-Learn **Schema** in the Battlewill menu for **1,000 learning points**; maximum mastery is **2,000**. Press **Build** and choose **Add Mito** or **Add Str.** to organize up to six effects, including duplicates. Move selected entries with Up/Down, then Apply; closing discards drafts. Toggle Schema to activate the saved tree.
+Learn **Schema** in the Battlewill menu for **1,000 learning points**; maximum mastery is **2,000**. Press **Build** and choose **Add Mito**, **Add Str.** or **Add Regen** to organize up to six effects, including duplicates. Move selected entries with Up/Down, then Apply; closing discards drafts. Toggle Schema to activate the saved tree.
 
 - **Mitochondrial Build:** +500% aura regeneration, −5% all outgoing damage per stack.
 - **Strength Build:** +5 base attack damage, +2% damage taken per stack.
+- **Regenerative Build:** +20% HP/SHP healing received, +5% aura/magicule costs per stack.
 
 Positive bonuses follow the shared slot sequence: 100%, 50%, 25%, 12.5%, 6.25%, 3.125% initially. Every 400 mastery makes another slot full strength; all six reach 100% at 2,000. Each drawback always applies at its full value. Six mastered Strength stacks grant +30 base attack and +12% damage taken; six mastered Mitochondrial stacks grant +3,000% regeneration and −30% damage dealt, before other bonuses. Chained/Unbound boosts positive effects once, leaving drawbacks unchanged.
 
-The passive continues during rest and boosts Chained’s converted recovery without changing retained magicule recovery. Actual aura recovery or landed hits with Strength active train mastery at most once per second. Saved Mitochondrial builds remain valid after updating. [Full guide](../../../wiki/pages/Schema.md).
+The passive continues during rest and boosts Chained’s converted recovery without changing retained magicule recovery. Actual aura recovery, landed hits with Strength active, or HP/SHP healing with Regenerative active train mastery at most once per second. Native/direct HP and SHP recovery benefit once, while suppression and limits remain. Costs are checked before payment; dash, Counter, aura recovery and native recurring payments are included. Free actions and hostile drains are unchanged. Six mastered Regenerative stacks give +120% healing with +30% costs before Chained/Unbound’s positive boost. Existing saved builds remain valid after updating. [Full guide](../../../wiki/pages/Schema.md).
 
 ## Instant Transmission
 

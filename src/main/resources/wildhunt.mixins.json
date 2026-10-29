@@ -41,7 +41,10 @@
     "NullificationSpiritualFormMixin",
     "InstantTransmissionMasteryMixin",
     "InstantTransmissionSpatialMixin",
-    "SchemaRecoveryMixin"
+    "SchemaRecoveryMixin",
+    "SchemaCostMixin",
+    "SchemaHealthMixin",
+    "SchemaSpiritualHealingMixin"
   ],
   "injectors": {
     "defaultRequire": 1

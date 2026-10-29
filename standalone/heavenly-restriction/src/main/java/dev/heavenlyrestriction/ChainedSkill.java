@@ -50,8 +50,8 @@ public class ChainedSkill extends Skill {
         if(!(caster.level() instanceof ServerLevel level) || mode!=0 || i.onCoolDown(0) || !canInteractSkill(i,caster) || !canActivateSkill(i,caster,0))return;
         var destination=ChainedDash.destination(caster);if(destination.isEmpty())return;
         Vec3 start=caster.position(),end=destination.get();
-        var energy=TensuraStorages.getExistenceFrom(caster);double spent=getAuraCost(caster,i,0);if(!Double.isFinite(spent) || spent<=0 || energy.getAura()<spent)return;
-        energy.setAura(energy.getAura()-spent);energy.markDirty();i.setCoolDown(1,0);addMasteryPoint(i,caster);
+        var energy=TensuraStorages.getExistenceFrom(caster);double spent=getAuraCost(caster,i,0),cost=SchemaArt.cost(caster,spent);if(!Double.isFinite(cost) || spent<=0 || energy.getAura()<cost)return;
+        energy.setAura(energy.getAura()-cost);energy.markDirty();i.setCoolDown(1,0);addMasteryPoint(i,caster);
         Vec3 from=start.add(0,caster.getBbHeight()*.5,0),to=end.add(0,caster.getBbHeight()*.5,0),travel=to.subtract(from);double length=travel.lengthSqr();
         Nullification.sweep(caster,from,to,3);
         for(var target:level.getEntitiesOfClass(LivingEntity.class,new AABB(from,to).inflate(4),e->RestrictionData.canHarm(caster,e))){

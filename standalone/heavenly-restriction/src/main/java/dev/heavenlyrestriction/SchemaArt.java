@@ -20,10 +20,11 @@ import java.util.*;
 
 /** Persisted, ordered Battlewill builds. Positive attenuation never discounts a drawback. */
 public final class SchemaArt extends Battlewill {
-    public static final int SLOTS=6,MITOCHONDRIAL=1,STRENGTH=2;
+    public static final int SLOTS=6,MITOCHONDRIAL=1,STRENGTH=2,REGENERATIVE=3;
     private static final String TREE="SchemaTree",REVISION="SchemaRevision",TRAIN="SchemaLastTraining";
     private static final ResourceLocation REGEN=HeavenlyRestriction.id("schema_regeneration");
     private static final ResourceLocation ATTACK=HeavenlyRestriction.id("schema_strength");
+    private static final String HEALING_CACHE="heavenlyrestriction.schema_healing";
     @Override public MutableComponent getName(){return Component.literal("Schema");}
     @Override public MutableComponent getColoredName(){return getName().withStyle(ChatFormatting.RED);}
     @Override public ResourceLocation getSkillIcon(){return HeavenlyRestriction.id("textures/battlewill/schema.png");}
@@ -35,7 +36,7 @@ public final class SchemaArt extends Battlewill {
     @Override public boolean canBeToggled(ManasSkillInstance i,LivingEntity e){return i.getMastery()>=0;}
     @Override public String getModeId(ManasSkillInstance i,int mode){return "schema.build";}
     @Override public Component getModeName(ManasSkillInstance i,int mode){return Component.literal("Build");}
-    @Override public MutableComponent getSkillDescription(){return Component.literal("Learn: 1000 points. Master: 2000 points. Toggle to activate your saved Schema Tree; press Build to organize up to six effects, including repeated effects. Positive slots after the full-strength slots have 50%, 25%, 12.5%... power. Every 400 mastery unlocks another full-strength slot, reaching all six at 2000. Mitochondrial Build: +500% aura regeneration and -5% all outgoing damage per stack. Strength Build: +5 base attack damage and +2% damage taken per stack. Drawbacks always apply at full strength. Train by actually recovering aura or landing hits with Strength Build active. No activation or upkeep cost.");}
+    @Override public MutableComponent getSkillDescription(){return Component.literal("Learn: 1000 points. Master: 2000 points. Toggle to activate your saved Schema Tree; press Build to organize up to six effects, including repeated effects. Positive slots after the full-strength slots have 50%, 25%, 12.5%... power. Every 400 mastery unlocks another full-strength slot, reaching all six at 2000. Mitochondrial Build: +500% aura regeneration and -5% all outgoing damage per stack. Strength Build: +5 base attack damage and +2% damage taken per stack. Regenerative Build: +20% HP and SHP healing received and +5% aura/magicule costs per stack. Drawbacks always apply at full strength. Train by actually recovering aura landing hits with Strength Build, or receiving healing with Regenerative Build active. No activation or upkeep cost.");}
     public static int fullSlots(double mastery){return 1+Math.min(5,(int)(Math.max(0,mastery)/400));}
     public static double weight(int order,double mastery){int full=fullSlots(mastery);return order<full?1:Math.scalb(1d,-(order-full+1));}
     public static int[] build(ManasSkillInstance i){
@@ -43,13 +44,15 @@ public final class SchemaArt extends Battlewill {
         for(int value:raw)if(validEffect(value) && at<SLOTS)result[at++]=value;
         return result;
     }
-    private static boolean validEffect(int effect){return effect==MITOCHONDRIAL || effect==STRENGTH;}
+    private static boolean validEffect(int effect){return effect==MITOCHONDRIAL || effect==STRENGTH || effect==REGENERATIVE;}
     public static int count(int[] tree){int n=0;for(int v:tree)if(validEffect(v))n++;return n;}
     public static int count(int[] tree,int effect){int n=0;for(int v:tree)if(v==effect)n++;return n;}
     public static double positive(int[] tree,double mastery){return positive(tree,mastery,MITOCHONDRIAL);}
     public static double positive(int[] tree,double mastery,int effect){double sum=0;int order=0;for(int value:tree)if(validEffect(value)){double w=weight(order++,mastery);if(value==effect)sum+=w;}return sum;}
     public static double bonus(int[] tree,double mastery,double battlewillBoost){return 5*positive(tree,mastery)*battlewillBoost;}
     public static double strengthBonus(int[] tree,double mastery,double battlewillBoost){return 5*positive(tree,mastery,STRENGTH)*battlewillBoost;}
+    public static double healingBonus(int[] tree,double mastery,double battlewillBoost){return .2*positive(tree,mastery,REGENERATIVE)*battlewillBoost;}
+    public static double costPenalty(int[] tree){return .05*count(tree,REGENERATIVE);}
     public static double penalty(int[] tree){return .05*count(tree,MITOCHONDRIAL);}
     public static double vulnerability(int[] tree){return .02*count(tree,STRENGTH);}
     public static Optional<ManasSkillInstance> active(LivingEntity owner){
@@ -60,6 +63,16 @@ public final class SchemaArt extends Battlewill {
     public static double regenerationFactor(LivingEntity owner){return active(owner).map(i->1+bonus(build(i),i.getMastery(),battlewillBoost(owner))).orElse(1d);}
     public static double damageFactor(LivingEntity owner){return active(owner).map(i->1-penalty(build(i))).orElse(1d);}
     public static double damageTakenFactor(LivingEntity owner){return active(owner).map(i->1+vulnerability(build(i))).orElse(1d);}
+    public static double healingFactor(LivingEntity owner){return active(owner).map(i->1+healingBonus(build(i),i.getMastery(),battlewillBoost(owner))).orElse(1d);}
+    public static boolean healingActive(LivingEntity owner){return owner!=null && owner.getPersistentData().getBoolean(HEALING_CACHE);}
+    public static double costFactor(LivingEntity owner){return active(owner).map(i->1+costPenalty(build(i))).orElse(1d);}
+    public static double cost(LivingEntity owner,double amount){return amount>0?amount*costFactor(owner):amount;}
+    public static double heal(double before,double requested,double maximum,double factor){
+        if(requested<=before || factor<=1 || !Double.isFinite(requested) || !Double.isFinite(before))return requested;
+        // Preserve explicit native over-cap writes, but never let this bonus create over-healing.
+        return Math.max(requested,Math.min(Math.max(before,maximum),before+(requested-before)*factor));
+    }
+    public static void trainHealing(LivingEntity owner,double recovered){if(recovered>0)active(owner).filter(i->count(build(i),REGENERATIVE)>0).ifPresent(i->train(owner,recovered));}
     public static void trainStrength(LivingEntity owner){active(owner).filter(i->count(build(i),STRENGTH)>0).ifPresent(i->train(owner,1));}
     public static void discover(ServerPlayer p){
         if(SkillAPI.getSkillsFrom(p).getSkill(HeavenlyRestriction.SCHEMA.get()).isEmpty())SkillHelper.learnSkill(p,HeavenlyRestriction.SCHEMA.get().createLearningInstance(p));
@@ -78,6 +91,7 @@ public final class SchemaArt extends Battlewill {
     }
     public static void refresh(LivingEntity owner){
         if(owner.level().isClientSide())return;
+        owner.getPersistentData().putBoolean(HEALING_CACHE,active(owner).filter(i->count(build(i),REGENERATIVE)>0).isPresent());
         double strength=active(owner).map(i->strengthBonus(build(i),i.getMastery(),battlewillBoost(owner))).orElse(0d);
         // Apply the Battlewill boost exactly once, without feeding this derived modifier back to ChainedBuffs.
         try(var ignored=ChainedContext.ability(owner,null)){
@@ -99,7 +113,7 @@ public final class SchemaArt extends Battlewill {
     }
     @Override public void onToggleOn(ManasSkillInstance i,LivingEntity e){i.setToggled(true);refresh(e);}
     @Override public void onToggleOff(ManasSkillInstance i,LivingEntity e){i.setToggled(false);refresh(e);}
-    @Override public void onForgetSkill(ManasSkillInstance i,LivingEntity e){modifier(e.getAttribute(TensuraAttributes.AURA_REGENERATION_MULTIPLIER),REGEN,0,AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);modifier(e.getAttribute(Attributes.ATTACK_DAMAGE),ATTACK,0,AttributeModifier.Operation.ADD_VALUE);super.onForgetSkill(i,e);}
+    @Override public void onForgetSkill(ManasSkillInstance i,LivingEntity e){e.getPersistentData().remove(HEALING_CACHE);modifier(e.getAttribute(TensuraAttributes.AURA_REGENERATION_MULTIPLIER),REGEN,0,AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);modifier(e.getAttribute(Attributes.ATTACK_DAMAGE),ATTACK,0,AttributeModifier.Operation.ADD_VALUE);super.onForgetSkill(i,e);}
     @Override public void onPressed(ManasSkillInstance i,LivingEntity e,int slot,int mode){if(e instanceof ServerPlayer p && mode==0 && i.getMastery()>=0 && canActivateSkill(i,p,0))SchemaNetwork.send(p,true,"");}
     public static void register(){
         NeoForge.EVENT_BUS.addListener((EntityTickEvent.Post e)->{if(e.getEntity() instanceof LivingEntity owner && !owner.level().isClientSide()){refresh(owner);if(owner instanceof ServerPlayer p && p.tickCount%20==0)discover(p);}});

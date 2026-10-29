@@ -27,9 +27,9 @@ public final class UnboundCounter {
         if(!(e.level() instanceof ServerLevel level))return;
         if(active(e)){clear(e);return;}
         clear(e);if(i.getMastery()<0 || i.onCoolDown(1) || !i.canInteractSkill(e) || !i.canActivateSkill(e,1))return;
-        var energy=TensuraStorages.getExistenceFrom(e);double spent=energy.getAura()*.1;
-        if(!Double.isFinite(spent) || spent<=0 || energy.getAura()<spent)return;
-        energy.setAura(energy.getAura()-spent);energy.markDirty();i.setCoolDown(10,1);i.addMasteryPoint(e);SkillAPI.getSkillsFrom(e).checkAndMarkDirty(i);
+        var energy=TensuraStorages.getExistenceFrom(e);double spent=energy.getAura()*.1,cost=SchemaArt.cost(e,spent);
+        if(!Double.isFinite(cost) || spent<=0 || energy.getAura()<cost)return;
+        energy.setAura(energy.getAura()-cost);energy.markDirty();i.setCoolDown(10,1);i.addMasteryPoint(e);SkillAPI.getSkillsFrom(e).checkAndMarkDirty(i);
         var visual=ArtVisualEntity.spawn(level,ArtVisualEntity.UNBOUND_STANCE,e.position(),e.getLookAngle(),60);visual.setCaster(e);
         STANCES.put(e,new Stance(level,level.getGameTime()+60,spent,visual));
         i.getOrCreateTag().putLong("counter_active_until",level.getGameTime()+60);i.getOrCreateTag().putString("counter_dimension",level.dimension().location().toString());i.markDirty();SkillAPI.getSkillsFrom(e).checkAndMarkDirty(i);

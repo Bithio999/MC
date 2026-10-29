@@ -46,7 +46,7 @@ public final class SchemaGameTests {
     public static void serverValidatesBuildsAndPersistsThemThroughSkillSerialization(GameTestHelper h){
         var p=player(h);SchemaArt.discover(p);int[] one={1,0,0,0,0,0};h.assertTrue(!SchemaArt.save(p,one,0),"Unlearned entry configured a build");
         var i=SkillAPI.getSkillsFrom(p).getSkill(HeavenlyRestriction.SCHEMA.get()).orElseThrow();i.setMastery(0);
-        h.assertTrue(!SchemaArt.save(p,new int[7],0) && !SchemaArt.save(p,new int[]{3,0,0,0,0,0},0),"Invalid build accepted");
+        h.assertTrue(!SchemaArt.save(p,new int[7],0) && !SchemaArt.save(p,new int[]{4,0,0,0,0,0},0),"Invalid build accepted");
         h.assertTrue(SchemaArt.save(p,one,0) && !SchemaArt.save(p,new int[6],0),"Revision guard failed");one[0]=0;
         var restored=ManasSkillInstance.fromNBT(i.toNBT());h.assertTrue(SchemaArt.count(SchemaArt.build(restored))==1,"Build alias or serialization lost the saved effect");
         SkillAPI.getSkillsFrom(p).forgetSkill(i.getSkill());h.assertTrue(!SchemaArt.save(p,new int[6],1),"Forged missing-skill save accepted");h.succeed();
@@ -151,4 +151,66 @@ public final class SchemaGameTests {
             h.assertTrue(victim.hurt(p.damageSources().playerAttack(p),100),"Training hit rejected");near(h,i.getMastery(),increment,"Landed Strength hit did not train");SchemaArt.trainStrength(p);near(h,i.getMastery(),increment,"Same tick trained twice");h.succeed();
         });
     }
+
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void regenerativeWeightsShareAllSlotsAndPersistTheNewEffect(GameTestHelper h){
+        int[] six={3,3,3,3,3,3},mixed={3,1,2,3,1,2};near(h,SchemaArt.healingBonus(six,0,1),.39375,"Initial healing weights");near(h,SchemaArt.healingBonus(six,2000,1),1.2,"Mastered healing weights");near(h,SchemaArt.costPenalty(six),.3,"Cost drawback diminished");
+        near(h,SchemaArt.healingBonus(mixed,0,1),.225,"Mixed healing order");near(h,SchemaArt.bonus(mixed,0,1),2.8125,"Mixed Mito order");near(h,SchemaArt.strengthBonus(mixed,0,1),1.40625,"Mixed Strength order");near(h,SchemaArt.costPenalty(mixed),.1,"Mixed costs");
+        var p=player(h);var i=learnTree(p,mixed,true);h.assertTrue(Arrays.equals(SchemaArt.build(ManasSkillInstance.fromNBT(i.toNBT())),mixed),"Third effect lost on save");h.succeed();
+    }
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void regenerativeBoostsHealAndDirectHpRestoresOnceButHonorsCancellation(GameTestHelper h){
+        var p=player(h);p.getAttribute(Attributes.MAX_HEALTH).setBaseValue(200);p.setHealth(40);learnTree(p,new int[]{3,0,0,0,0,0},true);
+        p.heal(10);near(h,p.getHealth(),52,"heal() was not boosted exactly once");p.setHealth(62);near(h,p.getHealth(),64,"Direct HP restore not boosted");p.setHealth(40);near(h,p.getHealth(),40,"HP loss was altered");
+        java.util.function.Consumer<net.neoforged.neoforge.event.entity.living.LivingHealEvent> cancel=e->{if(e.getEntity()==p)e.setCanceled(true);};net.neoforged.neoforge.common.NeoForge.EVENT_BUS.addListener(cancel);
+        try{p.heal(10);near(h,p.getHealth(),40,"Canceled healing bypassed suppression");}finally{net.neoforged.neoforge.common.NeoForge.EVENT_BUS.unregister(cancel);}
+        p.setHealth(p.getMaxHealth());p.setHealth(p.getMaxHealth()-1);p.heal(10);near(h,p.getHealth(),p.getMaxHealth(),"Healing bonus exceeded max HP");h.succeed();
+    }
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void regenerativeBoostsNativeSpiritualRegenAndDirectRestoresWithACap(GameTestHelper h){
+        var p=player(h);p.getAttribute(TensuraAttributes.MAX_SPIRITUAL_HEALTH).setBaseValue(200);p.getAttribute(TensuraAttributes.SPIRITUAL_HEALTH_REGENERATION).setBaseValue(2);var e=TensuraStorages.getExistenceFrom(p);e.setSpiritualHealth(50);learnTree(p,new int[]{3,0,0,0,0,0},true);
+        e.setSpiritualHealth(60);near(h,e.getSpiritualHealth(),62,"Direct SHP restore");
+        try{var m=ExistenceStorage.class.getDeclaredMethod("handleSpiritualHealthRegen",net.minecraft.server.MinecraftServer.class,LivingEntity.class,IExistence.class);m.setAccessible(true);m.invoke(null,h.getLevel().getServer(),p,e);}catch(ReflectiveOperationException ex){throw new IllegalStateException(ex);}
+        near(h,e.getSpiritualHealth(),64.4,"Native SHP regeneration");e.setSpiritualHealth(40);near(h,e.getSpiritualHealth(),40,"SHP damage was altered");double max=p.getAttributeValue(TensuraAttributes.MAX_SPIRITUAL_HEALTH);e.setSpiritualHealth(max);e.setSpiritualHealth(max-1);e.setSpiritualHealth(max);near(h,e.getSpiritualHealth(),max,"SHP bonus exceeded native cap");h.succeed();
+    }
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void regenerativeCostsAreAtomicAndTheConsumingOverloadsChargeOnce(GameTestHelper h){
+        var p=player(h);learnTree(p,new int[]{3,0,0,0,0,0},true);var e=TensuraStorages.getExistenceFrom(p);e.setAura(1000);e.setMagicule(1000);
+        h.assertTrue(!EnergyHelper.isOutOfEnergy(p,50,80),"Funded native payment rejected");near(h,e.getAura(),947.5,"Aura charged incorrectly");near(h,e.getMagicule(),916,"Magicules charged incorrectly");
+        near(h,EnergyHelper.isOutOfAuraConsuming(p,100),0,"Funded aura consumer");near(h,e.getAura(),842.5,"Delegating aura overload double-taxed");near(h,EnergyHelper.isOutOfMagiculeConsuming(p,100,10),0,"Funded MP consumer");near(h,e.getMagicule(),811,"MP consumer surcharge");
+        e.setAura(100);e.setMagicule(1000);h.assertTrue(EnergyHelper.isOutOfEnergy(p,100,10),"Surcharge affordability skipped");near(h,e.getAura(),100,"Failed cast spent aura");near(h,e.getMagicule(),1000,"Failed cast spent magicules");
+        near(h,EnergyHelper.isOutOfAuraConsuming(p,100,10),15/1.05,"Partial-consumption shortfall");near(h,e.getAura(),10,"Consumer ignored reserved minimum");h.succeed();
+    }
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void regenerativeDoesNotTaxFreeActionsHostileDrainsOrCreativeCosts(GameTestHelper h){
+        var p=player(h);learnTree(p,new int[]{3,0,0,0,0,0},true);var e=TensuraStorages.getExistenceFrom(p);e.setAura(1000);e.setMagicule(1000);
+        h.assertTrue(!EnergyHelper.isOutOfEnergy(p,0,0),"Free action blocked");near(h,e.getAura(),1000,"Free action cost aura");
+        h.assertTrue(EnergyHelper.drainEnergy(p,p,100,false,EnergyHelper.DrainType.AURA,EnergyHelper.GainType.NONE),"Drain fixture failed");near(h,e.getAura(),900,"A hostile drain was treated as a cost");
+        e.setAura(910);e.setMagicule(1010);near(h,e.getAura(),910,"Resource gain altered");near(h,e.getMagicule(),1010,"Magicule gain altered");
+        p.setGameMode(net.minecraft.world.level.GameType.CREATIVE);h.assertTrue(!EnergyHelper.isOutOfEnergy(p,100,100),"Creative cost blocked");near(h,e.getAura(),910,"Creative paid aura");near(h,e.getMagicule(),1010,"Creative paid MP");h.succeed();
+    }
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void chainedBoostsRegenerativeHealingButNeverItsResourcePenalty(GameTestHelper h){
+        var p=player(h);ChainedGameTests.vow(p,true);p.getAttribute(Attributes.MAX_HEALTH).setBaseValue(200);p.setHealth(40);learnTree(p,new int[]{3,0,0,0,0,0},true);
+        near(h,SchemaArt.healingFactor(p),1.6,"Chained healing multiplier");near(h,SchemaArt.costFactor(p),1.05,"Chained magnified the drawback");p.heal(10);near(h,p.getHealth(),56,"Chained healing double-boosted");h.succeed();
+    }
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void regenerativeSurchargeAlsoAppliesToManualDashAndCounterPayments(GameTestHelper h){
+        var p=player(h);var dash=ChainedGameTests.vow(p,false);learnTree(p,new int[]{3,0,0,0,0,0},true);var energy=TensuraStorages.getExistenceFrom(p);energy.setAura(1000);p.setOnGround(false);p.setYRot(-90);p.setXRot(-15);HeavenlyRestriction.CHAINED.get().onPressed(dash,p,0,0);near(h,energy.getAura(),979,"Manual dash did not pay 2.1 percent");
+        var q=player(h);RestrictionData.learnReward(q,HeavenlyRestriction.UNBOUND.get());var counter=SkillAPI.getSkillsFrom(q).getSkill(HeavenlyRestriction.UNBOUND.get()).orElseThrow();counter.setMastery(counter.getMaxMastery());learnTree(q,new int[]{3,0,0,0,0,0},true);var qe=TensuraStorages.getExistenceFrom(q);qe.setAura(1000);UnboundCounter.press(counter,q);h.assertTrue(UnboundCounter.active(q),"Counter did not enter stance");near(h,qe.getAura(),895,"Manual counter did not pay 10.5 percent");UnboundCounter.press(counter,q);near(h,qe.getAura(),895,"Cancel charged twice");h.succeed();
+    }
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void actualHealingTrainsRegenerativeAndToggleForgetRemoveItsEffects(GameTestHelper h){
+        var p=player(h);p.getAttribute(Attributes.MAX_HEALTH).setBaseValue(200);p.setHealth(40);var i=learnTree(p,new int[]{3,0,0,0,0,0},false);double gain=p.getAttributeValue(TensuraAttributes.ABILITY_MASTERY_GAIN);
+        p.heal(10);near(h,i.getMastery(),gain,"Actual healing did not train");p.heal(10);near(h,i.getMastery(),gain,"Same-tick healing trained twice");i.onToggleOff(p);p.setHealth(40);p.heal(10);near(h,p.getHealth(),50,"Toggle left healing bonus");near(h,SchemaArt.costFactor(p),1,"Toggle left cost surcharge");
+        i.onToggleOn(p);SkillAPI.getSkillsFrom(p).forgetSkill(i.getSkill());p.setHealth(40);p.heal(10);near(h,p.getHealth(),50,"Forget left healing bonus");near(h,SchemaArt.costFactor(p),1,"Forget left cost surcharge");h.assertTrue(!SchemaArt.healingActive(p),"Forget left constructor fast-path flag");h.succeed();
+    }
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void regenerativePartialBillsPreserveTheOriginalRecoveryUnits(GameTestHelper h){
+        var p=player(h);learnTree(p,new int[]{3,0,0,0,0,0},true);var e=TensuraStorages.getExistenceFrom(p);
+        e.setMagicule(0);near(h,EnergyHelper.isOutOfMagiculeConsuming(p,100),100,"An empty reserve returned an excessive base-unit shortfall");near(h,e.getMagicule(),0,"Empty reserve went negative");
+        e.setMagicule(50);double missing=EnergyHelper.isOutOfMagiculeConsuming(p,100);near(h,100-missing,50/1.05,"Underfunded recovery did not match purchased base units");near(h,e.getMagicule(),0,"Partial MP payment did not exhaust only the available amount");
+        e.setAura(25);missing=EnergyHelper.isOutOfAuraConsuming(p,100);near(h,100-missing,25/1.05,"Partial aura recovery units");h.succeed();
+    }
+
 }
