@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "mysticism:constant_energy",
+      "required": false
+    },
+    {
+      "id": "mysticism:constant_energy_debuff",
+      "required": false
+    }
+  ]
+}

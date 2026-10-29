@@ -162,3 +162,11 @@ Operators can certify a known, already-owned reincarnation root:
 ```
 
 Example: `/heavenlyrestriction chained inherit PlayerName tensura:martial_master`. Permission level 2 is required. This records provenance; it does not grant the skill. The standalone addon uses its own saved history and does not import Myths world data.
+
+## Modpack compatibility
+
+Tensura Neo Otherworld **1.1.3a** uses Tensura **2.0.1.4**, ManasCore **4.0.0.2**, NeoForge **21.1.248** and GeckoLib **4.9.2**. Use standalone **1.1.6+**. Chained respects Mysticism’s Constant Energy and Constant Energy Debuff: its magicule-to-aura conversion pauses until the status ends.
+
+Fettered Human excludes **29 of the pack’s 39 addon starting skills** for magicule costs or target-skill copying. The audit includes payments hidden inside abilities, not just their cost getters. Other races retain their pools; Pride’s exception and Creator inheritance remain. The server’s blacklist/allowlist settings still apply. [All addon skill classifications and reasons](compatibility/FETTERED-SKILLS.md).
+
+[Compatibility report](compatibility/NEO-OTHERWORLD-1.1.3a.md).

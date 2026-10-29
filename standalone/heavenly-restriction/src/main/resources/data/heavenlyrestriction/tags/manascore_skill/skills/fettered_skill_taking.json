@@ -12,6 +12,26 @@
     "tensura:spearhead",
     "tensura:starved",
     "tensura:unyielding",
-    "tensura:usurper"
+    "tensura:usurper",
+    {
+      "id": "stextras:imitator",
+      "required": false
+    },
+    {
+      "id": "tno_tensura_extras:all_rounder",
+      "required": false
+    },
+    {
+      "id": "traddon:total_reflection",
+      "required": false
+    },
+    {
+      "id": "mysticism:hidden_ruler",
+      "required": false
+    },
+    {
+      "id": "tensuramoreskills:satella",
+      "required": false
+    }
   ]
 }

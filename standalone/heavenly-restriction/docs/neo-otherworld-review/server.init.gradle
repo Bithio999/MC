@@ -1,0 +1,10 @@
+gradle.projectsEvaluated {
+    rootProject.sourceSets.main.java.exclude('**/TestFixtures.java')
+    rootProject.sourceSets.main.java.srcDir(rootProject.file('docs/neo-otherworld-review'))
+    rootProject.sourceSets.main.resources.srcDir(rootProject.file('docs/neo-otherworld-review/resources'))
+    rootProject.tasks.named('jar').configure { archiveClassifier = 'neo-otherworld-review' }
+    if (rootProject.hasProperty('neoOtherworldDirectory')) {
+        rootProject.neoForge.runs.gameTestServer.gameDirectory = rootProject.file(rootProject.findProperty('neoOtherworldGameDirectory') ?: rootProject.property('neoOtherworldDirectory') + '/gametest')
+        rootProject.neoForge.runs.gameTestServer.systemProperty('neoforge.enabledGameTestNamespaces', 'heavenlyrestriction_compat')
+    }
+}

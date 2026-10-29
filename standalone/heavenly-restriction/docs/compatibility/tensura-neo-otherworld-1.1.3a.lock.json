@@ -1,0 +1,3666 @@
+{
+  "pack": {
+    "name": "Tensura Neo Otherworld",
+    "version": "Release-1.1.3a",
+    "projectId": 1478248,
+    "fileId": 9340459,
+    "url": "https://www.curseforge.com/minecraft/modpacks/tensura-neo-otherworld/files/9340459",
+    "downloadUrl": "https://edge.forgecdn.net/files/9340/459/Tensura%20Neo%20Otherworld-Release-1.1.3a.zip",
+    "sha256": "d9a3d9978636385f569529e0f4f14d032dc7b71cd193744ba04dc1c3d5dbb22e",
+    "minecraft": "1.21.1",
+    "neoforge": "21.1.248"
+  },
+  "mods": [
+    {
+      "slug": "appleskin",
+      "projectID": 248787,
+      "fileID": 7854442,
+      "url": "https://www.cursemaven.com/curse/maven/appleskin-248787/7854442/appleskin-248787-7854442.jar",
+      "sha256": "38b48dd6231341c9f964ce6e42c57ec866c6cc8f72bec938390a59bafb3922df",
+      "size": 75804,
+      "mods": [
+        {
+          "id": "appleskin",
+          "version": "${file.jarVersion}"
+        }
+      ]
+    },
+    {
+      "slug": "architectury-api",
+      "projectID": 419699,
+      "fileID": 5786327,
+      "url": "https://www.cursemaven.com/curse/maven/architectury-api-419699/5786327/architectury-api-419699-5786327.jar",
+      "sha256": "5ec578f814e8cca87aeffa6e424032e78d9ea5ea6b603dd834c2dc13c31141ee",
+      "size": 584004,
+      "mods": [
+        {
+          "id": "architectury",
+          "version": "13.0.8"
+        }
+      ]
+    },
+    {
+      "slug": "artifacts",
+      "projectID": 312353,
+      "fileID": 7113293,
+      "url": "https://www.cursemaven.com/curse/maven/artifacts-312353/7113293/artifacts-312353-7113293.jar",
+      "sha256": "b666075d627021c98f7c07fb55676d35ea594700e157a295179384c2a9ecb622",
+      "size": 1003578,
+      "mods": [
+        {
+          "id": "artifacts",
+          "version": "13.1.0"
+        }
+      ]
+    },
+    {
+      "slug": "attributefix",
+      "projectID": 280510,
+      "fileID": 7115922,
+      "url": "https://www.cursemaven.com/curse/maven/attributefix-280510/7115922/attributefix-280510-7115922.jar",
+      "sha256": "b2b20f3d44e824071284c14de3f4d3323d420e1c450040b339a5c37d2c382ad4",
+      "size": 19809,
+      "mods": [
+        {
+          "id": "attributefix",
+          "version": "21.1.3"
+        }
+      ]
+    },
+    {
+      "slug": "backported-spears",
+      "projectID": 1385191,
+      "fileID": 7725067,
+      "url": "https://www.cursemaven.com/curse/maven/backported-spears-1385191/7725067/backported-spears-1385191-7725067.jar",
+      "sha256": "7c4d77eab65359950c33d7d32189359277651fff30f11c5c3d7b638ec5e86df4",
+      "size": 421287,
+      "mods": [
+        {
+          "id": "spears",
+          "version": "1.8.0"
+        }
+      ]
+    },
+    {
+      "slug": "balm",
+      "projectID": 531761,
+      "fileID": 6841890,
+      "url": "https://www.cursemaven.com/curse/maven/balm-531761/6841890/balm-531761-6841890.jar",
+      "sha256": "9ee6b98b668c53b26936d32c0cee3aa78f81eca9dac8fb4cf5f509fb7d5f549d",
+      "size": 587445,
+      "mods": [
+        {
+          "id": "balm",
+          "version": "21.0.49"
+        }
+      ]
+    },
+    {
+      "slug": "better-advancements",
+      "projectID": 272515,
+      "fileID": 5850587,
+      "url": "https://www.cursemaven.com/curse/maven/better-advancements-272515/5850587/better-advancements-272515-5850587.jar",
+      "sha256": "60b548bef04a2f0e1da686ee9035c2e3d4ed0459a17d7a4836fc26af6de6b60e",
+      "size": 98641,
+      "mods": [
+        {
+          "id": "betteradvancements",
+          "version": "0.4.3.21"
+        }
+      ]
+    },
+    {
+      "slug": "betterf3",
+      "projectID": 401648,
+      "fileID": 5873258,
+      "url": "https://www.cursemaven.com/curse/maven/betterf3-401648/5873258/betterf3-401648-5873258.jar",
+      "sha256": "1a97b6ca5c81b3b18d653f403929908e3b48bb1bdb6e8bd8559f89cf0294dc26",
+      "size": 481646,
+      "mods": [
+        {
+          "id": "betterf3",
+          "version": "11.0.3"
+        }
+      ]
+    },
+    {
+      "slug": "beyond-adventures",
+      "projectID": 1490800,
+      "fileID": 8634809,
+      "url": "https://www.cursemaven.com/curse/maven/beyond-adventures-1490800/8634809/beyond-adventures-1490800-8634809.jar",
+      "sha256": "4d2b4e3277bd2fd2209422666e8b63a203bf093f9847c8fbd96d09f20469e39c",
+      "size": 21760200,
+      "mods": [
+        {
+          "id": "beyond_gacha_c",
+          "version": "1.0.0"
+        }
+      ]
+    },
+    {
+      "slug": "biomespy",
+      "projectID": 1376024,
+      "fileID": 7488072,
+      "url": "https://www.cursemaven.com/curse/maven/biomespy-1376024/7488072/biomespy-1376024-7488072.jar",
+      "sha256": "2207ccff37f0631ebfaf692cf5aed9304835298c34df31c39b8558fd8c568acb",
+      "size": 38566,
+      "mods": [
+        {
+          "id": "biomespy",
+          "version": "1.3.3"
+        }
+      ]
+    },
+    {
+      "slug": "bookshelf",
+      "projectID": 228525,
+      "fileID": 6717571,
+      "url": "https://www.cursemaven.com/curse/maven/bookshelf-228525/6717571/bookshelf-228525-6717571.jar",
+      "sha256": "933c016d71e19533dd2d0215717090f047251471fe2d11f61fdcec0b39bc28d8",
+      "size": 332655,
+      "mods": [
+        {
+          "id": "bookshelf",
+          "version": "21.1.67"
+        }
+      ]
+    },
+    {
+      "slug": "bosses-of-mass-destruction-forge",
+      "projectID": 941573,
+      "fileID": 8448640,
+      "url": "https://www.cursemaven.com/curse/maven/bosses-of-mass-destruction-forge-941573/8448640/bosses-of-mass-destruction-forge-941573-8448640.jar",
+      "sha256": "93da8753a00229e41c5ed399e6cf849737e7bd9b4109d5d8e4ad3a20136deb82",
+      "size": 1952017,
+      "mods": [
+        {
+          "id": "bosses_of_mass_destruction",
+          "version": "1.3.3"
+        }
+      ]
+    },
+    {
+      "slug": "bossesrise",
+      "projectID": 1314084,
+      "fileID": 8123167,
+      "url": "https://www.cursemaven.com/curse/maven/bossesrise-1314084/8123167/bossesrise-1314084-8123167.jar",
+      "sha256": "9e230bd509e7aeb3af4c08125db0340734c0179d83483649a16e45c0ea085e8c",
+      "size": 23943105,
+      "mods": [
+        {
+          "id": "block_factorys_bosses",
+          "version": "2.1.2"
+        }
+      ]
+    },
+    {
+      "slug": "bye-pregen",
+      "projectID": 1567378,
+      "fileID": 9127709,
+      "url": "https://www.cursemaven.com/curse/maven/bye-pregen-1567378/9127709/bye-pregen-1567378-9127709.jar",
+      "sha256": "0aba8d89a9abdf7d5e9f8ad3f300ea5e2b081401ddc9a28a4d0c57256853fe44",
+      "size": 908230,
+      "mods": [
+        {
+          "id": "byepregen",
+          "version": "1.1.3.2"
+        }
+      ]
+    },
+    {
+      "slug": "cerbons-api",
+      "projectID": 955605,
+      "fileID": 6483943,
+      "url": "https://www.cursemaven.com/curse/maven/cerbons-api-955605/6483943/cerbons-api-955605-6483943.jar",
+      "sha256": "5c750762b31ab79127df6f455351fe79793d8c2b41e1a0f94b335a5a1123534d",
+      "size": 250545,
+      "mods": [
+        {
+          "id": "cerbons_api",
+          "version": "1.3.0"
+        }
+      ]
+    },
+    {
+      "slug": "chat-heads",
+      "projectID": 407206,
+      "fileID": 6850151,
+      "url": "https://www.cursemaven.com/curse/maven/chat-heads-407206/6850151/chat-heads-407206-6850151.jar",
+      "sha256": "ba105f86d705e2833de5f7e39df92f6fb20f144f9d49973ab722afd4c8cdedd8",
+      "size": 83369,
+      "mods": [
+        {
+          "id": "chat_heads",
+          "version": "0.13.20"
+        }
+      ]
+    },
+    {
+      "slug": "chloride",
+      "projectID": 931925,
+      "fileID": 7378108,
+      "url": "https://www.cursemaven.com/curse/maven/chloride-931925/7378108/chloride-931925-7378108.jar",
+      "sha256": "572460f9f0030c276fcfd61fab8c0b3712a2e90e95aa0776575f6d980061b1f4",
+      "size": 946009,
+      "mods": [
+        {
+          "id": "chloride",
+          "version": "1.7.5"
+        }
+      ]
+    },
+    {
+      "slug": "choicetheorems-overhauled-village",
+      "projectID": 623908,
+      "fileID": 6543958,
+      "url": "https://www.cursemaven.com/curse/maven/choicetheorems-overhauled-village-623908/6543958/choicetheorems-overhauled-village-623908-6543958.jar",
+      "sha256": "fbc1163ee349905c42bc34c3b13bdfca1018784671ed054b511bcb016f20902a",
+      "size": 7011778,
+      "mods": [
+        {
+          "id": "ctov",
+          "version": "3.5.9a"
+        }
+      ]
+    },
+    {
+      "slug": "chrono-dawn",
+      "projectID": 1414198,
+      "fileID": 8167932,
+      "url": "https://www.cursemaven.com/curse/maven/chrono-dawn-1414198/8167932/chrono-dawn-1414198-8167932.jar",
+      "sha256": "c1c64a9419291d05886ea31eeb0131f438361a24695b70a7288cca95040c0995",
+      "size": 15884207,
+      "mods": [
+        {
+          "id": "chronodawn",
+          "version": "0.8.0"
+        }
+      ]
+    },
+    {
+      "slug": "chunk-activity-tracker",
+      "projectID": 1193454,
+      "fileID": 6164360,
+      "url": "https://www.cursemaven.com/curse/maven/chunk-activity-tracker-1193454/6164360/chunk-activity-tracker-1193454-6164360.jar",
+      "sha256": "4b0dc7252b626c80be0fb9e3e72ea3b461f33cdc66d6c08bad320a4ed4b864e3",
+      "size": 385815,
+      "mods": [
+        {
+          "id": "chunkactivitytracker",
+          "version": "1.0.1"
+        }
+      ]
+    },
+    {
+      "slug": "clean-swing-through-grass",
+      "projectID": 915308,
+      "fileID": 6153780,
+      "url": "https://www.cursemaven.com/curse/maven/clean-swing-through-grass-915308/6153780/clean-swing-through-grass-915308-6153780.jar",
+      "sha256": "b86e69372a3451a09c1b5d09d69f2e20485c6d2aa62fa8a538ef77509a5f5595",
+      "size": 8449,
+      "mods": [
+        {
+          "id": "cleanswing",
+          "version": "1.9"
+        }
+      ]
+    },
+    {
+      "slug": "cloth-config",
+      "projectID": 348521,
+      "fileID": 5729127,
+      "url": "https://www.cursemaven.com/curse/maven/cloth-config-348521/5729127/cloth-config-348521-5729127.jar",
+      "sha256": "65e722e0d98431a07c45f8bdd8d529a217cc8c175fde1740248bd5c1b4f3c0d4",
+      "size": 1163890,
+      "mods": [
+        {
+          "id": "cloth_config",
+          "version": "15.0.140"
+        }
+      ]
+    },
+    {
+      "slug": "clumps",
+      "projectID": 256717,
+      "fileID": 5623731,
+      "url": "https://www.cursemaven.com/curse/maven/clumps-256717/5623731/clumps-256717-5623731.jar",
+      "sha256": "b524ccdace2ef8fd19f5b2074f7de1103ac5065c52553f064c00e098346c293e",
+      "size": 18382,
+      "mods": [
+        {
+          "id": "clumps",
+          "version": "19.0.0.1"
+        }
+      ]
+    },
+    {
+      "slug": "collective",
+      "projectID": 342584,
+      "fileID": 6429221,
+      "url": "https://www.cursemaven.com/curse/maven/collective-342584/6429221/collective-342584-6429221.jar",
+      "sha256": "611e6a1cb42cfd69097041b46c2febccf027182c0d792559e5ba4cb353ae1318",
+      "size": 934732,
+      "mods": [
+        {
+          "id": "collective",
+          "version": "8.3"
+        }
+      ]
+    },
+    {
+      "slug": "configured",
+      "projectID": 457570,
+      "fileID": 7276577,
+      "url": "https://www.cursemaven.com/curse/maven/configured-457570/7276577/configured-457570-7276577.jar",
+      "sha256": "421ffd2604b5487cbdb284d1eb5d1cb8a7d28f3ff84d5b4bda25e0a579282a15",
+      "size": 428793,
+      "mods": [
+        {
+          "id": "configured",
+          "version": "2.6.3"
+        }
+      ]
+    },
+    {
+      "slug": "connector-extras",
+      "projectID": 913445,
+      "fileID": 5618470,
+      "url": "https://www.cursemaven.com/curse/maven/connector-extras-913445/5618470/connector-extras-913445-5618470.jar",
+      "sha256": "ee89c3425b9a4bff766aaff02ccf8110c06f5da6ef5d71974556885cf25d4880",
+      "size": 86284,
+      "mods": [
+        {
+          "id": "connectorextras",
+          "version": "${file.jarVersion}"
+        }
+      ]
+    },
+    {
+      "slug": "construction-wands-revived",
+      "projectID": 1395288,
+      "fileID": 8371885,
+      "url": "https://www.cursemaven.com/curse/maven/construction-wands-revived-1395288/8371885/construction-wands-revived-1395288-8371885.jar",
+      "sha256": "52a2c1c52bdf7cae34f9b9e6f98ec129c957840e1538ef2df5473de917a75890",
+      "size": 401291,
+      "mods": [
+        {
+          "id": "constructionwand",
+          "version": "4.2.2"
+        }
+      ]
+    },
+    {
+      "slug": "controlling",
+      "projectID": 250398,
+      "fileID": 6368976,
+      "url": "https://www.cursemaven.com/curse/maven/controlling-250398/6368976/controlling-250398-6368976.jar",
+      "sha256": "cc525fb6b030d9e4d33176983f278919e17b33935e2ca568929bdfa98f2b44a0",
+      "size": 77555,
+      "mods": [
+        {
+          "id": "controlling",
+          "version": "19.0.5"
+        }
+      ]
+    },
+    {
+      "slug": "coroutil",
+      "projectID": 237749,
+      "fileID": 5622966,
+      "url": "https://www.cursemaven.com/curse/maven/coroutil-237749/5622966/coroutil-237749-5622966.jar",
+      "sha256": "9b32bcf2c793d33b93b5d4739c0dc4b64231025c7dc5fe40732b66d7cf4b2826",
+      "size": 63981,
+      "mods": [
+        {
+          "id": "coroutil",
+          "version": "1.21.0-1.3.8"
+        }
+      ]
+    },
+    {
+      "slug": "cosmetic-armor-reworked",
+      "projectID": 237307,
+      "fileID": 5610814,
+      "url": "https://www.cursemaven.com/curse/maven/cosmetic-armor-reworked-237307/5610814/cosmetic-armor-reworked-237307-5610814.jar",
+      "sha256": "6328049755735159c55f5918ac301cff53a8d8790c3fe63e32e7d8a0e37f123f",
+      "size": 92722,
+      "mods": [
+        {
+          "id": "cosmeticarmorreworked",
+          "version": "1.21.1-v1-neoforge"
+        }
+      ]
+    },
+    {
+      "slug": "crafttweaker",
+      "projectID": 239197,
+      "fileID": 7772819,
+      "url": "https://www.cursemaven.com/curse/maven/crafttweaker-239197/7772819/crafttweaker-239197-7772819.jar",
+      "sha256": "4c4a95ca706e1aec41145b2db32737f2aebf1fdedefda0b35b651cad3fa4abaf",
+      "size": 3465718,
+      "mods": [
+        {
+          "id": "crafttweaker",
+          "version": "21.0.38"
+        }
+      ]
+    },
+    {
+      "slug": "creativecore",
+      "projectID": 257814,
+      "fileID": 6937374,
+      "url": "https://www.cursemaven.com/curse/maven/creativecore-257814/6937374/creativecore-257814-6937374.jar",
+      "sha256": "e03e11404885cee486b3f6d28ee391f58967f0a162ea122608ce2e44cbe86d69",
+      "size": 1198832,
+      "mods": [
+        {
+          "id": "creativecore",
+          "version": "2.13.11"
+        }
+      ]
+    },
+    {
+      "slug": "cristel-lib",
+      "projectID": 856996,
+      "fileID": 7593921,
+      "url": "https://www.cursemaven.com/curse/maven/cristel-lib-856996/7593921/cristel-lib-856996-7593921.jar",
+      "sha256": "f5ada4fe5a4a8ba9f8800a54f9ae6fe5a7a4d1156ada6567d11d45e3c3b02239",
+      "size": 539899,
+      "mods": [
+        {
+          "id": "cristellib",
+          "version": "3.0.3"
+        }
+      ]
+    },
+    {
+      "slug": "cult-of-azazel",
+      "projectID": 1571005,
+      "fileID": 8655331,
+      "url": "https://www.cursemaven.com/curse/maven/cult-of-azazel-1571005/8655331/cult-of-azazel-1571005-8655331.jar",
+      "sha256": "e633ff5fd6ecf5dd36eccfdddb8ded606fbb33ba3ea9e5730f11446b18aa351a",
+      "size": 10920502,
+      "mods": [
+        {
+          "id": "netherman",
+          "version": "1.1.4.12"
+        }
+      ]
+    },
+    {
+      "slug": "curioenchantment",
+      "projectID": 1218889,
+      "fileID": 7510166,
+      "url": "https://www.cursemaven.com/curse/maven/curioenchantment-1218889/7510166/curioenchantment-1218889-7510166.jar",
+      "sha256": "fef973b5d9aacbb1075033187d78f298e923248026a260a5d26ef2a5ad62e655",
+      "size": 59761,
+      "mods": [
+        {
+          "id": "curio_enchantment",
+          "version": "2101.1.3-fix-1"
+        }
+      ]
+    },
+    {
+      "slug": "curios",
+      "projectID": 309927,
+      "fileID": 6529130,
+      "url": "https://www.cursemaven.com/curse/maven/curios-309927/6529130/curios-309927-6529130.jar",
+      "sha256": "a45df2125c26219974aba7507ffc9afe7b83acc941a386af3faacb1cc0056fde",
+      "size": 410690,
+      "mods": [
+        {
+          "id": "curios",
+          "version": "9.5.1+1.21.1"
+        }
+      ]
+    },
+    {
+      "slug": "customskinloader",
+      "projectID": 286924,
+      "fileID": 7823407,
+      "url": "https://www.cursemaven.com/curse/maven/customskinloader-286924/7823407/customskinloader-286924-7823407.jar",
+      "sha256": "0008fb0a91dd1e84d52162cfe96addb5f6aed3b76d426ea7305d7624e31f1894",
+      "size": 191666,
+      "mods": [
+        {
+          "id": "customskinloader",
+          "version": "14.28"
+        }
+      ]
+    },
+    {
+      "slug": "data-anchor",
+      "projectID": 1203668,
+      "fileID": 6507634,
+      "url": "https://www.cursemaven.com/curse/maven/data-anchor-1203668/6507634/data-anchor-1203668-6507634.jar",
+      "sha256": "5bd081da56500bc7ca9726f3634dd0d8aaa76e731cc7e9bd92814e13f39e1b7c",
+      "size": 111616,
+      "mods": [
+        {
+          "id": "dataanchor",
+          "version": "2.0.0.12"
+        }
+      ]
+    },
+    {
+      "slug": "default-options",
+      "projectID": 232131,
+      "fileID": 6972485,
+      "url": "https://www.cursemaven.com/curse/maven/default-options-232131/6972485/default-options-232131-6972485.jar",
+      "sha256": "a42f0ff542725b5a56b82f5e8ad064ba778392e3f81e2b8b2c0a48f3712c2fc3",
+      "size": 95656,
+      "mods": [
+        {
+          "id": "defaultoptions",
+          "version": "21.1.5"
+        }
+      ]
+    },
+    {
+      "slug": "does-it-tick",
+      "projectID": 543308,
+      "fileID": 6353650,
+      "url": "https://www.cursemaven.com/curse/maven/does-it-tick-543308/6353650/does-it-tick-543308-6353650.jar",
+      "sha256": "414b3fb33c695d463f0ea138753457fc4d38cdd2d3788b457545bbda3dbf882b",
+      "size": 93269,
+      "mods": [
+        {
+          "id": "does_it_tick",
+          "version": "1.1.4"
+        }
+      ]
+    },
+    {
+      "slug": "drippy-early-loading-module",
+      "projectID": 1390924,
+      "fileID": 7256321,
+      "url": "https://www.cursemaven.com/curse/maven/drippy-early-loading-module-1390924/7256321/drippy-early-loading-module-1390924-7256321.jar",
+      "sha256": "c65d697b08de154ec391d78ed180b4f3caae4904bf630b97cde308badb797dad",
+      "size": 133974,
+      "mods": []
+    },
+    {
+      "slug": "drippy-loading-screen",
+      "projectID": 511770,
+      "fileID": 7248439,
+      "url": "https://www.cursemaven.com/curse/maven/drippy-loading-screen-511770/7248439/drippy-loading-screen-511770-7248439.jar",
+      "sha256": "0c489fe95e9de57e6ba6439e97bc8b0fb54f7de11d8df89a7829711ad379af01",
+      "size": 172759,
+      "mods": [
+        {
+          "id": "drippyloadingscreen",
+          "version": "3.1.0"
+        }
+      ]
+    },
+    {
+      "slug": "dynamic-fps",
+      "projectID": 335493,
+      "fileID": 7546938,
+      "url": "https://www.cursemaven.com/curse/maven/dynamic-fps-335493/7546938/dynamic-fps-335493-7546938.jar",
+      "sha256": "78cb67c9faeff5d1cb4da48d41e48ecc47baddaaec0f792e6edc8207aee0ab8e",
+      "size": 220193,
+      "mods": [
+        {
+          "id": "dynamic_fps",
+          "version": "3.11.4"
+        }
+      ]
+    },
+    {
+      "slug": "efficient-hashing",
+      "projectID": 1393802,
+      "fileID": 7271542,
+      "url": "https://www.cursemaven.com/curse/maven/efficient-hashing-1393802/7271542/efficient-hashing-1393802-7271542.jar",
+      "sha256": "76bb1bd93e211cffac01f2879e2e6b54bee2b5884bc06bedf0c21d89107af5ad",
+      "size": 23822,
+      "mods": [
+        {
+          "id": "efficient_hashing",
+          "version": "1.0.0"
+        }
+      ]
+    },
+    {
+      "slug": "eldergrove",
+      "projectID": 1605239,
+      "fileID": 8407869,
+      "url": "https://www.cursemaven.com/curse/maven/eldergrove-1605239/8407869/eldergrove-1605239-8407869.jar",
+      "sha256": "e9f17405f0820f94fca2df8f79cca2b77c208c0c4c95f587311ec9b67d9ef34f",
+      "size": 151448,
+      "mods": [
+        {
+          "id": "eldergrove",
+          "version": "0.1.0"
+        }
+      ]
+    },
+    {
+      "slug": "elemental-maces",
+      "projectID": 1046692,
+      "fileID": 5605495,
+      "url": "https://www.cursemaven.com/curse/maven/elemental-maces-1046692/5605495/elemental-maces-1046692-5605495.jar",
+      "sha256": "5f015c9a8ff26ec2db322d332f22248bbe15852bb86296cbd9c0957422bb6d6e",
+      "size": 39705,
+      "mods": [
+        {
+          "id": "elementalmaces",
+          "version": "1.0.0"
+        }
+      ]
+    },
+    {
+      "slug": "elysium-api",
+      "projectID": 1158628,
+      "fileID": 8707151,
+      "url": "https://www.cursemaven.com/curse/maven/elysium-api-1158628/8707151/elysium-api-1158628-8707151.jar",
+      "sha256": "5deb92540de983319693e8022ad9389052f31f60c81440bfca29bcc8000a6759",
+      "size": 307526,
+      "mods": [
+        {
+          "id": "elysium_api",
+          "version": "2.0.1"
+        }
+      ]
+    },
+    {
+      "slug": "emi",
+      "projectID": 580555,
+      "fileID": 8081408,
+      "url": "https://www.cursemaven.com/curse/maven/emi-580555/8081408/emi-580555-8081408.jar",
+      "sha256": "b68691f94f0727fc517cac2ab55bd6658d1179cc8cc715fe610b60c37469bc4c",
+      "size": 1111538,
+      "mods": [
+        {
+          "id": "emi",
+          "version": "1.1.24+1.21.1+neoforge"
+        }
+      ]
+    },
+    {
+      "slug": "emi-loot",
+      "projectID": 681783,
+      "fileID": 7417271,
+      "url": "https://www.cursemaven.com/curse/maven/emi-loot-681783/7417271/emi-loot-681783-7417271.jar",
+      "sha256": "a89805cdcb2e11734624d7239112643ee6b8f95e6b71b3a720530df6a5c18980",
+      "size": 465870,
+      "mods": [
+        {
+          "id": "emi_loot",
+          "version": "0.7.9+1.21+neoforge"
+        }
+      ]
+    },
+    {
+      "slug": "emi-ores",
+      "projectID": 974009,
+      "fileID": 8254306,
+      "url": "https://www.cursemaven.com/curse/maven/emi-ores-974009/8254306/emi-ores-974009-8254306.jar",
+      "sha256": "079e92666e61d0c15671f73f89191d6e5b71f4b70c6abbf97be273bd76a1ce52",
+      "size": 116663,
+      "mods": [
+        {
+          "id": "emi_ores",
+          "version": "1.3+1.21.1+neoforge"
+        }
+      ]
+    },
+    {
+      "slug": "enchantment-descriptions",
+      "projectID": 250419,
+      "fileID": 7039849,
+      "url": "https://www.cursemaven.com/curse/maven/enchantment-descriptions-250419/7039849/enchantment-descriptions-250419-7039849.jar",
+      "sha256": "74d546ecb147da7e2cb53fe3115f6e062094329dcf15639b3da694cc00d3f843",
+      "size": 81847,
+      "mods": [
+        {
+          "id": "enchdesc",
+          "version": "21.1.9"
+        }
+      ]
+    },
+    {
+      "slug": "entityculling",
+      "projectID": 448233,
+      "fileID": 8287097,
+      "url": "https://www.cursemaven.com/curse/maven/entityculling-448233/8287097/entityculling-448233-8287097.jar",
+      "sha256": "2eacd2bada39bf1d1ef695736646790c619c0e6cdeaf3d7e3cfc9139d26fae02",
+      "size": 1585287,
+      "mods": [
+        {
+          "id": "entityculling",
+          "version": "1.10.5"
+        }
+      ]
+    },
+    {
+      "slug": "eternal-nether",
+      "projectID": 1252482,
+      "fileID": 6751611,
+      "url": "https://www.cursemaven.com/curse/maven/eternal-nether-1252482/6751611/eternal-nether-1252482-6751611.jar",
+      "sha256": "9680efb45ec51250da820b8d525ab739fe0210458651ea87f13c3de9b2691a93",
+      "size": 7395290,
+      "mods": [
+        {
+          "id": "eternalnether",
+          "version": "21.1.3"
+        }
+      ]
+    },
+    {
+      "slug": "eternal-starlight",
+      "projectID": 1080592,
+      "fileID": 8109479,
+      "url": "https://www.cursemaven.com/curse/maven/eternal-starlight-1080592/8109479/eternal-starlight-1080592-8109479.jar",
+      "sha256": "acb8fa7a69c4f7d4f1dfa3fba1dbdc96976478ea80b2f9025e43f0c4ee1ceb19",
+      "size": 57350115,
+      "mods": [
+        {
+          "id": "eternal_starlight",
+          "version": "0.8.1+1.21.1+neoforge"
+        }
+      ]
+    },
+    {
+      "slug": "explorers-compass",
+      "projectID": 491794,
+      "fileID": 7892943,
+      "url": "https://www.cursemaven.com/curse/maven/explorers-compass-491794/7892943/explorers-compass-491794-7892943.jar",
+      "sha256": "71e7b47bd88c9c210d7c06fe5276736fc2e225e869778216537d584e6d1faf24",
+      "size": 174668,
+      "mods": [
+        {
+          "id": "explorerscompass",
+          "version": "1.21.1-3.4.0-neoforge"
+        }
+      ]
+    },
+    {
+      "slug": "explorify",
+      "projectID": 698309,
+      "fileID": 7092252,
+      "url": "https://www.cursemaven.com/curse/maven/explorify-698309/7092252/explorify-698309-7092252.jar",
+      "sha256": "dcc5340dc771c61358f53b9818594e9e588d9af81c0a1e906c373fb14d9be7a3",
+      "size": 951495,
+      "mods": [
+        {
+          "id": "explorify",
+          "version": "1.6.4"
+        }
+      ]
+    },
+    {
+      "slug": "fancy-hotbar",
+      "projectID": 1130667,
+      "fileID": 6464844,
+      "url": "https://www.cursemaven.com/curse/maven/fancy-hotbar-1130667/6464844/fancy-hotbar-1130667-6464844.jar",
+      "sha256": "986dba90159b23323096f9f6b6d6eb52574d8d5978f0ef2628626fe42992ea41",
+      "size": 10486,
+      "mods": []
+    },
+    {
+      "slug": "fancy-toasts",
+      "projectID": 1326436,
+      "fileID": 7042409,
+      "url": "https://www.cursemaven.com/curse/maven/fancy-toasts-1326436/7042409/fancy-toasts-1326436-7042409.jar",
+      "sha256": "02f4f9ce02c3ecd0838b535ba89863c4f7203ed92bce5a32c14a25172ef22d5f",
+      "size": 242462,
+      "mods": [
+        {
+          "id": "fancytoasts",
+          "version": "1.4.2"
+        }
+      ]
+    },
+    {
+      "slug": "fancymenu",
+      "projectID": 367706,
+      "fileID": 7256741,
+      "url": "https://www.cursemaven.com/curse/maven/fancymenu-367706/7256741/fancymenu-367706-7256741.jar",
+      "sha256": "d935c9862541a41083f0ab086684b0510a924c05f609f8935f7fab6fbe843613",
+      "size": 4297501,
+      "mods": [
+        {
+          "id": "fancymenu",
+          "version": "3.8.1"
+        }
+      ]
+    },
+    {
+      "slug": "fast-ip-ping",
+      "projectID": 904356,
+      "fileID": 6666674,
+      "url": "https://www.cursemaven.com/curse/maven/fast-ip-ping-904356/6666674/fast-ip-ping-904356-6666674.jar",
+      "sha256": "fd3697cad87530af12b115a89eee8b2dbdf8a5146df93a1e4cd527ffeb3d2344",
+      "size": 10332,
+      "mods": [
+        {
+          "id": "fastipping",
+          "version": "1.0.7"
+        }
+      ]
+    },
+    {
+      "slug": "faster-iris-shadow-mapper",
+      "projectID": 1571926,
+      "fileID": 8292781,
+      "url": "https://www.cursemaven.com/curse/maven/faster-iris-shadow-mapper-1571926/8292781/faster-iris-shadow-mapper-1571926-8292781.jar",
+      "sha256": "c06bf21919ecde60b8b4f001cae7bf4bd087c4384e6b217109d77dd5575b3491",
+      "size": 21832,
+      "mods": [
+        {
+          "id": "fism",
+          "version": "1.0.5"
+        }
+      ]
+    },
+    {
+      "slug": "fastsuite",
+      "projectID": 475117,
+      "fileID": 7527945,
+      "url": "https://www.cursemaven.com/curse/maven/fastsuite-475117/7527945/fastsuite-475117-7527945.jar",
+      "sha256": "3e274cd01bdc27dff8e2514213f1c45306c86fe38e4271a4209bc1471de6c70d",
+      "size": 28193,
+      "mods": [
+        {
+          "id": "fastsuite",
+          "version": "6.0.7"
+        }
+      ]
+    },
+    {
+      "slug": "fdlib",
+      "projectID": 1271749,
+      "fileID": 7653105,
+      "url": "https://www.cursemaven.com/curse/maven/fdlib-1271749/7653105/fdlib-1271749-7653105.jar",
+      "sha256": "76f24094117df1a8c090a60d4d0f234daceda9defb8c393425a330f52f9e0ce3",
+      "size": 973073,
+      "mods": [
+        {
+          "id": "fdlib",
+          "version": "1.0.8"
+        }
+      ]
+    },
+    {
+      "slug": "ferritecore",
+      "projectID": 429235,
+      "fileID": 7524151,
+      "url": "https://www.cursemaven.com/curse/maven/ferritecore-429235/7524151/ferritecore-429235-7524151.jar",
+      "sha256": "d87ea28262715ebff45b8a82d493e6b468e7a4521bc021df5d88302196d030a8",
+      "size": 121559,
+      "mods": [
+        {
+          "id": "ferritecore",
+          "version": "7.0.3"
+        }
+      ]
+    },
+    {
+      "slug": "flerovium",
+      "projectID": 1142875,
+      "fileID": 7359979,
+      "url": "https://www.cursemaven.com/curse/maven/flerovium-1142875/7359979/flerovium-1142875-7359979.jar",
+      "sha256": "9ac6766f3462917adefda1272677631c5e759aa153253e478c253ebd1e783463",
+      "size": 182098,
+      "mods": [
+        {
+          "id": "flerovium",
+          "version": "1.0.17"
+        }
+      ]
+    },
+    {
+      "slug": "forgified-fabric-api",
+      "projectID": 889079,
+      "fileID": 7658611,
+      "url": "https://www.cursemaven.com/curse/maven/forgified-fabric-api-889079/7658611/forgified-fabric-api-889079-7658611.jar",
+      "sha256": "19867adeb1b5c0e79510b7fd2d6213a59949c9277b96a1c76a04a22211ad6d15",
+      "size": 5569717,
+      "mods": [
+        {
+          "id": "fabric_api",
+          "version": "${file.jarVersion}"
+        },
+        {
+          "id": "forgified_fabric_api",
+          "version": "${file.jarVersion}"
+        }
+      ]
+    },
+    {
+      "slug": "foxablaze-ultimate",
+      "projectID": 1540951,
+      "fileID": 9332277,
+      "url": "https://www.cursemaven.com/curse/maven/foxablaze-ultimate-1540951/9332277/foxablaze-ultimate-1540951-9332277.jar",
+      "sha256": "90cab0f9274f804e2e6eafac15dd1521385d317a563a0583661e089d911e5472",
+      "size": 1496681,
+      "mods": [
+        {
+          "id": "foxablazeultimate",
+          "version": "1.0.6.6"
+        }
+      ]
+    },
+    {
+      "slug": "friendlist-p2p-play-backport",
+      "projectID": 1543175,
+      "fileID": 8109680,
+      "url": "https://www.cursemaven.com/curse/maven/friendlist-p2p-play-backport-1543175/8109680/friendlist-p2p-play-backport-1543175-8109680.jar",
+      "sha256": "4765f9c6679c62f5ac21e0e7e0448f65ed1385e1d92d2645021d5c7a0d70c33d",
+      "size": 39168043,
+      "mods": [
+        {
+          "id": "flistp2p",
+          "version": "1.1.0"
+        }
+      ]
+    },
+    {
+      "slug": "friends-and-foes-beekeeper-hut-forge",
+      "projectID": 711903,
+      "fileID": 6779819,
+      "url": "https://www.cursemaven.com/curse/maven/friends-and-foes-beekeeper-hut-forge-711903/6779819/friends-and-foes-beekeeper-hut-forge-711903-6779819.jar",
+      "sha256": "903816172afe7d2df40cc5eeda0fef01e55393290d0542498e453d889923cb22",
+      "size": 88056,
+      "mods": [
+        {
+          "id": "beekeeperhut",
+          "version": "3.0.1"
+        }
+      ]
+    },
+    {
+      "slug": "friends-and-foes-forge",
+      "projectID": 602059,
+      "fileID": 7743143,
+      "url": "https://www.cursemaven.com/curse/maven/friends-and-foes-forge-602059/7743143/friends-and-foes-forge-602059-7743143.jar",
+      "sha256": "9fce7512691302b4512b30bf33fd1d4fc5b4c91abe7cbbe8cbce9e38afd6bd14",
+      "size": 4988437,
+      "mods": [
+        {
+          "id": "friendsandfoes",
+          "version": "4.0.23"
+        }
+      ]
+    },
+    {
+      "slug": "ftb-chunks-forge",
+      "projectID": 314906,
+      "fileID": 8791113,
+      "url": "https://www.cursemaven.com/curse/maven/ftb-chunks-forge-314906/8791113/ftb-chunks-forge-314906-8791113.jar",
+      "sha256": "4ba1b3352184fa7f6e2aa4bca76edd074867697d62344dfa50dcccdb4dab5217",
+      "size": 655807,
+      "mods": [
+        {
+          "id": "ftbchunks",
+          "version": "2101.1.22"
+        }
+      ]
+    },
+    {
+      "slug": "ftb-filter-system",
+      "projectID": 943925,
+      "fileID": 7429011,
+      "url": "https://www.cursemaven.com/curse/maven/ftb-filter-system-943925/7429011/ftb-filter-system-943925-7429011.jar",
+      "sha256": "b8700e8bfd9c78b09bc7819cb28a6318b20d2bf68969bc6894a0bfa39581a99b",
+      "size": 211671,
+      "mods": [
+        {
+          "id": "ftbfiltersystem",
+          "version": "21.1.4"
+        }
+      ]
+    },
+    {
+      "slug": "ftb-library-forge",
+      "projectID": 404465,
+      "fileID": 9008089,
+      "url": "https://www.cursemaven.com/curse/maven/ftb-library-forge-404465/9008089/ftb-library-forge-404465-9008089.jar",
+      "sha256": "624c2d2d1cbadb946d967e17757bd5b2d129d4d3ed71f2da0c70607d04476ac2",
+      "size": 1439881,
+      "mods": [
+        {
+          "id": "ftblibrary",
+          "version": "2101.1.37"
+        }
+      ]
+    },
+    {
+      "slug": "ftb-quests-forge",
+      "projectID": 289412,
+      "fileID": 8885017,
+      "url": "https://www.cursemaven.com/curse/maven/ftb-quests-forge-289412/8885017/ftb-quests-forge-289412-8885017.jar",
+      "sha256": "6a39982c4b3afc00b1e788041a4f0d394e1659e3b3a6e5d078cd790bc36d0018",
+      "size": 1609984,
+      "mods": [
+        {
+          "id": "ftbquests",
+          "version": "2101.1.36"
+        }
+      ]
+    },
+    {
+      "slug": "ftb-teams-forge",
+      "projectID": 404468,
+      "fileID": 8724782,
+      "url": "https://www.cursemaven.com/curse/maven/ftb-teams-forge-404468/8724782/ftb-teams-forge-404468-8724782.jar",
+      "sha256": "e6bcd670493624e6906df872a9c6af4a33fe6405cac57a32c59cd4cd5838c655",
+      "size": 308236,
+      "mods": [
+        {
+          "id": "ftbteams",
+          "version": "2101.1.11"
+        }
+      ]
+    },
+    {
+      "slug": "ftb-ultimine-forge",
+      "projectID": 386134,
+      "fileID": 8231400,
+      "url": "https://www.cursemaven.com/curse/maven/ftb-ultimine-forge-386134/8231400/ftb-ultimine-forge-386134-8231400.jar",
+      "sha256": "1393a85ceb6e4794450d5f06043e3a033278e31b86de8e03950d8b87604b2213",
+      "size": 177109,
+      "mods": [
+        {
+          "id": "ftbultimine",
+          "version": "2101.1.15"
+        }
+      ]
+    },
+    {
+      "slug": "ftb-xmod-compat",
+      "projectID": 889915,
+      "fileID": 8909889,
+      "url": "https://www.cursemaven.com/curse/maven/ftb-xmod-compat-889915/8909889/ftb-xmod-compat-889915-8909889.jar",
+      "sha256": "f587e13131101bac33d4cc7a04d13d06c00f8f88a892be90d6ffc8ad96119ae8",
+      "size": 148575,
+      "mods": [
+        {
+          "id": "ftbxmodcompat",
+          "version": "21.1.12"
+        }
+      ]
+    },
+    {
+      "slug": "fzzy-config",
+      "projectID": 1005914,
+      "fileID": 6843496,
+      "url": "https://www.cursemaven.com/curse/maven/fzzy-config-1005914/6843496/fzzy-config-1005914-6843496.jar",
+      "sha256": "82bccb294529dba0fdb50faa3499fa98a584cda1abcae0bfde7589fc4fbe9941",
+      "size": 2261392,
+      "mods": [
+        {
+          "id": "fzzy_config",
+          "version": "0.7.2+1.21+neoforge"
+        }
+      ]
+    },
+    {
+      "slug": "gardens-of-the-dead",
+      "projectID": 683174,
+      "fileID": 7308575,
+      "url": "https://www.cursemaven.com/curse/maven/gardens-of-the-dead-683174/7308575/gardens-of-the-dead-683174-7308575.jar",
+      "sha256": "c01e40d219ac1ed9fd9f94a54766a6b4e0d0e38592f33f8d1d4dc4b8120b3c2b",
+      "size": 11891302,
+      "mods": [
+        {
+          "id": "gardens_of_the_dead",
+          "version": "5.0.2"
+        }
+      ]
+    },
+    {
+      "slug": "geckolib",
+      "projectID": 388172,
+      "fileID": 8350073,
+      "url": "https://www.cursemaven.com/curse/maven/geckolib-388172/8350073/geckolib-388172-8350073.jar",
+      "sha256": "5e548466af9ab6aca7a91a7c7d4dc0dc8bc385e22958aed5da0e7bebd0fa3fba",
+      "size": 630584,
+      "mods": [
+        {
+          "id": "geckolib",
+          "version": "4.9.2"
+        }
+      ]
+    },
+    {
+      "slug": "geophilic",
+      "projectID": 711216,
+      "fileID": 7450707,
+      "url": "https://www.cursemaven.com/curse/maven/geophilic-711216/7450707/geophilic-711216-7450707.jar",
+      "sha256": "6da4e3e8691d2a950685601af3a24269137496a5aa37ce423d070aa5f69f0da6",
+      "size": 751598,
+      "mods": [
+        {
+          "id": "geophilic",
+          "version": "3.4.6"
+        }
+      ]
+    },
+    {
+      "slug": "geophilic-backport-vanilla-backport-compact",
+      "projectID": 1326075,
+      "fileID": 7821219,
+      "url": "https://www.cursemaven.com/curse/maven/geophilic-backport-vanilla-backport-compact-1326075/7821219/geophilic-backport-vanilla-backport-compact-1326075-7821219.jar",
+      "sha256": "9a19917119cfb3501aa49ddfb9319b0e625cdaad1c8fc471f5ce7b43802015d8",
+      "size": 87564,
+      "mods": [
+        {
+          "id": "geophilic_backport",
+          "version": "1.3.2"
+        }
+      ]
+    },
+    {
+      "slug": "gnetum",
+      "projectID": 1220460,
+      "fileID": 8312039,
+      "url": "https://www.cursemaven.com/curse/maven/gnetum-1220460/8312039/gnetum-1220460-8312039.jar",
+      "sha256": "19471108f3c2d799831ee52bc9d04d99cf745f0c1699b992ee981508befb583b",
+      "size": 120726,
+      "mods": [
+        {
+          "id": "gnetum",
+          "version": "3.3.6"
+        }
+      ]
+    },
+    {
+      "slug": "handcrafted",
+      "projectID": 538214,
+      "fileID": 6330030,
+      "url": "https://www.cursemaven.com/curse/maven/handcrafted-538214/6330030/handcrafted-538214-6330030.jar",
+      "sha256": "6f2a776fb28ed07d370899814e5e711fbeebe31396097d78a3b550439b364948",
+      "size": 7132842,
+      "mods": [
+        {
+          "id": "handcrafted",
+          "version": "4.0.3"
+        }
+      ]
+    },
+    {
+      "slug": "hellish-trials",
+      "projectID": 1414295,
+      "fileID": 7445277,
+      "url": "https://www.cursemaven.com/curse/maven/hellish-trials-1414295/7445277/hellish-trials-1414295-7445277.jar",
+      "sha256": "7f28724652eedd275970455e37629758f7279bd3918a4f1d852676dcf392db63",
+      "size": 581988,
+      "mods": [
+        {
+          "id": "hellish_trials",
+          "version": "1.0.5"
+        }
+      ]
+    },
+    {
+      "slug": "hobbit-hill-village",
+      "projectID": 1280129,
+      "fileID": 7527381,
+      "url": "https://www.cursemaven.com/curse/maven/hobbit-hill-village-1280129/7527381/hobbit-hill-village-1280129-7527381.jar",
+      "sha256": "888d07e4f133414cbbbc30f7d5e1d5ceac76e6e159604ec98043a161cbc188ec",
+      "size": 3755525,
+      "mods": [
+        {
+          "id": "hobbit_hill_village",
+          "version": "0.0.3"
+        }
+      ]
+    },
+    {
+      "slug": "iceandfire-ce",
+      "projectID": 1040076,
+      "fileID": 9128508,
+      "url": "https://www.cursemaven.com/curse/maven/iceandfire-ce-1040076/9128508/iceandfire-ce-1040076-9128508.jar",
+      "sha256": "c1fa9878d4a0f81fe6b2db69184958f6a802f8bc7c1cd34fec2b0dc03222ec0b",
+      "size": 20938104,
+      "mods": [
+        {
+          "id": "iceandfire",
+          "version": "2.1.4"
+        }
+      ]
+    },
+    {
+      "slug": "iceberg",
+      "projectID": 520110,
+      "fileID": 6423863,
+      "url": "https://www.cursemaven.com/curse/maven/iceberg-520110/6423863/iceberg-520110-6423863.jar",
+      "sha256": "0d620c975619b04110b94a73d5b42d252563ff59c1eae9d21ab2ee7e38460a3c",
+      "size": 213853,
+      "mods": [
+        {
+          "id": "iceberg",
+          "version": "1.3.2"
+        }
+      ]
+    },
+    {
+      "slug": "illager-invasion",
+      "projectID": 891324,
+      "fileID": 6492670,
+      "url": "https://www.cursemaven.com/curse/maven/illager-invasion-891324/6492670/illager-invasion-891324-6492670.jar",
+      "sha256": "5adfdd0df0c5dbe81e4458da50442b58863f9db9f22abc182f81e487eef0e6db",
+      "size": 2361701,
+      "mods": [
+        {
+          "id": "illagerinvasion",
+          "version": "21.1.6"
+        }
+      ]
+    },
+    {
+      "slug": "immersive-ui",
+      "projectID": 1021685,
+      "fileID": 6886575,
+      "url": "https://www.cursemaven.com/curse/maven/immersive-ui-1021685/6886575/immersive-ui-1021685-6886575.jar",
+      "sha256": "6b914e305f27962a91d49a659b77eb65f47acee9d79930801b4fc1d3e474c8a4",
+      "size": 217081,
+      "mods": [
+        {
+          "id": "immersiveui",
+          "version": "0.3.3"
+        }
+      ]
+    },
+    {
+      "slug": "improved-pillager-outpost",
+      "projectID": 1093283,
+      "fileID": 6269462,
+      "url": "https://www.cursemaven.com/curse/maven/improved-pillager-outpost-1093283/6269462/improved-pillager-outpost-1093283-6269462.jar",
+      "sha256": "a7709c70ed694294d892938bbf2bf19290351bc2c7a0a28f9d83da157793679c",
+      "size": 619296,
+      "mods": [
+        {
+          "id": "ipo",
+          "version": "5"
+        }
+      ]
+    },
+    {
+      "slug": "in-control",
+      "projectID": 257356,
+      "fileID": 7436215,
+      "url": "https://www.cursemaven.com/curse/maven/in-control-257356/7436215/in-control-257356-7436215.jar",
+      "sha256": "f7ef3ac3c1e8faf8cf2764a63858e2658d81c2bb1174e625ce304318ac079add",
+      "size": 347280,
+      "mods": [
+        {
+          "id": "incontrol",
+          "version": "${file.jarVersion}"
+        }
+      ]
+    },
+    {
+      "slug": "inventory-hud-forge",
+      "projectID": 357540,
+      "fileID": 6369797,
+      "url": "https://www.cursemaven.com/curse/maven/inventory-hud-forge-357540/6369797/inventory-hud-forge-357540-6369797.jar",
+      "sha256": "1bbd368273b299857ccdb236d096169d289513f67e7561d4743375b55f5a584a",
+      "size": 236206,
+      "mods": [
+        {
+          "id": "inventoryhud",
+          "version": "3.4.28"
+        }
+      ]
+    },
+    {
+      "slug": "inventory-profiles-next",
+      "projectID": 495267,
+      "fileID": 6811490,
+      "url": "https://www.cursemaven.com/curse/maven/inventory-profiles-next-495267/6811490/inventory-profiles-next-495267-6811490.jar",
+      "sha256": "4c0b0222c9ee24f70ba91d7cae5e0d4734f2114bea723225f298cdbe5a832296",
+      "size": 1281488,
+      "mods": [
+        {
+          "id": "inventoryprofilesnext",
+          "version": "2.1.11"
+        }
+      ]
+    },
+    {
+      "slug": "irisshaders",
+      "projectID": 455508,
+      "fileID": 6661598,
+      "url": "https://www.cursemaven.com/curse/maven/irisshaders-455508/6661598/irisshaders-455508-6661598.jar",
+      "sha256": "3e3f94d2d5cdcb8145c4385d521974aa2d8669b2cc212351f70cf06488182e83",
+      "size": 2438548,
+      "mods": [
+        {
+          "id": "iris",
+          "version": "1.8.12-snapshot+mc1.21.1-local"
+        }
+      ]
+    },
+    {
+      "slug": "iron-chests",
+      "projectID": 228756,
+      "fileID": 5491156,
+      "url": "https://www.cursemaven.com/curse/maven/iron-chests-228756/5491156/iron-chests-228756-5491156.jar",
+      "sha256": "dae66a38a33c2adac6ca0b7a4fbf4b365ba37a6a1f7a10961028617965c1fcaf",
+      "size": 305975,
+      "mods": [
+        {
+          "id": "ironchest",
+          "version": "1.21-neoforge-16.0.7"
+        }
+      ]
+    },
+    {
+      "slug": "item-highlighter",
+      "projectID": 521590,
+      "fileID": 5591015,
+      "url": "https://www.cursemaven.com/curse/maven/item-highlighter-521590/5591015/item-highlighter-521590-5591015.jar",
+      "sha256": "cc9480a383a8f9bcf2c6c3bfc913aa7e3b1b9ad1062c5180c4d0d281000c9f8b",
+      "size": 30417,
+      "mods": [
+        {
+          "id": "highlighter",
+          "version": "1.1.11"
+        }
+      ]
+    },
+    {
+      "slug": "itemphysic-lite",
+      "projectID": 270441,
+      "fileID": 6374702,
+      "url": "https://www.cursemaven.com/curse/maven/itemphysic-lite-270441/6374702/itemphysic-lite-270441-6374702.jar",
+      "sha256": "ebdd972435064b47b99033860d270f30848012d32fb21ca357c1fa40aeb80dc9",
+      "size": 18454,
+      "mods": [
+        {
+          "id": "itemphysiclite",
+          "version": "1.6.8"
+        }
+      ]
+    },
+    {
+      "slug": "jade",
+      "projectID": 324717,
+      "fileID": 7545219,
+      "url": "https://www.cursemaven.com/curse/maven/jade-324717/7545219/jade-324717-7545219.jar",
+      "sha256": "067bb4b007e1d6f6b79f0afe99c91252aa825472b99a76d33a60d24442f9e92d",
+      "size": 725742,
+      "mods": [
+        {
+          "id": "jade",
+          "version": "${file.jarVersion}"
+        }
+      ]
+    },
+    {
+      "slug": "jadens-nether-expansion",
+      "projectID": 1111833,
+      "fileID": 8707156,
+      "url": "https://www.cursemaven.com/curse/maven/jadens-nether-expansion-1111833/8707156/jadens-nether-expansion-1111833-8707156.jar",
+      "sha256": "3077fde34f60edd4fe181c88d58fc8c5a89017de670018f9e5da5c774edbf26e",
+      "size": 21052417,
+      "mods": [
+        {
+          "id": "netherexp",
+          "version": "2.4.1"
+        }
+      ]
+    },
+    {
+      "slug": "jei",
+      "projectID": 238222,
+      "fileID": 9173201,
+      "url": "https://www.cursemaven.com/curse/maven/jei-238222/9173201/jei-238222-9173201.jar",
+      "sha256": "a3bff17187be70220c6d6c6f5d7f3571fcf4b9c0fe550708c8c8c0bab324e934",
+      "size": 2375741,
+      "mods": [
+        {
+          "id": "jei",
+          "version": "19.64.0.454"
+        }
+      ]
+    },
+    {
+      "slug": "jupiter",
+      "projectID": 1072905,
+      "fileID": 7738312,
+      "url": "https://www.cursemaven.com/curse/maven/jupiter-1072905/7738312/jupiter-1072905-7738312.jar",
+      "sha256": "95af332af250f97fe2d9d288fe6b2057c266673a388348bf33756b0b693ace15",
+      "size": 278988,
+      "mods": [
+        {
+          "id": "jupiter",
+          "version": "2.3.7"
+        }
+      ]
+    },
+    {
+      "slug": "just-enough-characters",
+      "projectID": 250702,
+      "fileID": 7320033,
+      "url": "https://www.cursemaven.com/curse/maven/just-enough-characters-250702/7320033/just-enough-characters-250702-7320033.jar",
+      "sha256": "bd61da17dab517fa06560d325f37a63853df275bae37d56572fef075b486d9f5",
+      "size": 243572,
+      "mods": [
+        {
+          "id": "jecharacters",
+          "version": "4.5.23"
+        }
+      ]
+    },
+    {
+      "slug": "just-enough-professions-jep",
+      "projectID": 417645,
+      "fileID": 7966681,
+      "url": "https://www.cursemaven.com/curse/maven/just-enough-professions-jep-417645/7966681/just-enough-professions-jep-417645-7966681.jar",
+      "sha256": "b34d6bb434d507874a6ebe49d40169c26f7cad8f51c9ffea615eedb153746696",
+      "size": 24879,
+      "mods": [
+        {
+          "id": "justenoughprofessions",
+          "version": "${file.jarVersion}"
+        }
+      ]
+    },
+    {
+      "slug": "justenoughbreeding",
+      "projectID": 899386,
+      "fileID": 9037421,
+      "url": "https://www.cursemaven.com/curse/maven/justenoughbreeding-899386/9037421/justenoughbreeding-899386-9037421.jar",
+      "sha256": "6541ebcbaeb6cd6638ce01e509c38122e744e1d849bfdbd94e4097b54cd555d3",
+      "size": 626813,
+      "mods": [
+        {
+          "id": "justenoughbreeding",
+          "version": "3.3.1"
+        }
+      ]
+    },
+    {
+      "slug": "kaleidoscope-cookery",
+      "projectID": 1309203,
+      "fileID": 8266772,
+      "url": "https://www.cursemaven.com/curse/maven/kaleidoscope-cookery-1309203/8266772/kaleidoscope-cookery-1309203-8266772.jar",
+      "sha256": "04dd114f975df57fb8bb3f09e8c96d6de18587838ab5a019271b51a2aec24f74",
+      "size": 5018991,
+      "mods": [
+        {
+          "id": "kaleidoscope_cookery",
+          "version": "1.4.1-neoforge+mc1.21.1"
+        }
+      ]
+    },
+    {
+      "slug": "kerria",
+      "projectID": 1503432,
+      "fileID": 8140830,
+      "url": "https://www.cursemaven.com/curse/maven/kerria-1503432/8140830/kerria-1503432-8140830.jar",
+      "sha256": "40f993af9c912ee4d76c7b48cdaf56ad3563308e8a3f127c82cf0635a4bd2ed9",
+      "size": 1112760,
+      "mods": [
+        {
+          "id": "kerria",
+          "version": "1.0.7+1.21.1-neoforge"
+        }
+      ]
+    },
+    {
+      "slug": "konkrete",
+      "projectID": 410295,
+      "fileID": 5453385,
+      "url": "https://www.cursemaven.com/curse/maven/konkrete-410295/5453385/konkrete-410295-5453385.jar",
+      "sha256": "791c5538751dd3015ef3a2ce92d98719e1a28a48ebbd817b78506771256654cd",
+      "size": 618842,
+      "mods": [
+        {
+          "id": "konkrete",
+          "version": "1.9.9"
+        }
+      ]
+    },
+    {
+      "slug": "kotlin-for-forge",
+      "projectID": 351264,
+      "fileID": 6706911,
+      "url": "https://www.cursemaven.com/curse/maven/kotlin-for-forge-351264/6706911/kotlin-for-forge-351264-6706911.jar",
+      "sha256": "0776d24462b9648614d3a3a62adfcd3e8fdd297ab0f3349c14a0f1ba39cfbf55",
+      "size": 6451817,
+      "mods": []
+    },
+    {
+      "slug": "kubejs",
+      "projectID": 238086,
+      "fileID": 7278501,
+      "url": "https://www.cursemaven.com/curse/maven/kubejs-238086/7278501/kubejs-238086-7278501.jar",
+      "sha256": "6ddc6ddd16fabe09e2dd4303c6a598e3c272d6820b5c081f9c53e6b7aa6397fb",
+      "size": 2240610,
+      "mods": [
+        {
+          "id": "kubejs",
+          "version": "2101.7.2-build.348"
+        }
+      ]
+    },
+    {
+      "slug": "lambdynamiclights",
+      "projectID": 393442,
+      "fileID": 7306458,
+      "url": "https://www.cursemaven.com/curse/maven/lambdynamiclights-393442/7306458/lambdynamiclights-393442-7306458.jar",
+      "sha256": "30ce0c25f703d1a53540359447f11d35b411f5c75481555b0dc45ffa8d62006b",
+      "size": 2012226,
+      "mods": [
+        {
+          "id": "lambdynlights",
+          "version": "4.8.7+1.21.1"
+        }
+      ]
+    },
+    {
+      "slug": "lan-server-properties",
+      "projectID": 387365,
+      "fileID": 5891138,
+      "url": "https://www.cursemaven.com/curse/maven/lan-server-properties-387365/5891138/lan-server-properties-387365-5891138.jar",
+      "sha256": "7a0a065c7412116d8202d48ed05a475e6ac096cff798c99948f17b7140afdb10",
+      "size": 44799,
+      "mods": [
+        {
+          "id": "lanserverproperties",
+          "version": "1.13.2"
+        }
+      ]
+    },
+    {
+      "slug": "legendary-tooltips",
+      "projectID": 532127,
+      "fileID": 6400660,
+      "url": "https://www.cursemaven.com/curse/maven/legendary-tooltips-532127/6400660/legendary-tooltips-532127-6400660.jar",
+      "sha256": "8ba2bc2cb894e48d8e7520d41c72ef7f429659c3ee58b029f4899c760b958493",
+      "size": 81808,
+      "mods": [
+        {
+          "id": "legendarytooltips",
+          "version": "1.5.5"
+        }
+      ]
+    },
+    {
+      "slug": "lendercataclysm",
+      "projectID": 551586,
+      "fileID": 7908490,
+      "url": "https://www.cursemaven.com/curse/maven/lendercataclysm-551586/7908490/lendercataclysm-551586-7908490.jar",
+      "sha256": "fa4e8abd15aa86333d6a5fe20b05c4fe423ac865da7319be7808d321bcb3930c",
+      "size": 73346519,
+      "mods": [
+        {
+          "id": "cataclysm",
+          "version": "3.27"
+        }
+      ]
+    },
+    {
+      "slug": "libipn",
+      "projectID": 679177,
+      "fileID": 6748206,
+      "url": "https://www.cursemaven.com/curse/maven/libipn-679177/6748206/libipn-679177-6748206.jar",
+      "sha256": "6c43866f9fdd48deb8e433d43980d5b3c49c054c9990bd122def07490fe8ab43",
+      "size": 620652,
+      "mods": [
+        {
+          "id": "libipn",
+          "version": "6.5.1"
+        }
+      ]
+    },
+    {
+      "slug": "lionfish-api",
+      "projectID": 1001614,
+      "fileID": 7923465,
+      "url": "https://www.cursemaven.com/curse/maven/lionfish-api-1001614/7923465/lionfish-api-1001614-7923465.jar",
+      "sha256": "3194a1dc57337de9dc7547b27dba3e699072b3ea799095ec1b9a3830e2266540",
+      "size": 141524,
+      "mods": [
+        {
+          "id": "lionfishapi",
+          "version": "2.7"
+        }
+      ]
+    },
+    {
+      "slug": "lithium",
+      "projectID": 360438,
+      "fileID": 7740400,
+      "url": "https://www.cursemaven.com/curse/maven/lithium-360438/7740400/lithium-360438-7740400.jar",
+      "sha256": "a6548862bd13ff8eea6747cf61df50c8374a16a22d067614e414ed600eee6d83",
+      "size": 774148,
+      "mods": [
+        {
+          "id": "lithium",
+          "version": "0.15.3+mc1.21.1"
+        }
+      ]
+    },
+    {
+      "slug": "lithostitched",
+      "projectID": 936015,
+      "fileID": 8944659,
+      "url": "https://www.cursemaven.com/curse/maven/lithostitched-936015/8944659/lithostitched-936015-8944659.jar",
+      "sha256": "204699b4e3aa3176e2da5b145c6c66887363821f2bd671ba77bd94750036e169",
+      "size": 979783,
+      "mods": [
+        {
+          "id": "lithostitched",
+          "version": "1.8.0"
+        }
+      ]
+    },
+    {
+      "slug": "lodestone",
+      "projectID": 616457,
+      "fileID": 7264731,
+      "url": "https://www.cursemaven.com/curse/maven/lodestone-616457/7264731/lodestone-616457-7264731.jar",
+      "sha256": "cc961af6a77391628378c1c838e521415fa895062b13def493d27234ca527f3e",
+      "size": 818829,
+      "mods": [
+        {
+          "id": "lodestone",
+          "version": "1.8.2"
+        }
+      ]
+    },
+    {
+      "slug": "lootjs",
+      "projectID": 570630,
+      "fileID": 8009262,
+      "url": "https://www.cursemaven.com/curse/maven/lootjs-570630/8009262/lootjs-570630-8009262.jar",
+      "sha256": "d168fd80f45e5f23dced8a54fdee87347a4c7fc6ccd9c76d30ae4d067ba9c60a",
+      "size": 247689,
+      "mods": [
+        {
+          "id": "lootjs",
+          "version": "1.21.1-3.7.0"
+        }
+      ]
+    },
+    {
+      "slug": "lootr",
+      "projectID": 361276,
+      "fileID": 8428025,
+      "url": "https://www.cursemaven.com/curse/maven/lootr-361276/8428025/lootr-361276-8428025.jar",
+      "sha256": "fd330d69bb0740d2833ad91784ee5f8b0e4c5d8dbee379e60e93ca2d1c252fce",
+      "size": 992330,
+      "mods": [
+        {
+          "id": "lootr",
+          "version": "1.21.1-1.11.37.122"
+        }
+      ]
+    },
+    {
+      "slug": "lootr-liaison",
+      "projectID": 1445934,
+      "fileID": 9028796,
+      "url": "https://www.cursemaven.com/curse/maven/lootr-liaison-1445934/9028796/lootr-liaison-1445934-9028796.jar",
+      "sha256": "409699cf87d888dd547605ee82274ebfe9986d9333f148c9c27c38e1acf94bf7",
+      "size": 60687,
+      "mods": [
+        {
+          "id": "lootr_liaison",
+          "version": "1.3.0"
+        }
+      ]
+    },
+    {
+      "slug": "lukis-woodland-mansions",
+      "projectID": 1385782,
+      "fileID": 7227735,
+      "url": "https://www.cursemaven.com/curse/maven/lukis-woodland-mansions-1385782/7227735/lukis-woodland-mansions-1385782-7227735.jar",
+      "sha256": "61c477cbe76847a204157c92b944438edc610abd91c71aff1ab7e58aca3a1e65",
+      "size": 1512532,
+      "mods": [
+        {
+          "id": "mr_lukis_woodlandmansions",
+          "version": "1-v1.0"
+        }
+      ]
+    },
+    {
+      "slug": "manascore",
+      "projectID": 619025,
+      "fileID": 8022425,
+      "url": "https://www.cursemaven.com/curse/maven/manascore-619025/8022425/manascore-619025-8022425.jar",
+      "sha256": "29c4bbdb2ff97518a655d189cb94fdca1f8807380e93c27d260bd75a188a508d",
+      "size": 4687383,
+      "mods": [
+        {
+          "id": "manascore",
+          "version": "4.0.0.2"
+        }
+      ]
+    },
+    {
+      "slug": "mar-mars-enhanced-ore-variety",
+      "projectID": 1304406,
+      "fileID": 7320975,
+      "url": "https://www.cursemaven.com/curse/maven/mar-mars-enhanced-ore-variety-1304406/7320975/mar-mars-enhanced-ore-variety-1304406-7320975.jar",
+      "sha256": "f283894c22410611fed4d293015c5f0a81f5a2d670d4e4cbf444629e9375c909",
+      "size": 224840,
+      "mods": [
+        {
+          "id": "enhanced_ore_variety",
+          "version": "1.21.1-neoforge-2.2.0"
+        }
+      ]
+    },
+    {
+      "slug": "mebahels-api",
+      "projectID": 1463166,
+      "fileID": 7927369,
+      "url": "https://www.cursemaven.com/curse/maven/mebahels-api-1463166/7927369/mebahels-api-1463166-7927369.jar",
+      "sha256": "1f8ea4f588f7b1185a01e150809b0cfc99b8e1c2471e7f92266afd418b4329a2",
+      "size": 56118,
+      "mods": []
+    },
+    {
+      "slug": "mebahels-creatures-dwarven-automatons",
+      "projectID": 1464755,
+      "fileID": 8032085,
+      "url": "https://www.cursemaven.com/curse/maven/mebahels-creatures-dwarven-automatons-1464755/8032085/mebahels-creatures-dwarven-automatons-1464755-8032085.jar",
+      "sha256": "97a3d6a102f01bdacd5374daa8bdd6da02a4d2b9fa0d5007d075ee2b29e1bbe6",
+      "size": 4455553,
+      "mods": []
+    },
+    {
+      "slug": "medieval-buildings",
+      "projectID": 924590,
+      "fileID": 6952841,
+      "url": "https://www.cursemaven.com/curse/maven/medieval-buildings-924590/6952841/medieval-buildings-924590-6952841.jar",
+      "sha256": "367422cf0768bcdcf3d8ce21ce7c123e8d87022c11085f66f671fef1abc37102",
+      "size": 214623,
+      "mods": [
+        {
+          "id": "medieval_buildings",
+          "version": "1.1.1"
+        }
+      ]
+    },
+    {
+      "slug": "medieval-buildings-nether-edition",
+      "projectID": 1278431,
+      "fileID": 6952890,
+      "url": "https://www.cursemaven.com/curse/maven/medieval-buildings-nether-edition-1278431/6952890/medieval-buildings-nether-edition-1278431-6952890.jar",
+      "sha256": "94354beca3a83b4c4488d094a25f9a987c9475e93926d042ba6fcd1630a86ca3",
+      "size": 538302,
+      "mods": [
+        {
+          "id": "medieval_nether",
+          "version": "1.0.1"
+        }
+      ]
+    },
+    {
+      "slug": "melody",
+      "projectID": 938643,
+      "fileID": 5453382,
+      "url": "https://www.cursemaven.com/curse/maven/melody-938643/5453382/melody-938643-5453382.jar",
+      "sha256": "6b973a4564703c531fc0eae09db08b07a38091e0a743c687b8d2049457e84871",
+      "size": 36096,
+      "mods": [
+        {
+          "id": "melody",
+          "version": "1.0.10"
+        }
+      ]
+    },
+    {
+      "slug": "mezzconfig",
+      "projectID": 1689768,
+      "fileID": 9048666,
+      "url": "https://www.cursemaven.com/curse/maven/mezzconfig-1689768/9048666/mezzconfig-1689768-9048666.jar",
+      "sha256": "182ad8ad757175b49d573512c8fac624ee526e8138e24b36f677b0f6466e20cb",
+      "size": 327173,
+      "mods": []
+    },
+    {
+      "slug": "modern-apple-cows",
+      "projectID": 1586838,
+      "fileID": 8398146,
+      "url": "https://www.cursemaven.com/curse/maven/modern-apple-cows-1586838/8398146/modern-apple-cows-1586838-8398146.jar",
+      "sha256": "3185ef7235e625d4a30162ed05bd36e44505de72d87222031e7e7552ded68bc4",
+      "size": 422015,
+      "mods": [
+        {
+          "id": "apple_cows",
+          "version": "1.0.0+1.21.1-neoforge"
+        }
+      ]
+    },
+    {
+      "slug": "modernfix",
+      "projectID": 790626,
+      "fileID": 8255560,
+      "url": "https://www.cursemaven.com/curse/maven/modernfix-790626/8255560/modernfix-790626-8255560.jar",
+      "sha256": "efc89cb7d22b932ecad19777373688035a1c444443abe8e56d236c44b59c0301",
+      "size": 589839,
+      "mods": [
+        {
+          "id": "modernfix",
+          "version": "5.27.14+mc1.21.1"
+        }
+      ]
+    },
+    {
+      "slug": "modernworldcreation",
+      "projectID": 485245,
+      "fileID": 6119761,
+      "url": "https://www.cursemaven.com/curse/maven/modernworldcreation-485245/6119761/modernworldcreation-485245-6119761.jar",
+      "sha256": "aba9de9a28879bc59333aa05f1b53e1233c9eca5a91ab1c4c55cc63674842a43",
+      "size": 498164,
+      "mods": [
+        {
+          "id": "modernworldcreation",
+          "version": "2.0.1"
+        }
+      ]
+    },
+    {
+      "slug": "moogs-end-structures",
+      "projectID": 892382,
+      "fileID": 8128039,
+      "url": "https://www.cursemaven.com/curse/maven/moogs-end-structures-892382/8128039/moogs-end-structures-892382-8128039.jar",
+      "sha256": "6dd403739a473c38aa2a6660dc4891be1525743f5e7be0cf4c25b93b4491b4ea",
+      "size": 1210283,
+      "mods": [
+        {
+          "id": "mes",
+          "version": "2.0.3"
+        }
+      ]
+    },
+    {
+      "slug": "moogs-structure-lib",
+      "projectID": 1337167,
+      "fileID": 7925970,
+      "url": "https://www.cursemaven.com/curse/maven/moogs-structure-lib-1337167/7925970/moogs-structure-lib-1337167-7925970.jar",
+      "sha256": "b2a9168da6374cc04b64e3ad20c1d0b69c0a083198cce66bc9fca86643e3ae78",
+      "size": 251391,
+      "mods": [
+        {
+          "id": "moogs_structures",
+          "version": "2.0.2"
+        }
+      ]
+    },
+    {
+      "slug": "more-relics",
+      "projectID": 1269280,
+      "fileID": 7800760,
+      "url": "https://www.cursemaven.com/curse/maven/more-relics-1269280/7800760/more-relics-1269280-7800760.jar",
+      "sha256": "0118bee8afae1350d31b586bbb0f130cfc4c0b07f0271e975bc83d6b230b2548",
+      "size": 774683,
+      "mods": [
+        {
+          "id": "morerelics",
+          "version": "1.7.2"
+        }
+      ]
+    },
+    {
+      "slug": "moreculling",
+      "projectID": 630104,
+      "fileID": 7748843,
+      "url": "https://www.cursemaven.com/curse/maven/moreculling-630104/7748843/moreculling-630104-7748843.jar",
+      "sha256": "80e4716a3da53c920ce6e8d122332edc65b91c9f7e4d94bedacac9f35fe32aa0",
+      "size": 344279,
+      "mods": [
+        {
+          "id": "moreculling",
+          "version": "1.0.7"
+        }
+      ]
+    },
+    {
+      "slug": "mouse-tweaks",
+      "projectID": 60089,
+      "fileID": 5637846,
+      "url": "https://www.cursemaven.com/curse/maven/mouse-tweaks-60089/5637846/mouse-tweaks-60089-5637846.jar",
+      "sha256": "68e6f4201c5de97b77929a7215c9552495696ca6a3bf3ae4eacc34e135f6cc8b",
+      "size": 73938,
+      "mods": [
+        {
+          "id": "mousetweaks",
+          "version": "2.26.1"
+        }
+      ]
+    },
+    {
+      "slug": "mowzies-mobs",
+      "projectID": 250498,
+      "fileID": 7760267,
+      "url": "https://www.cursemaven.com/curse/maven/mowzies-mobs-250498/7760267/mowzies-mobs-250498-7760267.jar",
+      "sha256": "b8e7e39fb6430326de7fbb193db56588ee8bd04d0054527924fe588f37131e4f",
+      "size": 36042925,
+      "mods": [
+        {
+          "id": "mowziesmobs",
+          "version": "1.8.2"
+        }
+      ]
+    },
+    {
+      "slug": "mushroom-illager",
+      "projectID": 1254941,
+      "fileID": 7510903,
+      "url": "https://www.cursemaven.com/curse/maven/mushroom-illager-1254941/7510903/mushroom-illager-1254941-7510903.jar",
+      "sha256": "48075769526498dda5abb99e18cbea7ed58b84e2a99781b941f140a7eff3d34f",
+      "size": 85716,
+      "mods": [
+        {
+          "id": "mushroom_illager",
+          "version": "2.0.0"
+        }
+      ]
+    },
+    {
+      "slug": "mythika",
+      "projectID": 1630456,
+      "fileID": 8640968,
+      "url": "https://www.cursemaven.com/curse/maven/mythika-1630456/8640968/mythika-1630456-8640968.jar",
+      "sha256": "d46dfb3a30fa9f3d4679396934a3564ca45b1ec1d7411c5307b6c9564ccfb6dd",
+      "size": 334061,
+      "mods": [
+        {
+          "id": "mythika",
+          "version": "1.2.1"
+        }
+      ]
+    },
+    {
+      "slug": "nan-health-fixer",
+      "projectID": 828656,
+      "fileID": 7231447,
+      "url": "https://www.cursemaven.com/curse/maven/nan-health-fixer-828656/7231447/nan-health-fixer-828656-7231447.jar",
+      "sha256": "1f5cfb4837d1da8cc10e3638904ae507096409b5aa27179a035fc2561199f7b5",
+      "size": 2923,
+      "mods": [
+        {
+          "id": "nanhealthfixer",
+          "version": "1.21.1-1.0.0"
+        }
+      ]
+    },
+    {
+      "slug": "natures-aura",
+      "projectID": 306626,
+      "fileID": 8809415,
+      "url": "https://www.cursemaven.com/curse/maven/natures-aura-306626/8809415/natures-aura-306626-8809415.jar",
+      "sha256": "5401704e76fb59719d48cd3aa76f088220ae90d8e3b1f4859365ad260355700c",
+      "size": 1553371,
+      "mods": [
+        {
+          "id": "naturesaura",
+          "version": "41.10"
+        }
+      ]
+    },
+    {
+      "slug": "natures-compass",
+      "projectID": 252848,
+      "fileID": 7892954,
+      "url": "https://www.cursemaven.com/curse/maven/natures-compass-252848/7892954/natures-compass-252848-7892954.jar",
+      "sha256": "0e249ac11b2f916c5570d9679e188da652fa5664ba9cdb7be5dc9ff69497539c",
+      "size": 224657,
+      "mods": [
+        {
+          "id": "naturescompass",
+          "version": "1.21.1-3.4.0-neoforge"
+        }
+      ]
+    },
+    {
+      "slug": "necronomicon",
+      "projectID": 586157,
+      "fileID": 5772683,
+      "url": "https://www.cursemaven.com/curse/maven/necronomicon-586157/5772683/necronomicon-586157-5772683.jar",
+      "sha256": "63c3057fd28bf9e4a94ffe84f53dd20d9e7172b3e4afdf1b989213935d4aaf14",
+      "size": 29865,
+      "mods": [
+        {
+          "id": "necronomicon",
+          "version": "1.6.0"
+        }
+      ]
+    },
+    {
+      "slug": "neo-otherworld-compatibility-fix",
+      "projectID": 1503088,
+      "fileID": 9332282,
+      "url": "https://www.cursemaven.com/curse/maven/neo-otherworld-compatibility-fix-1503088/9332282/neo-otherworld-compatibility-fix-1503088-9332282.jar",
+      "sha256": "0c535db7cb9777a67b13b35e558e3818cf9b5e4aa3714db5e1677e0e8efa2ba2",
+      "size": 11954268,
+      "mods": [
+        {
+          "id": "tensura_tno",
+          "version": "1.0.6.1"
+        }
+      ]
+    },
+    {
+      "slug": "netherportalfix",
+      "projectID": 241160,
+      "fileID": 5623547,
+      "url": "https://www.cursemaven.com/curse/maven/netherportalfix-241160/5623547/netherportalfix-241160-5623547.jar",
+      "sha256": "c1077de0c7f1ff5289d1852e0674d9c477247d4318c9809b21c60e56a31ae31a",
+      "size": 211972,
+      "mods": [
+        {
+          "id": "netherportalfix",
+          "version": "21.1.1"
+        }
+      ]
+    },
+    {
+      "slug": "nightmares-tr-lag-begone",
+      "projectID": 1524120,
+      "fileID": 7980371,
+      "url": "https://www.cursemaven.com/curse/maven/nightmares-tr-lag-begone-1524120/7980371/nightmares-tr-lag-begone-1524120-7980371.jar",
+      "sha256": "0e6138b498d84967c3451d7fb170f7d5cf7488aabbd5fe4908fa6382cfaca94c",
+      "size": 36427,
+      "mods": [
+        {
+          "id": "trlagbegon",
+          "version": "1.0.0"
+        }
+      ]
+    },
+    {
+      "slug": "noise-boost",
+      "projectID": 1648078,
+      "fileID": 8637421,
+      "url": "https://www.cursemaven.com/curse/maven/noise-boost-1648078/8637421/noise-boost-1648078-8637421.jar",
+      "sha256": "f628ccb089895b65d65ff7a476244736e619eecf10a67bbce203d1ce0a679d76",
+      "size": 210003,
+      "mods": [
+        {
+          "id": "noise_boost",
+          "version": "1.2.0"
+        }
+      ]
+    },
+    {
+      "slug": "obe",
+      "projectID": 1575743,
+      "fileID": 8412253,
+      "url": "https://www.cursemaven.com/curse/maven/obe-1575743/8412253/obe-1575743-8412253.jar",
+      "sha256": "83eb2bd7af1e9c21e6315de619c05b77d96a77da1310fefa223c477981bc3f5e",
+      "size": 221304,
+      "mods": [
+        {
+          "id": "obe",
+          "version": "1.1.31"
+        }
+      ]
+    },
+    {
+      "slug": "oelib",
+      "projectID": 1319210,
+      "fileID": 7886017,
+      "url": "https://www.cursemaven.com/curse/maven/oelib-1319210/7886017/oelib-1319210-7886017.jar",
+      "sha256": "876e7d8837be3e4471880a698fbced371f5094a8610d73f72cb87ae38b4dbcae",
+      "size": 840689,
+      "mods": [
+        {
+          "id": "oelib",
+          "version": "0.2.3"
+        }
+      ]
+    },
+    {
+      "slug": "one-enough-block",
+      "projectID": 1356867,
+      "fileID": 7471732,
+      "url": "https://www.cursemaven.com/curse/maven/one-enough-block-1356867/7471732/one-enough-block-1356867-7471732.jar",
+      "sha256": "6ded4ef519b1598d66fc120df6271060b848fb06a174f74540e3de2ef407155b",
+      "size": 85490,
+      "mods": [
+        {
+          "id": "oneenoughblock",
+          "version": "1.1.2-hotfix"
+        }
+      ]
+    },
+    {
+      "slug": "one-enough-item",
+      "projectID": 1312660,
+      "fileID": 7939114,
+      "url": "https://www.cursemaven.com/curse/maven/one-enough-item-1312660/7939114/one-enough-item-1312660-7939114.jar",
+      "sha256": "f2bd5eeeefb7155f95d686a055d0c713da540c3ce6d2fd09fe18caea4f686583",
+      "size": 260782,
+      "mods": [
+        {
+          "id": "oneenoughitem",
+          "version": "1.0.8"
+        }
+      ]
+    },
+    {
+      "slug": "open-loader",
+      "projectID": 354339,
+      "fileID": 6546293,
+      "url": "https://www.cursemaven.com/curse/maven/open-loader-354339/6546293/open-loader-354339-6546293.jar",
+      "sha256": "c0becabbb2d45c254e959d3a26a0237dacdfccb7cde85de98c4b863057e842ff",
+      "size": 35602,
+      "mods": [
+        {
+          "id": "openloader",
+          "version": "21.1.5"
+        }
+      ]
+    },
+    {
+      "slug": "optimization-of-campfire-smoke",
+      "projectID": 1317747,
+      "fileID": 6866584,
+      "url": "https://www.cursemaven.com/curse/maven/optimization-of-campfire-smoke-1317747/6866584/optimization-of-campfire-smoke-1317747-6866584.jar",
+      "sha256": "13551a1935d9ff3a7ef51c62bc99d009bb6910d820b3c20bd1d178efff916902",
+      "size": 15636,
+      "mods": [
+        {
+          "id": "ocs",
+          "version": "1.0"
+        }
+      ]
+    },
+    {
+      "slug": "packet-fixer",
+      "projectID": 689467,
+      "fileID": 7221528,
+      "url": "https://www.cursemaven.com/curse/maven/packet-fixer-689467/7221528/packet-fixer-689467-7221528.jar",
+      "sha256": "2979a8a3f44e5d5df4f9f6315d18c220f3debf736bb8a2c2740acdfb13bd820f",
+      "size": 46623,
+      "mods": [
+        {
+          "id": "packetfixer",
+          "version": "3.3.1"
+        }
+      ]
+    },
+    {
+      "slug": "particle-effects-reforged",
+      "projectID": 1274497,
+      "fileID": 6707573,
+      "url": "https://www.cursemaven.com/curse/maven/particle-effects-reforged-1274497/6707573/particle-effects-reforged-1274497-6707573.jar",
+      "sha256": "541f3b3fc1fd183b6ad537a5e17bd761401a21b655a06ede1ac4a20da242f14b",
+      "size": 256303,
+      "mods": [
+        {
+          "id": "particle_effects",
+          "version": "1.0.1"
+        }
+      ]
+    },
+    {
+      "slug": "patchouli",
+      "projectID": 306770,
+      "fileID": 7730942,
+      "url": "https://www.cursemaven.com/curse/maven/patchouli-306770/7730942/patchouli-306770-7730942.jar",
+      "sha256": "959af52ed6640c316c3a8469203420be4aeea11ad6603890ba83bf48f5d9f993",
+      "size": 646777,
+      "mods": [
+        {
+          "id": "patchouli",
+          "version": "${file.jarVersion}"
+        }
+      ]
+    },
+    {
+      "slug": "placebo",
+      "projectID": 283644,
+      "fileID": 6926281,
+      "url": "https://www.cursemaven.com/curse/maven/placebo-283644/6926281/placebo-283644-6926281.jar",
+      "sha256": "42c90bc43800558b9322bd60faa9011d6694e66a87b7e6b3b9f51fa735b527ea",
+      "size": 324056,
+      "mods": [
+        {
+          "id": "placebo",
+          "version": "9.9.1"
+        }
+      ]
+    },
+    {
+      "slug": "platform",
+      "projectID": 997634,
+      "fileID": 8075942,
+      "url": "https://www.cursemaven.com/curse/maven/platform-997634/8075942/platform-997634-8075942.jar",
+      "sha256": "2d7175e43943d22cbb4f8d4533f0ad620f87a3ac12c77a4f15c3a35d965c4f18",
+      "size": 489341,
+      "mods": [
+        {
+          "id": "platform",
+          "version": "1.3.3"
+        }
+      ]
+    },
+    {
+      "slug": "playernbt-quests-ftb-quests",
+      "projectID": 1340833,
+      "fileID": 7911610,
+      "url": "https://www.cursemaven.com/curse/maven/playernbt-quests-ftb-quests-1340833/7911610/playernbt-quests-ftb-quests-1340833-7911610.jar",
+      "sha256": "4e125c86d7d8b200871f87a792cee5c7e0b73957134c4bcb111d94b1d2bae1e0",
+      "size": 14429,
+      "mods": [
+        {
+          "id": "playernbtftb",
+          "version": "1.0.1.1"
+        }
+      ]
+    },
+    {
+      "slug": "polymorph",
+      "projectID": 388800,
+      "fileID": 6794589,
+      "url": "https://www.cursemaven.com/curse/maven/polymorph-388800/6794589/polymorph-388800-6794589.jar",
+      "sha256": "bec8118978adeb052de9c4eaf9a595830621d82515a764f32f9c8a4dd52ab94b",
+      "size": 174972,
+      "mods": [
+        {
+          "id": "polymorph",
+          "version": "1.1.0+1.21.1"
+        }
+      ]
+    },
+    {
+      "slug": "prickle",
+      "projectID": 1023259,
+      "fileID": 6546240,
+      "url": "https://www.cursemaven.com/curse/maven/prickle-1023259/6546240/prickle-1023259-6546240.jar",
+      "sha256": "31e1ab0fa1c47d9f5af0778fb53c288ece0f9be7a3da26f64485be4315848cf1",
+      "size": 83725,
+      "mods": [
+        {
+          "id": "prickle",
+          "version": "21.1.8"
+        }
+      ]
+    },
+    {
+      "slug": "prism-lib",
+      "projectID": 638111,
+      "fileID": 6372979,
+      "url": "https://www.cursemaven.com/curse/maven/prism-lib-638111/6372979/prism-lib-638111-6372979.jar",
+      "sha256": "b6a1e585416c48d7d9fa53fc12c67122ad1f3a6965202b51d4e2c643ffca61c2",
+      "size": 62031,
+      "mods": [
+        {
+          "id": "prism",
+          "version": "1.0.11"
+        }
+      ]
+    },
+    {
+      "slug": "puzzles-lib",
+      "projectID": 495476,
+      "fileID": 6874068,
+      "url": "https://www.cursemaven.com/curse/maven/puzzles-lib-495476/6874068/puzzles-lib-495476-6874068.jar",
+      "sha256": "f9af300d28c87c3aff30f215be67ffb96b966a659293b7d8162b280acfad64cd",
+      "size": 1080651,
+      "mods": [
+        {
+          "id": "puzzleslib",
+          "version": "21.1.38"
+        }
+      ]
+    },
+    {
+      "slug": "quest-language-selection",
+      "projectID": 1707419,
+      "fileID": 8978707,
+      "url": "https://www.cursemaven.com/curse/maven/quest-language-selection-1707419/8978707/quest-language-selection-1707419-8978707.jar",
+      "sha256": "0c63e16bdbf1e4f887f43be0ae604c7599ff2e2afb4a377ae6450091055900cd",
+      "size": 54876,
+      "mods": [
+        {
+          "id": "ftbqlang",
+          "version": "1.0.0"
+        }
+      ]
+    },
+    {
+      "slug": "quick-pack",
+      "projectID": 1380888,
+      "fileID": 7971545,
+      "url": "https://www.cursemaven.com/curse/maven/quick-pack-1380888/7971545/quick-pack-1380888-7971545.jar",
+      "sha256": "37ed8231c00231ef0a0d6e6737bf9e2be0c11be33a944f1fb36868149413dc13",
+      "size": 11507,
+      "mods": [
+        {
+          "id": "quick_pack",
+          "version": "1.3.2"
+        }
+      ]
+    },
+    {
+      "slug": "raids-enhanced",
+      "projectID": 1467121,
+      "fileID": 7676063,
+      "url": "https://www.cursemaven.com/curse/maven/raids-enhanced-1467121/7676063/raids-enhanced-1467121-7676063.jar",
+      "sha256": "12311ddd5b66ee45bb64239dd6858f7e1554eb1c474515bfe483d498b5c13bcd",
+      "size": 1042533,
+      "mods": [
+        {
+          "id": "raidsenhanced",
+          "version": "1.0.2"
+        }
+      ]
+    },
+    {
+      "slug": "rebind-narrator",
+      "projectID": 296996,
+      "fileID": 7134458,
+      "url": "https://www.cursemaven.com/curse/maven/rebind-narrator-296996/7134458/rebind-narrator-296996-7134458.jar",
+      "sha256": "29b86d0f80ddbffbb710ab5b11acc1352c5dce36b8ca13c5ac2d3d5e4062043f",
+      "size": 190252,
+      "mods": [
+        {
+          "id": "rebind_narrator",
+          "version": "2025.10.21"
+        }
+      ]
+    },
+    {
+      "slug": "reeses-sodium-options",
+      "projectID": 511319,
+      "fileID": 6091021,
+      "url": "https://www.cursemaven.com/curse/maven/reeses-sodium-options-511319/6091021/reeses-sodium-options-511319-6091021.jar",
+      "sha256": "e00e960f9cae9ea411429fadaa48e2d778f8064667cf6aaee7ce88332813b0bf",
+      "size": 78451,
+      "mods": [
+        {
+          "id": "reeses_sodium_options",
+          "version": "1.8.3+mc1.21.4"
+        }
+      ]
+    },
+    {
+      "slug": "regions-unexplored",
+      "projectID": 659110,
+      "fileID": 8419667,
+      "url": "https://www.cursemaven.com/curse/maven/regions-unexplored-659110/8419667/regions-unexplored-659110-8419667.jar",
+      "sha256": "ccf32ed714f2724f54406b9e02a8d6f94d87dc5c72397bc39b3d6ed8f32412ea",
+      "size": 6365953,
+      "mods": [
+        {
+          "id": "regions_unexplored",
+          "version": "0.6.2"
+        }
+      ]
+    },
+    {
+      "slug": "relics-mod",
+      "projectID": 445274,
+      "fileID": 7586568,
+      "url": "https://www.cursemaven.com/curse/maven/relics-mod-445274/7586568/relics-mod-445274-7586568.jar",
+      "sha256": "024f63a0706a94fbb4dff5fb6534500817f72751a0e16577fe117e510b056e5c",
+      "size": 2753166,
+      "mods": [
+        {
+          "id": "relics",
+          "version": "0.10.7.8"
+        }
+      ]
+    },
+    {
+      "slug": "reliquified-artifacts",
+      "projectID": 1100379,
+      "fileID": 6879980,
+      "url": "https://www.cursemaven.com/curse/maven/reliquified-artifacts-1100379/6879980/reliquified-artifacts-1100379-6879980.jar",
+      "sha256": "fcbe35d8d6c44f72dcf467deb54c5fb9e5d6be725a79413f9f45354460553149",
+      "size": 451470,
+      "mods": [
+        {
+          "id": "rarcompat",
+          "version": "0.9.7"
+        }
+      ]
+    },
+    {
+      "slug": "reliquified-l-ender-s-cataclysm",
+      "projectID": 1232116,
+      "fileID": 6882649,
+      "url": "https://www.cursemaven.com/curse/maven/reliquified-l-ender-s-cataclysm-1232116/6882649/reliquified-l-ender-s-cataclysm-1232116-6882649.jar",
+      "sha256": "092abc16788a6ebc324ce923098285b1b0a704700c359fdf2d733e6f33535700",
+      "size": 376851,
+      "mods": [
+        {
+          "id": "reliquified_lenders_cataclysm",
+          "version": "0.1.1"
+        }
+      ]
+    },
+    {
+      "slug": "reliquified-twilight-forest",
+      "projectID": 1186617,
+      "fileID": 7680883,
+      "url": "https://www.cursemaven.com/curse/maven/reliquified-twilight-forest-1186617/7680883/reliquified-twilight-forest-1186617-7680883.jar",
+      "sha256": "2c89d7310c3809f77ece6cf0dd8583a7815409afb4db244de53245657456a9e3",
+      "size": 769787,
+      "mods": [
+        {
+          "id": "reliquified_twilight_forest",
+          "version": "0.5.3"
+        }
+      ]
+    },
+    {
+      "slug": "resourceful-config",
+      "projectID": 714059,
+      "fileID": 6467772,
+      "url": "https://www.cursemaven.com/curse/maven/resourceful-config-714059/6467772/resourceful-config-714059-6467772.jar",
+      "sha256": "25b4f3502d25c535004acd4a9420272fff01d2f1e2df352239fec93fdab005d4",
+      "size": 341009,
+      "mods": [
+        {
+          "id": "resourcefulconfig",
+          "version": "3.0.11"
+        }
+      ]
+    },
+    {
+      "slug": "resourceful-lib",
+      "projectID": 570073,
+      "fileID": 5973188,
+      "url": "https://www.cursemaven.com/curse/maven/resourceful-lib-570073/5973188/resourceful-lib-570073-5973188.jar",
+      "sha256": "5e36f2c69de008dc5795f730c84ab767688f15c810944b585485349a0c911261",
+      "size": 484332,
+      "mods": [
+        {
+          "id": "resourcefullib",
+          "version": "3.0.12"
+        }
+      ]
+    },
+    {
+      "slug": "rhino",
+      "projectID": 416294,
+      "fileID": 7104526,
+      "url": "https://www.cursemaven.com/curse/maven/rhino-416294/7104526/rhino-416294-7104526.jar",
+      "sha256": "fcc3f8de61771596f1b120f734819cb97f5935a5d42c76f4057a0be06a3609db",
+      "size": 882032,
+      "mods": [
+        {
+          "id": "rhino",
+          "version": "2101.2.7-build.81"
+        }
+      ]
+    },
+    {
+      "slug": "royal-variations",
+      "projectID": 989611,
+      "fileID": 7536377,
+      "url": "https://www.cursemaven.com/curse/maven/royal-variations-989611/7536377/royal-variations-989611-7536377.jar",
+      "sha256": "fa60862af8b7416fbb707c39e384d5c832a8f014b2e82c869e73a38658501f24",
+      "size": 777713,
+      "mods": [
+        {
+          "id": "royalvariations",
+          "version": "2.0"
+        }
+      ]
+    },
+    {
+      "slug": "rpg-style-more-bosses-early",
+      "projectID": 1416297,
+      "fileID": 7532590,
+      "url": "https://www.cursemaven.com/curse/maven/rpg-style-more-bosses-early-1416297/7532590/rpg-style-more-bosses-early-1416297-7532590.jar",
+      "sha256": "09f64e8392c861a99a6902ab5ed9909a090c79d8c8b772d4b1828149c8a40b57",
+      "size": 5746288,
+      "mods": [
+        {
+          "id": "rpg_style_more_bosses",
+          "version": "1.0.3"
+        }
+      ]
+    },
+    {
+      "slug": "searchables",
+      "projectID": 858542,
+      "fileID": 5831692,
+      "url": "https://www.cursemaven.com/curse/maven/searchables-858542/5831692/searchables-858542-5831692.jar",
+      "sha256": "ca193f0c69033d8f709f9e073a7c1ef4ea46714e5c2f94eb23ace12781c6aa68",
+      "size": 77326,
+      "mods": [
+        {
+          "id": "searchables",
+          "version": "1.0.2"
+        }
+      ]
+    },
+    {
+      "slug": "selling-bin",
+      "projectID": 922334,
+      "fileID": 6603963,
+      "url": "https://www.cursemaven.com/curse/maven/selling-bin-922334/6603963/selling-bin-922334-6603963.jar",
+      "sha256": "35a3d6398d5990bc440cf8586dac89aab10bc16cb2779aed2730428ca994e23a",
+      "size": 1166983,
+      "mods": [
+        {
+          "id": "sellingbin",
+          "version": "1.1.1"
+        }
+      ]
+    },
+    {
+      "slug": "servercore",
+      "projectID": 550579,
+      "fileID": 5667811,
+      "url": "https://www.cursemaven.com/curse/maven/servercore-550579/5667811/servercore-550579-5667811.jar",
+      "sha256": "528b60a3531819e6d5d4c98d8f858c39467b9234d2b5f20c31b48562073b67b0",
+      "size": 1391731,
+      "mods": [
+        {
+          "id": "servercore",
+          "version": "1.5.5+1.21.1"
+        }
+      ]
+    },
+    {
+      "slug": "shatterbyte-lib",
+      "projectID": 916747,
+      "fileID": 6932487,
+      "url": "https://www.cursemaven.com/curse/maven/shatterbyte-lib-916747/6932487/shatterbyte-lib-916747-6932487.jar",
+      "sha256": "0cf8725caedacb6aebca9e1902463169f039dc9f2f98a8a08dda5dae82d67168",
+      "size": 507443,
+      "mods": [
+        {
+          "id": "octolib",
+          "version": "0.6.0.4"
+        }
+      ]
+    },
+    {
+      "slug": "shoulder-surfing-reloaded",
+      "projectID": 243190,
+      "fileID": 6784169,
+      "url": "https://www.cursemaven.com/curse/maven/shoulder-surfing-reloaded-243190/6784169/shoulder-surfing-reloaded-243190-6784169.jar",
+      "sha256": "0eb59836268289210caf44b88016614c461bf6b6246035f8a6650ea9055288ae",
+      "size": 233262,
+      "mods": [
+        {
+          "id": "shouldersurfing",
+          "version": "1.21.1-4.14.1"
+        }
+      ]
+    },
+    {
+      "slug": "simple-weather",
+      "projectID": 983390,
+      "fileID": 7436830,
+      "url": "https://www.cursemaven.com/curse/maven/simple-weather-983390/7436830/simple-weather-983390-7436830.jar",
+      "sha256": "bb8f5a73ad7e32d82149a1ba7bd1cb494cdfabe346fe196f1a2c30eae4216325",
+      "size": 82792,
+      "mods": [
+        {
+          "id": "simple_weather",
+          "version": "1.0.13-hotfix"
+        }
+      ]
+    },
+    {
+      "slug": "sinytra-connector",
+      "projectID": 890127,
+      "fileID": 7634148,
+      "url": "https://www.cursemaven.com/curse/maven/sinytra-connector-890127/7634148/sinytra-connector-890127-7634148.jar",
+      "sha256": "45664deef6a8403bc89acd91f8999d3cea4a69c95eb97ef872716ef96711a1f6",
+      "size": 4526785,
+      "mods": []
+    },
+    {
+      "slug": "skullskinless",
+      "projectID": 1305269,
+      "fileID": 6767999,
+      "url": "https://www.cursemaven.com/curse/maven/skullskinless-1305269/6767999/skullskinless-1305269-6767999.jar",
+      "sha256": "53542126ba687dd5cc12fb04b3e1d1c671ac6b61d77c43b6343a8e5377a23d7a",
+      "size": 6459,
+      "mods": [
+        {
+          "id": "skullskinless",
+          "version": "1.21.1-1.0.0"
+        }
+      ]
+    },
+    {
+      "slug": "smart-particles",
+      "projectID": 1420751,
+      "fileID": 7470043,
+      "url": "https://www.cursemaven.com/curse/maven/smart-particles-1420751/7470043/smart-particles-1420751-7470043.jar",
+      "sha256": "a19d81c5a06180dd8539260c90bf42a5faa2a867ae215dc79b18c8c0b4833672",
+      "size": 50773,
+      "mods": [
+        {
+          "id": "smart_particles",
+          "version": "21.8.10"
+        }
+      ]
+    },
+    {
+      "slug": "smartbrainlib",
+      "projectID": 661293,
+      "fileID": 7055149,
+      "url": "https://www.cursemaven.com/curse/maven/smartbrainlib-661293/7055149/smartbrainlib-661293-7055149.jar",
+      "sha256": "68036561cc5511766d54cc0deabc3fc3a5e68f9e3db2478f2574ec82b494374b",
+      "size": 391053,
+      "mods": [
+        {
+          "id": "smartbrainlib",
+          "version": "1.16.11"
+        }
+      ]
+    },
+    {
+      "slug": "smsn",
+      "projectID": 1129397,
+      "fileID": 6953151,
+      "url": "https://www.cursemaven.com/curse/maven/smsn-1129397/6953151/smsn-1129397-6953151.jar",
+      "sha256": "575ead668cf6ee2aed8446043409e133224288fc14e39861e32be2e03dd3f0fb",
+      "size": 66667,
+      "mods": [
+        {
+          "id": "smsn",
+          "version": "1.2.10-1.21.1"
+        }
+      ]
+    },
+    {
+      "slug": "sodium",
+      "projectID": 394468,
+      "fileID": 6382651,
+      "url": "https://www.cursemaven.com/curse/maven/sodium-394468/6382651/sodium-394468-6382651.jar",
+      "sha256": "7acd7af2ef75ec883a6872c17494ead65e38025151eb08a1d60e36d34377f403",
+      "size": 1162994,
+      "mods": [
+        {
+          "id": "sodium",
+          "version": "0.6.13+mc1.21.1"
+        }
+      ]
+    },
+    {
+      "slug": "sodium-extra",
+      "projectID": 447673,
+      "fileID": 5913377,
+      "url": "https://www.cursemaven.com/curse/maven/sodium-extra-447673/5913377/sodium-extra-447673-5913377.jar",
+      "sha256": "c20fe1a554916cde5dd0ac72ba2b82ed04263026d4394ac51be6f7a300902443",
+      "size": 367047,
+      "mods": [
+        {
+          "id": "sodium_extra",
+          "version": "0.6.0+mc1.21.1"
+        }
+      ]
+    },
+    {
+      "slug": "sophisticated-backpacks",
+      "projectID": 422301,
+      "fileID": 7854633,
+      "url": "https://www.cursemaven.com/curse/maven/sophisticated-backpacks-422301/7854633/sophisticated-backpacks-422301-7854633.jar",
+      "sha256": "8763a7048d8f494bb5d80779e0649c87f6d023136caf77b9b55b7a2a6adf55c1",
+      "size": 1018675,
+      "mods": [
+        {
+          "id": "sophisticatedbackpacks",
+          "version": "3.25.36"
+        }
+      ]
+    },
+    {
+      "slug": "sophisticated-core",
+      "projectID": 618298,
+      "fileID": 7876836,
+      "url": "https://www.cursemaven.com/curse/maven/sophisticated-core-618298/7876836/sophisticated-core-618298-7876836.jar",
+      "sha256": "83e1fca92212f2160046f460ce418184a369ca60b166addfee10314a034ce781",
+      "size": 1471010,
+      "mods": [
+        {
+          "id": "sophisticatedcore",
+          "version": "1.4.18"
+        }
+      ]
+    },
+    {
+      "slug": "sophisticated-jei-index",
+      "projectID": 1482785,
+      "fileID": 7789874,
+      "url": "https://www.cursemaven.com/curse/maven/sophisticated-jei-index-1482785/7789874/sophisticated-jei-index-1482785-7789874.jar",
+      "sha256": "f42f4131d9b21021b1507ee1980e95355046e814ccfef72e73a05d8949a5d2ff",
+      "size": 76283,
+      "mods": [
+        {
+          "id": "sophisticated_jei_index",
+          "version": "1.0.2"
+        }
+      ]
+    },
+    {
+      "slug": "spark",
+      "projectID": 361579,
+      "fileID": 6225208,
+      "url": "https://www.cursemaven.com/curse/maven/spark-361579/6225208/spark-361579-6225208.jar",
+      "sha256": "647e8a81afbe414dba1df4ba15fd06c5d32d4cb544e68828405e8e074c2e16db",
+      "size": 3642581,
+      "mods": [
+        {
+          "id": "spark",
+          "version": "1.10.124"
+        }
+      ]
+    },
+    {
+      "slug": "starter-kit",
+      "projectID": 390717,
+      "fileID": 6429852,
+      "url": "https://www.cursemaven.com/curse/maven/starter-kit-390717/6429852/starter-kit-390717-6429852.jar",
+      "sha256": "1fbe57e9d7653af5dad1f4baa1354bb2fe11481fe7a2fa55bc3b5a8b281b580c",
+      "size": 272899,
+      "mods": [
+        {
+          "id": "starterkit",
+          "version": "7.4"
+        }
+      ]
+    },
+    {
+      "slug": "structblend",
+      "projectID": 1718901,
+      "fileID": 9118687,
+      "url": "https://www.cursemaven.com/curse/maven/structblend-1718901/9118687/structblend-1718901-9118687.jar",
+      "sha256": "e0b1a9faaa9be7d68eeadc3d21c7016f9888bc9b2e65e0a4ee83d70be9552513",
+      "size": 338874,
+      "mods": [
+        {
+          "id": "structblend",
+          "version": "1.0.3"
+        }
+      ]
+    },
+    {
+      "slug": "structure-layout-optimizer",
+      "projectID": 1087831,
+      "fileID": 7439136,
+      "url": "https://www.cursemaven.com/curse/maven/structure-layout-optimizer-1087831/7439136/structure-layout-optimizer-1087831-7439136.jar",
+      "sha256": "ef8eb29c5c4f111c74a49d379843e4c2f51d11b28c8116a49be13636c83f4385",
+      "size": 61777,
+      "mods": [
+        {
+          "id": "structure_layout_optimizer",
+          "version": "1.0.12"
+        }
+      ]
+    },
+    {
+      "slug": "swaying-garden",
+      "projectID": 1203057,
+      "fileID": 6936017,
+      "url": "https://www.cursemaven.com/curse/maven/swaying-garden-1203057/6936017/swaying-garden-1203057-6936017.jar",
+      "sha256": "b95858a1f60099e7243bc7c808cc77cc093d2ef71dd424c125704bb6ea0e0c29",
+      "size": 99155,
+      "mods": [
+        {
+          "id": "swaying_garden",
+          "version": "1.1.2.1"
+        }
+      ]
+    },
+    {
+      "slug": "tensura-barriers",
+      "projectID": 1598791,
+      "fileID": 9074218,
+      "url": "https://www.cursemaven.com/curse/maven/tensura-barriers-1598791/9074218/tensura-barriers-1598791-9074218.jar",
+      "sha256": "5e5de68e8f200b01ebd53a746f6fc14b5fb37908d925ae47a30a9244b6d383a1",
+      "size": 995613,
+      "mods": [
+        {
+          "id": "tensurabarriers",
+          "version": "4.0.0"
+        }
+      ]
+    },
+    {
+      "slug": "tensura-better-subordinates",
+      "projectID": 1489224,
+      "fileID": 8414486,
+      "url": "https://www.cursemaven.com/curse/maven/tensura-better-subordinates-1489224/8414486/tensura-better-subordinates-1489224-8414486.jar",
+      "sha256": "922798da68817fe14e49687d758798f67b34e75ccebcad96fefdd44cf475ee0b",
+      "size": 117477,
+      "mods": [
+        {
+          "id": "tensura_better_subs",
+          "version": "1.2.4"
+        }
+      ]
+    },
+    {
+      "slug": "tensura-blade",
+      "projectID": 1729581,
+      "fileID": 9335377,
+      "url": "https://www.cursemaven.com/curse/maven/tensura-blade-1729581/9335377/tensura-blade-1729581-9335377.jar",
+      "sha256": "43804d50e2112fa8b2baaee7f3520045ccdfbce2056239970336c5a7db7d049d",
+      "size": 482541,
+      "mods": [
+        {
+          "id": "tensura_blade",
+          "version": "1.0.11"
+        }
+      ]
+    },
+    {
+      "slug": "tensura-boss-structure",
+      "projectID": 1448822,
+      "fileID": 8614357,
+      "url": "https://www.cursemaven.com/curse/maven/tensura-boss-structure-1448822/8614357/tensura-boss-structure-1448822-8614357.jar",
+      "sha256": "c5c8f4c9791c28eb51f74fc3137eb8da6cccc32e5f43bab40bbf8448d66325f6",
+      "size": 906653,
+      "mods": [
+        {
+          "id": "tensura_boss_structure",
+          "version": "1.0.3.3"
+        }
+      ]
+    },
+    {
+      "slug": "tensura-compat-ftb",
+      "projectID": 1501493,
+      "fileID": 8375576,
+      "url": "https://www.cursemaven.com/curse/maven/tensura-compat-ftb-1501493/8375576/tensura-compat-ftb-1501493-8375576.jar",
+      "sha256": "c49a49dc1a7edae5fdd8640dfb14ae35b2d9cbd3ff389d1ec9c2e92ddc3617b6",
+      "size": 59976,
+      "mods": [
+        {
+          "id": "tensura_ftb",
+          "version": "2.0.0.4"
+        }
+      ]
+    },
+    {
+      "slug": "tensura-compat-ice-fire",
+      "projectID": 1140209,
+      "fileID": 7905387,
+      "url": "https://www.cursemaven.com/curse/maven/tensura-compat-ice-fire-1140209/7905387/tensura-compat-ice-fire-1140209-7905387.jar",
+      "sha256": "06ca9e5d5aa615e57e0b939f4879bc2bca166c33562d31e0546e8e50e6b65cd4",
+      "size": 139984,
+      "mods": [
+        {
+          "id": "tensura_iaf",
+          "version": "2.0.0.1"
+        }
+      ]
+    },
+    {
+      "slug": "tensura-enigmatic",
+      "projectID": 1299711,
+      "fileID": 8361578,
+      "url": "https://www.cursemaven.com/curse/maven/tensura-enigmatic-1299711/8361578/tensura-enigmatic-1299711-8361578.jar",
+      "sha256": "3895ba174ee27db3ac5a33897c481c11797650cb6259bd8d19e489161ca8af7d",
+      "size": 60960,
+      "mods": [
+        {
+          "id": "tensuraenigmatic",
+          "version": "1.0.1"
+        }
+      ]
+    },
+    {
+      "slug": "tensura-evolution-ui",
+      "projectID": 1560818,
+      "fileID": 8245633,
+      "url": "https://www.cursemaven.com/curse/maven/tensura-evolution-ui-1560818/8245633/tensura-evolution-ui-1560818-8245633.jar",
+      "sha256": "2323b01f5ff7862dfd452719bcc5026493f72ad8d0bd76b5c452e07025e0bd04",
+      "size": 67483,
+      "mods": [
+        {
+          "id": "tensura_trepu",
+          "version": "1.0.0.2"
+        }
+      ]
+    },
+    {
+      "slug": "tensura-extra",
+      "projectID": 1679891,
+      "fileID": 9294656,
+      "url": "https://www.cursemaven.com/curse/maven/tensura-extra-1679891/9294656/tensura-extra-1679891-9294656.jar",
+      "sha256": "14c621d49b284e03b145236dbfacb85f798d2c3a707843010cf38c6fbdf2b32a",
+      "size": 531143,
+      "mods": [
+        {
+          "id": "tno_tensura_extras",
+          "version": "1.0.3"
+        }
+      ]
+    },
+    {
+      "slug": "tensura-guild",
+      "projectID": 1595198,
+      "fileID": 8594606,
+      "url": "https://www.cursemaven.com/curse/maven/tensura-guild-1595198/8594606/tensura-guild-1595198-8594606.jar",
+      "sha256": "f834ce468efd954bf848a3b2f5c20f365073b80929742bcb2a5032435731938e",
+      "size": 831930,
+      "mods": [
+        {
+          "id": "tensura_guild",
+          "version": "1.0.1.2"
+        }
+      ]
+    },
+    {
+      "slug": "tensura-kumodesu",
+      "projectID": 1160952,
+      "fileID": 7976062,
+      "url": "https://www.cursemaven.com/curse/maven/tensura-kumodesu-1160952/7976062/tensura-kumodesu-1160952-7976062.jar",
+      "sha256": "55ab3e756a53ca4c2b20d4a5cda24868a844bffb58a3fa27d0e8c1cd1cca373f",
+      "size": 975853,
+      "mods": [
+        {
+          "id": "tensura_kumodesu",
+          "version": "2.0.3-1.21.1-HOTFIX2"
+        }
+      ]
+    },
+    {
+      "slug": "tensura-mortal-cultivation",
+      "projectID": 1356920,
+      "fileID": 9317556,
+      "url": "https://www.cursemaven.com/curse/maven/tensura-mortal-cultivation-1356920/9317556/tensura-mortal-cultivation-1356920-9317556.jar",
+      "sha256": "e78eeb9936b23f3c85e075c6d0142f0c165b3f68a61512b733b7de8a25174cdd",
+      "size": 3931166,
+      "mods": [
+        {
+          "id": "mortal_cultivation",
+          "version": "1.0.6.1"
+        }
+      ]
+    },
+    {
+      "slug": "tensura-mysticism",
+      "projectID": 1148149,
+      "fileID": 8980686,
+      "url": "https://www.cursemaven.com/curse/maven/tensura-mysticism-1148149/8980686/tensura-mysticism-1148149-8980686.jar",
+      "sha256": "61e98fe4666cb2baa35396dca7d4e1bb7e41069f2ddfc4af9799b2bb5eb442d3",
+      "size": 4054486,
+      "mods": [
+        {
+          "id": "mysticism",
+          "version": "2.2.1"
+        }
+      ]
+    },
+    {
+      "slug": "tensura-naturesaura",
+      "projectID": 1642669,
+      "fileID": 8972631,
+      "url": "https://www.cursemaven.com/curse/maven/tensura-naturesaura-1642669/8972631/tensura-naturesaura-1642669-8972631.jar",
+      "sha256": "d94d5f33e9253ab050f8c80531156ddbffbed6b0793e43c819f94bbc818577f8",
+      "size": 37284,
+      "mods": [
+        {
+          "id": "tensura_naturesaura",
+          "version": "1.0.0"
+        }
+      ]
+    },
+    {
+      "slug": "tensura-no-game-no-life",
+      "projectID": 1232792,
+      "fileID": 8594682,
+      "url": "https://www.cursemaven.com/curse/maven/tensura-no-game-no-life-1232792/8594682/tensura-no-game-no-life-1232792-8594682.jar",
+      "sha256": "82b33041fd9ae30d4065fca4621745bc861a58d1362494289d5ab3d65a1643b8",
+      "size": 2271048,
+      "mods": [
+        {
+          "id": "tennogamenolife",
+          "version": "1.1.4.3"
+        }
+      ]
+    },
+    {
+      "slug": "tensura-not-enough-bosses",
+      "projectID": 1230585,
+      "fileID": 8022509,
+      "url": "https://www.cursemaven.com/curse/maven/tensura-not-enough-bosses-1230585/8022509/tensura-not-enough-bosses-1230585-8022509.jar",
+      "sha256": "99ce6e9fd6737278182e055a3fb98b5013a5c53cc7a62700078daa21e158778c",
+      "size": 272181,
+      "mods": [
+        {
+          "id": "tensura_neb",
+          "version": "2.0.0.3"
+        }
+      ]
+    },
+    {
+      "slug": "tensura-reincarnated",
+      "projectID": 643695,
+      "fileID": 9289888,
+      "url": "https://www.cursemaven.com/curse/maven/tensura-reincarnated-643695/9289888/tensura-reincarnated-643695-9289888.jar",
+      "sha256": "c0df1d9880eb9555d2cf5705ed1def6df37b3d689468b31c9de0c0bc52645f42",
+      "size": 36224637,
+      "mods": [
+        {
+          "id": "tensura",
+          "version": "2.0.1.4"
+        }
+      ]
+    },
+    {
+      "slug": "tensura-skill-books",
+      "projectID": 1418495,
+      "fileID": 7925280,
+      "url": "https://www.cursemaven.com/curse/maven/tensura-skill-books-1418495/7925280/tensura-skill-books-1418495-7925280.jar",
+      "sha256": "3dda17509603658fcf0f5ece32d0139eaf13dbb935dbc54f37c95f5f6a1284b2",
+      "size": 1230689,
+      "mods": [
+        {
+          "id": "tensura_skill_books",
+          "version": "2.1.2"
+        }
+      ]
+    },
+    {
+      "slug": "tensura-skill-disabled",
+      "projectID": 1294166,
+      "fileID": 8398904,
+      "url": "https://www.cursemaven.com/curse/maven/tensura-skill-disabled-1294166/8398904/tensura-skill-disabled-1294166-8398904.jar",
+      "sha256": "cf2eec6495aa94df7c632cad080f9c1afe3b87252b1d71a585b9c26b40bdd5b4",
+      "size": 21492,
+      "mods": [
+        {
+          "id": "tensura_skill_disabled",
+          "version": "1.0.0.0"
+        }
+      ]
+    },
+    {
+      "slug": "tensura-skill-wiki",
+      "projectID": 1570862,
+      "fileID": 9332261,
+      "url": "https://www.cursemaven.com/curse/maven/tensura-skill-wiki-1570862/9332261/tensura-skill-wiki-1570862-9332261.jar",
+      "sha256": "f6bb04eb8aff21a233ba6702249a0ffffdb6222fd61f88208a9cd3d257e74771",
+      "size": 616046,
+      "mods": [
+        {
+          "id": "foxablazeaqzl_wiki",
+          "version": "1.0.2.8"
+        }
+      ]
+    },
+    {
+      "slug": "tensura-slimethrone-extras",
+      "projectID": 1249067,
+      "fileID": 8313927,
+      "url": "https://www.cursemaven.com/curse/maven/tensura-slimethrone-extras-1249067/8313927/tensura-slimethrone-extras-1249067-8313927.jar",
+      "sha256": "fd3f2e5f9321ef644f740267f07b092636cc00932db41987d407dbb79bf2bcdc",
+      "size": 12492546,
+      "mods": [
+        {
+          "id": "stextras",
+          "version": "2.1.2.1"
+        }
+      ]
+    },
+    {
+      "slug": "tensura-unique-monsters",
+      "projectID": 1489273,
+      "fileID": 7844220,
+      "url": "https://www.cursemaven.com/curse/maven/tensura-unique-monsters-1489273/7844220/tensura-unique-monsters-1489273-7844220.jar",
+      "sha256": "db73f98391ae96d9a267d2ee63c128e497b887ac00c74da9618cd6e0a271eea3",
+      "size": 32755,
+      "mods": [
+        {
+          "id": "tr_unique_monsters",
+          "version": "1.0.2"
+        }
+      ]
+    },
+    {
+      "slug": "tensurafoxboss",
+      "projectID": 1722334,
+      "fileID": 9097461,
+      "url": "https://www.cursemaven.com/curse/maven/tensurafoxboss-1722334/9097461/tensurafoxboss-1722334-9097461.jar",
+      "sha256": "c8c1fa540a48396c2e228e3f88f19a81b5871adc25e0b2931ae8573cf08e400c",
+      "size": 551031,
+      "mods": [
+        {
+          "id": "foxboss",
+          "version": "1.1.1"
+        }
+      ]
+    },
+    {
+      "slug": "tensuraleonboss",
+      "projectID": 1758932,
+      "fileID": 9294756,
+      "url": "https://www.cursemaven.com/curse/maven/tensuraleonboss-1758932/9294756/tensuraleonboss-1758932-9294756.jar",
+      "sha256": "450cf4f3a8a31091b5eb4e0b2f15cb0aad2f1396ca177c78efb3701920ab13cf",
+      "size": 224929,
+      "mods": [
+        {
+          "id": "foxboss_leon_cromwell",
+          "version": "1.0.1"
+        }
+      ]
+    },
+    {
+      "slug": "tensuramorecultculfoazazel",
+      "projectID": 1708344,
+      "fileID": 9278312,
+      "url": "https://www.cursemaven.com/curse/maven/tensuramorecultculfoazazel-1708344/9278312/tensuramorecultculfoazazel-1708344-9278312.jar",
+      "sha256": "e6e218e423f09014ca3b73b742ddb552754861f5ed812d3144762baeddcfd9f1",
+      "size": 46360,
+      "mods": [
+        {
+          "id": "tensuramorecult",
+          "version": "1.0.1"
+        }
+      ]
+    },
+    {
+      "slug": "tensuramoreskills",
+      "projectID": 1399788,
+      "fileID": 8974348,
+      "url": "https://www.cursemaven.com/curse/maven/tensuramoreskills-1399788/8974348/tensuramoreskills-1399788-8974348.jar",
+      "sha256": "356c56010bf4b9d98f0cbef9386bcc4f5188d644017192a289253ca41407ecf5",
+      "size": 7882195,
+      "mods": [
+        {
+          "id": "tensuramoreskills",
+          "version": "0.0.4.9.2"
+        }
+      ]
+    },
+    {
+      "slug": "tensuramoreutils",
+      "projectID": 1544812,
+      "fileID": 8487999,
+      "url": "https://www.cursemaven.com/curse/maven/tensuramoreutils-1544812/8487999/tensuramoreutils-1544812-8487999.jar",
+      "sha256": "9946cc80284a4afbf6dc03f8c90dd445e6e90010521b9ae2dc964dd76fc2fa47",
+      "size": 73553,
+      "mods": [
+        {
+          "id": "tensuramoreutils",
+          "version": "1.8"
+        }
+      ]
+    },
+    {
+      "slug": "terrablender-neoforge",
+      "projectID": 940057,
+      "fileID": 6054947,
+      "url": "https://www.cursemaven.com/curse/maven/terrablender-neoforge-940057/6054947/terrablender-neoforge-940057-6054947.jar",
+      "sha256": "edb34c388fe17ea88d0a7fd11174bbf8ae8f28a4c8ce886f1bf9a5cf0ebc36b8",
+      "size": 120364,
+      "mods": [
+        {
+          "id": "terrablender",
+          "version": "${file.jarVersion}"
+        }
+      ]
+    },
+    {
+      "slug": "the-afterdark",
+      "projectID": 1110531,
+      "fileID": 5887176,
+      "url": "https://www.cursemaven.com/curse/maven/the-afterdark-1110531/5887176/the-afterdark-1110531-5887176.jar",
+      "sha256": "5aafb8c71de1e994bd43274a15ed2cf5b39263841b6f5573f8a3a61bf076903f",
+      "size": 300274,
+      "mods": [
+        {
+          "id": "the_afterdark",
+          "version": "1.0.3.1"
+        }
+      ]
+    },
+    {
+      "slug": "the-ponderer",
+      "projectID": 1461949,
+      "fileID": 8021511,
+      "url": "https://www.cursemaven.com/curse/maven/the-ponderer-1461949/8021511/the-ponderer-1461949-8021511.jar",
+      "sha256": "ec8276101c67cf03f2274895f6f763ccd8a27bc1061f2153f0c2410306efefca",
+      "size": 2554865,
+      "mods": [
+        {
+          "id": "ponderer",
+          "version": "1.8.2"
+        }
+      ]
+    },
+    {
+      "slug": "the-twilight-forest",
+      "projectID": 227639,
+      "fileID": 7797302,
+      "url": "https://www.cursemaven.com/curse/maven/the-twilight-forest-227639/7797302/the-twilight-forest-227639-7797302.jar",
+      "sha256": "493da16d10210f9f53a3c33b3d8fcb4ae9b14016ee420d753c894562bd9aba35",
+      "size": 27154121,
+      "mods": [
+        {
+          "id": "twilightforest",
+          "version": "4.8.3345"
+        }
+      ]
+    },
+    {
+      "slug": "tiny-skeletons",
+      "projectID": 548647,
+      "fileID": 5733732,
+      "url": "https://www.cursemaven.com/curse/maven/tiny-skeletons-548647/5733732/tiny-skeletons-548647-5733732.jar",
+      "sha256": "cf3b5094c2619bd7e7951a3d4a2c553b9ead3932ebdb4ac577f9599461261da9",
+      "size": 105750,
+      "mods": [
+        {
+          "id": "tinyskeletons",
+          "version": "21.1.0"
+        }
+      ]
+    },
+    {
+      "slug": "toms-storage",
+      "projectID": 378609,
+      "fileID": 8769956,
+      "url": "https://www.cursemaven.com/curse/maven/toms-storage-378609/8769956/toms-storage-378609-8769956.jar",
+      "sha256": "a703e28391b914298223a515238c8729007606f2f967a83b65b8d5cb39e0789d",
+      "size": 856803,
+      "mods": [
+        {
+          "id": "toms_storage",
+          "version": "2.4.2"
+        }
+      ]
+    },
+    {
+      "slug": "toms-storage-star-optimized",
+      "projectID": 1472108,
+      "fileID": 8792982,
+      "url": "https://www.cursemaven.com/curse/maven/toms-storage-star-optimized-1472108/8792982/toms-storage-star-optimized-1472108-8792982.jar",
+      "sha256": "5851d2f9c9f95b3e9d4b4c35618abfb29f22929a2e53b72db439a47c62c65e27",
+      "size": 106660,
+      "mods": [
+        {
+          "id": "toms_storage_star_optimized",
+          "version": "0.9.3"
+        }
+      ]
+    },
+    {
+      "slug": "towns-and-towers",
+      "projectID": 626761,
+      "fileID": 7112985,
+      "url": "https://www.cursemaven.com/curse/maven/towns-and-towers-626761/7112985/towns-and-towers-626761-7112985.jar",
+      "sha256": "925d61a8cee8ca013bac15cda2fcfbdf647eb1cde50c414c18298ea3a627c640",
+      "size": 3641681,
+      "mods": [
+        {
+          "id": "t_and_t",
+          "version": "1.13.7"
+        }
+      ]
+    },
+    {
+      "slug": "tr-addon",
+      "projectID": 1132105,
+      "fileID": 7899584,
+      "url": "https://www.cursemaven.com/curse/maven/tr-addon-1132105/7899584/tr-addon-1132105-7899584.jar",
+      "sha256": "38def0f47748e11a5d153a9dde57892c53f396a78dff97c9aaebf3ba631ece83",
+      "size": 105506,
+      "mods": [
+        {
+          "id": "traddon",
+          "version": "2.0.1"
+        }
+      ]
+    },
+    {
+      "slug": "tr-ancient-artifacts",
+      "projectID": 1603667,
+      "fileID": 8585634,
+      "url": "https://www.cursemaven.com/curse/maven/tr-ancient-artifacts-1603667/8585634/tr-ancient-artifacts-1603667-8585634.jar",
+      "sha256": "8760de87c7109f6638e940219806c23d4a57a8f77b96a35f6cff5062a2b290f3",
+      "size": 225109,
+      "mods": [
+        {
+          "id": "ancient_artifacts",
+          "version": "1.0.0"
+        }
+      ]
+    },
+    {
+      "slug": "trashslot",
+      "projectID": 235577,
+      "fileID": 7966115,
+      "url": "https://www.cursemaven.com/curse/maven/trashslot-235577/7966115/trashslot-235577-7966115.jar",
+      "sha256": "8d5ed45a30eb649bcea93136541d5274bcd9585084bdacb3d2bd72bb97808e5f",
+      "size": 77367,
+      "mods": [
+        {
+          "id": "trashslot",
+          "version": "21.1.9"
+        }
+      ]
+    },
+    {
+      "slug": "travelers-titles-neoforge",
+      "projectID": 1015155,
+      "fileID": 6294123,
+      "url": "https://www.cursemaven.com/curse/maven/travelers-titles-neoforge-1015155/6294123/travelers-titles-neoforge-1015155-6294123.jar",
+      "sha256": "f7d6811b58a432e4d7f0e80bfcc48210f7a8da251d1c3e528a73c26d0f2a56ed",
+      "size": 235345,
+      "mods": [
+        {
+          "id": "travelerstitles",
+          "version": "1.21.1-NeoForge-5.1.3"
+        }
+      ]
+    },
+    {
+      "slug": "treasuredistance",
+      "projectID": 873563,
+      "fileID": 5430841,
+      "url": "https://www.cursemaven.com/curse/maven/treasuredistance-873563/5430841/treasuredistance-873563-5430841.jar",
+      "sha256": "7cdbe75c12a1de20804511b880d09eae800832211cf247c15b30f1a9570ea00d",
+      "size": 6496,
+      "mods": [
+        {
+          "id": "treasuredistance",
+          "version": "1.0"
+        }
+      ]
+    },
+    {
+      "slug": "twilight-tweaks",
+      "projectID": 548889,
+      "fileID": 6544710,
+      "url": "https://www.cursemaven.com/curse/maven/twilight-tweaks-548889/6544710/twilight-tweaks-548889-6544710.jar",
+      "sha256": "490b58946c7e7afb38bc9f031b1302ea487360f0d72c716b266f307b812d7ee4",
+      "size": 30765,
+      "mods": [
+        {
+          "id": "twilighttweaks",
+          "version": "1.3"
+        }
+      ]
+    },
+    {
+      "slug": "txnilib",
+      "projectID": 1104882,
+      "fileID": 6533725,
+      "url": "https://www.cursemaven.com/curse/maven/txnilib-1104882/6533725/txnilib-1104882-6533725.jar",
+      "sha256": "411e811a6a53a63c2716dbf71cd1167e3a98d000b884458759d6192720be3e18",
+      "size": 6276522,
+      "mods": [
+        {
+          "id": "txnilib",
+          "version": "1.0.24"
+        }
+      ]
+    },
+    {
+      "slug": "uranus",
+      "projectID": 1010827,
+      "fileID": 8587525,
+      "url": "https://www.cursemaven.com/curse/maven/uranus-1010827/8587525/uranus-1010827-8587525.jar",
+      "sha256": "2f98db9e0fed13aad87340beaff185e95c9d56ee27cdf1d111346b91a5725a69",
+      "size": 847836,
+      "mods": [
+        {
+          "id": "uranus",
+          "version": "2.4.1-bugfix"
+        }
+      ]
+    },
+    {
+      "slug": "vanillabackport",
+      "projectID": 417430,
+      "fileID": 8115367,
+      "url": "https://www.cursemaven.com/curse/maven/vanillabackport-417430/8115367/vanillabackport-417430-8115367.jar",
+      "sha256": "9b12deb39ab53e461dd39a1865a98c79874a679071126dac334c3fd7bf97c0d1",
+      "size": 54217741,
+      "mods": [
+        {
+          "id": "vanillabackport",
+          "version": "1.1.7.6"
+        }
+      ]
+    },
+    {
+      "slug": "variants-and-ventures",
+      "projectID": 981139,
+      "fileID": 7671987,
+      "url": "https://www.cursemaven.com/curse/maven/variants-and-ventures-981139/7671987/variants-and-ventures-981139-7671987.jar",
+      "sha256": "6181e5b8aefe1697aa6155c18b2dcd8ff4b1d35d1063e1af496f4b305ee8ef78",
+      "size": 1076276,
+      "mods": [
+        {
+          "id": "variantsandventures",
+          "version": "1.0.23"
+        }
+      ]
+    },
+    {
+      "slug": "waystones",
+      "projectID": 245755,
+      "fileID": 7750240,
+      "url": "https://www.cursemaven.com/curse/maven/waystones-245755/7750240/waystones-245755-7750240.jar",
+      "sha256": "4ba58cbff6600179addd06f8e27912339ff4aca9624c279caa173aaebc68a3a8",
+      "size": 876329,
+      "mods": [
+        {
+          "id": "waystones",
+          "version": "21.1.29"
+        }
+      ]
+    },
+    {
+      "slug": "when-dungeons-arise",
+      "projectID": 442508,
+      "fileID": 7150870,
+      "url": "https://www.cursemaven.com/curse/maven/when-dungeons-arise-442508/7150870/when-dungeons-arise-442508-7150870.jar",
+      "sha256": "7eee1eca7e3b2c6c1bede055934f391ae2e8349ffe33e106f451176d2cfcf0e4",
+      "size": 11842679,
+      "mods": [
+        {
+          "id": "dungeons_arise",
+          "version": "2.1.68"
+        }
+      ]
+    },
+    {
+      "slug": "wither-spawn-animation",
+      "projectID": 1084564,
+      "fileID": 7638136,
+      "url": "https://www.cursemaven.com/curse/maven/wither-spawn-animation-1084564/7638136/wither-spawn-animation-1084564-7638136.jar",
+      "sha256": "029bbd634e1b3528896f4f41bbdb600d93a4fe3528407fec2abe8ed4b71f57d7",
+      "size": 1602051,
+      "mods": [
+        {
+          "id": "wither_spawn_animation",
+          "version": "1.6.2"
+        }
+      ]
+    },
+    {
+      "slug": "xaeros-minimap",
+      "projectID": 263420,
+      "fileID": 8046966,
+      "url": "https://www.cursemaven.com/curse/maven/xaeros-minimap-263420/8046966/xaeros-minimap-263420-8046966.jar",
+      "sha256": "05fb78259566983b1e66501f46d6695bfab087e9630f3b65e82677b88244a1c2",
+      "size": 2138329,
+      "mods": [
+        {
+          "id": "xaerominimap",
+          "version": "25.3.13"
+        }
+      ]
+    },
+    {
+      "slug": "xaeros-world-map",
+      "projectID": 317780,
+      "fileID": 8042208,
+      "url": "https://www.cursemaven.com/curse/maven/xaeros-world-map-317780/8042208/xaeros-world-map-317780-8042208.jar",
+      "sha256": "73b1447333e467d23645ce7b2c319f3ca951b393b44b3a6ed0f41f06927d42bb",
+      "size": 1387011,
+      "mods": [
+        {
+          "id": "xaeroworldmap",
+          "version": "1.40.16"
+        }
+      ]
+    },
+    {
+      "slug": "yacl",
+      "projectID": 667299,
+      "fileID": 6662857,
+      "url": "https://www.cursemaven.com/curse/maven/yacl-667299/6662857/yacl-667299-6662857.jar",
+      "sha256": "673fecbffad26bb6d025fb5f60560cf6340e542bdf091d8d66074490515292f3",
+      "size": 1111051,
+      "mods": [
+        {
+          "id": "yet_another_config_lib_v3",
+          "version": "3.7.1+1.21.1-neoforge"
+        }
+      ]
+    },
+    {
+      "slug": "yeehaw-towns",
+      "projectID": 1078314,
+      "fileID": 7143025,
+      "url": "https://www.cursemaven.com/curse/maven/yeehaw-towns-1078314/7143025/yeehaw-towns-1078314-7143025.jar",
+      "sha256": "ae052e96fbe8b9a66aa46ac26009943d8465f419cba6a323385f132b797e6abb",
+      "size": 1032892,
+      "mods": [
+        {
+          "id": "yeehaw_towns",
+          "version": "1.0.4"
+        }
+      ]
+    },
+    {
+      "slug": "you-must-know-this-notice",
+      "projectID": 1470954,
+      "fileID": 9340356,
+      "url": "https://www.cursemaven.com/curse/maven/you-must-know-this-notice-1470954/9340356/you-must-know-this-notice-1470954-9340356.jar",
+      "sha256": "1c1f0fbc604f363f4e00e948b809803e3c0dd0e3fc28f30521e4dabf593723c0",
+      "size": 1125776,
+      "mods": [
+        {
+          "id": "ymktn",
+          "version": "1.1.1"
+        }
+      ]
+    },
+    {
+      "slug": "youre-in-grave-danger",
+      "projectID": 544912,
+      "fileID": 6684166,
+      "url": "https://www.cursemaven.com/curse/maven/youre-in-grave-danger-544912/6684166/youre-in-grave-danger-544912-6684166.jar",
+      "sha256": "dd2142a3c6a9d5b990ab36220be482f7aa9f528755f93b8fef8996f509ddcda2",
+      "size": 448888,
+      "mods": [
+        {
+          "id": "yigd",
+          "version": "2.0.13"
+        }
+      ]
+    },
+    {
+      "slug": "yungs-api-neoforge",
+      "projectID": 1015100,
+      "fileID": 6715463,
+      "url": "https://www.cursemaven.com/curse/maven/yungs-api-neoforge-1015100/6715463/yungs-api-neoforge-1015100-6715463.jar",
+      "sha256": "08e1d21690d3213a4c62de6b6cf79f3527afb2e72e0cad0e1848d46eb8f682ca",
+      "size": 388678,
+      "mods": [
+        {
+          "id": "yungsapi",
+          "version": "1.21.1-NeoForge-5.1.6"
+        }
+      ]
+    },
+    {
+      "slug": "yungs-better-desert-temples-neoforge",
+      "projectID": 1015114,
+      "fileID": 6276955,
+      "url": "https://www.cursemaven.com/curse/maven/yungs-better-desert-temples-neoforge-1015114/6276955/yungs-better-desert-temples-neoforge-1015114-6276955.jar",
+      "sha256": "2c3191ad447092cc7873a06e92f16bd3e2ff9dc31e93268b8893d06dd89e1fd6",
+      "size": 905839,
+      "mods": [
+        {
+          "id": "betterdeserttemples",
+          "version": "1.21.1-NeoForge-4.1.5"
+        }
+      ]
+    },
+    {
+      "slug": "yungs-better-end-island-neoforge",
+      "projectID": 1015127,
+      "fileID": 6300968,
+      "url": "https://www.cursemaven.com/curse/maven/yungs-better-end-island-neoforge-1015127/6300968/yungs-better-end-island-neoforge-1015127-6300968.jar",
+      "sha256": "8005f1ea798d09fc05dad07a21ed1f393a523a718197cdbd37b1ce6d9a17e4a4",
+      "size": 398130,
+      "mods": [
+        {
+          "id": "betterendisland",
+          "version": "1.21.1-NeoForge-3.1.2"
+        }
+      ]
+    },
+    {
+      "slug": "yungs-better-jungle-temples-neoforge",
+      "projectID": 1015123,
+      "fileID": 5924482,
+      "url": "https://www.cursemaven.com/curse/maven/yungs-better-jungle-temples-neoforge-1015123/5924482/yungs-better-jungle-temples-neoforge-1015123-5924482.jar",
+      "sha256": "a0d57b78c7a1891796f342b1f09c214bc27bedf0a3a894f029dfdb2db9f813d0",
+      "size": 795839,
+      "mods": [
+        {
+          "id": "betterjungletemples",
+          "version": "1.21.1-NeoForge-3.1.2"
+        }
+      ]
+    },
+    {
+      "slug": "yungs-better-nether-fortresses-neoforge",
+      "projectID": 1015118,
+      "fileID": 6606621,
+      "url": "https://www.cursemaven.com/curse/maven/yungs-better-nether-fortresses-neoforge-1015118/6606621/yungs-better-nether-fortresses-neoforge-1015118-6606621.jar",
+      "sha256": "5450a64a7036237f449496837e08f3e5b3aa1d7974a10df43944172def75d8ff",
+      "size": 609639,
+      "mods": [
+        {
+          "id": "betterfortresses",
+          "version": "1.21.1-NeoForge-3.1.5"
+        }
+      ]
+    },
+    {
+      "slug": "yungs-better-strongholds-neoforge",
+      "projectID": 1015105,
+      "fileID": 6272264,
+      "url": "https://www.cursemaven.com/curse/maven/yungs-better-strongholds-neoforge-1015105/6272264/yungs-better-strongholds-neoforge-1015105-6272264.jar",
+      "sha256": "a9cab2fc01538368862365691f7d215309801aed0b390351681b6b60a1db7b58",
+      "size": 461244,
+      "mods": [
+        {
+          "id": "betterstrongholds",
+          "version": "1.21.1-NeoForge-5.1.3"
+        }
+      ]
+    },
+    {
+      "slug": "yungs-cave-biomes",
+      "projectID": 1111586,
+      "fileID": 6913179,
+      "url": "https://www.cursemaven.com/curse/maven/yungs-cave-biomes-1111586/6913179/yungs-cave-biomes-1111586-6913179.jar",
+      "sha256": "7585587e5cb7859e26189c6ec0a5b829c5c228f095e4e843fa3add61f817dd20",
+      "size": 13006621,
+      "mods": [
+        {
+          "id": "yungscavebiomes",
+          "version": "1.21.1-NeoForge-3.1.1"
+        }
+      ]
+    }
+  ]
+}

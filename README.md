@@ -12,7 +12,7 @@ The **[Inverted Spear of Heaven](wiki/pages/Inverted-Spear-of-Heaven.md)** is a 
 
 ## Standalone Heavenly Restriction addon
 
-The race, Chained, Unbound, its three aura recovery skills and Air Walk are also available as **[Tensura: Heavenly Restriction](standalone/heavenly-restriction/README.md)**. [Download standalone 1.1.5](releases/tensura-heavenly-restriction-1.1.5.jar). It requires Tensura and its dependencies, runs without Tensura Myths, and uses separate registry IDs. Use either addon in an instance; the full Myths release above retains all its content.
+The race, Chained, Unbound, its three aura recovery skills and Air Walk are also available as **[Tensura: Heavenly Restriction](standalone/heavenly-restriction/README.md)**. [Download standalone 1.1.6](releases/tensura-heavenly-restriction-1.1.6.jar). It requires Tensura and its dependencies, runs without Tensura Myths, and uses separate registry IDs. Use either addon in an instance; the full Myths release above retains all its content. Standalone **1.1.6** also supports **[Tensura Neo Otherworld 1.1.3a](standalone/heavenly-restriction/docs/compatibility/NEO-OTHERWORLD-1.1.3a.md)**.
 
 ## Visuals
 

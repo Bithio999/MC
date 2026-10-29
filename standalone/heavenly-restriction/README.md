@@ -2,7 +2,13 @@
 
 An independent **NeoForge 1.21.1 addon for Tensura: Reincarnated**, extracted from Tensura Myths, with the Unbound Ultimate evolution and Air Walk update. It includes the Heavenly Restriction race lineage, Chained and its Unbound Ultimate evolution, aura recovery skills, and Air Walk. **Tensura Myths is not required.**
 
-[Download 1.1.5](../../releases/tensura-heavenly-restriction-1.1.5.jar) · [Gameplay guide](docs/GUIDE.md) · [Validation](docs/VALIDATION-1.1.5.md)
+[Download 1.1.6](../../releases/tensura-heavenly-restriction-1.1.6.jar) · [Gameplay guide](docs/GUIDE.md) · [Validation](docs/VALIDATION-1.1.6.md)
+
+## Tensura Neo Otherworld 1.1.3a
+
+Use **1.1.6 or newer** with this pack. The addon accepts its pinned Tensura 2.0.1.4 and GeckoLib 4.9.2, preserves the pack’s configs and respects Mysticism’s Constant Energy regeneration lock. All 39 addon starting skills are audited: 29 are excluded for magicule costs or target-skill copying, while 10 remain eligible. Pride’s exception and Creator inheritance are preserved.
+
+Replace the older Heavenly Restriction JAR in the instance’s `mods` folder. On multiplayer, update the server too. Keep Tensura Myths out of this standalone instance. [Compatibility report and exact pack lock](docs/compatibility/NEO-OTHERWORLD-1.1.3a.md).
 
 ## Included content
 
@@ -28,9 +34,9 @@ Chained/Unbound dash and Counter carry main-hand weapon damage, enchantments and
 
 Use **Java 21**, **Minecraft 1.21.1**, and **NeoForge 21.1.209 or later in the 21.1 line**. Install on both the client and server:
 
-1. **Tensura: Reincarnated 2.0.1.3** and its dependencies, including **ManasCore 4.0.0.2**, **Architectury 13.0.8+**, **SmartBrainLib**, and **TerraBlender**.
-2. **GeckoLib 4.9.3** (4.x).
-3. **tensura-heavenly-restriction-1.1.5.jar**.
+1. **Tensura: Reincarnated 2.0.1.3 or 2.0.1.4** and its dependencies, including **ManasCore 4.0.0.2**, **Architectury 13.0.8+**, **SmartBrainLib**, and **TerraBlender**.
+2. **GeckoLib 4.9.2** (4.x).
+3. **tensura-heavenly-restriction-1.1.6.jar**.
 
 Use this addon **instead of Tensura Myths**. The loader rejects installing both because both implement the same Chained and Battlewill hooks. The full Tensura Myths mod remains available separately with all its existing content.
 
@@ -46,7 +52,7 @@ python3 scripts/fetch-runtime.py
 ./gradlew build runGameTestServer
 ```
 
-Java 21 is required. The fetch script verifies the exact runtime dependency hashes in `runtime-mods.lock.json`. Gradle resolves the pinned Tensura, ManasCore and Architectury versions. Output: `build/libs/tensura-heavenly-restriction-1.1.5.jar`.
+Java 21 is required. The fetch script verifies the exact runtime dependency hashes in `runtime-mods.lock.json`. Gradle resolves the pinned Tensura, ManasCore and Architectury versions. Output: `build/libs/tensura-heavenly-restriction-1.1.6.jar`.
 
 `./gradlew runClient` starts an isolated development client. Native tests cover the extracted mechanics and prove that Tensura Myths is absent. Optional visual-review code in `docs/review` is excluded from regular builds; see its instructions.
 

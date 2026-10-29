@@ -37,7 +37,7 @@ public final class ChainedReincarnation {
         return id!=null && !id.toString().equals("tensura:pride") && SkillAPI.getSkillRegistry().delegate(id).is(SKILL_TAKING);
     }
     public static boolean hasMagiculeCost(ManasSkill skill,Player player){
-        if(nativeInlineCost(skill))return true;
+        if(nativeInlineCost(skill) || addonInlineCost(skill))return true;
         if(!(skill instanceof TensuraSkill tensura))return false;
         try{
             for(boolean mastered:new boolean[]{false,true})for(boolean toggled:new boolean[]{false,true}){
@@ -53,6 +53,36 @@ public final class ChainedReincarnation {
             return false;
         }catch(RuntimeException ex){
             if(WARNED.add(skill))LOG.warn("Unable to inspect reincarnation costs for {}; excluded for Fettered Human. An explicit allowlist entry can override this.",skill.getRegistryName(),ex);
+            return true;
+        }
+    }
+    /** Optional addon charges performed inside ability bodies, absent from their cost getters. */
+    private static boolean addonInlineCost(ManasSkill skill){
+        if(skill.getRegistryName()==null)return false;
+        String id=skill.getRegistryName().toString();
+        String[] fields=switch(id){
+            case "mysticism:subjugator" -> new String[]{"takeoverEPMultiplierRequirement","takeoverEPMultiplierRequirementMastered"};
+            case "mysticism:gardener" -> new String[]{"cropMasteryCost","blessingCost","blessingCostMastered"};
+            case "tensuramoreskills:authority_of_greed" -> new String[]{"lionheartMagiculeLossPercent"};
+            default -> null;
+        };
+        if(fields==null)return false;
+        try{
+            Object config;
+            if(id.equals("tensuramoreskills:authority_of_greed")){
+                var getter=skill.getClass().getDeclaredMethod("cfg");getter.setAccessible(true);config=getter.invoke(null);
+            }else{
+                var field=skill.getClass().getDeclaredField("CONFIG");field.setAccessible(true);config=field.get(null);
+            }
+            for(String name:fields){
+                var field=config.getClass().getField(name);Object value=field.get(config);
+                if(value instanceof net.neoforged.neoforge.common.ModConfigSpec.ConfigValue<?> configured)value=configured.get();
+                if(!(value instanceof Number number))throw new IllegalStateException("Non-numeric addon cost: "+name);
+                double amount=number.doubleValue();if(amount>0 || !Double.isFinite(amount))return true;
+            }
+            return false;
+        }catch(ReflectiveOperationException | RuntimeException ex){
+            if(WARNED.add(skill))LOG.warn("Unable to inspect inline addon costs for {}; excluded for Fettered Human. An explicit allowlist entry can override this.",id,ex);
             return true;
         }
     }

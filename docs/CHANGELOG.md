@@ -1,5 +1,12 @@
 # Changelog
 
+## Standalone 1.1.6 — Tensura Neo Otherworld 1.1.3a compatibility
+
+- Support the pack’s Tensura 2.0.1.4 and GeckoLib 4.9.2 while retaining Tensura 2.0.1.3 support. Myths 0.35.5 is unchanged.
+- Pause Chained’s converted regeneration under Mysticism’s Constant Energy and Constant Energy Debuff, using an extensible optional effect tag.
+- Audit all 39 addon starting skills. Exclude Imitator, All-Rounder, Total Reflection, Hidden Ruler and Satella for target-skill copying; detect inline magicule costs in Gardener, Subjugator and Authority of Greed. Preserve Pride’s exception, Creator support and configurable overrides.
+- Add an exact 263-project compatibility lock, isolated pack test setup, native integration fixtures and full-client review captures.
+
 ## 0.35.5 / standalone 1.1.5 — Heavenly Arsenal
 
 - Equipped Unerring Body blocks Fear, Slowness, Burden, native Haki fields and Haki forced movement, for both Chained and Unbound. Existing listed debuffs are cleansed.
