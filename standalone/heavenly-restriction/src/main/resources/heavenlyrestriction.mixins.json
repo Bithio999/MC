@@ -30,7 +30,9 @@
     "NullificationBarrierMixin",
     "NullificationActivationMixin",
     "NullificationSpiritualBodyMixin",
-    "NullificationSpiritualFormMixin"
+    "NullificationSpiritualFormMixin",
+    "InstantTransmissionMasteryMixin",
+    "InstantTransmissionSpatialMixin"
   ],
   "injectors": {
     "defaultRequire": 1

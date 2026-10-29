@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "heavenlyrestriction:air_sovereignty"
+    "heavenlyrestriction:air_sovereignty",
+    "heavenlyrestriction:instant_transmission"
   ]
 }

@@ -119,6 +119,7 @@ The three Godly classification passives are always active, free and non-stacking
 | Ability | Parent skill / system | Activation | Damage type |
 | --- | --- | --- | --- |
 | [Air Walk](https://github.com/Bithio999/MC/wiki/Air-Walk#air-walk) | [Air Walk](https://github.com/Bithio999/MC/wiki/Air-Walk) | Active - Press | None |
+| [Instant Transmission](https://github.com/Bithio999/MC/wiki/Instant-Transmission#instant-transmission) | [Instant Transmission](https://github.com/Bithio999/MC/wiki/Instant-Transmission) | Active - Press | None |
 
 ## Racial abilities
 

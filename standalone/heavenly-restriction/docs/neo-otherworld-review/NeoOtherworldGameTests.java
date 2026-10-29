@@ -16,6 +16,26 @@ import static dev.heavenlyrestriction.ChainedGameTests.near;
 @GameTestHolder("heavenlyrestriction_compat")
 @PrefixGameTestTemplate(false)
 public final class NeoOtherworldGameTests {
+    @GameTest(template="empty",timeoutTicks=160)
+    public static void battlewillCategoryAndSelfOnlyCapabilitiesAreNative(GameTestHelper h){InstantTransmissionGameTests.battlewillCategoryAndSelfOnlyCapabilitiesAreNative(h);}
+    @GameTest(template="empty",timeoutTicks=160)
+    public static void nativeInstantMoveMasteryUnlocksOneTrainableEvolution(GameTestHelper h){InstantTransmissionGameTests.nativeInstantMoveMasteryUnlocksOneTrainableEvolution(h);}
+    @GameTest(template="empty",timeoutTicks=160)
+    public static void existingMasteredParentsBackfillButBorrowedCopiesDoNot(GameTestHelper h){InstantTransmissionGameTests.existingMasteredParentsBackfillButBorrowedCopiesDoNot(h);}
+    @GameTest(template="empty",timeoutTicks=160)
+    public static void nativeCoordinateRequestBecomesInstantAtMasteryAndPaysOnlyAura(GameTestHelper h){InstantTransmissionGameTests.nativeCoordinateRequestBecomesInstantAtMasteryAndPaysOnlyAura(h);}
+    @GameTest(template="empty",timeoutTicks=160)
+    public static void unmasteredRequestWaitsExactlyOneHundredTicksAndChargesOnce(GameTestHelper h){InstantTransmissionGameTests.unmasteredRequestWaitsExactlyOneHundredTicksAndChargesOnce(h);}
+    @GameTest(template="empty",timeoutTicks=160)
+    public static void malformedUnlearnedUnfundedAndCrossDimensionRequestsDoNotTeleport(GameTestHelper h){InstantTransmissionGameTests.malformedUnlearnedUnfundedAndCrossDimensionRequestsDoNotTeleport(h);}
+    @GameTest(template="empty",timeoutTicks=160)
+    public static void nativePortalRequestCannotCreateAPortalOrChargeResources(GameTestHelper h){InstantTransmissionGameTests.nativePortalRequestCannotCreateAPortalOrChargeResources(h);}
+    @GameTest(template="empty",timeoutTicks=160)
+    public static void spatialBlockadeAndLosingTheSkillCancelPendingTransmission(GameTestHelper h){InstantTransmissionGameTests.spatialBlockadeAndLosingTheSkillCancelPendingTransmission(h);}
+    @GameTest(template="empty",timeoutTicks=160)
+    public static void nativeTeleportEventCanVetoAnInstantTransmission(GameTestHelper h){InstantTransmissionGameTests.nativeTeleportEventCanVetoAnInstantTransmission(h);}
+    @GameTest(template="empty",timeoutTicks=160)
+    public static void chainedCanLearnTheEvolutionAndReceivesBattlewillMasteryBonus(GameTestHelper h){InstantTransmissionGameTests.chainedCanLearnTheEvolutionAndReceivesBattlewillMasteryBonus(h);}
     @GameTest(template="empty",timeoutTicks=100)
     public static void spiritualContactBelongsOnlyToTheAttackingMainHandWeapon(GameTestHelper h){NullificationSpiritualGameTests.spiritualContactBelongsOnlyToTheAttackingMainHandWeapon(h);}
     @GameTest(template="empty",timeoutTicks=100)

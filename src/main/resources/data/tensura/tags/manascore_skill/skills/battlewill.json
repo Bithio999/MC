@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "wildhunt:air_sovereignty"
+    "wildhunt:air_sovereignty",
+    "wildhunt:instant_transmission"
   ]
 }

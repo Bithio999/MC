@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.35.7 / standalone 1.1.8 — Instant Transmission
+
+- Add a Battlewill evolution of mastered Instant Move through native learning, with backfill for existing masters and Chained/Unbound support.
+- Reuse Tensura’s native coordinate screen for self-teleportation: 100-tick charge, instant at mastery; 10 aura per block of 3D distance, halved at mastery. No magicule payment, portal creation or dimension crossing.
+- Validate requests on the server, prevent duplicate charges, retain native spatial event checks, and end pending casts on interruption or loss of ownership.
+
 ## 0.35.6 / standalone 1.1.7 — Spiritual contact
 
 - Add **“Can attack Spiritual Entities”** to Nullification. Engraved main-hand melee and Chained/Unbound weapon arts bypass native spiritual-body physical reduction and physical-hit immunity in spiritual form.

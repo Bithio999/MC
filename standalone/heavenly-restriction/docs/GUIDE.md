@@ -163,6 +163,14 @@ Operators can certify a known, already-owned reincarnation root:
 
 Example: `/heavenlyrestriction chained inherit PlayerName tensura:martial_master`. Permission level 2 is required. This records provenance; it does not grant the skill. The standalone addon uses its own saved history and does not import Myths world data.
 
+## Instant Transmission
+
+Master permanent **Instant Move** to reveal Instant Transmission as a learning entry in Tensura’s Battlewill menu. Complete learning, equip the art and press it to open the native coordinate screen. Enter **X, Y and Z**, then select **Warp**. Only the caster travels, within the current dimension.
+
+A normal cast costs **10 aura per block** of straight-line 3D distance and finishes after **100 ticks / 5 seconds**. Mastery makes it **instant** and halves the price to **5 aura per block**. Opening the menu is free; accepted confirmation pays once, with no magicule fallback. Portals are unavailable. Chained/Unbound users may learn the art and receive their Battlewill training bonuses. Existing mastered Instant Move players receive the learning entry automatically.
+
+Movement during the windup does not change the confirmed price or destination. Native spatial/interaction restrictions still apply; invalid requests do not start a cast. Losing the skill, death, logout or dimension changes cancel the charge. A started cast has already paid its cost. [Full article](../../../wiki/pages/Instant-Transmission.md).
+
 ## Spiritual contact — Nullification
 
 The Inverted Spear of Heaven can attack **Spiritual Entities**. Qualifying main-hand melee, Severance Rush and Counter hits bypass Tensura’s spiritual-body physical reduction (including War Gnome’s normal 99% reduction) and can hit targets in spiritual form. They retain **Physical** damage and their normal Chained/Unbound bonuses. The target stays in spiritual form; armor, resistance/nullification skills, ordinary blocking, dodge and ally/PvP checks still apply. Holding the spear does not grant this contact to unrelated abilities or projectiles.

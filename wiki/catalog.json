@@ -701,6 +701,12 @@
     "tier": "Extra"
   },
   {
+    "slug": "Instant-Transmission",
+    "title": "Instant Transmission",
+    "category": "Skills",
+    "tier": "Battlewill"
+  },
+  {
     "slug": "Inverted-Spear-of-Heaven",
     "title": "Inverted Spear of Heaven",
     "category": "Equipment"

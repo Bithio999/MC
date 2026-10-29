@@ -1,6 +1,6 @@
 # Tensura Myths Wiki
 
-An unofficial reference for the **Tensura Myths** addon to **Tensura: Reincarnated**. Minecraft 1.21.1 · NeoForge · Addon 0.35.6.
+An unofficial reference for the **Tensura Myths** addon to **Tensura: Reincarnated**. Minecraft 1.21.1 · NeoForge · Addon 0.35.7.
 
 ## Start here
 
@@ -19,7 +19,7 @@ An unofficial reference for the **Tensura Myths** addon to **Tensura: Reincarnat
 
 ## Battlewills
 
-Master **Air Float / Air Flight** to unlock **[Air Walk](https://github.com/Bithio999/MC/wiki/Air-Walk)**: native free flight paid entirely in aura. [Battlewill directory](https://github.com/Bithio999/MC/wiki/Battlewills).
+Master **Air Float / Air Flight** to unlock **[Air Walk](https://github.com/Bithio999/MC/wiki/Air-Walk)**: native free flight paid entirely in aura. Master **Instant Move** to unlock **[Instant Transmission](https://github.com/Bithio999/MC/wiki/Instant-Transmission)** for coordinate self-teleportation. [Battlewill directory](https://github.com/Bithio999/MC/wiki/Battlewills).
 
 ## Heavenly Restriction
 
@@ -56,4 +56,4 @@ The [Fettered Human](https://github.com/Bithio999/MC/wiki/Fettered-Human) starti
 Ability articles separate direct elemental hits, additional status damage, healing and utility. Their data tables include damage types, resource costs, cooldowns and acquisition requirements.
 
 
-[Download the styled offline edition](https://github.com/Bithio999/MC/blob/main/releases/tensura-myths-wiki-0.35.6.zip)
+[Download the styled offline edition](https://github.com/Bithio999/MC/blob/main/releases/tensura-myths-wiki-0.35.7.zip)
