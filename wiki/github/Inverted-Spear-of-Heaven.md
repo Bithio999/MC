@@ -2,7 +2,7 @@
 
 [Main Page](https://github.com/Bithio999/MC/wiki/Home) · [Weapons](https://github.com/Bithio999/MC/wiki/Weapons) · [Nullification](https://github.com/Bithio999/MC/wiki/Nullification)
 
-The **Inverted Spear of Heaven** is a rare, forked blade bearing the unique **[Nullification](https://github.com/Bithio999/MC/wiki/Nullification)** engraving. It breaks native barriers, strips skill status effects and briefly prevents its target from activating abilities.
+The **Inverted Spear of Heaven** is a rare, forked blade bearing the unique **[Nullification](https://github.com/Bithio999/MC/wiki/Nullification)** engraving. It can attack spiritual entities, breaks native barriers, strips skill status effects and briefly prevents its target from activating abilities.
 
 ![Inverted Spear of Heaven](https://github.com/Bithio999/MC/blob/main/wiki/assets/item/inverted_spear_of_heaven.png?raw=true)
 
@@ -43,9 +43,15 @@ A qualifying hit:
 
 1. Shatters the target's native **physical, magical and multilayer barriers** before barrier damage calculation. It can also destroy native barrier entities, including ranged and boss barriers.
 2. Removes effects classified by Tensura as **skill effects**, plus status effects carrying a source-ability record. This removes effects rather than the target's learned skills. Ordinary unrelated potion effects remain.
-3. Applies **Nullification** for **40 ticks / 2 seconds**, preventing skill activation. Another hit refreshes the duration. Existing cooldowns and learned mastery remain.
+3. Can attack **Spiritual Entities**, bypassing native spiritual-body physical reduction and physical-hit immunity in spiritual form.
+4. Applies **Nullification** for **40 ticks / 2 seconds**, preventing skill activation. Another hit refreshes the duration. Existing cooldowns and learned mastery remain.
 
 Nullification respects the native damage pipeline and ally/PvP targeting checks. Holding the spear does not make unrelated spells acquire its engraving.
+
+## Spiritual entities
+
+**Can attack Spiritual Entities.** Qualifying weapon hits bypass native spiritual-body physical reduction and physical-hit immunity in spiritual form while retaining Physical damage. Armor, resistance/nullification skills, blocking, dodge and ally/PvP checks still apply.
+
 
 ## Chained and Unbound
 

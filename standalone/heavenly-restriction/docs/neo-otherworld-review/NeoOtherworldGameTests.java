@@ -17,6 +17,14 @@ import static dev.heavenlyrestriction.ChainedGameTests.near;
 @PrefixGameTestTemplate(false)
 public final class NeoOtherworldGameTests {
     @GameTest(template="empty",timeoutTicks=100)
+    public static void spiritualContactBelongsOnlyToTheAttackingMainHandWeapon(GameTestHelper h){NullificationSpiritualGameTests.spiritualContactBelongsOnlyToTheAttackingMainHandWeapon(h);}
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void warGnomeReceivesFullPhysicalWeaponDamageWhileKeepingItsArmor(GameTestHelper h){NullificationSpiritualGameTests.warGnomeReceivesFullPhysicalWeaponDamageWhileKeepingItsArmor(h);}
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void spearCanHitSpiritualFormWithoutChangingTheTargetsForm(GameTestHelper h){NullificationSpiritualGameTests.spearCanHitSpiritualFormWithoutChangingTheTargetsForm(h);}
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void chainedAndUnboundWeaponArtsCarrySpiritualContact(GameTestHelper h){NullificationSpiritualGameTests.chainedAndUnboundWeaponArtsCarrySpiritualContact(h);}
+    @GameTest(template="empty",timeoutTicks=100)
     public static void auditAdditionalReincarnationSkills(GameTestHelper h) throws Exception {
         var p=TestFixtures.player(h);ReincarnationMenu.setRace(p,HeavenlyRestriction.RESTRICTED.getFirst().get(),true,false);var rows=new java.util.ArrayList<java.util.Map<String,Object>>();
         for(var skill:ReincarnationMenu.getSkillPool()){

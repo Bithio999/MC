@@ -20,6 +20,6 @@ public final class InvertedSpearItem extends SwordItem {
     @Override public void inventoryTick(ItemStack stack,Level level,Entity owner,int slot,boolean selected){super.inventoryTick(stack,level,owner,slot,selected);if(!level.isClientSide())engrave(stack,level.registryAccess());}
     @Override public void appendHoverText(ItemStack stack,Item.TooltipContext context,List<Component> lines,TooltipFlag flag){
         super.appendHoverText(stack,context,lines,flag);
-        for(int part=1;part<=4;part++)lines.add(Component.translatable("item."+WildHunt.ID+".inverted_spear_of_heaven.desc."+part).withStyle(ChatFormatting.GRAY));
+        for(int part=1;part<=5;part++)lines.add(Component.translatable("item."+WildHunt.ID+".inverted_spear_of_heaven.desc."+part).withStyle(ChatFormatting.GRAY));
     }
 }

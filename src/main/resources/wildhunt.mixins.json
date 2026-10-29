@@ -36,7 +36,9 @@
     "UnerringHakiMixin",
     "UnerringHakiPushMixin",
     "NullificationBarrierMixin",
-    "NullificationActivationMixin"
+    "NullificationActivationMixin",
+    "NullificationSpiritualBodyMixin",
+    "NullificationSpiritualFormMixin"
   ],
   "injectors": {
     "defaultRequire": 1

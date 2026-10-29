@@ -19,7 +19,7 @@
 
 ## Description
 
-> Attacks made with this weapon shatter any form of barriers instantly, remove all skill status effects, and inflict a debuff that prevents the target from activating skills for 2 seconds.
+> Attacks made with this weapon shatter any form of barriers instantly, remove all skill status effects, and inflict a debuff that prevents the target from activating skills for 2 seconds. Can attack Spiritual Entities.
 
 ## Effects
 
@@ -28,6 +28,8 @@
 **Status removal** removes Tensura's tagged skill buffs/debuffs and effects with a source ability, including source-attributed vanilla effects. It does not forget skills, reset mastery or indiscriminately clear unrelated potion effects.
 
 **Skill lock** is a separate, visible harmful status effect. It prevents native skill activation and direct casts that use native activation checks. Blocked activation does not spend the ability's resources. The status expires after 40 normal game ticks. It does not erase cooldowns, suppress all ownership passives or retroactively delete every projectile already in flight.
+
+**Spiritual contact — Can attack Spiritual Entities.** Qualifying weapon hits bypass Tensura’s separate spiritual-body physical damage reduction and physical-hit immunity in spiritual form. War Gnome’s normal 99% physical reduction therefore does not apply to these hits. The target keeps its spiritual form. This does not change the hit’s Physical classification or waive armor, resistance/nullification skills, blocking, dodge or ally/PvP checks.
 
 ## Compatible attacks
 

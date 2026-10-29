@@ -163,6 +163,10 @@ Operators can certify a known, already-owned reincarnation root:
 
 Example: `/heavenlyrestriction chained inherit PlayerName tensura:martial_master`. Permission level 2 is required. This records provenance; it does not grant the skill. The standalone addon uses its own saved history and does not import Myths world data.
 
+## Spiritual contact — Nullification
+
+The Inverted Spear of Heaven can attack **Spiritual Entities**. Qualifying main-hand melee, Severance Rush and Counter hits bypass Tensura’s spiritual-body physical reduction (including War Gnome’s normal 99% reduction) and can hit targets in spiritual form. They retain **Physical** damage and their normal Chained/Unbound bonuses. The target stays in spiritual form; armor, resistance/nullification skills, ordinary blocking, dodge and ally/PvP checks still apply. Holding the spear does not grant this contact to unrelated abilities or projectiles.
+
 ## Modpack compatibility
 
 Tensura Neo Otherworld **1.1.3a** uses Tensura **2.0.1.4**, ManasCore **4.0.0.2**, NeoForge **21.1.248** and GeckoLib **4.9.2**. Use standalone **1.1.6+**. Chained respects Mysticism’s Constant Energy and Constant Energy Debuff: its magicule-to-aura conversion pauses until the status ends.

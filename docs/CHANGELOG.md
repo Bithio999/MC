@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.35.6 / standalone 1.1.7 — Spiritual contact
+
+- Add **“Can attack Spiritual Entities”** to Nullification. Engraved main-hand melee and Chained/Unbound weapon arts bypass native spiritual-body physical reduction and physical-hit immunity in spiritual form.
+- Preserve Physical classification, ordinary armor/resistances, blocking, dodge, ally/PvP checks and the target’s spiritual form. Unrelated abilities, projectiles and offhand weapons cannot borrow the effect.
+- Match the supplied spear reference with a broad asymmetric split blade, silver guard, dark wrapped grip and gold fittings. Export the 64-pixel sprite into both distributions and update the tooltip and weapon/engraving wiki.
+
 ## Standalone 1.1.6 — Tensura Neo Otherworld 1.1.3a compatibility
 
 - Support the pack’s Tensura 2.0.1.4 and GeckoLib 4.9.2 while retaining Tensura 2.0.1.3 support. Myths 0.35.5 is unchanged.
