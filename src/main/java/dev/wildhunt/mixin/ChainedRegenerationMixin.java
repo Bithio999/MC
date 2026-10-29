@@ -19,8 +19,10 @@ public abstract class ChainedRegenerationMixin {
     private static void myths$convert(IExistence storage,LivingEntity owner,double areaMagicule,double maxMagicule,CallbackInfo out){
         if(!ChainedState.owned(owner) || storage.isSpiritualForm() && !SkillUtils.inSpiritualWorld(owner.level().dimension()) && isAffectedByEnergyLost(owner))return;
         double amount=Math.max(0,ChainedResources.regeneration(storage,owner,areaMagicule)-ChainedResources.RETAINED_MP_PER_PULSE);
-        double value=Math.min(EnergyHelper.getMaxAura(owner),storage.getAura()+amount);
-        if(value>storage.getAura()){storage.setAura(value);storage.markDirty();}
+        amount*=SchemaArt.regenerationFactor(owner);
+        double recovered=Math.min(EnergyHelper.getMaxAura(owner),storage.getAura()+amount)-storage.getAura();
+        double value=storage.getAura()+recovered;
+        if(value>storage.getAura()){storage.setAura(value);storage.markDirty();SchemaArt.train(owner,recovered);}
     }
     @WrapOperation(method="handleMagiculeRegen",at=@At(value="INVOKE",target="Lio/github/manasmods/tensura/storage/ep/IExistence;setMagicule(D)V",ordinal=2),remap=false)
     private static void myths$retainFlatRate(IExistence storage,double proposed,Operation<Void> original,@Local(argsOnly=true) LivingEntity owner,@Local(argsOnly=true,ordinal=0) double areaMagicule){

@@ -120,6 +120,8 @@ The three Godly classification passives are always active, free and non-stacking
 | --- | --- | --- | --- |
 | [Air Walk](https://github.com/Bithio999/MC/wiki/Air-Walk#air-walk) | [Air Walk](https://github.com/Bithio999/MC/wiki/Air-Walk) | Active - Press | None |
 | [Instant Transmission](https://github.com/Bithio999/MC/wiki/Instant-Transmission#instant-transmission) | [Instant Transmission](https://github.com/Bithio999/MC/wiki/Instant-Transmission) | Active - Press | None |
+| [Schema Tree](https://github.com/Bithio999/MC/wiki/Schema#schema-tree) | [Schema](https://github.com/Bithio999/MC/wiki/Schema) | Passive - Toggle | None |
+| [Build](https://github.com/Bithio999/MC/wiki/Schema#build) | [Schema](https://github.com/Bithio999/MC/wiki/Schema) | Active - Press | None |
 
 ## Racial abilities
 

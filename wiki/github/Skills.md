@@ -2,7 +2,7 @@
 
 [Main Page](https://github.com/Bithio999/MC/wiki/Home) · [Skills](https://github.com/Bithio999/MC/wiki/Skills) · [Ability index](https://github.com/Bithio999/MC/wiki/Abilities) · [Damage types](https://github.com/Bithio999/MC/wiki/Damage-Types)
 
-**Tensura Myths** provides **eight rollable Unique Skills, the race-exclusive Chained, five combination Ultimates, three Godly Skills, three aura recovery Extra Skills and two Battlewill evolutions: Air Walk and Instant Transmission**.
+**Tensura Myths** provides **eight rollable Unique Skills, the race-exclusive Chained, five combination Ultimates, three Godly Skills, three aura recovery Extra Skills and three Battlewills: Air Walk, Instant Transmission and Schema**.
 
 ## Skill tiers
 
@@ -14,6 +14,8 @@
 | [Extra](https://github.com/Bithio999/MC/wiki/Aura-Regeneration) | Hunter’s Recovery, Apex Renewal, Sovereign Rebirth | Hunter race evolution | Aura |
 
 ## Battlewills
+
+[Schema](https://github.com/Bithio999/MC/wiki/Schema) is learned independently and lets you organize a six-effect tree, starting with Mitochondrial Build.
 
 [Air Walk](https://github.com/Bithio999/MC/wiki/Air-Walk) evolves from mastered Air Float / Air Flight and enables aura-powered free flight. [Instant Transmission](https://github.com/Bithio999/MC/wiki/Instant-Transmission) evolves mastered Instant Move into aura-funded coordinate self-teleportation. Use the normal Battlewill category and native learning system. See the [Battlewill directory](https://github.com/Bithio999/MC/wiki/Battlewills).
 

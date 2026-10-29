@@ -6,6 +6,7 @@
 
 | Predecessor | Evolution | Requirement | Function | Damage type |
 | --- | --- | --- | --- | --- |
+| None | [Schema](https://github.com/Bithio999/MC/wiki/Schema) | 1,000 learning points; 2,000 mastery | Build and toggle a six-effect Schema Tree | None |
 | Instant Move (`tensura:instant_move`) | [Instant Transmission](https://github.com/Bithio999/MC/wiki/Instant-Transmission) | Master the permanent predecessor; complete native learning | Coordinate self-teleportation: 100 ticks, instant at mastery; 10 aura/block, 5 mastered | None |
 | Air Float / Air Flight (`tensura:air_flight`) | [Air Walk](https://github.com/Bithio999/MC/wiki/Air-Walk) | Master the permanent predecessor; complete native learning | Press-controlled free flight using aura | None |
 

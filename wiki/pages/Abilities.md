@@ -120,6 +120,8 @@ The three Godly classification passives are always active, free and non-stacking
 | --- | --- | --- | --- |
 | [Air Walk](Air-Walk.md#air-walk) | [Air Walk](Air-Walk.md) | Active - Press | None |
 | [Instant Transmission](Instant-Transmission.md#instant-transmission) | [Instant Transmission](Instant-Transmission.md) | Active - Press | None |
+| [Schema Tree](Schema.md#schema-tree) | [Schema](Schema.md) | Passive - Toggle | None |
+| [Build](Schema.md#build) | [Schema](Schema.md) | Active - Press | None |
 
 ## Racial abilities
 

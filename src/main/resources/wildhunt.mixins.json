@@ -40,7 +40,8 @@
     "NullificationSpiritualBodyMixin",
     "NullificationSpiritualFormMixin",
     "InstantTransmissionMasteryMixin",
-    "InstantTransmissionSpatialMixin"
+    "InstantTransmissionSpatialMixin",
+    "SchemaRecoveryMixin"
   ],
   "injectors": {
     "defaultRequire": 1

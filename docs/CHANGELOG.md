@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.35.8 / standalone 1.1.9 — Schema
+
+- Add Schema, an independent Battlewill with 1,000 learning points and 2,000 mastery, a toggleable six-effect tree and a persistent Build menu.
+- Start with repeatable Mitochondrial Build: +500% aura regeneration and −10% outgoing damage per stack. Positive effectiveness diminishes after the full-strength slots; every 400 mastery adds another full-strength slot, reaching six at 2,000. Drawbacks remain full strength.
+- Support native/sleep aura recovery, Chained conversion and a single Chained/Unbound positive-buff multiplier. Apply the damage penalty after native pre-calculation bonuses and to native direct SHP damage.
+- Train through actual recovery rather than menu actions. Add bounded server-owned build updates, revision checks, a new icon, wiki articles and real-client menu review.
+
 ## 0.35.7 / standalone 1.1.8 — Instant Transmission
 
 - Add a Battlewill evolution of mastered Instant Move through native learning, with backfill for existing masters and Chained/Unbound support.

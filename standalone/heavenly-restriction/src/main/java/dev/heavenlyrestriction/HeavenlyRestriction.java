@@ -16,6 +16,7 @@ public final class HeavenlyRestriction {
     private static final Registrar<ManasSkill> SKILLS=SkillAPI.getSkillRegistry();
     public static final RegistrySupplier<UnboundSkill> UNBOUND=SKILLS.register(id("unbound"),UnboundSkill::new);
     public static final RegistrySupplier<ChainedSkill> CHAINED=SKILLS.register(id("chained"),ChainedSkill::new);
+    public static final RegistrySupplier<SchemaArt> SCHEMA=SKILLS.register(id("schema"),SchemaArt::new);
     public static final RegistrySupplier<InstantTransmissionArt> INSTANT_TRANSMISSION=SKILLS.register(id("instant_transmission"),InstantTransmissionArt::new);
     public static final RegistrySupplier<AirSovereigntyArt> AIR_SOVEREIGNTY=SKILLS.register(id("air_sovereignty"),AirSovereigntyArt::new);
     public static final List<RegistrySupplier<RestrictedRace>> RESTRICTED=java.util.stream.IntStream.range(0,5).mapToObj(stage->RACES.register(id(RestrictedRace.IDS[stage]),()->new RestrictedRace(stage))).toList();
@@ -26,6 +27,8 @@ public final class HeavenlyRestriction {
     public HeavenlyRestriction(net.neoforged.bus.api.IEventBus modBus,net.neoforged.fml.ModContainer container){
         HeavenlyArsenal.register(modBus);
         InstantTransmissionArt.register();
+        SchemaArt.register();
+        modBus.addListener(SchemaNetwork::register);
         container.registerConfig(net.neoforged.fml.config.ModConfig.Type.SERVER,ChainedReincarnationConfig.SPEC,"tensura-heavenly-restriction-reincarnation.toml");
         ArtVisualEntity.register();
         SkillEvents.UNLOCK_SKILL.register(ChainedState::unlock);

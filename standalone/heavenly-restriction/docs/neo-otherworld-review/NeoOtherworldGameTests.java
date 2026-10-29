@@ -16,6 +16,26 @@ import static dev.heavenlyrestriction.ChainedGameTests.near;
 @GameTestHolder("heavenlyrestriction_compat")
 @PrefixGameTestTemplate(false)
 public final class NeoOtherworldGameTests {
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void outgoingPenaltyAlsoScalesFlatBonusesAddedByNativeEffects(GameTestHelper h){SchemaGameTests.outgoingPenaltyAlsoScalesFlatBonusesAddedByNativeEffects(h);}
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void learningRequiresOneThousandAndMasteryTwoThousand(GameTestHelper h){SchemaGameTests.learningRequiresOneThousandAndMasteryTwoThousand(h);}
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void allMasteryMilestonesRetainFullDrawbacks(GameTestHelper h){SchemaGameTests.allMasteryMilestonesRetainFullDrawbacks(h);}
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void serverValidatesBuildsAndPersistsThemThroughSkillSerialization(GameTestHelper h){SchemaGameTests.serverValidatesBuildsAndPersistsThemThroughSkillSerialization(h);}
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void toggleAndMasteryChangeActualRateWithoutStackingRefreshes(GameTestHelper h){SchemaGameTests.toggleAndMasteryChangeActualRateWithoutStackingRefreshes(h);}
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void nativeAuraAndSleepRecoveryAreBothBoostedAndCapped(GameTestHelper h){SchemaGameTests.nativeAuraAndSleepRecoveryAreBothBoostedAndCapped(h);}
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void chainedBuffAppliesOnceAndNeverMagnifiesThePenalty(GameTestHelper h){SchemaGameTests.chainedBuffAppliesOnceAndNeverMagnifiesThePenalty(h);}
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void convertedMagiculeRegenIsBoostedButRetainedMagiculesRemainFlat(GameTestHelper h){SchemaGameTests.convertedMagiculeRegenIsBoostedButRetainedMagiculesRemainFlat(h);}
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void meleeProjectilesAndDirectSoulDamagePayThePenaltyExactlyOnce(GameTestHelper h){SchemaGameTests.meleeProjectilesAndDirectSoulDamagePayThePenaltyExactlyOnce(h);}
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void masteryRequiresActualRecoveryAndCannotBeFarmedBySavingOrDuplicatePulses(GameTestHelper h){SchemaGameTests.masteryRequiresActualRecoveryAndCannotBeFarmedBySavingOrDuplicatePulses(h);}
     @GameTest(template="empty",timeoutTicks=160)
     public static void battlewillCategoryAndSelfOnlyCapabilitiesAreNative(GameTestHelper h){InstantTransmissionGameTests.battlewillCategoryAndSelfOnlyCapabilitiesAreNative(h);}
     @GameTest(template="empty",timeoutTicks=160)

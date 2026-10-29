@@ -163,6 +163,14 @@ Operators can certify a known, already-owned reincarnation root:
 
 Example: `/heavenlyrestriction chained inherit PlayerName tensura:martial_master`. Permission level 2 is required. This records provenance; it does not grant the skill. The standalone addon uses its own saved history and does not import Myths world data.
 
+## Schema
+
+Schema is an independent Battlewill available for **1,000 learning points**, with **2,000 mastery**. Press **Build** to arrange up to six effects; repeated effects are allowed. Use Add, Remove, Up, Down and Clear to edit, then **Apply** to save. Closing discards unapplied edits. Toggle the passive through Tensura’s controls to activate the saved tree.
+
+**Mitochondrial Build** gives **+500% aura regeneration and −10% all outgoing damage per stack**. Positive weights start at 100%, 50%, 25%, 12.5%, 6.25% and 3.125%; one additional slot retains 100% power at each 400 mastery, up to six at 2,000. Penalties stay at the full additive −10% per stack. Six stacks give +984.375% regeneration initially and +3,000% mastered, both with −60% damage. Chained/Unbound boosts the positive Battlewill bonus once, without magnifying the penalty.
+
+The passive continues during rest and boosts Chained’s converted aura recovery without changing its retained magicule rate. Actual aura recovery trains mastery at most once per second; menus, saves and full reserves grant no free mastery. [Full guide](../../../wiki/pages/Schema.md).
+
 ## Instant Transmission
 
 Master permanent **Instant Move** to reveal Instant Transmission as a learning entry in Tensura’s Battlewill menu. Complete learning, equip the art and press it to open the native coordinate screen. Enter **X, Y and Z**, then select **Warp**. Only the caster travels, within the current dimension.

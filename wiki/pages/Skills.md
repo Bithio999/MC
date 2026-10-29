@@ -2,7 +2,7 @@
 
 [Main Page](../README.md) · [Skills](Skills.md) · [Ability index](Abilities.md) · [Damage types](Damage-Types.md)
 
-**Tensura Myths** provides **eight rollable Unique Skills, the race-exclusive Chained, five combination Ultimates, three Godly Skills, three aura recovery Extra Skills and two Battlewill evolutions: Air Walk and Instant Transmission**.
+**Tensura Myths** provides **eight rollable Unique Skills, the race-exclusive Chained, five combination Ultimates, three Godly Skills, three aura recovery Extra Skills and three Battlewills: Air Walk, Instant Transmission and Schema**.
 
 ## Skill tiers
 
@@ -14,6 +14,8 @@
 | [Extra](Aura-Regeneration.md) | Hunter’s Recovery, Apex Renewal, Sovereign Rebirth | Hunter race evolution | Aura |
 
 ## Battlewills
+
+[Schema](Schema.md) is learned independently and lets you organize a six-effect tree, starting with Mitochondrial Build.
 
 [Air Walk](Air-Walk.md) evolves from mastered Air Float / Air Flight and enables aura-powered free flight. [Instant Transmission](Instant-Transmission.md) evolves mastered Instant Move into aura-funded coordinate self-teleportation. Use the normal Battlewill category and native learning system. See the [Battlewill directory](Battlewills.md).
 

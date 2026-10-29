@@ -17,6 +17,7 @@ public final class WildHunt {
     public static final String ID = "wildhunt";
     private static final Registrar<ManasRace> RACES = RaceAPI.getRaceRegistry();
     private static final Registrar<ManasSkill> SKILLS = SkillAPI.getSkillRegistry();
+    public static final RegistrySupplier<SchemaArt> SCHEMA=SKILLS.register(id("schema"),SchemaArt::new);
     public static final RegistrySupplier<InstantTransmissionArt> INSTANT_TRANSMISSION=SKILLS.register(id("instant_transmission"),InstantTransmissionArt::new);
     public static final RegistrySupplier<AirSovereigntyArt> AIR_SOVEREIGNTY=SKILLS.register(id("air_sovereignty"),AirSovereigntyArt::new);
     public static final RegistrySupplier<UnboundSkill> UNBOUND=SKILLS.register(id("unbound"),UnboundSkill::new);
@@ -48,6 +49,8 @@ public final class WildHunt {
     public WildHunt(net.neoforged.bus.api.IEventBus modBus, net.neoforged.fml.ModContainer container) {
         HeavenlyArsenal.register(modBus);
         InstantTransmissionArt.register();
+        SchemaArt.register();
+        modBus.addListener(SchemaNetwork::register);
         container.registerConfig(net.neoforged.fml.config.ModConfig.Type.SERVER,ChainedReincarnationConfig.SPEC,"tensura-myths-reincarnation.toml");
         container.registerConfig(net.neoforged.fml.config.ModConfig.Type.SERVER,dev.wildhunt.myths.MythsConfig.SPEC,"tensura-myths-server.toml");
         dev.wildhunt.myths.FusionCatalog.init();

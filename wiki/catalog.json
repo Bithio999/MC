@@ -773,6 +773,12 @@
     "tier": "Unique"
   },
   {
+    "slug": "Schema",
+    "title": "Schema",
+    "category": "Skills",
+    "tier": "Battlewill"
+  },
+  {
     "slug": "Skill-Synthesis",
     "title": "Skill synthesis",
     "category": "Skills"

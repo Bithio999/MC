@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Schema — the unofficial Tensura Myths addon reference.">
+<title>Schema — Tensura Myths Wiki</title><link rel="stylesheet" href="wiki.css">
+<script defer src="search-index.js"></script><script defer src="search.js"></script></head>
+<body data-root="../"><a class="skip" href="#article">Skip to article</a>
+<div class="global-bar"><span>TENSURA MYTHS</span><div><a href="https://tensura.wiki.gg/wiki/Tensura:_Reincarnated_Wiki">Base mod wiki</a><a href="https://github.com/Bithio999/MC">GitHub</a></div></div>
+<header class="masthead"><a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">M</span><span>TENSURA MYTHS<small>Tensura: Reincarnated addon wiki</small></span></a>
+<div class="search"><label for="wiki-search">Search Tensura Myths Wiki</label><input id="wiki-search" type="search" placeholder="Search skills, races, characters…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="search-results" aria-expanded="false"><div id="search-results" role="listbox" aria-label="Search results" hidden></div><span id="search-status" class="sr-only" aria-live="polite"></span></div></header>
+<div class="layout"><button id="navigation-toggle" aria-controls="wiki-navigation" aria-expanded="false">☰ Wiki navigation</button><nav id="wiki-navigation" class="sidebar" aria-label="Wiki navigation"><section><h2>Start here</h2><a href="../index.html">Main Page</a><a href="../site/Getting-Started.html">Getting started</a></section><section><h2>Skills</h2><a href="../site/Skills.html">Skill overview</a><a href="../site/Unique-Skills.html">Unique Skills</a><a href="../site/Ultimate-Skills.html">Ultimate Skills</a><a href="../site/Skill-Synthesis.html">Skill synthesis</a><a href="../site/Godly.html">Godly Skills</a><a href="../site/Aura-Regeneration.html">Extra Skills</a><a href="../site/Abilities.html">Ability index</a><a href="../site/Battlewills.html">Battlewills</a></section><section><h2>Races</h2><a href="../site/Races.html">Race directory</a><a href="../site/Evolution.html">Hunter evolution</a><a href="../site/Fettered-Human.html">Heavenly Restriction</a><a href="../site/Duo-Races.html">Secondary races</a><a href="../site/Convergent-Awakening.html">Convergent Awakening</a></section><section><h2>Equipment</h2><a href="../site/Weapons.html">Weapons</a><a href="../site/Inverted-Spear-of-Heaven.html">Inverted Spear of Heaven</a><a href="../site/Nullification.html">Nullification engraving</a></section><section><h2>Myth bosses</h2><a href="../site/Bosses.html">Boss directory</a><a href="../site/Ananke.html">Ananke</a><a href="../site/Moira.html">Moira, Lord of Finality</a><a href="../site/Eschaton.html">Eschaton, the Last Myth</a><a href="../site/Demiurge.html">Demiurge, God of Genesis</a></section><section><h2>Otherworlders</h2><a href="../site/Otherworlders.html">Character directory</a><a href="../site/Alma.html">Alma</a><a href="../site/Gemma.html">Gemma</a></section><section><h2>Reference</h2><a href="../site/Damage-Types.html">Damage types</a><a href="../site/Mechanics.html">Combat mechanics</a><a href="../site/Visual-Effects.html">Visual effects</a><a href="../site/Commands.html">Commands</a></section><div class="sidebar-version">Tensura Myths <strong>0.35.8</strong><br>Minecraft 1.21.1 · NeoForge<br><span>Offline reference edition</span></div></nav>
+<main id="article" class="article-page"><div class="page-tabs"><span aria-current="page">Article</span><a href="../pages/Schema.md">Read Markdown</a><a href="https://github.com/Bithio999/MC/blob/main/docs/CHANGELOG.md">Changelog</a></div>
+<div class="article-heading"><div class="breadcrumbs"><a href="../index.html">Tensura Myths Wiki</a> / <a href="../site/Skills.html">Skills</a> / <a href="../site/Battlewills.html">Battlewills</a></div><h1>Schema</h1><p class="subtitle">From the unofficial Tensura Myths Wiki</p></div>
+<div class="article-content"><div class="article-intro"><p><strong>Schema</strong> is a Battlewill inspired by the Schema system from <em>Infinite Mage</em>. Organize biological effects into a six-slot <strong>Schema Tree</strong>, then toggle the art to activate the saved build. Its initial effect, <strong>Mitochondrial Build</strong>, trades outgoing damage for aura regeneration.</p></div><aside class="infobox" aria-label="Schema skills data"><h2>Schema</h2><section class="infobox-section"><h3>Information</h3><table aria-label="Information"><tbody><tr><th scope="row">Classification</th><td>Battlewill</td></tr><tr><th scope="row">Registry ID</th><td><code>wildhunt:schema</code></td></tr><tr><th scope="row">Standalone ID</th><td><code>heavenlyrestriction:schema</code></td></tr><tr><th scope="row">Learning points</th><td><strong>1,000</strong></td></tr><tr><th scope="row">Maximum mastery</th><td><strong>2,000</strong></td></tr><tr><th scope="row">Acquisition</th><td>Available for native learning; no predecessor or race prerequisite</td></tr><tr><th scope="row">Active mode</th><td>Build</td></tr><tr><th scope="row">Passive</th><td>Toggle — activate the saved tree</td></tr><tr><th scope="row">Maximum effects</th><td>Six, with repeated effects allowed</td></tr><tr><th scope="row">Activation / upkeep cost</th><td>None</td></tr><tr><th scope="row">Damage type</th><td>None directly</td></tr><tr><th scope="row">Damage ID</th><td>None</td></tr></tbody></table></section></aside><details class="contents" open><summary>Contents</summary><div class="toc">
+<ul>
+<li><a href="#obtaining">Obtaining</a></li>
+<li><a href="#usage">Usage</a><ul>
+<li><a href="#schema-tree">Schema Tree</a></li>
+<li><a href="#build">Build</a></li>
+</ul>
+</li>
+<li><a href="#stacking-and-mastery">Stacking and mastery</a></li>
+<li><a href="#schema-tree-effects">Schema Tree effects</a><ul>
+<li><a href="#mitochondrial-build">Mitochondrial Build</a></li>
+</ul>
+</li>
+<li><a href="#related">Related</a></li>
+</ul>
+</div>
+</details>
+<p><img alt="Schema" src="../assets/battlewill/schema.png" /></p>
+
+<h2 id="obtaining">Obtaining</h2>
+<p>Schema appears as a learning entry in Tensura’s Battlewill menu on login or the next discovery tick. Complete <strong>1,000 learning points</strong> to use it. Existing learning, mastery and builds are retained; there is no race or awakening gate. Chained/Unbound users may learn it as a Battlewill.</p>
+<h2 id="usage">Usage</h2>
+<h3 id="schema-tree">Schema Tree</h3>
+<p class="ability-label">[Passive - Toggle]</p>
+<div class="article-table ability-data"><table>
+<thead>
+<tr>
+<th>Ability information</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Damage type</td>
+<td>None</td>
+</tr>
+<tr>
+<td>Damage ID</td>
+<td>None</td>
+</tr>
+<tr>
+<td>Effect</td>
+<td>Activate every effect in the saved tree</td>
+</tr>
+<tr>
+<td>Costs</td>
+<td>None</td>
+</tr>
+</tbody>
+</table></div>
+<p>Toggle Schema with Tensura’s normal passive control. Both bonuses and drawbacks apply while it is enabled, including while resting. Turning it off removes both. The saved build remains available for the next activation. Forgetting Schema removes its regeneration modifier.</p>
+<h3 id="build">Build</h3>
+<p class="ability-label">[Active - Press] — <strong>Build</strong></p>
+<div class="article-table ability-data"><table>
+<thead>
+<tr>
+<th>Ability information</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Damage type</td>
+<td>None</td>
+</tr>
+<tr>
+<td>Damage ID</td>
+<td>None</td>
+</tr>
+<tr>
+<td>Capacity</td>
+<td>Six ordered effects</td>
+</tr>
+<tr>
+<td>Costs</td>
+<td>None</td>
+</tr>
+<tr>
+<td>Save</td>
+<td>Apply</td>
+</tr>
+</tbody>
+</table></div>
+<p>Press <strong>Build</strong> to open the Schema Tree. Select a slot and use <strong>Add</strong>, <strong>Remove</strong>, <strong>Up</strong>, <strong>Down</strong>, or <strong>Clear</strong> to organize the draft. <strong>Apply</strong> saves it on the server and updates an active passive immediately. <strong>Close</strong> discards unapplied edits. Builds persist with the learned skill.</p>
+<p>The menu previews each effect’s positive effectiveness, total aura-regeneration bonus and total damage penalty. Empty slots do not let you bypass diminishing returns. Currently, Add inserts Mitochondrial Build; later effects can extend the tree.</p>
+<p><img alt="Initial six-stack build" src="../media/schema-initial-build.png" /></p>
+<h2 id="stacking-and-mastery">Stacking and mastery</h2>
+<p>At zero mastery, the six positive-effect weights are <strong>100%, 50%, 25%, 12.5%, 6.25%, 3.125%</strong>. Each additional full-strength slot moves the start of this diminishing sequence one position later. Drawbacks always apply at their full amount.</p>
+<div class="article-table"><table>
+<thead>
+<tr>
+<th>Mastery</th>
+<th>Full-strength slots</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0–399</td>
+<td>1</td>
+</tr>
+<tr>
+<td>400–799</td>
+<td>2</td>
+</tr>
+<tr>
+<td>800–1,199</td>
+<td>3</td>
+</tr>
+<tr>
+<td>1,200–1,599</td>
+<td>4</td>
+</tr>
+<tr>
+<td>1,600–1,999</td>
+<td>5</td>
+</tr>
+<tr>
+<td>2,000</td>
+<td>All 6</td>
+</tr>
+</tbody>
+</table></div>
+<p>Mastery is gained while an enabled, populated build actually restores aura, at most once per second through the normal mastery-point system. Opening the menu, saving, toggling and sitting at full aura do not grant free mastery. Native aptitude and Chained/Unbound Battlewill training bonuses apply.</p>
+<h2 id="schema-tree-effects">Schema Tree effects</h2>
+<h3 id="mitochondrial-build">Mitochondrial Build</h3>
+<p><strong>+500% aura regeneration; −10% all outgoing damage per stack.</strong></p>
+<p>Positive weights apply to the regeneration bonus. The damage penalty adds <strong>10 percentage points per stack</strong>, with no mastery discount. It scales the complete ordinary outgoing hit, including flat effect bonuses, and native direct spiritual damage. Attack damage attributes are not multiplied separately, avoiding a second penalty on weapon-derived attacks.</p>
+<div class="article-table"><table>
+<thead>
+<tr>
+<th>Build</th>
+<th>Aura regeneration bonus</th>
+<th>Total regeneration rate</th>
+<th>Outgoing damage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>One stack</td>
+<td>+500%</td>
+<td>6× baseline</td>
+<td>90%</td>
+</tr>
+<tr>
+<td>Six stacks, zero mastery</td>
+<td>+984.375%</td>
+<td>10.84375× baseline</td>
+<td>40%</td>
+</tr>
+<tr>
+<td>Six stacks, full mastery</td>
+<td>+3,000%</td>
+<td>31× baseline</td>
+<td>40%</td>
+</tr>
+</tbody>
+</table></div>
+<p>These are baseline values before other Battlewill bonuses. Chained/Unbound’s enabled buff-effectiveness bonus boosts the <strong>positive bonus once</strong> and leaves the damage penalty alone. The preview includes that bonus. Native aura recovery, sleep recovery and Chained’s converted magicule regeneration benefit; Chained still retains only its normal flat magicule recovery. Aura remains capped at maximum, and effects that pause native regeneration still prevent recovery.</p>
+<p><img alt="Mastered six-stack build" src="../media/schema-mastered-build.png" /></p>
+<h2 id="related">Related</h2>
+<p><a href="Battlewills.html">Battlewills</a> · <a href="Air-Walk.html">Air Walk</a> · <a href="Instant-Transmission.html">Instant Transmission</a> · <a href="Chained.html">Chained</a> · <a href="Unbound.html">Unbound</a></p></div><nav class="related-box" aria-label="Related skills"><strong>Tensura Myths · Skills</strong><div class="navbox-row"><strong>Skill directories</strong><div><a href="../site/Skills.html">Skills</a><a href="../site/Unique-Skills.html">Unique Skills</a><a href="../site/Ultimate-Skills.html">Ultimate Skills</a><a href="../site/Godly.html">Godly Skills</a><a href="../site/Aura-Regeneration.html">Aura regeneration</a></div></div><div class="navbox-row"><strong>Related abilities</strong><div><a href="../site/Abilities.html">Ability index</a><a href="../site/Damage-Types.html">Damage types</a></div></div><div class="navbox-row"><strong>Extra Skills</strong><div><a href="../site/Hunters-Recovery.html">Hunter’s Recovery</a><a href="../site/Apex-Renewal.html">Apex Renewal</a><a href="../site/Sovereign-Rebirth.html">Sovereign Rebirth</a></div></div></nav>
+<div class="categories">Categories: <a href="../index.html">Tensura Myths</a> · <a href="../site/Skills.html">Skills</a> / <a href="../site/Battlewills.html">Battlewills</a></div>
+<footer>Unofficial fan addon. Original documentation and portraits. Not affiliated with Capcom or ManasMods.<br>Tensura Myths 0.35.8 · Offline edition · No external services required.</footer></main></div></body></html>

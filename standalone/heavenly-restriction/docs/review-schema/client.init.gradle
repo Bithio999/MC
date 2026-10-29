@@ -1,0 +1,6 @@
+gradle.projectsEvaluated {
+ rootProject.sourceSets.main.java.srcDir(rootProject.file('docs/review-schema'))
+ rootProject.neoForge.runs.client.jvmArgument('-Duser.home=' + rootProject.property('neoOtherworldDirectory') + '/client-home')
+ rootProject.neoForge.runs.client.programArgument('--quickPlaySingleplayer')
+ rootProject.neoForge.runs.client.programArgument('Schema Validation')
+}

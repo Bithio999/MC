@@ -6,6 +6,7 @@
 
 | Predecessor | Evolution | Requirement | Function | Damage type |
 | --- | --- | --- | --- | --- |
+| None | [Schema](Schema.md) | 1,000 learning points; 2,000 mastery | Build and toggle a six-effect Schema Tree | None |
 | Instant Move (`tensura:instant_move`) | [Instant Transmission](Instant-Transmission.md) | Master the permanent predecessor; complete native learning | Coordinate self-teleportation: 100 ticks, instant at mastery; 10 aura/block, 5 mastered | None |
 | Air Float / Air Flight (`tensura:air_flight`) | [Air Walk](Air-Walk.md) | Master the permanent predecessor; complete native learning | Press-controlled free flight using aura | None |
 
