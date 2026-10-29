@@ -22,6 +22,9 @@ public abstract class ChainedBattlewillDamageMixin {
         if(dev.wildhunt.UnboundCounter.intercept(target,actual,amount))return false;
         var damage=io.github.manasmods.manascore.network.api.util.Changeable.of(amount);
         dev.wildhunt.UnboundCritical.apply(attacker instanceof net.minecraft.world.entity.LivingEntity living?living:null,target,actual,damage);
-        return original.call(target,attacker,actual,(float)(damage.get()*dev.wildhunt.SchemaArt.damageFactor(attacker instanceof net.minecraft.world.entity.LivingEntity living?living:actual.getEntity() instanceof net.minecraft.world.entity.LivingEntity sourceOwner?sourceOwner:null)),resistance);
+        var owner=attacker instanceof net.minecraft.world.entity.LivingEntity living?living:actual.getEntity() instanceof net.minecraft.world.entity.LivingEntity sourceOwner?sourceOwner:null;
+        boolean hit=original.call(target,attacker,actual,(float)(damage.get()*dev.wildhunt.SchemaArt.damageFactor(owner)*dev.wildhunt.SchemaArt.damageTakenFactor(target)),resistance);
+        if(hit && damage.get()>0)dev.wildhunt.SchemaArt.trainStrength(owner);
+        return hit;
     }
 }

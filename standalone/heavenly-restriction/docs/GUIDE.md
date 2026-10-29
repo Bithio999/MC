@@ -165,11 +165,14 @@ Example: `/heavenlyrestriction chained inherit PlayerName tensura:martial_master
 
 ## Schema
 
-Schema is an independent Battlewill available for **1,000 learning points**, with **2,000 mastery**. Press **Build** to arrange up to six effects; repeated effects are allowed. Use Add, Remove, Up, Down and Clear to edit, then **Apply** to save. Closing discards unapplied edits. Toggle the passive through Tensura’s controls to activate the saved tree.
+Learn **Schema** in the Battlewill menu for **1,000 learning points**; maximum mastery is **2,000**. Press **Build** and choose **Add Mito** or **Add Str.** to organize up to six effects, including duplicates. Move selected entries with Up/Down, then Apply; closing discards drafts. Toggle Schema to activate the saved tree.
 
-**Mitochondrial Build** gives **+500% aura regeneration and −10% all outgoing damage per stack**. Positive weights start at 100%, 50%, 25%, 12.5%, 6.25% and 3.125%; one additional slot retains 100% power at each 400 mastery, up to six at 2,000. Penalties stay at the full additive −10% per stack. Six stacks give +984.375% regeneration initially and +3,000% mastered, both with −60% damage. Chained/Unbound boosts the positive Battlewill bonus once, without magnifying the penalty.
+- **Mitochondrial Build:** +500% aura regeneration, −5% all outgoing damage per stack.
+- **Strength Build:** +5 base attack damage, +2% damage taken per stack.
 
-The passive continues during rest and boosts Chained’s converted aura recovery without changing its retained magicule rate. Actual aura recovery trains mastery at most once per second; menus, saves and full reserves grant no free mastery. [Full guide](../../../wiki/pages/Schema.md).
+Positive bonuses follow the shared slot sequence: 100%, 50%, 25%, 12.5%, 6.25%, 3.125% initially. Every 400 mastery makes another slot full strength; all six reach 100% at 2,000. Each drawback always applies at its full value. Six mastered Strength stacks grant +30 base attack and +12% damage taken; six mastered Mitochondrial stacks grant +3,000% regeneration and −30% damage dealt, before other bonuses. Chained/Unbound boosts positive effects once, leaving drawbacks unchanged.
+
+The passive continues during rest and boosts Chained’s converted recovery without changing retained magicule recovery. Actual aura recovery or landed hits with Strength active train mastery at most once per second. Saved Mitochondrial builds remain valid after updating. [Full guide](../../../wiki/pages/Schema.md).
 
 ## Instant Transmission
 

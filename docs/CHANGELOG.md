@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.35.9 / standalone 1.1.10 — Schema Strength Build
+
+- Lower Mitochondrial Build’s outgoing-damage drawback from 10% to 5% per stack.
+- Add repeatable Strength Build: +5 base attack damage and +2% damage taken. Both builds share ordered positive-effect weights and six slots; drawbacks remain full strength.
+- Expand the native Build menu with separate effect choices and previews for regeneration, base attack, outgoing damage and incoming damage. Preserve existing saved Mitochondrial trees.
+- Apply Strength as a native flat attack modifier, with Chained/Unbound’s positive buff boost once. Cover ordinary and direct SHP incoming damage, cleanup and successful-hit mastery training for Strength builds.
+
 ## 0.35.8 / standalone 1.1.9 — Schema
 
 - Add Schema, an independent Battlewill with 1,000 learning points and 2,000 mastery, a toggleable six-effect tree and a persistent Build menu.

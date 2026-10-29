@@ -2,7 +2,7 @@
 
 An independent **NeoForge 1.21.1 addon for Tensura: Reincarnated**, extracted from Tensura Myths, with Unbound and additional Battlewills. It includes the Heavenly Restriction race lineage, Chained and its Unbound Ultimate evolution, aura recovery skills, Air Walk, Instant Transmission, and Schema. **Tensura Myths is not required.**
 
-[Download 1.1.9](../../releases/tensura-heavenly-restriction-1.1.9.jar) · [Gameplay guide](docs/GUIDE.md) · [Validation](docs/VALIDATION-1.1.9.md)
+[Download 1.1.10](../../releases/tensura-heavenly-restriction-1.1.10.jar) · [Gameplay guide](docs/GUIDE.md) · [Validation](docs/VALIDATION-1.1.10.md)
 
 ## Tensura Neo Otherworld 1.1.3a
 
@@ -15,7 +15,7 @@ Replace the older Heavenly Restriction JAR in the instance’s `mods` folder. On
 - **Fettered Human → Tempered Vessel → Unshackled → Heavenly Restricted → Heavenbreaker**, through Tensura's reincarnation and evolution menus.
 - **Chained**, granted only by Fettered Human and retained through evolution, with 5× later aura-capacity gains. Its combat toggle grants 5× damage sourced from Battlewill abilities, or 3× other outgoing Physical damage. These bonuses use exclusive branches. Aura Sword is excluded from the separate 3× buff-effectiveness bonus; the dash supports upward aiming, finds safe standing room around terrain and canopies, and stops before aimed enemies.
 - **Hunter's Recovery**, **Apex Renewal**, and **Sovereign Rebirth**, granted at evolutions two, three, and four. Only the strongest enabled recovery tier heals.
-- **Schema**, a six-effect Battlewill tree with 1,000 learning points and 2,000 mastery. Mitochondrial Build increases aura regeneration and lowers outgoing damage; positive diminishing returns improve with mastery.
+- **Schema**, a six-effect Battlewill tree with 1,000 learning points and 2,000 mastery. Mitochondrial Build grants +500% aura regeneration with −5% outgoing damage per stack; Strength Build adds +5 base attack with +2% damage taken. Positive diminishing returns improve with mastery.
 - **Instant Transmission**, the native-coordinate self-teleportation evolution of mastered Instant Move: 100-tick charge (instant mastered), 10 aura per block (5 mastered).
 - **Air Walk**, the aura-powered Battlewill evolution of mastered native Air Flight / Air Float.
 - The original race/skill icons, broken-chain teleport visual, recovery bloom's Blockbench/GeckoLib rig, smooth surface rendering, and aura-flight particles.
@@ -38,7 +38,7 @@ Use **Java 21**, **Minecraft 1.21.1**, and **NeoForge 21.1.209 or later in the 2
 
 1. **Tensura: Reincarnated 2.0.1.3 or 2.0.1.4** and its dependencies, including **ManasCore 4.0.0.2**, **Architectury 13.0.8+**, **SmartBrainLib**, and **TerraBlender**.
 2. **GeckoLib 4.9.2** (4.x).
-3. **tensura-heavenly-restriction-1.1.9.jar**.
+3. **tensura-heavenly-restriction-1.1.10.jar**.
 
 Use this addon **instead of Tensura Myths**. The loader rejects installing both because both implement the same Chained and Battlewill hooks. The full Tensura Myths mod remains available separately with all its existing content.
 
@@ -54,7 +54,7 @@ python3 scripts/fetch-runtime.py
 ./gradlew build runGameTestServer
 ```
 
-Java 21 is required. The fetch script verifies the exact runtime dependency hashes in `runtime-mods.lock.json`. Gradle resolves the pinned Tensura, ManasCore and Architectury versions. Output: `build/libs/tensura-heavenly-restriction-1.1.9.jar`.
+Java 21 is required. The fetch script verifies the exact runtime dependency hashes in `runtime-mods.lock.json`. Gradle resolves the pinned Tensura, ManasCore and Architectury versions. Output: `build/libs/tensura-heavenly-restriction-1.1.10.jar`.
 
 `./gradlew runClient` starts an isolated development client. Native tests cover the extracted mechanics and prove that Tensura Myths is absent. Optional visual-review code in `docs/review` is excluded from regular builds; see its instructions.
 

@@ -17,6 +17,16 @@ import static dev.heavenlyrestriction.ChainedGameTests.near;
 @PrefixGameTestTemplate(false)
 public final class NeoOtherworldGameTests {
     @GameTest(template="empty",timeoutTicks=100)
+    public static void mixedEffectsShareTheirOrderedWeightsAndPersistBothIds(GameTestHelper h){SchemaGameTests.mixedEffectsShareTheirOrderedWeightsAndPersistBothIds(h);}
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void strengthAddsToWeaponBaseAndCleansOnlyItsOwnModifier(GameTestHelper h){SchemaGameTests.strengthAddsToWeaponBaseAndCleansOnlyItsOwnModifier(h);}
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void chainedStrengthBoostsOnlyPositiveDamageOnce(GameTestHelper h){SchemaGameTests.chainedStrengthBoostsOnlyPositiveDamageOnce(h);}
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void strengthVulnerabilityAppliesToMeleeMagicProjectilesEnvironmentAndSoul(GameTestHelper h){SchemaGameTests.strengthVulnerabilityAppliesToMeleeMagicProjectilesEnvironmentAndSoul(h);}
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void strengthOnlyBuildTrainsOnLandedHitsWithFullAura(GameTestHelper h){SchemaGameTests.strengthOnlyBuildTrainsOnLandedHitsWithFullAura(h);}
+    @GameTest(template="empty",timeoutTicks=100)
     public static void outgoingPenaltyAlsoScalesFlatBonusesAddedByNativeEffects(GameTestHelper h){SchemaGameTests.outgoingPenaltyAlsoScalesFlatBonusesAddedByNativeEffects(h);}
     @GameTest(template="empty",timeoutTicks=100)
     public static void learningRequiresOneThousandAndMasteryTwoThousand(GameTestHelper h){SchemaGameTests.learningRequiresOneThousandAndMasteryTwoThousand(h);}
