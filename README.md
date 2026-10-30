@@ -18,9 +18,9 @@ The **[Inverted Spear of Heaven](wiki/pages/Inverted-Spear-of-Heaven.md)** is a 
 
 **[Schema](wiki/pages/Schema.md)** adds a six-effect Battlewill tree: 1,000 learning points, 2,000 mastery and toggleable Mitochondrial, Strength and Regenerative builds for aura regeneration, base attack damage or HP/SHP recovery, with tradeoffs.
 
-## Standalone Heavenly Restriction addon
+## Standalone TensuraAdditionalAdditions addon
 
-The race, Chained, Unbound, its three aura recovery skills and Air Walk are also available as **[Tensura: Heavenly Restriction](standalone/heavenly-restriction/README.md)**. [Download standalone 1.2.0](releases/tensura-heavenly-restriction-1.2.0.jar). It requires Tensura and its dependencies, runs without Tensura Myths, and uses separate registry IDs. Use either addon in an instance; the full Myths release above retains all its content. Standalone **1.2.0** supports **[Tensura Neo Otherworld 1.1.3a](standalone/heavenly-restriction/docs/compatibility/NEO-OTHERWORLD-1.1.3a.md)**.
+The race, Chained, Unbound, its three aura recovery skills and Air Walk are also available as **[TensuraAdditionalAdditions](standalone/heavenly-restriction/README.md)**. [Download standalone 1.2.1](releases/TensuraAdditionalAdditions-1.2.1.jar). It requires Tensura and its dependencies, runs without Tensura Myths, and uses separate registry IDs. Use either addon in an instance; the full Myths release above retains all its content. Standalone **1.2.1** supports **[Tensura Neo Otherworld 1.1.3a](standalone/heavenly-restriction/docs/compatibility/NEO-OTHERWORLD-1.1.3a.md)**.
 
 ## Visuals
 

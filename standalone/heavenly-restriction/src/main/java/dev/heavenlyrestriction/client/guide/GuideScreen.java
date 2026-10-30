@@ -30,7 +30,7 @@ public final class GuideScreen extends Screen {
     private GuideButton previous,next;
     private int x,y,w,h,side,listTop,listBottom,articleX,articleY,articleW,articleBottom,listStart,pageScroll,totalHeight;
     private record Line(FormattedCharSequence text,int color,int top,int height,String link){}
-    public GuideScreen(Screen parent){super(Component.literal("Heavenly Restriction Guide"));this.parent=parent;catalog=load();selected=catalog.get(selected).id();}
+    public GuideScreen(Screen parent){super(Component.literal("TensuraAdditionalAdditions Guide"));this.parent=parent;catalog=load();selected=catalog.get(selected).id();}
     private static GuideCatalog load(){
         try(var in=Minecraft.getInstance().getResourceManager().getResourceOrThrow(HeavenlyRestriction.id("guide/entries.json")).open()){
             return GuideCatalog.parse(new String(in.readAllBytes(),StandardCharsets.UTF_8));
@@ -96,7 +96,7 @@ public final class GuideScreen extends Screen {
     @Override public void renderBackground(GuiGraphics g,int mx,int my,float partial){}
     @Override public void render(GuiGraphics g,int mx,int my,float partial){
         previous.active=!back.isEmpty();next.active=!forward.isEmpty();g.fill(0,0,width,height,0xc8070c12);g.fill(x-1,y-1,x+w+1,y+h+1,LINE);g.fill(x,y,x+w,y+h,INK);g.fill(x,y,x+w,y+2,ACCENT);
-        String label=w<420?"Heavenly Restriction":"Heavenly Restriction  /  Field Guide";g.drawString(font,label,x+67,y+15,ACCENT,false);
+        String label=w<420?"TensuraAdditionalAdditions":"TensuraAdditionalAdditions  /  Field Guide";g.drawString(font,label,x+67,y+15,ACCENT,false);
         g.fill(x+8,listTop-2,x+side+12,listBottom+1,PANEL);g.fill(articleX-8,listTop-2,x+w-9,articleBottom+5,PANEL);
         var e=catalog.get(selected);int hx=articleX+26;try{g.blit(ResourceLocation.parse(e.icon()),articleX,y+86,0,0,20,20,20,20);}catch(Exception ignored){}
         String title=font.plainSubstrByWidth(e.title(),Math.max(20,articleW-30));g.drawString(font,title,hx,y+87,TEXT,false);

@@ -2,7 +2,7 @@
 
 [Main Page](https://github.com/Bithio999/MC/wiki/Home) · [Getting Started](https://github.com/Bithio999/MC/wiki/Getting-Started)
 
-Open the offline guide with **F8** while playing. You can change this key under **Controls → Key Binds**. The pause menu also has **Myths Guide** or **Restriction Guide**, and Tensura’s status page has a **Guide** button below the panel.
+Open the offline guide with **F8** while playing. You can change this key under **Controls → Key Binds**. The pause menu also has **Myths Guide** or **Additions Guide**, and Tensura’s status page has a **Guide** button below the panel.
 
 The Myths guide covers skills, hunter and Heavenly Restriction progression, secondary races, the individual Convergent races, equipment, otherworlders and bosses. The standalone guide contains its lineage, Chained/Unbound, Schema, movement Battlewills, recovery and the spear.
 

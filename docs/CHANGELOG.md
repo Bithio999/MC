@@ -1,5 +1,10 @@
 # Changelog
 
+## Standalone 1.2.1 — TensuraAdditionalAdditions
+
+- Rename the standalone mod, resource pack, Controls category and guide branding to TensuraAdditionalAdditions. The pause button reads Additions Guide.
+- Rename the release JAR while retaining the existing internal mod ID, registry IDs, configuration filenames and saved progress for existing standalone worlds. Gameplay is unchanged.
+
 ## 0.36.0 / standalone 1.2.0 — In-game guide
 
 - Add a bundled, searchable reference opened by F8, pause/status menu buttons or client commands. It pauses single-player, restores the previous screen and works offline.

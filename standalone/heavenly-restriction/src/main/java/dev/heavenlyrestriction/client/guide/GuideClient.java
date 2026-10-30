@@ -19,7 +19,7 @@ public final class GuideClient {
         private static boolean requested;
         @SubscribeEvent public static void tick(ClientTickEvent.Post e){var mc=Minecraft.getInstance();if(requested){requested=false;open(null);}while(KEY.consumeClick())if(mc.player!=null && mc.screen==null)open(null);}
         @SubscribeEvent public static void init(ScreenEvent.Init.Post e){var s=e.getScreen();
-            if(s instanceof PauseScreen)e.addListener(Button.builder(Component.literal("Restriction Guide"),b->open(s)).bounds(8,8,112,20).build());
+            if(s instanceof PauseScreen)e.addListener(Button.builder(Component.literal("Additions Guide"),b->open(s)).bounds(8,8,112,20).build());
             else if(s instanceof io.github.manasmods.tensura.client.screen.MainScreen main){int bx=(s.width-254)/2,by=(s.height-163)/2+168;if(by+18<=s.height-3)e.addListener(Button.builder(Component.literal("Guide"),b->open(s)).bounds(bx,by,78,18).build());}
         }
         @SubscribeEvent public static void commands(RegisterClientCommandsEvent e){e.getDispatcher().register(com.mojang.brigadier.builder.LiteralArgumentBuilder.<net.minecraft.commands.CommandSourceStack>literal("restrictionguide").executes(c->{requested=true;return 1;}));}

@@ -1,6 +1,6 @@
-# Heavenly Restriction guide
+# TensuraAdditionalAdditions guide
 
-For the in-game version, press **F8**, use **Restriction Guide** in the pause menu, or **Guide** below Tensura’s status panel. It includes search, categories, page history and related topics. The key can be changed in Controls.
+For the in-game version, press **F8**, use **Additions Guide** in the pause menu, or **Guide** below Tensura’s status panel. It includes search, categories, page history and related topics. The key can be changed in Controls.
 
 
 [Addon home](../README.md)
