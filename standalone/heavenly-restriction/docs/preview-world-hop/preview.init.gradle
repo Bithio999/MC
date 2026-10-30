@@ -1,0 +1,10 @@
+gradle.projectsEvaluated {
+ rootProject.sourceSets.main.java.srcDir(rootProject.file('docs/preview-world-hop'))
+ rootProject.neoForge.runs.client.gameDirectory=rootProject.file('/workspace/validation-world-hop-video/client')
+ rootProject.neoForge.runs.client.programArgument('--quickPlaySingleplayer')
+ rootProject.neoForge.runs.client.programArgument('World Hop Preview')
+ rootProject.neoForge.runs.client.programArgument('--width')
+ rootProject.neoForge.runs.client.programArgument('1280')
+ rootProject.neoForge.runs.client.programArgument('--height')
+ rootProject.neoForge.runs.client.programArgument('720')
+}

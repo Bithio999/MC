@@ -16,6 +16,8 @@ Replace the older standalone JAR in the instance’s `mods` folder. On multiplay
 
 ## Parallel World Jumper
 
+[Watch the in-game World Hop preview](../../docs/media/world-hop-preview/README.md).
+
 A new Unique skill, rollable in **private single-player**. Press **World Hop** to save and enter a new-seed continuation with **all dimensions regenerated**. Your character, inventory and progression carry over; builds and entities stay in the previous world, which remains available in the world list. Land on nearby safe ground, with an Overworld fallback. Generator presets and datapacks are preserved; flat worlds remain flat. No aura or magicule cost. Dedicated servers and open-to-LAN sessions cannot roll, acquire, learn, copy or activate it.
 
 ## Included content

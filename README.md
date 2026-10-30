@@ -22,6 +22,8 @@ The **[Inverted Spear of Heaven](wiki/pages/Inverted-Spear-of-Heaven.md)** is a 
 
 The race, Chained, Unbound, its three aura recovery skills and Air Walk are also available as **[TensuraAdditionalAdditions](standalone/heavenly-restriction/README.md)**. [Download standalone 1.3.0](releases/TensuraAdditionalAdditions-1.3.0.jar). It requires Tensura and its dependencies, runs without Tensura Myths, and uses separate registry IDs. Use either addon in an instance; the full Myths release above retains all its content. The standalone also adds **Parallel World Jumper**, a single-player Unique that enters a fresh-seed continuation with every dimension regenerated while retaining your character and keeping the previous save. Standalone **1.3.0** supports **[Tensura Neo Otherworld 1.1.3a](standalone/heavenly-restriction/docs/compatibility/NEO-OTHERWORLD-1.1.3a.md)**.
 
+[Watch the World Hop video preview](docs/media/world-hop-preview/README.md).
+
 ## Visuals
 
 World effects and Myth bosses use original **Blockbench models and GeckoLib animations**, combined with smooth ring structures, faceted crystals, curved organic surfaces, beveled solid edges, fluid sheets, beams, trails and black-hole optics. The release includes 72 effect rigs, both Myth bosses, destructible Genesis Seals, animated NPC equipment and four modeled ritual items. [Visual gallery](wiki/pages/Visual-Effects.md) · [Editable projects](art/blockbench) · [Artist workflow](docs/VISUAL_PIPELINE.md).

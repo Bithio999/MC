@@ -1,0 +1,18 @@
+{
+  "seed_before": 7611466232267607111,
+  "seed_after": 3092169633888434771,
+  "ep_before": 1000000.0,
+  "ep_after": 1000000.0,
+  "race_before": "tensura:human",
+  "race_after": "tensura:human",
+  "diamonds_before": 37,
+  "diamonds_after": 37,
+  "named_sword_preserved": true,
+  "previous_world_retained": true,
+  "cast_at": 9.003027856,
+  "client_return_at": 218.601521722,
+  "terrain_visible_at": 230.6528404,
+  "duration": 243.719014562,
+  "audio_offset": 168.790804263,
+  "version": "1.3.0"
+}
