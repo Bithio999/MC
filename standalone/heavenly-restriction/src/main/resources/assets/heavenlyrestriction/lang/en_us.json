@@ -13,5 +13,7 @@
   "item.heavenlyrestriction.inverted_spear_of_heaven.desc.4": "prevents skill activation for 2 seconds.",
   "item.heavenlyrestriction.inverted_spear_of_heaven.desc.5": "Can attack Spiritual Entities.",
   "message.heavenlyrestriction.instant_transmission.charging": "Instant Transmission: %s seconds",
-  "message.heavenlyrestriction.instant_transmission.cancelled": "Instant Transmission cancelled."
+  "message.heavenlyrestriction.instant_transmission.cancelled": "Instant Transmission cancelled.",
+  "key.heavenlyrestriction.guide": "Open in-game guide",
+  "key.categories.heavenlyrestriction": "Heavenly Restriction"
 }

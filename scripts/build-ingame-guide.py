@@ -1,0 +1,139 @@
+#!/usr/bin/env python3
+"""Export a compact, gameplay-only guide from curated entries and the wiki's current tables."""
+from pathlib import Path
+import json,re
+ROOT=Path(__file__).resolve().parents[1]
+PAGES=ROOT/'wiki/pages'
+def clean(s):
+    s=s.replace('Godly / native Ultimate','Godly')
+    s=re.sub(r'!\[[^]]*\]\([^)]*\)','',s)
+    s=re.sub(r'\[([^]]+)\]\([^)]*\)',r'\1',s)
+    return re.sub(r'[*`_]', '',s).strip()
+def section(title,*lines):return {'title':title,'lines':list(lines)}
+def entry(id,title,cat,summary,*sections,keywords=(),related=(),icon='minecraft:textures/item/book.png'):
+    return dict(id=id,title=title,category=cat,summary=summary,sections=list(sections),keywords=list(keywords),related=list(related),icon=icon)
+common=[
+entry('welcome','Getting started','Start','Your quick reference for races, skills and equipment.',section('Open the guide','Press F8 in the world, or use Guide on the Tensura status screen or the guide button in the pause menu. The key can be changed in Controls.'),section('Find what you need','Search by name, ability, damage type or requirement. Categories narrow the results. Scroll each panel independently; use the arrows to return to earlier pages. Ctrl+F focuses search.'),section('Read the numbers','Values are defaults. Server settings, mastery and other bonuses can change them. Skill pages list the damage type; support moves do not deal damage.'),related=['fettered-lineage','chained','schema','spear']),
+entry('fettered-lineage','Heavenly Restriction lineage','Races','Choose Fettered Human at reincarnation. Difficulty: Hard. The lineage keeps your human appearance.',section('Starting resources','1,500–2,000 aura and 50–100 magicules. Chained is granted at birth and retained through evolution; starting aura is not multiplied.'),section('Evolution requirements','Tempered Vessel: 100,000 total EP; master 1 Battlewill; Chained 20%.','Unshackled: 500,000 total EP; master 2 Battlewills; Chained 40%.','Heavenly Restricted: 2,000,000 total EP; master 3 Battlewills; Chained 60%.','Heavenbreaker: 8,000,000 total EP; master 4 Battlewills; Chained 100%.'),section('Progression','Use Tensura’s race evolution menu. EP requirements check the total shown in Status. Hunter’s Recovery is granted at Unshackled; Apex Renewal at Heavenly Restricted; Sovereign Rebirth at Heavenbreaker.'),keywords=['fettered human','tempered vessel','unshackled','heavenly restricted','heavenbreaker','jujutsu kaisen'],related=['chained','unbound','recovery','air-walk'],icon='wildhunt:textures/race/fettered_human.png'),
+entry('chained','Chained','Skills','The lineage’s Unique Skill trades magical growth and unrestricted learning for aura and physical combat.',section('Always active while owned','Later maximum-aura gains receive 5× growth; existing magicule capacity is retained but cannot grow. EP gains split 90% aura / 10% magicules; the blocked magicule share is not redirected.','Retain up to 1 magicule per second and convert the remaining computed regeneration, including biome and sleep bonuses, into aura.','Learn Battlewills, resistances/nullifications, reincarnation skills and their derived skills, and lineage recovery skills. Blocked skills remain visible but cannot finish learning. Resistances use their configured acquisition cost in current aura.'),section('Toggle: Martial Supremacy','Battlewill learning/mastery +9; resistance learning +19. Battlewill-sourced attacks deal 5× damage; other Physical hits deal 3×. These branches do not stack. Numeric Battlewill buffs receive 3× effectiveness; Aura Sword is excluded.'),section('Mastered: Broken Limit','Always active when mastered. Your hits ignore dodge and lower Nullification to Resistance, and Resistance to nothing.'),section('In slot: Unerring Body','10% damage reduction, 100% projectile dodge and 25% other dodge, subject to native bypass rules. Immune to Fear, Slowness, Burden and Haki effects.'),section('Press: Severance Rush','Aim and teleport up to 16 blocks, including in the air; stop before the aimed enemy. Physical damage along a 3-block radius and at the 4-block arrival. Cost: 2% current aura. Cooldown: 1 second.','Base damage: path 1.5 × √A + W; arrival 3 × √A + W. A is the base aura payment; W is the held weapon contribution. Weapon enchantments and engravings apply.'),related=['unbound','fettered-lineage','schema','spear'],icon='wildhunt:textures/skill/chained.png'),
+entry('unbound','Unbound','Skills','Chained automatically evolves into this Ultimate when you are Heavenbreaker, fully master Chained, and become a True Hero or True Demon Lord.',section('Retained pact','Retains Chained’s restrictions, aura growth and regeneration conversion. Presets and progress carry over.'),section('Improved combat','Toggle: 8× Battlewill damage or 5× other Physical damage; 4× numeric Battlewill buffs except Aura Sword. The damage branches remain separate.','In slot: 30% damage reduction, 100% projectile dodge and 50% other dodge. Retains Fear, Slowness, Burden and Haki immunity.','Mastered Broken Limit retains resistance degradation and dodge bypass, and makes your attacks critical hits.'),section('Severance Rush','The same 16-block aim teleport and Physical path/arrival formulas as Chained. Cost: 2% current aura. Cooldown: 1 second. Held weapon effects apply.'),section('Counter','Press to hold a defensive stance for 3 seconds with movement speed 0. The first eligible enemy hit is negated and releases a terrain-piercing slash toward the attacker, hitting other enemies along its path.','Cost: 10% current aura on entry. Cooldown: 10 seconds. Press again to cancel early for free.','Physical base damage: 10 × negated damage + 6 × √A + W. The released weapon’s damage, enchantments and engravings apply; toggle bonuses and critical hits then apply.'),related=['chained','spear'],icon='wildhunt:textures/skill/unbound.png'),
+entry('schema','Schema','Skills','A Battlewill with a customizable six-effect tree. Learn: 1,000 points. Master: 2,000 points.',section('Use','Press Build to open the tree. Choose Add Mito, Add Str. or Add Regen; select a slot to move or remove it. Apply saves; Close discards unapplied edits. Toggle Schema to activate the saved tree.'),section('Effects per stack','Mitochondrial: +500% aura regeneration; −5% outgoing damage.','Strength: +5 base attack damage; +2% damage taken.','Regenerative: +20% HP/SHP healing received; +5% aura and magicule costs. Healing bonuses apply once and respect native limits.'),section('Slot order and mastery','Positive weights start at 100%, 50%, 25%, 12.5%, 6.25%, 3.125%. Every 400 mastery makes another slot full strength, reaching all six at 2,000. All effects share that order; drawbacks always stay full strength.','Chained/Unbound boosts positive Battlewill bonuses once; drawbacks are not boosted.'),section('Training','Qualifying aura recovery, Strength hits and Regenerative healing share one mastery gain every 30 seconds. Idle full reserves, editing and toggling grant no training. The timer and build persist after saving.'),related=['chained','unbound','recovery'],icon='wildhunt:textures/battlewill/schema.png'),
+entry('air-walk','Air Walk','Skills','A Battlewill evolution of Air Float / Air Flight.',section('Learn','Master your permanent Air Float, then complete the new learning entry in the Battlewill menu.'),section('Use','Press to enable free flight using aura. Press again to stop; stopping is free even with empty aura.','Cost: 30 aura to activate and 30 aura per second actually flying. Mastery halves both to 15. No magicule cost or cooldown.'),related=['instant-transmission','schema'],icon='wildhunt:textures/battlewill/air_sovereignty.png'),
+entry('instant-transmission','Instant Transmission','Skills','A Battlewill evolution of Instant Move for coordinate self-teleportation.',section('Learn','Master your permanent Instant Move, then complete its evolution’s learning entry.'),section('Use','Press to enter X, Y and Z, then choose Warp. Only you travel, within the current dimension; it does not create portals.','Charge: 100 ticks / 5 seconds; instant at mastery. Cost: 10 aura per block of 3D distance, halved to 5 at mastery. Opening the menu is free.'),section('Limits','Native spatial blocks still apply. Invalid or unfunded requests do not start a cast. Losing the skill, dying, logging out or changing dimension cancels a pending cast; a started cast has already paid.'),related=['air-walk','schema'],icon='minecraft:textures/item/ender_pearl.png'),
+entry('recovery','Aura recovery skills','Skills','Toggle a recovery skill to heal with aura. Only your strongest toggled tier works; full reserves cost nothing.',section('Hunter’s Recovery','Restore 4 HP per second, or 8 mastered, at 20 aura per base HP.'),section('Apex Renewal','Restore missing HP every half second. Cost: 30 aura per base HP, or 20 mastered.'),section('Sovereign Rebirth','Restore HP and SHP every half second. Cost: 30 aura per HP / 10 per SHP, or 20 / 5 mastered. Can prevent ordinary fatal damage while funded; native bypass and suppression rules still apply.'),section('Obtaining','Granted by the relevant hunter or Heavenly Restriction evolutions. Earlier recovery skills remain available, but do not heal in parallel.'),related=['fettered-lineage','schema'],icon='tensura:textures/skill/extra/infinite_regeneration.png'),
+entry('spear','Inverted Spear of Heaven','Gear','A rare weapon from ominous trial vault loot, with the same attack stats as a Hihiirokane Sword.',section('Stats and obtaining','80 total ordinary player attack damage; 1.6 attack speed. Rare 2% additional ominous-vault reward. Regular vaults do not drop it.'),section('Nullification engraving','Weapon hits instantly shatter barriers, remove skill status effects, and prevent skill activation for 2 seconds. The weapon can attack Spiritual Entities.','Held main-hand attacks, Severance Rush and Counter carry the engraving. Spiritual contact bypasses the spiritual-body Physical reduction, while armor, resistance, dodge and PvP rules still apply.'),related=['chained','unbound'],icon='wildhunt:textures/item/inverted_spear_of_heaven.png')]
+# Verify progression against the canonical current player guide rather than inferring from EP.
+guide=(ROOT/'standalone/heavenly-restriction/docs/GUIDE.md').read_text()
+rows=[clean(l) for l in guide.splitlines() if l.startswith('|') and clean(l.split('|')[1]).strip() in ['Tempered Vessel','Unshackled','Heavenly Restricted','Heavenbreaker']]
+assert len(rows)==4, 'The Heavenly Restriction progression table changed'
+# Export exact displayed table values; this also keeps later balance edits synchronized.
+common[1]['sections'][1]['lines']=[f'{cells[0]}: {cells[1]} total EP; {cells[2]} mastered Battlewills; Chained {cells[3]}.' for l in rows for cells in [[c.strip() for c in l.strip('|').split('|')[:4]]]]
+common[1]['sections'].append(section('Racial health bonuses','Tempered Vessel: +100 HP / +400 SHP. Unshackled: +300 HP / +1,600 SHP.','Heavenly Restricted: +600 HP / +3,600 SHP. Heavenbreaker: +1,000 HP / +6,600 SHP. Each stage replaces the old racial bonuses.'))
+common[1]['sections'].append(section('Starting skill rolls','Skills with magicule-cost abilities or target-skill stealing/copying are excluded from Fettered Human’s starting rolls. Pride is exempt; Creator and recorded derived skills remain allowed.'))
+def icon_from(s,slug):
+    m=re.search(r'assets/wildhunt/(textures/[^)]+\.png)',s)
+    if m:return 'wildhunt:'+m[1]
+    m=re.search(r'\.\./assets/(skill|race|battlewill)/([^).]+)\.png',s)
+    if m:return 'wildhunt:textures/'+m[1]+'/'+m[2]+'.png'
+    return 'minecraft:textures/item/book.png'
+def paragraphs(s):
+    return [clean(p) for p in re.split(r'\n\s*\n',s) if p.strip() and not p.lstrip().startswith(('#','|','!','[','---','```'))]
+def compact(s,limit=75):
+    s=clean(s);sentences=re.split(r'(?<=[.!?])\s+',s);out=[]
+    for sentence in sentences:
+        if any(t in sentence.lower() for t in ['render','particle','registry','server-controlled','local preview','network','game tick','stored','serialized','resource location']):continue
+        out.append(sentence)
+        if len(' '.join(out).split())>=limit or len(out)>=2:break
+    return ' '.join(out)
+def tables(s):
+    groups=re.findall(r'(?:^\|.*\n)+',s,re.M);out=[]
+    for g in groups:
+        rows=[[clean(c) for c in l.strip().strip('|').split('|')] for l in g.splitlines() if not re.match(r'^\|[\s:|\-]+\|$',l)]
+        if len(rows)<2:continue
+        header=rows[0]
+        for row in rows[1:]:
+            if not row or not any(row) or row[0] in ['Information','Evolution','Obtaining'] or row[0] in ['Damage ID','Registry ID','Entity ID','Previous','Evolution','Inspiration','Combat role','Normal reincarnation Unique pool']:continue
+            if not any(header):out.append(' / '.join(c for c in row if c));continue
+            if len(header)>2:out.append(' · '.join((header[n]+': ' if n>0 and n<len(header) else '')+cell for n,cell in enumerate(row) if cell and cell!='—'))
+            else:
+                if row[0]=='Effect' and ('native element' in ' '.join(row) or 'No direct damage' in ' '.join(row)):continue
+                out.append(': '.join(c for c in row if c and c!='—'))
+    return out
+full=list(common)
+# The remaining playable skill pages use concise current ability tables + short behavior summaries.
+catalog=json.loads((ROOT/'wiki/catalog.json').read_text())
+skip={'Chained','Unbound','Schema','Air-Walk','Instant-Transmission','Aura-Regeneration','Hunters-Recovery','Apex-Renewal','Sovereign-Rebirth','Skills','Skill-Synthesis','Unique-Skills','Ultimate-Skills','Demiurge','Moira'}
+for meta in catalog:
+    slug=meta['slug']
+    if meta['category']!='Skills' or slug in skip:continue
+    s=(PAGES/(slug+'.md')).read_text();parts=re.split(r'^## Usage\s*$',s,flags=re.M);head=parts[0];summary=next((compact(p) for p in paragraphs(head) if compact(p)),meta['title'])
+    sections=[];facts=tables(head)
+    if facts:sections.append(section('At a glance',*facts[:9]))
+    # Active modes get their cost/cooldown table once, followed by their own small entries.
+    chunks=re.split(r'^(#{3,4}) (.+)$',parts[1] if len(parts)>1 else s,flags=re.M)
+    for n in range(1,len(chunks),3):
+        title=clean(chunks[n+1]);body=chunks[n+2]
+        if title.lower() in ['visual effects','related pages','technique archive']:continue
+        facts=tables(body);bodyparas=paragraphs(body);text=next((compact(p) for p in bodyparas if compact(p)), '')
+        lines=facts[:8]+([text] if text else [])
+        if lines:sections.append(section(title,*lines))
+    if not sections:sections=[section('Use',*tables(s)[:7])]
+    keywords=[meta.get('tier',''),slug.replace('-',' ')]+re.findall(r'\[Passive[^\]]*\] — \*\*([^*]+)',s)
+    full.append(entry(slug.lower(),meta['title'],'Skills',summary,*sections,keywords=keywords,related=['welcome'],icon=icon_from(s,slug)))
+# Human hunter progression; boss types, not repeated kills.
+full.append(entry('hunters','Hunter lineage','Races','An alternate Human branch: Awakened Hunter → Apex Hunter → Sovereign Hunter.',section('Requirements','Awakened Hunter: 100,000 total EP and 1 distinct boss type.','Apex Hunter: 400,000 total EP and 3 distinct boss types.','Sovereign Hunter: 2,000,000 total EP, 5 distinct boss types and one mastered Myths Unique.'),section('Rewards','HP / SHP bonuses: +100 / +400; +500 / +3,200; +1,000 / +6,600. The new stage replaces the old racial bonuses. Each stage grants the corresponding aura recovery skill.'),section('Boss credit','Repeated kills of one boss type give one entry. Player-attributed kills while Human or a hunter count. Wither, Ender Dragon and supported boss-tagged mobs qualify.'),related=['recovery','storm-crown'],keywords=['human','awakened hunter','apex hunter','sovereign hunter']))
+for slug,cat in [('Skill-Synthesis','Start'),('Godly','Start'),('Duo-Races','Races'),('Convergent-Awakening','Races'),('Ananke','Bosses'),('Eschaton','Bosses'),('Alma','People'),('Gemma','People')]:
+    if slug=='Godly' and any(e['id']=='godly' for e in full):continue
+    s=(PAGES/(slug+'.md')).read_text();ps=paragraphs(s);summary=next((compact(p) for p in ps if compact(p)),slug)
+    sections=[]
+    chunks=re.split(r'^## (.+)$',s,flags=re.M)
+    headfacts=tables(chunks[0]);headfacts=[l for l in headfacts if not any(t in l for t in ['Operator','Entity ID','Learned package'])]
+    if headfacts:sections.append(section('At a glance',*headfacts[:8]))
+    for n in range(1,len(chunks),2):
+        title=clean(chunks[n]);body=chunks[n+1]
+        if any(t in title.lower() for t in ['catalog','visual','package','related','leaving','technical','command','configuration','gallery']):continue
+        ts=tables(body);ts=[t for t in ts if not any(w in t for w in ['wildhunt:','minecraft:','tensura:','config/','Registry'])]
+        ps=[compact(p) for p in paragraphs(body)];ps=[p for p in ps if p and not any(w in p.lower() for w in ['config/','serverconfig','nbt','integration','operator'])]
+        lines=ts[:8]+ps[:2]
+        if lines:sections.append(section(title,*lines))
+    full.append(entry(slug.lower(),clean(s.splitlines()[0][2:]),cat,summary,*sections,related=['welcome'],icon=icon_from(s,slug)))
+# Keep the progression reference short and explicit.
+for e in full:
+    if e['id']=='duo-races':e['sections']=[section('Unlock','Finish your primary race, become a True Hero or True Demon Lord, and reach 5M total EP. Choose a different ancestry in the right-side Secondary Race tab. Confirm carefully: the choice is permanent for this life.'),section('Develop the secondary','The added EP gates are fixed: 7.5M, 10M, 12.5M, 15M for the first four evolutions. Meet the native requirements shown in the menu too.','The secondary gives half-strength racial attributes and +10% native EP gain. Its racial action can be bound separately in Controls. The primary keeps your body and ordinary racial key.'),section('Daemon naming','Being named means receiving your own name through Tensura. Naming other mobs, mass naming, name tags and nicknames do not satisfy it.'),section('Next step','Finish both lineages to unlock their Convergent Awakening. The right-side tabs show current eligibility.')];e['related']=['convergent-awakening']
+    if e['id']=='convergent-awakening':e['sections']=[section('Requirements','Both selected races must reach final evolution. Be a True Hero or True Demon Lord.','Required total EP: the greater of 10M and 125% of the highest preceding evolution EP gate. This uses fixed lineage gates, not your current EP at selection.'),section('Awaken','Use the right-side Convergent Awakening tab. It shows your exact requirement and the resulting race.','The fusion grants a one-time 25% increase to both base energy pools, replaces the prior racial attributes, refills health/energy and retains learned skills and +10% EP gain.'),section('Concordance Pulse','Bind the secondary racial action to use the fused action. Restore 50% max HP and SHP and push nearby enemies. Cost: 1,500 aura; cooldown: 30 seconds. No direct damage.')];e['related']=['duo-races']
+    if e['id']=='godly':e['sections']=[section('Ascend','Master a combination Ultimate, become a True Hero or True Demon Lord and reach 12M total EP. Use Skills → Godly → Ascension.','Choose Aion directly; Thoth also needs mastered Rune Smith, and Lugh also needs mastered Threadweaver.'),section('Always-active classification passives','Divine Authority: +35% damage against targets without a learned Godly skill.','Absolute Penetration: your damage bypasses resistance/nullification skills and corresponding resistance attributes. It does not remove every other defense.','Interference Immunity: non-Godly magic interference cannot suppress the owner.')];e['related']=['aion','thoth','lugh','skill-synthesis']
+    if e['id']=='storm-crown':
+        for sec in e['sections']:
+            if sec['title']=='Railbolt':sec['lines'].append('The initial shot needs a clear path. Ricochets ignore blocks and never revisit a target.')
+    if e['id']=='skill-synthesis':
+        e['sections'].append(section('Godly choices','At 12M total EP with true awakening, ascend a mastered Ultimate into Aion. Thoth also needs mastered Rune Smith; Lugh also needs mastered Threadweaver.'))
+# Each fusion gets a short page so searching either ancestry or its name finds the result.
+for meta in catalog:
+    if not meta['slug'].startswith('Fusion-'):continue
+    s=(PAGES/(meta['slug']+'.md')).read_text();facts=tables(s);keep=[l for l in facts if any(l.startswith(k) for k in ['Ancestries:','Alignment:','Aura gain weight:','Magicule gain weight:'])]
+    full.append(entry(meta['slug'].lower(),meta['title'],'Races',next(p for p in paragraphs(s) if p),section('Ancestries and growth',*keep),section('Awaken','Finish both selected race paths and meet the Convergent Awakening requirements. Select the awakening tab to see the required EP. Reversing the two ancestries gives the same race.'),section('Racial action','Concordance Pulse: restore 50% maximum HP and SHP and push nearby enemies. Cost: 1,500 aura. Cooldown: 30 seconds. No direct damage.'),related=['duo-races','convergent-awakening'],keywords=[meta['slug'].replace('-',' ')],icon=icon_from(s,meta['slug'])))
+# Link each skill to its actual synthesis and ascension reference without a giant navigation list.
+ids={e['id'] for e in full}
+for e in full:
+    if e['category']=='Skills' and e['id'] not in {x['id'] for x in common}:e['related']=[i for i in ['skill-synthesis','godly'] if i in ids]
+full[0]['related']+=['hunters','skill-synthesis','duo-races','ananke','eschaton']
+# Both mods share only the content they actually register.
+for mod,entries,folder in [('wildhunt',full,ROOT/'src/main/resources/assets/wildhunt'),('heavenlyrestriction',common,ROOT/'standalone/heavenly-restriction/src/main/resources/assets/heavenlyrestriction')]:
+    import copy
+    entries=copy.deepcopy(entries)
+    allowed={e['id'] for e in entries}
+    for e in entries:
+        e['related']=[i for i in e['related'] if i in allowed]
+        if mod=='heavenlyrestriction':
+            e['icon']=e['icon'].replace('wildhunt:','heavenlyrestriction:')
+            e['summary']=e['summary'].replace('hunter or Heavenly Restriction','Heavenly Restriction')
+            for sec in e['sections']:sec['lines']=[l.replace('hunter or Heavenly Restriction','Heavenly Restriction') for l in sec['lines']]
+        icon=e['icon']
+        if icon.startswith(mod+':') and not (folder/icon.split(':',1)[1]).is_file():e['icon']='minecraft:textures/item/book.png'
+    # IDs must be unique and related links always resolvable.
+    assert len(allowed)==len(entries),(mod,'duplicate IDs')
+    for e in entries:
+        assert e['summary'] and e['sections'],e['id']
+        assert all(i in allowed for i in e['related'])
+    target=folder/'guide/entries.json';target.parent.mkdir(parents=True,exist_ok=True);target.write_text(json.dumps({'entries':entries},ensure_ascii=False,indent=2)+'\n')
+    print(mod,len(entries),'pages')

@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.36.0 / standalone 1.2.0 — In-game guide
+
+- Add a bundled, searchable reference opened by F8, pause/status menu buttons or client commands. It pauses single-player, restores the previous screen and works offline.
+- Add categories, independent scrolling/draggable scrollbars, page history, related links and responsive layouts. Full Myths has 139 pages including all 105 Convergent races; standalone has nine focused pages.
+- Export concise gameplay content with costs, damage types, progression and usage. Validate catalogs, links, fixed progression gates and search behavior; review both real clients and small-window layouts.
+
 ## 0.35.11 / standalone 1.1.12 — Schema training interval
 
 - Change Schema mastery training from once per second to once every 30 seconds (600 game ticks). All recovery, Strength hits and Regenerative healing share the same persisted timer. Native mastery-point bonuses and saved progress are retained.

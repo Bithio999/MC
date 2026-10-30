@@ -1,0 +1,353 @@
+{
+  "entries": [
+    {
+      "id": "welcome",
+      "title": "Getting started",
+      "category": "Start",
+      "summary": "Your quick reference for races, skills and equipment.",
+      "sections": [
+        {
+          "title": "Open the guide",
+          "lines": [
+            "Press F8 in the world, or use Guide on the Tensura status screen or the guide button in the pause menu. The key can be changed in Controls."
+          ]
+        },
+        {
+          "title": "Find what you need",
+          "lines": [
+            "Search by name, ability, damage type or requirement. Categories narrow the results. Scroll each panel independently; use the arrows to return to earlier pages. Ctrl+F focuses search."
+          ]
+        },
+        {
+          "title": "Read the numbers",
+          "lines": [
+            "Values are defaults. Server settings, mastery and other bonuses can change them. Skill pages list the damage type; support moves do not deal damage."
+          ]
+        }
+      ],
+      "keywords": [],
+      "related": [
+        "fettered-lineage",
+        "chained",
+        "schema",
+        "spear"
+      ],
+      "icon": "minecraft:textures/item/book.png"
+    },
+    {
+      "id": "fettered-lineage",
+      "title": "Heavenly Restriction lineage",
+      "category": "Races",
+      "summary": "Choose Fettered Human at reincarnation. Difficulty: Hard. The lineage keeps your human appearance.",
+      "sections": [
+        {
+          "title": "Starting resources",
+          "lines": [
+            "1,500–2,000 aura and 50–100 magicules. Chained is granted at birth and retained through evolution; starting aura is not multiplied."
+          ]
+        },
+        {
+          "title": "Evolution requirements",
+          "lines": [
+            "Tempered Vessel: 100,000 total EP; 1 mastered Battlewills; Chained 20%.",
+            "Unshackled: 500,000 total EP; 2 mastered Battlewills; Chained 40%.",
+            "Heavenly Restricted: 2,000,000 total EP; 3 mastered Battlewills; Chained 60%.",
+            "Heavenbreaker: 8,000,000 total EP; 4 mastered Battlewills; Chained 100%."
+          ]
+        },
+        {
+          "title": "Progression",
+          "lines": [
+            "Use Tensura’s race evolution menu. EP requirements check the total shown in Status. Hunter’s Recovery is granted at Unshackled; Apex Renewal at Heavenly Restricted; Sovereign Rebirth at Heavenbreaker."
+          ]
+        },
+        {
+          "title": "Racial health bonuses",
+          "lines": [
+            "Tempered Vessel: +100 HP / +400 SHP. Unshackled: +300 HP / +1,600 SHP.",
+            "Heavenly Restricted: +600 HP / +3,600 SHP. Heavenbreaker: +1,000 HP / +6,600 SHP. Each stage replaces the old racial bonuses."
+          ]
+        },
+        {
+          "title": "Starting skill rolls",
+          "lines": [
+            "Skills with magicule-cost abilities or target-skill stealing/copying are excluded from Fettered Human’s starting rolls. Pride is exempt; Creator and recorded derived skills remain allowed."
+          ]
+        }
+      ],
+      "keywords": [
+        "fettered human",
+        "tempered vessel",
+        "unshackled",
+        "heavenly restricted",
+        "heavenbreaker",
+        "jujutsu kaisen"
+      ],
+      "related": [
+        "chained",
+        "unbound",
+        "recovery",
+        "air-walk"
+      ],
+      "icon": "heavenlyrestriction:textures/race/fettered_human.png"
+    },
+    {
+      "id": "chained",
+      "title": "Chained",
+      "category": "Skills",
+      "summary": "The lineage’s Unique Skill trades magical growth and unrestricted learning for aura and physical combat.",
+      "sections": [
+        {
+          "title": "Always active while owned",
+          "lines": [
+            "Later maximum-aura gains receive 5× growth; existing magicule capacity is retained but cannot grow. EP gains split 90% aura / 10% magicules; the blocked magicule share is not redirected.",
+            "Retain up to 1 magicule per second and convert the remaining computed regeneration, including biome and sleep bonuses, into aura.",
+            "Learn Battlewills, resistances/nullifications, reincarnation skills and their derived skills, and lineage recovery skills. Blocked skills remain visible but cannot finish learning. Resistances use their configured acquisition cost in current aura."
+          ]
+        },
+        {
+          "title": "Toggle: Martial Supremacy",
+          "lines": [
+            "Battlewill learning/mastery +9; resistance learning +19. Battlewill-sourced attacks deal 5× damage; other Physical hits deal 3×. These branches do not stack. Numeric Battlewill buffs receive 3× effectiveness; Aura Sword is excluded."
+          ]
+        },
+        {
+          "title": "Mastered: Broken Limit",
+          "lines": [
+            "Always active when mastered. Your hits ignore dodge and lower Nullification to Resistance, and Resistance to nothing."
+          ]
+        },
+        {
+          "title": "In slot: Unerring Body",
+          "lines": [
+            "10% damage reduction, 100% projectile dodge and 25% other dodge, subject to native bypass rules. Immune to Fear, Slowness, Burden and Haki effects."
+          ]
+        },
+        {
+          "title": "Press: Severance Rush",
+          "lines": [
+            "Aim and teleport up to 16 blocks, including in the air; stop before the aimed enemy. Physical damage along a 3-block radius and at the 4-block arrival. Cost: 2% current aura. Cooldown: 1 second.",
+            "Base damage: path 1.5 × √A + W; arrival 3 × √A + W. A is the base aura payment; W is the held weapon contribution. Weapon enchantments and engravings apply."
+          ]
+        }
+      ],
+      "keywords": [],
+      "related": [
+        "unbound",
+        "fettered-lineage",
+        "schema",
+        "spear"
+      ],
+      "icon": "heavenlyrestriction:textures/skill/chained.png"
+    },
+    {
+      "id": "unbound",
+      "title": "Unbound",
+      "category": "Skills",
+      "summary": "Chained automatically evolves into this Ultimate when you are Heavenbreaker, fully master Chained, and become a True Hero or True Demon Lord.",
+      "sections": [
+        {
+          "title": "Retained pact",
+          "lines": [
+            "Retains Chained’s restrictions, aura growth and regeneration conversion. Presets and progress carry over."
+          ]
+        },
+        {
+          "title": "Improved combat",
+          "lines": [
+            "Toggle: 8× Battlewill damage or 5× other Physical damage; 4× numeric Battlewill buffs except Aura Sword. The damage branches remain separate.",
+            "In slot: 30% damage reduction, 100% projectile dodge and 50% other dodge. Retains Fear, Slowness, Burden and Haki immunity.",
+            "Mastered Broken Limit retains resistance degradation and dodge bypass, and makes your attacks critical hits."
+          ]
+        },
+        {
+          "title": "Severance Rush",
+          "lines": [
+            "The same 16-block aim teleport and Physical path/arrival formulas as Chained. Cost: 2% current aura. Cooldown: 1 second. Held weapon effects apply."
+          ]
+        },
+        {
+          "title": "Counter",
+          "lines": [
+            "Press to hold a defensive stance for 3 seconds with movement speed 0. The first eligible enemy hit is negated and releases a terrain-piercing slash toward the attacker, hitting other enemies along its path.",
+            "Cost: 10% current aura on entry. Cooldown: 10 seconds. Press again to cancel early for free.",
+            "Physical base damage: 10 × negated damage + 6 × √A + W. The released weapon’s damage, enchantments and engravings apply; toggle bonuses and critical hits then apply."
+          ]
+        }
+      ],
+      "keywords": [],
+      "related": [
+        "chained",
+        "spear"
+      ],
+      "icon": "heavenlyrestriction:textures/skill/unbound.png"
+    },
+    {
+      "id": "schema",
+      "title": "Schema",
+      "category": "Skills",
+      "summary": "A Battlewill with a customizable six-effect tree. Learn: 1,000 points. Master: 2,000 points.",
+      "sections": [
+        {
+          "title": "Use",
+          "lines": [
+            "Press Build to open the tree. Choose Add Mito, Add Str. or Add Regen; select a slot to move or remove it. Apply saves; Close discards unapplied edits. Toggle Schema to activate the saved tree."
+          ]
+        },
+        {
+          "title": "Effects per stack",
+          "lines": [
+            "Mitochondrial: +500% aura regeneration; −5% outgoing damage.",
+            "Strength: +5 base attack damage; +2% damage taken.",
+            "Regenerative: +20% HP/SHP healing received; +5% aura and magicule costs. Healing bonuses apply once and respect native limits."
+          ]
+        },
+        {
+          "title": "Slot order and mastery",
+          "lines": [
+            "Positive weights start at 100%, 50%, 25%, 12.5%, 6.25%, 3.125%. Every 400 mastery makes another slot full strength, reaching all six at 2,000. All effects share that order; drawbacks always stay full strength.",
+            "Chained/Unbound boosts positive Battlewill bonuses once; drawbacks are not boosted."
+          ]
+        },
+        {
+          "title": "Training",
+          "lines": [
+            "Qualifying aura recovery, Strength hits and Regenerative healing share one mastery gain every 30 seconds. Idle full reserves, editing and toggling grant no training. The timer and build persist after saving."
+          ]
+        }
+      ],
+      "keywords": [],
+      "related": [
+        "chained",
+        "unbound",
+        "recovery"
+      ],
+      "icon": "heavenlyrestriction:textures/battlewill/schema.png"
+    },
+    {
+      "id": "air-walk",
+      "title": "Air Walk",
+      "category": "Skills",
+      "summary": "A Battlewill evolution of Air Float / Air Flight.",
+      "sections": [
+        {
+          "title": "Learn",
+          "lines": [
+            "Master your permanent Air Float, then complete the new learning entry in the Battlewill menu."
+          ]
+        },
+        {
+          "title": "Use",
+          "lines": [
+            "Press to enable free flight using aura. Press again to stop; stopping is free even with empty aura.",
+            "Cost: 30 aura to activate and 30 aura per second actually flying. Mastery halves both to 15. No magicule cost or cooldown."
+          ]
+        }
+      ],
+      "keywords": [],
+      "related": [
+        "instant-transmission",
+        "schema"
+      ],
+      "icon": "heavenlyrestriction:textures/battlewill/air_sovereignty.png"
+    },
+    {
+      "id": "instant-transmission",
+      "title": "Instant Transmission",
+      "category": "Skills",
+      "summary": "A Battlewill evolution of Instant Move for coordinate self-teleportation.",
+      "sections": [
+        {
+          "title": "Learn",
+          "lines": [
+            "Master your permanent Instant Move, then complete its evolution’s learning entry."
+          ]
+        },
+        {
+          "title": "Use",
+          "lines": [
+            "Press to enter X, Y and Z, then choose Warp. Only you travel, within the current dimension; it does not create portals.",
+            "Charge: 100 ticks / 5 seconds; instant at mastery. Cost: 10 aura per block of 3D distance, halved to 5 at mastery. Opening the menu is free."
+          ]
+        },
+        {
+          "title": "Limits",
+          "lines": [
+            "Native spatial blocks still apply. Invalid or unfunded requests do not start a cast. Losing the skill, dying, logging out or changing dimension cancels a pending cast; a started cast has already paid."
+          ]
+        }
+      ],
+      "keywords": [],
+      "related": [
+        "air-walk",
+        "schema"
+      ],
+      "icon": "minecraft:textures/item/ender_pearl.png"
+    },
+    {
+      "id": "recovery",
+      "title": "Aura recovery skills",
+      "category": "Skills",
+      "summary": "Toggle a recovery skill to heal with aura. Only your strongest toggled tier works; full reserves cost nothing.",
+      "sections": [
+        {
+          "title": "Hunter’s Recovery",
+          "lines": [
+            "Restore 4 HP per second, or 8 mastered, at 20 aura per base HP."
+          ]
+        },
+        {
+          "title": "Apex Renewal",
+          "lines": [
+            "Restore missing HP every half second. Cost: 30 aura per base HP, or 20 mastered."
+          ]
+        },
+        {
+          "title": "Sovereign Rebirth",
+          "lines": [
+            "Restore HP and SHP every half second. Cost: 30 aura per HP / 10 per SHP, or 20 / 5 mastered. Can prevent ordinary fatal damage while funded; native bypass and suppression rules still apply."
+          ]
+        },
+        {
+          "title": "Obtaining",
+          "lines": [
+            "Granted by the relevant Heavenly Restriction evolutions. Earlier recovery skills remain available, but do not heal in parallel."
+          ]
+        }
+      ],
+      "keywords": [],
+      "related": [
+        "fettered-lineage",
+        "schema"
+      ],
+      "icon": "tensura:textures/skill/extra/infinite_regeneration.png"
+    },
+    {
+      "id": "spear",
+      "title": "Inverted Spear of Heaven",
+      "category": "Gear",
+      "summary": "A rare weapon from ominous trial vault loot, with the same attack stats as a Hihiirokane Sword.",
+      "sections": [
+        {
+          "title": "Stats and obtaining",
+          "lines": [
+            "80 total ordinary player attack damage; 1.6 attack speed. Rare 2% additional ominous-vault reward. Regular vaults do not drop it."
+          ]
+        },
+        {
+          "title": "Nullification engraving",
+          "lines": [
+            "Weapon hits instantly shatter barriers, remove skill status effects, and prevent skill activation for 2 seconds. The weapon can attack Spiritual Entities.",
+            "Held main-hand attacks, Severance Rush and Counter carry the engraving. Spiritual contact bypasses the spiritual-body Physical reduction, while armor, resistance, dodge and PvP rules still apply."
+          ]
+        }
+      ],
+      "keywords": [],
+      "related": [
+        "chained",
+        "unbound"
+      ],
+      "icon": "heavenlyrestriction:textures/item/inverted_spear_of_heaven.png"
+    }
+  ]
+}

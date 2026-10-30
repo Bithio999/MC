@@ -2,7 +2,7 @@ plugins {
     id 'java-library'
     id 'net.neoforged.moddev' version '2.0.148'
 }
-version = '0.35.11'
+version = '0.36.0'
 group = 'dev.wildhunt'
 base { archivesName = 'tensura-myths' }
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
@@ -44,6 +44,7 @@ dependencies {
     compileOnly fileTree(dir: 'libs/runtime', include: ['geckolib-*.jar', 'SmartBrainLib-*.jar'])
     testImplementation platform('org.junit:junit-bom:5.11.4')
     testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'com.google.code.gson:gson:2.10.1'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 test { useJUnitPlatform() }

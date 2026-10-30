@@ -1,0 +1,1 @@
+gradle.projectsEvaluated { rootProject.sourceSets.main.java.srcDir(rootProject.file('docs/review-guide')); rootProject.neoForge.runs.client.gameDirectory=rootProject.file('/workspace/validation-guide/full-client') }

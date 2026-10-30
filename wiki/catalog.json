@@ -696,9 +696,14 @@
   },
   {
     "slug": "Hunters-Recovery",
-    "title": "Hunter\u2019s Recovery",
+    "title": "Hunter’s Recovery",
     "category": "Skills",
     "tier": "Extra"
+  },
+  {
+    "slug": "In-Game-Guide",
+    "title": "In-game guide",
+    "category": "Reference"
   },
   {
     "slug": "Instant-Transmission",
