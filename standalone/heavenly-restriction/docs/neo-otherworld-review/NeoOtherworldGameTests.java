@@ -16,6 +16,12 @@ import static dev.heavenlyrestriction.ChainedGameTests.near;
 @GameTestHolder("heavenlyrestriction_compat")
 @PrefixGameTestTemplate(false)
 public final class NeoOtherworldGameTests {
+@GameTest(template="empty",timeoutTicks=100)
+public static void nativeActivationLearnsAuraSlashBeforeSchema(GameTestHelper h){SchemaGameTests.nativeActivationLearnsAuraSlashBeforeSchema(h);}
+@GameTest(template="empty",timeoutTicks=100)
+public static void nativeFailedLearningCannotSkipSchemasThousandPoints(GameTestHelper h){SchemaGameTests.nativeFailedLearningCannotSkipSchemasThousandPoints(h);}
+@GameTest(template="empty",timeoutTicks=100)
+public static void masteryCompletesAtTwoThousandAndNeverEarlier(GameTestHelper h){SchemaGameTests.masteryCompletesAtTwoThousandAndNeverEarlier(h);}
     @GameTest(template="empty",timeoutTicks=100)
     public static void masterySharesOneThirtySecondIntervalAcrossEveryBuild(GameTestHelper h){SchemaGameTests.masterySharesOneThirtySecondIntervalAcrossEveryBuild(h);}
     @GameTest(template="empty",timeoutTicks=100)

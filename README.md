@@ -9,7 +9,7 @@ Press **F8**, use the guide button in the **pause menu**, or choose **Guide** be
 
 ## Download
 
-The built addon is included at [releases/tensura-myths-0.36.0.jar](releases/tensura-myths-0.36.0.jar).
+The built addon is included at [releases/tensura-myths-0.36.1.jar](releases/tensura-myths-0.36.1.jar).
 Install it alongside Tensura and its required dependencies on both client and server, including **GeckoLib 4.9.3 (4.x)**.
 
 The **[Inverted Spear of Heaven](wiki/pages/Inverted-Spear-of-Heaven.md)** is a rare ominous-vault reward with Hihiirokane Sword attack stats and a unique barrier-shattering, status-clearing, two-second skill-sealing engraving. Nullification can attack **Spiritual Entities**, and the split-blade silhouette follows the supplied reference. It is included in both distributions. Chained/Unbound’s dash and Counter now carry main-hand weapon damage, enchantments and native engraving effects; equipped Unerring Body also grants Fear, Slowness, Burden and Haki immunity.
@@ -20,7 +20,7 @@ The **[Inverted Spear of Heaven](wiki/pages/Inverted-Spear-of-Heaven.md)** is a 
 
 ## Standalone TensuraAdditionalAdditions addon
 
-The race, Chained, Unbound, its three aura recovery skills and Air Walk are also available as **[TensuraAdditionalAdditions](standalone/heavenly-restriction/README.md)**. [Download standalone 1.2.1](releases/TensuraAdditionalAdditions-1.2.1.jar). It requires Tensura and its dependencies, runs without Tensura Myths, and uses separate registry IDs. Use either addon in an instance; the full Myths release above retains all its content. Standalone **1.2.1** supports **[Tensura Neo Otherworld 1.1.3a](standalone/heavenly-restriction/docs/compatibility/NEO-OTHERWORLD-1.1.3a.md)**.
+The race, Chained, Unbound, its three aura recovery skills and Air Walk are also available as **[TensuraAdditionalAdditions](standalone/heavenly-restriction/README.md)**. [Download standalone 1.2.2](releases/TensuraAdditionalAdditions-1.2.2.jar). It requires Tensura and its dependencies, runs without Tensura Myths, and uses separate registry IDs. Use either addon in an instance; the full Myths release above retains all its content. Standalone **1.2.2** supports **[Tensura Neo Otherworld 1.1.3a](standalone/heavenly-restriction/docs/compatibility/NEO-OTHERWORLD-1.1.3a.md)**.
 
 ## Visuals
 
@@ -129,7 +129,7 @@ An independent secondary grants **10% extra native EP gain**, retaining the prim
 
 ## Updating
 
-Replace the previous addon JAR with **0.36.0** on client and server. Install only one addon version. Existing Chained owners retain their saved base capacity and mastery. Their historical 20,000 starting aura is excluded from Chained’s multiplier; earned growth still gets 5×. Only a fresh reincarnation uses the new starting ranges. Current aura follows native capacity/overflow handling. The `wildhunt` namespace remains stable for existing saves.
+Replace the previous addon JAR with **0.36.1** on client and server. Install only one addon version. Existing Chained owners retain their saved base capacity and mastery. Their historical 20,000 starting aura is excluded from Chained’s multiplier; earned growth still gets 5×. Only a fresh reincarnation uses the new starting ranges. Current aura follows native capacity/overflow handling. The `wildhunt` namespace remains stable for existing saves.
 
 Ordinary elemental attribute bonuses use the strongest source per element; Godly bonuses remain separate. Mirrorbound, Demeter, Janus and Thoth no longer give passive shields; old saved contributions are cleaned automatically. Water Veil, Colossus Carapace and Aion retain their dedicated defenses. Demeter’s second mode is Perennial Seed: a one-use 40% HP/SHP rescue effect.
 
@@ -139,7 +139,7 @@ The [changelog](docs/CHANGELOG.md) records development changes separately from t
 
 ## Wiki
 
-Read the [Tensura Myths Wiki](wiki/README.md) for individual skill/race articles, per-ability damage types, progression and commands. [Download the styled offline edition](releases/tensura-myths-wiki-0.36.0.zip), extract it and open `index.html` for the wiki layout, infoboxes, screenshots and offline search. The [GitHub Wiki edition](wiki/github/Home.md) is prepared for the separate Wiki when it is available; [publishing instructions](docs/WIKI.md).
+Read the [Tensura Myths Wiki](wiki/README.md) for individual skill/race articles, per-ability damage types, progression and commands. [Download the styled offline edition](releases/tensura-myths-wiki-0.36.1.zip), extract it and open `index.html` for the wiki layout, infoboxes, screenshots and offline search. The [GitHub Wiki edition](wiki/github/Home.md) is prepared for the separate Wiki when it is available; [publishing instructions](docs/WIKI.md).
 
 ## Build and test
 
@@ -166,9 +166,9 @@ vertical dashes, through-wall ricochets, momentum preservation, native shield
 breakage and timed recovery, HP/SHP evolution, aura regeneration and native NPC loadouts.
 `./gradlew runClient` starts a development client on a machine with graphics.
 
-The [0.36.0 validation report](docs/VALIDATION-0.36.0.md) covers the new guide, search/content validation, real client screens and modpack compatibility, alongside existing gameplay regressions.
+The [0.36.1 validation report](docs/VALIDATION-0.36.1.md) covers Schema’s native learning-failure fix, exact learning/mastery thresholds, progress display and modpack checks.
 
-Install `build/libs/tensura-myths-0.36.0.jar` on **both client and server**,
+Install `build/libs/tensura-myths-0.36.1.jar` on **both client and server**,
 alongside Tensura and its required dependencies. The addon jar is not a complete
 modpack. Additional development dependency versions are in `runtime-mods.lock.json`.
 

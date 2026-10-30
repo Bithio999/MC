@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.36.1 / standalone 1.2.2 — Schema learning fix
+
+- Fix native failed-learning penalties jumping Schema’s remaining learning points to the standard 100-point budget. Keep the full 1,000-point requirement and native failure odds proportional to progress.
+- Correct Schema’s native learning bar and display explicit learning/mastery totals of 1,000 / 2,000. Ordinary abilities retain their native display and requirements.
+- Test actual activation alongside Aura Slash, forced failed learning, the exact mastery boundary and both supported Tensura environments. Preserve existing saved progress and Schema’s 30-second mastery interval.
+
 ## Standalone 1.2.1 — TensuraAdditionalAdditions
 
 - Rename the standalone mod, resource pack, Controls category and guide branding to TensuraAdditionalAdditions. The pause button reads Additions Guide.

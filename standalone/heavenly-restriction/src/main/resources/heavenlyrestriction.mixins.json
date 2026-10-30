@@ -36,12 +36,14 @@
     "SchemaRecoveryMixin",
     "SchemaCostMixin",
     "SchemaHealthMixin",
-    "SchemaSpiritualHealingMixin"
+    "SchemaSpiritualHealingMixin",
+    "SchemaLearningMixin"
   ],
   "injectors": {
     "defaultRequire": 1
   },
   "client": [
-    "client.RestrictedRaceInfoMixin"
+    "client.RestrictedRaceInfoMixin",
+    "client.SchemaProgressMixin"
   ]
 }

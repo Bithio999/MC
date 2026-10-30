@@ -1,0 +1,6 @@
+gradle.projectsEvaluated {
+ rootProject.sourceSets.main.java.srcDir(rootProject.file('docs/review-schema-progress'))
+ rootProject.neoForge.runs.client.gameDirectory=rootProject.file('/workspace/validation-schema-learning/full-client')
+ rootProject.neoForge.runs.client.programArgument('--quickPlaySingleplayer')
+ rootProject.neoForge.runs.client.programArgument('Myths Validation')
+}

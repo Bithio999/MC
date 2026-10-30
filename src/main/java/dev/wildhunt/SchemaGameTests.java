@@ -28,6 +28,54 @@ public final class SchemaGameTests {
         var method=ExistenceStorage.class.getDeclaredMethod(name,IExistence.class,LivingEntity.class,double.class);method.setAccessible(true);method.invoke(null,TensuraStorages.getExistenceFrom(p),p,arg);
     }catch(ReflectiveOperationException ex){throw new IllegalStateException(ex);}}
     @GameTest(template="empty",timeoutTicks=100)
+    public static void nativeActivationLearnsAuraSlashBeforeSchema(GameTestHelper h){
+        var p=player(h);SchemaArt.discover(p);var schema=SkillAPI.getSkillsFrom(p).getSkill(WildHunt.SCHEMA.get()).orElseThrow();
+        var slash=(io.github.manasmods.tensura.ability.TensuraSkill)SkillAPI.getSkillRegistry().get(net.minecraft.resources.ResourceLocation.parse("tensura:aura_slash"));
+        var auraSlash=slash.createLearningInstance(p);io.github.manasmods.tensura.ability.SkillHelper.learnSkill(p,auraSlash);
+        p.setItemSlot(EquipmentSlot.MAINHAND,new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.DIAMOND_SWORD));TensuraStorages.getExistenceFrom(p).setAura(100000);
+        var abilities=TensuraStorages.getAbilityFrom(p);abilities.setAbilitySlot(0,schema.getSkill(),0);abilities.setAbilitySlot(1,slash,0);
+        var config=io.github.manasmods.tensura.ability.TensuraSkill.BASE_CONFIG.Learning;int min=config.minBonus,max=config.maxBonus;double chance=config.failingPenaltyChance;
+        try{
+            config.minBonus=0;config.maxBonus=0;config.failingPenaltyChance=0;p.getAttribute(TensuraAttributes.ABILITY_LEARNING_GAIN).setBaseValue(1);
+            for(int n=0;n<1000;n++){
+                schema.setCoolDown(0,0);io.github.manasmods.manascore.skill.api.SkillEvents.ACTIVATE_SKILL.invoker().activateSkill(io.github.manasmods.manascore.network.api.util.Changeable.of(schema),p,0,0);
+                if(n<100){auraSlash.setCoolDown(0,0);io.github.manasmods.manascore.skill.api.SkillEvents.ACTIVATE_SKILL.invoker().activateSkill(io.github.manasmods.manascore.network.api.util.Changeable.of(auraSlash),p,1,0);}
+                if(n==99){near(h,auraSlash.getMastery(),0,"Aura Slash no longer learns in its native 100 points");near(h,schema.getMastery(),-900,"Schema learned as quickly as Aura Slash");}
+                if(n==998)near(h,schema.getMastery(),-1,"Schema completed before 1000 points");
+            }
+            near(h,schema.getMastery(),0,"Schema did not finish at exactly 1000 points");
+        }finally{config.minBonus=min;config.maxBonus=max;config.failingPenaltyChance=chance;}
+        h.succeed();
+    }
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void nativeFailedLearningCannotSkipSchemasThousandPoints(GameTestHelper h){
+        var p=player(h);SchemaArt.discover(p);var i=SkillAPI.getSkillsFrom(p).getSkill(WildHunt.SCHEMA.get()).orElseThrow();
+        var config=io.github.manasmods.tensura.ability.TensuraSkill.BASE_CONFIG.Learning;
+        int min=config.minBonus,max=config.maxBonus,penaltyMin=config.failingPenaltyMin,penaltyMax=config.failingPenaltyMax,level=config.failingPenaltyLevel;
+        double chance=config.failingPenaltyChance;
+        try{
+            config.minBonus=0;config.maxBonus=0;config.failingPenaltyChance=1;config.failingPenaltyMin=1;config.failingPenaltyMax=1;config.failingPenaltyLevel=1;
+            p.getAttribute(TensuraAttributes.ABILITY_LEARNING_GAIN).setBaseValue(1);p.getRandom().setSeed(123);
+            TensuraStorages.getAbilityFrom(p).setAbilitySlot(0,i.getSkill(),0);
+            for(int n=0;n<20;n++){
+                i.setCoolDown(0,0);p.removeAllEffects();
+                io.github.manasmods.manascore.skill.api.SkillEvents.ACTIVATE_SKILL.invoker().activateSkill(io.github.manasmods.manascore.network.api.util.Changeable.of(i),p,0,0);
+                h.assertTrue(i.getMastery()<=-1000+n+1,"Native failure skipped learning points: "+i.getMastery());
+                h.assertTrue(i.getMastery()>=-1000,"Failure lost more than the initial learning requirement");
+            }
+            h.assertTrue(i.getMastery()<-980,"Fixture never applied a learning failure");
+        }finally{config.minBonus=min;config.maxBonus=max;config.failingPenaltyChance=chance;config.failingPenaltyMin=penaltyMin;config.failingPenaltyMax=penaltyMax;config.failingPenaltyLevel=level;}
+        h.succeed();
+    }
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void masteryCompletesAtTwoThousandAndNeverEarlier(GameTestHelper h){
+        var p=player(h);SchemaArt.discover(p);var i=SkillAPI.getSkillsFrom(p).getSkill(WildHunt.SCHEMA.get()).orElseThrow();
+        WildHunt.SCHEMA.get().addLearnPoint(i,p,0,1000);i.setMastery(1999);
+        h.assertTrue(!i.isMastered(p),"Schema mastered before 2000 points");
+        WildHunt.SCHEMA.get().addMasteryPoint(i,p,1);near(h,i.getMastery(),2000,"Mastery did not finish at 2000");
+        h.assertTrue(i.isMastered(p),"2000 points did not master Schema");WildHunt.SCHEMA.get().addMasteryPoint(i,p,20);near(h,i.getMastery(),2000,"Mastery exceeded its cap");h.succeed();
+    }
+    @GameTest(template="empty",timeoutTicks=100)
     public static void learningRequiresOneThousandAndMasteryTwoThousand(GameTestHelper h){
         var p=player(h);SchemaArt.discover(p);var i=SkillAPI.getSkillsFrom(p).getSkill(WildHunt.SCHEMA.get()).orElseThrow();
         near(h,i.getMastery(),-1000,"Initial learning points");h.assertTrue(i.getMaxMastery()==2000,"Mastery requirement");

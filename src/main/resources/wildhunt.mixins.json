@@ -44,7 +44,8 @@
     "SchemaRecoveryMixin",
     "SchemaCostMixin",
     "SchemaHealthMixin",
-    "SchemaSpiritualHealingMixin"
+    "SchemaSpiritualHealingMixin",
+    "SchemaLearningMixin"
   ],
   "injectors": {
     "defaultRequire": 1
@@ -54,6 +55,7 @@
     "client.MythsUltimateFilterMixin",
     "client.MythsTabsMixin",
     "client.MythsStatusMixin",
-    "client.RestrictedRaceInfoMixin"
+    "client.RestrictedRaceInfoMixin",
+    "client.SchemaProgressMixin"
   ]
 }
