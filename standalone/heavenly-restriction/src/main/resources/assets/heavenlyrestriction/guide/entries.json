@@ -353,7 +353,7 @@
       "id": "parallel-world-jumper",
       "title": "Parallel World Jumper",
       "category": "Skills",
-      "summary": "Unique skill \u00b7 Single-player travel to fresh or previously visited worlds.",
+      "summary": "Unique skill \u00b7 Single-player travel through a hidden library of up to 128 worlds.",
       "sections": [
         {
           "title": "World Jump \u00b7 Active, Press",
@@ -376,9 +376,11 @@
           ]
         },
         {
-          "title": "Previous world",
+          "title": "Hidden world library",
           "lines": [
-            "Builds, terrain and entities stay in the previous world, which remains in the Singleplayer list. Terrain maps and bed/spawn bindings reset in the new continuation. World generator presets and datapacks are preserved; flat presets remain flat."
+            "Only the active save appears in Singleplayer. All visited worlds are stored inside its hidden library and reached through World Select. The limit is 128 worlds, including the active world. At the limit, revisit existing worlds; new-world creation is blocked.",
+            "Deleting the active save from Singleplayer deletes the entire hidden library, including its visited worlds and internal recovery copies. Renaming or backing up the whole save keeps the library with it.",
+            "Existing recorded travel history is moved into the library on the next jump. Unrelated saves remain separate. Older libraries above 128 retain their worlds but cannot create more."
           ]
         },
         {

@@ -23,47 +23,81 @@ public final class WorldHopClient {
         WorldHop.clientAvailable=e->{var mc=Minecraft.getInstance();var s=mc.getSingleplayerServer();return e==mc.player && s!=null && !s.isPublished() && s.getPlayerList().getPlayerCount()==1;};
         WorldHopNetwork.receiver=WorldHopClient::begin;
         WorldHopNetwork.worldsReceiver=WorldSelectScreen::receive;
-        WorldHopNetwork.statusReceiver=ok->{var mc=Minecraft.getInstance();if(mc.getSingleplayerServer()==null)return;if(ok){previous=null;busy=false;}else {Path old=previous;if(old==null){var host=mc.getSingleplayerServer().getPlayerList().getPlayer(mc.player.getUUID());if(host!=null)old=WorldHopFiles.previous(mc.getLevelSource().getBaseDir(),host.getPersistentData().getCompound(WorldHopMetadata.MARKER).getString("Previous")).orElse(null);}mc.level.disconnect();mc.disconnect(new MessageScreen("No safe landing was found."));recover(old,"World Hop could not find safe ground. Your previous world is unchanged.");}};
+        WorldHopNetwork.statusReceiver=WorldHopClient::landed;
+        try{WorldHopLibrary.recover(Minecraft.getInstance().getLevelSource().getBaseDir());}
+        catch(Exception ex){LoggerFactory.getLogger("TensuraAdditionalAdditions/WorldHop").error("An interrupted World Jump needs recovery",ex);}
     });}
     @EventBusSubscriber(modid=HeavenlyRestriction.ID,value=Dist.CLIENT)
     public static final class Events {
-        @SubscribeEvent public static void logout(net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent.LoggingOut e){busy=false;}
+        @SubscribeEvent public static void open(net.neoforged.neoforge.client.event.ScreenEvent.Opening e){
+            var mc=Minecraft.getInstance();if(mc.getSingleplayerServer()==null && e.getNewScreen() instanceof net.minecraft.client.gui.screens.worldselection.SelectWorldScreen){
+                try{WorldHopLibrary.recover(mc.getLevelSource().getBaseDir());}
+                catch(Exception ex){LoggerFactory.getLogger("TensuraAdditionalAdditions/WorldHop").error("Travel recovery left all saves intact",ex);e.setNewScreen(new RecoveryScreen(null,"Interrupted travel needs recovery. Saves have been preserved; see the log."));}
+            }
+        }
+    }
+    private static void landed(boolean success){
+        var mc=Minecraft.getInstance();var server=mc.getSingleplayerServer();if(server==null)return;
+        Path active=server.getWorldPath(net.minecraft.world.level.storage.LevelResource.ROOT).toAbsolutePath().normalize();
+        if(!success){abort(active,"No safe landing was found. Your previous world has been restored.");return;}
+        CompletableFuture.runAsync(()->{try{WorldHopLibrary.finish(active);}catch(Exception ex){throw new java.util.concurrent.CompletionException(ex);}}).whenComplete((ignored,error)->mc.execute(()->{
+            if(error==null){previous=null;busy=false;}else{LoggerFactory.getLogger("TensuraAdditionalAdditions/WorldHop").error("Could not finish library transfer",error);abort(active,"Travel could not finish. Your previous world has been restored.");}
+        }));
+    }
+    private static void abort(Path active,String reason){
+        var mc=Minecraft.getInstance();Path fallback=previous==null?active:previous;
+        if(mc.level!=null)mc.level.disconnect();
+        mc.disconnect(new MessageScreen("Restoring your previous world…"));
+        CompletableFuture.runAsync(()->{try{WorldHopLibrary.rollback(active);}catch(Exception ex){throw new java.util.concurrent.CompletionException(ex);}}).whenComplete((ignored,error)->mc.execute(()->{
+            if(error!=null){LoggerFactory.getLogger("TensuraAdditionalAdditions/WorldHop").error("Travel data preserved for recovery",error);recover(null,"Automatic recovery could not finish. Your saves are preserved; see the log.");}
+            else recover(fallback,reason);
+        }));
     }
     private static void begin(UUID token){
         var mc=Minecraft.getInstance();var server=mc.getSingleplayerServer();if(busy || server==null)return;
         var claimed=WorldHop.claim(server,token);if(claimed.isEmpty())return;var ticket=claimed.get();
         try{
-            Path old=ticket.source().toRealPath(),saves=mc.getLevelSource().getBaseDir().toRealPath();if(!old.getParent().equals(saves))throw new java.io.IOException("The world is not in this instance's saves directory");
-            busy=true;previous=old;MessageScreen progress=new MessageScreen("Saving your current world…");mc.level.disconnect();mc.disconnect(progress);
-            // disconnect waits for integrated-server shutdown and all chunk/player writes to finish.
+            Path active=ticket.source().toRealPath(),saves=mc.getLevelSource().getBaseDir().toRealPath();if(!active.getParent().equals(saves))throw new java.io.IOException("The world is not in this instance's saves directory");
+            busy=true;previous=active;MessageScreen progress=new MessageScreen("Saving your current world…");mc.level.disconnect();mc.disconnect(progress);
             progress.message=ticket.destination()==null?"Creating a fresh-seed world…":"Preparing your selected world…";
-            String folder="PWJ-"+UUID.randomUUID();
-            CompletableFuture.supplyAsync(()->{
+            CompletableFuture.runAsync(()->{
                 try{
-                    var data=WorldHopMetadata.read(old.resolve("level.dat")).getCompound("Data");
-                    var journal=WorldSelect.journal(old,data.getString("LevelName"),data.getCompound("WorldGenSettings").getLong("seed"));
-                    if(ticket.destination()==null)return WorldHopFiles.fork(old,folder,stage->{
-                        WorldHopMetadata.rewrite(stage,ticket.seed(),ticket.player(),old.getFileName().toString(),folder);
-                        var fresh=WorldHopMetadata.read(stage.resolve("level.dat")).getCompound("Data");var destination=new WorldHopJournal.Entry(WorldHopJournal.id(folder),folder,fresh.getString("LevelName"),ticket.seed());
-                        WorldHopJournal.write(stage,WorldHopJournal.arrive(journal,destination,folder));
-                    });
-                    var entry=journal.find(ticket.destination().id()).filter(e->!e.id().equals(journal.current())).orElseThrow(()->new java.io.IOException("Destination not in visited worlds"));
-                    Path destination=WorldHopFiles.previous(saves,entry.folder()).orElseThrow(()->new java.io.IOException("Selected world is missing"));
-                    // Refuse a destination held open by another process; native access also validates symlinks.
-                    try(var access=mc.getLevelSource().validateAndCreateAccess(entry.folder())){
-                        if(!access.getLevelPath(net.minecraft.world.level.storage.LevelResource.ROOT).toRealPath().equals(destination))throw new java.io.IOException("Destination changed");
-                        if(WorldHopMetadata.read(destination.resolve("level.dat")).getCompound("Data").getCompound("WorldGenSettings").getLong("seed")!=entry.seed())throw new java.io.IOException("Selected world's seed changed");
-                        return WorldHopFiles.revisit(destination,folder,stage->{WorldHopMetadata.revisit(stage,old,ticket.player(),old.getFileName().toString(),folder);WorldHopJournal.write(stage,WorldHopJournal.arrive(journal,entry,folder));});
+                    WorldHopLibrary.Transaction tx;
+                    try(var activeAccess=mc.getLevelSource().validateAndCreateAccess(active.getFileName().toString())){
+                        if(!activeAccess.getLevelPath(net.minecraft.world.level.storage.LevelResource.ROOT).toRealPath().equals(active))throw new java.io.IOException("The active slot changed");
+                        var data=WorldHopMetadata.read(active.resolve("level.dat")).getCompound("Data");
+                        var journal=WorldSelect.journal(active,data.getString("LevelName"),data.getCompound("WorldGenSettings").getLong("seed"));
+                        if(ticket.destination()==null && !WorldHopJournal.canCreate(journal))throw new java.io.IOException("The 128-world library is full");
+                        WorldHopMigration.migrate(active,journal,(path,seed)->{
+                            try(var access=mc.getLevelSource().validateAndCreateAccess(path.getFileName().toString())){
+                                if(!access.getLevelPath(net.minecraft.world.level.storage.LevelResource.ROOT).toRealPath().equals(path) || WorldHopMetadata.read(path.resolve("level.dat")).getCompound("Data").getCompound("WorldGenSettings").getLong("seed")!=seed)throw new java.io.IOException("Recorded world changed");
+                            }
+                        });
+                        tx=WorldHopLibrary.begin(active,journal.current());String slot=active.getFileName().toString();
+                        if(ticket.destination()==null){
+                            WorldHopFiles.stage(active,tx.next(),stage->{
+                                WorldHopMetadata.rewrite(stage,ticket.seed(),ticket.player(),slot,slot);
+                                var fresh=WorldHopMetadata.read(stage.resolve("level.dat")).getCompound("Data");var destination=new WorldHopJournal.Entry(UUID.randomUUID().toString(),slot,fresh.getString("LevelName"),ticket.seed());
+                                WorldHopJournal.write(stage,WorldHopJournal.arrive(journal,destination,slot));
+                            },false);
+                        }else{
+                            var entry=journal.find(ticket.destination().id()).filter(e->!e.id().equals(journal.current())).orElseThrow(()->new java.io.IOException("Destination not visited"));
+                            Path destination=WorldHopLibrary.archived(active,entry.id()).orElseThrow(()->new java.io.IOException("Selected world is missing"));
+                            if(WorldHopMetadata.read(destination.resolve("level.dat")).getCompound("Data").getCompound("WorldGenSettings").getLong("seed")!=entry.seed())throw new java.io.IOException("Selected world's seed changed");
+                            WorldHopFiles.stage(destination,tx.next(),stage->{WorldHopMetadata.revisit(stage,active,ticket.player(),slot,slot);WorldHopJournal.write(stage,WorldHopJournal.arrive(journal,entry,slot));},true);
+                        }
                     }
-                }
-                catch(Exception ex){throw new java.util.concurrent.CompletionException(ex);}
-            }).whenComplete((fresh,error)->mc.execute(()->{
-                if(error!=null){LoggerFactory.getLogger("TensuraAdditionalAdditions/WorldHop").error("World Hop left the previous world unchanged",error);recover(old,"World Hop could not create the new world. Your previous world is unchanged.");return;}
+                    if(net.minecraft.util.DirectoryLock.isLocked(active))throw new java.io.IOException("The active save was opened elsewhere");
+                    WorldHopLibrary.install(tx);
+                }catch(Exception ex){throw new java.util.concurrent.CompletionException(ex);}
+            }).whenComplete((ignored,error)->mc.execute(()->{
+                if(error!=null){LoggerFactory.getLogger("TensuraAdditionalAdditions/WorldHop").error("World Jump could not prepare the library",error);abort(active,"World Jump could not finish. Your previous world has been restored.");return;}
                 progress.message="Entering your parallel world…";
-                mc.createWorldOpenFlows().openWorld(fresh.getFileName().toString(),()->recover(old,"The new world could not be opened. Your previous world is unchanged."));
+                mc.createWorldOpenFlows().openWorld(active.getFileName().toString(),()->abort(active,"The world could not be opened. Your previous world has been restored."));
             }));
-        }catch(Exception ex){busy=false;LoggerFactory.getLogger("TensuraAdditionalAdditions/WorldHop").error("Could not prepare World Hop",ex);if(mc.player!=null)mc.player.sendSystemMessage(Component.literal("World Hop could not start. Your world is unchanged."));else if(previous!=null)recover(previous,"World Hop could not start. Your previous world is unchanged.");}
+        }catch(Exception ex){busy=false;LoggerFactory.getLogger("TensuraAdditionalAdditions/WorldHop").error("Could not prepare World Jump",ex);if(mc.player!=null)mc.player.sendSystemMessage(Component.literal("World Jump could not start. Your world is unchanged."));else if(previous!=null)abort(previous,"World Jump could not start. Your previous world has been restored.");}
     }
+
     private static void recover(Path original,String reason){busy=false;Minecraft.getInstance().setScreen(new RecoveryScreen(original,reason));}
     private static class MessageScreen extends Screen {
         volatile String message;

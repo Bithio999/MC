@@ -37,9 +37,10 @@ public final class WorldHop {
     public static void request(ServerPlayer p,ManasSkillInstance i){
         if(!available(p)){p.sendSystemMessage(Component.literal("World Hop is only available in a private single-player world."));return;}
         if(p.getPersistentData().contains(WorldHopMetadata.MARKER) || REQUESTS.containsKey(p.server))return;
+        if(WorldHopLibrary.pending(p.server.getWorldPath(LevelResource.ROOT)))return;
         long old=p.server.getWorldData().worldGenOptions().seed(),seed;do{seed=new java.security.SecureRandom().nextLong();}while(seed==old);
         WorldHopJournal.Entry destination;
-        try{destination=WorldSelect.destination(p);}catch(java.io.IOException ex){p.sendSystemMessage(Component.literal("The selected world is unavailable. Open World Select to choose another destination or New World."));return;}
+        try{destination=WorldSelect.destination(p);if(destination==null && !WorldHopJournal.canCreate(WorldSelect.journal(p))){p.sendSystemMessage(Component.literal("Your parallel-world library has reached 128 worlds. Use World Select to revisit a world."));return;}}catch(java.io.IOException ex){p.sendSystemMessage(Component.literal("The selected world is unavailable. Open World Select to choose another destination or New World."));return;}
         var ticket=new Ticket(UUID.randomUUID(),p.server.getWorldPath(LevelResource.ROOT).toAbsolutePath().normalize(),seed,p.getUUID(),destination);
         if(REQUESTS.putIfAbsent(p.server,ticket)!=null)return;
         p.getPersistentData().remove(WorldSelect.SELECTION);p.unRide();p.closeContainer();i.addMasteryPoint(p);
@@ -113,6 +114,6 @@ public final class WorldHop {
             else {next=0;chunks.clear();int cx=net.minecraft.util.Mth.floor(target.x)>>4,cz=net.minecraft.util.Mth.floor(target.z)>>4;int radius=8;for(int dx=-radius;dx<=radius;dx++)for(int dz=-radius;dz<=radius;dz++)chunks.add(new ChunkPos(cx+dx,cz+dz));chunks.sort(Comparator.comparingDouble(this::minimumDistance));}
         }
         void restore(){player.setInvulnerable(invulnerable);player.setNoGravity(noGravity);}
-        void finish(){net.neoforged.neoforge.network.PacketDistributor.sendToPlayer(player,new WorldHopNetwork.Status(true));player.teleportTo(level,best.getX()+.5,best.getY(),best.getZ()+.5,Set.of(),player.getYRot(),player.getXRot());player.resetFallDistance();player.setDeltaMovement(Vec3.ZERO);restore();player.getPersistentData().remove(WorldHopMetadata.MARKER);player.sendSystemMessage(Component.literal("World Hop complete. Your previous world is still available in Singleplayer."));}
+        void finish(){net.neoforged.neoforge.network.PacketDistributor.sendToPlayer(player,new WorldHopNetwork.Status(true));player.teleportTo(level,best.getX()+.5,best.getY(),best.getZ()+.5,Set.of(),player.getYRot(),player.getXRot());player.resetFallDistance();player.setDeltaMovement(Vec3.ZERO);restore();player.getPersistentData().remove(WorldHopMetadata.MARKER);player.sendSystemMessage(Component.literal("World Jump complete. Visit previous worlds through World Select."));}
     }
 }

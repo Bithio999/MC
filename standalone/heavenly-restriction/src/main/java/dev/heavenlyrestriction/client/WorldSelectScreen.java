@@ -17,7 +17,7 @@ public final class WorldSelectScreen extends Screen {
     private final List<Button> rows=new ArrayList<>();
     private String selected="",picked="",message="",query="";
     private boolean error,pending;
-    private int x,y,w,h,listW,page,pageSize;
+    private int x,y,w,h,listW,page,pageSize,worldCount=1,limit=128;
     private EditBox search;
     private Button previous,next,apply;
     private static final int TEXT=0xffe2eafa,MUTED=0xff9aaac6,GOLD=0xffe9c985;
@@ -30,7 +30,7 @@ public final class WorldSelectScreen extends Screen {
     private void read(CompoundTag state){
         worlds.clear();worlds.add(new World("","New World",0,true));
         for(var tag:state.getList("worlds",Tag.TAG_COMPOUND)){var row=(CompoundTag)tag;worlds.add(new World(row.getString("id"),row.getString("name"),row.getLong("seed"),row.getBoolean("available")));}
-        selected=state.getString("selected");message=state.getString("message");error=state.getBoolean("error");
+        selected=state.getString("selected");message=state.getString("message");error=state.getBoolean("error");worldCount=state.getInt("count");limit=state.contains("limit")?state.getInt("limit"):128;
     }
     private List<World> filtered(){String q=query.strip().toLowerCase(Locale.ROOT);return worlds.stream().filter(e->e.name.toLowerCase(Locale.ROOT).contains(q) || !e.id.isEmpty() && Long.toString(e.seed).contains(q)).toList();}
     private World chosen(){return worlds.stream().filter(e->e.id.equals(picked)).findFirst().orElse(null);}
@@ -83,6 +83,7 @@ public final class WorldSelectScreen extends Screen {
             if(!world.id.isEmpty()){g.drawString(font,"WORLD SEED",right,y+89,MUTED,false);g.drawString(font,fit(Long.toString(world.seed),rw),right,y+102,0xffbfcdf4,false);}
             String detail=world.id.isEmpty()?"Create a fresh world. All dimensions regenerate. Your current character travels with you.":"Return to saved terrain, builds and entities. Bring your current inventory, skills and progression.";
             if(h<270)detail=world.id.isEmpty()?"Fresh seed. All dimensions regenerate.":"Saved terrain. Your current character travels with you.";
+            if(world.id.isEmpty() && worldCount>=limit)detail="Library full. Choose a visited world to return.";
             int textY=y+(world.id.isEmpty()?92:122);g.drawWordWrap(font,Component.literal(detail),right,textY,rw,MUTED);
         }
         int noteY=y+h-89;
@@ -90,7 +91,7 @@ public final class WorldSelectScreen extends Screen {
         String status=world!=null && !world.available?"This save is unavailable.":message.isEmpty()?"Selecting here does not jump.":message;
         g.drawString(font,fit(status,rw),right,y+h-66,error?0xffe9a29a:0xffa6cbbc,false);
         var filtered=filtered();int pages=Math.max(1,(filtered.size()+pageSize-1)/pageSize);
-        g.drawCenteredString(font,(page+1)+" / "+pages+" · "+Math.max(0,worlds.size()-1)+" visited",x+listW/2,y+h-23,MUTED);
+        g.drawCenteredString(font,(page+1)+"/"+pages+" · "+worldCount+"/"+limit+" worlds",x+listW/2,y+h-23,MUTED);
         if(filtered.isEmpty())g.drawCenteredString(font,"No matching worlds",x+listW/2,y+91,MUTED);
         super.render(g,mx,my,partial);
     }

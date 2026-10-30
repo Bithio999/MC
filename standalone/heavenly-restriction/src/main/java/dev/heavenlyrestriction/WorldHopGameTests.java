@@ -13,6 +13,47 @@ import static dev.heavenlyrestriction.TestFixtures.*;
 @GameTestHolder(HeavenlyRestriction.ID)
 @PrefixGameTestTemplate(false)
 public final class WorldHopGameTests {
+    private static void metadata(Path world,String name,long seed)throws java.io.IOException{
+        Files.createDirectories(world);var data=new CompoundTag();data.putString("LevelName",name);var gen=new CompoundTag();gen.putLong("seed",seed);data.put("WorldGenSettings",gen);var root=new CompoundTag();root.put("Data",data);NbtIo.writeCompressed(root,world.resolve("level.dat"));
+    }
+    private static void removeTree(Path root)throws java.io.IOException{try(var paths=Files.walk(root)){for(Path file:paths.sorted(java.util.Comparator.reverseOrder()).toList())Files.delete(file);}}
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void restoredHiddenLibraryDoesNotAdoptOriginalSiblingSave(GameTestHelper h){
+        try{
+            Path base=Files.createTempDirectory("library-restored-"),restored=base.resolve("Restored"),original=base.resolve("Original");metadata(restored,"Restored",11);metadata(original,"Original",22);
+            var a=new WorldHopJournal.Entry(WorldHopJournal.id("A"),"Restored","A",11);var b=new WorldHopJournal.Entry(WorldHopJournal.id("B"),"Original","B",22);var journal=new WorldHopJournal.Journal(a.id(),java.util.List.of(a,b));
+            WorldHopJournal.write(restored,journal);WorldHopJournal.write(original,new WorldHopJournal.Journal(b.id(),java.util.List.of(a,b)));metadata(WorldHopLibrary.worlds(restored).resolve(b.id()),"Archived B",22);
+            Files.writeString(restored.resolve("heavenlyrestriction-world-hop.json"),"{\"previous\":\"Original\"}");
+            WorldHopMigration.migrate(restored,journal,(path,seed)->{throw new IllegalStateException("Restored library attempted to adopt original owner");});
+            h.assertTrue(Files.isRegularFile(original.resolve("level.dat")) && WorldHopLibrary.archived(restored,b.id()).isPresent(),"Restored backup moved the original save");removeTree(base);
+        }catch(Exception ex){throw new RuntimeException(ex);}h.succeed();
+    }
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void legacyMigrationHidesLatestWorldsAndRecordedRecoveryCopiesOnly(GameTestHelper h){
+        try{
+            Path base=Files.createTempDirectory("library-legacy-"),active=base.resolve("Active"),latest=base.resolve("Latest A"),oldA=base.resolve("Original A"),oldB=base.resolve("Original B"),unrelated=base.resolve("Unrelated");
+            metadata(active,"B",22);metadata(latest,"A",11);metadata(oldA,"Old A",11);metadata(oldB,"Old B",22);metadata(unrelated,"Unrelated",11);
+            var a=new WorldHopJournal.Entry(WorldHopJournal.id("Original A"),"Latest A","A",11);var b=new WorldHopJournal.Entry(WorldHopJournal.id("Original B"),"Active","B",22);var journal=new WorldHopJournal.Journal(b.id(),java.util.List.of(b,a));WorldHopJournal.write(active,journal);
+            var previousB=new WorldHopJournal.Entry(b.id(),"Original B","B",22);WorldHopJournal.write(latest,new WorldHopJournal.Journal(a.id(),java.util.List.of(a,previousB)));WorldHopJournal.write(oldB,new WorldHopJournal.Journal(b.id(),java.util.List.of(previousB,a)));
+            Files.writeString(latest.resolve("heavenlyrestriction-world-hop.json"),"{\"previous\":\"Original A\"}");
+            WorldHopMigration.migrate(active,journal,(path,seed)->{if(WorldHopMetadata.read(path.resolve("level.dat")).getCompound("Data").getCompound("WorldGenSettings").getLong("seed")!=seed)throw new IllegalStateException("Seed mismatch");});
+            h.assertTrue(!Files.exists(latest) && !Files.exists(oldA) && !Files.exists(oldB) && Files.exists(unrelated),"Migration left related copies visible or adopted an unrelated save");
+            h.assertTrue(WorldHopLibrary.archived(active,a.id()).isPresent(),"Latest A not selectable");try(var copies=Files.list(active.resolve(WorldHopLibrary.DIRECTORY).resolve("recovery"))){h.assertTrue(copies.count()==2,"Recorded old copies were not retained as hidden recovery data");}removeTree(base);
+        }catch(Exception ex){throw new RuntimeException(ex);}h.succeed();
+    }
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void nativeWorldListHidesLibraryAndDeletingOwnerRemovesAllWorlds(GameTestHelper h){
+        try{
+            Path base=Files.createTempDirectory("world-library-delete-"),active=Files.createDirectory(base.resolve("Active")),other=Files.createDirectory(base.resolve("Unrelated"));
+            Files.writeString(active.resolve("level.dat"),"active");Files.writeString(other.resolve("level.dat"),"other");
+            for(String id:new String[]{WorldHopJournal.id("A"),WorldHopJournal.id("B")}){Path archived=Files.createDirectory(WorldHopLibrary.worlds(active).resolve(id));Files.writeString(archived.resolve("level.dat"),"hidden world");Files.writeString(archived.resolve("build.txt"),"keep until deletion");}
+            var storage=net.minecraft.world.level.storage.LevelStorageSource.createDefault(base);var candidates=storage.findLevelCandidates();
+            h.assertTrue(candidates.levels().size()==2,"Hidden worlds appeared in native save discovery");
+            try(var access=storage.validateAndCreateAccess("Active")){access.deleteLevel();}
+            h.assertTrue(!Files.exists(active) && Files.readString(other.resolve("level.dat")).equals("other"),"Deleting active slot left its library or damaged an unrelated save");
+            try(var paths=Files.walk(base)){for(Path f:paths.sorted(java.util.Comparator.reverseOrder()).toList())Files.delete(f);}
+        }catch(Exception ex){throw new RuntimeException(ex);}h.succeed();
+    }
     @GameTest(template="empty",timeoutTicks=100)
     public static void dedicatedServersCannotRollLearnCopyOrActivateWorldJumper(GameTestHelper h){
         var p=player(h);var skill=HeavenlyRestriction.PARALLEL_WORLD_JUMPER.get();h.assertTrue(skill.createDefaultInstance().is(net.minecraft.tags.TagKey.create(SkillAPI.getSkillRegistryKey(),net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("tensura","unique_skills"))),"Unique classification tag missing");h.assertTrue(!WorldHop.available(p),"Dedicated server was treated as single-player");

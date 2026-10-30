@@ -12,6 +12,7 @@ public final class WorldHopFiles {
     @FunctionalInterface public interface Metadata {void rewrite(Path stagedWorld) throws IOException;}
     public static boolean keep(Path relative,boolean directory){
         String first=relative.getName(0).toString(),name=relative.getFileName().toString();
+        if(first.equals(WorldHopLibrary.DIRECTORY))return false;
         // Only actual world-storage roots are regenerated. Datapacks may legitimately
         // contain folders named entities/region/poi and must remain byte-identical.
         if(TERRAIN.contains(first) || first.equals("dimensions") || first.matches("DIM-?\\d+"))return false;
@@ -26,16 +27,22 @@ public final class WorldHopFiles {
     public static Path revisit(Path source,String destination,Metadata metadata)throws IOException{
         return copy(source,destination,metadata,true);
     }
+    public static Path stage(Path source,Path result,Metadata metadata,boolean terrain)throws IOException{
+        return copyTo(source,result,metadata,terrain);
+    }
     private static Path copy(Path source,String destination,Metadata metadata,boolean terrain) throws IOException {
         source=source.toRealPath();Path saves=source.getParent();
         if(!destination.matches("PWJ-[A-Za-z0-9_-]{1,100}"))throw new IOException("Invalid parallel-world directory");
-        Path result=saves.resolve(destination),staging=saves.resolve(".pwj-"+UUID.randomUUID());
+        return copyTo(source,saves.resolve(destination),metadata,terrain);
+    }
+    private static Path copyTo(Path source,Path result,Metadata metadata,boolean terrain)throws IOException{
+        source=source.toRealPath();Path staging=result.resolveSibling(".pwj-"+UUID.randomUUID());
         if(Files.exists(result,LinkOption.NOFOLLOW_LINKS) || !Files.isRegularFile(source.resolve("level.dat"),LinkOption.NOFOLLOW_LINKS))throw new IOException("World unavailable or destination already exists");
         Files.createDirectory(staging);final Path original=source;
         try{
             Files.walkFileTree(original,new SimpleFileVisitor<>(){
                 @Override public FileVisitResult preVisitDirectory(Path dir,BasicFileAttributes attrs)throws IOException{
-                    Path rel=original.relativize(dir);if(!terrain && !rel.toString().isEmpty() && !keep(rel,true))return FileVisitResult.SKIP_SUBTREE;
+                    Path rel=original.relativize(dir);if(!rel.toString().isEmpty() && (rel.getName(0).toString().equals(WorldHopLibrary.DIRECTORY) || !terrain && !keep(rel,true)))return FileVisitResult.SKIP_SUBTREE;
                     Files.createDirectories(staging.resolve(rel));return FileVisitResult.CONTINUE;
                 }
                 @Override public FileVisitResult visitFile(Path file,BasicFileAttributes attrs)throws IOException{

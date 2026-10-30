@@ -206,6 +206,10 @@ Fettered Human excludes **29 of the pack’s 39 addon starting skills** for magi
 
 Land on nearby safe ground: near your departing coordinates for a fresh world, or near your last position in a visited world. If no safe ground is nearby, search around the new Overworld spawn. If a new world or safe landing cannot be prepared, return to your previous world using the recovery screen.
 
-Your previous world stays in the Singleplayer list as a recoverable save. A return uses the most recently visited copy of that world. Builds, mobs and uncarried entities stay with their world; terrain maps reset only when generating fresh terrain. Bed/spawn bindings clear during travel. World generator presets, datapacks and server settings carry over. Flat worlds remain flat.
+Only the active save appears in Singleplayer. Visited worlds live in its hidden library and are accessed through World Select; a return uses the most recently visited state. Builds, mobs and uncarried entities stay with their world; terrain maps reset only when generating fresh terrain. Bed/spawn bindings clear during travel. World generator presets, datapacks and server settings carry over. Flat worlds remain flat.
 
 **Obtaining:** Can roll as a reincarnation Unique in private single-player. Unavailable on dedicated servers or while open to LAN, including learning and skill-copying paths. Chained allows it when it was obtained through reincarnation.
+
+**Library limit:** 128 worlds including the active one. At the limit, return travel still works, but new-world creation is blocked. Recorded earlier worlds and their travel recovery copies migrate on your next jump. Unrelated saves stay separate. Older libraries above the limit retain their worlds and cannot create more.
+
+**Deleting the save:** Minecraft’s normal Singleplayer Delete action removes the active save and its entire hidden library. Whole-save backups retain the library.

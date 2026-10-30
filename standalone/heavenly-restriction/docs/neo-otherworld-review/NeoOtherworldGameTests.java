@@ -17,6 +17,8 @@ import static dev.heavenlyrestriction.ChainedGameTests.near;
 @PrefixGameTestTemplate(false)
 public final class NeoOtherworldGameTests {
 @GameTest(template="empty",timeoutTicks=100)
+public static void nativeWorldListHidesLibraryAndDeletingOwnerRemovesAllWorlds(GameTestHelper h){WorldHopGameTests.nativeWorldListHidesLibraryAndDeletingOwnerRemovesAllWorlds(h);}
+@GameTest(template="empty",timeoutTicks=100)
 public static void dedicatedServersCannotRollLearnCopyOrActivateWorldJumper(GameTestHelper h){WorldHopGameTests.dedicatedServersCannotRollLearnCopyOrActivateWorldJumper(h);}
 @GameTest(template="empty",timeoutTicks=100)
 public static void metadataKeepsCharacterAndDimensionGeneratorsButChangesSeed(GameTestHelper h){WorldHopGameTests.metadataKeepsCharacterAndDimensionGeneratorsButChangesSeed(h);}

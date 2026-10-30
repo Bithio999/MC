@@ -19,4 +19,11 @@ class WorldHopJournalTest {
         Files.writeString(file,"{\"current\":\""+WorldHopJournal.id("World")+"\",\"worlds\":[{\"id\":\""+WorldHopJournal.id("evil")+"\",\"folder\":\"../outside\",\"name\":\"Bad\",\"seed\":1}]}");assertThrows(IOException.class,()->WorldHopJournal.read(world,"Home",1));
         Files.delete(file);Path outside=saves.resolve("outside.json");Files.writeString(outside,"{}");Files.createSymbolicLink(file,outside);assertThrows(IOException.class,()->WorldHopJournal.read(world,"Home",1));assertFalse(WorldHopJournal.validId("../world"));assertFalse(WorldHopJournal.validId(""));
     }
+    @Test void capIncludesCurrentWorldAndBlocksOnlyCreation()throws Exception{
+        var entries=new java.util.ArrayList<WorldHopJournal.Entry>();for(int n=0;n<128;n++)entries.add(new WorldHopJournal.Entry(WorldHopJournal.id("world"+n),"Slot","World "+n,n));
+        var full=new WorldHopJournal.Journal(entries.getFirst().id(),entries);assertFalse(WorldHopJournal.canCreate(full));assertEquals(128,WorldHopJournal.arrive(full,entries.get(1),"Slot").worlds().size());
+        assertThrows(IllegalStateException.class,()->WorldHopJournal.arrive(full,new WorldHopJournal.Entry(WorldHopJournal.id("new"),"Slot","New",999),"Slot"));
+        Path slot=java.nio.file.Files.createDirectory(saves.resolve("Slot"));WorldHopJournal.write(slot,full);assertEquals(128,WorldHopJournal.read(slot,"Current",0).worlds().size());
+        entries.add(new WorldHopJournal.Entry(WorldHopJournal.id("old129"),"Old","Older world",129));var legacy=new WorldHopJournal.Journal(full.current(),entries);WorldHopJournal.write(slot,legacy);assertEquals(129,WorldHopJournal.read(slot,"Current",0).worlds().size());assertFalse(WorldHopJournal.canCreate(legacy));
+    }
 }

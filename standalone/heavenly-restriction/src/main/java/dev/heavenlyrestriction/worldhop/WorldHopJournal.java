@@ -9,7 +9,10 @@ import java.util.*;
 /** Per-continuation itinerary. IDs are opaque; network clients never supply filesystem paths. */
 public final class WorldHopJournal {
     public static final String FILE="heavenlyrestriction-worlds.json";
-    public static final int LIMIT=512;
+    public static final int LIMIT=128;
+    // Read old libraries without discarding worlds that predate the new creation cap.
+    public static final int READ_LIMIT=512;
+    public static boolean canCreate(Journal journal){return journal.worlds.size()<LIMIT;}
     public record Entry(String id,String folder,String name,long seed){}
     public record Journal(String current,List<Entry> worlds){
         public Journal{worlds=List.copyOf(worlds);}
@@ -23,7 +26,7 @@ public final class WorldHopJournal {
             if(Files.isSymbolicLink(file) || Files.size(file)>1024*1024)throw new IOException("Invalid world journal");
             try{
                 var root=JsonParser.parseString(Files.readString(file)).getAsJsonObject();current=root.get("current").getAsString();if(!validId(current))throw new IOException("Invalid current world ID");
-                var list=root.getAsJsonArray("worlds");if(list.size()>LIMIT)throw new IOException("World journal is full");Set<String> ids=new HashSet<>();
+                var list=root.getAsJsonArray("worlds");if(list.size()>READ_LIMIT)throw new IOException("World journal is full");Set<String> ids=new HashSet<>();
                 for(var element:list){var e=element.getAsJsonObject();String key=e.get("id").getAsString(),folder=e.get("folder").getAsString(),label=e.get("name").getAsString();
                     if(!validId(key) || !ids.add(key) || folder.isBlank() || folder.length()>255 || folder.contains("/") || folder.contains("\\") || folder.equals(".") || folder.equals("..") || label.length()>512)throw new IOException("Invalid visited world");
                     entries.add(new Entry(key,folder,label,e.get("seed").getAsLong()));
@@ -31,15 +34,19 @@ public final class WorldHopJournal {
             }catch(RuntimeException ex){throw new IOException("Could not read visited worlds",ex);}
         }
         String key=current;entries.removeIf(e->e.id.equals(key));entries.addFirst(new Entry(current,world.getFileName().toString(),name,seed));
-        if(entries.size()>LIMIT)throw new IOException("World journal is full");return new Journal(current,entries);
+        if(entries.size()>READ_LIMIT)throw new IOException("World journal is full");return new Journal(current,entries);
     }
     public static Journal arrive(Journal from,Entry destination,String folder){
+        if(from.find(destination.id).isEmpty() && !canCreate(from))throw new IllegalStateException("The 128-world library is full");
         var entries=new ArrayList<>(from.worlds);entries.removeIf(e->e.id.equals(destination.id));entries.addFirst(new Entry(destination.id,folder,destination.name,destination.seed));return new Journal(destination.id,entries);
     }
     public static void write(Path world,Journal journal)throws IOException{
-        if(journal.worlds.size()>LIMIT)throw new IOException("World journal is full");
+        if(journal.worlds.size()>READ_LIMIT)throw new IOException("World journal is full");
         var root=new JsonObject();root.addProperty("version",1);root.addProperty("current",journal.current);var entries=new JsonArray();
         for(var e:journal.worlds){var row=new JsonObject();row.addProperty("id",e.id);row.addProperty("folder",e.folder);row.addProperty("name",e.name);row.addProperty("seed",e.seed);entries.add(row);}root.add("worlds",entries);
-        Files.writeString(world.resolve(FILE),new GsonBuilder().setPrettyPrinting().create().toJson(root));
+        Path temporary=world.resolve(".pwj-journal-"+UUID.randomUUID()+".tmp");
+        try{Files.writeString(temporary,new GsonBuilder().setPrettyPrinting().create().toJson(root));
+            try{Files.move(temporary,world.resolve(FILE),StandardCopyOption.ATOMIC_MOVE,StandardCopyOption.REPLACE_EXISTING);}catch(AtomicMoveNotSupportedException ex){Files.move(temporary,world.resolve(FILE),StandardCopyOption.REPLACE_EXISTING);}
+        }finally{Files.deleteIfExists(temporary);}
     }
 }
