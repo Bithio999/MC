@@ -16,6 +16,7 @@ public final class HeavenlyRestriction {
     private static final Registrar<ManasSkill> SKILLS=SkillAPI.getSkillRegistry();
     public static final RegistrySupplier<UnboundSkill> UNBOUND=SKILLS.register(id("unbound"),UnboundSkill::new);
     public static final RegistrySupplier<ChainedSkill> CHAINED=SKILLS.register(id("chained"),ChainedSkill::new);
+    public static final RegistrySupplier<ParallelWorldJumperSkill> PARALLEL_WORLD_JUMPER=SKILLS.register(id("parallel_world_jumper"),ParallelWorldJumperSkill::new);
     public static final RegistrySupplier<SchemaArt> SCHEMA=SKILLS.register(id("schema"),SchemaArt::new);
     public static final RegistrySupplier<InstantTransmissionArt> INSTANT_TRANSMISSION=SKILLS.register(id("instant_transmission"),InstantTransmissionArt::new);
     public static final RegistrySupplier<AirSovereigntyArt> AIR_SOVEREIGNTY=SKILLS.register(id("air_sovereignty"),AirSovereigntyArt::new);
@@ -28,6 +29,8 @@ public final class HeavenlyRestriction {
         HeavenlyArsenal.register(modBus);
         InstantTransmissionArt.register();
         SchemaArt.register();
+        dev.heavenlyrestriction.worldhop.WorldHop.register();
+        modBus.addListener(dev.heavenlyrestriction.worldhop.WorldHopNetwork::register);
         modBus.addListener(SchemaNetwork::register);
         container.registerConfig(net.neoforged.fml.config.ModConfig.Type.SERVER,ChainedReincarnationConfig.SPEC,"tensura-heavenly-restriction-reincarnation.toml");
         ArtVisualEntity.register();

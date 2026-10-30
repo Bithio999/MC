@@ -17,8 +17,10 @@ import java.util.*;
 public abstract class ChainedReincarnationMixin {
     @Inject(method="getReincarnationSkills",at=@At("RETURN"),cancellable=true,remap=false)
     private static void restriction$restrictedRolls(List<ManasSkill> pool,ServerLevel level,boolean ignoreGameRule,Player roller,CallbackInfoReturnable<List<ManasSkill>> out){
-        out.setReturnValue(ChainedReincarnation.filter(out.getReturnValue(),roller));
+        out.setReturnValue(ChainedReincarnation.filter(out.getReturnValue(),roller).stream().filter(skill->!(skill instanceof ParallelWorldJumperSkill) || dev.heavenlyrestriction.worldhop.WorldHop.available(roller)).toList());
     }
+    @Inject(method="getSkillPool",at=@At("RETURN"),cancellable=true,remap=false)
+    private static void restriction$worldJumperPool(CallbackInfoReturnable<List<ManasSkill>> out){var pool=new ArrayList<>(out.getReturnValue());if(!pool.contains(HeavenlyRestriction.PARALLEL_WORLD_JUMPER.get()))pool.add(HeavenlyRestriction.PARALLEL_WORLD_JUMPER.get());out.setReturnValue(List.copyOf(pool));}
     @Inject(method={"getRacePool","getRandomRacePool"},at=@At("RETURN"),cancellable=true,remap=false)
     private void restriction$startingRace(CallbackInfoReturnable<List<ManasRace>> out){var list=new ArrayList<>(out.getReturnValue());var race=HeavenlyRestriction.RESTRICTED.getFirst().get();if(!list.contains(race))list.add(race);out.setReturnValue(List.copyOf(list));}
     @WrapMethod(method="grantedUniqueSkill",remap=false)

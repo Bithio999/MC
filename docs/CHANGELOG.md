@@ -1,5 +1,11 @@
 # Changelog
 
+## Standalone 1.3.0 — Parallel World Jumper
+
+- Add the single-player Unique skill Parallel World Jumper and its World Hop active. Save and close the integrated world, then load a new-seed continuation with all dimension terrain regenerated. Retain player progress, inventory and pack configuration; preserve the previous save as the recovery copy.
+- Find safe ground near the previous coordinates, with a bounded Overworld fallback and recovery if no landing can be found. Reject multiplayer reincarnation rolls, acquisition, learning, copying and activation, including LAN worlds.
+- Add a standalone in-game guide page and native integration, file-copy/failure and repeated real-client transition coverage.
+
 ## 0.36.1 / standalone 1.2.2 — Schema learning fix
 
 - Fix native failed-learning penalties jumping Schema’s remaining learning points to the standard 100-point budget. Keep the full 1,000-point requirement and native failure odds proportional to progress.

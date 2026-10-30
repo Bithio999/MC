@@ -348,6 +348,46 @@
         "unbound"
       ],
       "icon": "heavenlyrestriction:textures/item/inverted_spear_of_heaven.png"
+    },
+    {
+      "id": "parallel-world-jumper",
+      "title": "Parallel World Jumper",
+      "category": "Skills",
+      "summary": "Unique skill · Single-player only. Press World Hop to enter a fresh-seed continuation.",
+      "sections": [
+        {
+          "title": "World Hop",
+          "lines": [
+            "Every dimension regenerates. Your character, inventory and progression carry over. The game saves, closes and reloads your world during the hop. No aura or magicule cost."
+          ]
+        },
+        {
+          "title": "Arrival",
+          "lines": [
+            "Land on the nearest safe ground around your previous coordinates. If there is no nearby safe ground, World Hop searches around the Overworld spawn instead."
+          ]
+        },
+        {
+          "title": "Previous world",
+          "lines": [
+            "Builds, terrain and entities stay in the previous world, which remains in the Singleplayer list. Terrain maps and bed/spawn bindings reset in the new continuation. World generator presets and datapacks are preserved; flat presets remain flat."
+          ]
+        },
+        {
+          "title": "Obtaining",
+          "lines": [
+            "Can roll as a reincarnation Unique in a private single-player world. Cannot be acquired, copied, learned or used on dedicated servers or while open to LAN. Chained must receive it through reincarnation to permit it."
+          ]
+        }
+      ],
+      "keywords": [
+        "world hop",
+        "new seed",
+        "regenerate",
+        "parallel"
+      ],
+      "related": [],
+      "icon": "tensura:textures/skill/extra/spatial_motion.png"
     }
   ]
 }

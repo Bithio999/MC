@@ -197,3 +197,13 @@ Tensura Neo Otherworld **1.1.3a** uses Tensura **2.0.1.4**, ManasCore **4.0.0.2*
 Fettered Human excludes **29 of the pack’s 39 addon starting skills** for magicule costs or target-skill copying. The audit includes payments hidden inside abilities, not just their cost getters. Other races retain their pools; Pride’s exception and Creator inheritance remain. The server’s blacklist/allowlist settings still apply. [All addon skill classifications and reasons](compatibility/FETTERED-SKILLS.md).
 
 [Compatibility report](compatibility/NEO-OTHERWORLD-1.1.3a.md).
+
+## Parallel World Jumper — Unique
+
+**World Hop · Active, Press.** Enter a new-seed continuation with every dimension regenerated. Your character, inventory and progression carry over. The game saves, closes and reloads during the transition. Cost: none. Damage: none.
+
+Land on the nearest safe ground near your previous coordinates. If no safe ground is nearby, search around the new Overworld spawn. If a new world or safe landing cannot be prepared, return to your previous world using the recovery screen.
+
+Your previous world stays in the Singleplayer list. Builds, mobs and uncarried entities stay there; terrain maps and old bed/spawn bindings reset in the new continuation. World generator presets, datapacks and server settings carry over. Flat worlds remain flat.
+
+**Obtaining:** Can roll as a reincarnation Unique in private single-player. Unavailable on dedicated servers or while open to LAN, including learning and skill-copying paths. Chained allows it when it was obtained through reincarnation.

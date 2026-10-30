@@ -1,0 +1,7 @@
+gradle.projectsEvaluated {
+ rootProject.sourceSets.main.java.srcDir(rootProject.file('docs/review-world-hop'))
+ if(rootProject.hasProperty('worldHopReviewHops'))rootProject.neoForge.runs.client.jvmArgument('-Dworldhop.review.hops='+rootProject.property('worldHopReviewHops'))
+ rootProject.neoForge.runs.client.jvmArgument('-Duser.home=' + rootProject.property('neoOtherworldDirectory') + '/client-home')
+ rootProject.neoForge.runs.client.programArgument('--quickPlaySingleplayer')
+ rootProject.neoForge.runs.client.programArgument('World Hop Validation')
+}

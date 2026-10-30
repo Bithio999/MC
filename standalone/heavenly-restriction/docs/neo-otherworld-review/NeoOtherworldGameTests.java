@@ -17,6 +17,12 @@ import static dev.heavenlyrestriction.ChainedGameTests.near;
 @PrefixGameTestTemplate(false)
 public final class NeoOtherworldGameTests {
 @GameTest(template="empty",timeoutTicks=100)
+public static void dedicatedServersCannotRollLearnCopyOrActivateWorldJumper(GameTestHelper h){WorldHopGameTests.dedicatedServersCannotRollLearnCopyOrActivateWorldJumper(h);}
+@GameTest(template="empty",timeoutTicks=100)
+public static void metadataKeepsCharacterAndDimensionGeneratorsButChangesSeed(GameTestHelper h){WorldHopGameTests.metadataKeepsCharacterAndDimensionGeneratorsButChangesSeed(h);}
+@GameTest(template="empty",timeoutTicks=100)
+public static void landingRejectsWaterHazardsAndBlockedHeadroom(GameTestHelper h){WorldHopGameTests.landingRejectsWaterHazardsAndBlockedHeadroom(h);}
+@GameTest(template="empty",timeoutTicks=100)
 public static void nativeActivationLearnsAuraSlashBeforeSchema(GameTestHelper h){SchemaGameTests.nativeActivationLearnsAuraSlashBeforeSchema(h);}
 @GameTest(template="empty",timeoutTicks=100)
 public static void nativeFailedLearningCannotSkipSchemasThousandPoints(GameTestHelper h){SchemaGameTests.nativeFailedLearningCannotSkipSchemasThousandPoints(h);}
@@ -104,7 +110,7 @@ public static void masteryCompletesAtTwoThousandAndNeverEarlier(GameTestHelper h
     public static void auditAdditionalReincarnationSkills(GameTestHelper h) throws Exception {
         var p=TestFixtures.player(h);ReincarnationMenu.setRace(p,HeavenlyRestriction.RESTRICTED.getFirst().get(),true,false);var rows=new java.util.ArrayList<java.util.Map<String,Object>>();
         for(var skill:ReincarnationMenu.getSkillPool()){
-            if(skill.getRegistryName().getNamespace().equals("tensura"))continue;
+            if(java.util.Set.of("tensura","heavenlyrestriction").contains(skill.getRegistryName().getNamespace()))continue;
             var row=new java.util.LinkedHashMap<String,Object>();row.put("id",skill.getRegistryName().toString());row.put("class",skill.getClass().getName());row.put("magiculeCost",ChainedReincarnation.hasMagiculeCost(skill,p));row.put("targetSkillTaking",ChainedReincarnation.takesTargetSkills(skill));row.put("blocked",ChainedReincarnation.blocked(skill,p));rows.add(row);
         }
         var eligible=rows.stream().filter(row->!((Boolean)row.get("blocked"))).map(row->(String)row.get("id")).collect(java.util.stream.Collectors.toSet());

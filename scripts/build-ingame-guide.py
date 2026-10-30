@@ -121,6 +121,8 @@ full[0]['related']+=['hunters','skill-synthesis','duo-races','ananke','eschaton'
 for mod,entries,folder in [('wildhunt',full,ROOT/'src/main/resources/assets/wildhunt'),('heavenlyrestriction',common,ROOT/'standalone/heavenly-restriction/src/main/resources/assets/heavenlyrestriction')]:
     import copy
     entries=copy.deepcopy(entries)
+    if mod=='heavenlyrestriction':
+        entries.append(entry('parallel-world-jumper','Parallel World Jumper','Skills','Unique skill · Single-player only. Press World Hop to enter a fresh-seed continuation.',section('World Hop','Every dimension regenerates. Your character, inventory and progression carry over. The game saves, closes and reloads your world during the hop. No aura or magicule cost.'),section('Arrival','Land on the nearest safe ground around your previous coordinates. If there is no nearby safe ground, World Hop searches around the Overworld spawn instead.'),section('Previous world','Builds, terrain and entities stay in the previous world, which remains in the Singleplayer list. Terrain maps and bed/spawn bindings reset in the new continuation. World generator presets and datapacks are preserved; flat presets remain flat.'),section('Obtaining','Can roll as a reincarnation Unique in a private single-player world. Cannot be acquired, copied, learned or used on dedicated servers or while open to LAN. Chained must receive it through reincarnation to permit it.'),keywords=['world hop','new seed','regenerate','parallel'],icon='tensura:textures/skill/extra/spatial_motion.png'))
     allowed={e['id'] for e in entries}
     for e in entries:
         e['related']=[i for i in e['related'] if i in allowed]

@@ -20,7 +20,7 @@ The **[Inverted Spear of Heaven](wiki/pages/Inverted-Spear-of-Heaven.md)** is a 
 
 ## Standalone TensuraAdditionalAdditions addon
 
-The race, Chained, Unbound, its three aura recovery skills and Air Walk are also available as **[TensuraAdditionalAdditions](standalone/heavenly-restriction/README.md)**. [Download standalone 1.2.2](releases/TensuraAdditionalAdditions-1.2.2.jar). It requires Tensura and its dependencies, runs without Tensura Myths, and uses separate registry IDs. Use either addon in an instance; the full Myths release above retains all its content. Standalone **1.2.2** supports **[Tensura Neo Otherworld 1.1.3a](standalone/heavenly-restriction/docs/compatibility/NEO-OTHERWORLD-1.1.3a.md)**.
+The race, Chained, Unbound, its three aura recovery skills and Air Walk are also available as **[TensuraAdditionalAdditions](standalone/heavenly-restriction/README.md)**. [Download standalone 1.3.0](releases/TensuraAdditionalAdditions-1.3.0.jar). It requires Tensura and its dependencies, runs without Tensura Myths, and uses separate registry IDs. Use either addon in an instance; the full Myths release above retains all its content. The standalone also adds **Parallel World Jumper**, a single-player Unique that enters a fresh-seed continuation with every dimension regenerated while retaining your character and keeping the previous save. Standalone **1.3.0** supports **[Tensura Neo Otherworld 1.1.3a](standalone/heavenly-restriction/docs/compatibility/NEO-OTHERWORLD-1.1.3a.md)**.
 
 ## Visuals
 

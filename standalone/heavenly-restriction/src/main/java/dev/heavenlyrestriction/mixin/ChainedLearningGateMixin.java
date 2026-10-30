@@ -13,12 +13,12 @@ import org.spongepowered.asm.mixin.Mixin;
 public abstract class ChainedLearningGateMixin {
     @WrapMethod(method="learnSkill",remap=false)
     private boolean restriction$learn(ManasSkillInstance i,MutableComponent message,Operation<Boolean> original){
-        var owner=((Skills)(Object)this).getOwner();if(i.getMastery()>=0 && !ChainedState.canLearn(owner,i)){ChainedState.notifyBlocked(owner,i);return false;}
+        var owner=((Skills)(Object)this).getOwner();if(!dev.heavenlyrestriction.worldhop.WorldHop.mayStore(i,owner))return false;if(i.getMastery()>=0 && !ChainedState.canLearn(owner,i)){ChainedState.notifyBlocked(owner,i);return false;}
         try(var scope=i.getParentSkill()!=null && ChainedState.inherited(owner,i.getParentSkill())?ChainedContext.reincarnation(owner,i.getSkill()):ChainedContext.ability(owner,i.getSkill())){boolean result=original.call(i,message);if(result && ChainedContext.inherited(owner))ChainedState.remember(owner,i.getSkill());return result;}
     }
     @WrapMethod(method="updateSkill",remap=false)
     private void restriction$update(ManasSkillInstance i,boolean sync,Operation<Void> original){
-        var storage=(Skills)(Object)this;var owner=storage.getOwner();if(i.getMastery()>=0 && storage.getSkill(i.getSkillId()).filter(old->old.getMastery()>=0).isEmpty() && !ChainedState.canLearn(owner,i)){ChainedState.notifyBlocked(owner,i);return;}
+        var storage=(Skills)(Object)this;var owner=storage.getOwner();if(!dev.heavenlyrestriction.worldhop.WorldHop.mayStore(i,owner))return;if(i.getMastery()>=0 && storage.getSkill(i.getSkillId()).filter(old->old.getMastery()>=0).isEmpty() && !ChainedState.canLearn(owner,i)){ChainedState.notifyBlocked(owner,i);return;}
         original.call(i,sync);if(!owner.level().isClientSide() && ChainedContext.inherited(owner))ChainedState.remember(owner,i.getSkill());
     }
 }
