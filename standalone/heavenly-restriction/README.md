@@ -2,7 +2,7 @@
 
 An independent **NeoForge 1.21.1 addon for Tensura: Reincarnated**, extracted from Tensura Myths, with Unbound and additional Battlewills. It includes the Heavenly Restriction race lineage, Chained and its Unbound Ultimate evolution, aura recovery skills, Air Walk, Instant Transmission, Schema, and Parallel World Jumper. **Tensura Myths is not required.**
 
-[Download 1.3.0](../../releases/TensuraAdditionalAdditions-1.3.0.jar) · [Gameplay guide](docs/GUIDE.md) · [Validation](docs/VALIDATION-1.3.0.md)
+[Download 1.4.0](../../releases/TensuraAdditionalAdditions-1.4.0.jar) · [Gameplay guide](docs/GUIDE.md) · [Validation](docs/VALIDATION-1.4.0.md)
 
 ## In-game guide
 
@@ -18,7 +18,11 @@ Replace the older standalone JAR in the instance’s `mods` folder. On multiplay
 
 [Watch the in-game World Hop preview](../../docs/media/world-hop-preview/README.md).
 
-A new Unique skill, rollable in **private single-player**. Press **World Hop** to save and enter a new-seed continuation with **all dimensions regenerated**. Your character, inventory and progression carry over; builds and entities stay in the previous world, which remains available in the world list. Land on nearby safe ground, with an Overworld fallback. Generator presets and datapacks are preserved; flat worlds remain flat. No aura or magicule cost. Dedicated servers and open-to-LAN sessions cannot roll, acquire, learn, copy or activate it.
+A new Unique skill, rollable in **private single-player**. Press **World Jump** to save and enter a new-seed continuation with **all dimensions regenerated**. Your character, inventory and progression carry over; builds and entities stay in the previous world, which remains available in the world list. Land on nearby safe ground, with an Overworld fallback. Generator presets and datapacks are preserved; flat worlds remain flat. No aura or magicule cost. Dedicated servers and open-to-LAN sessions cannot roll, acquire, learn, copy or activate it.
+
+**World Select · Active, Press · Requires Learning:** browse visited worlds in a searchable atlas, choose a destination and press **Set next jump**. The next **World Jump** returns there once, retaining that world’s terrain/builds and bringing your current character. Choose **New World** to clear the destination. Earlier World Hop history is imported when its old saves are still present.
+
+[View the World Select menu](docs/media/world-select-1.4.0.png).
 
 ## Included content
 
@@ -48,7 +52,7 @@ Use **Java 21**, **Minecraft 1.21.1**, and **NeoForge 21.1.209 or later in the 2
 
 1. **Tensura: Reincarnated 2.0.1.3 or 2.0.1.4** and its dependencies, including **ManasCore 4.0.0.2**, **Architectury 13.0.8+**, **SmartBrainLib**, and **TerraBlender**.
 2. **GeckoLib 4.9.2** (4.x).
-3. **TensuraAdditionalAdditions-1.3.0.jar**.
+3. **TensuraAdditionalAdditions-1.4.0.jar**.
 
 Use this addon **instead of Tensura Myths**. The loader rejects installing both because both implement the same Chained and Battlewill hooks. The full Tensura Myths mod remains available separately with all its existing content.
 
@@ -66,7 +70,7 @@ python3 scripts/fetch-runtime.py
 ./gradlew build runGameTestServer
 ```
 
-Java 21 is required. The fetch script verifies the exact runtime dependency hashes in `runtime-mods.lock.json`. Gradle resolves the pinned Tensura, ManasCore and Architectury versions. Output: `build/libs/TensuraAdditionalAdditions-1.3.0.jar`.
+Java 21 is required. The fetch script verifies the exact runtime dependency hashes in `runtime-mods.lock.json`. Gradle resolves the pinned Tensura, ManasCore and Architectury versions. Output: `build/libs/TensuraAdditionalAdditions-1.4.0.jar`.
 
 `./gradlew runClient` starts an isolated development client. Native tests cover the extracted mechanics and prove that Tensura Myths is absent. Optional visual-review code in `docs/review` is excluded from regular builds; see its instructions.
 

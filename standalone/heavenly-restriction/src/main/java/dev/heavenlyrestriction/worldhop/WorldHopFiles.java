@@ -20,6 +20,13 @@ public final class WorldHopFiles {
         return !Set.of("xaero","xaeroworldmap","journeymap","voxy","lod","distant_horizons","chunk_activity_info").contains(first.toLowerCase(Locale.ROOT));
     }
     public static Path fork(Path source,String destination,Metadata metadata) throws IOException {
+        return copy(source,destination,metadata,false);
+    }
+    /** Returning copies the complete destination, leaving its recoverable save intact. */
+    public static Path revisit(Path source,String destination,Metadata metadata)throws IOException{
+        return copy(source,destination,metadata,true);
+    }
+    private static Path copy(Path source,String destination,Metadata metadata,boolean terrain) throws IOException {
         source=source.toRealPath();Path saves=source.getParent();
         if(!destination.matches("PWJ-[A-Za-z0-9_-]{1,100}"))throw new IOException("Invalid parallel-world directory");
         Path result=saves.resolve(destination),staging=saves.resolve(".pwj-"+UUID.randomUUID());
@@ -28,11 +35,11 @@ public final class WorldHopFiles {
         try{
             Files.walkFileTree(original,new SimpleFileVisitor<>(){
                 @Override public FileVisitResult preVisitDirectory(Path dir,BasicFileAttributes attrs)throws IOException{
-                    Path rel=original.relativize(dir);if(!rel.toString().isEmpty() && !keep(rel,true))return FileVisitResult.SKIP_SUBTREE;
+                    Path rel=original.relativize(dir);if(!terrain && !rel.toString().isEmpty() && !keep(rel,true))return FileVisitResult.SKIP_SUBTREE;
                     Files.createDirectories(staging.resolve(rel));return FileVisitResult.CONTINUE;
                 }
                 @Override public FileVisitResult visitFile(Path file,BasicFileAttributes attrs)throws IOException{
-                    Path rel=original.relativize(file);if(!keep(rel,false))return FileVisitResult.CONTINUE;
+                    Path rel=original.relativize(file);if(terrain?rel.getNameCount()==1 && Set.of("session.lock","level.dat_old").contains(rel.toString()):!keep(rel,false))return FileVisitResult.CONTINUE;
                     if(attrs.isSymbolicLink() || !attrs.isRegularFile())throw new IOException("Unsupported linked world file: "+rel);
                     Files.copy(file,staging.resolve(rel));return FileVisitResult.CONTINUE;
                 }

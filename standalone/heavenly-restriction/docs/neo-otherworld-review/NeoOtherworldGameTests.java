@@ -21,6 +21,8 @@ public static void dedicatedServersCannotRollLearnCopyOrActivateWorldJumper(Game
 @GameTest(template="empty",timeoutTicks=100)
 public static void metadataKeepsCharacterAndDimensionGeneratorsButChangesSeed(GameTestHelper h){WorldHopGameTests.metadataKeepsCharacterAndDimensionGeneratorsButChangesSeed(h);}
 @GameTest(template="empty",timeoutTicks=100)
+public static void revisitKeepsDestinationWorldAndTransfersCurrentCharacter(GameTestHelper h){WorldHopGameTests.revisitKeepsDestinationWorldAndTransfersCurrentCharacter(h);}
+@GameTest(template="empty",timeoutTicks=100)
 public static void landingRejectsWaterHazardsAndBlockedHeadroom(GameTestHelper h){WorldHopGameTests.landingRejectsWaterHazardsAndBlockedHeadroom(h);}
 @GameTest(template="empty",timeoutTicks=100)
 public static void nativeActivationLearnsAuraSlashBeforeSchema(GameTestHelper h){SchemaGameTests.nativeActivationLearnsAuraSlashBeforeSchema(h);}

@@ -31,4 +31,11 @@ class WorldHopFilesTest {
     @Test void refusesEscapingPathsAndLinkedState()throws Exception{
         Path old=source();assertThrows(IOException.class,()->WorldHopFiles.fork(old,"../escape",p->{}));write(saves,"private.txt","untouched");Files.createSymbolicLink(old.resolve("linked.dat"),saves.resolve("private.txt"));assertThrows(IOException.class,()->WorldHopFiles.fork(old,"PWJ-links",p->{}));assertEquals("untouched",Files.readString(saves.resolve("private.txt")));
     }
+    @Test void revisitRetainsEveryDimensionsTerrainAndNeverMutatesDestination()throws Exception{
+        Path old=source();for(String file:List.of("region/r.0.0.mca","DIM-1/entities/r.0.0.mca","DIM1/poi/r.0.0.mca","dimensions/mod/sky/region/r.0.0.mca","data/map_1.dat","data/raids.dat","data/progress.dat","playerdata/person.dat","icon.png","session.lock"))write(old,file,"saved:"+file);
+        Path returned=WorldHopFiles.revisit(old,"PWJ-return",p->Files.writeString(p.resolve("level.dat"),"present character + old world"));
+        assertEquals("original metadata",Files.readString(old.resolve("level.dat")));
+        try(var files=Files.walk(old)){for(Path file:files.filter(Files::isRegularFile).toList()){Path rel=old.relativize(file);if(rel.toString().equals("level.dat"))continue;if(rel.toString().equals("session.lock"))assertFalse(Files.exists(returned.resolve(rel)));else assertEquals(Files.readString(file),Files.readString(returned.resolve(rel)));}}
+        assertThrows(IOException.class,()->WorldHopFiles.revisit(old,"PWJ-failed-return",p->{throw new IOException("No space");}));assertFalse(Files.exists(saves.resolve("PWJ-failed-return")));assertEquals("original metadata",Files.readString(old.resolve("level.dat")));
+    }
 }

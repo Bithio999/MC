@@ -24,7 +24,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Predicate;
 
 public final class WorldHop {
-    public record Ticket(UUID token,Path source,long seed,UUID player){}
+    public record Ticket(UUID token,Path source,long seed,UUID player,WorldHopJournal.Entry destination){}
     private static final Map<MinecraftServer,Ticket> REQUESTS=new ConcurrentHashMap<>();
     private static final Map<UUID,Landing> LANDINGS=new HashMap<>();
     public static Predicate<LivingEntity> clientAvailable=e->false;
@@ -38,9 +38,11 @@ public final class WorldHop {
         if(!available(p)){p.sendSystemMessage(Component.literal("World Hop is only available in a private single-player world."));return;}
         if(p.getPersistentData().contains(WorldHopMetadata.MARKER) || REQUESTS.containsKey(p.server))return;
         long old=p.server.getWorldData().worldGenOptions().seed(),seed;do{seed=new java.security.SecureRandom().nextLong();}while(seed==old);
-        var ticket=new Ticket(UUID.randomUUID(),p.server.getWorldPath(LevelResource.ROOT).toAbsolutePath().normalize(),seed,p.getUUID());
+        WorldHopJournal.Entry destination;
+        try{destination=WorldSelect.destination(p);}catch(java.io.IOException ex){p.sendSystemMessage(Component.literal("The selected world is unavailable. Open World Select to choose another destination or New World."));return;}
+        var ticket=new Ticket(UUID.randomUUID(),p.server.getWorldPath(LevelResource.ROOT).toAbsolutePath().normalize(),seed,p.getUUID(),destination);
         if(REQUESTS.putIfAbsent(p.server,ticket)!=null)return;
-        p.unRide();p.closeContainer();i.addMasteryPoint(p);
+        p.getPersistentData().remove(WorldSelect.SELECTION);p.unRide();p.closeContainer();i.addMasteryPoint(p);
         WorldHopNetwork.send(p,ticket.token());
     }
     /** A remote server cannot create or claim a local transfer ticket. */

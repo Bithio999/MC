@@ -1,0 +1,11 @@
+gradle.projectsEvaluated {
+ rootProject.sourceSets.main.java.srcDir(rootProject.file('docs/review-world-select'))
+ if(rootProject.hasProperty('worldSelectMenuOnly'))rootProject.neoForge.runs.client.jvmArgument('-Dworldselect.review.menuOnly=true')
+ rootProject.neoForge.runs.client.gameDirectory=rootProject.file('/workspace/validation-world-select/client')
+ rootProject.neoForge.runs.client.programArgument('--quickPlaySingleplayer')
+ rootProject.neoForge.runs.client.programArgument('World Select Review')
+ rootProject.neoForge.runs.client.programArgument('--width')
+ rootProject.neoForge.runs.client.programArgument('1280')
+ rootProject.neoForge.runs.client.programArgument('--height')
+ rootProject.neoForge.runs.client.programArgument('720')
+}

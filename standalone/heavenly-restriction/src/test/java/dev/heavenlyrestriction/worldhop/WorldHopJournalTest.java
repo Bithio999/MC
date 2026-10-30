@@ -1,0 +1,22 @@
+package dev.heavenlyrestriction.worldhop;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.io.TempDir;
+import java.nio.file.*;
+import java.io.IOException;
+import static org.junit.jupiter.api.Assertions.*;
+class WorldHopJournalTest {
+    @TempDir Path saves;
+    @Test void returnKeepsStableIdentityAndLatestFolderWithoutDuplicateWorlds()throws Exception{
+        Path original=Files.createDirectory(saves.resolve("Original"));var first=WorldHopJournal.read(original,"Home",123);
+        var second=new WorldHopJournal.Entry(WorldHopJournal.id("PWJ-B"),"PWJ-B","Parallel 1",456);
+        var there=WorldHopJournal.arrive(first,second,"PWJ-B");Path b=Files.createDirectory(saves.resolve("PWJ-B"));WorldHopJournal.write(b,there);
+        var loaded=WorldHopJournal.read(b,"Parallel 1",456);assertEquals(2,loaded.worlds().size());
+        var back=WorldHopJournal.arrive(loaded,first.worlds().getFirst(),"PWJ-return");assertEquals(first.current(),back.current());assertEquals(2,back.worlds().size());assertEquals("PWJ-return",back.find(first.current()).orElseThrow().folder());assertEquals("PWJ-B",back.find(second.id()).orElseThrow().folder());
+        Path returned=Files.createDirectory(saves.resolve("PWJ-return"));WorldHopJournal.write(returned,back);var resumed=WorldHopJournal.read(returned,"Home",123);assertEquals(back,resumed);
+    }
+    @Test void malformedAndLinkedJournalsFailWithoutInventingPaths()throws Exception{
+        Path world=Files.createDirectory(saves.resolve("World"));Path file=world.resolve(WorldHopJournal.FILE);Files.writeString(file,"{broken");assertThrows(IOException.class,()->WorldHopJournal.read(world,"Home",1));
+        Files.writeString(file,"{\"current\":\""+WorldHopJournal.id("World")+"\",\"worlds\":[{\"id\":\""+WorldHopJournal.id("evil")+"\",\"folder\":\"../outside\",\"name\":\"Bad\",\"seed\":1}]}");assertThrows(IOException.class,()->WorldHopJournal.read(world,"Home",1));
+        Files.delete(file);Path outside=saves.resolve("outside.json");Files.writeString(outside,"{}");Files.createSymbolicLink(file,outside);assertThrows(IOException.class,()->WorldHopJournal.read(world,"Home",1));assertFalse(WorldHopJournal.validId("../world"));assertFalse(WorldHopJournal.validId(""));
+    }
+}

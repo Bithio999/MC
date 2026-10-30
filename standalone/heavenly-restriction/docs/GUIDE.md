@@ -200,10 +200,12 @@ Fettered Human excludes **29 of the pack’s 39 addon starting skills** for magi
 
 ## Parallel World Jumper — Unique
 
-**World Hop · Active, Press.** Enter a new-seed continuation with every dimension regenerated. Your character, inventory and progression carry over. The game saves, closes and reloads during the transition. Cost: none. Damage: none.
+**World Select · Active, Press · Requires Learning.** Open a searchable list of previously visited worlds. Choose a card and press **Set next jump**. The next World Jump returns there once; terrain, builds, entities and world state are retained, while your current character, inventory, skills, EP, advancements and stats travel with you. Select **New World** and confirm to restore random generation. Selection itself does not teleport. No cost or damage.
 
-Land on the nearest safe ground near your previous coordinates. If no safe ground is nearby, search around the new Overworld spawn. If a new world or safe landing cannot be prepared, return to your previous world using the recovery screen.
+**World Jump · Active, Press.** With a selected destination, return there once. Otherwise enter a new-seed continuation with every dimension regenerated. Your character, inventory and progression carry over. The game saves, closes and reloads during the transition. Cost: none. Damage: none.
 
-Your previous world stays in the Singleplayer list. Builds, mobs and uncarried entities stay there; terrain maps and old bed/spawn bindings reset in the new continuation. World generator presets, datapacks and server settings carry over. Flat worlds remain flat.
+Land on nearby safe ground: near your departing coordinates for a fresh world, or near your last position in a visited world. If no safe ground is nearby, search around the new Overworld spawn. If a new world or safe landing cannot be prepared, return to your previous world using the recovery screen.
+
+Your previous world stays in the Singleplayer list as a recoverable save. A return uses the most recently visited copy of that world. Builds, mobs and uncarried entities stay with their world; terrain maps reset only when generating fresh terrain. Bed/spawn bindings clear during travel. World generator presets, datapacks and server settings carry over. Flat worlds remain flat.
 
 **Obtaining:** Can roll as a reincarnation Unique in private single-player. Unavailable on dedicated servers or while open to LAN, including learning and skill-copying paths. Chained allows it when it was obtained through reincarnation.
