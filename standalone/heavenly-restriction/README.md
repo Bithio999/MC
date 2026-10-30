@@ -4,6 +4,10 @@ An independent **NeoForge 1.21.1 addon for Tensura: Reincarnated**, extracted fr
 
 [Download 1.5.0](../../releases/TensuraAdditionalAdditions-1.5.0.jar) · [Gameplay guide](docs/GUIDE.md) · [Validation](docs/VALIDATION-1.5.0.md)
 
+## Wiki
+
+[Additions wiki](../../wiki/pages/TensuraAdditionalAdditions.md) · [Parallel World Jumper](../../wiki/pages/Additions-Parallel-World-Jumper.md) · [Download the styled reference](../../releases/tensura-addon-wikis.zip). This section covers the standalone only.
+
 ## In-game guide
 
 Press **F8**, use the guide button in the **pause menu**, or choose **Guide** below Tensura’s status panel. Search names, abilities or requirements; browse categories and related pages. The guide works offline, pauses single-player while reading, and includes only this addon’s content. Its key can be changed in Controls.

@@ -1,157 +1,185 @@
-[
-  [
-    "Start here",
+{
+  "myths": [
     [
+      "Start",
       [
-        "",
-        "Main Page"
-      ],
+        [
+          "Tensura-Myths",
+          "Myths home"
+        ],
+        [
+          "Getting-Started",
+          "Install"
+        ],
+        [
+          "In-Game-Guide",
+          "In-game guide"
+        ]
+      ]
+    ],
+    [
+      "Skills",
       [
-        "Getting-Started",
-        "Getting started"
+        [
+          "Skills",
+          "Skill overview"
+        ],
+        [
+          "Unique-Skills",
+          "Unique"
+        ],
+        [
+          "Ultimate-Skills",
+          "Ultimate"
+        ],
+        [
+          "Godly",
+          "Godly"
+        ],
+        [
+          "Battlewills",
+          "Battlewills"
+        ],
+        [
+          "Aura-Regeneration",
+          "Aura recovery"
+        ],
+        [
+          "Abilities",
+          "Ability directory"
+        ]
+      ]
+    ],
+    [
+      "World and progression",
+      [
+        [
+          "Races",
+          "Races"
+        ],
+        [
+          "Evolution",
+          "Hunters"
+        ],
+        [
+          "Fettered-Human",
+          "Heavenly Restriction"
+        ],
+        [
+          "Duo-Races",
+          "Secondary races"
+        ],
+        [
+          "Convergent-Awakening",
+          "Awakening"
+        ],
+        [
+          "Bosses",
+          "Bosses"
+        ],
+        [
+          "Otherworlders",
+          "Otherworlders"
+        ],
+        [
+          "Weapons",
+          "Equipment"
+        ]
+      ]
+    ],
+    [
+      "Reference",
+      [
+        [
+          "Damage-Types",
+          "Damage types"
+        ],
+        [
+          "Mechanics",
+          "Combat rules"
+        ],
+        [
+          "Visual-Effects",
+          "Pictures and videos"
+        ],
+        [
+          "Commands",
+          "Commands"
+        ]
       ]
     ]
   ],
-  [
-    "Skills",
+  "additions": [
     [
+      "Start",
       [
-        "Skills",
-        "Skill overview"
-      ],
-      [
-        "Unique-Skills",
-        "Unique Skills"
-      ],
-      [
-        "Ultimate-Skills",
-        "Ultimate Skills"
-      ],
-      [
-        "Skill-Synthesis",
-        "Skill synthesis"
-      ],
-      [
-        "Godly",
-        "Godly Skills"
-      ],
-      [
-        "Aura-Regeneration",
-        "Extra Skills"
-      ],
-      [
-        "Abilities",
-        "Ability index"
-      ],
-      [
-        "Battlewills",
-        "Battlewills"
+        [
+          "TensuraAdditionalAdditions",
+          "Additions home"
+        ],
+        [
+          "Additions-Getting-Started",
+          "Install"
+        ],
+        [
+          "Additions-In-Game-Guide",
+          "In-game guide"
+        ]
       ]
-    ]
-  ],
-  [
-    "Races",
+    ],
     [
+      "Content",
       [
-        "Races",
-        "Race directory"
-      ],
-      [
-        "Evolution",
-        "Hunter evolution"
-      ],
-      [
-        "Fettered-Human",
-        "Heavenly Restriction"
-      ],
-      [
-        "Duo-Races",
-        "Secondary races"
-      ],
-      [
-        "Convergent-Awakening",
-        "Convergent Awakening"
+        [
+          "Additions-Fettered-Human",
+          "Heavenly Restriction"
+        ],
+        [
+          "Additions-Skills",
+          "Skills"
+        ],
+        [
+          "Additions-Chained",
+          "Chained"
+        ],
+        [
+          "Additions-Unbound",
+          "Unbound"
+        ],
+        [
+          "Additions-Battlewills",
+          "Battlewills"
+        ],
+        [
+          "Additions-Parallel-World-Jumper",
+          "Parallel World Jumper"
+        ],
+        [
+          "Additions-Aura-Regeneration",
+          "Aura recovery"
+        ],
+        [
+          "Additions-Weapons",
+          "Equipment"
+        ]
       ]
-    ]
-  ],
-  [
-    "Equipment",
+    ],
     [
+      "Reference",
       [
-        "Weapons",
-        "Weapons"
-      ],
-      [
-        "Inverted-Spear-of-Heaven",
-        "Inverted Spear of Heaven"
-      ],
-      [
-        "Nullification",
-        "Nullification engraving"
-      ]
-    ]
-  ],
-  [
-    "Myth bosses",
-    [
-      [
-        "Bosses",
-        "Boss directory"
-      ],
-      [
-        "Ananke",
-        "Ananke"
-      ],
-      [
-        "Moira",
-        "Moira, Lord of Finality"
-      ],
-      [
-        "Eschaton",
-        "Eschaton, the Last Myth"
-      ],
-      [
-        "Demiurge",
-        "Demiurge, God of Genesis"
-      ]
-    ]
-  ],
-  [
-    "Otherworlders",
-    [
-      [
-        "Otherworlders",
-        "Character directory"
-      ],
-      [
-        "Alma",
-        "Alma"
-      ],
-      [
-        "Gemma",
-        "Gemma"
-      ]
-    ]
-  ],
-  [
-    "Reference",
-    [
-      [
-        "Damage-Types",
-        "Damage types"
-      ],
-      [
-        "Mechanics",
-        "Combat mechanics"
-      ],
-      [
-        "Visual-Effects",
-        "Visual effects"
-      ],
-      [
-        "Commands",
-        "Commands"
+        [
+          "Additions-Abilities",
+          "Ability directory"
+        ],
+        [
+          "Additions-Damage-Types",
+          "Damage types"
+        ],
+        [
+          "Additions-Commands",
+          "Commands"
+        ]
       ]
     ]
   ]
-]
+}

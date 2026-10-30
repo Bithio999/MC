@@ -1,3 +1,5 @@
 # Air Walk
 
-See [Air Walk](Air-Walk.md) for this Battlewill.
+[All wikis](../README.md) · [Tensura Myths](Tensura-Myths.md)
+
+Air Sovereignty is now called **[Air Walk](Air-Walk.md)**.

@@ -1,5 +1,3 @@
-**Tensura Myths 0.36.1** · Minecraft 1.21.1 · NeoForge
+[All wikis](https://github.com/Bithio999/MC/wiki) · [Tensura Myths 0.36.1](https://github.com/Bithio999/MC/wiki/Tensura-Myths) · [TensuraAdditionalAdditions 1.5.0](https://github.com/Bithio999/MC/wiki/TensuraAdditionalAdditions)
 
-[Home](https://github.com/Bithio999/MC/wiki) · [Source](https://github.com/Bithio999/MC) · [Base mod wiki](https://tensura.wiki.gg/wiki/Tensura:_Reincarnated_Wiki)
-
-Unofficial fan addon. Original documentation and portraits. Not affiliated with Capcom or ManasMods.
+Unofficial addon reference · [Source](https://github.com/Bithio999/MC)

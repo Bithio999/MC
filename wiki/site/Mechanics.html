@@ -1,164 +1,21 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Combat mechanics — the unofficial Tensura Myths addon reference.">
-<title>Combat mechanics — Tensura Myths Wiki</title><link rel="stylesheet" href="wiki.css">
+<meta name="description" content="Combat rules — Tensura Myths gameplay reference.">
+<title>Combat rules — Tensura Myths</title><link rel="stylesheet" href="wiki.css">
 <script defer src="search-index.js"></script><script defer src="search.js"></script></head>
-<body data-root="../"><a class="skip" href="#article">Skip to article</a>
-<div class="global-bar"><span>TENSURA MYTHS</span><div><a href="https://tensura.wiki.gg/wiki/Tensura:_Reincarnated_Wiki">Base mod wiki</a><a href="https://github.com/Bithio999/MC">GitHub</a></div></div>
-<header class="masthead"><a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">M</span><span>TENSURA MYTHS<small>Tensura: Reincarnated addon wiki</small></span></a>
-<div class="search"><label for="wiki-search">Search Tensura Myths Wiki</label><input id="wiki-search" type="search" placeholder="Search skills, races, characters…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="search-results" aria-expanded="false"><div id="search-results" role="listbox" aria-label="Search results" hidden></div><span id="search-status" class="sr-only" aria-live="polite"></span></div></header>
-<div class="layout"><button id="navigation-toggle" aria-controls="wiki-navigation" aria-expanded="false">☰ Wiki navigation</button><nav id="wiki-navigation" class="sidebar" aria-label="Wiki navigation"><section><h2>Start here</h2><a href="../index.html">Main Page</a><a href="../site/Getting-Started.html">Getting started</a></section><section><h2>Skills</h2><a href="../site/Skills.html">Skill overview</a><a href="../site/Unique-Skills.html">Unique Skills</a><a href="../site/Ultimate-Skills.html">Ultimate Skills</a><a href="../site/Skill-Synthesis.html">Skill synthesis</a><a href="../site/Godly.html">Godly Skills</a><a href="../site/Aura-Regeneration.html">Extra Skills</a><a href="../site/Abilities.html">Ability index</a><a href="../site/Battlewills.html">Battlewills</a></section><section><h2>Races</h2><a href="../site/Races.html">Race directory</a><a href="../site/Evolution.html">Hunter evolution</a><a href="../site/Fettered-Human.html">Heavenly Restriction</a><a href="../site/Duo-Races.html">Secondary races</a><a href="../site/Convergent-Awakening.html">Convergent Awakening</a></section><section><h2>Equipment</h2><a href="../site/Weapons.html">Weapons</a><a href="../site/Inverted-Spear-of-Heaven.html">Inverted Spear of Heaven</a><a href="../site/Nullification.html">Nullification engraving</a></section><section><h2>Myth bosses</h2><a href="../site/Bosses.html">Boss directory</a><a href="../site/Ananke.html">Ananke</a><a href="../site/Moira.html">Moira, Lord of Finality</a><a href="../site/Eschaton.html">Eschaton, the Last Myth</a><a href="../site/Demiurge.html">Demiurge, God of Genesis</a></section><section><h2>Otherworlders</h2><a href="../site/Otherworlders.html">Character directory</a><a href="../site/Alma.html">Alma</a><a href="../site/Gemma.html">Gemma</a></section><section><h2>Reference</h2><a href="../site/Damage-Types.html">Damage types</a><a href="../site/Mechanics.html" aria-current="page">Combat mechanics</a><a href="../site/Visual-Effects.html">Visual effects</a><a href="../site/Commands.html">Commands</a></section><div class="sidebar-version">Tensura Myths <strong>0.36.1</strong><br>Minecraft 1.21.1 · NeoForge<br><span>Offline reference edition</span></div></nav>
-<main id="article" class="article-page"><div class="page-tabs"><span aria-current="page">Article</span><a href="../pages/Mechanics.md">Read Markdown</a><a href="https://github.com/Bithio999/MC/blob/main/docs/CHANGELOG.md">Changelog</a></div>
-<div class="article-heading"><div class="breadcrumbs"><a href="../index.html">Tensura Myths Wiki</a> / <a href="../site/Mechanics.html">Reference</a></div><h1>Combat mechanics</h1><p class="subtitle">From the unofficial Tensura Myths Wiki</p></div>
-<div class="article-content"><div class="article-intro"><p>This page explains <strong>Tensura Myths combat mechanics</strong>, including native barriers, skill toggles, damage modifiers, and aura consumption.</p></div><details class="contents" open><summary>Contents</summary><div class="toc">
+<body data-root="../" data-mod="myths"><a class="skip" href="#article">Skip to article</a>
+<div class="global-bar"><span>TENSURA ADDON WIKIS</span><div><a href="https://tensura.wiki.gg/wiki/Tensura:_Reincarnated_Wiki">Base mod wiki</a><a href="https://github.com/Bithio999/MC">GitHub</a></div></div>
+<header class="masthead"><a class="brand" href="Tensura-Myths.html"><span class="brand-mark" aria-hidden="true">M</span><span>Tensura Myths<small>0.36.1 · Minecraft 1.21.1 · NeoForge</small></span></a>
+<div class="search"><label for="wiki-search">Search Tensura Myths</label><input id="wiki-search" type="search" placeholder="Search names, abilities or requirements…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="search-results" aria-expanded="false"><div id="search-results" role="listbox" hidden></div><span id="search-status" class="sr-only" aria-live="polite"></span></div></header>
+<nav class="mod-switch" aria-label="Choose addon"><a href="../index.html">All wikis</a><a href="Tensura-Myths.html" aria-current="page">Tensura Myths</a><a href="TensuraAdditionalAdditions.html">TensuraAdditionalAdditions</a></nav>
+<div class="layout"><button id="navigation-toggle" aria-controls="wiki-navigation" aria-expanded="false">☰ Wiki navigation</button><nav id="wiki-navigation" class="sidebar" aria-label="Tensura Myths navigation"><section><h2>Start</h2><a href="Tensura-Myths.html">Myths home</a><a href="Getting-Started.html">Install</a><a href="In-Game-Guide.html">In-game guide</a></section><section><h2>Skills</h2><a href="Skills.html">Skill overview</a><a href="Unique-Skills.html">Unique</a><a href="Ultimate-Skills.html">Ultimate</a><a href="Godly.html">Godly</a><a href="Battlewills.html">Battlewills</a><a href="Aura-Regeneration.html">Aura recovery</a><a href="Abilities.html">Ability directory</a></section><section><h2>World and progression</h2><a href="Races.html">Races</a><a href="Evolution.html">Hunters</a><a href="Fettered-Human.html">Heavenly Restriction</a><a href="Duo-Races.html">Secondary races</a><a href="Convergent-Awakening.html">Awakening</a><a href="Bosses.html">Bosses</a><a href="Otherworlders.html">Otherworlders</a><a href="Weapons.html">Equipment</a></section><section><h2>Reference</h2><a href="Damage-Types.html">Damage types</a><a href="Mechanics.html" aria-current="page">Combat rules</a><a href="Visual-Effects.html">Pictures and videos</a><a href="Commands.html">Commands</a></section></nav>
+<main id="article" class="article-page"><div class="page-tabs"><span aria-current="page">Tensura Myths</span><a href="../pages/Mechanics.md">Read Markdown</a></div><div class="article-heading"><div class="breadcrumbs"><a href="../index.html">All wikis</a> / <a href="Tensura-Myths.html">Tensura Myths</a></div><h1 id="combat-rules">Combat rules</h1><p class="subtitle">Tensura Myths · Reference</p></div>
+<div class="article-content"><p>Listed ability damage is before armor, barriers, resistances, dodge and other modifiers. Damage color or the size of an animation does not enlarge its stated hit area.</p>
 <ul>
-<li><a href="#damage-types">Damage types</a></li>
-<li><a href="#damage-and-mastery">Damage and mastery</a></li>
-<li><a href="#elemental-bonus-sources">Elemental bonus sources</a></li>
-<li><a href="#world-effects">World effects</a></li>
-<li><a href="#toggleable-passives">Toggleable passives</a></li>
-<li><a href="#native-barriers">Native barriers</a></li>
-<li><a href="#aiming-and-movement">Aiming and movement</a></li>
-<li><a href="#aura-regeneration">Aura regeneration</a></li>
-<li><a href="#visual-effects">Visual effects</a></li>
-<li><a href="#barrier-hud-examples">Barrier HUD examples</a></li>
-<li><a href="#hunter-vitality">Hunter vitality</a></li>
-<li><a href="#ultimate-interactions-and-technique-reconstruction">Ultimate interactions and technique reconstruction</a></li>
+<li>Ordinary elemental bonuses use the <strong>strongest eligible source</strong>, rather than adding every source. Godly bonuses apply separately.</li>
+<li>Barriers use Tensura’s native defenses/HUD. Where specified, owned Multilayer Barrier capacity rearms after ten seconds without being hit.</li>
+<li>Boss Infinite Regeneration spends real resources before a fatal defeat can trigger the next form.</li>
+<li>EP gates use total maximum aura + maximum magicules shown in Status. Current resource depletion does not lower the gate.</li>
+<li><a href="Chained.html">Chained</a>/<a href="Unbound.html">Unbound</a> use separate Battlewill and other-Physical damage branches; their multipliers do not double-dip.</li>
 </ul>
-</div>
-</details>
-<h2 id="damage-types">Damage types</h2>
-<p>The <a href="Abilities.html">ability index</a> and <a href="Damage-Types.html">damage reference</a> distinguish every direct elemental source, native status and non-damaging utility. Vritra and Thoth use multiple elements within one skill; each strike keeps its own native damage source. Reflection preserves the projectile’s own type. Healing, gates, resource conversion and barriers do not invent attack damage.</p>
-<h2 id="damage-and-mastery">Damage and mastery</h2>
-<p>All eight Uniques, the combination Ultimates and the three Godly skills use <strong>1 + 0.5 × mastery fraction</strong>. Mastery fractions are clamped to 0–1, giving a maximum of 1.5× before native modifiers. Each new kit has its own raw damage values; there is no shared Ultimate 3× multiplier.</p>
-<p><strong>EP never multiplies damage.</strong> It is a fixed progression requirement. Native elemental boosts, skill authority, barriers, resistance/nullification, hit immunity and server rules still determine actual health loss. Overlapping warnings do not reset vanilla/native hit immunity to force multiple full hits.</p>
-<p>Owning any Godly skill grants <a href="Godly.html#classification-passives">three shared classification passives</a>, independently of toggles and upkeep. Divine Authority adds 35% damage against non-Godly owners while preserving the original attack type. Absolute Penetration bypasses native resistance/nullification protection only for damage attributed to that owner; nearby allies and environmental damage receive no benefit. Interference Immunity rejects non-Godly-origin Magic Interference, using the originating skill rather than the caster’s tier. These traits never stack between Godly skills. Aion retains its separate barrier/slow toggle, Thoth retains its elemental boosts and native magic-efficiency toggle, and Lugh retains its attack speed/movement/mastery toggle.</p>
-<h2 id="elemental-bonus-sources">Elemental bonus sources</h2>
-<p>For each native elemental boost attribute, only the <strong>strongest positive non-Godly modifier</strong> applies. Compare each source’s actual effect against the current innate base, including flat, base-multiplier and total-multiplier operations. This covers native skills, Myths skills, equipment and other attribute sources. Lower bonuses remain installed and become effective automatically when a stronger source ends. Innate base values and negative modifiers remain intact.</p>
-<p>Thoth’s <strong>Godly</strong> +75% elemental bonus applies separately. For example, +50% Rune Smith, +50% Furnace Mantle and +100% Vritra provide <strong>2×</strong>, rather than multiplying together. Adding Thoth gives <strong>2 × 1.75 = 3.5×</strong> before penalties. This policy affects elemental boost attributes only; it does not limit healing, mastery, attack speed or the shared Godly damage bonus. Native damage paths that do not use these attributes retain their own rules.</p>
-<p>Living Grove also spends aura for each recipient’s actual HP/SHP recovery, in addition to its placement payment. See <a href="Verdant-Keeper.html#living-grove">Verdant Keeper</a> for mastery rates, refunds and partial funding.</p>
-<h2 id="world-effects">World effects</h2>
-<p>Oil pools occupy finite world locations. Drenched is a timed water mark that supports the water/lightning interactions described on the skill pages.</p>
-<h2 id="toggleable-passives">Toggleable passives</h2>
-<p>Unique skills have two active modes, combination Ultimates three, and Godly skills four, with a separate native skill toggle in Tensura’s Ability Selection.</p>
-<div class="article-table"><table>
-<thead>
-<tr>
-<th>Skill</th>
-<th style="text-align: right;">Upkeep per second</th>
-<th style="text-align: right;">Native multilayer capacity</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Storm Crown</td>
-<td style="text-align: right;">25 aura</td>
-<td style="text-align: right;">—</td>
-</tr>
-<tr>
-<td>Scarlet Deluge</td>
-<td style="text-align: right;">30 aura</td>
-<td style="text-align: right;">100</td>
-</tr>
-<tr>
-<td>Black Flame</td>
-<td style="text-align: right;">35 aura</td>
-<td style="text-align: right;">—</td>
-</tr>
-<tr>
-<td>Frostbound Colossus</td>
-<td style="text-align: right;">40 aura</td>
-<td style="text-align: right;">150</td>
-</tr>
-<tr>
-<td>Threadweaver</td>
-<td style="text-align: right;">25 aura</td>
-<td style="text-align: right;">—</td>
-</tr>
-<tr>
-<td>Rune Smith</td>
-<td style="text-align: right;">30 aura</td>
-<td style="text-align: right;">—</td>
-</tr>
-<tr>
-<td>Verdant Keeper</td>
-<td style="text-align: right;">35 aura</td>
-<td style="text-align: right;">—</td>
-</tr>
-<tr>
-<td>Mirrorbound</td>
-<td style="text-align: right;">25 aura</td>
-<td style="text-align: right;">—</td>
-</tr>
-<tr>
-<td>Vritra</td>
-<td style="text-align: right;">120 aura</td>
-<td style="text-align: right;">—</td>
-</tr>
-<tr>
-<td>Demeter</td>
-<td style="text-align: right;">110 aura</td>
-<td style="text-align: right;">—</td>
-</tr>
-<tr>
-<td>Janus</td>
-<td style="text-align: right;">110 aura</td>
-<td style="text-align: right;">—</td>
-</tr>
-<tr>
-<td>Aion</td>
-<td style="text-align: right;">180 magicules</td>
-<td style="text-align: right;">1,200</td>
-</tr>
-<tr>
-<td>Thoth</td>
-<td style="text-align: right;">180 magicules</td>
-<td style="text-align: right;">—</td>
-</tr>
-<tr>
-<td>Lugh</td>
-<td style="text-align: right;">240 magicules</td>
-<td style="text-align: right;">—</td>
-</tr>
-<tr>
-<td>Anansi</td>
-<td style="text-align: right;">100 aura</td>
-<td style="text-align: right;">—</td>
-</tr>
-<tr>
-<td>Aegir</td>
-<td style="text-align: right;">110 aura</td>
-<td style="text-align: right;">—</td>
-</tr>
-</tbody>
-</table></div>
-<p>The first second is paid when enabling; upkeep is charged once every twenty game ticks while active. Passives stay on until disabled, unfunded or blocked by activation requirements. They do not expire after fifteen or thirty seconds. Attribute contributions use stable IDs, so refreshes cannot accumulate duplicate bonuses. Turning off or forgetting the skill removes its modifiers. Saved native toggle state is restored on login.</p>
-<h2 id="native-barriers">Native barriers</h2>
-<p>Water Veil and Colossus Carapace contribute to Tensura’s <code>PHYSICAL_BARRIER</code> and <code>MAGIC_BARRIER</code> attributes and arm <code>MULTILAYER_BARRIER</code>, which is the attribute read by its shield HUD counter. Tensura handles their interaction with damage and renders its native barrier layer around the character. Wild Hunt adds no separate absorption-heart pool. Other skills’ barrier contributions remain separate.</p>
-<p>Aion also uses a recovering personal multilayer barrier. Demeter uses one-use <strong>Perennial Seeds</strong>, which heal wounded living allies for 40% maximum HP/SHP instead of lending a barrier. Its orchard and empowered harvest provide additional allied recovery. Mirrorbound and Aegir redirect projectiles; Janus uses positioning; Anansi creates runic threads; Thoth and Lugh focus on spellcraft and reconstructed techniques. None of those toggles grants a general-purpose shield.</p>
-<p>The displayed value is native per-hit blocking capacity. Tensura charges magicules for blocked damage. Overflow, inadequate magicules and native power interactions can break the shield. A broken multilayer barrier automatically rearms at the first paid upkeep after ten seconds without a hit (normally 10–11 seconds). Hits, including fully blocked hits, restart recovery. Retoggling cannot skip this delay. The shield modifier is saved across relogs; turning off removes only this art’s contribution. Ensure Tensura’s <strong>Barrier</strong> HUD decoration is enabled if you have customized its HUD.</p>
-<p>Water Veil retains water breathing and an attacker-targeted retaliation after actual health damage. Furnace Mantle retains fire protection while enabled; both utility effects stop immediately on toggle-off without leftover timed potions.</p>
-<h2 id="aiming-and-movement">Aiming and movement</h2>
-<p>Railbolt begins with a block-clipped aimed hit, then ricochets from the latest victim. Thunder Step follows the full aim vector, including vertical pitch, and sweeps the whole caster bounding box. Collisions, build-height limits and the world border stop it. Railbolt bounces reach twelve blocks through walls from the most recent victim. Thunder Step reaches 16 blocks with a 4-second cooldown and preserves all three components of player momentum. Undertow is placed on the crosshair ray within 24 blocks, using the hit surface or bounded endpoint. Water waves sweep continuous segments so targets cannot hide between movement updates. Oil Lash selects a limited forward fan and creates synced tentacle geometry. Avalanche Crash is an aimed area impact; Glacial Prison targets one enemy. Winter Harvest warns fixed crystal blooms for 1.2 seconds; Parallax Snare warns a spatial convergence for 0.8 seconds.</p>
-<p>Attacks respect teams, owned pets, creative/spectator immunity and PvP settings. They check line of sight except for Railbolt ricochets after the initial hit. Movement respects knockback resistance. Dimension changes invalidate anchored effects. Native status resistance and skill ranks can prevent Frost or Chill. No art destroys terrain or places permanent ice.</p>
-<h2 id="aura-regeneration">Aura regeneration</h2>
-<p>See <a href="Aura-Regeneration.html">Aura regeneration</a> for the three race-granted Extra Skills, healing speed, aura costs, suppression and death-prevention limits. They never charge magicules. Default native EP gain stays split two thirds aura and one third magicules.</p>
-<h2 id="visual-effects">Visual effects</h2>
-<p>Each kit uses its own textured shapes and animation: branched lightning, caustic water, molten tentacles, veined ice, silk, rune circuits, botanical growth, faceted mirrors, storm clouds, crystal orchards, architectural gates and astronomical clockwork. See the <a href="Visual-Effects.html">visual gallery</a> for examples and display behavior. Thoth retains its layered seals, hinged grimoires and chapter-colored spells.</p>
-<p>Visual entities deal no damage by themselves, have no collision and expire automatically. Server skill logic owns targeting, resource use, damage and cooldowns. Long-lived fields retain their actual placement; moving wards and healing pulses follow their recipients. Native elemental particles, barrier rendering and animated magic circles remain supplied by Tensura at runtime.</p>
-<p>No shader pack is required. Materials are batched per effect; curve detail decreases at distance. Minecraft’s <strong>Particles</strong> setting reduces decorative motes, foam and cloud sprites while preserving primary attack paths, warning footprints, crystal geometry and gate frames. Minimal particles does not disable skill visuals. Water Veil and Colossus Carapace remain free of constant custom effects.</p>
-<h2 id="barrier-hud-examples">Barrier HUD examples</h2>
-<p><img alt="Water Veil native HUD showing 100" src="../media/water-veil-hud.png" /></p>
-<p><img alt="Colossus Carapace native HUD showing 150" src="../media/colossus-carapace-hud.png" /></p>
-<p>The examples show the Unique passives enabled.</p>
-<p><img alt="Centered portraits and combined native barrier HUD" src="../media/hunter-icons-and-barriers.png" /></p>
-<p>The native HUD shows 250 combined capacity with both Unique barrier passives enabled (100 Water Veil + 150 Colossus Carapace); no custom bubble/frost orbit is emitted.</p>
-<h2 id="hunter-vitality">Hunter vitality</h2>
-<p>Race HP bonuses are +100 / +500 / +1,000; native SHP bonuses are +400 / +3,200 / +6,600. These replace earlier hunter-stage bonuses. See <a href="Evolution.html#hp-and-shp-growth">Human evolution</a>.</p>
-<h2 id="ultimate-interactions-and-technique-reconstruction">Ultimate interactions and technique reconstruction</h2>
-<p>All five combination Ultimates' damaging arts carry native <strong>level-1 resistance bypass</strong>, preserving the native partial-penetration/nullification fallback rules. Native attribute resistance, barriers, authority and hit immunity still apply. Godly ownership provides stronger resistance/nullification bypass for the owner's damage only.</p>
-<p>Vritra's storm creates a second Plasma Bore firing origin and is consumed by Cataclysm Front. Janus can open a second Parallax Snare at its opposite gate. Anansi's Checkmate consumes a fixed two-anchor corridor or three-anchor triangle. Aegir's Mirrorsea adds two converging Harpoon origins with a shared victim set, then can be consumed for an empowered expanding wave. Demeter consumes its orchard for a stronger harvest and allied recovery.</p>
-<p><a href="Lugh.html">Lugh</a> stores three bounded techniques and reconstructs their form and normalised damage type. It never executes another addon's skill code. Countermand seals only a recent non-Godly source ability for six seconds without deleting skill state. Grand Synthesis snapshots the archive and strikes at 1.0, 1.8 and 2.6 seconds.</p>
-</div><nav class="related-box" aria-label="Related reference"><strong>Tensura Myths · Reference</strong><div class="navbox-row"><strong>Reference</strong><div><a href="../site/Getting-Started.html">Getting started</a><a href="../site/Skills.html">Skills</a><a href="../site/Abilities.html">Ability index</a><a href="../site/Damage-Types.html">Damage types</a><a href="../site/Races.html">Race directory</a><a href="../site/Otherworlders.html">Otherworlders</a><a href="../site/Mechanics.html" aria-current="page">Combat mechanics</a><a href="../site/Commands.html">Commands</a></div></div></nav>
-<div class="categories">Categories: <a href="../index.html">Tensura Myths</a> · <a href="../site/Mechanics.html">Reference</a></div>
-<footer>Unofficial fan addon. Original documentation and portraits. Not affiliated with Capcom or ManasMods.<br>Tensura Myths 0.36.1 · Offline edition · No external services required.</footer></main></div></body></html>
+<p><a href="Damage-Types.html">Damage types</a> · <a href="Godly.html">Godly passives</a>.</p></div><footer>Unofficial addon reference · Default gameplay values · Pictures and videos illustrate their recorded versions.<br>Original addon artwork. Not affiliated with ManasMods or Capcom.</footer></main></div></body></html>

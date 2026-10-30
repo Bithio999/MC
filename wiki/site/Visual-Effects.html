@@ -1,394 +1,51 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Skill visual effects — the unofficial Tensura Myths addon reference.">
-<title>Skill visual effects — Tensura Myths Wiki</title><link rel="stylesheet" href="wiki.css">
+<meta name="description" content="Pictures and videos — Tensura Myths gameplay reference.">
+<title>Pictures and videos — Tensura Myths</title><link rel="stylesheet" href="wiki.css">
 <script defer src="search-index.js"></script><script defer src="search.js"></script></head>
-<body data-root="../"><a class="skip" href="#article">Skip to article</a>
-<div class="global-bar"><span>TENSURA MYTHS</span><div><a href="https://tensura.wiki.gg/wiki/Tensura:_Reincarnated_Wiki">Base mod wiki</a><a href="https://github.com/Bithio999/MC">GitHub</a></div></div>
-<header class="masthead"><a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">M</span><span>TENSURA MYTHS<small>Tensura: Reincarnated addon wiki</small></span></a>
-<div class="search"><label for="wiki-search">Search Tensura Myths Wiki</label><input id="wiki-search" type="search" placeholder="Search skills, races, characters…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="search-results" aria-expanded="false"><div id="search-results" role="listbox" aria-label="Search results" hidden></div><span id="search-status" class="sr-only" aria-live="polite"></span></div></header>
-<div class="layout"><button id="navigation-toggle" aria-controls="wiki-navigation" aria-expanded="false">☰ Wiki navigation</button><nav id="wiki-navigation" class="sidebar" aria-label="Wiki navigation"><section><h2>Start here</h2><a href="../index.html">Main Page</a><a href="../site/Getting-Started.html">Getting started</a></section><section><h2>Skills</h2><a href="../site/Skills.html">Skill overview</a><a href="../site/Unique-Skills.html">Unique Skills</a><a href="../site/Ultimate-Skills.html">Ultimate Skills</a><a href="../site/Skill-Synthesis.html">Skill synthesis</a><a href="../site/Godly.html">Godly Skills</a><a href="../site/Aura-Regeneration.html">Extra Skills</a><a href="../site/Abilities.html">Ability index</a><a href="../site/Battlewills.html">Battlewills</a></section><section><h2>Races</h2><a href="../site/Races.html">Race directory</a><a href="../site/Evolution.html">Hunter evolution</a><a href="../site/Fettered-Human.html">Heavenly Restriction</a><a href="../site/Duo-Races.html">Secondary races</a><a href="../site/Convergent-Awakening.html">Convergent Awakening</a></section><section><h2>Equipment</h2><a href="../site/Weapons.html">Weapons</a><a href="../site/Inverted-Spear-of-Heaven.html">Inverted Spear of Heaven</a><a href="../site/Nullification.html">Nullification engraving</a></section><section><h2>Myth bosses</h2><a href="../site/Bosses.html">Boss directory</a><a href="../site/Ananke.html">Ananke</a><a href="../site/Moira.html">Moira, Lord of Finality</a><a href="../site/Eschaton.html">Eschaton, the Last Myth</a><a href="../site/Demiurge.html">Demiurge, God of Genesis</a></section><section><h2>Otherworlders</h2><a href="../site/Otherworlders.html">Character directory</a><a href="../site/Alma.html">Alma</a><a href="../site/Gemma.html">Gemma</a></section><section><h2>Reference</h2><a href="../site/Damage-Types.html">Damage types</a><a href="../site/Mechanics.html">Combat mechanics</a><a href="../site/Visual-Effects.html" aria-current="page">Visual effects</a><a href="../site/Commands.html">Commands</a></section><div class="sidebar-version">Tensura Myths <strong>0.36.1</strong><br>Minecraft 1.21.1 · NeoForge<br><span>Offline reference edition</span></div></nav>
-<main id="article" class="article-page"><div class="page-tabs"><span aria-current="page">Article</span><a href="../pages/Visual-Effects.md">Read Markdown</a><a href="https://github.com/Bithio999/MC/blob/main/docs/CHANGELOG.md">Changelog</a></div>
-<div class="article-heading"><div class="breadcrumbs"><a href="../index.html">Tensura Myths Wiki</a> / <a href="../site/Mechanics.html">Reference</a></div><h1>Skill visual effects</h1><p class="subtitle">From the unofficial Tensura Myths Wiki</p></div>
-<div class="article-content"><div class="article-intro"><p>Tensura Myths gives each skill family an individual visual language, using articulated models, original inscription and surface textures, smooth keyframe animation and Tensura’s native magic circles. Effects are full-bright where appropriate and require no shader pack.</p></div><details class="contents" open><summary>Contents</summary><div class="toc">
-<ul>
-<li><a href="#eschaton-and-demiurge">Eschaton and Demiurge</a></li>
-<li><a href="#display-settings">Display settings</a></li>
-<li><a href="#gallery">Gallery</a><ul>
-<li><a href="#storm-crown">Storm Crown</a></li>
-<li><a href="#scarlet-deluge">Scarlet Deluge</a></li>
-<li><a href="#black-flame">Black Flame</a></li>
-<li><a href="#frostbound-colossus">Frostbound Colossus</a></li>
-<li><a href="#threadweaver">Threadweaver</a></li>
-<li><a href="#rune-smith">Rune Smith</a></li>
-<li><a href="#verdant-keeper">Verdant Keeper</a></li>
-<li><a href="#mirrorbound">Mirrorbound</a></li>
-<li><a href="#vritra">Vritra</a></li>
-<li><a href="#demeter">Demeter</a></li>
-<li><a href="#janus">Janus</a></li>
-<li><a href="#aion">Aion</a></li>
-<li><a href="#thoth">Thoth</a></li>
-</ul>
-</li>
-<li><a href="#combat-readability">Combat readability</a><ul>
-<li><a href="#anansi">Anansi</a></li>
-<li><a href="#aegir">Aegir</a></li>
-<li><a href="#lugh">Lugh</a></li>
-</ul>
-</li>
-<li><a href="#ananke-the-unwritten-end">Ananke, the Unwritten End</a></li>
-<li><a href="#equipment-and-artifacts">Equipment and artifacts</a></li>
-<li><a href="#individual-formation-previews">Individual formation previews</a></li>
-</ul>
-</div>
-</details>
-<p>The formations combine detailed solid structures with flowing light: engraved storm conductors, coral crests, curved oil tendons, hinged parchment grimoires, fate looms, recessed codices and reconstructed weapons. Ananke has layered armor, articulated feathers, ritual poses and an ascending phase animation. Alma and Gemma carry animated journals and smithing tools. The summoning scroll and Dawn Testament have three-dimensional item models.</p>
-<p>Ring frames have continuous beveled curves and luminous inlays. Crystals and reconstructed weapon tips taper to actual points; leaves, petals, water crests and feathers use curved surfaces. Book covers, tablets and selected armor edges are beveled. These refinements preserve each skill’s attack footprint and timing.</p>
-<h2 id="eschaton-and-demiurge">Eschaton and Demiurge</h2>
-<p>The final Myth has a four-armed sovereign model, an unfolding crescent mantle, a jointed tail and a seven-blade final crown. Broad pearl/cyan cleave smears accompany torso windup and recoil. Demiurge adds eight independent patterns: saturated elemental descent plumes, tapered spatial tears between monumental scripture, continuous dark curled fronts with golden openings, and a world seed beneath a vast celestial canopy. The buildup compresses before a sharp nova and broad pressure front. Its lensed accretion disk stays in a stable plane. Red warnings mark damage; a broken creation seal opens a golden refuge.</p>
-<p><img alt="Eschaton’s final form" src="../media/eschaton-final-form.png" /></p>
-<p><img alt="The End of All Myths with a broken seal refuge" src="../media/eschaton-apocalypse.png" /></p>
-<p><img alt="World-Eater Wake’s curled fronts and golden safe openings" src="../media/eschaton-wake-anime.webp" /></p>
-<p><a href="../media/eschaton-aion-anime-preview.mp4">Native Eschaton and Aion motion preview</a>. Captured in Minecraft; the reel cuts between staged casts and skips the waiting interval before Causal Reversal’s automatic return.</p>
-<p>See <a href="Eschaton.html">Eschaton</a> and <a href="Demiurge.html">Demiurge</a> for gameplay, timing and damage types.</p>
-<h2 id="display-settings">Display settings</h2>
-<p>Minecraft’s <strong>Particles</strong> setting reduces decorative motes, foam and cloud sprites. Primary attack paths, warning footprints, crystal geometry and gate frames remain visible even on <strong>Minimal</strong>. Distant effects use fewer curve segments. These settings do not change damage or server targeting.</p>
-<p>Water Veil and Colossus Carapace have no constant custom particle cloud. Healing Extras pulse only when they actually restore HP or SHP. Native barrier rendering and the barrier HUD still belong to Tensura.</p>
-<h2 id="gallery">Gallery</h2>
-<p>These in-game views show the geometry in an isolated development world. Some use a single staged visual to keep the shape unobstructed; they are not representations of damage, range or effect duration. The individual ability articles remain the gameplay reference.</p>
-<h3 id="storm-crown">Storm Crown</h3>
-<p><a href="Storm-Crown.html">Storm Crown</a> — A coherent white-hot Railbolt core carries branching gold lightning and moving ion collars between its victims. Thunder Step leaves a tunnel of conductors and speed streaks along the travelled path; the lightning impact expands from the landing point.</p>
-<p><img alt="Railbolt’s branched lightning and ion collars" src="../media/visual-storm-crown.png" /></p>
-<h3 id="scarlet-deluge">Scarlet Deluge</h3>
-<p><a href="Scarlet-Deluge.html">Scarlet Deluge</a> — Crushing Current is a curled, scrolling caustic water sheet with a bright foam crest. Scarlet Undertow forms a shallow raised vortex with four inward-flowing spiral ribbons, coral-colored fins and drifting foam. These surfaces mark the actual travelling wave and placed field; Water Veil adds no constant custom particle cloud.</p>
-<p><img alt="Scarlet Undertow’s layered water vortex" src="../media/visual-scarlet-deluge.png" /></p>
-<h3 id="black-flame">Black Flame</h3>
-<p><a href="Black-Flame.html">Black Flame</a> — Oil Lash extends and recoils as a curved, tapered tentacle with suckers and molten seams. Each owned pool has an irregular dark oil surface. Ignition transforms that same surface into black flame silhouettes, violet inner fire, orange hot cores and rising soot; the surface fades when its pool ends.</p>
-<p><img alt="An ignited oil pool with dark flames and violet cores" src="../media/visual-black-flame.png" /></p>
-<h3 id="frostbound-colossus">Frostbound Colossus</h3>
-<p><a href="Frostbound-Colossus.html">Frostbound Colossus</a> — Avalanche Crash erupts in faceted, veined ice spires with luminous edges and snowflake imprints. Glacial Prison arranges the crystals around its captured victim. The crystals remain visual geometry rather than placed blocks, and Colossus Carapace adds no constant custom particle cloud.</p>
-<p><img alt="Veined ice with luminous crystal edges" src="../media/visual-frostbound-colossus.png" /></p>
-<h3 id="threadweaver">Threadweaver</h3>
-<p><a href="Threadweaver.html">Threadweaver</a> — Loom Needle uses four braided strands, travelling pulses and an oriented silk-web anchor at its target. Sever Thread closes that web inward into a pink spatial snap. Its fine filaments remain distinct from Janus’s large architectural cuts.</p>
-<p><img alt="Braided silk and its target-facing web anchor" src="../media/visual-threadweaver.png" /></p>
-<h3 id="rune-smith">Rune Smith</h3>
-<p><a href="Rune-Smith.html">Rune Smith</a> — Runic Mine assembles two counter-rotating circuit inscriptions and six rising rune tablets. Command Detonation releases an expanding circuit front and luminous earth pillars. The armed mine has a stable footprint rather than a continuous shower of server particles.</p>
-<p><img alt="Runic Mine’s layered circuitry and rising tablets" src="../media/visual-rune-smith.png" /></p>
-<h3 id="verdant-keeper">Verdant Keeper</h3>
-<p><a href="Verdant-Keeper.html">Verdant Keeper</a> — Living Grove grows curved trunks, branching stems, roots and leaf clusters around a botanical ground diagram. Soft rising motes and an outward ripple accompany its healing field. Briar Grasp uses tapering, thorned vines around each caught enemy rather than a recolored grove.</p>
-<p><img alt="Living Grove’s branches, foliage and root network" src="../media/visual-verdant-keeper.png" /></p>
-<h3 id="mirrorbound">Mirrorbound</h3>
-<p><a href="Mirrorbound.html">Mirrorbound</a> — Prismatic Lance has a white core, three refracted color strands and etched optical collars. Mirror Aegis uses independently orbiting faceted glass panels, luminous edges and inset mirror inscriptions. The formation follows the caster smoothly between server updates.</p>
-<p><img alt="Mirror Aegis’s faceted orbiting glass" src="../media/visual-mirrorbound.png" /></p>
-<h3 id="vritra">Vritra</h3>
-<p><a href="Vritra.html">Vritra</a> — Plasma Lance combines a continuous hot core, orange/violet helices and conductor collars; its delayed fuses converge into fire impacts. Thunderhead Furnace carries soft storm-cloud layers, periodic branching lightning and a suspended hot ring. Cataclysm Front warns with a fractured ground inscription before volcanic spires and flame jets erupt at the strike.</p>
-<p><img alt="Thunderhead Furnace’s storm cloud and conductor diagram" src="../media/visual-vritra.png" /></p>
-<h3 id="demeter">Demeter</h3>
-<p><a href="Demeter.html">Demeter</a> — Winter Orchard grows an ice-veined grove with curved crystal branches, snowflake tips, roots and flowing restorative ripples. Perennial Seed marks its actual recipient with a quiet crystal flower and opens a crystalline recovery bloom when triggered. Winter Harvest first shows its frost warning, then opens into a large eight-petalled crystalline bloom at the strike.</p>
-<p><img alt="Winter Orchard’s luminous veins and crystal branches" src="../media/visual-demeter.png" /></p>
-<h3 id="janus">Janus</h3>
-<p><a href="Janus.html">Janus</a> — Twin Gate builds two freestanding frames with recessed, counter-rotating spiral apertures; entry and exit have distinct violet and gold accents. Passage leaves a short spatial transit streak. Parallax Snare closes opposing luminous cuts toward its warned center, while Crossroads Edict lays out a wide cartographic grid and cardinal anchors.</p>
-<p><img alt="Twin Gate’s freestanding frame and layered aperture" src="../media/visual-janus.png" /></p>
-<h3 id="aion">Aion</h3>
-<p><a href="Aion.html">Aion</a> — Worldline Sever tears a dark spatial seam with saturated gold/violet edges, a narrow white core and travelling time fragments. Event Horizon folds six dark petals toward its lensed center above substantial clock hands, with a faint separate pull perimeter. Causal Reversal places a three-dimensional hourglass over its checkpoint clock and releases a sharp re-entry burst on return. Genesis Verdict suspends twenty miniature black holes, bends each through a unique accelerating curve, and homes them continuously onto the moving target and resolves twenty individual detonations. Opaque speed-deformed cores sit inside broad luminous disks whose world orientation stays steady. Lensed rear-disk arches, photon rings, tapered wakes, large starbursts and expanding shock fronts distinguish the phases. Outer blast light is cosmetic; damage radii are documented in the ability article.</p>
-<p><img alt="Aion's twenty-singularity barrage" src="../media/aion-verdict-anime.webp" /></p>
-<p><a href="../media/eschaton-aion-anime-preview.mp4">720p native motion preview</a>.</p>
-<p><img alt="Event Horizon’s dark core and tilted clockwork optics" src="../media/visual-aion.png" /></p>
-<h3 id="thoth">Thoth</h3>
-<p><a href="Thoth.html">Thoth</a> cycles Fire, Water, Lightning, Earth, Wind, Light and Space through flame crowns, caustic ribbons, branching bolts, stone tablets, wind helices, radiant spokes and spatial fractures. Its hinged parchment books, counter-rotating seals, spellbreak obelisks and held Mana Crucible alembic move together. Water represents the shared Water/Ice slot.</p>
-<p><img alt="Thoth’s held Mana Crucible formation" src="../media/thoth-mana-crucible.png" /></p>
-<h2 id="combat-readability">Combat readability</h2>
-<p>Bright cores mark beam paths, floor inscriptions preserve placed areas, and warned strikes build before their existing damage timings. Visual geometry has no collision and does not place terrain blocks. Server logic determines all hits, costs and cooldowns independently.</p>
-<h3 id="anansi">Anansi</h3>
-<p><a href="Anansi.html">Anansi</a> uses articulated runic spider anchors and fine braided threads that match its placed network. Puppet Passage sends a woven transit along the route; Checkmate raises its fixed closing lattice and erupts along the consumed shape.</p>
-<p><img alt="Anansi's three-anchor runic network" src="../media/anansi-network.png" /></p>
-<h3 id="aegir">Aegir</h3>
-<p><a href="Aegir.html">Aegir</a> builds a circular caustic Mirrorsea and six floating glass lenses. Refracted Harpoon shows each converging water spear; Sovereign Breaker's narrow crest expands with its actual damage rim.</p>
-<p><img alt="Mirrorsea's caustic basin and glass lenses" src="../media/aegir-mirrorsea.png" /></p>
-<p><img alt="Sovereign Breaker's expanding crest" src="../media/aegir-breaker.png" /></p>
-<h3 id="lugh">Lugh</h3>
-<p><a href="Lugh.html">Lugh</a> assembles ivory/gold armaments from solid, recessed rune tablets. Blade arcs, travelling lances and a descending crown identify its three forms. Grand Synthesis visibly assembles its archived forms in sequence. All-Skilled automatically scans nearby demonstrated techniques into Skill Bank, while Countermand locks a single rune tablet rather than surrounding the victim with a barrier.</p>
-<p><img alt="Lugh's three-technique synthesis formation" src="../media/lugh-synthesis.png" /></p>
-<h2 id="ananke-the-unwritten-end">Ananke, the Unwritten End</h2>
-<p>An original six-winged ceremonial armor model has articulated feather spars, emissive violet cores and a rotating gold halo. Its <a href="Moira.html">Moira rites</a> use different warning geometry: a locked fan, individually placed starfall seals, a hollow advancing wave and a dark sun above a real golden refuge ring. Cast poses ease into the animation rather than snapping. Geometry is rendered with native batched materials and distance detail limits.</p>
-<p><img alt="Ananke and the golden Last Dawn refuge" src="../media/ananke-last-dawn.png" /></p>
-<p><a href="../media/ananke-last-dawn.mp4">Watch The Last Dawn</a> · <a href="Ananke.html#gallery">Encounter and full gallery</a></p>
-
-<h2 id="equipment-and-artifacts">Equipment and artifacts</h2>
-<p>Alma carries a journal and rolled field notes; Gemma carries her smithing tools. Their travel equipment moves with them while retaining their normal skins and held items.</p>
-<p><img alt="Alma and Gemma’s travel and smithing equipment" src="../media/otherworlder-equipment.png" /></p>
-<p>The Writ of Last Dawn and Dawn Testament have modeled covers, end caps, layered pages and ornamental details.</p>
-<p><img alt="Writ of Last Dawn held in first person" src="../media/item-scroll.png" /></p>
-<p><img alt="Dawn Testament held in first person" src="../media/item-testament.png" /></p>
-<h2 id="individual-formation-previews">Individual formation previews</h2>
-<p>These staged views show each structure with its accompanying light or fluid effect. Recipient-bound effects use third-person view. Apparent size and pose depend on the camera and captured animation frame; these are visual references, not damage-volume diagrams.</p>
-<div class="article-table"><table>
+<body data-root="../" data-mod="myths"><a class="skip" href="#article">Skip to article</a>
+<div class="global-bar"><span>TENSURA ADDON WIKIS</span><div><a href="https://tensura.wiki.gg/wiki/Tensura:_Reincarnated_Wiki">Base mod wiki</a><a href="https://github.com/Bithio999/MC">GitHub</a></div></div>
+<header class="masthead"><a class="brand" href="Tensura-Myths.html"><span class="brand-mark" aria-hidden="true">M</span><span>Tensura Myths<small>0.36.1 · Minecraft 1.21.1 · NeoForge</small></span></a>
+<div class="search"><label for="wiki-search">Search Tensura Myths</label><input id="wiki-search" type="search" placeholder="Search names, abilities or requirements…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="search-results" aria-expanded="false"><div id="search-results" role="listbox" hidden></div><span id="search-status" class="sr-only" aria-live="polite"></span></div></header>
+<nav class="mod-switch" aria-label="Choose addon"><a href="../index.html">All wikis</a><a href="Tensura-Myths.html" aria-current="page">Tensura Myths</a><a href="TensuraAdditionalAdditions.html">TensuraAdditionalAdditions</a></nav>
+<div class="layout"><button id="navigation-toggle" aria-controls="wiki-navigation" aria-expanded="false">☰ Wiki navigation</button><nav id="wiki-navigation" class="sidebar" aria-label="Tensura Myths navigation"><section><h2>Start</h2><a href="Tensura-Myths.html">Myths home</a><a href="Getting-Started.html">Install</a><a href="In-Game-Guide.html">In-game guide</a></section><section><h2>Skills</h2><a href="Skills.html">Skill overview</a><a href="Unique-Skills.html">Unique</a><a href="Ultimate-Skills.html">Ultimate</a><a href="Godly.html">Godly</a><a href="Battlewills.html">Battlewills</a><a href="Aura-Regeneration.html">Aura recovery</a><a href="Abilities.html">Ability directory</a></section><section><h2>World and progression</h2><a href="Races.html">Races</a><a href="Evolution.html">Hunters</a><a href="Fettered-Human.html">Heavenly Restriction</a><a href="Duo-Races.html">Secondary races</a><a href="Convergent-Awakening.html">Awakening</a><a href="Bosses.html">Bosses</a><a href="Otherworlders.html">Otherworlders</a><a href="Weapons.html">Equipment</a></section><section><h2>Reference</h2><a href="Damage-Types.html">Damage types</a><a href="Mechanics.html">Combat rules</a><a href="Visual-Effects.html" aria-current="page">Pictures and videos</a><a href="Commands.html">Commands</a></section></nav>
+<main id="article" class="article-page"><div class="page-tabs"><span aria-current="page">Tensura Myths</span><a href="../pages/Visual-Effects.md">Read Markdown</a></div><div class="article-heading"><div class="breadcrumbs"><a href="../index.html">All wikis</a> / <a href="Tensura-Myths.html">Tensura Myths</a></div><h1 id="pictures-and-videos">Pictures and videos</h1><p class="subtitle">Tensura Myths · Reference</p></div>
+<div class="article-content"><div class="article-table"><table>
 <thead>
 <tr>
-<th>Formation</th>
-<th>Native preview</th>
+<th>Topic</th>
+<th>Entry</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Oil Lash</td>
-<td><img alt="Oil Lash" src="../media/modeled/00-oil_lash.png" /></td>
+<td>Black-hole barrage</td>
+<td><a href="Aion.html#pictures-and-video">Aion</a></td>
 </tr>
 <tr>
-<td>Ice spire</td>
-<td><img alt="Ice spire" src="../media/modeled/01-glacial_spire.png" /></td>
-</tr>
-<tr>
-<td>Falling icicle</td>
-<td><img alt="Falling icicle" src="../media/modeled/02-falling_icicle.png" /></td>
-</tr>
-<tr>
-<td>Crushing Current</td>
-<td><img alt="Crushing Current" src="../media/modeled/03-tidal_crest.png" /></td>
-</tr>
-<tr>
-<td>Scarlet Undertow</td>
-<td><img alt="Scarlet Undertow" src="../media/modeled/04-coral_vortex.png" /></td>
-</tr>
-<tr>
-<td>Temporal protection</td>
-<td><img alt="Temporal protection" src="../media/modeled/05-causal_astrolabe.png" /></td>
-</tr>
-<tr>
-<td>Worldline Sever</td>
-<td><img alt="Worldline Sever" src="../media/modeled/06-worldline_blade.png" /></td>
-</tr>
-<tr>
-<td>Event Horizon</td>
-<td><img alt="Event Horizon" src="../media/modeled/07-event_horizon_orrery.png" /></td>
-</tr>
-<tr>
-<td>Causal Reversal</td>
-<td><img alt="Causal Reversal" src="../media/modeled/08-causal_hourglass.png" /></td>
-</tr>
-<tr>
-<td>Genesis Verdict</td>
-<td><img alt="Genesis Verdict" src="../media/modeled/09-singularity_armature.png" /></td>
-</tr>
-<tr>
-<td>Causal impact</td>
-<td><img alt="Causal impact" src="../media/modeled/10-chronofracture.png" /></td>
-</tr>
-<tr>
-<td>Loom Needle</td>
-<td><img alt="Loom Needle" src="../media/modeled/11-silken_spindle.png" /></td>
-</tr>
-<tr>
-<td>Runic Mine</td>
-<td><img alt="Runic Mine" src="../media/modeled/12-runic_igniter.png" /></td>
-</tr>
-<tr>
-<td>Living Grove</td>
-<td><img alt="Living Grove" src="../media/modeled/13-living_grove.png" /></td>
-</tr>
-<tr>
-<td>Mirror Aegis</td>
-<td><img alt="Mirror Aegis" src="../media/modeled/14-prism_guard.png" /></td>
-</tr>
-<tr>
-<td>Prismatic Lance</td>
-<td><img alt="Prismatic Lance" src="../media/modeled/15-prismatic_emitter.png" /></td>
-</tr>
-<tr>
-<td>Plasma Lance</td>
-<td><img alt="Plasma Lance" src="../media/modeled/16-plasma_capacitor.png" /></td>
-</tr>
-<tr>
-<td>Thunderhead Furnace</td>
-<td><img alt="Thunderhead Furnace" src="../media/modeled/17-storm_engine.png" /></td>
-</tr>
-<tr>
-<td>Cataclysm Front</td>
-<td><img alt="Cataclysm Front" src="../media/modeled/18-volcanic_fault.png" /></td>
-</tr>
-<tr>
-<td>Winter Orchard</td>
-<td><img alt="Winter Orchard" src="../media/modeled/19-winter_orchard.png" /></td>
-</tr>
-<tr>
-<td>Crystal Bulwark</td>
-<td><img alt="Crystal Bulwark" src="../media/modeled/20-crystal_aegis.png" /></td>
-</tr>
-<tr>
-<td>Winter Harvest</td>
-<td><img alt="Winter Harvest" src="../media/modeled/21-glacial_blossom.png" /></td>
-</tr>
-<tr>
-<td>Twin Gate</td>
-<td><img alt="Twin Gate" src="../media/modeled/22-threshold_gate.png" /></td>
-</tr>
-<tr>
-<td>Parallax Snare</td>
-<td><img alt="Parallax Snare" src="../media/modeled/23-parallax_judges.png" /></td>
-</tr>
-<tr>
-<td>Crossroads Edict</td>
-<td><img alt="Crossroads Edict" src="../media/modeled/24-crossroads.png" /></td>
-</tr>
-<tr>
-<td>Elemental Lexicon</td>
-<td><img alt="Elemental Lexicon" src="../media/modeled/25-lexicon_volumes.png" /></td>
-</tr>
-<tr>
-<td>Spellbreak</td>
-<td><img alt="Spellbreak" src="../media/modeled/26-spellbreak_obelisks.png" /></td>
-</tr>
-<tr>
-<td>Mana Crucible</td>
-<td><img alt="Mana Crucible" src="../media/modeled/27-mana_alembic.png" /></td>
-</tr>
-<tr>
-<td>Astral Library</td>
-<td><img alt="Astral Library" src="../media/modeled/28-astral_volumes.png" /></td>
-</tr>
-<tr>
-<td>Spectrum bolt</td>
-<td><img alt="Spectrum bolt" src="../media/modeled/29-spectrum_emitter.png" /></td>
-</tr>
-<tr>
-<td>Briar Grasp</td>
-<td><img alt="Briar Grasp" src="../media/modeled/30-briar_corolla.png" /></td>
-</tr>
-<tr>
-<td>Command Detonation</td>
-<td><img alt="Command Detonation" src="../media/modeled/31-runic_detonator.png" /></td>
-</tr>
-<tr>
-<td>Mirror splinters</td>
-<td><img alt="Mirror splinters" src="../media/modeled/32-mirror_splinters.png" /></td>
-</tr>
-<tr>
-<td>Railbolt</td>
-<td><img alt="Railbolt" src="../media/modeled/33-fulgur_conductor.png" /></td>
-</tr>
-<tr>
-<td>Thunder Step</td>
-<td><img alt="Thunder Step" src="../media/modeled/34-thunderstep_armature.png" /></td>
-</tr>
-<tr>
-<td>Elemental impact</td>
-<td><img alt="Elemental impact" src="../media/modeled/35-elemental_detonation.png" /></td>
-</tr>
-<tr>
-<td>Oil pool</td>
-<td><img alt="Oil pool" src="../media/modeled/36-obsidian_vents.png" /></td>
-</tr>
-<tr>
-<td>Aura recovery</td>
-<td><img alt="Aura recovery" src="../media/modeled/37-vital_corolla.png" /></td>
-</tr>
-<tr>
-<td>Gate transit</td>
-<td><img alt="Gate transit" src="../media/modeled/38-gate_wake.png" /></td>
-</tr>
-<tr>
-<td>Fate Anchor</td>
-<td><img alt="Fate Anchor" src="../media/modeled/39-fate_loom.png" /></td>
-</tr>
-<tr>
-<td>Fate Thread</td>
-<td><img alt="Fate Thread" src="../media/modeled/40-fate_spindle.png" /></td>
-</tr>
-<tr>
-<td>Loom Transit</td>
-<td><img alt="Loom Transit" src="../media/modeled/41-loom_wake.png" /></td>
-</tr>
-<tr>
-<td>Checkmate</td>
-<td><img alt="Checkmate" src="../media/modeled/42-checkmate_blades.png" /></td>
-</tr>
-<tr>
-<td>Mirrorsea</td>
-<td><img alt="Mirrorsea" src="../media/modeled/43-mirrorsea_lenses.png" /></td>
-</tr>
-<tr>
-<td>Refracted Harpoon</td>
-<td><img alt="Refracted Harpoon" src="../media/modeled/44-refracted_harpoon.png" /></td>
-</tr>
-<tr>
-<td>Sovereign Breaker</td>
-<td><img alt="Sovereign Breaker" src="../media/modeled/45-sovereign_crest.png" /></td>
-</tr>
-<tr>
-<td>Water Refraction</td>
-<td><img alt="Water Refraction" src="../media/modeled/46-refraction_lenses.png" /></td>
-</tr>
-<tr>
-<td>Perennial Seed</td>
-<td><img alt="Perennial Seed" src="../media/modeled/47-perennial_corolla.png" /></td>
-</tr>
-<tr>
-<td>Rebirth Bloom</td>
-<td><img alt="Rebirth Bloom" src="../media/modeled/48-rebirth_lotus.png" /></td>
+<td>Elemental magic / conversion</td>
+<td><a href="Thoth.html#pictures-and-video">Thoth</a></td>
 </tr>
 <tr>
 <td>Skill Bank</td>
-<td><img alt="Skill Bank" src="../media/modeled/49-skill_bank_codex.png" /></td>
+<td><a href="Lugh.html#pictures-and-video">Lugh</a></td>
 </tr>
 <tr>
-<td>Artisan Thread</td>
-<td><img alt="Artisan Thread" src="../media/modeled/50-artisan_spindle.png" /></td>
+<td>First Myth</td>
+<td><a href="Ananke.html#pictures-and-video">Ananke</a></td>
 </tr>
 <tr>
-<td>Countermand</td>
-<td><img alt="Countermand" src="../media/modeled/51-countermand_tablet.png" /></td>
+<td>Final Myth</td>
+<td><a href="Eschaton.html#pictures-and-video">Eschaton</a></td>
 </tr>
 <tr>
-<td>Grand Synthesis</td>
-<td><img alt="Grand Synthesis" src="../media/modeled/52-grand_synthesis_codices.png" /></td>
+<td>Counter</td>
+<td><a href="Unbound.html#pictures-and-video">Unbound</a></td>
 </tr>
 <tr>
-<td>Reconstructed Blade</td>
-<td><img alt="Reconstructed Blade" src="../media/modeled/53-reconstructed_sword.png" /></td>
-</tr>
-<tr>
-<td>Reconstructed Lance</td>
-<td><img alt="Reconstructed Lance" src="../media/modeled/54-reconstructed_lance.png" /></td>
-</tr>
-<tr>
-<td>Reconstructed Crown</td>
-<td><img alt="Reconstructed Crown" src="../media/modeled/55-reconstructed_crown.png" /></td>
-</tr>
-<tr>
-<td>Fatebreaker</td>
-<td><img alt="Fatebreaker" src="../media/modeled/56-fatebreaker_armature.png" /></td>
-</tr>
-<tr>
-<td>Starfall Canticle</td>
-<td><img alt="Starfall Canticle" src="../media/modeled/57-starfall_armature.png" /></td>
-</tr>
-<tr>
-<td>Eventide Procession</td>
-<td><img alt="Eventide Procession" src="../media/modeled/58-procession_censer.png" /></td>
-</tr>
-<tr>
-<td>The Last Dawn</td>
-<td><img alt="The Last Dawn" src="../media/modeled/59-last_dawn_orrery.png" /></td>
-</tr>
-<tr>
-<td>Phase ascension</td>
-<td><img alt="Phase ascension" src="../media/modeled/60-seraph_ascension.png" /></td>
-</tr>
-<tr>
-<td>Spatial Reposition</td>
-<td><img alt="Spatial Reposition" src="../media/modeled/62-seraph_threshold.png" /></td>
+<td>Schema tree</td>
+<td><a href="Schema.html#pictures-and-video">Schema</a></td>
 </tr>
 </tbody>
 </table></div>
-<p>| Crownless Edge | <img alt="Crownless Edge" src="../media/modeled/63-origin_execution.png" /> |
-| Astral Loom | <img alt="Astral Loom" src="../media/modeled/64-origin_star_loom.png" /> |
-| Sevenfold Genesis | <img alt="Sevenfold Genesis" src="../media/modeled/65-origin_sevenfold.png" /> |
-| Null Testament | <img alt="Null Testament" src="../media/modeled/66-origin_silent_scripture.png" /> |
-| World-Eater’s Wake | <img alt="World-Eater’s Wake" src="../media/modeled/67-origin_serpent_wake.png" /> |
-| Primordial Exchange | <img alt="Primordial Exchange" src="../media/modeled/68-origin_exchange.png" /> |
-| Thronefall | <img alt="Thronefall" src="../media/modeled/69-origin_thronefall.png" /> |
-| The End of All Myths | <img alt="The End of All Myths" src="../media/modeled/70-origin_apocalypse.png" /> |
-| Origin ascension | <img alt="Origin ascension" src="../media/modeled/71-origin_apotheosis.png" /> |
-| Genesis Seal shatter | <img alt="Genesis Seal shatter" src="../media/modeled/72-origin_star_shatter.png" /> |</p></div><nav class="related-box" aria-label="Related reference"><strong>Tensura Myths · Reference</strong><div class="navbox-row"><strong>Reference</strong><div><a href="../site/Getting-Started.html">Getting started</a><a href="../site/Skills.html">Skills</a><a href="../site/Abilities.html">Ability index</a><a href="../site/Damage-Types.html">Damage types</a><a href="../site/Races.html">Race directory</a><a href="../site/Otherworlders.html">Otherworlders</a><a href="../site/Mechanics.html">Combat mechanics</a><a href="../site/Commands.html">Commands</a></div></div></nav>
-<div class="categories">Categories: <a href="../index.html">Tensura Myths</a> · <a href="../site/Mechanics.html">Reference</a></div>
-<footer>Unofficial fan addon. Original documentation and portraits. Not affiliated with Capcom or ManasMods.<br>Tensura Myths 0.36.1 · Offline edition · No external services required.</footer></main></div></body></html>
+<p>Existing recordings illustrate the abilities. Older footage can show earlier UI or balance values; the article text gives the current values.</p></div><footer>Unofficial addon reference · Default gameplay values · Pictures and videos illustrate their recorded versions.<br>Original addon artwork. Not affiliated with ManasMods or Capcom.</footer></main></div></body></html>

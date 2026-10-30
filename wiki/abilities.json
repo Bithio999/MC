@@ -7,7 +7,8 @@
     "damage": "None",
     "damage_id": null,
     "secondary_damage_id": null,
-    "anchor": "passive"
+    "anchor": "passive",
+    "mod": "myths"
   },
   {
     "skill": "Storm-Crown",
@@ -17,7 +18,8 @@
     "damage": "Lightning elemental",
     "damage_id": "tensura:lightning_elemental",
     "secondary_damage_id": null,
-    "anchor": "railbolt"
+    "anchor": "railbolt",
+    "mod": "myths"
   },
   {
     "skill": "Storm-Crown",
@@ -27,7 +29,8 @@
     "damage": "Lightning elemental",
     "damage_id": "tensura:lightning_elemental",
     "secondary_damage_id": null,
-    "anchor": "thunder-step"
+    "anchor": "thunder-step",
+    "mod": "myths"
   },
   {
     "skill": "Scarlet-Deluge",
@@ -37,7 +40,8 @@
     "damage": "Water elemental",
     "damage_id": "tensura:water_elemental",
     "secondary_damage_id": null,
-    "anchor": "passive"
+    "anchor": "passive",
+    "mod": "myths"
   },
   {
     "skill": "Scarlet-Deluge",
@@ -47,7 +51,8 @@
     "damage": "Water elemental",
     "damage_id": "tensura:water_elemental",
     "secondary_damage_id": null,
-    "anchor": "crushing-current"
+    "anchor": "crushing-current",
+    "mod": "myths"
   },
   {
     "skill": "Scarlet-Deluge",
@@ -57,7 +62,8 @@
     "damage": "Water elemental",
     "damage_id": "tensura:water_elemental",
     "secondary_damage_id": null,
-    "anchor": "scarlet-undertow"
+    "anchor": "scarlet-undertow",
+    "mod": "myths"
   },
   {
     "skill": "Black-Flame",
@@ -67,7 +73,8 @@
     "damage": "None",
     "damage_id": null,
     "secondary_damage_id": null,
-    "anchor": "passive"
+    "anchor": "passive",
+    "mod": "myths"
   },
   {
     "skill": "Black-Flame",
@@ -77,7 +84,8 @@
     "damage": "Fire elemental",
     "damage_id": "tensura:fire_elemental",
     "secondary_damage_id": null,
-    "anchor": "oil-lash"
+    "anchor": "oil-lash",
+    "mod": "myths"
   },
   {
     "skill": "Black-Flame",
@@ -87,7 +95,8 @@
     "damage": "Fire elemental",
     "damage_id": "tensura:fire_elemental",
     "secondary_damage_id": "tensura:black_flame",
-    "anchor": "blackflame-ignition"
+    "anchor": "blackflame-ignition",
+    "mod": "myths"
   },
   {
     "skill": "Frostbound-Colossus",
@@ -97,7 +106,8 @@
     "damage": "None",
     "damage_id": null,
     "secondary_damage_id": null,
-    "anchor": "passive"
+    "anchor": "passive",
+    "mod": "myths"
   },
   {
     "skill": "Frostbound-Colossus",
@@ -107,7 +117,8 @@
     "damage": "Ice elemental",
     "damage_id": "tensura:ice_elemental",
     "secondary_damage_id": null,
-    "anchor": "avalanche-crash"
+    "anchor": "avalanche-crash",
+    "mod": "myths"
   },
   {
     "skill": "Frostbound-Colossus",
@@ -117,7 +128,8 @@
     "damage": "Ice elemental",
     "damage_id": "tensura:ice_elemental",
     "secondary_damage_id": null,
-    "anchor": "glacial-prison"
+    "anchor": "glacial-prison",
+    "mod": "myths"
   },
   {
     "skill": "Aion",
@@ -127,7 +139,8 @@
     "damage": "None",
     "damage_id": null,
     "secondary_damage_id": null,
-    "anchor": "passive"
+    "anchor": "passive",
+    "mod": "myths"
   },
   {
     "skill": "Aion",
@@ -137,7 +150,8 @@
     "damage": "Space elemental",
     "damage_id": "tensura:space_elemental",
     "secondary_damage_id": null,
-    "anchor": "worldline-sever"
+    "anchor": "worldline-sever",
+    "mod": "myths"
   },
   {
     "skill": "Aion",
@@ -147,7 +161,8 @@
     "damage": "Space elemental",
     "damage_id": "tensura:space_elemental",
     "secondary_damage_id": null,
-    "anchor": "event-horizon"
+    "anchor": "event-horizon",
+    "mod": "myths"
   },
   {
     "skill": "Aion",
@@ -157,7 +172,8 @@
     "damage": "None",
     "damage_id": null,
     "secondary_damage_id": null,
-    "anchor": "causal-reversal"
+    "anchor": "causal-reversal",
+    "mod": "myths"
   },
   {
     "skill": "Aion",
@@ -167,17 +183,19 @@
     "damage": "Space elemental",
     "damage_id": "tensura:space_elemental",
     "secondary_damage_id": null,
-    "anchor": "genesis-verdict"
+    "anchor": "genesis-verdict",
+    "mod": "myths"
   },
   {
     "skill": "Hunters-Recovery",
-    "name": "Hunter’s Recovery",
+    "name": "Hunter\u2019s Recovery",
     "tier": "Extra",
     "kind": "Passive",
     "damage": "None",
     "damage_id": null,
     "secondary_damage_id": null,
-    "anchor": "passive"
+    "anchor": "passive",
+    "mod": "myths"
   },
   {
     "skill": "Apex-Renewal",
@@ -187,7 +205,8 @@
     "damage": "None",
     "damage_id": null,
     "secondary_damage_id": null,
-    "anchor": "passive"
+    "anchor": "passive",
+    "mod": "myths"
   },
   {
     "skill": "Sovereign-Rebirth",
@@ -197,7 +216,8 @@
     "damage": "None",
     "damage_id": null,
     "secondary_damage_id": null,
-    "anchor": "passive"
+    "anchor": "passive",
+    "mod": "myths"
   },
   {
     "skill": "Convergent-Awakening",
@@ -207,7 +227,8 @@
     "damage": "None",
     "damage_id": null,
     "secondary_damage_id": null,
-    "anchor": "awakening-rewards"
+    "anchor": "awakening-rewards",
+    "mod": "myths"
   },
   {
     "skill": "Threadweaver",
@@ -217,7 +238,8 @@
     "damage": "None",
     "damage_id": null,
     "secondary_damage_id": null,
-    "anchor": "passive"
+    "anchor": "passive",
+    "mod": "myths"
   },
   {
     "skill": "Threadweaver",
@@ -230,7 +252,8 @@
     "damage_ids": [
       "tensura:space_elemental"
     ],
-    "anchor": "loom-needle"
+    "anchor": "loom-needle",
+    "mod": "myths"
   },
   {
     "skill": "Threadweaver",
@@ -243,7 +266,8 @@
     "damage_ids": [
       "tensura:space_elemental"
     ],
-    "anchor": "sever-thread"
+    "anchor": "sever-thread",
+    "mod": "myths"
   },
   {
     "skill": "Rune-Smith",
@@ -253,7 +277,8 @@
     "damage": "None",
     "damage_id": null,
     "secondary_damage_id": null,
-    "anchor": "passive"
+    "anchor": "passive",
+    "mod": "myths"
   },
   {
     "skill": "Rune-Smith",
@@ -266,7 +291,8 @@
     "damage_ids": [
       "tensura:earth_elemental"
     ],
-    "anchor": "runic-mine"
+    "anchor": "runic-mine",
+    "mod": "myths"
   },
   {
     "skill": "Rune-Smith",
@@ -279,7 +305,8 @@
     "damage_ids": [
       "tensura:earth_elemental"
     ],
-    "anchor": "command-detonation"
+    "anchor": "command-detonation",
+    "mod": "myths"
   },
   {
     "skill": "Verdant-Keeper",
@@ -289,7 +316,8 @@
     "damage": "None",
     "damage_id": null,
     "secondary_damage_id": null,
-    "anchor": "passive"
+    "anchor": "passive",
+    "mod": "myths"
   },
   {
     "skill": "Verdant-Keeper",
@@ -300,7 +328,8 @@
     "damage_id": null,
     "secondary_damage_id": null,
     "damage_ids": [],
-    "anchor": "living-grove"
+    "anchor": "living-grove",
+    "mod": "myths"
   },
   {
     "skill": "Verdant-Keeper",
@@ -313,7 +342,8 @@
     "damage_ids": [
       "tensura:earth_elemental"
     ],
-    "anchor": "briar-grasp"
+    "anchor": "briar-grasp",
+    "mod": "myths"
   },
   {
     "skill": "Mirrorbound",
@@ -323,7 +353,8 @@
     "damage": "None",
     "damage_id": null,
     "secondary_damage_id": null,
-    "anchor": "passive"
+    "anchor": "passive",
+    "mod": "myths"
   },
   {
     "skill": "Mirrorbound",
@@ -336,18 +367,20 @@
     "damage_ids": [
       "tensura:light_elemental"
     ],
-    "anchor": "prismatic-lance"
+    "anchor": "prismatic-lance",
+    "mod": "myths"
   },
   {
     "skill": "Mirrorbound",
     "name": "Mirror Aegis",
     "tier": "Unique",
     "kind": "Active",
-    "damage": "None — reflected projectiles retain their own attack type",
+    "damage": "None \u2014 reflected projectiles retain their own attack type",
     "damage_id": null,
     "secondary_damage_id": null,
     "damage_ids": [],
-    "anchor": "mirror-aegis"
+    "anchor": "mirror-aegis",
+    "mod": "myths"
   },
   {
     "skill": "Vritra",
@@ -357,7 +390,8 @@
     "damage": "None",
     "damage_id": null,
     "secondary_damage_id": null,
-    "anchor": "passive"
+    "anchor": "passive",
+    "mod": "myths"
   },
   {
     "skill": "Vritra",
@@ -371,7 +405,8 @@
       "tensura:lightning_elemental",
       "tensura:fire_elemental"
     ],
-    "anchor": "plasma-bore"
+    "anchor": "plasma-bore",
+    "mod": "myths"
   },
   {
     "skill": "Vritra",
@@ -385,7 +420,8 @@
       "tensura:lightning_elemental",
       "tensura:fire_elemental"
     ],
-    "anchor": "thunderhead-crucible"
+    "anchor": "thunderhead-crucible",
+    "mod": "myths"
   },
   {
     "skill": "Vritra",
@@ -398,7 +434,8 @@
     "damage_ids": [
       "tensura:fire_elemental"
     ],
-    "anchor": "cataclysm-front"
+    "anchor": "cataclysm-front",
+    "mod": "myths"
   },
   {
     "skill": "Demeter",
@@ -408,7 +445,8 @@
     "damage": "None",
     "damage_id": null,
     "secondary_damage_id": null,
-    "anchor": "passive"
+    "anchor": "passive",
+    "mod": "myths"
   },
   {
     "skill": "Demeter",
@@ -421,7 +459,8 @@
     "damage_ids": [
       "tensura:ice_elemental"
     ],
-    "anchor": "winter-orchard"
+    "anchor": "winter-orchard",
+    "mod": "myths"
   },
   {
     "skill": "Demeter",
@@ -432,7 +471,8 @@
     "damage_id": null,
     "secondary_damage_id": null,
     "damage_ids": [],
-    "anchor": "perennial-seed"
+    "anchor": "perennial-seed",
+    "mod": "myths"
   },
   {
     "skill": "Demeter",
@@ -445,7 +485,8 @@
     "damage_ids": [
       "tensura:ice_elemental"
     ],
-    "anchor": "winter-harvest"
+    "anchor": "winter-harvest",
+    "mod": "myths"
   },
   {
     "skill": "Janus",
@@ -455,7 +496,8 @@
     "damage": "None",
     "damage_id": null,
     "secondary_damage_id": null,
-    "anchor": "passive"
+    "anchor": "passive",
+    "mod": "myths"
   },
   {
     "skill": "Janus",
@@ -466,7 +508,8 @@
     "damage_id": null,
     "secondary_damage_id": null,
     "damage_ids": [],
-    "anchor": "twin-gates"
+    "anchor": "twin-gates",
+    "mod": "myths"
   },
   {
     "skill": "Janus",
@@ -479,7 +522,8 @@
     "damage_ids": [
       "tensura:space_elemental"
     ],
-    "anchor": "parallax-snare"
+    "anchor": "parallax-snare",
+    "mod": "myths"
   },
   {
     "skill": "Janus",
@@ -492,7 +536,8 @@
     "damage_ids": [
       "tensura:space_elemental"
     ],
-    "anchor": "crossroads-edict"
+    "anchor": "crossroads-edict",
+    "mod": "myths"
   },
   {
     "skill": "Thoth",
@@ -502,7 +547,8 @@
     "damage": "None",
     "damage_id": null,
     "secondary_damage_id": null,
-    "anchor": "passive"
+    "anchor": "passive",
+    "mod": "myths"
   },
   {
     "skill": "Thoth",
@@ -521,7 +567,8 @@
       "tensura:light_elemental",
       "tensura:space_elemental"
     ],
-    "anchor": "lexicon-of-ruin"
+    "anchor": "lexicon-of-ruin",
+    "mod": "myths"
   },
   {
     "skill": "Thoth",
@@ -534,7 +581,8 @@
     "damage_ids": [
       "tensura:magic"
     ],
-    "anchor": "spellbreak"
+    "anchor": "spellbreak",
+    "mod": "myths"
   },
   {
     "skill": "Thoth",
@@ -545,7 +593,8 @@
     "damage_id": null,
     "secondary_damage_id": null,
     "damage_ids": [],
-    "anchor": "mana-crucible"
+    "anchor": "mana-crucible",
+    "mod": "myths"
   },
   {
     "skill": "Thoth",
@@ -564,27 +613,30 @@
       "tensura:light_elemental",
       "tensura:space_elemental"
     ],
-    "anchor": "astral-library"
+    "anchor": "astral-library",
+    "mod": "myths"
   },
   {
     "skill": "Godly",
     "name": "Divine Authority",
     "tier": "Godly",
     "kind": "Passive",
-    "damage": "Modifier — original damage type",
+    "damage": "Modifier \u2014 original damage type",
     "damage_id": null,
     "secondary_damage_id": null,
-    "anchor": "divine-authority"
+    "anchor": "divine-authority",
+    "mod": "myths"
   },
   {
     "skill": "Godly",
     "name": "Absolute Penetration",
     "tier": "Godly",
     "kind": "Passive",
-    "damage": "Modifier — original damage type",
+    "damage": "Modifier \u2014 original damage type",
     "damage_id": null,
     "secondary_damage_id": null,
-    "anchor": "absolute-penetration"
+    "anchor": "absolute-penetration",
+    "mod": "myths"
   },
   {
     "skill": "Godly",
@@ -594,7 +646,8 @@
     "damage": "None",
     "damage_id": null,
     "secondary_damage_id": null,
-    "anchor": "interference-immunity"
+    "anchor": "interference-immunity",
+    "mod": "myths"
   },
   {
     "skill": "Anansi",
@@ -604,7 +657,8 @@
     "damage": "None",
     "damage_id": null,
     "secondary_damage_id": null,
-    "anchor": "passive"
+    "anchor": "passive",
+    "mod": "myths"
   },
   {
     "skill": "Anansi",
@@ -614,7 +668,8 @@
     "damage": "Space elemental",
     "damage_id": "tensura:space_elemental",
     "secondary_damage_id": null,
-    "anchor": "fate-stitch"
+    "anchor": "fate-stitch",
+    "mod": "myths"
   },
   {
     "skill": "Anansi",
@@ -624,7 +679,8 @@
     "damage": "None",
     "damage_id": null,
     "secondary_damage_id": null,
-    "anchor": "puppet-passage"
+    "anchor": "puppet-passage",
+    "mod": "myths"
   },
   {
     "skill": "Anansi",
@@ -634,7 +690,8 @@
     "damage": "Space elemental, then Earth elemental",
     "damage_id": "tensura:space_elemental",
     "secondary_damage_id": "tensura:earth_elemental",
-    "anchor": "checkmate-loom"
+    "anchor": "checkmate-loom",
+    "mod": "myths"
   },
   {
     "skill": "Aegir",
@@ -644,7 +701,8 @@
     "damage": "None",
     "damage_id": null,
     "secondary_damage_id": null,
-    "anchor": "passive"
+    "anchor": "passive",
+    "mod": "myths"
   },
   {
     "skill": "Aegir",
@@ -654,17 +712,19 @@
     "damage": "Water elemental",
     "damage_id": "tensura:water_elemental",
     "secondary_damage_id": null,
-    "anchor": "refracted-harpoon"
+    "anchor": "refracted-harpoon",
+    "mod": "myths"
   },
   {
     "skill": "Aegir",
     "name": "Mirrorsea",
     "tier": "Ultimate",
     "kind": "Active",
-    "damage": "None — reflected projectiles retain their attack type",
+    "damage": "None \u2014 reflected projectiles retain their attack type",
     "damage_id": null,
     "secondary_damage_id": null,
-    "anchor": "mirrorsea"
+    "anchor": "mirrorsea",
+    "mod": "myths"
   },
   {
     "skill": "Aegir",
@@ -674,7 +734,8 @@
     "damage": "Water elemental",
     "damage_id": "tensura:water_elemental",
     "secondary_damage_id": null,
-    "anchor": "sovereign-breaker"
+    "anchor": "sovereign-breaker",
+    "mod": "myths"
   },
   {
     "skill": "Lugh",
@@ -684,7 +745,8 @@
     "damage": "None",
     "damage_id": null,
     "secondary_damage_id": null,
-    "anchor": "passive"
+    "anchor": "passive",
+    "mod": "myths"
   },
   {
     "skill": "Lugh",
@@ -694,7 +756,8 @@
     "damage": "None",
     "damage_id": null,
     "secondary_damage_id": null,
-    "anchor": "skill-bank"
+    "anchor": "skill-bank",
+    "mod": "myths"
   },
   {
     "skill": "Lugh",
@@ -704,7 +767,8 @@
     "damage": "Variable normalised physical, elemental or generic magic",
     "damage_id": "tensura:aura_slash",
     "secondary_damage_id": "tensura:magic",
-    "anchor": "reconstructed-art"
+    "anchor": "reconstructed-art",
+    "mod": "myths"
   },
   {
     "skill": "Lugh",
@@ -714,7 +778,8 @@
     "damage": "None",
     "damage_id": null,
     "secondary_damage_id": null,
-    "anchor": "countermand"
+    "anchor": "countermand",
+    "mod": "myths"
   },
   {
     "skill": "Lugh",
@@ -724,7 +789,8 @@
     "damage": "Three bound normalised damage types",
     "damage_id": "tensura:aura_slash",
     "secondary_damage_id": "tensura:magic",
-    "anchor": "grand-synthesis"
+    "anchor": "grand-synthesis",
+    "mod": "myths"
   },
   {
     "skill": "Moira",
@@ -734,7 +800,8 @@
     "damage": "Aura slash",
     "damage_id": "tensura:aura_slash",
     "secondary_damage_id": null,
-    "anchor": "fatebreaker"
+    "anchor": "fatebreaker",
+    "mod": "myths"
   },
   {
     "skill": "Moira",
@@ -744,7 +811,8 @@
     "damage": "Light elemental",
     "damage_id": "tensura:light_elemental",
     "secondary_damage_id": null,
-    "anchor": "starfall-canticle"
+    "anchor": "starfall-canticle",
+    "mod": "myths"
   },
   {
     "skill": "Moira",
@@ -754,7 +822,8 @@
     "damage": "Darkness elemental",
     "damage_id": "tensura:darkness_elemental",
     "secondary_damage_id": null,
-    "anchor": "eventide-procession"
+    "anchor": "eventide-procession",
+    "mod": "myths"
   },
   {
     "skill": "Moira",
@@ -764,27 +833,30 @@
     "damage": "Space elemental",
     "damage_id": "tensura:space_elemental",
     "secondary_damage_id": null,
-    "anchor": "the-last-dawn"
+    "anchor": "the-last-dawn",
+    "mod": "myths"
   },
   {
     "skill": "Ananke",
     "name": "Spatial Reposition",
     "tier": "Boss",
     "kind": "Boss movement",
-    "damage": "None — movement only",
+    "damage": "None \u2014 movement only",
     "damage_id": null,
     "secondary_damage_id": null,
-    "anchor": "spatial-reposition"
+    "anchor": "spatial-reposition",
+    "mod": "myths"
   },
   {
     "skill": "Ananke",
     "name": "Infinite Regeneration",
     "tier": "Boss",
     "kind": "Native passive",
-    "damage": "None — recovery only",
+    "damage": "None \u2014 recovery only",
     "damage_id": null,
     "secondary_damage_id": null,
-    "anchor": "infinite-regeneration"
+    "anchor": "infinite-regeneration",
+    "mod": "myths"
   },
   {
     "skill": "Demiurge",
@@ -794,7 +866,8 @@
     "damage_id": "tensura:aura_slash",
     "secondary_damage_id": null,
     "tier": "Godly",
-    "kind": "Boss cast"
+    "kind": "Boss cast",
+    "mod": "myths"
   },
   {
     "skill": "Demiurge",
@@ -804,7 +877,8 @@
     "damage_id": "tensura:light_elemental",
     "secondary_damage_id": null,
     "tier": "Godly",
-    "kind": "Boss cast"
+    "kind": "Boss cast",
+    "mod": "myths"
   },
   {
     "skill": "Demiurge",
@@ -814,7 +888,8 @@
     "damage_id": null,
     "secondary_damage_id": null,
     "tier": "Godly",
-    "kind": "Boss cast"
+    "kind": "Boss cast",
+    "mod": "myths"
   },
   {
     "skill": "Demiurge",
@@ -824,27 +899,30 @@
     "damage_id": "tensura:space_elemental",
     "secondary_damage_id": null,
     "tier": "Godly",
-    "kind": "Boss cast"
+    "kind": "Boss cast",
+    "mod": "myths"
   },
   {
     "skill": "Demiurge",
-    "name": "World-Eater’s Wake",
+    "name": "World-Eater\u2019s Wake",
     "anchor": "world-eaters-wake",
     "damage": "Darkness elemental",
     "damage_id": "tensura:darkness_elemental",
     "secondary_damage_id": null,
     "tier": "Godly",
-    "kind": "Boss cast"
+    "kind": "Boss cast",
+    "mod": "myths"
   },
   {
     "skill": "Demiurge",
     "name": "Primordial Exchange",
     "anchor": "primordial-exchange",
-    "damage": "None — resource conversion",
+    "damage": "None \u2014 resource conversion",
     "damage_id": null,
     "secondary_damage_id": null,
     "tier": "Godly",
-    "kind": "Boss channel"
+    "kind": "Boss channel",
+    "mod": "myths"
   },
   {
     "skill": "Demiurge",
@@ -854,7 +932,8 @@
     "damage_id": "tensura:earth_elemental",
     "secondary_damage_id": null,
     "tier": "Godly",
-    "kind": "Boss cast"
+    "kind": "Boss cast",
+    "mod": "myths"
   },
   {
     "skill": "Demiurge",
@@ -864,7 +943,8 @@
     "damage_id": "tensura:space_elemental",
     "secondary_damage_id": null,
     "tier": "Godly",
-    "kind": "Boss cast"
+    "kind": "Boss cast",
+    "mod": "myths"
   },
   {
     "skill": "Chained",
@@ -874,7 +954,8 @@
     "damage": "None",
     "damage_id": null,
     "secondary_damage_id": null,
-    "anchor": "heavenly-restriction"
+    "anchor": "heavenly-restriction",
+    "mod": "myths"
   },
   {
     "skill": "Chained",
@@ -884,7 +965,8 @@
     "damage": "None",
     "damage_id": null,
     "secondary_damage_id": null,
-    "anchor": "martial-supremacy"
+    "anchor": "martial-supremacy",
+    "mod": "myths"
   },
   {
     "skill": "Chained",
@@ -894,7 +976,8 @@
     "damage": "None",
     "damage_id": null,
     "secondary_damage_id": null,
-    "anchor": "broken-limit"
+    "anchor": "broken-limit",
+    "mod": "myths"
   },
   {
     "skill": "Chained",
@@ -904,7 +987,8 @@
     "damage": "None",
     "damage_id": null,
     "secondary_damage_id": null,
-    "anchor": "unerring-body"
+    "anchor": "unerring-body",
+    "mod": "myths"
   },
   {
     "skill": "Chained",
@@ -914,7 +998,8 @@
     "damage": "Physical",
     "damage_id": "minecraft:mob_attack",
     "secondary_damage_id": null,
-    "anchor": "severance-rush"
+    "anchor": "severance-rush",
+    "mod": "myths"
   },
   {
     "skill": "Air-Walk",
@@ -924,7 +1009,8 @@
     "damage": "None",
     "damage_id": null,
     "secondary_damage_id": null,
-    "anchor": "air-walk"
+    "anchor": "air-walk",
+    "mod": "myths"
   },
   {
     "skill": "Unbound",
@@ -934,7 +1020,8 @@
     "damage": "None",
     "damage_id": null,
     "secondary_damage_id": null,
-    "anchor": "heavenly-restriction"
+    "anchor": "heavenly-restriction",
+    "mod": "myths"
   },
   {
     "skill": "Unbound",
@@ -944,7 +1031,8 @@
     "damage": "None",
     "damage_id": null,
     "secondary_damage_id": null,
-    "anchor": "martial-supremacy"
+    "anchor": "martial-supremacy",
+    "mod": "myths"
   },
   {
     "skill": "Unbound",
@@ -954,7 +1042,8 @@
     "damage": "None",
     "damage_id": null,
     "secondary_damage_id": null,
-    "anchor": "broken-limit"
+    "anchor": "broken-limit",
+    "mod": "myths"
   },
   {
     "skill": "Unbound",
@@ -964,7 +1053,8 @@
     "damage": "None",
     "damage_id": null,
     "secondary_damage_id": null,
-    "anchor": "unerring-body"
+    "anchor": "unerring-body",
+    "mod": "myths"
   },
   {
     "skill": "Unbound",
@@ -974,7 +1064,8 @@
     "damage": "Physical",
     "damage_id": "minecraft:mob_attack",
     "secondary_damage_id": null,
-    "anchor": "severance-rush"
+    "anchor": "severance-rush",
+    "mod": "myths"
   },
   {
     "skill": "Unbound",
@@ -984,7 +1075,8 @@
     "damage": "Physical",
     "damage_id": "minecraft:mob_attack",
     "secondary_damage_id": null,
-    "anchor": "counter"
+    "anchor": "counter",
+    "mod": "myths"
   },
   {
     "skill": "Instant-Transmission",
@@ -994,7 +1086,8 @@
     "damage": "None",
     "damage_id": null,
     "secondary_damage_id": null,
-    "anchor": "instant-transmission"
+    "anchor": "instant-transmission",
+    "mod": "myths"
   },
   {
     "skill": "Schema",
@@ -1004,7 +1097,8 @@
     "damage": "None",
     "damage_id": null,
     "secondary_damage_id": null,
-    "anchor": "schema-tree"
+    "anchor": "schema-tree",
+    "mod": "myths"
   },
   {
     "skill": "Schema",
@@ -1014,6 +1108,227 @@
     "damage": "None",
     "damage_id": null,
     "secondary_damage_id": null,
-    "anchor": "build"
+    "anchor": "build",
+    "mod": "myths"
+  },
+  {
+    "skill": "Additions-Chained",
+    "name": "Severance Rush",
+    "tier": "Unique",
+    "kind": "Active",
+    "damage": "Physical",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "anchor": "severance-rush",
+    "mod": "additions"
+  },
+  {
+    "skill": "Additions-Chained",
+    "name": "Martial Supremacy",
+    "tier": "Unique",
+    "kind": "Passive toggle",
+    "damage": "Modifier \u2014 Battlewill or other Physical branch",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "anchor": "toggle-martial-supremacy",
+    "mod": "additions"
+  },
+  {
+    "skill": "Additions-Chained",
+    "name": "Unerring Body",
+    "tier": "Unique",
+    "kind": "Passive in slot",
+    "damage": "None",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "anchor": "in-slot-unerring-body",
+    "mod": "additions"
+  },
+  {
+    "skill": "Additions-Chained",
+    "name": "Broken Limit",
+    "tier": "Unique",
+    "kind": "Passive mastered",
+    "damage": "Modifier \u2014 preserves attack type",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "anchor": "mastered-broken-limit",
+    "mod": "additions"
+  },
+  {
+    "skill": "Additions-Unbound",
+    "name": "Severance Rush",
+    "tier": "Ultimate",
+    "kind": "Active",
+    "damage": "Physical",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "anchor": "severance-rush",
+    "mod": "additions"
+  },
+  {
+    "skill": "Additions-Unbound",
+    "name": "Counter",
+    "tier": "Ultimate",
+    "kind": "Active",
+    "damage": "Physical",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "anchor": "counter",
+    "mod": "additions"
+  },
+  {
+    "skill": "Additions-Schema",
+    "name": "Build",
+    "tier": "Battlewill",
+    "kind": "Active",
+    "damage": "None",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "anchor": "use",
+    "mod": "additions"
+  },
+  {
+    "skill": "Additions-Schema",
+    "name": "Schema tree",
+    "tier": "Battlewill",
+    "kind": "Passive toggle",
+    "damage": "None",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "anchor": "effects-per-stack",
+    "mod": "additions"
+  },
+  {
+    "skill": "Additions-Air-Walk",
+    "name": "Air Walk",
+    "tier": "Battlewill",
+    "kind": "Active toggle",
+    "damage": "None",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "anchor": "use",
+    "mod": "additions"
+  },
+  {
+    "skill": "Additions-Instant-Transmission",
+    "name": "Instant Transmission",
+    "tier": "Battlewill",
+    "kind": "Active",
+    "damage": "None",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "anchor": "use",
+    "mod": "additions"
+  },
+  {
+    "skill": "Additions-Parallel-World-Jumper",
+    "name": "World Jump",
+    "tier": "Unique",
+    "kind": "Active",
+    "damage": "None",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "anchor": "world-jump",
+    "mod": "additions"
+  },
+  {
+    "skill": "Additions-Parallel-World-Jumper",
+    "name": "World Select",
+    "tier": "Unique",
+    "kind": "Active; requires learning",
+    "damage": "None",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "anchor": "world-select",
+    "mod": "additions"
+  },
+  {
+    "skill": "Additions-Hunters-Recovery",
+    "name": "Hunter\u2019s Recovery",
+    "tier": "Extra",
+    "kind": "Passive toggle",
+    "damage": "None",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "anchor": "recovery",
+    "mod": "additions"
+  },
+  {
+    "skill": "Additions-Apex-Renewal",
+    "name": "Apex Renewal",
+    "tier": "Extra",
+    "kind": "Passive toggle",
+    "damage": "None",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "anchor": "recovery",
+    "mod": "additions"
+  },
+  {
+    "skill": "Additions-Sovereign-Rebirth",
+    "name": "Sovereign Rebirth",
+    "tier": "Extra",
+    "kind": "Passive toggle",
+    "damage": "None",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "anchor": "recovery",
+    "mod": "additions"
+  },
+  {
+    "skill": "Additions-Chained",
+    "name": "Heavenly Restriction",
+    "tier": "Unique",
+    "kind": "Passive true",
+    "damage": "None",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "anchor": "always-active-while-owned",
+    "mod": "additions"
+  },
+  {
+    "skill": "Additions-Unbound",
+    "name": "Heavenly Restriction",
+    "tier": "Ultimate",
+    "kind": "Passive true",
+    "damage": "None",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "anchor": "retained-pact",
+    "mod": "additions"
+  },
+  {
+    "skill": "Additions-Unbound",
+    "name": "Martial Supremacy",
+    "tier": "Ultimate",
+    "kind": "Passive toggle",
+    "damage": "Modifier \u2014 Battlewill or other Physical branch",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "anchor": "improved-combat",
+    "mod": "additions"
+  },
+  {
+    "skill": "Additions-Unbound",
+    "name": "Broken Limit",
+    "tier": "Ultimate",
+    "kind": "Passive mastered",
+    "damage": "Modifier \u2014 preserves attack type",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "anchor": "improved-combat",
+    "mod": "additions"
+  },
+  {
+    "skill": "Additions-Unbound",
+    "name": "Unerring Body",
+    "tier": "Ultimate",
+    "kind": "Passive in slot",
+    "damage": "None",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "anchor": "improved-combat",
+    "mod": "additions"
   }
 ]

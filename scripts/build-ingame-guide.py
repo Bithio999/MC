@@ -61,7 +61,7 @@ def tables(s):
     return out
 full=list(common)
 # The remaining playable skill pages use concise current ability tables + short behavior summaries.
-catalog=json.loads((ROOT/'wiki/catalog.json').read_text())
+catalog=[item for item in json.loads((ROOT/'wiki/catalog.json').read_text()) if item.get('mod','myths')=='myths']
 skip={'Chained','Unbound','Schema','Air-Walk','Instant-Transmission','Aura-Regeneration','Hunters-Recovery','Apex-Renewal','Sovereign-Rebirth','Skills','Skill-Synthesis','Unique-Skills','Ultimate-Skills','Demiurge','Moira'}
 for meta in catalog:
     slug=meta['slug']

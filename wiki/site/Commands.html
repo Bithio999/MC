@@ -1,63 +1,16 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Commands — the unofficial Tensura Myths addon reference.">
-<title>Commands — Tensura Myths Wiki</title><link rel="stylesheet" href="wiki.css">
+<meta name="description" content="Commands — Tensura Myths gameplay reference.">
+<title>Commands — Tensura Myths</title><link rel="stylesheet" href="wiki.css">
 <script defer src="search-index.js"></script><script defer src="search.js"></script></head>
-<body data-root="../"><a class="skip" href="#article">Skip to article</a>
-<div class="global-bar"><span>TENSURA MYTHS</span><div><a href="https://tensura.wiki.gg/wiki/Tensura:_Reincarnated_Wiki">Base mod wiki</a><a href="https://github.com/Bithio999/MC">GitHub</a></div></div>
-<header class="masthead"><a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">M</span><span>TENSURA MYTHS<small>Tensura: Reincarnated addon wiki</small></span></a>
-<div class="search"><label for="wiki-search">Search Tensura Myths Wiki</label><input id="wiki-search" type="search" placeholder="Search skills, races, characters…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="search-results" aria-expanded="false"><div id="search-results" role="listbox" aria-label="Search results" hidden></div><span id="search-status" class="sr-only" aria-live="polite"></span></div></header>
-<div class="layout"><button id="navigation-toggle" aria-controls="wiki-navigation" aria-expanded="false">☰ Wiki navigation</button><nav id="wiki-navigation" class="sidebar" aria-label="Wiki navigation"><section><h2>Start here</h2><a href="../index.html">Main Page</a><a href="../site/Getting-Started.html">Getting started</a></section><section><h2>Skills</h2><a href="../site/Skills.html">Skill overview</a><a href="../site/Unique-Skills.html">Unique Skills</a><a href="../site/Ultimate-Skills.html">Ultimate Skills</a><a href="../site/Skill-Synthesis.html">Skill synthesis</a><a href="../site/Godly.html">Godly Skills</a><a href="../site/Aura-Regeneration.html">Extra Skills</a><a href="../site/Abilities.html">Ability index</a><a href="../site/Battlewills.html">Battlewills</a></section><section><h2>Races</h2><a href="../site/Races.html">Race directory</a><a href="../site/Evolution.html">Hunter evolution</a><a href="../site/Fettered-Human.html">Heavenly Restriction</a><a href="../site/Duo-Races.html">Secondary races</a><a href="../site/Convergent-Awakening.html">Convergent Awakening</a></section><section><h2>Equipment</h2><a href="../site/Weapons.html">Weapons</a><a href="../site/Inverted-Spear-of-Heaven.html">Inverted Spear of Heaven</a><a href="../site/Nullification.html">Nullification engraving</a></section><section><h2>Myth bosses</h2><a href="../site/Bosses.html">Boss directory</a><a href="../site/Ananke.html">Ananke</a><a href="../site/Moira.html">Moira, Lord of Finality</a><a href="../site/Eschaton.html">Eschaton, the Last Myth</a><a href="../site/Demiurge.html">Demiurge, God of Genesis</a></section><section><h2>Otherworlders</h2><a href="../site/Otherworlders.html">Character directory</a><a href="../site/Alma.html">Alma</a><a href="../site/Gemma.html">Gemma</a></section><section><h2>Reference</h2><a href="../site/Damage-Types.html">Damage types</a><a href="../site/Mechanics.html">Combat mechanics</a><a href="../site/Visual-Effects.html">Visual effects</a><a href="../site/Commands.html" aria-current="page">Commands</a></section><div class="sidebar-version">Tensura Myths <strong>0.36.1</strong><br>Minecraft 1.21.1 · NeoForge<br><span>Offline reference edition</span></div></nav>
-<main id="article" class="article-page"><div class="page-tabs"><span aria-current="page">Article</span><a href="../pages/Commands.md">Read Markdown</a><a href="https://github.com/Bithio999/MC/blob/main/docs/CHANGELOG.md">Changelog</a></div>
-<div class="article-heading"><div class="breadcrumbs"><a href="../index.html">Tensura Myths Wiki</a> / <a href="../site/Mechanics.html">Reference</a></div><h1>Commands</h1><p class="subtitle">From the unofficial Tensura Myths Wiki</p></div>
-<div class="article-content"><div class="article-intro"><p>Player progression commands affect the issuing player, need no operator permission, and enforce progression gates. The boss administration commands below require operator permission.</p></div><details class="contents" open><summary>Contents</summary><div class="toc">
-<ul>
-<li><a href="#passive-status">Passive status</a></li>
-<li><a href="#synthesis-requirements">Synthesis requirements</a></li>
-<li><a href="#myths-progression">Myths progression</a></li>
-<li><a href="#boss-administration">Boss administration</a></li>
-</ul>
-</div>
-</details>
-<div class="article-table"><table>
-<thead>
-<tr>
-<th>Command</th>
-<th>Function</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>/wildhunt</code> or <code>/wildhunt guide</code></td>
-<td>Show the brief gameplay guide</td>
-</tr>
-<tr>
-<td><code>/wildhunt status</code></td>
-<td>Show race stage, total EP, distinct boss IDs, mastery and learned-art resources</td>
-</tr>
-<tr>
-<td><code>/wildhunt evolve</code></td>
-<td>Advance one hunter stage if eligible</td>
-</tr>
-<tr>
-<td><code>/wildhunt ascend vritra</code></td>
-<td>Combine mastered Storm Crown + Black Flame</td>
-</tr>
-<tr>
-<td><code>/wildhunt ascend demeter</code></td>
-<td>Combine mastered Verdant Keeper + Frostbound Colossus</td>
-</tr>
-<tr>
-<td><code>/wildhunt ascend janus</code></td>
-<td>Combine mastered Threadweaver + Mirrorbound</td>
-</tr>
-</tbody>
-</table></div>
-<h2 id="passive-status">Passive status</h2>
-<p>Each learned art reports its passive name, ON/OFF state and aura upkeep per second. Use the native skill toggle in Tensura’s Ability Selection to change that state. Status does not grant resources or change a toggle.</p>
-<h2 id="synthesis-requirements">Synthesis requirements</h2>
-<p>Any race can synthesize at <strong>2M total EP</strong> with both specific ingredients mastered. The result is learned before both sources are removed. Invalid requests consume nothing. The same server rules power <strong>Skills → Ultimate → Synthesis</strong>. See <a href="Skill-Synthesis.html">Skill synthesis</a>.</p>
-<h2 id="myths-progression">Myths progression</h2>
+<body data-root="../" data-mod="myths"><a class="skip" href="#article">Skip to article</a>
+<div class="global-bar"><span>TENSURA ADDON WIKIS</span><div><a href="https://tensura.wiki.gg/wiki/Tensura:_Reincarnated_Wiki">Base mod wiki</a><a href="https://github.com/Bithio999/MC">GitHub</a></div></div>
+<header class="masthead"><a class="brand" href="Tensura-Myths.html"><span class="brand-mark" aria-hidden="true">M</span><span>Tensura Myths<small>0.36.1 · Minecraft 1.21.1 · NeoForge</small></span></a>
+<div class="search"><label for="wiki-search">Search Tensura Myths</label><input id="wiki-search" type="search" placeholder="Search names, abilities or requirements…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="search-results" aria-expanded="false"><div id="search-results" role="listbox" hidden></div><span id="search-status" class="sr-only" aria-live="polite"></span></div></header>
+<nav class="mod-switch" aria-label="Choose addon"><a href="../index.html">All wikis</a><a href="Tensura-Myths.html" aria-current="page">Tensura Myths</a><a href="TensuraAdditionalAdditions.html">TensuraAdditionalAdditions</a></nav>
+<div class="layout"><button id="navigation-toggle" aria-controls="wiki-navigation" aria-expanded="false">☰ Wiki navigation</button><nav id="wiki-navigation" class="sidebar" aria-label="Tensura Myths navigation"><section><h2>Start</h2><a href="Tensura-Myths.html">Myths home</a><a href="Getting-Started.html">Install</a><a href="In-Game-Guide.html">In-game guide</a></section><section><h2>Skills</h2><a href="Skills.html">Skill overview</a><a href="Unique-Skills.html">Unique</a><a href="Ultimate-Skills.html">Ultimate</a><a href="Godly.html">Godly</a><a href="Battlewills.html">Battlewills</a><a href="Aura-Regeneration.html">Aura recovery</a><a href="Abilities.html">Ability directory</a></section><section><h2>World and progression</h2><a href="Races.html">Races</a><a href="Evolution.html">Hunters</a><a href="Fettered-Human.html">Heavenly Restriction</a><a href="Duo-Races.html">Secondary races</a><a href="Convergent-Awakening.html">Awakening</a><a href="Bosses.html">Bosses</a><a href="Otherworlders.html">Otherworlders</a><a href="Weapons.html">Equipment</a></section><section><h2>Reference</h2><a href="Damage-Types.html">Damage types</a><a href="Mechanics.html">Combat rules</a><a href="Visual-Effects.html">Pictures and videos</a><a href="Commands.html" aria-current="page">Commands</a></section></nav>
+<main id="article" class="article-page"><div class="page-tabs"><span aria-current="page">Tensura Myths</span><a href="../pages/Commands.md">Read Markdown</a></div><div class="article-heading"><div class="breadcrumbs"><a href="../index.html">All wikis</a> / <a href="Tensura-Myths.html">Tensura Myths</a></div><h1 id="commands">Commands</h1><p class="subtitle">Tensura Myths · Reference</p></div>
+<div class="article-content"><p>Normal progression uses Tensura’s menus; these shortcuts are for operators/testing.</p>
 <div class="article-table"><table>
 <thead>
 <tr>
@@ -67,73 +20,29 @@
 </thead>
 <tbody>
 <tr>
-<td><code>/myths</code></td>
-<td>Open the native secondary evolution page</td>
-</tr>
-<tr>
-<td><code>/myths status</code></td>
-<td>Show primary and secondary status and open native evolution</td>
-</tr>
-<tr>
-<td><code>/myths secondary &lt;family&gt;</code></td>
-<td>Choose a permanent secondary ancestry after meeting all gates</td>
-</tr>
-<tr>
-<td><code>/myths evolve_secondary &lt;race_id&gt;</code></td>
-<td>Evolve the secondary through native requirements</td>
-</tr>
-<tr>
-<td><code>/myths awaken</code></td>
-<td>Perform Convergent Awakening after both races reach final evolution</td>
-</tr>
-<tr>
-<td><code>/myths synthesize &lt;vritra/demeter/janus&gt;</code></td>
-<td>Combine the required mastered Unique pair</td>
-</tr>
-<tr>
-<td><code>/myths godly &lt;ultimate_id&gt; [aion/thoth/lugh]</code></td>
-<td>Ascend a mastered combination Ultimate; defaults to Aion. Thoth also combines mastered Rune Smith</td>
-</tr>
-</tbody>
-</table></div>
-<p>These commands are available to players and enforce the same server-side requirements as the menu. Valid secondary keys: <code>beastfolk</code>, <code>harpy</code>, <code>ogre</code>, <code>goblin</code>, <code>giant</code>, <code>orc</code>, <code>lizardman</code>, <code>merfolk</code>, <code>elf</code>, <code>human</code>, <code>dwarf</code>, <code>slime</code>, <code>vampire</code>, <code>wight</code>, <code>daemon</code>.</p>
-<p>Godly IDs are <code>wildhunt:aion</code>, <code>wildhunt:thoth</code> and <code>wildhunt:lugh</code>. Fused race IDs follow <code>wildhunt:convergence/&lt;sorted_family_pair&gt;</code>; the <a href="Convergent-Awakening.html#race-catalog">catalog</a> links to each exact ID.</p>
-<h2 id="boss-administration">Boss administration</h2>
-<div class="article-table"><table>
-<thead>
-<tr>
-<th>Command</th>
-<th>Function</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>/myths boss eschaton summon</code></td>
-<td>Summon the one-billion-EP final Myth in open space</td>
-</tr>
-<tr>
-<td><code>/myths boss eschaton arena</code></td>
-<td>Create a native eight-player <code>eschaton</code> arena; never overwrite it</td>
-</tr>
-<tr>
-<td><code>/bossFight join @s eschaton</code></td>
-<td>Join the prepared final-boss arena under native permissions</td>
+<td><code>/mythsguide</code></td>
+<td>Open the in-game guide</td>
 </tr>
 <tr>
 <td><code>/myths boss summon</code></td>
-<td>Summon Ananke in front of the operator, if there is room</td>
+<td>Summon Ananke</td>
 </tr>
 <tr>
 <td><code>/myths boss arena</code></td>
-<td>Create a native <code>ananke</code> boss-fight profile at the operator's position; never overwrite an existing one</td>
+<td>Create Ananke’s native arena</td>
 </tr>
 <tr>
 <td><code>/bossFight join @s ananke</code></td>
-<td>Native Tensura command to join the prepared arena; requires the base mod's permissions</td>
+<td>Join that arena</td>
+</tr>
+<tr>
+<td><code>/summon wildhunt:alma</code></td>
+<td>Summon Alma</td>
+</tr>
+<tr>
+<td><code>/summon wildhunt:gemma</code></td>
+<td>Summon Gemma</td>
 </tr>
 </tbody>
 </table></div>
-<p>These are operator tools. Survival players use the <a href="Ananke.html#summoning">Writ of Last Dawn ritual</a>. Arena setup creates configuration, not terrain; prepare the ground and entrance first.</p>
-</div><nav class="related-box" aria-label="Related reference"><strong>Tensura Myths · Reference</strong><div class="navbox-row"><strong>Reference</strong><div><a href="../site/Getting-Started.html">Getting started</a><a href="../site/Skills.html">Skills</a><a href="../site/Abilities.html">Ability index</a><a href="../site/Damage-Types.html">Damage types</a><a href="../site/Races.html">Race directory</a><a href="../site/Otherworlders.html">Otherworlders</a><a href="../site/Mechanics.html">Combat mechanics</a><a href="../site/Commands.html" aria-current="page">Commands</a></div></div></nav>
-<div class="categories">Categories: <a href="../index.html">Tensura Myths</a> · <a href="../site/Mechanics.html">Reference</a></div>
-<footer>Unofficial fan addon. Original documentation and portraits. Not affiliated with Capcom or ManasMods.<br>Tensura Myths 0.36.1 · Offline edition · No external services required.</footer></main></div></body></html>
+<p>Boss pages explain survival-mode summoning. <a href="Ananke.html">Ananke</a> · <a href="Eschaton.html">Eschaton</a>.</p></div><footer>Unofficial addon reference · Default gameplay values · Pictures and videos illustrate their recorded versions.<br>Original addon artwork. Not affiliated with ManasMods or Capcom.</footer></main></div></body></html>

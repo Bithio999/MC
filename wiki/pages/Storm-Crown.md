@@ -1,110 +1,51 @@
 # Storm Crown
 
-[Main Page](../README.md) · [Skills](Skills.md) · [Ability index](Abilities.md) · [Damage types](Damage-Types.md)
+[All wikis](../README.md) · [Tensura Myths](Tensura-Myths.md)
 
-**Storm Crown** is a Unique Skill inspired by **Rey Dau**. It combines ricochet lightning with an aimed movement art.
+Storm Crown is a Unique Skill inspired by Rey Dau. It combines ricochet lightning with an aimed movement art.
 
-![Storm Crown](../../src/main/resources/assets/wildhunt/textures/skill/storm_crown.png)
+![Storm Crown icon](../assets/skill/storm_crown.png)
 
-| Skill data | Storm Crown |
+| Skill data | Value |
 | --- | --- |
-| **Information** | |
-| Type | Unique Skill |
-| Inspiration | Rey Dau |
+| Tier | Unique |
 | Damage type | Lightning elemental |
-| Damage ID | `tensura:lightning_elemental` |
-| Combat role | Ricochet lightning / mobility |
-| Active modes | 2 |
-| Toggleable passive | Storm Mantle |
 | Passive upkeep | 25 aura / second |
-| Registry ID | `wildhunt:storm_crown` |
-| **Evolution** | |
-| Previous | — |
-| Evolution | [Vritra](Vritra.md), with mastered Black Flame |
-| **Obtaining** | |
-| Method | Reincarnation / starting skill roll |
+| Obtaining | Reincarnation / starting skill roll |
 
-All damaging arts in this skill use **lightning elemental damage**, including its area hits and pulses.
 
-## Usage
+## Active abilities
 
-### Passive
+| Ability | Damage type / base damage | Cost | Cooldown |
+| --- | --- | --- | --- |
+| Railbolt | Lightning elemental · 300 | 600 aura | 3 s |
+| Thunder Step | Lightning elemental · 200 | 700 aura | 4 s |
 
-[Passive - Toggle] — **Storm Mantle**
 
-| Ability information | Value |
-| --- | --- |
-| Damage type | None — support / defense |
-| Damage ID | — |
-| Effect | No direct damage; modifies the caster’s attributes or defenses. |
+## Passive
+
+Damage type: None — support / defense
 
 While toggled on, gain 6 armor, 35% movement, 25% attack speed and 50% lightning boost. Movement generates no resource.
 
-Elemental boosts use the [strongest ordinary source](Mechanics.md#elemental-bonus-sources); Godly bonuses apply separately.
 
-Enable or disable this through Tensura’s native **Ability Selection** skill toggle. It is separate from active mode cycling and has no fifteen/thirty-second duration. Upkeep is **25 aura per second**, with the first second paid on enabling. It turns off when aura is insufficient or activation requirements fail. Turning it off removes its own attribute modifiers immediately.
+## Railbolt
 
-### Active
+- Damage type: Lightning elemental
+- Aim the first hit along a block-clipped ray up to 36 blocks. The bolt then ricochets from its latest victim to the nearest eligible enemy within twelve blocks.
+- The initial shot needs a clear path. Ricochets ignore blocks and never revisit a target.
 
-| Mode | Aura | Cooldown | Raw opening damage |
-| --- | ---: | ---: | ---: |
-| 1. Railbolt | 600 | 3 s | 300 |
-| 2. Thunder Step | 700 | 4 s | 200 |
+## Thunder Step
 
-**Damage calculation:** multiply the listed base values by **1 + 0.5 × mastery fraction**, up to **1.50×**. Elemental boosts, defenses, barriers, and situational modifiers also apply. EP does not multiply damage.
+Damage type: Lightning elemental
 
-#### Railbolt
+Dash along your full aim direction for up to 16 blocks, including upward and downward, and shock enemies within 2.5 blocks of the travelled segment. The path sweeps the caster’s whole bounding box in half-block increments; walls, low ceilings, collisions the world border and build-height limits stop it.
 
-[Active - Press] — **Railbolt**
 
-| Ability information | Value |
-| --- | --- |
-| Damage type | [Lightning elemental](Damage-Types.md#lightning) |
-| Damage ID | `tensura:lightning_elemental` |
-| Effect | Direct hits use this native element. |
+## Related
 
-Aim the first hit along a block-clipped ray up to 36 blocks. The bolt then ricochets from its latest victim to the nearest eligible enemy within twelve blocks. It can hit up to 4 different targets, including the initial victim, and never revisits one. Each hop retains 90% of the preceding hop’s raw damage. Ricochets ignore blocks and line of sight; the initial aimed shot still stops at blocks. Wet or drenched enemies take 30% extra lightning damage.
+[Skill synthesis](Skill-Synthesis.md) · [Godly Skills](Godly.md)
 
-#### Thunder Step
+## Pictures and video
 
-[Active - Press] — **Thunder Step**
-
-| Ability information | Value |
-| --- | --- |
-| Damage type | [Lightning elemental](Damage-Types.md#lightning) |
-| Damage ID | `tensura:lightning_elemental` |
-| Effect | Direct hits use this native element. |
-
-Dash along your full aim direction for up to 16 blocks, including upward and downward, and shock enemies within 2.5 blocks of the travelled segment. The path sweeps the caster’s whole bounding box in half-block increments; walls, low ceilings, collisions the world border and build-height limits stop it. The teleport preserves your current horizontal and vertical velocity and syncs it to the client.
-
-## Obtaining
-
-Roll through Tensura’s normal reincarnation system. These Uniques join the configured primary pool; no particular roll is guaranteed. There are no skill trials, boss-awarded skills or race requirements to roll.
-
-## Evolution
-
-Combine the mastered skill with a mastered **Black Flame** at **2M total EP** to create [Vritra](Vritra.md), using **Skills → Ultimate → Synthesis**. Both ingredients are replaced and presets/cooldowns carry over. No race requirement applies.
-
-## Suggested combo
-
-Use Thunder Step to find a clear angle → aim Railbolt at one edge of a group → let its successive hops reach enemies beyond the initial victim’s bounce radius.
-
-## Strengths and limitations
-
-A missed initial ray cannot start a ricochet. Bounces pass through walls but cannot revisit an enemy. The dash follows a collision-checked 3D path and can carry you off a ledge or into the air. Normal gravity resumes afterward; it is not sustained flight.
-
-## Related pages
-
-[Skills](Skills.md) · [Mechanics](Mechanics.md) · [Evolution](Evolution.md) · [Commands](Commands.md)
-
-## Visual effects
-
-A coherent white-hot Railbolt core carries branching gold lightning and moving ion collars between its victims. Thunder Step leaves a tunnel of conductors and speed streaks along the travelled path; the lightning impact expands from the landing point.
-
-![Railbolt’s branched lightning and ion collars](../media/visual-storm-crown.png)
-
-[Visual effects gallery and display settings](Visual-Effects.md).
-
----
-
-**Categories:** Tensura Myths · Skills
+![Storm Crown — visual storm crown](../media/visual-storm-crown.png)

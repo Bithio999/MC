@@ -1,339 +1,470 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Race directory — the unofficial Tensura Myths addon reference.">
-<title>Race directory — Tensura Myths Wiki</title><link rel="stylesheet" href="wiki.css">
+<meta name="description" content="Races — Tensura Myths gameplay reference.">
+<title>Races — Tensura Myths</title><link rel="stylesheet" href="wiki.css">
 <script defer src="search-index.js"></script><script defer src="search.js"></script></head>
-<body data-root="../"><a class="skip" href="#article">Skip to article</a>
-<div class="global-bar"><span>TENSURA MYTHS</span><div><a href="https://tensura.wiki.gg/wiki/Tensura:_Reincarnated_Wiki">Base mod wiki</a><a href="https://github.com/Bithio999/MC">GitHub</a></div></div>
-<header class="masthead"><a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">M</span><span>TENSURA MYTHS<small>Tensura: Reincarnated addon wiki</small></span></a>
-<div class="search"><label for="wiki-search">Search Tensura Myths Wiki</label><input id="wiki-search" type="search" placeholder="Search skills, races, characters…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="search-results" aria-expanded="false"><div id="search-results" role="listbox" aria-label="Search results" hidden></div><span id="search-status" class="sr-only" aria-live="polite"></span></div></header>
-<div class="layout"><button id="navigation-toggle" aria-controls="wiki-navigation" aria-expanded="false">☰ Wiki navigation</button><nav id="wiki-navigation" class="sidebar" aria-label="Wiki navigation"><section><h2>Start here</h2><a href="../index.html">Main Page</a><a href="../site/Getting-Started.html">Getting started</a></section><section><h2>Skills</h2><a href="../site/Skills.html">Skill overview</a><a href="../site/Unique-Skills.html">Unique Skills</a><a href="../site/Ultimate-Skills.html">Ultimate Skills</a><a href="../site/Skill-Synthesis.html">Skill synthesis</a><a href="../site/Godly.html">Godly Skills</a><a href="../site/Aura-Regeneration.html">Extra Skills</a><a href="../site/Abilities.html">Ability index</a><a href="../site/Battlewills.html">Battlewills</a></section><section><h2>Races</h2><a href="../site/Races.html" aria-current="page">Race directory</a><a href="../site/Evolution.html">Hunter evolution</a><a href="../site/Fettered-Human.html">Heavenly Restriction</a><a href="../site/Duo-Races.html">Secondary races</a><a href="../site/Convergent-Awakening.html">Convergent Awakening</a></section><section><h2>Equipment</h2><a href="../site/Weapons.html">Weapons</a><a href="../site/Inverted-Spear-of-Heaven.html">Inverted Spear of Heaven</a><a href="../site/Nullification.html">Nullification engraving</a></section><section><h2>Myth bosses</h2><a href="../site/Bosses.html">Boss directory</a><a href="../site/Ananke.html">Ananke</a><a href="../site/Moira.html">Moira, Lord of Finality</a><a href="../site/Eschaton.html">Eschaton, the Last Myth</a><a href="../site/Demiurge.html">Demiurge, God of Genesis</a></section><section><h2>Otherworlders</h2><a href="../site/Otherworlders.html">Character directory</a><a href="../site/Alma.html">Alma</a><a href="../site/Gemma.html">Gemma</a></section><section><h2>Reference</h2><a href="../site/Damage-Types.html">Damage types</a><a href="../site/Mechanics.html">Combat mechanics</a><a href="../site/Visual-Effects.html">Visual effects</a><a href="../site/Commands.html">Commands</a></section><div class="sidebar-version">Tensura Myths <strong>0.36.1</strong><br>Minecraft 1.21.1 · NeoForge<br><span>Offline reference edition</span></div></nav>
-<main id="article" class="article-page"><div class="page-tabs"><span aria-current="page">Article</span><a href="../pages/Races.md">Read Markdown</a><a href="https://github.com/Bithio999/MC/blob/main/docs/CHANGELOG.md">Changelog</a></div>
-<div class="article-heading"><div class="breadcrumbs"><a href="../index.html">Tensura Myths Wiki</a> / <a href="../site/Races.html">Races</a></div><h1>Race directory</h1><p class="subtitle">From the unofficial Tensura Myths Wiki</p></div>
-<div class="article-content"><div class="article-intro"><p><strong>Races</strong> are organized into the Human hunter branch, independent secondary lineages and unified Convergent races. The addon preserves the native race system and requirements.</p></div><details class="contents" open><summary>Contents</summary><div class="toc">
-<ul>
-<li><a href="#boss-exclusive-races">Boss-exclusive races</a></li>
-<li><a href="#hunter-races">Hunter races</a></li>
-<li><a href="#heavenly-restriction-lineage">Heavenly Restriction lineage</a></li>
-<li><a href="#secondary-races">Secondary races</a></li>
-<li><a href="#convergent-races">Convergent races</a></li>
-<li><a href="#beastfolk-ancestry">Beastfolk ancestry</a></li>
-<li><a href="#daemon-ancestry">Daemon ancestry</a></li>
-<li><a href="#dwarf-ancestry">Dwarf ancestry</a></li>
-<li><a href="#elf-ancestry">Elf ancestry</a></li>
-<li><a href="#giant-ancestry">Giant ancestry</a></li>
-<li><a href="#goblin-ancestry">Goblin ancestry</a></li>
-<li><a href="#harpy-ancestry">Harpy ancestry</a></li>
-<li><a href="#human-ancestry">Human ancestry</a></li>
-<li><a href="#lizardman-ancestry">Lizardman ancestry</a></li>
-<li><a href="#merfolk-ancestry">Merfolk ancestry</a></li>
-<li><a href="#ogre-ancestry">Ogre ancestry</a></li>
-<li><a href="#orc-ancestry">Orc ancestry</a></li>
-<li><a href="#slime-ancestry">Slime ancestry</a></li>
-<li><a href="#vampire-ancestry">Vampire ancestry</a></li>
-<li><a href="#wight-ancestry">Wight ancestry</a></li>
-<li><a href="#boss-lineages">Boss lineages</a></li>
-</ul>
-</div>
-</details>
-<h2 id="boss-exclusive-races">Boss-exclusive races</h2>
-<p><a href="Origin-Sovereign.html">Origin Sovereign</a> belongs to the final Myth, <a href="Eschaton.html">Eschaton</a>. <a href="Eclipse-Seraph.html">Eclipse Seraph</a> belongs to Ananke. Neither is a player evolution, reincarnation roll or secondary-race option.</p>
-<h2 id="hunter-races">Hunter races</h2>
-<div class="article-table"><table>
+<body data-root="../" data-mod="myths"><a class="skip" href="#article">Skip to article</a>
+<div class="global-bar"><span>TENSURA ADDON WIKIS</span><div><a href="https://tensura.wiki.gg/wiki/Tensura:_Reincarnated_Wiki">Base mod wiki</a><a href="https://github.com/Bithio999/MC">GitHub</a></div></div>
+<header class="masthead"><a class="brand" href="Tensura-Myths.html"><span class="brand-mark" aria-hidden="true">M</span><span>Tensura Myths<small>0.36.1 · Minecraft 1.21.1 · NeoForge</small></span></a>
+<div class="search"><label for="wiki-search">Search Tensura Myths</label><input id="wiki-search" type="search" placeholder="Search names, abilities or requirements…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="search-results" aria-expanded="false"><div id="search-results" role="listbox" hidden></div><span id="search-status" class="sr-only" aria-live="polite"></span></div></header>
+<nav class="mod-switch" aria-label="Choose addon"><a href="../index.html">All wikis</a><a href="Tensura-Myths.html" aria-current="page">Tensura Myths</a><a href="TensuraAdditionalAdditions.html">TensuraAdditionalAdditions</a></nav>
+<div class="layout"><button id="navigation-toggle" aria-controls="wiki-navigation" aria-expanded="false">☰ Wiki navigation</button><nav id="wiki-navigation" class="sidebar" aria-label="Tensura Myths navigation"><section><h2>Start</h2><a href="Tensura-Myths.html">Myths home</a><a href="Getting-Started.html">Install</a><a href="In-Game-Guide.html">In-game guide</a></section><section><h2>Skills</h2><a href="Skills.html">Skill overview</a><a href="Unique-Skills.html">Unique</a><a href="Ultimate-Skills.html">Ultimate</a><a href="Godly.html">Godly</a><a href="Battlewills.html">Battlewills</a><a href="Aura-Regeneration.html">Aura recovery</a><a href="Abilities.html">Ability directory</a></section><section><h2>World and progression</h2><a href="Races.html" aria-current="page">Races</a><a href="Evolution.html">Hunters</a><a href="Fettered-Human.html">Heavenly Restriction</a><a href="Duo-Races.html">Secondary races</a><a href="Convergent-Awakening.html">Awakening</a><a href="Bosses.html">Bosses</a><a href="Otherworlders.html">Otherworlders</a><a href="Weapons.html">Equipment</a></section><section><h2>Reference</h2><a href="Damage-Types.html">Damage types</a><a href="Mechanics.html">Combat rules</a><a href="Visual-Effects.html">Pictures and videos</a><a href="Commands.html">Commands</a></section></nav>
+<main id="article" class="article-page"><div class="page-tabs"><span aria-current="page">Tensura Myths</span><a href="../pages/Races.md">Read Markdown</a></div><div class="article-heading"><div class="breadcrumbs"><a href="../index.html">All wikis</a> / <a href="Tensura-Myths.html">Tensura Myths</a></div><h1 id="races">Races</h1><p class="subtitle">Tensura Myths · Races</p></div>
+<div class="article-content"><div class="article-table"><table>
 <thead>
 <tr>
-<th>Race</th>
-<th>Stage</th>
-<th>HP / SHP racial bonus</th>
-<th>Recovery Extra Skill</th>
+<th>Lineage / system</th>
+<th>Start here</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><a href="Awakened-Hunter.html">Awakened Hunter</a></td>
-<td>1</td>
-<td>+100 / +400</td>
-<td><a href="Hunters-Recovery.html">Hunter’s Recovery</a></td>
+<td>Human hunter branch</td>
+<td><a href="Evolution.html">Hunter evolution</a></td>
 </tr>
 <tr>
-<td><a href="Apex-Hunter.html">Apex Hunter</a></td>
-<td>2</td>
-<td>+500 / +3,200</td>
-<td><a href="Apex-Renewal.html">Apex Renewal</a></td>
+<td>Heavenly Restriction</td>
+<td><a href="Fettered-Human.html">Fettered Human</a></td>
 </tr>
 <tr>
-<td><a href="Sovereign-Hunter.html">Sovereign Hunter</a></td>
-<td>3</td>
-<td>+1,000 / +6,600</td>
-<td><a href="Sovereign-Rebirth.html">Sovereign Rebirth</a></td>
+<td>Two ancestries</td>
+<td><a href="Duo-Races.html">Secondary races</a></td>
+</tr>
+<tr>
+<td>Combined final race</td>
+<td><a href="Convergent-Awakening.html">Convergent Awakening</a></td>
 </tr>
 </tbody>
 </table></div>
-<p><a href="Evolution.html">Human evolution</a> explains boss credit, EP and mastery gates. Bonuses replace earlier stages.</p>
-<h2 id="heavenly-restriction-lineage">Heavenly Restriction lineage</h2>
-<p>Start as <a href="Fettered-Human.html">Fettered Human</a>, then evolve through <a href="Tempered-Vessel.html">Tempered Vessel</a>, <a href="Unshackled.html">Unshackled</a>, <a href="Heavenly-Restricted.html">Heavenly Restricted</a> and <a href="Heavenbreaker.html">Heavenbreaker</a>. Fettered Human grants <a href="Chained.html">Chained</a>; later evolutions retain it without granting it again. The lineage uses a 90% aura / 10% magicule EP split. Fixed total EP, mastered Battlewills and Chained mastery govern this separate starting lineage. Unshackled, Heavenly Restricted and Heavenbreaker grant Hunter’s Recovery, Apex Renewal and Sovereign Rebirth respectively.</p>
-<h2 id="secondary-races">Secondary races</h2>
-<p><a href="Duo-Races.html">Choose a secondary lineage</a> after completing the primary evolution path, reaching true awakening and 5M total EP. Each further secondary evolution requires native conditions and a new 2.5M-EP growth interval. A secondary adds 10% EP growth and displays alongside the primary in Status.</p>
 <h2 id="convergent-races">Convergent races</h2>
-<p><a href="Convergent-Awakening.html">Convergent Awakening</a> requires both lineages to finish evolving. Each unordered ancestral pair has one named race and its own growth profile, retaining the 10% bonus. Concordance Pulse is a shared non-damaging racial action.</p>
-<p>The directory below groups all 105 races by ancestry; each race appears under both of its families. The <a href="Convergent-Awakening.html#race-catalog">awakening catalog</a> lists each pair once with its growth weights.</p>
-<h2 id="beastfolk-ancestry">Beastfolk ancestry</h2>
-<ul>
-<li><a href="Fusion-beastfolk-daemon.html">Abyssal Chimera</a> — Beastfolk + Daemon</li>
-<li><a href="Fusion-beastfolk-dwarf.html">Adamant Manticore</a> — Beastfolk + Dwarf</li>
-<li><a href="Fusion-beastfolk-slime.html">Amorphous Behemoth</a> — Beastfolk + Slime</li>
-<li><a href="Fusion-beastfolk-vampire.html">Bloodmoon Lycan</a> — Beastfolk + Vampire</li>
-<li><a href="Fusion-beastfolk-goblin.html">Briar Monarch</a> — Beastfolk + Goblin</li>
-<li><a href="Fusion-beastfolk-orc.html">Calydonian King</a> — Beastfolk + Orc</li>
-<li><a href="Fusion-beastfolk-lizardman.html">Chimera Wyrm</a> — Beastfolk + Lizardman</li>
-<li><a href="Fusion-beastfolk-giant.html">Fenrir Colossus</a> — Beastfolk + Giant</li>
-<li><a href="Fusion-beastfolk-harpy.html">Gryphon Sovereign</a> — Beastfolk + Harpy</li>
-<li><a href="Fusion-beastfolk-merfolk.html">Leviathan Beast</a> — Beastfolk + Merfolk</li>
-<li><a href="Fusion-beastfolk-wight.html">Ossuary Fenrir</a> — Beastfolk + Wight</li>
-<li><a href="Fusion-beastfolk-human.html">Primal Paragon</a> — Beastfolk + Human</li>
-<li><a href="Fusion-beastfolk-ogre.html">Rakshasa</a> — Beastfolk + Ogre</li>
-<li><a href="Fusion-beastfolk-elf.html">Sylvan Sphinx</a> — Beastfolk + Elf</li>
-</ul>
-<h2 id="daemon-ancestry">Daemon ancestry</h2>
-<ul>
-<li><a href="Fusion-beastfolk-daemon.html">Abyssal Chimera</a> — Daemon + Beastfolk</li>
-<li><a href="Fusion-daemon-slime.html">Abyssal Progenitor</a> — Daemon + Slime</li>
-<li><a href="Fusion-daemon-ogre.html">Abyssal Rakshasa</a> — Daemon + Ogre</li>
-<li><a href="Fusion-daemon-merfolk.html">Abyssal Scylla</a> — Daemon + Merfolk</li>
-<li><a href="Fusion-daemon-human.html">Empyrean Adversary</a> — Daemon + Human</li>
-<li><a href="Fusion-daemon-wight.html">Erebus Sovereign</a> — Daemon + Wight</li>
-<li><a href="Fusion-daemon-harpy.html">Fallen Simurgh</a> — Daemon + Harpy</li>
-<li><a href="Fusion-daemon-dwarf.html">Infernal Forgemaster</a> — Daemon + Dwarf</li>
-<li><a href="Fusion-daemon-goblin.html">Infernal Goblin King</a> — Daemon + Goblin</li>
-<li><a href="Fusion-daemon-orc.html">Maw of Tartarus</a> — Daemon + Orc</li>
-<li><a href="Fusion-daemon-vampire.html">Sanguine Archfiend</a> — Daemon + Vampire</li>
-<li><a href="Fusion-daemon-lizardman.html">Tiamat Scion</a> — Daemon + Lizardman</li>
-<li><a href="Fusion-daemon-elf.html">Twilight Seraph</a> — Daemon + Elf</li>
-<li><a href="Fusion-daemon-giant.html">Typhon</a> — Daemon + Giant</li>
-</ul>
-<h2 id="dwarf-ancestry">Dwarf ancestry</h2>
-<ul>
-<li><a href="Fusion-beastfolk-dwarf.html">Adamant Manticore</a> — Dwarf + Beastfolk</li>
-<li><a href="Fusion-dwarf-elf.html">Aetherforged Oracle</a> — Dwarf + Elf</li>
-<li><a href="Fusion-dwarf-vampire.html">Bloodrune Patriarch</a> — Dwarf + Vampire</li>
-<li><a href="Fusion-dwarf-goblin.html">Gremlin Artificer</a> — Dwarf + Goblin</li>
-<li><a href="Fusion-dwarf-giant.html">Hecatoncheir</a> — Dwarf + Giant</li>
-<li><a href="Fusion-daemon-dwarf.html">Infernal Forgemaster</a> — Dwarf + Daemon</li>
-<li><a href="Fusion-dwarf-wight.html">Ossuary Runesmith</a> — Dwarf + Wight</li>
-<li><a href="Fusion-dwarf-slime.html">Quicksilver Artificer</a> — Dwarf + Slime</li>
-<li><a href="Fusion-dwarf-lizardman.html">Runebound Fafnir</a> — Dwarf + Lizardman</li>
-<li><a href="Fusion-dwarf-harpy.html">Runewing Artisan</a> — Dwarf + Harpy</li>
-<li><a href="Fusion-dwarf-human.html">Runic Exemplar</a> — Dwarf + Human</li>
-<li><a href="Fusion-dwarf-merfolk.html">Runic Triton</a> — Dwarf + Merfolk</li>
-<li><a href="Fusion-dwarf-ogre.html">Vajra Forgemaster</a> — Dwarf + Ogre</li>
-<li><a href="Fusion-dwarf-orc.html">Vulcan Behemoth</a> — Dwarf + Orc</li>
-</ul>
-<h2 id="elf-ancestry">Elf ancestry</h2>
-<ul>
-<li><a href="Fusion-dwarf-elf.html">Aetherforged Oracle</a> — Elf + Dwarf</li>
-<li><a href="Fusion-elf-human.html">Astral Exemplar</a> — Elf + Human</li>
-<li><a href="Fusion-elf-vampire.html">Crimson Sidhe</a> — Elf + Vampire</li>
-<li><a href="Fusion-elf-lizardman.html">Elder Starwyrm</a> — Elf + Lizardman</li>
-<li><a href="Fusion-elf-ogre.html">Moonlit Kensei</a> — Elf + Ogre</li>
-<li><a href="Fusion-elf-merfolk.html">Nereid Oracle</a> — Elf + Merfolk</li>
-<li><a href="Fusion-elf-wight.html">Pale Star Oracle</a> — Elf + Wight</li>
-<li><a href="Fusion-elf-slime.html">Sylvan Protean</a> — Elf + Slime</li>
-<li><a href="Fusion-beastfolk-elf.html">Sylvan Sphinx</a> — Elf + Beastfolk</li>
-<li><a href="Fusion-elf-goblin.html">Thornsong Sovereign</a> — Elf + Goblin</li>
-<li><a href="Fusion-daemon-elf.html">Twilight Seraph</a> — Elf + Daemon</li>
-<li><a href="Fusion-elf-orc.html">Verdant Juggernaut</a> — Elf + Orc</li>
-<li><a href="Fusion-elf-giant.html">Yggdrasil Guardian</a> — Elf + Giant</li>
-<li><a href="Fusion-elf-harpy.html">Zephyr Oracle</a> — Elf + Harpy</li>
-</ul>
-<h2 id="giant-ancestry">Giant ancestry</h2>
-<ul>
-<li><a href="Fusion-giant-human.html">Atlas Ascendant</a> — Giant + Human</li>
-<li><a href="Fusion-giant-vampire.html">Bloodforge Titan</a> — Giant + Vampire</li>
-<li><a href="Fusion-giant-goblin.html">Bramble Titan</a> — Giant + Goblin</li>
-<li><a href="Fusion-beastfolk-giant.html">Fenrir Colossus</a> — Giant + Beastfolk</li>
-<li><a href="Fusion-dwarf-giant.html">Hecatoncheir</a> — Giant + Dwarf</li>
-<li><a href="Fusion-giant-ogre.html">Indra Colossus</a> — Giant + Ogre</li>
-<li><a href="Fusion-giant-lizardman.html">Jormungandr</a> — Giant + Lizardman</li>
-<li><a href="Fusion-giant-merfolk.html">Oceanus</a> — Giant + Merfolk</li>
-<li><a href="Fusion-giant-wight.html">Ossuary Colossus</a> — Giant + Wight</li>
-<li><a href="Fusion-giant-slime.html">Primordial Colossus</a> — Giant + Slime</li>
-<li><a href="Fusion-giant-harpy.html">Storm Titan</a> — Giant + Harpy</li>
-<li><a href="Fusion-daemon-giant.html">Typhon</a> — Giant + Daemon</li>
-<li><a href="Fusion-giant-orc.html">Worldbreaker</a> — Giant + Orc</li>
-<li><a href="Fusion-elf-giant.html">Yggdrasil Guardian</a> — Giant + Elf</li>
-</ul>
-<h2 id="goblin-ancestry">Goblin ancestry</h2>
-<ul>
-<li><a href="Fusion-goblin-lizardman.html">Basilisk Regent</a> — Goblin + Lizardman</li>
-<li><a href="Fusion-giant-goblin.html">Bramble Titan</a> — Goblin + Giant</li>
-<li><a href="Fusion-beastfolk-goblin.html">Briar Monarch</a> — Goblin + Beastfolk</li>
-<li><a href="Fusion-goblin-slime.html">Briar Protean</a> — Goblin + Slime</li>
-<li><a href="Fusion-goblin-human.html">Emerald Exemplar</a> — Goblin + Human</li>
-<li><a href="Fusion-dwarf-goblin.html">Gremlin Artificer</a> — Goblin + Dwarf</li>
-<li><a href="Fusion-daemon-goblin.html">Infernal Goblin King</a> — Goblin + Daemon</li>
-<li><a href="Fusion-goblin-wight.html">Ossuary Trickster</a> — Goblin + Wight</li>
-<li><a href="Fusion-goblin-merfolk.html">Reef Trickster</a> — Goblin + Merfolk</li>
-<li><a href="Fusion-goblin-vampire.html">Sanguine Puck</a> — Goblin + Vampire</li>
-<li><a href="Fusion-goblin-ogre.html">Thorncrown Asura</a> — Goblin + Ogre</li>
-<li><a href="Fusion-elf-goblin.html">Thornsong Sovereign</a> — Goblin + Elf</li>
-<li><a href="Fusion-goblin-harpy.html">Thornwing Archon</a> — Goblin + Harpy</li>
-<li><a href="Fusion-goblin-orc.html">Verdant Warlord</a> — Goblin + Orc</li>
-</ul>
-<h2 id="harpy-ancestry">Harpy ancestry</h2>
-<ul>
-<li><a href="Fusion-harpy-human.html">Celestial Valkyrie</a> — Harpy + Human</li>
-<li><a href="Fusion-harpy-slime.html">Cloudborn Protean</a> — Harpy + Slime</li>
-<li><a href="Fusion-daemon-harpy.html">Fallen Simurgh</a> — Harpy + Daemon</li>
-<li><a href="Fusion-harpy-ogre.html">Garuda Oni</a> — Harpy + Ogre</li>
-<li><a href="Fusion-beastfolk-harpy.html">Gryphon Sovereign</a> — Harpy + Beastfolk</li>
-<li><a href="Fusion-harpy-vampire.html">Nocturne Strix</a> — Harpy + Vampire</li>
-<li><a href="Fusion-harpy-wight.html">Pale Thunderbird</a> — Harpy + Wight</li>
-<li><a href="Fusion-harpy-lizardman.html">Quetzal Sovereign</a> — Harpy + Lizardman</li>
-<li><a href="Fusion-dwarf-harpy.html">Runewing Artisan</a> — Harpy + Dwarf</li>
-<li><a href="Fusion-harpy-merfolk.html">Siren Seraph</a> — Harpy + Merfolk</li>
-<li><a href="Fusion-giant-harpy.html">Storm Titan</a> — Harpy + Giant</li>
-<li><a href="Fusion-harpy-orc.html">Tempest Juggernaut</a> — Harpy + Orc</li>
-<li><a href="Fusion-goblin-harpy.html">Thornwing Archon</a> — Harpy + Goblin</li>
-<li><a href="Fusion-elf-harpy.html">Zephyr Oracle</a> — Harpy + Elf</li>
-</ul>
-<h2 id="human-ancestry">Human ancestry</h2>
-<ul>
-<li><a href="Fusion-human-orc.html">Adamant Warlord</a> — Human + Orc</li>
-<li><a href="Fusion-human-slime.html">Aeonic Protean</a> — Human + Slime</li>
-<li><a href="Fusion-elf-human.html">Astral Exemplar</a> — Human + Elf</li>
-<li><a href="Fusion-giant-human.html">Atlas Ascendant</a> — Human + Giant</li>
-<li><a href="Fusion-harpy-human.html">Celestial Valkyrie</a> — Human + Harpy</li>
-<li><a href="Fusion-human-wight.html">Deathless Exemplar</a> — Human + Wight</li>
-<li><a href="Fusion-human-lizardman.html">Dragonheart Exemplar</a> — Human + Lizardman</li>
-<li><a href="Fusion-human-vampire.html">Eclipse Sovereign</a> — Human + Vampire</li>
-<li><a href="Fusion-goblin-human.html">Emerald Exemplar</a> — Human + Goblin</li>
-<li><a href="Fusion-daemon-human.html">Empyrean Adversary</a> — Human + Daemon</li>
-<li><a href="Fusion-human-ogre.html">Heavenly Asura</a> — Human + Ogre</li>
-<li><a href="Fusion-beastfolk-human.html">Primal Paragon</a> — Human + Beastfolk</li>
-<li><a href="Fusion-dwarf-human.html">Runic Exemplar</a> — Human + Dwarf</li>
-<li><a href="Fusion-human-merfolk.html">Thalassic Exemplar</a> — Human + Merfolk</li>
-</ul>
-<h2 id="lizardman-ancestry">Lizardman ancestry</h2>
-<ul>
-<li><a href="Fusion-lizardman-merfolk.html">Azure Leviathan</a> — Lizardman + Merfolk</li>
-<li><a href="Fusion-goblin-lizardman.html">Basilisk Regent</a> — Lizardman + Goblin</li>
-<li><a href="Fusion-beastfolk-lizardman.html">Chimera Wyrm</a> — Lizardman + Beastfolk</li>
-<li><a href="Fusion-human-lizardman.html">Dragonheart Exemplar</a> — Lizardman + Human</li>
-<li><a href="Fusion-elf-lizardman.html">Elder Starwyrm</a> — Lizardman + Elf</li>
-<li><a href="Fusion-lizardman-orc.html">Ironhide Wyrm</a> — Lizardman + Orc</li>
-<li><a href="Fusion-giant-lizardman.html">Jormungandr</a> — Lizardman + Giant</li>
-<li><a href="Fusion-lizardman-slime.html">Mercurial Ouroboros</a> — Lizardman + Slime</li>
-<li><a href="Fusion-lizardman-wight.html">Ossuary Dragon</a> — Lizardman + Wight</li>
-<li><a href="Fusion-harpy-lizardman.html">Quetzal Sovereign</a> — Lizardman + Harpy</li>
-<li><a href="Fusion-dwarf-lizardman.html">Runebound Fafnir</a> — Lizardman + Dwarf</li>
-<li><a href="Fusion-lizardman-ogre.html">Ryuujin</a> — Lizardman + Ogre</li>
-<li><a href="Fusion-lizardman-vampire.html">Sanguine Wyrm</a> — Lizardman + Vampire</li>
-<li><a href="Fusion-daemon-lizardman.html">Tiamat Scion</a> — Lizardman + Daemon</li>
-</ul>
-<h2 id="merfolk-ancestry">Merfolk ancestry</h2>
-<ul>
-<li><a href="Fusion-merfolk-orc.html">Abyssal Cetus</a> — Merfolk + Orc</li>
-<li><a href="Fusion-daemon-merfolk.html">Abyssal Scylla</a> — Merfolk + Daemon</li>
-<li><a href="Fusion-merfolk-slime.html">Abyssal Undine</a> — Merfolk + Slime</li>
-<li><a href="Fusion-lizardman-merfolk.html">Azure Leviathan</a> — Merfolk + Lizardman</li>
-<li><a href="Fusion-beastfolk-merfolk.html">Leviathan Beast</a> — Merfolk + Beastfolk</li>
-<li><a href="Fusion-elf-merfolk.html">Nereid Oracle</a> — Merfolk + Elf</li>
-<li><a href="Fusion-giant-merfolk.html">Oceanus</a> — Merfolk + Giant</li>
-<li><a href="Fusion-merfolk-wight.html">Ossuary Mariner</a> — Merfolk + Wight</li>
-<li><a href="Fusion-goblin-merfolk.html">Reef Trickster</a> — Merfolk + Goblin</li>
-<li><a href="Fusion-dwarf-merfolk.html">Runic Triton</a> — Merfolk + Dwarf</li>
-<li><a href="Fusion-merfolk-vampire.html">Sanguine Siren</a> — Merfolk + Vampire</li>
-<li><a href="Fusion-harpy-merfolk.html">Siren Seraph</a> — Merfolk + Harpy</li>
-<li><a href="Fusion-human-merfolk.html">Thalassic Exemplar</a> — Merfolk + Human</li>
-<li><a href="Fusion-merfolk-ogre.html">Tidal Susanoo</a> — Merfolk + Ogre</li>
-</ul>
-<h2 id="ogre-ancestry">Ogre ancestry</h2>
-<ul>
-<li><a href="Fusion-daemon-ogre.html">Abyssal Rakshasa</a> — Ogre + Daemon</li>
-<li><a href="Fusion-ogre-vampire.html">Crimson Yaksha</a> — Ogre + Vampire</li>
-<li><a href="Fusion-harpy-ogre.html">Garuda Oni</a> — Ogre + Harpy</li>
-<li><a href="Fusion-ogre-wight.html">Gravebound Kishin</a> — Ogre + Wight</li>
-<li><a href="Fusion-human-ogre.html">Heavenly Asura</a> — Ogre + Human</li>
-<li><a href="Fusion-giant-ogre.html">Indra Colossus</a> — Ogre + Giant</li>
-<li><a href="Fusion-elf-ogre.html">Moonlit Kensei</a> — Ogre + Elf</li>
-<li><a href="Fusion-ogre-slime.html">Protean Kishin</a> — Ogre + Slime</li>
-<li><a href="Fusion-beastfolk-ogre.html">Rakshasa</a> — Ogre + Beastfolk</li>
-<li><a href="Fusion-lizardman-ogre.html">Ryuujin</a> — Ogre + Lizardman</li>
-<li><a href="Fusion-goblin-ogre.html">Thorncrown Asura</a> — Ogre + Goblin</li>
-<li><a href="Fusion-merfolk-ogre.html">Tidal Susanoo</a> — Ogre + Merfolk</li>
-<li><a href="Fusion-dwarf-ogre.html">Vajra Forgemaster</a> — Ogre + Dwarf</li>
-<li><a href="Fusion-ogre-orc.html">Warborn Ravager</a> — Ogre + Orc</li>
-</ul>
-<h2 id="orc-ancestry">Orc ancestry</h2>
-<ul>
-<li><a href="Fusion-merfolk-orc.html">Abyssal Cetus</a> — Orc + Merfolk</li>
-<li><a href="Fusion-human-orc.html">Adamant Warlord</a> — Orc + Human</li>
-<li><a href="Fusion-beastfolk-orc.html">Calydonian King</a> — Orc + Beastfolk</li>
-<li><a href="Fusion-orc-wight.html">Gravehide Colossus</a> — Orc + Wight</li>
-<li><a href="Fusion-lizardman-orc.html">Ironhide Wyrm</a> — Orc + Lizardman</li>
-<li><a href="Fusion-daemon-orc.html">Maw of Tartarus</a> — Orc + Daemon</li>
-<li><a href="Fusion-orc-vampire.html">Sanguine Behemoth</a> — Orc + Vampire</li>
-<li><a href="Fusion-harpy-orc.html">Tempest Juggernaut</a> — Orc + Harpy</li>
-<li><a href="Fusion-elf-orc.html">Verdant Juggernaut</a> — Orc + Elf</li>
-<li><a href="Fusion-goblin-orc.html">Verdant Warlord</a> — Orc + Goblin</li>
-<li><a href="Fusion-orc-slime.html">Voracious Protean</a> — Orc + Slime</li>
-<li><a href="Fusion-dwarf-orc.html">Vulcan Behemoth</a> — Orc + Dwarf</li>
-<li><a href="Fusion-ogre-orc.html">Warborn Ravager</a> — Orc + Ogre</li>
-<li><a href="Fusion-giant-orc.html">Worldbreaker</a> — Orc + Giant</li>
-</ul>
-<h2 id="slime-ancestry">Slime ancestry</h2>
-<ul>
-<li><a href="Fusion-daemon-slime.html">Abyssal Progenitor</a> — Slime + Daemon</li>
-<li><a href="Fusion-merfolk-slime.html">Abyssal Undine</a> — Slime + Merfolk</li>
-<li><a href="Fusion-human-slime.html">Aeonic Protean</a> — Slime + Human</li>
-<li><a href="Fusion-beastfolk-slime.html">Amorphous Behemoth</a> — Slime + Beastfolk</li>
-<li><a href="Fusion-goblin-slime.html">Briar Protean</a> — Slime + Goblin</li>
-<li><a href="Fusion-harpy-slime.html">Cloudborn Protean</a> — Slime + Harpy</li>
-<li><a href="Fusion-lizardman-slime.html">Mercurial Ouroboros</a> — Slime + Lizardman</li>
-<li><a href="Fusion-slime-wight.html">Ossuary Protean</a> — Slime + Wight</li>
-<li><a href="Fusion-giant-slime.html">Primordial Colossus</a> — Slime + Giant</li>
-<li><a href="Fusion-ogre-slime.html">Protean Kishin</a> — Slime + Ogre</li>
-<li><a href="Fusion-dwarf-slime.html">Quicksilver Artificer</a> — Slime + Dwarf</li>
-<li><a href="Fusion-slime-vampire.html">Sanguine Protean</a> — Slime + Vampire</li>
-<li><a href="Fusion-elf-slime.html">Sylvan Protean</a> — Slime + Elf</li>
-<li><a href="Fusion-orc-slime.html">Voracious Protean</a> — Slime + Orc</li>
-</ul>
-<h2 id="vampire-ancestry">Vampire ancestry</h2>
-<ul>
-<li><a href="Fusion-giant-vampire.html">Bloodforge Titan</a> — Vampire + Giant</li>
-<li><a href="Fusion-beastfolk-vampire.html">Bloodmoon Lycan</a> — Vampire + Beastfolk</li>
-<li><a href="Fusion-dwarf-vampire.html">Bloodrune Patriarch</a> — Vampire + Dwarf</li>
-<li><a href="Fusion-elf-vampire.html">Crimson Sidhe</a> — Vampire + Elf</li>
-<li><a href="Fusion-ogre-vampire.html">Crimson Yaksha</a> — Vampire + Ogre</li>
-<li><a href="Fusion-human-vampire.html">Eclipse Sovereign</a> — Vampire + Human</li>
-<li><a href="Fusion-vampire-wight.html">Nocturne Revenant</a> — Vampire + Wight</li>
-<li><a href="Fusion-harpy-vampire.html">Nocturne Strix</a> — Vampire + Harpy</li>
-<li><a href="Fusion-daemon-vampire.html">Sanguine Archfiend</a> — Vampire + Daemon</li>
-<li><a href="Fusion-orc-vampire.html">Sanguine Behemoth</a> — Vampire + Orc</li>
-<li><a href="Fusion-slime-vampire.html">Sanguine Protean</a> — Vampire + Slime</li>
-<li><a href="Fusion-goblin-vampire.html">Sanguine Puck</a> — Vampire + Goblin</li>
-<li><a href="Fusion-merfolk-vampire.html">Sanguine Siren</a> — Vampire + Merfolk</li>
-<li><a href="Fusion-lizardman-vampire.html">Sanguine Wyrm</a> — Vampire + Lizardman</li>
-</ul>
-<h2 id="wight-ancestry">Wight ancestry</h2>
-<ul>
-<li><a href="Fusion-human-wight.html">Deathless Exemplar</a> — Wight + Human</li>
-<li><a href="Fusion-daemon-wight.html">Erebus Sovereign</a> — Wight + Daemon</li>
-<li><a href="Fusion-ogre-wight.html">Gravebound Kishin</a> — Wight + Ogre</li>
-<li><a href="Fusion-orc-wight.html">Gravehide Colossus</a> — Wight + Orc</li>
-<li><a href="Fusion-vampire-wight.html">Nocturne Revenant</a> — Wight + Vampire</li>
-<li><a href="Fusion-giant-wight.html">Ossuary Colossus</a> — Wight + Giant</li>
-<li><a href="Fusion-lizardman-wight.html">Ossuary Dragon</a> — Wight + Lizardman</li>
-<li><a href="Fusion-beastfolk-wight.html">Ossuary Fenrir</a> — Wight + Beastfolk</li>
-<li><a href="Fusion-merfolk-wight.html">Ossuary Mariner</a> — Wight + Merfolk</li>
-<li><a href="Fusion-slime-wight.html">Ossuary Protean</a> — Wight + Slime</li>
-<li><a href="Fusion-dwarf-wight.html">Ossuary Runesmith</a> — Wight + Dwarf</li>
-<li><a href="Fusion-goblin-wight.html">Ossuary Trickster</a> — Wight + Goblin</li>
-<li><a href="Fusion-elf-wight.html">Pale Star Oracle</a> — Wight + Elf</li>
-<li><a href="Fusion-harpy-wight.html">Pale Thunderbird</a> — Wight + Harpy</li>
-</ul>
-<h2 id="boss-lineages">Boss lineages</h2>
-<p><a href="Eclipse-Seraph.html">Eclipse Seraph</a> belongs to the Myth <a href="Ananke.html">Ananke</a>. It has no player reincarnation, secondary-race or Convergent route. The boss entity supplies its encounter stats.</p>
-</div><nav class="related-box" aria-label="Related races"><strong>Tensura Myths · Races</strong><div class="navbox-row"><strong>Race directory</strong><div><a href="../site/Races.html" aria-current="page">Race directory</a></div></div><div class="navbox-row"><strong>Race systems</strong><div><a href="../site/Duo-Races.html">Duo Races</a><a href="../site/Convergent-Awakening.html">Convergent Awakening</a></div></div><div class="navbox-row"><strong>Human / Hunter</strong><div><a href="../site/Evolution.html">Human evolution</a><a href="../site/Awakened-Hunter.html">Awakened Hunter</a><a href="../site/Apex-Hunter.html">Apex Hunter</a><a href="../site/Sovereign-Hunter.html">Sovereign Hunter</a></div></div></nav>
-<div class="categories">Categories: <a href="../index.html">Tensura Myths</a> · <a href="../site/Races.html">Races</a></div>
-<footer>Unofficial fan addon. Original documentation and portraits. Not affiliated with Capcom or ManasMods.<br>Tensura Myths 0.36.1 · Offline edition · No external services required.</footer></main></div></body></html>
+<p>There are 105 unordered ancestry pairs. Reversing primary/secondary order produces the same final race.</p>
+<div class="article-table"><table>
+<thead>
+<tr>
+<th>Ancestries</th>
+<th>Final race</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Beastfolk + Daemon</td>
+<td><a href="Fusion-beastfolk-daemon.html">Abyssal Chimera</a></td>
+</tr>
+<tr>
+<td>Beastfolk + Dwarf</td>
+<td><a href="Fusion-beastfolk-dwarf.html">Adamant Manticore</a></td>
+</tr>
+<tr>
+<td>Beastfolk + Elf</td>
+<td><a href="Fusion-beastfolk-elf.html">Sylvan Sphinx</a></td>
+</tr>
+<tr>
+<td>Beastfolk + Giant</td>
+<td><a href="Fusion-beastfolk-giant.html">Fenrir Colossus</a></td>
+</tr>
+<tr>
+<td>Beastfolk + Goblin</td>
+<td><a href="Fusion-beastfolk-goblin.html">Briar Monarch</a></td>
+</tr>
+<tr>
+<td>Beastfolk + Harpy</td>
+<td><a href="Fusion-beastfolk-harpy.html">Gryphon Sovereign</a></td>
+</tr>
+<tr>
+<td>Beastfolk + Human</td>
+<td><a href="Fusion-beastfolk-human.html">Primal Paragon</a></td>
+</tr>
+<tr>
+<td>Beastfolk + Lizardman</td>
+<td><a href="Fusion-beastfolk-lizardman.html">Chimera Wyrm</a></td>
+</tr>
+<tr>
+<td>Beastfolk + Merfolk</td>
+<td><a href="Fusion-beastfolk-merfolk.html">Leviathan Beast</a></td>
+</tr>
+<tr>
+<td>Beastfolk + Ogre</td>
+<td><a href="Fusion-beastfolk-ogre.html">Rakshasa</a></td>
+</tr>
+<tr>
+<td>Beastfolk + Orc</td>
+<td><a href="Fusion-beastfolk-orc.html">Calydonian King</a></td>
+</tr>
+<tr>
+<td>Beastfolk + Slime</td>
+<td><a href="Fusion-beastfolk-slime.html">Amorphous Behemoth</a></td>
+</tr>
+<tr>
+<td>Beastfolk + Vampire</td>
+<td><a href="Fusion-beastfolk-vampire.html">Bloodmoon Lycan</a></td>
+</tr>
+<tr>
+<td>Beastfolk + Wight</td>
+<td><a href="Fusion-beastfolk-wight.html">Ossuary Fenrir</a></td>
+</tr>
+<tr>
+<td>Daemon + Dwarf</td>
+<td><a href="Fusion-daemon-dwarf.html">Infernal Forgemaster</a></td>
+</tr>
+<tr>
+<td>Daemon + Elf</td>
+<td><a href="Fusion-daemon-elf.html">Twilight Seraph</a></td>
+</tr>
+<tr>
+<td>Daemon + Giant</td>
+<td><a href="Fusion-daemon-giant.html">Typhon</a></td>
+</tr>
+<tr>
+<td>Daemon + Goblin</td>
+<td><a href="Fusion-daemon-goblin.html">Infernal Goblin King</a></td>
+</tr>
+<tr>
+<td>Daemon + Harpy</td>
+<td><a href="Fusion-daemon-harpy.html">Fallen Simurgh</a></td>
+</tr>
+<tr>
+<td>Daemon + Human</td>
+<td><a href="Fusion-daemon-human.html">Empyrean Adversary</a></td>
+</tr>
+<tr>
+<td>Daemon + Lizardman</td>
+<td><a href="Fusion-daemon-lizardman.html">Tiamat Scion</a></td>
+</tr>
+<tr>
+<td>Daemon + Merfolk</td>
+<td><a href="Fusion-daemon-merfolk.html">Abyssal Scylla</a></td>
+</tr>
+<tr>
+<td>Daemon + Ogre</td>
+<td><a href="Fusion-daemon-ogre.html">Abyssal Rakshasa</a></td>
+</tr>
+<tr>
+<td>Daemon + Orc</td>
+<td><a href="Fusion-daemon-orc.html">Maw of Tartarus</a></td>
+</tr>
+<tr>
+<td>Daemon + Slime</td>
+<td><a href="Fusion-daemon-slime.html">Abyssal Progenitor</a></td>
+</tr>
+<tr>
+<td>Daemon + Vampire</td>
+<td><a href="Fusion-daemon-vampire.html">Sanguine Archfiend</a></td>
+</tr>
+<tr>
+<td>Daemon + Wight</td>
+<td><a href="Fusion-daemon-wight.html">Erebus Sovereign</a></td>
+</tr>
+<tr>
+<td>Dwarf + Elf</td>
+<td><a href="Fusion-dwarf-elf.html">Aetherforged Oracle</a></td>
+</tr>
+<tr>
+<td>Dwarf + Giant</td>
+<td><a href="Fusion-dwarf-giant.html">Hecatoncheir</a></td>
+</tr>
+<tr>
+<td>Dwarf + Goblin</td>
+<td><a href="Fusion-dwarf-goblin.html">Gremlin Artificer</a></td>
+</tr>
+<tr>
+<td>Dwarf + Harpy</td>
+<td><a href="Fusion-dwarf-harpy.html">Runewing Artisan</a></td>
+</tr>
+<tr>
+<td>Dwarf + Human</td>
+<td><a href="Fusion-dwarf-human.html">Runic Exemplar</a></td>
+</tr>
+<tr>
+<td>Dwarf + Lizardman</td>
+<td><a href="Fusion-dwarf-lizardman.html">Runebound Fafnir</a></td>
+</tr>
+<tr>
+<td>Dwarf + Merfolk</td>
+<td><a href="Fusion-dwarf-merfolk.html">Runic Triton</a></td>
+</tr>
+<tr>
+<td>Dwarf + Ogre</td>
+<td><a href="Fusion-dwarf-ogre.html">Vajra Forgemaster</a></td>
+</tr>
+<tr>
+<td>Dwarf + Orc</td>
+<td><a href="Fusion-dwarf-orc.html">Vulcan Behemoth</a></td>
+</tr>
+<tr>
+<td>Dwarf + Slime</td>
+<td><a href="Fusion-dwarf-slime.html">Quicksilver Artificer</a></td>
+</tr>
+<tr>
+<td>Dwarf + Vampire</td>
+<td><a href="Fusion-dwarf-vampire.html">Bloodrune Patriarch</a></td>
+</tr>
+<tr>
+<td>Dwarf + Wight</td>
+<td><a href="Fusion-dwarf-wight.html">Ossuary Runesmith</a></td>
+</tr>
+<tr>
+<td>Elf + Giant</td>
+<td><a href="Fusion-elf-giant.html">Yggdrasil Guardian</a></td>
+</tr>
+<tr>
+<td>Elf + Goblin</td>
+<td><a href="Fusion-elf-goblin.html">Thornsong Sovereign</a></td>
+</tr>
+<tr>
+<td>Elf + Harpy</td>
+<td><a href="Fusion-elf-harpy.html">Zephyr Oracle</a></td>
+</tr>
+<tr>
+<td>Elf + Human</td>
+<td><a href="Fusion-elf-human.html">Astral Exemplar</a></td>
+</tr>
+<tr>
+<td>Elf + Lizardman</td>
+<td><a href="Fusion-elf-lizardman.html">Elder Starwyrm</a></td>
+</tr>
+<tr>
+<td>Elf + Merfolk</td>
+<td><a href="Fusion-elf-merfolk.html">Nereid Oracle</a></td>
+</tr>
+<tr>
+<td>Elf + Ogre</td>
+<td><a href="Fusion-elf-ogre.html">Moonlit Kensei</a></td>
+</tr>
+<tr>
+<td>Elf + Orc</td>
+<td><a href="Fusion-elf-orc.html">Verdant Juggernaut</a></td>
+</tr>
+<tr>
+<td>Elf + Slime</td>
+<td><a href="Fusion-elf-slime.html">Sylvan Protean</a></td>
+</tr>
+<tr>
+<td>Elf + Vampire</td>
+<td><a href="Fusion-elf-vampire.html">Crimson Sidhe</a></td>
+</tr>
+<tr>
+<td>Elf + Wight</td>
+<td><a href="Fusion-elf-wight.html">Pale Star Oracle</a></td>
+</tr>
+<tr>
+<td>Giant + Goblin</td>
+<td><a href="Fusion-giant-goblin.html">Bramble Titan</a></td>
+</tr>
+<tr>
+<td>Giant + Harpy</td>
+<td><a href="Fusion-giant-harpy.html">Storm Titan</a></td>
+</tr>
+<tr>
+<td>Giant + Human</td>
+<td><a href="Fusion-giant-human.html">Atlas Ascendant</a></td>
+</tr>
+<tr>
+<td>Giant + Lizardman</td>
+<td><a href="Fusion-giant-lizardman.html">Jormungandr</a></td>
+</tr>
+<tr>
+<td>Giant + Merfolk</td>
+<td><a href="Fusion-giant-merfolk.html">Oceanus</a></td>
+</tr>
+<tr>
+<td>Giant + Ogre</td>
+<td><a href="Fusion-giant-ogre.html">Indra Colossus</a></td>
+</tr>
+<tr>
+<td>Giant + Orc</td>
+<td><a href="Fusion-giant-orc.html">Worldbreaker</a></td>
+</tr>
+<tr>
+<td>Giant + Slime</td>
+<td><a href="Fusion-giant-slime.html">Primordial Colossus</a></td>
+</tr>
+<tr>
+<td>Giant + Vampire</td>
+<td><a href="Fusion-giant-vampire.html">Bloodforge Titan</a></td>
+</tr>
+<tr>
+<td>Giant + Wight</td>
+<td><a href="Fusion-giant-wight.html">Ossuary Colossus</a></td>
+</tr>
+<tr>
+<td>Goblin + Harpy</td>
+<td><a href="Fusion-goblin-harpy.html">Thornwing Archon</a></td>
+</tr>
+<tr>
+<td>Goblin + Human</td>
+<td><a href="Fusion-goblin-human.html">Emerald Exemplar</a></td>
+</tr>
+<tr>
+<td>Goblin + Lizardman</td>
+<td><a href="Fusion-goblin-lizardman.html">Basilisk Regent</a></td>
+</tr>
+<tr>
+<td>Goblin + Merfolk</td>
+<td><a href="Fusion-goblin-merfolk.html">Reef Trickster</a></td>
+</tr>
+<tr>
+<td>Goblin + Ogre</td>
+<td><a href="Fusion-goblin-ogre.html">Thorncrown Asura</a></td>
+</tr>
+<tr>
+<td>Goblin + Orc</td>
+<td><a href="Fusion-goblin-orc.html">Verdant Warlord</a></td>
+</tr>
+<tr>
+<td>Goblin + Slime</td>
+<td><a href="Fusion-goblin-slime.html">Briar Protean</a></td>
+</tr>
+<tr>
+<td>Goblin + Vampire</td>
+<td><a href="Fusion-goblin-vampire.html">Sanguine Puck</a></td>
+</tr>
+<tr>
+<td>Goblin + Wight</td>
+<td><a href="Fusion-goblin-wight.html">Ossuary Trickster</a></td>
+</tr>
+<tr>
+<td>Harpy + Human</td>
+<td><a href="Fusion-harpy-human.html">Celestial Valkyrie</a></td>
+</tr>
+<tr>
+<td>Harpy + Lizardman</td>
+<td><a href="Fusion-harpy-lizardman.html">Quetzal Sovereign</a></td>
+</tr>
+<tr>
+<td>Harpy + Merfolk</td>
+<td><a href="Fusion-harpy-merfolk.html">Siren Seraph</a></td>
+</tr>
+<tr>
+<td>Harpy + Ogre</td>
+<td><a href="Fusion-harpy-ogre.html">Garuda Oni</a></td>
+</tr>
+<tr>
+<td>Harpy + Orc</td>
+<td><a href="Fusion-harpy-orc.html">Tempest Juggernaut</a></td>
+</tr>
+<tr>
+<td>Harpy + Slime</td>
+<td><a href="Fusion-harpy-slime.html">Cloudborn Protean</a></td>
+</tr>
+<tr>
+<td>Harpy + Vampire</td>
+<td><a href="Fusion-harpy-vampire.html">Nocturne Strix</a></td>
+</tr>
+<tr>
+<td>Harpy + Wight</td>
+<td><a href="Fusion-harpy-wight.html">Pale Thunderbird</a></td>
+</tr>
+<tr>
+<td>Human + Lizardman</td>
+<td><a href="Fusion-human-lizardman.html">Dragonheart Exemplar</a></td>
+</tr>
+<tr>
+<td>Human + Merfolk</td>
+<td><a href="Fusion-human-merfolk.html">Thalassic Exemplar</a></td>
+</tr>
+<tr>
+<td>Human + Ogre</td>
+<td><a href="Fusion-human-ogre.html">Heavenly Asura</a></td>
+</tr>
+<tr>
+<td>Human + Orc</td>
+<td><a href="Fusion-human-orc.html">Adamant Warlord</a></td>
+</tr>
+<tr>
+<td>Human + Slime</td>
+<td><a href="Fusion-human-slime.html">Aeonic Protean</a></td>
+</tr>
+<tr>
+<td>Human + Vampire</td>
+<td><a href="Fusion-human-vampire.html">Eclipse Sovereign</a></td>
+</tr>
+<tr>
+<td>Human + Wight</td>
+<td><a href="Fusion-human-wight.html">Deathless Exemplar</a></td>
+</tr>
+<tr>
+<td>Lizardman + Merfolk</td>
+<td><a href="Fusion-lizardman-merfolk.html">Azure Leviathan</a></td>
+</tr>
+<tr>
+<td>Lizardman + Ogre</td>
+<td><a href="Fusion-lizardman-ogre.html">Ryuujin</a></td>
+</tr>
+<tr>
+<td>Lizardman + Orc</td>
+<td><a href="Fusion-lizardman-orc.html">Ironhide Wyrm</a></td>
+</tr>
+<tr>
+<td>Lizardman + Slime</td>
+<td><a href="Fusion-lizardman-slime.html">Mercurial Ouroboros</a></td>
+</tr>
+<tr>
+<td>Lizardman + Vampire</td>
+<td><a href="Fusion-lizardman-vampire.html">Sanguine Wyrm</a></td>
+</tr>
+<tr>
+<td>Lizardman + Wight</td>
+<td><a href="Fusion-lizardman-wight.html">Ossuary Dragon</a></td>
+</tr>
+<tr>
+<td>Merfolk + Ogre</td>
+<td><a href="Fusion-merfolk-ogre.html">Tidal Susanoo</a></td>
+</tr>
+<tr>
+<td>Merfolk + Orc</td>
+<td><a href="Fusion-merfolk-orc.html">Abyssal Cetus</a></td>
+</tr>
+<tr>
+<td>Merfolk + Slime</td>
+<td><a href="Fusion-merfolk-slime.html">Abyssal Undine</a></td>
+</tr>
+<tr>
+<td>Merfolk + Vampire</td>
+<td><a href="Fusion-merfolk-vampire.html">Sanguine Siren</a></td>
+</tr>
+<tr>
+<td>Merfolk + Wight</td>
+<td><a href="Fusion-merfolk-wight.html">Ossuary Mariner</a></td>
+</tr>
+<tr>
+<td>Ogre + Orc</td>
+<td><a href="Fusion-ogre-orc.html">Warborn Ravager</a></td>
+</tr>
+<tr>
+<td>Ogre + Slime</td>
+<td><a href="Fusion-ogre-slime.html">Protean Kishin</a></td>
+</tr>
+<tr>
+<td>Ogre + Vampire</td>
+<td><a href="Fusion-ogre-vampire.html">Crimson Yaksha</a></td>
+</tr>
+<tr>
+<td>Ogre + Wight</td>
+<td><a href="Fusion-ogre-wight.html">Gravebound Kishin</a></td>
+</tr>
+<tr>
+<td>Orc + Slime</td>
+<td><a href="Fusion-orc-slime.html">Voracious Protean</a></td>
+</tr>
+<tr>
+<td>Orc + Vampire</td>
+<td><a href="Fusion-orc-vampire.html">Sanguine Behemoth</a></td>
+</tr>
+<tr>
+<td>Orc + Wight</td>
+<td><a href="Fusion-orc-wight.html">Gravehide Colossus</a></td>
+</tr>
+<tr>
+<td>Slime + Vampire</td>
+<td><a href="Fusion-slime-vampire.html">Sanguine Protean</a></td>
+</tr>
+<tr>
+<td>Slime + Wight</td>
+<td><a href="Fusion-slime-wight.html">Ossuary Protean</a></td>
+</tr>
+<tr>
+<td>Vampire + Wight</td>
+<td><a href="Fusion-vampire-wight.html">Nocturne Revenant</a></td>
+</tr>
+</tbody>
+</table></div></div><footer>Unofficial addon reference · Default gameplay values · Pictures and videos illustrate their recorded versions.<br>Original addon artwork. Not affiliated with ManasMods or Capcom.</footer></main></div></body></html>

@@ -1,120 +1,52 @@
 # Black Flame
 
-[Main Page](../README.md) · [Skills](Skills.md) · [Ability index](Abilities.md) · [Damage types](Damage-Types.md)
+[All wikis](../README.md) · [Tensura Myths](Tensura-Myths.md)
 
-**Black Flame** is a Unique Skill inspired by **Nu Udra**. It uses visible oil tentacles to pull targets into burning ground.
+Black Flame is a Unique Skill inspired by Nu Udra. It uses visible oil tentacles to pull targets into burning ground.
 
-![Black Flame](../../src/main/resources/assets/wildhunt/textures/skill/black_flame.png)
+![Black Flame icon](../assets/skill/black_flame.png)
 
-| Skill data | Black Flame |
+| Skill data | Value |
 | --- | --- |
-| **Information** | |
-| Type | Unique Skill |
-| Inspiration | Nu Udra |
+| Tier | Unique |
 | Damage type | Fire elemental |
-| Damage ID | `tensura:fire_elemental` |
-| Additional status damage | Black Burn — `tensura:black_flame` |
-| Combat role | Tentacle pulls / burning ground |
-| Active modes | 2 |
-| Toggleable passive | Furnace Mantle |
+| Additional status damage | Black Burn — tensura:blackflame |
 | Passive upkeep | 35 aura / second |
-| Registry ID | `wildhunt:black_flame` |
-| **Evolution** | |
-| Previous | — |
-| Evolution | [Vritra](Vritra.md), with mastered Storm Crown |
-| **Obtaining** | |
-| Method | Reincarnation / starting skill roll |
+| Obtaining | Reincarnation / starting skill roll |
 
-All damaging arts in this skill use **fire elemental damage**, including its area hits and pulses.
 
-## Usage
+## Active abilities
 
-### Passive
+| Ability | Damage type / base damage | Cost | Cooldown |
+| --- | --- | --- | --- |
+| Oil Lash | Fire elemental · 260 | 550 aura | 3 s |
+| Blackflame Ignition | Fire elemental · 350 | 1,600 aura | 7 s |
 
-[Passive - Toggle] — **Furnace Mantle**
 
-| Ability information | Value |
-| --- | --- |
-| Damage type | None — support / defense |
-| Damage ID | — |
-| Effect | No direct damage; modifies the caster’s attributes or defenses. |
+## Passive
 
-While toggled on, gain 8 armor, 50% melee attack and 50% flame boost. Fire-tagged damage is resisted while the passive is enabled, preserving its fire-protection utility without a lingering potion. Melee attacks do not coat targets or accumulate oil. This is an offensive passive, not an extra ignition step.
+Damage type: None — support / defense
 
-Elemental boosts use the [strongest ordinary source](Mechanics.md#elemental-bonus-sources); Godly bonuses apply separately.
+While toggled on, gain 8 armor, 50% melee attack and 50% flame boost. Fire-tagged damage is resisted while the passive is enabled, preserving its fire-protection utility without a lingering potion.
 
-Enable or disable this through Tensura’s native **Ability Selection** skill toggle. It is separate from active mode cycling and has no fifteen/thirty-second duration. Upkeep is **35 aura per second**, with the first second paid on enabling. It turns off when aura is insufficient or activation requirements fail. Turning it off removes its own attribute modifiers immediately.
 
-### Active
+## Oil Lash
 
-| Mode | Aura | Cooldown | Raw opening damage |
-| --- | ---: | ---: | ---: |
-| 1. Oil Lash | 550 | 3 s | 260 |
-| 2. Blackflame Ignition | 1,600 | 7 s | 350 |
+- Damage type: Fire elemental
+- Additional status damage: Black Burn — tensura:blackflame
+- Lash up to 4 enemies in a forward fan within 14 blocks and pull them toward you. Each lash has a synced three-dimensional tapered tentacle with a dark body and glowing orange bands.
 
-**Damage calculation:** multiply the listed base values by **1 + 0.5 × mastery fraction**, up to **1.50×**. Elemental boosts, defenses, barriers, and situational modifiers also apply. EP does not multiply damage.
+## Blackflame Ignition
 
-#### Oil Lash
+- Damage type: Fire elemental
+- Additional status damage: Black Burn — tensura:blackflame
+- Additional status damage: Black Burn: tensura:blackflame (details)
+- Ignite valid owned pools for six seconds. Each affects a 3-block radius; overlapping pools cannot damage one enemy twice in a pulse.
 
-[Active - Press] — **Oil Lash**
+## Related
 
-| Ability information | Value |
-| --- | --- |
-| Damage type | [Fire elemental](Damage-Types.md#fire) |
-| Damage ID | `tensura:fire_elemental` |
-| Additional status damage | Black Burn — `tensura:black_flame` |
-| Effect | Direct hits use this native element. |
+[Skill synthesis](Skill-Synthesis.md) · [Godly Skills](Godly.md)
 
-Lash up to 4 enemies in a forward fan within 14 blocks and pull them toward you. Each lash has a synced three-dimensional tapered tentacle with a dark body and glowing orange bands. It extends, curls and recoils over sixteen ticks. A missed cast still shows a tentacle sweep. Leave a pool at the final victim’s location, or at the aim point about ten blocks away on a miss. Maintain up to 3 pools; the oldest is replaced first.
+## Pictures and video
 
-#### Blackflame Ignition
-
-[Active - Press] — **Blackflame Ignition**
-
-| Ability information | Value |
-| --- | --- |
-| Damage type | [Fire elemental](Damage-Types.md#fire) |
-| Damage ID | `tensura:fire_elemental` |
-| Additional status damage | Black Burn — `tensura:black_flame` |
-| Effect | Direct hits use this native element. |
-| Additional status damage | Black Burn: `tensura:black_flame` ([details](Damage-Types.md#black-burn)) |
-
-Ignite valid owned pools for six seconds. Each affects a 3-block radius; overlapping pools cannot damage one enemy twice in a pulse. Opening damage is immediate and fixed, with no oil-stack multiplier. Later pulses deal 75 raw damage once per second and apply native Black Burn. If no valid controllable pool exists, place a fallback pool at the aim point up to six blocks away.
-
-## Obtaining
-
-Roll through Tensura’s normal reincarnation system. These Uniques join the configured primary pool; no particular roll is guaranteed. There are no skill trials, boss-awarded skills or race requirements to roll.
-
-## Evolution
-
-Combine the mastered skill with a mastered **Storm Crown** at **2M total EP** to create [Vritra](Vritra.md), using **Skills → Ultimate → Synthesis**. Both ingredients are replaced and presets/cooldowns carry over. No race requirement applies.
-
-## Suggested combo
-
-Use Oil Lash to pull a victim and place a pool → ignite the pool. Cover likely escape routes with separate pools instead of farming stacks or overlapping them for duplicate damage.
-
-## Strengths and limitations
-
-Pools are world locations, not status stacks on enemies. Unlit pools expire after fifteen seconds; ordinary ignition burns for six. Only your pools in the same dimension and within thirty-two blocks can be controlled. Native Black Burn and forced movement may be resisted.
-
-## In-game preview
-
-![Oil Lash tentacles](../media/oil-lash.png)
-
-In-game example of the active art.
-
-## Related pages
-
-[Skills](Skills.md) · [Mechanics](Mechanics.md) · [Evolution](Evolution.md) · [Commands](Commands.md)
-
-## Visual effects
-
-Oil Lash extends and recoils as a curved, tapered tentacle with suckers and molten seams. Each owned pool has an irregular dark oil surface. Ignition transforms that same surface into black flame silhouettes, violet inner fire, orange hot cores and rising soot; the surface fades when its pool ends.
-
-![An ignited oil pool with dark flames and violet cores](../media/visual-black-flame.png)
-
-[Visual effects gallery and display settings](Visual-Effects.md).
-
----
-
-**Categories:** Tensura Myths · Skills
+![Black Flame — oil lash](../media/oil-lash.png)

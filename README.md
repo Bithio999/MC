@@ -141,7 +141,9 @@ The [changelog](docs/CHANGELOG.md) records development changes separately from t
 
 ## Wiki
 
-Read the [Tensura Myths Wiki](wiki/README.md) for individual skill/race articles, per-ability damage types, progression and commands. [Download the styled offline edition](releases/tensura-myths-wiki-0.36.1.zip), extract it and open `index.html` for the wiki layout, infoboxes, screenshots and offline search. The [GitHub Wiki edition](wiki/github/Home.md) is prepared for the separate Wiki when it is available; [publishing instructions](docs/WIKI.md).
+[Choose your addon](wiki/README.md): **[Tensura Myths](wiki/pages/Tensura-Myths.md)** or **[TensuraAdditionalAdditions](wiki/pages/TensuraAdditionalAdditions.md)**. Each section has its own navigation, concise skill/race entries, damage types and related pictures/videos.
+
+[Download both styled wikis](releases/tensura-addon-wikis.zip), extract the ZIP and open `index.html`. Search is scoped to the selected addon. The [GitHub Wiki export](wiki/github/Home.md) is ready for the separate Wiki repository when accessible. [Authoring and publishing](docs/WIKI.md).
 
 ## Build and test
 

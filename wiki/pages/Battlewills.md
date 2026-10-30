@@ -1,19 +1,9 @@
 # Battlewills
 
-[Main Page](../README.md) · [Skills](Skills.md) · [Ability index](Abilities.md)
+[All wikis](../README.md) · [Tensura Myths](Tensura-Myths.md)
 
-**Battlewills** are martial arts that use aura. Tensura Myths integrates its arts into Tensura’s native Battlewill category, learning and mastery systems.
-
-| Predecessor | Evolution | Requirement | Function | Damage type |
-| --- | --- | --- | --- | --- |
-| None | [Schema](Schema.md) | 1,000 learning points; 2,000 mastery | Build and toggle a six-effect Schema Tree | None |
-| Instant Move (`tensura:instant_move`) | [Instant Transmission](Instant-Transmission.md) | Master the permanent predecessor; complete native learning | Coordinate self-teleportation: 100 ticks, instant at mastery; 10 aura/block, 5 mastered | None |
-| Air Float / Air Flight (`tensura:air_flight`) | [Air Walk](Air-Walk.md) | Master the permanent predecessor; complete native learning | Press-controlled free flight using aura | None |
-
-The predecessor stays available when its evolution is unlocked. Temporary or copied sub-instances cannot unlock permanent progression. Existing masters receive the learnable evolution automatically.
-
-[Chained](Chained.md) allows Battlewills and provides its normal learning/mastery bonuses to them. Movement arts that deal no damage gain no additional damage from the Battlewill damage multiplier.
-
----
-
-**Categories:** Tensura Myths · Battlewills
+| Art | Obtaining | Use |
+| --- | --- | --- |
+| [Schema](Schema.md) | Learn: 1,000; master: 2,000 | Build a six-effect tree; toggle to apply it. |
+| [Air Walk](Air-Walk.md) | Master Air Float / Air Flight | Aura-powered free flight. |
+| [Instant Transmission](Instant-Transmission.md) | Master Instant Move | Enter coordinates for self-teleportation. |

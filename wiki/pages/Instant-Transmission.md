@@ -1,65 +1,36 @@
 # Instant Transmission
 
-[Main Page](../README.md) · [Battlewills](Battlewills.md) · [Chained](Chained.md)
+[All wikis](../README.md) · [Tensura Myths](Tensura-Myths.md)
 
-**Instant Transmission** is the Battlewill evolution of **Instant Move**. Enter **X, Y and Z** in Tensura’s native Spatial Movement screen to transmit yourself to those coordinates. Aura replaces Spatial Motion’s magicule payment; the art grants self-teleportation within your current dimension.
+A Battlewill evolution of Instant Move for coordinate self-teleportation.
 
-| Skill data | Instant Transmission |
+| Skill data | Value |
 | --- | --- |
-| **Information** | |
-| Classification | Battlewill |
-| Registry ID | `wildhunt:instant_transmission` |
-| Standalone ID | `heavenlyrestriction:instant_transmission` |
-| Predecessor | Instant Move (`tensura:instant_move`) |
-| Acquisition | Master the permanent predecessor; complete native learning |
-| Maximum mastery | 400 |
-| Active mode | Instant Transmission |
-| Resource | Aura only |
+| Tier | Battlewill |
 | Damage type | None |
-| Damage ID | None |
 
-![Native Instant Transmission coordinate screen in Neo Otherworld](../media/instant-transmission-coordinates.png)
 
-## Obtaining
+## Learn
 
-Master a permanent, independent **Instant Move** to unlock a **learning entry** in Tensura’s normal Battlewill menu. Complete the entry’s learning to use it. Instant Move remains available; discovering the evolution does not replace your existing presets.
+Master your permanent Instant Move, then complete its evolution’s learning entry.
 
-Players who already mastered Instant Move receive the entry on login or the next progression check. Existing progress is preserved. Temporary, detached and sub-instance copies do not unlock permanent progression. Any eligible race can learn the art, including [Chained](Chained.md)/[Unbound](Unbound.md) users, who receive their normal Battlewill training bonuses.
 
-## Usage
+## Use
 
-### Instant Transmission
+Press to enter X, Y and Z, then choose Warp. Only you travel, within the current dimension; it does not create portals.
 
-[Active - Press] — **Instant Transmission**
+Charge: 100 ticks / 5 seconds; instant at mastery. Cost: 10 aura per block of 3D distance, halved to 5 at mastery. Opening the menu is free.
 
-| Ability information | Value |
-| --- | --- |
-| Damage type | None |
-| Damage ID | None |
-| Normal charge | **100 ticks / 5 seconds** after coordinate confirmation |
-| Mastered charge | **Instant** |
-| Normal cost | **10 aura × distance in blocks** |
-| Mastered cost | **5 aura × distance in blocks** |
-| Distance | Straight-line three-dimensional distance from the caster at confirmation |
-| Magicule cost | **0** |
-| Menu-opening cost | **0** |
-| Cooldown | None; one pending charge per caster |
-| Targets | Caster only |
-| Dimensions | Current dimension only; native spatial restrictions apply |
-| Portal creation | Unavailable |
 
-Press the art, enter the coordinates and use the native **Warp** button. The aura payment occurs once when the server accepts your confirmation. A normal cast then charges for 100 ticks with spatial particles and a countdown; mastery removes that wait and halves the price. You may move during the windup, as with Spatial Motion; the confirmed destination and quoted distance stay fixed.
+## Limits
 
-For example, travelling **100 blocks** costs **1,000 aura**, or **500 aura** when mastered. A displacement of **3 blocks in X and 4 in Z** is **5 blocks**, costing **50 aura** or **25 aura** when mastered.
+Native spatial blocks still apply. Invalid or unfunded requests do not start a cast. Losing the skill, dying, logging out or changing dimension cancels a pending cast; a started cast has already paid.
 
-The native screen retains its existing coordinate/warp-point controls. The portal action is disabled and rejected by the server. No portal entity or other transported target is created.
-
-## Restrictions
-
-The server validates ownership, completed learning, available aura, finite coordinates, the world border and the destination dimension. Magicules cannot pay an aura shortfall. Repeating the request during a charge does not pay again or replace its destination; requesting the current position does not generate free mastery.
-
-Spatial Blockade, native interaction/interference rules and applicable area restrictions can prevent or interrupt transmission. Death, logout, dimension changes, forgetting the art or losing valid ownership end a pending charge. The startup payment is already spent when interrupted, as with native Spatial Motion. Native spatial events can also cancel or redirect the final teleport.
 
 ## Related
 
-[Battlewills](Battlewills.md) · [Air Walk](Air-Walk.md) · [Chained](Chained.md) · [Unbound](Unbound.md) · [Damage types](Damage-Types.md)
+[Air Walk](Air-Walk.md) · [Schema](Schema.md)
+
+## Pictures and video
+
+![Instant Transmission — instant transmission coordinates](../media/instant-transmission-coordinates.png)

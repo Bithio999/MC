@@ -23,14 +23,16 @@ function search() {
   input.removeAttribute('aria-activedescendant');
   const query = input.value.trim().toLocaleLowerCase();
   if (!query) { closeResults(); status.textContent = ''; return; }
-  const matches = (window.WIKI_PAGES || []).map(page => ({page,
-    score: page.title.toLocaleLowerCase().includes(query) ? 2 :
+  const scope = document.body.dataset.mod || 'all';
+  const matches = (window.WIKI_PAGES || []).filter(page => scope === 'all' || page.mod === scope).map(page => ({page,
+    score: page.title.toLocaleLowerCase() === query ? 4 : page.title.toLocaleLowerCase().includes(query) ? 3 :
       (page.keywords || '').toLocaleLowerCase().includes(query) ? 1 : 0
   })).filter(match => match.score).sort((a, b) => b.score - a.score).slice(0, 8);
   for (const {page} of matches) {
     const anchor = document.createElement('a');
     anchor.href = document.body.dataset.root + 'site/' + page.slug + '.html' + (page.anchor ? '#' + page.anchor : '');
     anchor.textContent = page.title;
+    if (scope === 'all') { const badge = document.createElement('small'); badge.className = 'search-result-mod'; badge.textContent = page.mod === 'myths' ? 'Tensura Myths' : 'TensuraAdditionalAdditions'; anchor.append(badge); }
     anchor.id = 'search-result-' + results.children.length;
     anchor.setAttribute('role', 'option');
     anchor.setAttribute('aria-selected', 'false');

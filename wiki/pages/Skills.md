@@ -1,46 +1,17 @@
 # Skills
 
-[Main Page](../README.md) · [Skills](Skills.md) · [Ability index](Abilities.md) · [Damage types](Damage-Types.md)
+[All wikis](../README.md) · [Tensura Myths](Tensura-Myths.md)
 
-**Tensura Myths** provides **eight rollable Unique Skills, the race-exclusive Chained, five combination Ultimates, three Godly Skills, three aura recovery Extra Skills and three Battlewills: Air Walk, Instant Transmission and Schema**.
+Equip active arts and toggle passives in Tensura’s skill menu. Toggle upkeep is paid while enabled; unfunded passives turn off.
 
-## Skill tiers
-
-| Tier | Skills | Obtaining | Resource |
-| --- | --- | --- | --- |
-| [Unique](Unique-Skills.md) | Storm Crown, Scarlet Deluge, Black Flame, Frostbound Colossus, Threadweaver, Rune Smith, Verdant Keeper, Mirrorbound | Reincarnation rolls | Aura |
-| [Ultimate](Ultimate-Skills.md) | Vritra, Demeter, Janus, Anansi, Aegir | Two specific mastered Uniques; 2M total EP; [Synthesis](Skill-Synthesis.md) | Aura |
-| [Godly](Godly.md) | Aion, Thoth, Lugh | Mastered combination Ultimate; true awakening; 12M total EP; Thoth also combines mastered Rune Smith; Lugh combines mastered Threadweaver | Magicules; Mana Crucible converts aura |
-| [Extra](Aura-Regeneration.md) | Hunter’s Recovery, Apex Renewal, Sovereign Rebirth | Hunter race evolution | Aura |
-
-## Battlewills
-
-[Schema](Schema.md) is learned independently and lets you organize a six-effect tree, starting with Mitochondrial Build.
-
-[Air Walk](Air-Walk.md) evolves from mastered Air Float / Air Flight and enables aura-powered free flight. [Instant Transmission](Instant-Transmission.md) evolves mastered Instant Move into aura-funded coordinate self-teleportation. Use the normal Battlewill category and native learning system. See the [Battlewill directory](Battlewills.md).
-
-## Using skills
-
-Equip and cycle active modes through Tensura’s native Ability Selection and key bindings. The separate native toggle activates each skill’s passive. Uniques have two active modes, Ultimates have three, and each Godly Skill has four. Recovery Extra Skills are passive-only.
-
-## Skill evolution
-
-| Ingredients | Ultimate | Further evolution |
+| Tier | Obtaining | Pages |
 | --- | --- | --- |
-| Storm Crown + Black Flame | [Vritra](Vritra.md) | [Aion](Aion.md), or [Thoth](Thoth.md) with mastered Rune Smith |
-| Verdant Keeper + Frostbound Colossus | [Demeter](Demeter.md) | Aion, or Thoth with mastered Rune Smith |
-| Threadweaver + Mirrorbound | [Janus](Janus.md) | Aion, Thoth or Lugh with their additional requirements |
-| Threadweaver + Rune Smith | [Anansi](Anansi.md) | Aion, Thoth or Lugh with their additional requirements |
-| Scarlet Deluge + Mirrorbound | [Aegir](Aegir.md) | Aion, Thoth or Lugh with their additional requirements |
+| Unique | Reincarnation rolls | [Eight starting skills](Unique-Skills.md); [Chained](Chained.md) is race-exclusive |
+| Ultimate | Two mastered Uniques; 2M total EP | [Recipes](Skill-Synthesis.md) |
+| Godly | Mastered combination Ultimate; true awakening; 12M total EP | [Aion, Thoth, Lugh](Godly.md) |
+| Extra | Race evolution | [Aura recovery](Aura-Regeneration.md) |
+| Battlewill | Learning/evolution | [Schema, Air Walk, Instant Transmission](Battlewills.md) |
 
-[Scarlet Deluge](Scarlet-Deluge.md) remains a standalone water/control Unique. The [synthesis reference](Skill-Synthesis.md) explains exact acquisition and replacement behavior.
+Unless a page says otherwise, playable attack values scale from **1× to 1.5×** with mastery. EP does not directly multiply skill damage. Listed damage is before defenses and other modifiers.
 
-## Ability reference
-
-The [ability index](Abilities.md) records every move’s damage type. Healing, barriers and utility list **None**; reflected shots retain their projectile’s own damage. [Damage types](Damage-Types.md) explains native damage sources and status damage.
-
----
-
-**Categories:** Tensura Myths · Skills
-
-[Unbound](Unbound.md) is the race-exclusive Ultimate evolution of mastered [Chained](Chained.md), unlocked at Heavenbreaker with True Demon Lord or True Hero status.
+[All abilities and damage types](Abilities.md).

@@ -1,60 +1,41 @@
 # Wiki authoring and publishing
 
-The canonical articles live in `wiki/pages/*.md`; `wiki/README.md` is the GitHub-readable home page. Edit those sources rather than the generated copies.
+The player-facing wiki lives in `wiki/pages/*.md`; `wiki/README.md` is the shared addon chooser. Articles cover current gameplay. Research, validation and change history belong in `docs/`.
 
-## Build both editions
+## Two addon sections
 
-Install the optional documentation dependency, then build:
+- **Tensura Myths 0.36.1:** home `Tensura-Myths.md`; existing unprefixed article URLs remain valid.
+- **TensuraAdditionalAdditions 1.5.0:** home `TensuraAdditionalAdditions.md`; content pages use `Additions-` prefixes.
+- `wiki/catalog.json` assigns every article a `mod`: `myths` or `additions`.
+- `wiki/navigation.json` contains separate navigation groups. The site and search keep the selected scope; the shared home searches both and labels results by addon.
+- Shared content has separate pages. Do not link an Additions article to Myths-only content. Use the correct release/guide when checking values.
+
+Entries should explain what the content does, how to obtain/use it, and necessary damage types, costs, cooldowns and limits. Keep targeting and survival-critical mechanics. Omit registry IDs, implementation details and repeated change notes. Use existing relevant media; label recordings that show an older version.
+
+## Build and check
 
 ```sh
 python3 -m pip install Markdown==3.7
 python3 scripts/build-wiki.py
+python3 scripts/verify-wiki.py
 ```
 
-This generates:
+The build produces the shared `wiki/index.html`, all `wiki/site/*.html`, per-addon ability directories, scoped offline search, `wiki/github/*.md`, and `releases/tensura-addon-wikis.zip`. Original addon icons and local pictures/video are included. Fixed ZIP timestamps and sorted files make the bundle reproducible. Older versioned ZIP releases are retained unchanged.
 
-- `wiki/index.html` and `wiki/site/*.html`: the styled visual edition.
-- `wiki/github/*.md`: the actual GitHub Wiki edition, including `Home.md`, all 161 gameplay/reference articles, `_Sidebar.md`, and `_Footer.md`.
-- `releases/tensura-myths-wiki-0.34.4.zip`: the self-contained offline edition.
+The checker verifies local links, images/video paths, ability anchors, duplicate IDs, canonical/HTML targets and addon boundaries. Browser review should cover desktop/mobile, search on both addon sections, and video controls. The site uses no remote script, font or search service.
 
-GitHub Wiki uses GitHub's own theme and strips custom CSS and scripts. Its pages mirror the visual edition's structure, original portraits, topic tables, navigation, and article content. The ZIP provides the full custom theme and search.
+## GitHub Wiki export
 
-## Publish to the actual GitHub Wiki
+GitHub’s Wiki is a separate Git repository, `MC.wiki.git`. Committing `wiki/` to the main repository updates the repository/offline editions, not that separate service.
 
-The Wiki is a separate Git repository (`MC.wiki.git`); committing `wiki/` to `MC` alone does not publish it.
-
-If the Wiki has never been enabled, open [repository settings](https://github.com/Bithio999/MC/settings), select **General → Features → Wikis**, then visit [the Wiki tab](https://github.com/Bithio999/MC/wiki), create a page titled **Home**, and save it once. GitHub does not expose a REST endpoint for creating that first Wiki page. Private repository Wikis may also require a supported GitHub plan.
-
-Then publish with Git credentials that can push to the Wiki:
+When the Wiki repository is initialized and accessible to the configured credentials:
 
 ```sh
 python3 scripts/export-github-wiki.py --publish
 ```
 
-The script exports the current sources, clones the Wiki, copies the generated Markdown files, commits changes if needed, and pushes to its existing branch. Other pages and existing Git history are preserved. No tokens are stored in files or remote URLs. Running without `--publish` only prepares the files locally.
+Without `--publish`, the script only refreshes `wiki/github`. Publishing preserves unrelated remote pages/history and does not change repository settings. GitHub uses its own theme; the downloadable edition provides the custom styling and scoped search.
 
-The current Codex integration can push the main repository, but GitHub refused its attempt to enable the Wiki with **403 Resource not accessible by integration**. If that remains the case after initialization, publish using an account or Git integration with Wiki access. The prepared pages are in Git for review and manual upload.
+## In-game guide
 
-## Visual reference
-
-The redesign was checked against these public pages on 2026-10-19:
-
-- [Tensura: Reincarnated Wiki home](https://tensura.wiki.gg/wiki/Tensura:_Reincarnated_Wiki): centered welcome, About, Links and Contribute panels; a three-column topic grid; blue panel boundaries.
-- [Great Sage](https://tensura.wiki.gg/wiki/Great_Sage) and [Predator](https://tensura.wiki.gg/wiki/Predator): short introductions, sectioned Information / Evolution / Obtaining infoboxes, Usage divided into Passive and Active, and categorized skill navboxes.
-- [Human](https://tensura.wiki.gg/wiki/Races/Human): serif article headings, compact contents, right-hand data infobox with labels and values, evolution references.
-
-The reference's light-theme colors include white content, `#006ee6` borders, `#274690` accents, and `#0645ad` links. This repository implements its own styles and uses only original addon branding and images; no Tensura logos, backgrounds, fonts, or article text are copied.
-
-## Individual article layout
-
-Skill articles use a lead summary, grouped data table, Usage with Passive / Active subsections and labeled arts, Obtaining, Evolution, then strategy and reference notes. Race articles group information, vitality bonuses, evolution and obtaining in their infobox, with Racial Ability, Traits and Evolution in the body. NPC pages put abilities and spawning before the screenshot gallery. The renderer turns the same Markdown data into a sectioned right-hand infobox; GitHub readers retain an ordinary data table. No gameplay values are changed by this layout.
-
-Development history, save migration, and balancing references live separately in [CHANGELOG.md](CHANGELOG.md). Keep gameplay articles in present tense and describe current behavior.
-
-## Topic organization and damage fields
-
-The shared sidebar is defined in `wiki/navigation.json`. `wiki/catalog.json` records article category and skill tier; both editions use these for a consistent hierarchy. Skills, Races, Otherworlders and Reference are the main entry points. The 105 fusion articles remain individually addressable and are indexed by ancestry.
-
-Each active/passive variant is listed in `wiki/abilities.json` and the Ability index. Under each skill's usage label, include an Ability information table with Damage type and Damage ID. Explicitly label utility/healing as None. Separate direct hits from native status damage such as Black Burn; never infer damage from an animation, skill name or resource. Update the ability index and metadata when adding an art. See [damage audit](WIKI-DAMAGE-AUDIT.md) for the inspected native paths.
-
-The wiki build regenerates `pages/Abilities.md` from `abilities.json` before rendering. Use `python3 scripts/build-ability-index.py` for a Markdown-only refresh; keep new records tied to their exact skill-page anchors.
+The F8 guides are separate release resources and already contain only their installed addon’s content. This wiki reorganization does not alter gameplay, guide resources or release JARs. Do not run `build-ingame-guide.py` as part of a wiki build: it updates mod resources and needs its own release validation.

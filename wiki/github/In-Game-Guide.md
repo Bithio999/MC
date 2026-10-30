@@ -1,23 +1,15 @@
 # In-game guide
 
-[Main Page](https://github.com/Bithio999/MC/wiki/Home) · [Getting Started](https://github.com/Bithio999/MC/wiki/Getting-Started)
+[All wikis](https://github.com/Bithio999/MC/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/MC/wiki/Tensura-Myths)
 
-Open the offline guide with **F8** while playing. You can change this key under **Controls → Key Binds**. The pause menu also has **Myths Guide** or **Additions Guide**, and Tensura’s status page has a **Guide** button below the panel.
+Press **F8**, use the pause-menu **Myths Guide** button, or choose **Guide** below Tensura’s status panel.
 
-The Myths guide covers skills, hunter and Heavenly Restriction progression, secondary races, the individual Convergent races, equipment, otherworlders and bosses. The standalone guide contains its lineage, Chained/Unbound, Schema, movement Battlewills, recovery and the spear.
+- Search names, abilities, damage types or requirements; categories narrow results.
+- Scroll the page list and article separately. Use arrows for history and related links for the next topic.
+- **Ctrl+F:** search. **Page Up/Down:** scroll. **Esc:** back.
 
-## Search and navigation
+The guide covers this addon only and works offline. Single-player pauses while reading; multiplayer continues. Change its key in Controls.
 
-- Search names, abilities, damage types or requirements. Multiple words narrow the results.
-- Use categories to browse. Core topics appear before advanced race combinations.
-- Scroll the page list and article independently; both scrollbars can be dragged.
-- Use the arrows for page history and the links at the end of an article for related topics.
-- **Ctrl+F** focuses search. **Page Up/Down** scroll the article. **Esc** returns to the previous screen.
+## Pictures and video
 
-Command shortcuts: **`/mythsguide`** in Myths, **`/restrictionguide`** in the standalone. The guide works without a web connection or an additional guidebook mod. It pauses a local single-player game; multiplayer continues normally.
-
-Pages show default gameplay values. Server settings and bonuses can change them. The guide reads no private player data and does not grant items, skills or stats.
-
-![Myths in-game guide](https://github.com/Bithio999/MC/blob/main/wiki/media/guide-myths-home.png?raw=true)
-
-![Standalone in-game guide](https://github.com/Bithio999/MC/blob/main/wiki/media/guide-restriction-home.png?raw=true)
+![In Game Guide — guide myths home](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/guide-myths-home.png)

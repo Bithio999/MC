@@ -1,67 +1,25 @@
-# Tensura Myths Wiki
+# Tensura addon wikis
 
-**[In-game guide](pages/In-Game-Guide.md):** press F8 or use the pause/status menu buttons for a concise searchable reference.
+Choose the addon you play. Each section has its own skills, progression, pictures and videos.
 
-
-An unofficial reference for the **Tensura Myths** addon to **Tensura: Reincarnated**. Minecraft 1.21.1 · NeoForge · Addon 0.36.1.
-
-## Start here
-
-[Getting started](pages/Getting-Started.md) explains installation and the first reincarnation. Choose a topic below or use the [ability index](pages/Abilities.md) to find an individual move.
-
-## Skills
-
-| Tier | Directory | Obtaining |
+| Wiki | What it includes | Version |
 | --- | --- | --- |
-| Unique | [Eight reincarnation skills](pages/Unique-Skills.md) | Starting-skill rolls |
-| Ultimate | [Five combination skills](pages/Ultimate-Skills.md) | Two specific mastered Uniques, 2M total EP |
-| Godly | [Aion, Thoth and Lugh](pages/Godly.md) | Mastered combination Ultimate, true awakening, 12M total EP; Thoth also uses Rune Smith; Lugh uses Threadweaver |
-| Extra | [Three aura recovery skills](pages/Aura-Regeneration.md) | Hunter evolution |
+| **[Tensura Myths](pages/Tensura-Myths.md)** | Hunter and Heavenly Restriction races, skill combinations, Godly skills, dual races, bosses and otherworlders | 0.36.1 |
+| **[TensuraAdditionalAdditions](pages/TensuraAdditionalAdditions.md)** | Heavenly Restriction, Chained/Unbound, Battlewills, the spear and Parallel World Jumper | 1.5.0 |
 
-[Skill overview](pages/Skills.md) · [Skill synthesis](pages/Skill-Synthesis.md) · [Every active and passive ability](pages/Abilities.md) · [Damage types](pages/Damage-Types.md)
+Both require **Tensura: Reincarnated**, Minecraft **1.21.1** and **NeoForge**. Install **one addon per instance**; they are separate distributions.
 
-## Battlewills
+## Start reading
 
-Master **Air Float / Air Flight** to unlock **[Air Walk](pages/Air-Walk.md)**: native free flight paid entirely in aura. Master **Instant Move** to unlock **[Instant Transmission](pages/Instant-Transmission.md)** for coordinate self-teleportation. [Battlewill directory](pages/Battlewills.md).
+- **Myths:** [Install](pages/Getting-Started.md) · [Skills](pages/Skills.md) · [Races](pages/Races.md) · [Bosses](pages/Bosses.md).
+- **Additions:** [Install](pages/Additions-Getting-Started.md) · [Heavenly Restriction](pages/Additions-Fettered-Human.md) · [Battlewills](pages/Additions-Battlewills.md) · [World travel](pages/Additions-Parallel-World-Jumper.md).
 
-## Heavenly Restriction
+Each entry lists what the content does, how to obtain/use it, and the relevant damage types, costs and cooldowns. Values are defaults before defenses and other bonuses. Development notes and change history live in the repository’s docs, outside these entries.
 
-The [Fettered Human](pages/Fettered-Human.md) starting race has four evolutions ending in [Heavenbreaker](pages/Heavenbreaker.md). Its intrinsic Unique [Chained](pages/Chained.md) trades magical growth and unrestricted skills for 5× later aura-capacity gains, Battlewill combat and an instant attacking teleport. Starting aura rolls of 1,500–2,000 are unmultiplied; starting magicules roll 50–100. Unshackled, Heavenly Restricted and Heavenbreaker grant Hunter’s Recovery, Apex Renewal and Sovereign Rebirth respectively.
+## Offline edition
 
-[Unbound](pages/Unbound.md) evolves from mastered Chained at Heavenbreaker with True Hero or True Demon Lord status. Its martial passives and Counter use the native Ultimate skill menu.
+[Download both wikis](../releases/tensura-addon-wikis.zip), extract the ZIP, and open `index.html`. Search is scoped to the selected addon; the main page searches both. Pictures and linked videos are included for offline viewing.
 
-## Equipment
+The in-game guide opens with **F8** and already covers only the installed addon. [Myths guide](pages/In-Game-Guide.md) · [Additions guide](pages/Additions-In-Game-Guide.md).
 
-[Inverted Spear of Heaven](pages/Inverted-Spear-of-Heaven.md) is a rare ominous-vault weapon with Hihiirokane Sword stats. Its unique [Nullification engraving](pages/Nullification.md) shatters barriers, removes skill status effects and prevents skill activation for two seconds. [Weapon directory](pages/Weapons.md).
-
-## Races
-
-[Race directory](pages/Races.md) covers the Human hunter branch and all **105 Convergent races**, grouped by ancestry.
-
-- [Hunter evolution](pages/Evolution.md): Human → Awakened Hunter → Apex Hunter → Sovereign Hunter.
-- [Secondary races](pages/Duo-Races.md): develop an independent lineage and gain 10% extra EP.
-- [Convergent Awakening](pages/Convergent-Awakening.md): unite two fully evolved lineages into one unique race.
-
-## Myth bosses
-
-[Eschaton, the Last Myth](pages/Eschaton.md) is the **one-billion-EP final boss**: three fatal forms, four resource bars, three Godly Skills and eight Demiurge arts. Break his creation seals to drain his reserves, open golden refuges and interrupt his apocalypse. [Demiurge](pages/Demiurge.md) · [Origin Sovereign](pages/Origin-Sovereign.md) · [Summoning](pages/Eschaton.md#summoning)
-
-[Ananke, the Unwritten End](pages/Ananke.md) is the first Myth: a **30M-EP Eclipse Seraph** with three phases, Moira’s four warned rites and Thoth’s Godly authority. [Boss directory](pages/Bosses.md) · [Summoning and rewards](pages/Ananke.md#summoning)
-
-## Otherworlders
-
-[Character directory](pages/Otherworlders.md) · [Alma](pages/Alma.md) · [Gemma](pages/Gemma.md)
-
-## Combat and reference
-
-[Damage types](pages/Damage-Types.md) · [Combat mechanics](pages/Mechanics.md) · [Visual gallery](pages/Visual-Effects.md) · [Commands](pages/Commands.md)
-
-Ability articles separate direct elemental hits, additional status damage, healing and utility. Their data tables include damage types, resource costs, cooldowns and acquisition requirements.
-
-## Open the visual edition
-
-[Download the styled offline wiki](../releases/tensura-myths-wiki-0.36.1.zip), extract it, and open `index.html`. It contains every article, portraits, screenshots and offline search. GitHub readers can use the Markdown links above.
-
-[Download the addon](../releases/tensura-myths-0.36.1.jar) · [Base mod wiki](https://tensura.wiki.gg/wiki/Tensura:_Reincarnated_Wiki) · [Changelog](../docs/CHANGELOG.md) · [Wiki authoring](../docs/WIKI.md)
-
-Unofficial fan addon. Not affiliated with Capcom or ManasMods.
+[Base mod wiki](https://tensura.wiki.gg/wiki/Tensura:_Reincarnated_Wiki) · [Source and downloads](../README.md) · [Wiki authoring](../docs/WIKI.md).

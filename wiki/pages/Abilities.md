@@ -1,141 +1,135 @@
-# Ability index
+# Ability directory
 
-[Main Page](../README.md) · [Skills](Skills.md) · [Damage types](Damage-Types.md)
+[All wikis](../README.md) · [Tensura Myths](Tensura-Myths.md)
 
-**Ability index** lists active arts, toggleable passives, classification passives and shared racial actions. Each entry links to its exact resource costs, targeting and damage-type information. Reflected projectiles retain their original attack type.
+Find a move below, then open its entry for targeting, damage, cost and cooldown. “None” means no direct attack damage.
 
-## Unique abilities
+## Unique
 
-| Ability | Parent skill / system | Activation | Damage type |
+| Ability | Skill / system | Activation | Damage type |
 | --- | --- | --- | --- |
 | [Storm Mantle](Storm-Crown.md#passive) | [Storm Crown](Storm-Crown.md) | Passive | None |
-| [Railbolt](Storm-Crown.md#railbolt) | [Storm Crown](Storm-Crown.md) | Active | Lightning elemental — `tensura:lightning_elemental` |
-| [Thunder Step](Storm-Crown.md#thunder-step) | [Storm Crown](Storm-Crown.md) | Active | Lightning elemental — `tensura:lightning_elemental` |
-| [Water Veil](Scarlet-Deluge.md#passive) | [Scarlet Deluge](Scarlet-Deluge.md) | Passive | Water elemental — `tensura:water_elemental` |
-| [Crushing Current](Scarlet-Deluge.md#crushing-current) | [Scarlet Deluge](Scarlet-Deluge.md) | Active | Water elemental — `tensura:water_elemental` |
-| [Scarlet Undertow](Scarlet-Deluge.md#scarlet-undertow) | [Scarlet Deluge](Scarlet-Deluge.md) | Active | Water elemental — `tensura:water_elemental` |
+| [Railbolt](Storm-Crown.md#railbolt) | [Storm Crown](Storm-Crown.md) | Active | Lightning elemental |
+| [Thunder Step](Storm-Crown.md#thunder-step) | [Storm Crown](Storm-Crown.md) | Active | Lightning elemental |
+| [Water Veil](Scarlet-Deluge.md#passive) | [Scarlet Deluge](Scarlet-Deluge.md) | Passive | Water elemental |
+| [Crushing Current](Scarlet-Deluge.md#crushing-current) | [Scarlet Deluge](Scarlet-Deluge.md) | Active | Water elemental |
+| [Scarlet Undertow](Scarlet-Deluge.md#scarlet-undertow) | [Scarlet Deluge](Scarlet-Deluge.md) | Active | Water elemental |
 | [Furnace Mantle](Black-Flame.md#passive) | [Black Flame](Black-Flame.md) | Passive | None |
-| [Oil Lash](Black-Flame.md#oil-lash) | [Black Flame](Black-Flame.md) | Active | Fire elemental — `tensura:fire_elemental` |
-| [Blackflame Ignition](Black-Flame.md#blackflame-ignition) | [Black Flame](Black-Flame.md) | Active | Fire elemental — `tensura:fire_elemental`, `tensura:black_flame` |
+| [Oil Lash](Black-Flame.md#oil-lash) | [Black Flame](Black-Flame.md) | Active | Fire elemental |
+| [Blackflame Ignition](Black-Flame.md#blackflame-ignition) | [Black Flame](Black-Flame.md) | Active | Fire elemental |
 | [Colossus Carapace](Frostbound-Colossus.md#passive) | [Frostbound Colossus](Frostbound-Colossus.md) | Passive | None |
-| [Avalanche Crash](Frostbound-Colossus.md#avalanche-crash) | [Frostbound Colossus](Frostbound-Colossus.md) | Active | Ice elemental — `tensura:ice_elemental` |
-| [Glacial Prison](Frostbound-Colossus.md#glacial-prison) | [Frostbound Colossus](Frostbound-Colossus.md) | Active | Ice elemental — `tensura:ice_elemental` |
+| [Avalanche Crash](Frostbound-Colossus.md#avalanche-crash) | [Frostbound Colossus](Frostbound-Colossus.md) | Active | Ice elemental |
+| [Glacial Prison](Frostbound-Colossus.md#glacial-prison) | [Frostbound Colossus](Frostbound-Colossus.md) | Active | Ice elemental |
 | [Silken Instinct](Threadweaver.md#passive) | [Threadweaver](Threadweaver.md) | Passive | None |
-| [Loom Needle](Threadweaver.md#loom-needle) | [Threadweaver](Threadweaver.md) | Active | Space elemental — `tensura:space_elemental` |
-| [Sever Thread](Threadweaver.md#sever-thread) | [Threadweaver](Threadweaver.md) | Active | Space elemental — `tensura:space_elemental` |
+| [Loom Needle](Threadweaver.md#loom-needle) | [Threadweaver](Threadweaver.md) | Active | Space elemental |
+| [Sever Thread](Threadweaver.md#sever-thread) | [Threadweaver](Threadweaver.md) | Active | Space elemental |
 | [Runic Circuit](Rune-Smith.md#passive) | [Rune Smith](Rune-Smith.md) | Passive | None |
-| [Runic Mine](Rune-Smith.md#runic-mine) | [Rune Smith](Rune-Smith.md) | Active | Earth elemental — `tensura:earth_elemental` |
-| [Command Detonation](Rune-Smith.md#command-detonation) | [Rune Smith](Rune-Smith.md) | Active | Earth elemental — `tensura:earth_elemental` |
+| [Runic Mine](Rune-Smith.md#runic-mine) | [Rune Smith](Rune-Smith.md) | Active | Earth elemental |
+| [Command Detonation](Rune-Smith.md#command-detonation) | [Rune Smith](Rune-Smith.md) | Active | Earth elemental |
 | [Verdant Heart](Verdant-Keeper.md#passive) | [Verdant Keeper](Verdant-Keeper.md) | Passive | None |
 | [Living Grove](Verdant-Keeper.md#living-grove) | [Verdant Keeper](Verdant-Keeper.md) | Active | None |
-| [Briar Grasp](Verdant-Keeper.md#briar-grasp) | [Verdant Keeper](Verdant-Keeper.md) | Active | Earth elemental — `tensura:earth_elemental` |
+| [Briar Grasp](Verdant-Keeper.md#briar-grasp) | [Verdant Keeper](Verdant-Keeper.md) | Active | Earth elemental |
 | [Silvered Soul](Mirrorbound.md#passive) | [Mirrorbound](Mirrorbound.md) | Passive | None |
-| [Prismatic Lance](Mirrorbound.md#prismatic-lance) | [Mirrorbound](Mirrorbound.md) | Active | Light elemental — `tensura:light_elemental` |
+| [Prismatic Lance](Mirrorbound.md#prismatic-lance) | [Mirrorbound](Mirrorbound.md) | Active | Light elemental |
 | [Mirror Aegis](Mirrorbound.md#mirror-aegis) | [Mirrorbound](Mirrorbound.md) | Active | None — reflected projectiles retain their own attack type |
 | [Heavenly Restriction](Chained.md#heavenly-restriction) | [Chained](Chained.md) | Passive - True | None |
 | [Martial Supremacy](Chained.md#martial-supremacy) | [Chained](Chained.md) | Passive - Toggle | None |
 | [Broken Limit](Chained.md#broken-limit) | [Chained](Chained.md) | Passive - True - Mastered | None |
 | [Unerring Body](Chained.md#unerring-body) | [Chained](Chained.md) | Passive - In-slot | None |
-| [Severance Rush](Chained.md#severance-rush) | [Chained](Chained.md) | Active - Press | Physical — `minecraft:mob_attack` |
+| [Severance Rush](Chained.md#severance-rush) | [Chained](Chained.md) | Active - Press | Physical |
 
-## Ultimate abilities
+## Ultimate
 
-| Ability | Parent skill / system | Activation | Damage type |
+| Ability | Skill / system | Activation | Damage type |
 | --- | --- | --- | --- |
 | [Catastrophe Engine](Vritra.md#passive) | [Vritra, Lord of Cataclysm](Vritra.md) | Passive | None |
-| [Plasma Bore](Vritra.md#plasma-bore) | [Vritra, Lord of Cataclysm](Vritra.md) | Active | Lightning elemental + delayed Fire elemental — `tensura:lightning_elemental`, `tensura:fire_elemental` |
-| [Thunderhead Crucible](Vritra.md#thunderhead-crucible) | [Vritra, Lord of Cataclysm](Vritra.md) | Active | Lightning elemental + delayed Fire elemental — `tensura:lightning_elemental`, `tensura:fire_elemental` |
-| [Cataclysm Front](Vritra.md#cataclysm-front) | [Vritra, Lord of Cataclysm](Vritra.md) | Active | Fire elemental — `tensura:fire_elemental` |
+| [Plasma Bore](Vritra.md#plasma-bore) | [Vritra, Lord of Cataclysm](Vritra.md) | Active | Lightning elemental + delayed Fire elemental |
+| [Thunderhead Crucible](Vritra.md#thunderhead-crucible) | [Vritra, Lord of Cataclysm](Vritra.md) | Active | Lightning elemental + delayed Fire elemental |
+| [Cataclysm Front](Vritra.md#cataclysm-front) | [Vritra, Lord of Cataclysm](Vritra.md) | Active | Fire elemental |
 | [Evergreen Sanctuary](Demeter.md#passive) | [Demeter, Lady of Sanctuary](Demeter.md) | Passive | None |
-| [Winter Orchard](Demeter.md#winter-orchard) | [Demeter, Lady of Sanctuary](Demeter.md) | Active | Ice elemental against enemies; allied healing has no damage type — `tensura:ice_elemental` |
+| [Winter Orchard](Demeter.md#winter-orchard) | [Demeter, Lady of Sanctuary](Demeter.md) | Active | Ice elemental against enemies; allied healing has no damage type |
 | [Perennial Seed](Demeter.md#perennial-seed) | [Demeter, Lady of Sanctuary](Demeter.md) | Active | None |
-| [Winter Harvest](Demeter.md#winter-harvest) | [Demeter, Lady of Sanctuary](Demeter.md) | Active | Ice elemental — `tensura:ice_elemental` |
+| [Winter Harvest](Demeter.md#winter-harvest) | [Demeter, Lady of Sanctuary](Demeter.md) | Active | Ice elemental |
 | [Threshold Dominion](Janus.md#passive) | [Janus, Lord of Crossroads](Janus.md) | Passive | None |
 | [Twin Gates](Janus.md#twin-gates) | [Janus, Lord of Crossroads](Janus.md) | Active | None |
-| [Parallax Snare](Janus.md#parallax-snare) | [Janus, Lord of Crossroads](Janus.md) | Active | Space elemental — `tensura:space_elemental` |
-| [Crossroads Edict](Janus.md#crossroads-edict) | [Janus, Lord of Crossroads](Janus.md) | Active | Space elemental — `tensura:space_elemental` |
+| [Parallax Snare](Janus.md#parallax-snare) | [Janus, Lord of Crossroads](Janus.md) | Active | Space elemental |
+| [Crossroads Edict](Janus.md#crossroads-edict) | [Janus, Lord of Crossroads](Janus.md) | Active | Space elemental |
 | [Schemer's Instinct](Anansi.md#passive) | [Anansi, Lord of Schemes](Anansi.md) | Passive | None |
-| [Fate Stitch](Anansi.md#fate-stitch) | [Anansi, Lord of Schemes](Anansi.md) | Active | Space elemental — `tensura:space_elemental` |
+| [Fate Stitch](Anansi.md#fate-stitch) | [Anansi, Lord of Schemes](Anansi.md) | Active | Space elemental |
 | [Puppet Passage](Anansi.md#puppet-passage) | [Anansi, Lord of Schemes](Anansi.md) | Active | None |
-| [Checkmate Loom](Anansi.md#checkmate-loom) | [Anansi, Lord of Schemes](Anansi.md) | Active | Space elemental, then Earth elemental — `tensura:space_elemental`, `tensura:earth_elemental` |
+| [Checkmate Loom](Anansi.md#checkmate-loom) | [Anansi, Lord of Schemes](Anansi.md) | Active | Space elemental, then Earth elemental |
 | [Abyssal Majesty](Aegir.md#passive) | [Aegir, Lord of the Abyss](Aegir.md) | Passive | None |
-| [Refracted Harpoon](Aegir.md#refracted-harpoon) | [Aegir, Lord of the Abyss](Aegir.md) | Active | Water elemental — `tensura:water_elemental` |
+| [Refracted Harpoon](Aegir.md#refracted-harpoon) | [Aegir, Lord of the Abyss](Aegir.md) | Active | Water elemental |
 | [Mirrorsea](Aegir.md#mirrorsea) | [Aegir, Lord of the Abyss](Aegir.md) | Active | None — reflected projectiles retain their attack type |
-| [Sovereign Breaker](Aegir.md#sovereign-breaker) | [Aegir, Lord of the Abyss](Aegir.md) | Active | Water elemental — `tensura:water_elemental` |
-| [Fatebreaker](Moira.md#fatebreaker) | [Moira, Lord of Finality](Moira.md) | Boss cast | Aura slash — `tensura:aura_slash` |
-| [Starfall Canticle](Moira.md#starfall-canticle) | [Moira, Lord of Finality](Moira.md) | Boss cast | Light elemental — `tensura:light_elemental` |
-| [Eventide Procession](Moira.md#eventide-procession) | [Moira, Lord of Finality](Moira.md) | Boss cast | Darkness elemental — `tensura:darkness_elemental` |
-| [The Last Dawn](Moira.md#the-last-dawn) | [Moira, Lord of Finality](Moira.md) | Boss cast | Space elemental — `tensura:space_elemental` |
+| [Sovereign Breaker](Aegir.md#sovereign-breaker) | [Aegir, Lord of the Abyss](Aegir.md) | Active | Water elemental |
+| [Fatebreaker](Moira.md#fatebreaker) | [Moira, Lord of Finality](Moira.md) | Boss cast | Aura slash |
+| [Starfall Canticle](Moira.md#starfall-canticle) | [Moira, Lord of Finality](Moira.md) | Boss cast | Light elemental |
+| [Eventide Procession](Moira.md#eventide-procession) | [Moira, Lord of Finality](Moira.md) | Boss cast | Darkness elemental |
+| [The Last Dawn](Moira.md#the-last-dawn) | [Moira, Lord of Finality](Moira.md) | Boss cast | Space elemental |
 | [Heavenly Restriction](Unbound.md#heavenly-restriction) | [Unbound](Unbound.md) | Passive - True | None |
 | [Martial Supremacy](Unbound.md#martial-supremacy) | [Unbound](Unbound.md) | Passive - Toggle | None |
 | [Broken Limit](Unbound.md#broken-limit) | [Unbound](Unbound.md) | Passive - True - Mastered | None |
 | [Unerring Body](Unbound.md#unerring-body) | [Unbound](Unbound.md) | Passive - In-slot | None |
-| [Severance Rush](Unbound.md#severance-rush) | [Unbound](Unbound.md) | Active - Press | Physical — `minecraft:mob_attack` |
-| [Counter](Unbound.md#counter) | [Unbound](Unbound.md) | Active - Press | Physical — `minecraft:mob_attack` |
+| [Severance Rush](Unbound.md#severance-rush) | [Unbound](Unbound.md) | Active - Press | Physical |
+| [Counter](Unbound.md#counter) | [Unbound](Unbound.md) | Active - Press | Physical |
 
-## Godly abilities
+## Godly
 
-The three Godly classification passives are always active, free and non-stacking. Individual skill toggles retain their own upkeep.
-
-| Ability | Parent skill / system | Activation | Damage type |
+| Ability | Skill / system | Activation | Damage type |
 | --- | --- | --- | --- |
 | [Unbroken Continuum](Aion.md#passive) | [Aion, God of Causality](Aion.md) | Passive | None |
-| [Worldline Sever](Aion.md#worldline-sever) | [Aion, God of Causality](Aion.md) | Active | Space elemental — `tensura:space_elemental` |
-| [Event Horizon](Aion.md#event-horizon) | [Aion, God of Causality](Aion.md) | Active | Space elemental — `tensura:space_elemental` |
+| [Worldline Sever](Aion.md#worldline-sever) | [Aion, God of Causality](Aion.md) | Active | Space elemental |
+| [Event Horizon](Aion.md#event-horizon) | [Aion, God of Causality](Aion.md) | Active | Space elemental |
 | [Causal Reversal](Aion.md#causal-reversal) | [Aion, God of Causality](Aion.md) | Active | None |
-| [Genesis Verdict](Aion.md#genesis-verdict) | [Aion, God of Causality](Aion.md) | Active | Space elemental — `tensura:space_elemental` |
+| [Genesis Verdict](Aion.md#genesis-verdict) | [Aion, God of Causality](Aion.md) | Active | Space elemental |
 | [Arcane Sovereignty](Thoth.md#passive) | [Thoth, God of Magic](Thoth.md) | Passive | None |
-| [Lexicon of Ruin](Thoth.md#lexicon-of-ruin) | [Thoth, God of Magic](Thoth.md) | Active | Fire, Water, Lightning, Earth, Wind, Light and Space elemental — `tensura:fire_elemental`, `tensura:water_elemental` |
-| [Spellbreak](Thoth.md#spellbreak) | [Thoth, God of Magic](Thoth.md) | Active | Generic magic — `tensura:magic` |
+| [Lexicon of Ruin](Thoth.md#lexicon-of-ruin) | [Thoth, God of Magic](Thoth.md) | Active | Fire, Water, Lightning, Earth, Wind, Light and Space elemental |
+| [Spellbreak](Thoth.md#spellbreak) | [Thoth, God of Magic](Thoth.md) | Active | Generic magic |
 | [Mana Crucible](Thoth.md#mana-crucible) | [Thoth, God of Magic](Thoth.md) | Active | None |
-| [Astral Library](Thoth.md#astral-library) | [Thoth, God of Magic](Thoth.md) | Active | Rotating Fire, Water, Lightning, Earth, Wind, Light and Space elemental — `tensura:fire_elemental`, `tensura:water_elemental` |
-| [Divine Authority](Godly.md#divine-authority) | [Godly Skills](Godly.md) | Always active | Modifier — original damage type |
-| [Absolute Penetration](Godly.md#absolute-penetration) | [Godly Skills](Godly.md) | Always active | Modifier — original damage type |
-| [Interference Immunity](Godly.md#interference-immunity) | [Godly Skills](Godly.md) | Always active | None |
+| [Astral Library](Thoth.md#astral-library) | [Thoth, God of Magic](Thoth.md) | Active | Rotating Fire, Water, Lightning, Earth, Wind, Light and Space elemental |
+| [Divine Authority](Godly.md#divine-authority) | [Godly Skills](Godly.md) | Passive | Modifier — original damage type |
+| [Absolute Penetration](Godly.md#absolute-penetration) | [Godly Skills](Godly.md) | Passive | Modifier — original damage type |
+| [Interference Immunity](Godly.md#interference-immunity) | [Godly Skills](Godly.md) | Passive | None |
 | [All-Skilled](Lugh.md#passive) | [Lugh, God of Skills](Lugh.md) | Passive | None |
 | [Skill Bank](Lugh.md#skill-bank) | [Lugh, God of Skills](Lugh.md) | Active | None |
-| [Reconstructed Art](Lugh.md#reconstructed-art) | [Lugh, God of Skills](Lugh.md) | Active | Variable normalised physical, elemental or generic magic — see the linked archive/source reference |
+| [Reconstructed Art](Lugh.md#reconstructed-art) | [Lugh, God of Skills](Lugh.md) | Active | Variable normalised physical, elemental or generic magic |
 | [Countermand](Lugh.md#countermand) | [Lugh, God of Skills](Lugh.md) | Active | None |
-| [Grand Synthesis](Lugh.md#grand-synthesis) | [Lugh, God of Skills](Lugh.md) | Active | Three bound normalised damage types — see the linked archive/source reference |
-| [Crownless Edge](Demiurge.md#crownless-edge) | [Demiurge, God of Genesis](Demiurge.md) | Boss cast | Physical aura slash — `tensura:aura_slash` |
-| [Astral Loom](Demiurge.md#astral-loom) | [Demiurge, God of Genesis](Demiurge.md) | Boss cast | Light elemental — `tensura:light_elemental` |
+| [Grand Synthesis](Lugh.md#grand-synthesis) | [Lugh, God of Skills](Lugh.md) | Active | Three bound normalised damage types |
+| [Crownless Edge](Demiurge.md#crownless-edge) | [Demiurge, God of Genesis](Demiurge.md) | Boss cast | Physical aura slash |
+| [Astral Loom](Demiurge.md#astral-loom) | [Demiurge, God of Genesis](Demiurge.md) | Boss cast | Light elemental |
 | [Sevenfold Genesis](Demiurge.md#sevenfold-genesis) | [Demiurge, God of Genesis](Demiurge.md) | Boss cast | Fire, Water, Lightning, Earth, Wind, Light, Space |
-| [Null Testament](Demiurge.md#null-testament) | [Demiurge, God of Genesis](Demiurge.md) | Boss cast | Space elemental — `tensura:space_elemental` |
-| [World-Eater’s Wake](Demiurge.md#world-eaters-wake) | [Demiurge, God of Genesis](Demiurge.md) | Boss cast | Darkness elemental — `tensura:darkness_elemental` |
+| [Null Testament](Demiurge.md#null-testament) | [Demiurge, God of Genesis](Demiurge.md) | Boss cast | Space elemental |
+| [World-Eater’s Wake](Demiurge.md#world-eaters-wake) | [Demiurge, God of Genesis](Demiurge.md) | Boss cast | Darkness elemental |
 | [Primordial Exchange](Demiurge.md#primordial-exchange) | [Demiurge, God of Genesis](Demiurge.md) | Boss channel | None — resource conversion |
-| [Thronefall](Demiurge.md#thronefall) | [Demiurge, God of Genesis](Demiurge.md) | Boss cast | Earth elemental — `tensura:earth_elemental` |
-| [The End of All Myths](Demiurge.md#the-end-of-all-myths) | [Demiurge, God of Genesis](Demiurge.md) | Boss cast | Space elemental — `tensura:space_elemental` |
+| [Thronefall](Demiurge.md#thronefall) | [Demiurge, God of Genesis](Demiurge.md) | Boss cast | Earth elemental |
+| [The End of All Myths](Demiurge.md#the-end-of-all-myths) | [Demiurge, God of Genesis](Demiurge.md) | Boss cast | Space elemental |
 
-## Extra abilities
+## Extra
 
-| Ability | Parent skill / system | Activation | Damage type |
+| Ability | Skill / system | Activation | Damage type |
 | --- | --- | --- | --- |
 | [Hunter’s Recovery](Hunters-Recovery.md#passive) | [Hunter’s Recovery](Hunters-Recovery.md) | Passive | None |
 | [Apex Renewal](Apex-Renewal.md#passive) | [Apex Renewal](Apex-Renewal.md) | Passive | None |
 | [Sovereign Rebirth](Sovereign-Rebirth.md#passive) | [Sovereign Rebirth](Sovereign-Rebirth.md) | Passive | None |
 
-## Battlewill arts
+## Battlewill
 
-| Ability | Parent skill / system | Activation | Damage type |
+| Ability | Skill / system | Activation | Damage type |
 | --- | --- | --- | --- |
 | [Air Walk](Air-Walk.md#air-walk) | [Air Walk](Air-Walk.md) | Active - Press | None |
 | [Instant Transmission](Instant-Transmission.md#instant-transmission) | [Instant Transmission](Instant-Transmission.md) | Active - Press | None |
 | [Schema Tree](Schema.md#schema-tree) | [Schema](Schema.md) | Passive - Toggle | None |
 | [Build](Schema.md#build) | [Schema](Schema.md) | Active - Press | None |
 
-## Racial abilities
+## Racial
 
-| Ability | Parent skill / system | Activation | Damage type |
+| Ability | Skill / system | Activation | Damage type |
 | --- | --- | --- | --- |
 | [Concordance Pulse](Convergent-Awakening.md#awakening-rewards) | [Convergent Awakening](Convergent-Awakening.md) | Active | None |
 
-## Boss abilities
+## Boss
 
-| Ability | Parent skill / system | Activation | Damage type |
+| Ability | Skill / system | Activation | Damage type |
 | --- | --- | --- | --- |
 | [Spatial Reposition](Ananke.md#spatial-reposition) | [Ananke, the Unwritten End](Ananke.md) | Boss movement | None — movement only |
 | [Infinite Regeneration](Ananke.md#infinite-regeneration) | [Ananke, the Unwritten End](Ananke.md) | Native passive | None — recovery only |
-
----
-
-**Categories:** Tensura Myths · Skills

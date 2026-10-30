@@ -1,37 +1,25 @@
 # Skill synthesis
 
-[Main Page](../README.md) · [Skills](Skills.md) · [Ability index](Abilities.md) · [Damage types](Damage-Types.md)
+[All wikis](../README.md) · [Tensura Myths](Tensura-Myths.md)
 
-**Skill synthesis** combines two mastered Unique Skills into one new Ultimate. It is available to any race at **2,000,000 total EP**.
+Skill synthesis combines two mastered Unique Skills into one new Ultimate. It is available to any race at 2,000,000 total EP.
 
 ## Recipes
 
-| Ultimate | Mastered ingredient 1 | Mastered ingredient 2 | Role |
-| --- | --- | --- | --- |
-| [Vritra](Vritra.md) | [Storm Crown](Storm-Crown.md) | [Black Flame](Black-Flame.md) | Plasma / delayed demolition |
-| [Demeter](Demeter.md) | [Verdant Keeper](Verdant-Keeper.md) | [Frostbound Colossus](Frostbound-Colossus.md) | Allied support / crystal control |
-| [Janus](Janus.md) | [Threadweaver](Threadweaver.md) | [Mirrorbound](Mirrorbound.md) | Gates / spatial displacement |
-| [Anansi](Anansi.md) | [Threadweaver](Threadweaver.md) | [Rune Smith](Rune-Smith.md) | Runic threads / triangular traps |
-| [Aegir](Aegir.md) | [Scarlet Deluge](Scarlet-Deluge.md) | [Mirrorbound](Mirrorbound.md) | Water refraction / tidal shock front |
+| Mastered ingredients | Result |
+| --- | --- |
+| Storm Crown + Black Flame | [Vritra](Vritra.md) |
+| Verdant Keeper + Frostbound Colossus | [Demeter](Demeter.md) |
+| Threadweaver + Mirrorbound | [Janus](Janus.md) |
+| Threadweaver + Rune Smith | [Anansi](Anansi.md) |
+| Scarlet Deluge + Mirrorbound | [Aegir](Aegir.md) |
 
 ## Using the menu
 
-Open **Skills → Ultimate**, then choose **Synthesis** at the top of the native skill page. The native list still shows your learned Uniques and their details. The footer’s recipe button cycles **Vritra → Demeter → Janus → Anansi → Aegir**; hover it or **Combine** to see both ingredients and their mastery states. Combine becomes available when all requirements are met. Use **Ultimates** to return to the ordinary native Ultimate list.
+Open **Skills → Ultimate → Synthesis**. Both ingredients must be mastered and you need **2M total EP**. A successful synthesis replaces them; invalid requests consume nothing.
 
-The server checks the complete recipe and EP requirement. An invalid request consumes nothing. A successful synthesis combines both ingredients, preserves all nine equipped presets and carries the longest remaining ingredient cooldown to every new mode. The new Ultimate starts with its own mastery. EP is a threshold and is not spent. A different mastered skill is not a substitute for a required ingredient. Unrelated skills stay learned.
+A mastered combination Ultimate can later ascend through [Godly](Godly.md) requirements.
 
-## Further evolution
+## Related
 
-Master the resulting Ultimate, become a True Hero or True Demon Lord and reach 12M total EP. **Skills → Godly → Ascension** offers [Aion](Aion.md), or [Thoth](Thoth.md) when a mastered [Rune Smith](Rune-Smith.md) is also available. Lugh additionally combines a mastered [Threadweaver](Threadweaver.md). The Godly destination button cycles between Aion, Thoth and Lugh.
-
-## Standalone Uniques
-
-All Uniques remain usable independently. Scarlet Deluge combines with Mirrorbound into Aegir; Rune Smith combines with Threadweaver into Anansi. Rune Smith is also Thoth’s additional ascension ingredient, while Threadweaver is Lugh’s. Each successful recipe consumes its listed ingredients.
-
-## Gallery
-
-![Synthesis recipe selection, mastery states and the native Combine control](../media/skill-synthesis.png)
-
----
-
-**Categories:** Tensura Myths · Skills
+[In-game guide](In-Game-Guide.md)

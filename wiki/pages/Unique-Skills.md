@@ -1,35 +1,18 @@
 # Unique Skills
 
-[Main Page](../README.md) · [Skills](Skills.md) · [Ability index](Abilities.md) · [Damage types](Damage-Types.md)
+[All wikis](../README.md) · [Tensura Myths](Tensura-Myths.md)
 
-**Unique Skills** are one of the addon’s skill tiers. Eight Uniques are rollable in Tensura’s configured reincarnation primary pool; no particular result is guaranteed.
+Eight skills join Tensura’s reincarnation pool. Chained is granted separately by Fettered Human.
 
-## Skills
+| Skill | Role |
+| --- | --- |
+| [Black Flame](Black-Flame.md) | Black Flame is a Unique Skill inspired by Nu Udra. It uses visible oil tentacles to pull targets into burning ground. |
+| [Frostbound Colossus](Frostbound-Colossus.md) | Frostbound Colossus is a Unique Skill inspired by Jin Dahaad. It combines avalanche impacts, ice capture, and a defensive carapace. |
+| [Mirrorbound](Mirrorbound.md) | Mirrorbound is a Unique Skill focused on splitting light attacks and timed projectile reflection. |
+| [Rune Smith](Rune-Smith.md) | Rune Smith is a Unique Skill focused on armed proximity trap and remote demolition. |
+| [Scarlet Deluge](Scarlet-Deluge.md) | Scarlet Deluge is a Unique Skill inspired by Uth Duna. It combines travelling currents, aimed whirlpools, and native barriers. |
+| [Storm Crown](Storm-Crown.md) | Storm Crown is a Unique Skill inspired by Rey Dau. It combines ricochet lightning with an aimed movement art. |
+| [Threadweaver](Threadweaver.md) | Threadweaver is a Unique Skill focused on single-target leash and spatial severance. |
+| [Verdant Keeper](Verdant-Keeper.md) | Verdant Keeper is a Unique Skill focused on allied hp/shp support and forward root control. |
 
-| Skill | Direct damage type | Active arts | Passive |
-| --- | --- | --- | --- |
-| [Storm Crown](Storm-Crown.md) | [Lightning elemental](Damage-Types.md#lightning) | Railbolt, Thunder Step | Storm Mantle |
-| [Scarlet Deluge](Scarlet-Deluge.md) | [Water elemental](Damage-Types.md#water) | Crushing Current, Scarlet Undertow | Water Veil |
-| [Black Flame](Black-Flame.md) | [Fire elemental](Damage-Types.md#fire) | Oil Lash, Blackflame Ignition | Furnace Mantle |
-| [Frostbound Colossus](Frostbound-Colossus.md) | [Ice elemental](Damage-Types.md#ice) | Avalanche Crash, Glacial Prison | Colossus Carapace |
-
-| [Threadweaver](Threadweaver.md) | Space elemental | Loom Needle, Sever Thread | Silken Instinct |
-| [Rune Smith](Rune-Smith.md) | Earth elemental | Runic Mine, Command Detonation | Runic Circuit |
-| [Verdant Keeper](Verdant-Keeper.md) | Earth elemental; healing has no damage type | Living Grove, Briar Grasp | Verdant Heart |
-| [Mirrorbound](Mirrorbound.md) | Light elemental; reflected shots retain their own type | Prismatic Lance, Mirror Aegis | Silvered Soul |
-
-## Usage
-
-Active modes consume aura. Toggleable passives consume ongoing aura and are separate from mode cycling. Each skill article lists costs, cooldowns, individual damage types, effects and limits.
-
-## Race-exclusive Unique
-
-[Chained](Chained.md) belongs to the [Heavenly Restriction lineage](Fettered-Human.md). It is granted only by Fettered Human and retained through evolution and does not enter the eight ordinary rollable Uniques.
-
-## Related pages
-
-[Skill overview](Skills.md) · [Ability index](Abilities.md) · [Godly Skills](Godly.md) · [Extra Skills](Aura-Regeneration.md)
-
----
-
-**Categories:** Tensura Myths · Skills
+[Chained](Chained.md) · [All abilities](Abilities.md).

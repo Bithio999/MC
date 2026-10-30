@@ -1,109 +1,52 @@
 # Verdant Keeper
 
-[Main Page](../README.md) · [Skills](Skills.md) · [Ability index](Abilities.md) · [Damage types](Damage-Types.md)
+[All wikis](../README.md) · [Tensura Myths](Tensura-Myths.md)
 
-**Verdant Keeper** is a Unique Skill focused on **allied hp/shp support and forward root control**.
+Verdant Keeper is a Unique Skill focused on allied hp/shp support and forward root control.
 
-![Verdant Keeper](../../src/main/resources/assets/wildhunt/textures/skill/verdant_keeper.png)
+![Verdant Keeper icon](../assets/skill/verdant_keeper.png)
 
-| Skill data | Verdant Keeper |
+| Skill data | Value |
 | --- | --- |
-| **Information** | |
-| Type | Unique Skill |
-| Combat role | Allied HP/SHP support and forward root control |
-| Active modes | 2 |
+| Tier | Unique |
 | Resource | Aura |
-| Toggleable passive | Verdant Heart |
 | Passive upkeep | 35 aura / second |
-| Registry ID | `wildhunt:verdant_keeper` |
-| **Obtaining** | |
-| Method | Reincarnation starting-skill roll |
-| **Evolution** | |
-| Evolution | [Synthesis](Skill-Synthesis.md) |
+| Obtaining | Reincarnation starting-skill roll |
 
-## Usage
 
-### Passive
+## Active abilities
 
-[Passive - Toggle] — **Verdant Heart**
+| Ability | Damage type / base damage | Cost | Cooldown |
+| --- | --- | --- | --- |
+| Living Grove | None | 600 aura + healing expenditure | 14 s |
+| Briar Grasp | Earth elemental · 300 | 550 aura | 5 s |
 
-| Ability information | Value |
-| --- | --- |
-| Damage type | None — support / defense |
-| Damage ID | — |
-| Upkeep | 35 aura / second |
 
-Increase native spiritual-health regeneration by 100%. This modifies natural recovery; it does not create an additional periodic HP-heal loop.
+## Passive
 
-Enable the native skill toggle in Ability Selection. The first second is paid on enabling; upkeep is paid every twenty game ticks. It turns off when unfunded or blocked by native activation rules. Turning it off removes only its own modifiers. It is separate from active mode cycling.
+- Damage type: None — support / defense
+- Upkeep: 35 aura / second
+- Increase native spiritual-health regeneration by 100%. This modifies natural recovery; it does not create an additional periodic HP-heal loop.
 
-### Active
+## Living Grove
 
-| Mode | Aura | Cooldown | Raw damage |
-| --- | ---: | ---: | --- |
-| 1. Living Grove | 600 + healing expenditure | 14 s | — |
-| 2. Briar Grasp | 550 | 5 s | 300 |
+- Damage type: None
+- Resource cost: 600 aura to place; each pulse pays for HP/SHP restored
+- Cooldown: 14 seconds
+- Grow a stationary grove within 24 blocks. For eight seconds it restores 7% maximum HP and 6% maximum SHP each second to up to eight beneficiaries within seven blocks.
 
-Damage listed here is before native combat handling and uses **1 + 0.5 × mastery fraction**, capped at **1.5×**. EP never multiplies their damage. Native elemental boosts, authority, resistances, barriers and hit immunity apply.
+## Briar Grasp
 
-#### Living Grove
+- Damage type: Earth elemental
+- Resource cost: 550 aura
+- Cooldown: 5 seconds
+- Raw damage: 300
+- Lash up to six visible enemies in a forward fan within twelve blocks. Successful hits attempt to apply native Webbed for 3.5 seconds.
 
-[Active - Press] — **Living Grove**
+## Related
 
-| Ability information | Value |
-| --- | --- |
-| Damage type | None |
-| Damage ID | — |
-| Resource cost | 600 aura to place; each pulse pays for HP/SHP restored |
-| Cooldown | 14 seconds |
-| Raw damage | — |
+[Skill synthesis](Skill-Synthesis.md) · [Godly Skills](Godly.md)
 
-Grow a stationary grove within 24 blocks. For eight seconds it restores 7% maximum HP and 6% maximum SHP each second to up to eight beneficiaries within seven blocks. Beneficiaries are yourself, teammates/allies and your owned pets; neutral strangers are excluded. Healing caps at each pool’s current maximum. Only one grove per owner; other allies need your line of sight.
+## Pictures and video
 
-After the placement payment, each pulse spends the caster’s aura for the HP and SHP it restores to **each** recipient. At zero mastery the rates are **40 aura per HP** and **60 aura per SHP**; they improve smoothly to **30 aura per HP** and **40 aura per SHP** at full mastery. Full pools cost nothing. Canceled or reduced HP healing refunds the unused payment.
-
-If there is not enough aura for a full pulse, every eligible recipient receives the same proportion of their planned healing. At zero aura the field pauses healing and can resume on a later pulse when funded. The pulse cannot exceed its funded quota, including native HP-healing amplification. Native healing suppression and its regeneration-based exceptions still apply. Placement range, duration, ally rules and current pool caps remain in effect.
-
-#### Briar Grasp
-
-[Active - Press] — **Briar Grasp**
-
-| Ability information | Value |
-| --- | --- |
-| Damage type | Earth elemental |
-| Damage ID | `tensura:earth_elemental` |
-| Resource cost | 550 aura |
-| Cooldown | 5 seconds |
-| Raw damage | 300 |
-
-Lash up to six visible enemies in a forward fan within twelve blocks. Successful hits attempt to apply native Webbed for 3.5 seconds. Animated briars erupt around the selected victims. Native resistance and rank rules still govern the status.
-
-## Obtaining
-
-Roll through Tensura’s normal reincarnation pool alongside the other seven Myths Uniques and configured native candidates. The roll is random; no particular skill is guaranteed. There is no race, trial or boss-kill requirement to roll.
-
-## Suggested combo
-
-Place Living Grove where your allies can fight → use Briar Grasp to hold approaching enemies outside their formation.
-
-## Strengths and limitations
-
-The grove stays where it was cast. It heals allies instead of damaging enemies. Webbed is a native effect and is not guaranteed against every target.
-
-Attacks respect teams, owned pets, creative/spectator immunity and server PvP settings. Native status resistances apply. World effects are bounded, expire automatically and do not damage terrain. Anchored effects do not persist across death, relog or dimension changes.
-
-## Related pages
-
-[Skills](Skills.md) · [Skill synthesis](Skill-Synthesis.md) · [Damage types](Damage-Types.md) · [Mechanics](Mechanics.md)
-
-## Visual effects
-
-Living Grove grows curved trunks, branching stems, roots and leaf clusters around a botanical ground diagram. Soft rising motes and an outward ripple accompany its healing field. Briar Grasp uses tapering, thorned vines around each caught enemy rather than a recolored grove.
-
-![Living Grove’s branches, foliage and root network](../media/visual-verdant-keeper.png)
-
-[Visual effects gallery and display settings](Visual-Effects.md).
-
----
-
-**Categories:** Tensura Myths · Skills
+![Verdant Keeper — visual verdant keeper](../media/visual-verdant-keeper.png)

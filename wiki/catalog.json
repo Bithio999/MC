@@ -2,872 +2,1213 @@
   {
     "slug": "Abilities",
     "title": "Ability index",
-    "category": "Reference"
+    "category": "Reference",
+    "mod": "myths"
   },
   {
     "slug": "Aegir",
     "title": "Aegir, Lord of the Abyss",
     "category": "Skills",
-    "tier": "Ultimate"
+    "tier": "Ultimate",
+    "mod": "myths"
   },
   {
     "slug": "Aion",
     "title": "Aion, God of Causality",
     "category": "Skills",
-    "tier": "Godly"
+    "tier": "Godly",
+    "mod": "myths"
   },
   {
     "slug": "Air-Sovereignty",
     "title": "Air Walk",
-    "category": "Reference"
+    "category": "Reference",
+    "mod": "myths",
+    "alias": true
   },
   {
     "slug": "Air-Walk",
     "title": "Air Walk",
     "category": "Skills",
-    "tier": "Battlewill"
+    "tier": "Battlewill",
+    "mod": "myths"
   },
   {
     "slug": "Alma",
     "title": "Alma",
-    "category": "Otherworlders"
+    "category": "Otherworlders",
+    "mod": "myths"
   },
   {
     "slug": "Ananke",
     "title": "Ananke, the Unwritten End",
-    "category": "Bosses"
+    "category": "Bosses",
+    "mod": "myths"
   },
   {
     "slug": "Anansi",
     "title": "Anansi, Lord of Schemes",
     "category": "Skills",
-    "tier": "Ultimate"
+    "tier": "Ultimate",
+    "mod": "myths"
   },
   {
     "slug": "Apex-Hunter",
     "title": "Apex Hunter",
-    "category": "Races"
+    "category": "Races",
+    "mod": "myths"
   },
   {
     "slug": "Apex-Renewal",
     "title": "Apex Renewal",
     "category": "Skills",
-    "tier": "Extra"
+    "tier": "Extra",
+    "mod": "myths"
   },
   {
     "slug": "Aura-Regeneration",
     "title": "Aura regeneration",
-    "category": "Skills"
+    "category": "Skills",
+    "mod": "myths"
   },
   {
     "slug": "Awakened-Hunter",
     "title": "Awakened Hunter",
-    "category": "Races"
+    "category": "Races",
+    "mod": "myths"
   },
   {
     "slug": "Battlewills",
     "title": "Battlewills",
-    "category": "Reference"
+    "category": "Reference",
+    "mod": "myths"
   },
   {
     "slug": "Black-Flame",
     "title": "Black Flame",
     "category": "Skills",
-    "tier": "Unique"
+    "tier": "Unique",
+    "mod": "myths"
   },
   {
     "slug": "Bosses",
     "title": "Myth bosses",
-    "category": "Bosses"
+    "category": "Bosses",
+    "mod": "myths"
   },
   {
     "slug": "Chained",
     "title": "Chained",
     "category": "Skills",
-    "tier": "Unique"
+    "tier": "Unique",
+    "mod": "myths"
   },
   {
     "slug": "Commands",
     "title": "Commands",
-    "category": "Reference"
+    "category": "Reference",
+    "mod": "myths"
   },
   {
     "slug": "Convergent-Awakening",
     "title": "Convergent Awakening",
-    "category": "Races"
+    "category": "Races",
+    "mod": "myths"
   },
   {
     "slug": "Damage-Types",
     "title": "Damage types",
-    "category": "Reference"
+    "category": "Reference",
+    "mod": "myths"
   },
   {
     "slug": "Demeter",
     "title": "Demeter, Lady of Sanctuary",
     "category": "Skills",
-    "tier": "Ultimate"
+    "tier": "Ultimate",
+    "mod": "myths"
   },
   {
     "slug": "Demiurge",
     "title": "Demiurge, God of Genesis",
     "category": "Skills",
-    "tier": "Godly"
+    "tier": "Godly",
+    "mod": "myths"
   },
   {
     "slug": "Duo-Races",
     "title": "Duo Races",
-    "category": "Races"
+    "category": "Races",
+    "mod": "myths"
   },
   {
     "slug": "Eclipse-Seraph",
     "title": "Eclipse Seraph",
-    "category": "Races"
+    "category": "Races",
+    "mod": "myths"
   },
   {
     "slug": "Eschaton",
     "title": "Eschaton, the Last Myth",
-    "category": "Bosses"
+    "category": "Bosses",
+    "mod": "myths"
   },
   {
     "slug": "Evolution",
     "title": "Human evolution",
-    "category": "Races"
+    "category": "Races",
+    "mod": "myths"
   },
   {
     "slug": "Fettered-Human",
     "title": "Fettered Human",
-    "category": "Races"
+    "category": "Races",
+    "mod": "myths"
   },
   {
     "slug": "Frostbound-Colossus",
     "title": "Frostbound Colossus",
     "category": "Skills",
-    "tier": "Unique"
+    "tier": "Unique",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-beastfolk-daemon",
     "title": "Abyssal Chimera",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-beastfolk-dwarf",
     "title": "Adamant Manticore",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-beastfolk-elf",
     "title": "Sylvan Sphinx",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-beastfolk-giant",
     "title": "Fenrir Colossus",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-beastfolk-goblin",
     "title": "Briar Monarch",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-beastfolk-harpy",
     "title": "Gryphon Sovereign",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-beastfolk-human",
     "title": "Primal Paragon",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-beastfolk-lizardman",
     "title": "Chimera Wyrm",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-beastfolk-merfolk",
     "title": "Leviathan Beast",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-beastfolk-ogre",
     "title": "Rakshasa",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-beastfolk-orc",
     "title": "Calydonian King",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-beastfolk-slime",
     "title": "Amorphous Behemoth",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-beastfolk-vampire",
     "title": "Bloodmoon Lycan",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-beastfolk-wight",
     "title": "Ossuary Fenrir",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-daemon-dwarf",
     "title": "Infernal Forgemaster",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-daemon-elf",
     "title": "Twilight Seraph",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-daemon-giant",
     "title": "Typhon",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-daemon-goblin",
     "title": "Infernal Goblin King",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-daemon-harpy",
     "title": "Fallen Simurgh",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-daemon-human",
     "title": "Empyrean Adversary",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-daemon-lizardman",
     "title": "Tiamat Scion",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-daemon-merfolk",
     "title": "Abyssal Scylla",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-daemon-ogre",
     "title": "Abyssal Rakshasa",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-daemon-orc",
     "title": "Maw of Tartarus",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-daemon-slime",
     "title": "Abyssal Progenitor",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-daemon-vampire",
     "title": "Sanguine Archfiend",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-daemon-wight",
     "title": "Erebus Sovereign",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-dwarf-elf",
     "title": "Aetherforged Oracle",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-dwarf-giant",
     "title": "Hecatoncheir",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-dwarf-goblin",
     "title": "Gremlin Artificer",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-dwarf-harpy",
     "title": "Runewing Artisan",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-dwarf-human",
     "title": "Runic Exemplar",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-dwarf-lizardman",
     "title": "Runebound Fafnir",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-dwarf-merfolk",
     "title": "Runic Triton",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-dwarf-ogre",
     "title": "Vajra Forgemaster",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-dwarf-orc",
     "title": "Vulcan Behemoth",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-dwarf-slime",
     "title": "Quicksilver Artificer",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-dwarf-vampire",
     "title": "Bloodrune Patriarch",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-dwarf-wight",
     "title": "Ossuary Runesmith",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-elf-giant",
     "title": "Yggdrasil Guardian",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-elf-goblin",
     "title": "Thornsong Sovereign",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-elf-harpy",
     "title": "Zephyr Oracle",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-elf-human",
     "title": "Astral Exemplar",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-elf-lizardman",
     "title": "Elder Starwyrm",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-elf-merfolk",
     "title": "Nereid Oracle",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-elf-ogre",
     "title": "Moonlit Kensei",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-elf-orc",
     "title": "Verdant Juggernaut",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-elf-slime",
     "title": "Sylvan Protean",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-elf-vampire",
     "title": "Crimson Sidhe",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-elf-wight",
     "title": "Pale Star Oracle",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-giant-goblin",
     "title": "Bramble Titan",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-giant-harpy",
     "title": "Storm Titan",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-giant-human",
     "title": "Atlas Ascendant",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-giant-lizardman",
     "title": "Jormungandr",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-giant-merfolk",
     "title": "Oceanus",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-giant-ogre",
     "title": "Indra Colossus",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-giant-orc",
     "title": "Worldbreaker",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-giant-slime",
     "title": "Primordial Colossus",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-giant-vampire",
     "title": "Bloodforge Titan",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-giant-wight",
     "title": "Ossuary Colossus",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-goblin-harpy",
     "title": "Thornwing Archon",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-goblin-human",
     "title": "Emerald Exemplar",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-goblin-lizardman",
     "title": "Basilisk Regent",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-goblin-merfolk",
     "title": "Reef Trickster",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-goblin-ogre",
     "title": "Thorncrown Asura",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-goblin-orc",
     "title": "Verdant Warlord",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-goblin-slime",
     "title": "Briar Protean",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-goblin-vampire",
     "title": "Sanguine Puck",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-goblin-wight",
     "title": "Ossuary Trickster",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-harpy-human",
     "title": "Celestial Valkyrie",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-harpy-lizardman",
     "title": "Quetzal Sovereign",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-harpy-merfolk",
     "title": "Siren Seraph",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-harpy-ogre",
     "title": "Garuda Oni",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-harpy-orc",
     "title": "Tempest Juggernaut",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-harpy-slime",
     "title": "Cloudborn Protean",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-harpy-vampire",
     "title": "Nocturne Strix",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-harpy-wight",
     "title": "Pale Thunderbird",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-human-lizardman",
     "title": "Dragonheart Exemplar",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-human-merfolk",
     "title": "Thalassic Exemplar",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-human-ogre",
     "title": "Heavenly Asura",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-human-orc",
     "title": "Adamant Warlord",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-human-slime",
     "title": "Aeonic Protean",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-human-vampire",
     "title": "Eclipse Sovereign",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-human-wight",
     "title": "Deathless Exemplar",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-lizardman-merfolk",
     "title": "Azure Leviathan",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-lizardman-ogre",
     "title": "Ryuujin",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-lizardman-orc",
     "title": "Ironhide Wyrm",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-lizardman-slime",
     "title": "Mercurial Ouroboros",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-lizardman-vampire",
     "title": "Sanguine Wyrm",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-lizardman-wight",
     "title": "Ossuary Dragon",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-merfolk-ogre",
     "title": "Tidal Susanoo",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-merfolk-orc",
     "title": "Abyssal Cetus",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-merfolk-slime",
     "title": "Abyssal Undine",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-merfolk-vampire",
     "title": "Sanguine Siren",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-merfolk-wight",
     "title": "Ossuary Mariner",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-ogre-orc",
     "title": "Warborn Ravager",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-ogre-slime",
     "title": "Protean Kishin",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-ogre-vampire",
     "title": "Crimson Yaksha",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-ogre-wight",
     "title": "Gravebound Kishin",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-orc-slime",
     "title": "Voracious Protean",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-orc-vampire",
     "title": "Sanguine Behemoth",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-orc-wight",
     "title": "Gravehide Colossus",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-slime-vampire",
     "title": "Sanguine Protean",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-slime-wight",
     "title": "Ossuary Protean",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Fusion-vampire-wight",
     "title": "Nocturne Revenant",
-    "category": "Convergent races"
+    "category": "Convergent races",
+    "mod": "myths"
   },
   {
     "slug": "Gemma",
     "title": "Gemma",
-    "category": "Otherworlders"
+    "category": "Otherworlders",
+    "mod": "myths"
   },
   {
     "slug": "Getting-Started",
     "title": "Getting started",
-    "category": "Reference"
+    "category": "Reference",
+    "mod": "myths"
   },
   {
     "slug": "Godly",
     "title": "Godly Skills",
-    "category": "Skills"
+    "category": "Skills",
+    "mod": "myths"
   },
   {
     "slug": "Heavenbreaker",
     "title": "Heavenbreaker",
-    "category": "Races"
+    "category": "Races",
+    "mod": "myths"
   },
   {
     "slug": "Heavenly-Restricted",
     "title": "Heavenly Restricted",
-    "category": "Races"
+    "category": "Races",
+    "mod": "myths"
   },
   {
     "slug": "Hunters-Recovery",
-    "title": "Hunter’s Recovery",
+    "title": "Hunter\u2019s Recovery",
     "category": "Skills",
-    "tier": "Extra"
+    "tier": "Extra",
+    "mod": "myths"
   },
   {
     "slug": "In-Game-Guide",
     "title": "In-game guide",
-    "category": "Reference"
+    "category": "Reference",
+    "mod": "myths"
   },
   {
     "slug": "Instant-Transmission",
     "title": "Instant Transmission",
     "category": "Skills",
-    "tier": "Battlewill"
+    "tier": "Battlewill",
+    "mod": "myths"
   },
   {
     "slug": "Inverted-Spear-of-Heaven",
     "title": "Inverted Spear of Heaven",
-    "category": "Equipment"
+    "category": "Equipment",
+    "mod": "myths"
   },
   {
     "slug": "Janus",
     "title": "Janus, Lord of Crossroads",
     "category": "Skills",
-    "tier": "Ultimate"
+    "tier": "Ultimate",
+    "mod": "myths"
   },
   {
     "slug": "Lugh",
     "title": "Lugh, God of Skills",
     "category": "Skills",
-    "tier": "Godly"
+    "tier": "Godly",
+    "mod": "myths"
   },
   {
     "slug": "Mechanics",
     "title": "Combat mechanics",
-    "category": "Reference"
+    "category": "Reference",
+    "mod": "myths"
   },
   {
     "slug": "Mirrorbound",
     "title": "Mirrorbound",
     "category": "Skills",
-    "tier": "Unique"
+    "tier": "Unique",
+    "mod": "myths"
   },
   {
     "slug": "Moira",
     "title": "Moira, Lord of Finality",
     "category": "Skills",
-    "tier": "Ultimate"
+    "tier": "Ultimate",
+    "mod": "myths"
   },
   {
     "slug": "Nullification",
     "title": "Nullification",
-    "category": "Equipment"
+    "category": "Equipment",
+    "mod": "myths"
   },
   {
     "slug": "Origin-Sovereign",
     "title": "Origin Sovereign",
-    "category": "Races"
+    "category": "Races",
+    "mod": "myths"
   },
   {
     "slug": "Otherworlders",
     "title": "Otherworlders",
-    "category": "Otherworlders"
+    "category": "Otherworlders",
+    "mod": "myths"
   },
   {
     "slug": "Races",
     "title": "Race directory",
-    "category": "Races"
+    "category": "Races",
+    "mod": "myths"
   },
   {
     "slug": "Rune-Smith",
     "title": "Rune Smith",
     "category": "Skills",
-    "tier": "Unique"
+    "tier": "Unique",
+    "mod": "myths"
   },
   {
     "slug": "Scarlet-Deluge",
     "title": "Scarlet Deluge",
     "category": "Skills",
-    "tier": "Unique"
+    "tier": "Unique",
+    "mod": "myths"
   },
   {
     "slug": "Schema",
     "title": "Schema",
     "category": "Skills",
-    "tier": "Battlewill"
+    "tier": "Battlewill",
+    "mod": "myths"
   },
   {
     "slug": "Skill-Synthesis",
     "title": "Skill synthesis",
-    "category": "Skills"
+    "category": "Skills",
+    "mod": "myths"
   },
   {
     "slug": "Skills",
     "title": "Skills",
-    "category": "Skills"
+    "category": "Skills",
+    "mod": "myths"
   },
   {
     "slug": "Sovereign-Hunter",
     "title": "Sovereign Hunter",
-    "category": "Races"
+    "category": "Races",
+    "mod": "myths"
   },
   {
     "slug": "Sovereign-Rebirth",
     "title": "Sovereign Rebirth",
     "category": "Skills",
-    "tier": "Extra"
+    "tier": "Extra",
+    "mod": "myths"
   },
   {
     "slug": "Storm-Crown",
     "title": "Storm Crown",
     "category": "Skills",
-    "tier": "Unique"
+    "tier": "Unique",
+    "mod": "myths"
   },
   {
     "slug": "Tempered-Vessel",
     "title": "Tempered Vessel",
-    "category": "Races"
+    "category": "Races",
+    "mod": "myths"
   },
   {
     "slug": "Thoth",
     "title": "Thoth, God of Magic",
     "category": "Skills",
-    "tier": "Godly"
+    "tier": "Godly",
+    "mod": "myths"
   },
   {
     "slug": "Threadweaver",
     "title": "Threadweaver",
     "category": "Skills",
-    "tier": "Unique"
+    "tier": "Unique",
+    "mod": "myths"
   },
   {
     "slug": "Ultimate-Skills",
     "title": "Ultimate Skills",
-    "category": "Skills"
+    "category": "Skills",
+    "mod": "myths"
   },
   {
     "slug": "Unbound",
     "title": "Unbound",
     "category": "Skills",
-    "tier": "Ultimate"
+    "tier": "Ultimate",
+    "mod": "myths"
   },
   {
     "slug": "Unique-Skills",
     "title": "Unique Skills",
-    "category": "Skills"
+    "category": "Skills",
+    "mod": "myths"
   },
   {
     "slug": "Unshackled",
     "title": "Unshackled",
-    "category": "Races"
+    "category": "Races",
+    "mod": "myths"
   },
   {
     "slug": "Verdant-Keeper",
     "title": "Verdant Keeper",
     "category": "Skills",
-    "tier": "Unique"
+    "tier": "Unique",
+    "mod": "myths"
   },
   {
     "slug": "Visual-Effects",
     "title": "Skill visual effects",
-    "category": "Reference"
+    "category": "Reference",
+    "mod": "myths"
   },
   {
     "slug": "Vritra",
     "title": "Vritra, Lord of Cataclysm",
     "category": "Skills",
-    "tier": "Ultimate"
+    "tier": "Ultimate",
+    "mod": "myths"
   },
   {
     "slug": "Weapons",
     "title": "Weapons",
-    "category": "Equipment"
+    "category": "Equipment",
+    "mod": "myths"
+  },
+  {
+    "slug": "Additions-Fettered-Human",
+    "title": "Heavenly Restriction lineage",
+    "category": "Races",
+    "mod": "additions"
+  },
+  {
+    "slug": "Additions-Chained",
+    "title": "Chained",
+    "category": "Skills",
+    "mod": "additions",
+    "tier": "Unique"
+  },
+  {
+    "slug": "Additions-Unbound",
+    "title": "Unbound",
+    "category": "Skills",
+    "mod": "additions",
+    "tier": "Ultimate"
+  },
+  {
+    "slug": "Additions-Schema",
+    "title": "Schema",
+    "category": "Skills",
+    "mod": "additions",
+    "tier": "Battlewill"
+  },
+  {
+    "slug": "Additions-Air-Walk",
+    "title": "Air Walk",
+    "category": "Skills",
+    "mod": "additions",
+    "tier": "Battlewill"
+  },
+  {
+    "slug": "Additions-Instant-Transmission",
+    "title": "Instant Transmission",
+    "category": "Skills",
+    "mod": "additions",
+    "tier": "Battlewill"
+  },
+  {
+    "slug": "Additions-Aura-Regeneration",
+    "title": "Aura recovery skills",
+    "category": "Skills",
+    "mod": "additions"
+  },
+  {
+    "slug": "Additions-Inverted-Spear-of-Heaven",
+    "title": "Inverted Spear of Heaven",
+    "category": "Gear",
+    "mod": "additions"
+  },
+  {
+    "slug": "Additions-Parallel-World-Jumper",
+    "title": "Parallel World Jumper",
+    "category": "Skills",
+    "mod": "additions",
+    "tier": "Unique"
+  },
+  {
+    "slug": "Tensura-Myths",
+    "title": "Tensura Myths",
+    "category": "Start",
+    "mod": "myths"
+  },
+  {
+    "slug": "TensuraAdditionalAdditions",
+    "title": "TensuraAdditionalAdditions",
+    "category": "Start",
+    "mod": "additions"
+  },
+  {
+    "slug": "Additions-Getting-Started",
+    "title": "Getting started",
+    "category": "Reference",
+    "mod": "additions"
+  },
+  {
+    "slug": "Additions-In-Game-Guide",
+    "title": "In-game guide",
+    "category": "Reference",
+    "mod": "additions"
+  },
+  {
+    "slug": "Additions-Battlewills",
+    "title": "Battlewills",
+    "category": "Skills",
+    "mod": "additions"
+  },
+  {
+    "slug": "Additions-Skills",
+    "title": "Skills",
+    "category": "Skills",
+    "mod": "additions"
+  },
+  {
+    "slug": "Additions-Tempered-Vessel",
+    "title": "Tempered Vessel",
+    "category": "Races",
+    "mod": "additions"
+  },
+  {
+    "slug": "Additions-Unshackled",
+    "title": "Unshackled",
+    "category": "Races",
+    "mod": "additions"
+  },
+  {
+    "slug": "Additions-Heavenly-Restricted",
+    "title": "Heavenly Restricted",
+    "category": "Races",
+    "mod": "additions"
+  },
+  {
+    "slug": "Additions-Heavenbreaker",
+    "title": "Heavenbreaker",
+    "category": "Races",
+    "mod": "additions"
+  },
+  {
+    "slug": "Additions-Hunters-Recovery",
+    "title": "Hunter\u2019s Recovery",
+    "category": "Skills",
+    "mod": "additions",
+    "tier": "Extra"
+  },
+  {
+    "slug": "Additions-Apex-Renewal",
+    "title": "Apex Renewal",
+    "category": "Skills",
+    "mod": "additions",
+    "tier": "Extra"
+  },
+  {
+    "slug": "Additions-Sovereign-Rebirth",
+    "title": "Sovereign Rebirth",
+    "category": "Skills",
+    "mod": "additions",
+    "tier": "Extra"
+  },
+  {
+    "slug": "Additions-Nullification",
+    "title": "Nullification",
+    "category": "Equipment",
+    "mod": "additions"
+  },
+  {
+    "slug": "Additions-Weapons",
+    "title": "Weapons",
+    "category": "Equipment",
+    "mod": "additions"
+  },
+  {
+    "slug": "Additions-Damage-Types",
+    "title": "Damage types",
+    "category": "Reference",
+    "mod": "additions"
+  },
+  {
+    "slug": "Additions-Commands",
+    "title": "Commands",
+    "category": "Reference",
+    "mod": "additions"
+  },
+  {
+    "slug": "Additions-Abilities",
+    "title": "Ability directory",
+    "category": "Reference",
+    "mod": "additions"
   }
 ]
