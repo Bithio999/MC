@@ -24,6 +24,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Predicate;
 
 public final class WorldHop {
+    public static final int COOLDOWN_SECONDS=5*60;
     public record Ticket(UUID token,Path source,long seed,UUID player,WorldHopJournal.Entry destination){}
     private static final Map<MinecraftServer,Ticket> REQUESTS=new ConcurrentHashMap<>();
     private static final Map<UUID,Landing> LANDINGS=new HashMap<>();
@@ -36,7 +37,7 @@ public final class WorldHop {
     public static boolean mayStore(ManasSkillInstance i,LivingEntity e){return !(i.getSkill() instanceof ParallelWorldJumperSkill) || e.level().isClientSide() || available(e);}
     public static void request(ServerPlayer p,ManasSkillInstance i){
         if(!available(p)){p.sendSystemMessage(Component.literal("World Hop is only available in a private single-player world."));return;}
-        if(p.getPersistentData().contains(WorldHopMetadata.MARKER) || REQUESTS.containsKey(p.server))return;
+        if(i.onCoolDown(0) || p.getPersistentData().contains(WorldHopMetadata.MARKER) || REQUESTS.containsKey(p.server))return;
         if(WorldHopLibrary.pending(p.server.getWorldPath(LevelResource.ROOT)))return;
         long old=p.server.getWorldData().worldGenOptions().seed(),seed;do{seed=new java.security.SecureRandom().nextLong();}while(seed==old);
         WorldHopJournal.Entry destination;
@@ -44,6 +45,7 @@ public final class WorldHop {
         var ticket=new Ticket(UUID.randomUUID(),p.server.getWorldPath(LevelResource.ROOT).toAbsolutePath().normalize(),seed,p.getUUID(),destination);
         if(REQUESTS.putIfAbsent(p.server,ticket)!=null)return;
         p.getPersistentData().remove(WorldSelect.SELECTION);p.unRide();p.closeContainer();i.addMasteryPoint(p);
+        i.setCoolDown(COOLDOWN_SECONDS,0);io.github.manasmods.manascore.skill.api.SkillAPI.getSkillsFrom(p).checkAndMarkDirty(i);
         WorldHopNetwork.send(p,ticket.token());
     }
     /** A remote server cannot create or claim a local transfer ticket. */

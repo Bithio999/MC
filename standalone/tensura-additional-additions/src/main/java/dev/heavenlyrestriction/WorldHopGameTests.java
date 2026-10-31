@@ -22,6 +22,14 @@ public final class WorldHopGameTests {
         skill.learnMode(i,p,1,1,false);h.assertTrue(skill.isWorldSelectLearned(i,p),"Mode did not unlock when native learning completed");
         h.assertTrue(skill.isWorldSelectLearned(i.copy(),p) && i.getMastery()==0,"Mode learning was lost on copy or changed overall mastery");h.succeed();
     }
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void worldJumpCooldownSurvivesNativeSaveWithoutBlockingWorldSelect(GameTestHelper h){
+        var p=player(h);var skill=HeavenlyRestriction.PARALLEL_WORLD_JUMPER.get();var i=skill.createDefaultInstance();
+        skill.learnMode(i,p,1,skill.getLearningPointRequirement(i,p,1),false);i.setCoolDown(WorldHop.COOLDOWN_SECONDS,0);
+        var restored=ManasSkillInstance.fromNBT(i.toNBT());
+        h.assertTrue(restored.getCoolDown(0)==300 && restored.onCoolDown(0),"Five-minute World Jump cooldown was lost during native skill serialization");
+        h.assertTrue(!restored.onCoolDown(1) && skill.isWorldSelectLearned(restored,p),"Jump cooldown blocked learned World Select");h.succeed();
+    }
     private static void metadata(Path world,String name,long seed)throws java.io.IOException{
         Files.createDirectories(world);var data=new CompoundTag();data.putString("LevelName",name);var gen=new CompoundTag();gen.putLong("seed",seed);data.put("WorldGenSettings",gen);var root=new CompoundTag();root.put("Data",data);NbtIo.writeCompressed(root,world.resolve("level.dat"));
     }

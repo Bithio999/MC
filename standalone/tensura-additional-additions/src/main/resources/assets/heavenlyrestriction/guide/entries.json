@@ -358,7 +358,7 @@
         {
           "title": "World Jump \u00b7 Active, Press",
           "lines": [
-            "With no destination selected, every dimension regenerates under a new seed. Your character, inventory and progression carry over. The game saves and reloads. No resource cost or damage."
+            "With no destination selected, every dimension regenerates under a new seed. Your character, inventory and progression carry over. The game saves and reloads. Cooldown: 5 minutes, shared by fresh and return jumps. World Select remains usable during cooldown. No resource cost or damage."
           ]
         },
         {

@@ -31,7 +31,7 @@ public final class WorldLibraryClientReview {
     private static void log(String text){try{Files.createDirectories(OUT);Files.writeString(OUT.resolve("results.txt"),text+"\n",StandardOpenOption.CREATE,StandardOpenOption.APPEND);}catch(Exception e){throw new RuntimeException(e);}}
     private static void screenshot(String name){try{Files.createDirectories(OUT);var mc=Minecraft.getInstance();try(var image=Screenshot.takeScreenshot(mc.getMainRenderTarget())){image.writeToFile(OUT.resolve(name+".png"));}}catch(Exception e){throw new RuntimeException(e);}}
     private static ManasSkillInstance skill(ServerPlayer p){return SkillAPI.getSkillsFrom(p).getSkill(HeavenlyRestriction.PARALLEL_WORLD_JUMPER.get()).orElseThrow();}
-    private static void jump(ServerPlayer p){source=p.server;skill(p).onPressed(p,0,0);}
+    private static void jump(ServerPlayer p){source=p.server;/* Advance past the already-verified cooldown between scripted hops. */skill(p).setCoolDown(0,0);skill(p).onPressed(p,0,0);check(skill(p).getCoolDown(0)==300,"Accepted jump did not start five-minute cooldown");}
     @SubscribeEvent public static void tick(ClientTickEvent.Post event){
         var mc=Minecraft.getInstance();mc.options.pauseOnLostFocus=false;
         if(mc.screen!=null && mc.screen.getClass().getSimpleName().equals("LoadingErrorScreen"))for(var child:mc.screen.children())if(child instanceof Button b && b.getMessage().getString().equals("Proceed to main menu")){b.onPress();return;}
@@ -86,6 +86,8 @@ public final class WorldLibraryClientReview {
                 try{
                     var p=server.getPlayerList().getPlayers().getFirst();if(p.getPersistentData().contains(WorldHopMetadata.MARKER) || WorldHopLibrary.pending(path(server))){phase=completing;return;}
                     check(p.getPersistentData().getString("worldselect_progress").equals("latest") && Math.abs(EnergyHelper.getMaxEP(p)-ep)<.01 && p.getInventory().getItem(1).is(Items.DIAMOND) && p.getInventory().getItem(1).getCount()==diamonds,"Character rolled back");
+                    check(skill(p).onCoolDown(0) && skill(p).getCoolDown(0)<=300 && !skill(p).onCoolDown(1),"Cooldown lost across travel or blocked World Select");
+                    var cooldown=skill(p).getCoolDown(0);double mastery=skill(p).getMastery();WorldHop.request(p,skill(p));check(skill(p).getCoolDown(0)==cooldown && skill(p).getMastery()==mastery,"Cooldown allowed another jump");
                     check(path(server).equals(pathB),"Active save folder changed");check(!p.getPersistentData().contains(WorldSelect.SELECTION),"Selection not consumed");check(WorldHop.safe(p.serverLevel(),p,p.blockPosition()),"Unsafe landing");var j=WorldSelect.journal(p);
                     if(completing==7){
                         check(server.overworld().getSeed()==seedA && j.current().equals(idA),"Did not return to A");check(WorldHopLibrary.archived(path(server),idB).isPresent(),"B hidden snapshot missing");check(!Files.exists(pathB.getParent().resolve("World Hop Preview")),"Legacy world stayed visible");check(mc.getLevelSource().findLevelCandidates().levels().size()==2,"Migration left additional visible saves");
@@ -104,7 +106,7 @@ public final class WorldLibraryClientReview {
                         var actual=WorldSelect.journal(p);var entries=new ArrayList<>(actual.worlds());
                         while(entries.size()<128){int n=entries.size();entries.add(new WorldHopJournal.Entry(UUID.randomUUID().toString(),pathB.getFileName().toString(),"Capacity test "+n,n));}
                         WorldHopJournal.write(pathB,new WorldHopJournal.Journal(actual.current(),entries));
-                        try{check(WorldSelect.select(p,idA),"Full library rejected return selection");WorldSelect.select(p,"");double mastery=skill(p).getMastery();skill(p).onPressed(p,0,0);check(skill(p).getMastery()==mastery,"Full library allowed native creation");}
+                        try{check(WorldSelect.select(p,idA),"Full library rejected return selection");WorldSelect.select(p,"");double capMastery=skill(p).getMastery();skill(p).setCoolDown(0,0);skill(p).onPressed(p,0,0);check(skill(p).getMastery()==capMastery,"Full library allowed native creation");}
                         finally{WorldHopJournal.write(pathB,actual);}
                         log("128-world cap blocks native World Jump creation before mastery/transfer; returning remains selectable");
                         var integrated=(net.minecraft.client.server.IntegratedServer)server;check(integrated.publishServer(net.minecraft.world.level.GameType.SURVIVAL,false,0),"Could not publish test LAN");check(!WorldSelect.select(p,idA) && !WorldSelect.select(p,""),"LAN accepted selection");

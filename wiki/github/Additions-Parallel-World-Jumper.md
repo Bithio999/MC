@@ -15,7 +15,7 @@ Unique skill · Single-player travel through a hidden library of up to 128 world
 
 ## World Jump · Active, Press
 
-With no destination selected, every dimension regenerates under a new seed. Your character, inventory and progression carry over. The game saves and reloads. No resource cost or damage.
+With no destination selected, every dimension regenerates under a new seed. Your character, inventory and progression carry over. The game saves and reloads. **Cooldown: 5 minutes**, shared by fresh and return jumps. World Select remains usable during the cooldown. No resource cost or damage.
 
 
 <a id="world-select"></a>
