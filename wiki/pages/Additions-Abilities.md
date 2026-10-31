@@ -15,6 +15,7 @@ Find a move below, then open its entry for targeting, damage, cost and cooldown.
 | [World Jump](Additions-Parallel-World-Jumper.md#world-jump) | [Parallel World Jumper](Additions-Parallel-World-Jumper.md) | Active | None |
 | [World Select](Additions-Parallel-World-Jumper.md#world-select) | [Parallel World Jumper](Additions-Parallel-World-Jumper.md) | Active; requires learning | None |
 | [Heavenly Restriction](Additions-Chained.md#always-active-while-owned) | [Chained](Additions-Chained.md) | Passive true | None |
+| [Fuse](Additions-Fusion.md#fuse) | [Fusion](Additions-Fusion.md) | Active, Press | None (outgoing attacks retain their damage type) |
 
 ## Ultimate
 

@@ -1330,5 +1330,16 @@
     "secondary_damage_id": null,
     "anchor": "improved-combat",
     "mod": "additions"
+  },
+  {
+    "skill": "Additions-Fusion",
+    "name": "Fuse",
+    "tier": "Unique",
+    "kind": "Active, Press",
+    "damage": "None (outgoing attacks retain their damage type)",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "anchor": "fuse",
+    "mod": "additions"
   }
 ]

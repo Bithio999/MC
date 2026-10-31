@@ -188,7 +188,7 @@ public final class SchemaGameTests {
                 victim.invulnerableTime=0;float before=victim.getHealth();h.assertTrue(victim.hurt(source,100),"Mixed hit rejected: "+source);h.assertTrue(Math.abs((before-victim.getHealth())-96.9)<.001,"Outgoing reduction/incoming vulnerability double-counted: "+source+" delta="+(before-victim.getHealth()));
             }
             victim.invulnerableTime=0;float before=victim.getHealth();h.assertTrue(victim.hurt(victim.damageSources().fall(),100),"Ownerless fall rejected");h.assertTrue(Math.abs((before-victim.getHealth())-102)<.001,"Ownerless damage skipped vulnerability");
-            h.assertTrue(TensuraDamageHelper.directSpiritualHurt(victim,p,null,100,0),"Soul hit rejected");h.assertTrue(Math.abs(TensuraStorages.getExistenceFrom(victim).getSpiritualHealth()-903.1)<.001,"Soul vulnerability/penalty applied incorrectly");h.succeed();
+            TensuraStorages.getExistenceFrom(victim).setSpiritualHealth(1000);h.assertTrue(TensuraDamageHelper.directSpiritualHurt(victim,p,null,100,0),"Soul hit rejected");h.assertTrue(Math.abs(TensuraStorages.getExistenceFrom(victim).getSpiritualHealth()-903.1)<.001,"Soul vulnerability/penalty applied incorrectly");h.succeed();
         });
     }
     @GameTest(template="empty",timeoutTicks=100)

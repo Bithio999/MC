@@ -1,0 +1,59 @@
+package dev.heavenlyrestriction;
+import dev.heavenlyrestriction.fusion.*;
+import io.github.manasmods.manascore.skill.api.*;
+import io.github.manasmods.tensura.registry.effect.TensuraMobEffects;
+import io.github.manasmods.tensura.registry.skill.CommonSkills;
+import io.github.manasmods.tensura.storage.TensuraStorages;
+import io.github.manasmods.tensura.util.EnergyHelper;
+import net.minecraft.gametest.framework.*;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.GameType;
+import net.neoforged.neoforge.gametest.*;
+import java.util.*;
+import static dev.heavenlyrestriction.TestFixtures.*;
+@GameTestHolder(HeavenlyRestriction.ID) @PrefixGameTestTemplate(false)
+public final class FusionGameTests {
+    private static ServerPlayer caster(GameTestHelper h){var p=player(h);SkillAPI.getSkillsFrom(p).learnSkill(HeavenlyRestriction.FUSION.get().createDefaultInstance());return p;}
+    private static LivingEntity subordinate(GameTestHelper h,ServerPlayer p){var host=target(h,p.position().add(3,0,0));TensuraStorages.getExistenceFrom(host).setPermanentOwner(p.getUUID());EnergyHelper.setBaseMaxEP(host,1_000_000);var pool=TensuraStorages.getExistenceFrom(host);pool.setAura(500_000);pool.setMagicule(500_000);return host;}
+    private static void near(GameTestHelper h,double actual,double expected,String message){h.assertTrue(Math.abs(actual-expected)<.02,message+": "+actual+" / "+expected);}
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void subordinateFusionCombinesActualEPAndRestoresBothBodies(GameTestHelper h){var p=caster(h);var host=subordinate(h,p);double base=EnergyHelper.getMaxEP(p),other=EnergyHelper.getMaxEP(host);var inventory=p.getInventory().save(new net.minecraft.nbt.ListTag());
+        afterTracking(h,List.of(host),()->{h.assertTrue(Fusion.fuseSubordinate(p,host),"Owned subordinate fusion failed");near(h,EnergyHelper.getMaxEP(p),1.5*(base+other),"Controlled form EP");h.assertTrue(Fusion.session(p).until-p.level().getGameTime()==3600,"Fusion duration is not three minutes");near(h,EnergyHelper.getMaxEP(host),1.5*(base+other),"Subordinate EP");h.assertTrue(Fusion.hidden(host) && Fusion.body(p) && !host.isPickable(),"Hidden body remained targetable");
+            Fusion.expire(p,Fusion.session(p).until-1);h.assertTrue(Fusion.session(p)!=null,"Fusion expired before three minutes");Fusion.expire(p,Fusion.session(p).until);h.assertTrue(Fusion.session(p)==null,"Fusion did not expire at three minutes");near(h,EnergyHelper.getMaxEP(p),base,"Caster permanent EP changed");near(h,EnergyHelper.getMaxEP(host),other,"Target permanent EP changed");h.assertTrue(!host.isInvisible() && !host.isInvulnerable() && !host.noPhysics,"Host flags not restored");h.assertTrue(inventory.equals(p.getInventory().save(new net.minecraft.nbt.ListTag())),"Fusion changed inventory");checkPenalties(h,p,host);h.succeed();});
+    }
+    private static void checkPenalties(GameTestHelper h,LivingEntity... actors){for(var e:actors)for(var effect:List.of(TensuraMobEffects.PARALYSIS,TensuraMobEffects.FRAGILITY)){var i=e.getEffect(TensuraMobEffects.getReference(effect));h.assertTrue(i!=null && i.getAmplifier()==1 && i.getDuration()==6000,"Both parties need five-minute level-II penalties");}}
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void foreignMobsAndPlayerConsentCannotBeBypassed(GameTestHelper h){var p=caster(h);var mob=subordinate(h,p);TensuraStorages.getExistenceFrom(mob).setPermanentOwner(null);h.assertTrue(!Fusion.fuseSubordinate(p,mob),"Unowned mob accepted");var receiver=player(h);receiver.setPos(p.position().add(2,0,0));h.assertTrue(!Fusion.fuseSubordinate(p,receiver),"Player fused without consent");UUID nonce=Fusion.invite(p,receiver);h.assertTrue(nonce!=null && Fusion.session(p)==null,"Invitation fused immediately");h.assertTrue(!Fusion.reply(receiver,UUID.randomUUID(),true),"Forged nonce accepted");h.assertTrue(!Fusion.reply(p,nonce,true),"Caster impersonated receiver");h.assertTrue(!Fusion.reply(receiver,nonce,false) && Fusion.session(p)==null,"Decline fused players");h.succeed();}
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void receivingPlayerControlsAndEitherPartyCanSeparate(GameTestHelper h){var p=caster(h);var receiver=player(h);receiver.setPos(p.position().add(2,0,0));double total=EnergyHelper.getMaxEP(p)+EnergyHelper.getMaxEP(receiver);UUID nonce=Fusion.invite(p,receiver);
+        h.assertTrue(Fusion.reply(receiver,nonce,true),"Accepted invitation failed");h.assertTrue(Fusion.body(receiver) && Fusion.hidden(p) && p.isSpectator() && !receiver.isSpectator(),"Receiving player did not control body");near(h,EnergyHelper.getMaxEP(receiver),total*1.5,"Player fusion EP");h.assertTrue(!Fusion.reply(receiver,nonce,true),"Invitation reused");h.runAfterDelay(5,()->{h.assertTrue(Fusion.session(p)!=null && Fusion.body(receiver),"Accepted Fusion ended as soon as caster was absorbed");Fusion.end(p,"Test");h.assertTrue(!p.isSpectator() && p.gameMode.getGameModeForPlayer()==GameType.SURVIVAL,"Caster game mode not restored");checkPenalties(h,p,receiver);h.succeed();});}
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void borrowedSkillsAreTemporaryAndOriginalCooldownStateReturns(GameTestHelper h){var p=caster(h);var host=subordinate(h,p);var skill=CommonSkills.SELF_REGENERATION.get();SkillAPI.getSkillsFrom(host).learnSkill(skill.createDefaultInstance());var studying=skill.createLearningInstance(p);studying.getOrCreateTag().putInt("own_bank",22);SkillAPI.getSkillsFrom(p).updateSkill(studying,true);
+        afterTracking(h,List.of(host),()->{h.assertTrue(Fusion.fuseSubordinate(p,host),"Fusion failed");var loan=SkillAPI.getSkillsFrom(p).getSkill(skill).orElseThrow();h.assertTrue(loan.isTemporarySkill(),"Skill permanently copied");loan.setCoolDown(47,0);loan.getOrCreateTag().putInt("bank_sentinel",7);Fusion.end(p,"Test");var restored=SkillAPI.getSkillsFrom(p).getSkill(skill).orElseThrow();h.assertTrue(restored.getMastery()<0 && restored.getOrCreateTag().getInt("own_bank")==22,"Previous learning progress or own storage was not restored");var original=SkillAPI.getSkillsFrom(host).getSkill(skill).orElseThrow();h.assertTrue(original.getCoolDown(0)==47 && original.getTag().getInt("bank_sentinel")==7,"Cooldown or storage state reset/duplicated on return");h.succeed();});}
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void temporaryAbilitiesAreBorrowedWithoutExtendingTheirLease(GameTestHelper h){var p=caster(h);var host=subordinate(h,p);var skill=CommonSkills.SELF_REGENERATION.get();var gift=skill.createDefaultInstance();gift.setRemoveTime(5);SkillAPI.getSkillsFrom(host).updateSkill(gift,true);
+        afterTracking(h,List.of(host),()->{h.assertTrue(Fusion.fuseSubordinate(p,host),"Fusion failed");var loan=SkillAPI.getSkillsFrom(p).getSkill(skill).orElseThrow();h.assertTrue(loan.getRemoveTime()>0 && loan.getRemoveTime()<=5,"Temporary ability was omitted or made permanent");SkillAPI.getSkillsFrom(host).getSkill(skill).orElseThrow().setRemoveTime(2);Fusion.end(p,"Test");h.assertTrue(SkillAPI.getSkillsFrom(host).getSkill(skill).orElseThrow().getRemoveTime()<=2,"Fusion extended the original temporary skill lease");h.assertTrue(SkillAPI.getSkillsFrom(p).getSkill(skill).isEmpty(),"Temporary loan survived separation");h.succeed();});}
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void regenerationMultipliesNativePulsesIncludingBiomeInput(GameTestHelper h){var p=caster(h);var host=subordinate(h,p);afterTracking(h,List.of(host),()->{try{
+        var aura=io.github.manasmods.tensura.storage.ep.ExistenceStorage.class.getDeclaredMethod("handleAuraRegen",io.github.manasmods.tensura.storage.ep.IExistence.class,LivingEntity.class,double.class);aura.setAccessible(true);
+        var magicule=io.github.manasmods.tensura.storage.ep.ExistenceStorage.class.getDeclaredMethod("handleMagiculeRegen",io.github.manasmods.tensura.storage.ep.IExistence.class,LivingEntity.class,double.class,double.class);magicule.setAccessible(true);var pool=TensuraStorages.getExistenceFrom(p);pool.setAura(0);pool.setMagicule(100);
+        aura.invoke(null,pool,p,EnergyHelper.getMaxAura(p));double normalAura=pool.getAura();pool.setMagicule(100);magicule.invoke(null,pool,p,100d,EnergyHelper.getMaxMagicule(p));double normalMagicule=pool.getMagicule()-100;
+        h.assertTrue(Fusion.fuseSubordinate(p,host),"Fusion failed");pool.setAura(0);pool.setMagicule(100);aura.invoke(null,pool,p,EnergyHelper.getMaxAura(p));magicule.invoke(null,pool,p,100d,EnergyHelper.getMaxMagicule(p));near(h,pool.getAura(),normalAura*10,"Aura pulse not ×10");near(h,pool.getMagicule()-100,normalMagicule*10,"Biome magicule pulse not ×10");Fusion.end(p,"Test");h.succeed();
+        }catch(Exception ex){Fusion.end(p,"Test failure");throw new RuntimeException(ex);}});}
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void fusionDoublesFinalDamageWithoutChangingDamageType(GameTestHelper h){var p=caster(h);var host=subordinate(h,p);var victim=target(h,p.position().add(5,0,0));afterTracking(h,List.of(host,victim),()->{
+        var source=p.damageSources().playerAttack(p);victim.hurt(source,10);float normal=1024-victim.getHealth();victim.setHealth(1024);victim.invulnerableTime=0;
+        h.assertTrue(Fusion.fuseSubordinate(p,host),"Fusion failed");victim.hurt(source,10);near(h,1024-victim.getHealth(),normal*2,"Final physical damage not exactly doubled");Fusion.end(p,"Test");h.succeed();});}
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void canceledFatalDamageDoesNotEndFusionBeforeRegeneration(GameTestHelper h){var p=caster(h);var host=subordinate(h,p);afterTracking(h,List.of(host),()->{
+        h.assertTrue(Fusion.fuseSubordinate(p,host),"Fusion failed");java.util.function.Consumer<net.neoforged.neoforge.event.entity.living.LivingDeathEvent> regeneration=e->{if(e.getEntity()==p)e.setCanceled(true);};var bus=net.neoforged.neoforge.common.NeoForge.EVENT_BUS;bus.addListener(net.neoforged.bus.api.EventPriority.HIGHEST,regeneration);
+        try{bus.post(new net.neoforged.neoforge.event.entity.living.LivingDeathEvent(p,p.damageSources().generic()));h.assertTrue(Fusion.session(p)!=null,"A prevented death ended Fusion before regeneration");}finally{bus.unregister(regeneration);Fusion.end(p,"Test");}h.succeed();});}
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void disconnectEventSeparatesAndRestoresBothParticipants(GameTestHelper h){var p=caster(h);var host=subordinate(h,p);afterTracking(h,List.of(host),()->{
+        h.assertTrue(Fusion.fuseSubordinate(p,host),"Fusion failed");net.neoforged.neoforge.common.NeoForge.EVENT_BUS.post(new net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerLoggedOutEvent(p));h.assertTrue(Fusion.session(p)==null && !host.isInvisible() && !host.isInvulnerable(),"Disconnect left a fused body behind");checkPenalties(h,p,host);h.succeed();});}
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void interruptedFusionRestoresFlagsAndTemporarySkills(GameTestHelper h){var p=caster(h);var host=subordinate(h,p);afterTracking(h,List.of(host),()->{
+        h.assertTrue(Fusion.fuseSubordinate(p,host),"Fusion failed");var snapshot=host.getPersistentData().getCompound(Fusion.STATE).copy();Fusion.end(p,"Test");host.getPersistentData().put(Fusion.STATE,snapshot);host.setInvisible(true);host.setInvulnerable(true);Fusion.recover(host);
+        h.assertTrue(!host.isInvisible() && !host.isInvulnerable() && !host.getPersistentData().contains(Fusion.STATE),"Stale persisted fusion left host hidden");h.succeed();});}
+}

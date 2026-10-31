@@ -32,6 +32,7 @@
     {
       "id": "tensuramoreskills:satella",
       "required": false
-    }
+    },
+    "heavenlyrestriction:fusion"
   ]
 }

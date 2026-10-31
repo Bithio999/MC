@@ -53,6 +53,7 @@
 - [Chained](https://github.com/Bithio999/MC/wiki/Additions-Chained)
 - [Unbound](https://github.com/Bithio999/MC/wiki/Additions-Unbound)
 - [Battlewills](https://github.com/Bithio999/MC/wiki/Additions-Battlewills)
+- [Fusion](https://github.com/Bithio999/MC/wiki/Additions-Fusion)
 - [Parallel World Jumper](https://github.com/Bithio999/MC/wiki/Additions-Parallel-World-Jumper)
 - [Aura recovery](https://github.com/Bithio999/MC/wiki/Additions-Aura-Regeneration)
 - [Equipment](https://github.com/Bithio999/MC/wiki/Additions-Weapons)

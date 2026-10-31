@@ -404,6 +404,57 @@
       ],
       "related": [],
       "icon": "tensura:textures/skill/extra/spatial_motion.png"
+    },
+    {
+      "id": "fusion",
+      "title": "Fusion",
+      "category": "Skills",
+      "summary": "Unique skill \u00b7 Share a body and skills with a subordinate or consenting player for 3 minutes.",
+      "sections": [
+        {
+          "title": "Fuse \u00b7 Active, Press",
+          "lines": [
+            "Aim within 16 blocks at your subordinate or another player. Players must accept the invitation. You control a subordinate\u2019s fused form; a receiving player controls their own fused body.",
+            "Fused EP = (your actual max EP + the target\u2019s actual max EP) \u00d7 1.5. Aura and magicule capacities keep the participants\u2019 combined resource split. Both resources regenerate 10\u00d7 faster; final outgoing damage is doubled.",
+            "The fused body temporarily has the participants\u2019 skills. Existing learned skills are retained. Borrowed skills and their storage/cooldown state return to their owner after separation; normal acquisition and activation restrictions apply.",
+            "Duration: 3 minutes. Press Fuse again or choose Separate Fusion in the pause menu to end early. The absorbed caster can also sneak to separate. No resource cost or additional cooldown."
+          ]
+        },
+        {
+          "title": "Separation",
+          "lines": [
+            "Both participants receive Paralysis II and Fragility II for 5 minutes, including after early separation. Their original EP, forms and permanent skills return.",
+            "Remaining resources are divided proportionally; fusing cannot refill either participant for free. Death, disconnect, dimension change or server shutdown ends Fusion. Fusion cannot be nested."
+          ]
+        },
+        {
+          "title": "Damage type",
+          "lines": [
+            "Fuse has no direct attack damage. The \u00d72 multiplier retains each attack\u2019s original damage type, including Physical, magical and direct Spiritual damage."
+          ]
+        },
+        {
+          "title": "Obtaining",
+          "lines": [
+            "Available in normal Unique reincarnation rolls. Excluded from Fettered Human\u2019s roll pool because it borrows target skills."
+          ]
+        }
+      ],
+      "keywords": [
+        "fusion",
+        "fuse",
+        "subordinate",
+        "consent",
+        "EP",
+        "regeneration",
+        "paralysis",
+        "fragility"
+      ],
+      "related": [
+        "chained",
+        "parallel-world-jumper"
+      ],
+      "icon": "heavenlyrestriction:textures/skill/fusion.png"
     }
   ]
 }

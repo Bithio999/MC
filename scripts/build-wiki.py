@@ -6,7 +6,7 @@ import html,json,re,shutil,subprocess,sys,zipfile,os
 try:import markdown
 except ImportError:raise SystemExit('Install the documentation renderer: python3 -m pip install Markdown==3.7')
 ROOT=Path(__file__).resolve().parents[1];WIKI=ROOT/'wiki';SITE=WIKI/'site'
-MODS={'myths':{'name':'Tensura Myths','version':'0.36.1','home':'Tensura-Myths','mark':'M'},'additions':{'name':'TensuraAdditionalAdditions','version':'1.5.2','home':'TensuraAdditionalAdditions','mark':'A'}}
+MODS={'myths':{'name':'Tensura Myths','version':'0.36.1','home':'Tensura-Myths','mark':'M'},'additions':{'name':'TensuraAdditionalAdditions','version':'1.6.0','home':'TensuraAdditionalAdditions','mark':'A'}}
 subprocess.run([sys.executable,str(ROOT/'scripts/build-ability-index.py')],check=True)
 catalog=json.loads((WIKI/'catalog.json').read_text());metadata={e['slug']:e for e in catalog};navigation=json.loads((WIKI/'navigation.json').read_text());abilities=json.loads((WIKI/'abilities.json').read_text())
 SITE.mkdir(exist_ok=True)
@@ -51,7 +51,7 @@ def render(source,destination):
     # Keep videos local and playable offline; retain a plain link for download/accessibility.
     def video(m):
         href,name=m.groups()
-        posters={'aion-singularity-barrage.mp4':'aion-singularity-formation.png','astral-library.mp4':'astral-library.png','eschaton-aion-anime-preview.mp4':'eschaton-apocalypse.png','ananke-last-dawn.mp4':'ananke-last-dawn.png','counter-eschaton-8m.mp4':'counter-preview-poster.png','world-hop.mp4':'world-hop-preview-poster.png'}
+        posters={'fusion.mp4':'fusion-poster.png','aion-singularity-barrage.mp4':'aion-singularity-formation.png','astral-library.mp4':'astral-library.png','eschaton-aion-anime-preview.mp4':'eschaton-apocalypse.png','ananke-last-dawn.mp4':'ananke-last-dawn.png','counter-eschaton-8m.mp4':'counter-preview-poster.png','world-hop.mp4':'world-hop-preview-poster.png'}
         poster=posters.get(Path(urlsplit(href).path).name)
         attribute=' poster="'+relative(WIKI/'media'/poster,destination)+'"' if poster else ''
         return '<figure class="video"><video controls preload="none" playsinline src="'+href+'"'+attribute+' aria-label="'+html.escape(re.sub('<[^>]+>','',name),quote=True)+'"></video><figcaption><a href="'+href+'">'+name+'</a></figcaption></figure>'
@@ -78,7 +78,7 @@ def render(source,destination):
         # The visual cards replace the Markdown comparison table.
         content=re.sub(r'<div class="article-table"><table>.*?</table></div>', '<div class="mod-grid">'+cards+'</div>',content,count=1,flags=re.S)
     toc='<details class="contents"><summary>On this page</summary>'+renderer.toc+'</details>' if len(renderer.toc_tokens)>2 and not home else ''
-    version=config['version'] if config else 'Myths 0.36.1 · Additions 1.5.2';mark=config['mark'] if config else 'T';prefix=relative(WIKI,destination)+'/'
+    version=config['version'] if config else 'Myths 0.36.1 · Additions 1.6.0';mark=config['mark'] if config else 'T';prefix=relative(WIKI,destination)+'/'
     title_id=markdown.extensions.toc.slugify(title,'-')
     title_attr='' if re.search(r'id="'+re.escape(title_id)+r'"',content) else ' id="'+html.escape(title_id)+'"'
     article_home=route(config['home'],destination) if config else relative(WIKI/'index.html',destination)

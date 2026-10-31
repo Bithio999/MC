@@ -11,7 +11,7 @@ import software.bernie.geckolib.animatable.GeoEntity;
 
 /** Two bounded visual protocols only. This entity cannot collide, hurt or edit the world. */
 public final class ArtVisualEntity extends Entity implements GeoEntity {
-    public static final int HEALING_PULSE=0,CHAINED_RUSH=1,UNBOUND_STANCE=2,UNBOUND_SLASH=3;
+    public static final int HEALING_PULSE=0,CHAINED_RUSH=1,UNBOUND_STANCE=2,UNBOUND_SLASH=3,FUSION=4;
     private static final DeferredRegister<EntityType<?>> TYPES=DeferredRegister.create(HeavenlyRestriction.ID,Registries.ENTITY_TYPE);
     public static final RegistrySupplier<EntityType<ArtVisualEntity>> TYPE=TYPES.register("art_visual",()->EntityType.Builder.<ArtVisualEntity>of(ArtVisualEntity::new,MobCategory.MISC).sized(.1f,.1f).clientTrackingRange(8).updateInterval(1).noSave().noSummon().build("heavenlyrestriction:art_visual"));
     private static final EntityDataAccessor<Integer> KIND=SynchedEntityData.defineId(ArtVisualEntity.class,EntityDataSerializers.INT),LIFE=SynchedEntityData.defineId(ArtVisualEntity.class,EntityDataSerializers.INT),STYLE=SynchedEntityData.defineId(ArtVisualEntity.class,EntityDataSerializers.INT),CASTER=SynchedEntityData.defineId(ArtVisualEntity.class,EntityDataSerializers.INT);
@@ -25,7 +25,7 @@ public final class ArtVisualEntity extends Entity implements GeoEntity {
     public Vec3 end(){return new Vec3(entityData.get(X),entityData.get(Y),entityData.get(Z));}
     public void setCaster(Entity e){entityData.set(CASTER,e.getId());}public Entity caster(){return level().getEntity(entityData.get(CASTER));}
     @Override protected void defineSynchedData(SynchedEntityData.Builder b){b.define(KIND,0);b.define(LIFE,16);b.define(STYLE,0);b.define(CASTER,-1);b.define(X,0f);b.define(Y,0f);b.define(Z,0f);}
-    @Override public void tick(){super.tick();if(!level().isClientSide() && tickCount>=lifetime())discard();}
+    @Override public void tick(){super.tick();if(kind()==FUSION && caster()!=null)setPos(caster().position());if(!level().isClientSide() && tickCount>=lifetime())discard();}
     @Override public AABB getBoundingBoxForCulling(){return new AABB(position(),position().add(end())).inflate(4);}
     @Override public boolean shouldRenderAtSqrDistance(double distance){return distance<128*128;}
     @Override protected void readAdditionalSaveData(CompoundTag tag){}@Override protected void addAdditionalSaveData(CompoundTag tag){}

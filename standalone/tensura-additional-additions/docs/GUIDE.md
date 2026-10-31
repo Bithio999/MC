@@ -213,3 +213,10 @@ Only the active save appears in Singleplayer. Visited worlds live in its hidden 
 **Library limit:** 128 worlds including the active one. At the limit, return travel still works, but new-world creation is blocked. Recorded earlier worlds and their travel recovery copies migrate on your next jump. Unrelated saves stay separate. Older libraries above the limit retain their worlds and cannot create more.
 
 **Deleting the save:** Minecraft’s normal Singleplayer Delete action removes the active save and its entire hidden library. Whole-save backups retain the library.
+
+
+## Fusion — Unique
+
+**Fuse · Active, Press.** Aim at your subordinate or a willing player within 16 blocks. Players accept a consent prompt. You control a subordinate’s fused form; a receiving player remains in control. Fused EP is **1.5 × combined actual max EP**, with **10× aura/magicule regeneration** and **2× final outgoing damage**. Borrowed skills last for Fusion and preserve their owner’s storage and cooldown state. Native skill restrictions still apply. Fuse deals no direct damage and retains each boosted attack’s damage type.
+
+Fusion lasts **3 minutes**. Recast Fuse, use **Pause → Separate Fusion**, or sneak as the absorbed caster to separate early. Both parties receive **Paralysis II and Fragility II for 5 minutes**. Original capacities return and remaining resources are divided proportionally. No cost or additional cooldown. Available in normal Unique rolls; excluded from Fettered Human’s target-skill-copying pool.

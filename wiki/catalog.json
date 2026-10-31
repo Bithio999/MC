@@ -1210,5 +1210,12 @@
     "title": "Ability directory",
     "category": "Reference",
     "mod": "additions"
+  },
+  {
+    "slug": "Additions-Fusion",
+    "title": "Fusion",
+    "category": "Skills",
+    "tier": "Unique",
+    "mod": "additions"
   }
 ]

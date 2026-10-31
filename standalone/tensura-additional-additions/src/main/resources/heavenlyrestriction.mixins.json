@@ -37,13 +37,17 @@
     "SchemaCostMixin",
     "SchemaHealthMixin",
     "SchemaSpiritualHealingMixin",
-    "SchemaLearningMixin"
+    "SchemaLearningMixin",
+    "FusionRecoveryMixin",
+    "FusionHiddenMixin",
+    "FusionSkillTickMixin"
   ],
   "injectors": {
     "defaultRequire": 1
   },
   "client": [
     "client.RestrictedRaceInfoMixin",
-    "client.SchemaProgressMixin"
+    "client.SchemaProgressMixin",
+    "client.FusionRendererMixin"
   ]
 }

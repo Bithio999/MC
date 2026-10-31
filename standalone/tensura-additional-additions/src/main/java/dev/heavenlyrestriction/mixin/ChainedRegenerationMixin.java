@@ -19,7 +19,7 @@ public abstract class ChainedRegenerationMixin {
     private static void restriction$convert(IExistence storage,LivingEntity owner,double areaMagicule,double maxMagicule,CallbackInfo out){
         if(!ChainedState.owned(owner) || storage.isSpiritualForm() && !SkillUtils.inSpiritualWorld(owner.level().dimension()) && isAffectedByEnergyLost(owner))return;
         double amount=Math.max(0,ChainedResources.regeneration(storage,owner,areaMagicule)-ChainedResources.RETAINED_MP_PER_PULSE);
-        amount*=SchemaArt.regenerationFactor(owner);
+        amount*=SchemaArt.regenerationFactor(owner)*dev.heavenlyrestriction.fusion.Fusion.regenerationFactor(owner);
         double recovered=Math.min(EnergyHelper.getMaxAura(owner),storage.getAura()+amount)-storage.getAura();
         double value=storage.getAura()+recovered;
         if(value>storage.getAura()){storage.setAura(value);storage.markDirty();SchemaArt.train(owner,recovered);}

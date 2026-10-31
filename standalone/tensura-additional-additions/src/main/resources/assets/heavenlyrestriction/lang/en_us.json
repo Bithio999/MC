@@ -18,5 +18,7 @@
   "message.heavenlyrestriction.instant_transmission.charging": "Instant Transmission: %s seconds",
   "message.heavenlyrestriction.instant_transmission.cancelled": "Instant Transmission cancelled.",
   "key.heavenlyrestriction.guide": "Open in-game guide",
-  "key.categories.heavenlyrestriction": "TensuraAdditionalAdditions"
+  "key.categories.heavenlyrestriction": "TensuraAdditionalAdditions",
+  "heavenlyrestriction.skill.fusion": "Fusion",
+  "heavenlyrestriction.skill.mode.fusion.fuse": "Fuse"
 }
