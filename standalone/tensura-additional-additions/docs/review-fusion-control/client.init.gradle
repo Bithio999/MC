@@ -1,0 +1,6 @@
+gradle.projectsEvaluated {
+ rootProject.sourceSets.main.java.srcDir(rootProject.file('docs/review-fusion-control'))
+ rootProject.dependencies.add('runtimeOnly', rootProject.files('/tmp/neo-otherworld/client/mods/jade-7545219.jar'))
+ rootProject.neoForge.runs.client.gameDirectory=rootProject.file('/workspace/validation-fusion/client')
+ rootProject.neoForge.runs.client.programArguments.addAll('--quickPlaySingleplayer','Fusion Preview','--width','1280','--height','720')
+}

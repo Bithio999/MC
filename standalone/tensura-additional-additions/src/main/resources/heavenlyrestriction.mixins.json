@@ -40,7 +40,9 @@
     "SchemaLearningMixin",
     "FusionRecoveryMixin",
     "FusionHiddenMixin",
-    "FusionSkillTickMixin"
+    "FusionSkillTickMixin",
+    "FusionEntityQueryMixin",
+    "FusionCollisionMixin"
   ],
   "injectors": {
     "defaultRequire": 1

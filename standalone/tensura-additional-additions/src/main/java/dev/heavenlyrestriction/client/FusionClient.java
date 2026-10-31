@@ -19,13 +19,18 @@ import java.util.*;
 @EventBusSubscriber(modid=HeavenlyRestriction.ID,value=Dist.CLIENT)
 public final class FusionClient {
     private record Body(CompoundTag data,long received){}
-    private static final Map<UUID,Body> BODIES=new HashMap<>();private static boolean rendering,sentExit;private static Object lastLevel;
+    private static final Map<UUID,Body> BODIES=new HashMap<>();private static final Map<LivingEntity,Boolean> PHYSICS=new IdentityHashMap<>();private static boolean rendering,sentExit;private static Object lastLevel;
     @EventBusSubscriber(modid=HeavenlyRestriction.ID,value=Dist.CLIENT,bus=EventBusSubscriber.Bus.MOD)
     public static class Setup {@SubscribeEvent public static void setup(FMLClientSetupEvent e){e.enqueueWork(()->{FusionNetwork.receiver=FusionClient::receive;Fusion.clientHidden=e2->BODIES.values().stream().anyMatch(b->b.data.getInt("hidden")==e2.getId());});}}
     public static void receive(CompoundTag tag){var mc=Minecraft.getInstance();if(tag==null)return;if(lastLevel!=mc.level){BODIES.clear();lastLevel=mc.level;}
         if(tag.getBoolean("invite")){mc.setScreen(new Consent(mc.screen,tag));return;}
-        if(!tag.hasUUID("token"))return;if(tag.getBoolean("ended")){BODIES.remove(tag.getUUID("token"));sentExit=false;}else if(mc.level!=null)BODIES.put(tag.getUUID("token"),new Body(tag.copy(),mc.level.getGameTime()));
+        if(!tag.hasUUID("token"))return;if(tag.getBoolean("ended")){BODIES.remove(tag.getUUID("token"));sentExit=false;}else if(mc.level!=null)BODIES.put(tag.getUUID("token"),new Body(tag.copy(),mc.level.getGameTime()));syncPhysics();
     }
+    private static void syncPhysics(){var mc=Minecraft.getInstance();
+        var it=PHYSICS.entrySet().iterator();while(it.hasNext()){var entry=it.next();if(mc.level!=entry.getKey().level() || !Fusion.hidden(entry.getKey())){entry.getKey().noPhysics=entry.getValue();it.remove();}}
+        if(mc.level!=null)for(var body:BODIES.values())if(mc.level.getEntity(body.data.getInt("hidden")) instanceof LivingEntity hidden){PHYSICS.putIfAbsent(hidden,hidden.noPhysics);hidden.noPhysics=true;}
+    }
+    @SubscribeEvent public static void beforeTick(ClientTickEvent.Pre e){var mc=Minecraft.getInstance();if(mc.level!=lastLevel){BODIES.clear();lastLevel=mc.level;sentExit=false;}syncPhysics();}
     private static CompoundTag local(){var mc=Minecraft.getInstance();if(mc.player==null)return null;for(var b:BODIES.values())if(b.data.getInt("pilot")==mc.player.getId() || b.data.getInt("caster")==mc.player.getId())return b.data;return null;}
     @SubscribeEvent public static void tick(ClientTickEvent.Post e){var mc=Minecraft.getInstance();if(mc.level!=lastLevel){BODIES.clear();lastLevel=mc.level;sentExit=false;}if(mc.level==null)return;
         BODIES.values().removeIf(b->mc.level.getGameTime()-b.received>b.data.getInt("ticks")+40);var state=local();

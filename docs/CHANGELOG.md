@@ -1,5 +1,10 @@
 # Changelog
 
+## Standalone 1.6.2 — Fusion movement and targeting
+
+- Keep the embedded Fusion participant non-physical on both client and server, and prevent it from pushing the controlling player. Restore client physics when Fusion ends.
+- Exclude the embedded body from spatial entity queries so Jade/WAILA rays and Tensura Analytical Appraisal can detect real targets beyond it. Preserve direct entity lookup for rendering and recovery.
+
 ## Standalone 1.3.0 — Parallel World Jumper
 
 - Add the single-player Unique skill Parallel World Jumper and its World Hop active. Save and close the integrated world, then load a new-seed continuation with all dimension terrain regenerated. Retain player progress, inventory and pack configuration; preserve the previous save as the recovery copy.

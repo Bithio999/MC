@@ -48,6 +48,7 @@ public final class Fusion {
     public static Session session(LivingEntity e){return e==null?null:ACTIVE.get(e.getUUID());}
     public static boolean body(LivingEntity e){var s=session(e);return s!=null && s.pilot==e;}
     public static boolean hidden(LivingEntity e){if(e.level().isClientSide())return clientHidden.test(e);var s=session(e);return s!=null && s.hidden==e;}
+    public static boolean embedded(Entity e){return e instanceof LivingEntity living && hidden(living);}
     public static double regenerationFactor(LivingEntity e){return body(e)?10:1;}
     public static double damageFactor(LivingEntity e){return body(e)?2:1;}
     public static boolean maintained(ServerPlayer p){return SkillAPI.getSkillsFrom(p).getSkill(HeavenlyRestriction.FUSION.get()).filter(i->i.getMastery()>=0).isPresent();}

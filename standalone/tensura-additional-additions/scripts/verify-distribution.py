@@ -5,7 +5,7 @@ import json, re, struct, tomllib, zipfile
 
 root = Path(__file__).resolve().parents[1]
 resources = root / 'src/main/resources'
-jar = root / 'build/libs/TensuraAdditionalAdditions-1.6.1.jar'
+jar = root / 'build/libs/TensuraAdditionalAdditions-1.6.2.jar'
 assets = resources / 'assets/heavenlyrestriction'
 required_art = [*(f'textures/race/{name}.png' for name in (
     'fettered_human', 'tempered_vessel', 'unshackled', 'heavenly_restricted', 'heavenbreaker')),
@@ -35,14 +35,14 @@ for name in config['mixins'] + config.get('client', []):
 with zipfile.ZipFile(jar) as z:
     names = set(z.namelist())
     mods = tomllib.loads(z.read('META-INF/neoforge.mods.toml').decode())
-    assert [(m['modId'], m['version']) for m in mods['mods']] == [('heavenlyrestriction', '1.6.1')]
+    assert [(m['modId'], m['version']) for m in mods['mods']] == [('heavenlyrestriction', '1.6.2')]
     assert mods['mods'][0]['displayName'] == 'TensuraAdditionalAdditions'
     language=json.loads(z.read('assets/heavenlyrestriction/lang/en_us.json'))
     for key,label in [('heavenlyrestriction.skill.parallel_world_jumper','Parallel World Jumper'),('heavenlyrestriction.skill.fusion','Fusion'),('heavenlyrestriction.skill.mode.fusion.fuse','Fuse'),('heavenlyrestriction.skill.mode.parallel_world_jumper.world_hop','World Jump'),('heavenlyrestriction.skill.mode.parallel_world_jumper.world_select','World Select')]:
         assert language[key]==label, key
     assert any(d['modId'] == 'tensura' and d['type'] == 'required' for d in mods['dependencies']['heavenlyrestriction'])
     assert any(d['modId'] == 'wildhunt' and d['type'] == 'incompatible' for d in mods['dependencies']['heavenlyrestriction'])
-    assert not any(n.startswith('dev/wildhunt/') or 'StandaloneReview' in n or 'ChainedTargetingReview' in n or 'ChainedResourceReview' in n or 'UnboundReview' in n or 'AirborneReview' in n or 'NeoOtherworldClientReview' in n or 'NeoOtherworldGameTests' in n or 'NeoOtherworldFixtures' in n or 'SpiritualReviewGameTests' in n or 'TransmissionReview' in n or 'TransmissionClientReview' in n or 'SchemaReview' in n or 'SchemaClientReview' in n or 'GuideClientReview' in n or 'SchemaProgressClientReview' in n or 'WorldHopClientReview' in n or 'WorldHopPreview' in n or 'WorldSelectClientReview' in n or 'WorldLibraryClientReview' in n or 'FusionPreview' in n or 'FusionConsentReview' in n or 'FusionMenuReview' in n for n in names)
+    assert not any(n.startswith('dev/wildhunt/') or 'StandaloneReview' in n or 'ChainedTargetingReview' in n or 'ChainedResourceReview' in n or 'UnboundReview' in n or 'AirborneReview' in n or 'NeoOtherworldClientReview' in n or 'NeoOtherworldGameTests' in n or 'NeoOtherworldFixtures' in n or 'SpiritualReviewGameTests' in n or 'TransmissionReview' in n or 'TransmissionClientReview' in n or 'SchemaReview' in n or 'SchemaClientReview' in n or 'GuideClientReview' in n or 'SchemaProgressClientReview' in n or 'WorldHopClientReview' in n or 'WorldHopPreview' in n or 'WorldSelectClientReview' in n or 'WorldLibraryClientReview' in n or 'FusionPreview' in n or 'FusionConsentReview' in n or 'FusionMenuReview' in n or 'FusionControlReview' in n for n in names)
     assert b'ftbteams' not in z.read('dev/heavenlyrestriction/TestFixtures.class'), 'Pack-only fixture leaked into release'
     for name in required_art:
         assert z.read('assets/heavenlyrestriction/' + name) == (assets / name).read_bytes(), name
@@ -77,4 +77,4 @@ with zipfile.ZipFile(jar) as z:
     assert next(d for d in deps if d['modId']=='tensura')['versionRange'] == '[2.0.1.3,2.0.1.5)'
     assert next(d for d in deps if d['modId']=='geckolib')['versionRange'] == '[4.9.2,5)'
     assert not any(n.endswith('.jar') for n in names), 'Dependency jars must not be redistributed inside the addon'
-print('Independent 1.6.1 JAR, native dependency metadata, all extracted icons/rigs/animations and mixin classes verified; no Myths classes, bundled dependencies or review fixtures.')
+print('Independent 1.6.2 JAR, native dependency metadata, all extracted icons/rigs/animations and mixin classes verified; no Myths classes, bundled dependencies or review fixtures.')
