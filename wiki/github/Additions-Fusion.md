@@ -22,6 +22,7 @@ Aim at your subordinate or another player. Players must accept the invitation. Y
 | Fused benefit | Effect |
 | --- | --- |
 | EP | **(Your actual max EP + target’s actual max EP) × 1.5** |
+| HP and SHP | **Add both participants’ maximum and remaining HP/SHP**; no 1.5× health multiplier |
 | Resource split | Combined aura and magicule capacities, each multiplied by 1.5 |
 | Regeneration | **10×** aura and magicule regeneration, including normal biome bonuses |
 | Damage | **2× final outgoing damage**, retaining Physical, magical or Spiritual type |
@@ -29,9 +30,15 @@ Aim at your subordinate or another player. Players must accept the invitation. Y
 
 Press **Fuse** again or choose **Pause → Separate Fusion** to end early. The absorbed caster can also sneak to separate. Fusion cannot be nested.
 
+## Borrowed skills in Tensura’s menu
+
+Open Tensura’s **Ability Selection** menu. Borrowed skills appear in their normal categories, such as **Skills → Unique**, **Magic**, or **Battlewills**. Search `f:temporary` to find temporary entries. Select and slot active abilities normally; passives follow their normal toggle/slot rules. Borrowed entries disappear after separation, and any previous learning entry is restored.
+
+![Borrowed skills in the receiving player’s native menu](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/fusion-player-unique-menu.png)
+
 ## Separation
 
-Both participants receive **Paralysis II and Fragility II for 5 minutes**, including after early separation. Original forms, EP and permanent skills return. Remaining resources are divided proportionally; Fusion does not provide a free refill. Borrowed skill storage and cooldowns return to their owner.
+Both participants receive **Paralysis II and Fragility II for 5 minutes**, including after early separation. Original forms, EP and permanent skills return. Remaining HP, SHP, aura and magicules are divided in proportion to the original maximum capacities; Fusion does not provide a free refill. Borrowed skill storage and cooldowns return to their owner.
 
 Death, disconnect, dimension changes and server shutdown end Fusion. Normal skill restrictions still apply.
 
@@ -47,4 +54,4 @@ Can roll as a normal reincarnation Unique. Excluded from Fettered Human’s star
 
 ![Fusion preview](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/fusion-poster.png)
 
-[Fusion — controlled subordinate form, EP, damage and separation](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/fusion.mp4)
+[Fusion — recorded on 1.6.0, before combined HP/SHP](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/fusion.mp4)

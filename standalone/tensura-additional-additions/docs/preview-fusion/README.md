@@ -18,3 +18,11 @@ DISPLAY=:99 LIBGL_ALWAYS_SOFTWARE=1 ./gradlew runClient -I docs/preview-fusion/p
 ```
 
 The inviter uses a server-side test player; the receiver is the connected native client. The fixture clicks the actual Accept button, validates control after the reply packet, then clicks Pause → Separate Fusion. Results and screenshots are written to `/workspace/validation-fusion/ui-review`. Both fixture classes are excluded from normal builds.
+
+To verify borrowed skills through Tensura's actual Ability Selection screen for both control roles:
+
+```sh
+DISPLAY=:99 LIBGL_ALWAYS_SOFTWARE=1 ./gradlew runClient -I docs/preview-fusion/preview.init.gradle -PfusionMenuReview
+```
+
+This checks combined HP/SHP, actual list selection in Skills → Unique and Battlewills, native slot packets accepted by the server, and removal of borrowed entries afterward. Results/screenshots are saved under `/workspace/validation-fusion/menu-review`. The player donor is a server-side test player. The menu-review fixture is also excluded from production builds.

@@ -416,6 +416,7 @@
           "lines": [
             "Aim within 16 blocks at your subordinate or another player. Players must accept the invitation. You control a subordinate\u2019s fused form; a receiving player controls their own fused body.",
             "Fused EP = (your actual max EP + the target\u2019s actual max EP) \u00d7 1.5. Aura and magicule capacities keep the participants\u2019 combined resource split. Both resources regenerate 10\u00d7 faster; final outgoing damage is doubled.",
+            "HP and SHP combine by addition: maximum HP/SHP and the remaining HP/SHP are each summed. The EP multiplier does not multiply HP or SHP. Native skill menus show the borrowed abilities in their normal categories; use f:temporary to find temporary entries.",
             "The fused body temporarily has the participants\u2019 skills. Existing learned skills are retained. Borrowed skills and their storage/cooldown state return to their owner after separation; normal acquisition and activation restrictions apply.",
             "Duration: 3 minutes. Press Fuse again or choose Separate Fusion in the pause menu to end early. The absorbed caster can also sneak to separate. No resource cost or additional cooldown."
           ]
