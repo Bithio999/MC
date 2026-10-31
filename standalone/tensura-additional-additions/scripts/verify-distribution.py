@@ -5,7 +5,7 @@ import json, re, struct, tomllib, zipfile
 
 root = Path(__file__).resolve().parents[1]
 resources = root / 'src/main/resources'
-jar = root / 'build/libs/TensuraAdditionalAdditions-1.5.0.jar'
+jar = root / 'build/libs/TensuraAdditionalAdditions-1.5.1.jar'
 assets = resources / 'assets/heavenlyrestriction'
 required_art = [*(f'textures/race/{name}.png' for name in (
     'fettered_human', 'tempered_vessel', 'unshackled', 'heavenly_restricted', 'heavenbreaker')),
@@ -35,8 +35,11 @@ for name in config['mixins'] + config.get('client', []):
 with zipfile.ZipFile(jar) as z:
     names = set(z.namelist())
     mods = tomllib.loads(z.read('META-INF/neoforge.mods.toml').decode())
-    assert [(m['modId'], m['version']) for m in mods['mods']] == [('heavenlyrestriction', '1.5.0')]
+    assert [(m['modId'], m['version']) for m in mods['mods']] == [('heavenlyrestriction', '1.5.1')]
     assert mods['mods'][0]['displayName'] == 'TensuraAdditionalAdditions'
+    language=json.loads(z.read('assets/heavenlyrestriction/lang/en_us.json'))
+    for key,label in [('heavenlyrestriction.skill.parallel_world_jumper','Parallel World Jumper'),('heavenlyrestriction.skill.mode.parallel_world_jumper.world_hop','World Jump'),('heavenlyrestriction.skill.mode.parallel_world_jumper.world_select','World Select')]:
+        assert language[key]==label, key
     assert any(d['modId'] == 'tensura' and d['type'] == 'required' for d in mods['dependencies']['heavenlyrestriction'])
     assert any(d['modId'] == 'wildhunt' and d['type'] == 'incompatible' for d in mods['dependencies']['heavenlyrestriction'])
     assert not any(n.startswith('dev/wildhunt/') or 'StandaloneReview' in n or 'ChainedTargetingReview' in n or 'ChainedResourceReview' in n or 'UnboundReview' in n or 'AirborneReview' in n or 'NeoOtherworldClientReview' in n or 'NeoOtherworldGameTests' in n or 'NeoOtherworldFixtures' in n or 'SpiritualReviewGameTests' in n or 'TransmissionReview' in n or 'TransmissionClientReview' in n or 'SchemaReview' in n or 'SchemaClientReview' in n or 'GuideClientReview' in n or 'SchemaProgressClientReview' in n or 'WorldHopClientReview' in n or 'WorldHopPreview' in n or 'WorldSelectClientReview' in n or 'WorldLibraryClientReview' in n for n in names)
@@ -65,7 +68,7 @@ with zipfile.ZipFile(jar) as z:
     assert any(e['id']=='parallel-world-jumper' for e in guide)
     unique=json.loads(z.read('data/tensura/tags/manascore_skill/skills/unique_skills.json'))
     assert 'heavenlyrestriction:parallel_world_jumper' in unique['values']
-    for cls in ['worldhop/WorldHop','worldhop/WorldHopFiles','worldhop/WorldHopMetadata','worldhop/WorldHopSaveCompat','worldhop/WorldHopNetwork','client/WorldHopClient','worldhop/WorldHopLibrary','worldhop/WorldHopMigration','worldhop/WorldHopJournal','worldhop/WorldSelect','client/WorldSelectScreen']:
+    for cls in ['worldhop/WorldHop','worldhop/WorldHopFiles','worldhop/WorldHopIo','worldhop/WorldHopMetadata','worldhop/WorldHopSaveCompat','worldhop/WorldHopNetwork','client/WorldHopClient','worldhop/WorldHopLibrary','worldhop/WorldHopMigration','worldhop/WorldHopJournal','worldhop/WorldSelect','client/WorldSelectScreen']:
         assert 'dev/heavenlyrestriction/'+cls+'.class' in names
     pause = 'data/heavenlyrestriction/tags/mob_effect/pauses_energy_regeneration.json'
     assert z.read(pause) == (resources / pause).read_bytes()
@@ -73,4 +76,4 @@ with zipfile.ZipFile(jar) as z:
     assert next(d for d in deps if d['modId']=='tensura')['versionRange'] == '[2.0.1.3,2.0.1.5)'
     assert next(d for d in deps if d['modId']=='geckolib')['versionRange'] == '[4.9.2,5)'
     assert not any(n.endswith('.jar') for n in names), 'Dependency jars must not be redistributed inside the addon'
-print('Independent 1.5.0 JAR, native dependency metadata, all extracted icons/rigs/animations and mixin classes verified; no Myths classes, bundled dependencies or review fixtures.')
+print('Independent 1.5.1 JAR, native dependency metadata, all extracted icons/rigs/animations and mixin classes verified; no Myths classes, bundled dependencies or review fixtures.')

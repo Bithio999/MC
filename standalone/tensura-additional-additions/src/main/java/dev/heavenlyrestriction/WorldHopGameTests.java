@@ -13,6 +13,15 @@ import static dev.heavenlyrestriction.TestFixtures.*;
 @GameTestHolder(HeavenlyRestriction.ID)
 @PrefixGameTestTemplate(false)
 public final class WorldHopGameTests {
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void worldSelectNeedsItsOwnNativeModeLearningAndRetainsThatProgress(GameTestHelper h){
+        var p=player(h);var skill=HeavenlyRestriction.PARALLEL_WORLD_JUMPER.get();var i=skill.createDefaultInstance();double required=skill.getLearningPointRequirement(i,p,1);
+        h.assertTrue(required>1 && skill.getModeLearningList(i).equals(java.util.List.of(1)),"World Select missing from native mode-learning list");
+        h.assertTrue(!skill.isWorldSelectLearned(i,p),"Learning the overall skill unlocked World Select");
+        skill.learnMode(i,p,1,required-1,false);h.assertTrue(!skill.isWorldSelectLearned(i,p),"Mode unlocked before its learning threshold");
+        skill.learnMode(i,p,1,1,false);h.assertTrue(skill.isWorldSelectLearned(i,p),"Mode did not unlock when native learning completed");
+        h.assertTrue(skill.isWorldSelectLearned(i.copy(),p) && i.getMastery()==0,"Mode learning was lost on copy or changed overall mastery");h.succeed();
+    }
     private static void metadata(Path world,String name,long seed)throws java.io.IOException{
         Files.createDirectories(world);var data=new CompoundTag();data.putString("LevelName",name);var gen=new CompoundTag();gen.putLong("seed",seed);data.put("WorldGenSettings",gen);var root=new CompoundTag();root.put("Data",data);NbtIo.writeCompressed(root,world.resolve("level.dat"));
     }
@@ -56,6 +65,11 @@ public final class WorldHopGameTests {
     }
     @GameTest(template="empty",timeoutTicks=100)
     public static void dedicatedServersCannotRollLearnCopyOrActivateWorldJumper(GameTestHelper h){
+        var named=HeavenlyRestriction.PARALLEL_WORLD_JUMPER.get();
+        h.assertTrue(named.getName().getString().equals("Parallel World Jumper") && named.getColoredName().getString().equals("Parallel World Jumper"),"Plain/colored skill name leaked a translation key");
+        h.assertTrue(named.getColoredName().getStyle().getColor().equals(net.minecraft.network.chat.TextColor.fromLegacyFormat(named.getType().getChatFormatting())),"Unique name lost its tier color");
+        h.assertTrue(named.getChatDisplayName(false).getString().contains("Parallel World Jumper"),"Chat/tooltip name bypassed the localized label");
+        h.assertTrue(named.getModeName(named.createDefaultInstance(),0).getString().equals("World Jump"),"World Jump label leaked a translation key");
         var p=player(h);var skill=HeavenlyRestriction.PARALLEL_WORLD_JUMPER.get();h.assertTrue(skill.createDefaultInstance().is(net.minecraft.tags.TagKey.create(SkillAPI.getSkillRegistryKey(),net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("tensura","unique_skills"))),"Unique classification tag missing");h.assertTrue(!WorldHop.available(p),"Dedicated server was treated as single-player");
         h.assertTrue(ReincarnationMenu.getSkillPool().contains(skill),"Skill missing from registered pool");h.assertTrue(!ReincarnationMenu.getReincarnationSkills(ReincarnationMenu.getSkillPool(),h.getLevel(),true,p).contains(skill),"Multiplayer reincarnation could roll World Jumper");
         h.assertTrue(!SkillHelper.learnSkill(p,skill.createDefaultInstance()),"Multiplayer could acquire the skill");h.assertTrue(!SkillHelper.learnSkill(p,skill.createLearningInstance(p)),"Multiplayer could acquire a learning entry");

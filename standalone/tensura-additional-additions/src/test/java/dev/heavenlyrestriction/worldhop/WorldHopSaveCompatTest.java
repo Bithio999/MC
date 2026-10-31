@@ -7,6 +7,11 @@ import com.google.gson.*;
 import static org.junit.jupiter.api.Assertions.*;
 class WorldHopSaveCompatTest {
     @TempDir Path world;
+    @Test void returningToAnOldWorldUsesTheLibraryNumberRatherThanItsOldSidecar()throws Exception{
+        var first=WorldHopSaveCompat.advanceHistory(world,"Original world",123,"Original",1);assertEquals(1,first.hop());
+        var fresh=WorldHopSaveCompat.advanceHistory(world,"Original world · Parallel 1",456,"Slot",3);assertEquals(3,fresh.hop());assertEquals("Original world",fresh.name());
+        Files.delete(world.resolve("heavenlyrestriction-world-hop.json"));var returned=WorldHopSaveCompat.advanceHistory(world,"Original world · Parallel 1",789,"Slot",4);assertEquals(4,returned.hop());assertEquals("Original world",returned.name());
+    }
     Path tracking()throws IOException{Path p=world.resolve("data/starterkit/tracking.json");Files.createDirectories(p.getParent());return p;}
     @Test void worldNamesRemainStableWhenNativeSaveDropsCustomLevelTags()throws Exception{
         var first=WorldHopSaveCompat.advanceHistory(world,"Original world",123,"Original");assertEquals("Original world",first.name());assertEquals(1,first.hop());

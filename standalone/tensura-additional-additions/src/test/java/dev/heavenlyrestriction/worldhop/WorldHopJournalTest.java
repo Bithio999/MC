@@ -6,6 +6,14 @@ import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.*;
 class WorldHopJournalTest {
     @TempDir Path saves;
+    @Test void libraryNumberDoesNotRestartAfterReturningAndDuplicateLabelsAreRepaired()throws Exception{
+        Path active=Files.createDirectory(saves.resolve("Slot"));var original=new WorldHopJournal.Entry(WorldHopJournal.id("original"),"Slot","Home",10);
+        var a=new WorldHopJournal.Entry(WorldHopJournal.id("A"),"Slot","Home · Parallel 1",20);var b=new WorldHopJournal.Entry(WorldHopJournal.id("B"),"Old B","Home · Parallel 1",30);
+        var old=new WorldHopJournal.Journal(a.id(),java.util.List.of(a,b,original));WorldHopJournal.write(active,old);var repaired=WorldHopJournal.read(active,a.name(),a.seed());
+        assertEquals("Home · Parallel 1",repaired.find(a.id()).orElseThrow().name());assertEquals("Home · Parallel 2",repaired.find(b.id()).orElseThrow().name());assertEquals(30,repaired.find(b.id()).orElseThrow().seed());
+        assertEquals(3,WorldHopJournal.nextParallelNumber(repaired));var returned=WorldHopJournal.arrive(repaired,original,"Slot");assertEquals(3,WorldHopJournal.nextParallelNumber(returned));
+        var next=new WorldHopJournal.Entry(WorldHopJournal.id("C"),"Slot","Home · Parallel 3",40);assertEquals(4,WorldHopJournal.nextParallelNumber(WorldHopJournal.arrive(returned,next,"Slot")));
+    }
     @Test void returnKeepsStableIdentityAndLatestFolderWithoutDuplicateWorlds()throws Exception{
         Path original=Files.createDirectory(saves.resolve("Original"));var first=WorldHopJournal.read(original,"Home",123);
         var second=new WorldHopJournal.Entry(WorldHopJournal.id("PWJ-B"),"PWJ-B","Parallel 1",456);

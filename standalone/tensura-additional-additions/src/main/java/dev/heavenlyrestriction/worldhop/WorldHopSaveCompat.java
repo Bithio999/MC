@@ -5,10 +5,13 @@ public final class WorldHopSaveCompat {
     public record History(String name,long hop){}
     /** Native level.dat serialization drops unknown fields, so keep hop names in a sidecar. */
     public static History advanceHistory(Path world,String currentName,long seed,String previous)throws IOException{
+        return advanceHistory(world,currentName,seed,previous,0);
+    }
+    public static History advanceHistory(Path world,String currentName,long seed,String previous,long libraryNumber)throws IOException{
         Path file=world.resolve("heavenlyrestriction-world-hop.json");
         try{
             var data=Files.isRegularFile(file)?com.google.gson.JsonParser.parseString(Files.readString(file)).getAsJsonObject():new com.google.gson.JsonObject();
-            String name=data.has("name")?data.get("name").getAsString():currentName;long hop=Math.addExact(Math.max(0,data.has("hop")?data.get("hop").getAsLong():0),1);
+            String name=data.has("name")?data.get("name").getAsString():currentName.replaceFirst(" · Parallel \\d+$","");long hop=libraryNumber>0?libraryNumber:Math.addExact(Math.max(0,data.has("hop")?data.get("hop").getAsLong():0),1);
             data.addProperty("version",1);data.addProperty("name",name);data.addProperty("hop",hop);data.addProperty("seed",seed);data.addProperty("previous",previous);Files.writeString(file,new com.google.gson.GsonBuilder().setPrettyPrinting().create().toJson(data));return new History(name,hop);
         }catch(RuntimeException ex){throw new IOException("Could not preserve parallel-world history",ex);}
     }

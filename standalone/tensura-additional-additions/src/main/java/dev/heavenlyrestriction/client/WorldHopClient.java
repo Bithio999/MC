@@ -41,7 +41,7 @@ public final class WorldHopClient {
         Path active=server.getWorldPath(net.minecraft.world.level.storage.LevelResource.ROOT).toAbsolutePath().normalize();
         if(!success){abort(active,"No safe landing was found. Your previous world has been restored.");return;}
         CompletableFuture.runAsync(()->{try{WorldHopLibrary.finish(active);}catch(Exception ex){throw new java.util.concurrent.CompletionException(ex);}}).whenComplete((ignored,error)->mc.execute(()->{
-            if(error==null){previous=null;busy=false;}else{LoggerFactory.getLogger("TensuraAdditionalAdditions/WorldHop").error("Could not finish library transfer",error);abort(active,"Travel could not finish. Your previous world has been restored.");}
+            if(error==null){previous=null;busy=false;}else{LoggerFactory.getLogger("TensuraAdditionalAdditions/WorldHop").error("Could not finish library transfer",error);abort(active,"Travel could not finish. Your previous world has been restored.\n"+WorldHopIo.describe(error));}
         }));
     }
     private static void abort(Path active,String reason){
@@ -49,7 +49,7 @@ public final class WorldHopClient {
         if(mc.level!=null)mc.level.disconnect();
         mc.disconnect(new MessageScreen("Restoring your previous world…"));
         CompletableFuture.runAsync(()->{try{WorldHopLibrary.rollback(active);}catch(Exception ex){throw new java.util.concurrent.CompletionException(ex);}}).whenComplete((ignored,error)->mc.execute(()->{
-            if(error!=null){LoggerFactory.getLogger("TensuraAdditionalAdditions/WorldHop").error("Travel data preserved for recovery",error);recover(null,"Automatic recovery could not finish. Your saves are preserved; see the log.");}
+            if(error!=null){LoggerFactory.getLogger("TensuraAdditionalAdditions/WorldHop").error("Travel data preserved for recovery",error);recover(null,"Automatic recovery could not finish. Your saves are preserved.\n"+WorldHopIo.describe(error));}
             else recover(fallback,reason);
         }));
     }
@@ -76,7 +76,7 @@ public final class WorldHopClient {
                         tx=WorldHopLibrary.begin(active,journal.current());String slot=active.getFileName().toString();
                         if(ticket.destination()==null){
                             WorldHopFiles.stage(active,tx.next(),stage->{
-                                WorldHopMetadata.rewrite(stage,ticket.seed(),ticket.player(),slot,slot);
+                                WorldHopMetadata.rewrite(stage,ticket.seed(),ticket.player(),slot,slot,WorldHopJournal.nextParallelNumber(journal));
                                 var fresh=WorldHopMetadata.read(stage.resolve("level.dat")).getCompound("Data");var destination=new WorldHopJournal.Entry(UUID.randomUUID().toString(),slot,fresh.getString("LevelName"),ticket.seed());
                                 WorldHopJournal.write(stage,WorldHopJournal.arrive(journal,destination,slot));
                             },false);
@@ -84,14 +84,14 @@ public final class WorldHopClient {
                             var entry=journal.find(ticket.destination().id()).filter(e->!e.id().equals(journal.current())).orElseThrow(()->new java.io.IOException("Destination not visited"));
                             Path destination=WorldHopLibrary.archived(active,entry.id()).orElseThrow(()->new java.io.IOException("Selected world is missing"));
                             if(WorldHopMetadata.read(destination.resolve("level.dat")).getCompound("Data").getCompound("WorldGenSettings").getLong("seed")!=entry.seed())throw new java.io.IOException("Selected world's seed changed");
-                            WorldHopFiles.stage(destination,tx.next(),stage->{WorldHopMetadata.revisit(stage,active,ticket.player(),slot,slot);WorldHopJournal.write(stage,WorldHopJournal.arrive(journal,entry,slot));},true);
+                            WorldHopFiles.stage(destination,tx.next(),stage->{WorldHopMetadata.revisit(stage,active,ticket.player(),slot,slot);WorldHopMetadata.setName(stage,entry.name());WorldHopJournal.write(stage,WorldHopJournal.arrive(journal,entry,slot));},true);
                         }
                     }
                     if(net.minecraft.util.DirectoryLock.isLocked(active))throw new java.io.IOException("The active save was opened elsewhere");
                     WorldHopLibrary.install(tx);
                 }catch(Exception ex){throw new java.util.concurrent.CompletionException(ex);}
             }).whenComplete((ignored,error)->mc.execute(()->{
-                if(error!=null){LoggerFactory.getLogger("TensuraAdditionalAdditions/WorldHop").error("World Jump could not prepare the library",error);abort(active,"World Jump could not finish. Your previous world has been restored.");return;}
+                if(error!=null){LoggerFactory.getLogger("TensuraAdditionalAdditions/WorldHop").error("World Jump could not prepare the library",error);abort(active,"World Jump could not finish. Your previous world has been restored.\n"+WorldHopIo.describe(error));return;}
                 progress.message="Entering your parallel world…";
                 mc.createWorldOpenFlows().openWorld(active.getFileName().toString(),()->abort(active,"The world could not be opened. Your previous world has been restored."));
             }));
@@ -105,16 +105,18 @@ public final class WorldHopClient {
         @Override public boolean shouldCloseOnEsc(){return false;}
         @Override public void render(GuiGraphics g,int mx,int my,float partial){
             g.fillGradient(0,0,width,height,0xff080f20,0xff1e2446);int cx=width/2,cy=height/2;
-            int beat=(int)(System.currentTimeMillis()/300%4);g.drawCenteredString(font,"PARALLEL WORLD JUMPER",cx,cy-38,0xffbbdcff);
-            g.drawCenteredString(font,message+".".repeat(beat),cx,cy-8,0xffeeeeff);g.drawCenteredString(font,"Your previous world is preserved.",cx,cy+18,0xffa2aec5);
+            g.drawCenteredString(font,"PARALLEL WORLD JUMPER",cx,cy-58,0xffbbdcff);
+            var lines=font.split(Component.literal(message),Math.max(120,Math.min(500,width-32)));int lineY=cy-26;
+            for(int n=0;n<Math.min(8,lines.size());n++){var line=lines.get(n);g.drawString(font,line,cx-font.width(line)/2,lineY,0xffeeeeff,false);lineY+=10;}
+            g.drawCenteredString(font,"Your previous world is preserved.",cx,cy+54,0xffa2aec5);
         }
     }
     private static final class RecoveryScreen extends MessageScreen {
         private final Path original;
         RecoveryScreen(Path old,String reason){super(reason);original=old;}
         @Override protected void init(){
-            if(original!=null)addRenderableWidget(Button.builder(Component.literal("Return to previous world"),b->Minecraft.getInstance().createWorldOpenFlows().openWorld(original.getFileName().toString(),()->Minecraft.getInstance().setScreen(new TitleScreen()))).bounds(width/2-110,height/2+45,220,20).build());
-            addRenderableWidget(Button.builder(Component.literal("World list"),b->Minecraft.getInstance().setScreen(new net.minecraft.client.gui.screens.worldselection.SelectWorldScreen(new TitleScreen()))).bounds(width/2-110,height/2+70,220,20).build());
+            if(original!=null)addRenderableWidget(Button.builder(Component.literal("Return to previous world"),b->Minecraft.getInstance().createWorldOpenFlows().openWorld(original.getFileName().toString(),()->Minecraft.getInstance().setScreen(new TitleScreen()))).bounds(width/2-110,height/2+70,220,20).build());
+            addRenderableWidget(Button.builder(Component.literal("World list"),b->Minecraft.getInstance().setScreen(new net.minecraft.client.gui.screens.worldselection.SelectWorldScreen(new TitleScreen()))).bounds(width/2-110,height/2+95,220,20).build());
         }
         @Override public void render(GuiGraphics g,int mx,int my,float partial){super.render(g,mx,my,partial);for(var widget:renderables)widget.render(g,mx,my,partial);}
     }

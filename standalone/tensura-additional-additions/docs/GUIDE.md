@@ -200,7 +200,7 @@ Fettered Human excludes **29 of the pack’s 39 addon starting skills** for magi
 
 ## Parallel World Jumper — Unique
 
-**World Select · Active, Press · Requires Learning.** Open a searchable list of previously visited worlds. Choose a card and press **Set next jump**. The next World Jump returns there once; terrain, builds, entities and world state are retained, while your current character, inventory, skills, EP, advancements and stats travel with you. Select **New World** and confirm to restore random generation. Selection itself does not teleport. No cost or damage.
+**World Select · Active, Press · Requires Learning.** Learn this mode separately by selecting it and pressing the skill to gain learning points. Once learned, open a searchable list of previously visited worlds. Choose a card and press **Set next jump**. The next World Jump returns there once; terrain, builds, entities and world state are retained, while your current character, inventory, skills, EP, advancements and stats travel with you. Select **New World** and confirm to restore random generation. Selection itself does not teleport. No cost or damage.
 
 **World Jump · Active, Press.** With a selected destination, return there once. Otherwise enter a new-seed continuation with every dimension regenerated. Your character, inventory and progression carry over. The game saves, closes and reloads during the transition. Cost: none. Damage: none.
 

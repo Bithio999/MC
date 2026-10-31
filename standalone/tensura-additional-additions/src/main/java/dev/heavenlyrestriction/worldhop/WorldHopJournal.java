@@ -13,6 +13,9 @@ public final class WorldHopJournal {
     // Read old libraries without discarding worlds that predate the new creation cap.
     public static final int READ_LIMIT=512;
     public static boolean canCreate(Journal journal){return journal.worlds.size()<LIMIT;}
+    private static final java.util.regex.Pattern PARALLEL=java.util.regex.Pattern.compile("^(.*) · Parallel (\\d{1,9})$");
+    /** Count the whole library, rather than the sidecar of the world we happened to revisit. */
+    public static long nextParallelNumber(Journal journal){long next=journal.worlds.size();for(var entry:journal.worlds){var match=PARALLEL.matcher(entry.name);if(match.matches())next=Math.max(next,Long.parseLong(match.group(2))+1);}return next;}
     public record Entry(String id,String folder,String name,long seed){}
     public record Journal(String current,List<Entry> worlds){
         public Journal{worlds=List.copyOf(worlds);}
@@ -34,7 +37,14 @@ public final class WorldHopJournal {
             }catch(RuntimeException ex){throw new IOException("Could not read visited worlds",ex);}
         }
         String key=current;entries.removeIf(e->e.id.equals(key));entries.addFirst(new Entry(current,world.getFileName().toString(),name,seed));
-        if(entries.size()>READ_LIMIT)throw new IOException("World journal is full");return new Journal(current,entries);
+        if(entries.size()>READ_LIMIT)throw new IOException("World journal is full");
+        // Repair old duplicate generated labels while preserving IDs, seeds and unique/custom names.
+        Set<String> reserved=new HashSet<>(),seen=new HashSet<>();for(var entry:entries)reserved.add(entry.name);
+        for(int n=0;n<entries.size();n++){var entry=entries.get(n);if(seen.add(entry.name))continue;var match=PARALLEL.matcher(entry.name);if(!match.matches())continue;
+            int serial=1;String label;do{label=match.group(1)+" · Parallel "+serial++;}while(reserved.contains(label));
+            reserved.add(label);seen.add(label);entries.set(n,new Entry(entry.id,entry.folder,label,entry.seed));
+        }
+        return new Journal(current,entries);
     }
     public static Journal arrive(Journal from,Entry destination,String folder){
         if(from.find(destination.id).isEmpty() && !canCreate(from))throw new IllegalStateException("The 128-world library is full");

@@ -48,7 +48,8 @@ public final class WorldHopFiles {
                 @Override public FileVisitResult visitFile(Path file,BasicFileAttributes attrs)throws IOException{
                     Path rel=original.relativize(file);if(terrain?rel.getNameCount()==1 && Set.of("session.lock","level.dat_old").contains(rel.toString()):!keep(rel,false))return FileVisitResult.CONTINUE;
                     if(attrs.isSymbolicLink() || !attrs.isRegularFile())throw new IOException("Unsupported linked world file: "+rel);
-                    Files.copy(file,staging.resolve(rel));return FileVisitResult.CONTINUE;
+                    Path target=staging.resolve(rel);if(Files.exists(target,LinkOption.NOFOLLOW_LINKS))throw new FileAlreadyExistsException(target.toString());
+                    boolean[] attempted={false};WorldHopIo.retry(()->{if(attempted[0])Files.deleteIfExists(target);attempted[0]=true;return Files.copy(file,target);});return FileVisitResult.CONTINUE;
                 }
             });
             metadata.rewrite(staging);

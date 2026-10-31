@@ -22,6 +22,7 @@ With no destination selected, every dimension regenerates under a new seed. Your
 
 ## World Select · Active, Press · Requires Learning
 
+- Learn this mode separately by selecting it and pressing the skill to gain learning points. Once learned, pressing it opens the menu.
 - Browse previously visited worlds. Search by name or seed, choose a world, then press Set next jump. World Jump travels there once, preserving its terrain, builds and entities while bringing your current character, inventory, skills and progression.
 - Choose New World and confirm to clear your selection. Selecting a destination does not teleport you. After a jump, the next unselected jump generates a fresh seed again.
 - Earlier World Hop saves are imported when their recorded previous saves still exist in this instance. Missing saves cannot be selected.

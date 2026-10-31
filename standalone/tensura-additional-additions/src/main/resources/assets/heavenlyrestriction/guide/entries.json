@@ -364,6 +364,7 @@
         {
           "title": "World Select \u00b7 Active, Press \u00b7 Requires Learning",
           "lines": [
+            "World Select must be learned separately. Select its mode and press the skill to gain learning points; once learned, pressing it opens the world menu.",
             "Browse previously visited worlds. Search by name or seed, choose a world, then press Set next jump. World Jump travels there once, preserving its terrain, builds and entities while bringing your current character, inventory, skills and progression.",
             "Choose New World and confirm to clear your selection. Selecting a destination does not teleport you. After a jump, the next unselected jump generates a fresh seed again.",
             "Earlier World Hop saves are imported when their recorded previous saves still exist in this instance. Missing saves cannot be selected."

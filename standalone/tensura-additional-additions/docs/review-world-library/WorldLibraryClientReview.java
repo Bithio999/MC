@@ -34,6 +34,7 @@ public final class WorldLibraryClientReview {
     private static void jump(ServerPlayer p){source=p.server;skill(p).onPressed(p,0,0);}
     @SubscribeEvent public static void tick(ClientTickEvent.Post event){
         var mc=Minecraft.getInstance();mc.options.pauseOnLostFocus=false;
+        if(mc.screen!=null && mc.screen.getClass().getSimpleName().equals("LoadingErrorScreen"))for(var child:mc.screen.children())if(child instanceof Button b && b.getMessage().getString().equals("Proceed to main menu")){b.onPress();return;}
         if(mc.screen instanceof WorldSelectScreen screen){screen.children().stream().filter(c->c instanceof Button).forEach(c->((Button)c).setTooltip(null));}
         if(++age>14000){mc.stop();throw new IllegalStateException("World Select review timed out at "+phase);}
         if(phase==13 && ++frames>40){
@@ -56,6 +57,9 @@ public final class WorldLibraryClientReview {
                 try{
                     var p=server.getPlayerList().getPlayers().getFirst();p.closeContainer();var i=skill(p);i.setMastery(0);WorldSelect.select(p,"");var j=WorldSelect.journal(p);check(j.worlds().size()>=2,"Legacy previous world was not imported");
                     idB=j.current();pathB=path(server);seedB=server.overworld().getSeed();var a=j.worlds().stream().filter(e->!e.id().equals(idB)).findFirst().orElseThrow();idA=a.id();nameA=a.name();seedA=a.seed();
+                    var jumper=HeavenlyRestriction.PARALLEL_WORLD_JUMPER.get();i.getOrCreateTag().remove(jumper.getModeId(i,1));
+                    check(!WorldSelect.select(p,idA),"Unlearned World Select accepted a destination");
+                    jumper.learnMode(i,p,1,jumper.getLearningPointRequirement(i,p,1),false);check(jumper.isWorldSelectLearned(i,p),"Native mode learning failed");WorldSelect.select(p,"");
                     check(!WorldSelect.select(p,"../escape") && !WorldSelect.select(p,UUID.randomUUID().toString()) && !WorldSelect.select(p,idB),"Invalid destination accepted");
                     i.setMastery(-1);check(!WorldSelect.select(p,idA) && i.getModes()==1,"Learning gate bypassed");i.setMastery(0);
                     ep=EnergyHelper.getMaxEP(p);diamonds=37;p.getInventory().setItem(1,new net.minecraft.world.item.ItemStack(Items.DIAMOND,diamonds));p.getPersistentData().putString("worldselect_progress","latest");
@@ -76,7 +80,7 @@ public final class WorldLibraryClientReview {
         }
         if(phase==4 && ++frames>20){phase=40;server.execute(()->{var p=server.getPlayerList().getPlayers().getFirst();check(p.getPersistentData().getString(WorldSelect.SELECTION).equals(idA),"Menu did not persist selected destination");log("Native UI search and selection packet passed");phase=5;});return;}
         if(phase==5){screenshot("world-select-selected");mc.options.guiScale().set(3);mc.resizeDisplay();phase=6;frames=0;return;}
-        if(phase==6 && ++frames>30){screenshot("world-select-compact");if(Boolean.getBoolean("worldselect.review.menuOnly")){mc.stop();phase=99;return;}phase=7;server.execute(()->{var p=server.getPlayerList().getPlayers().getFirst();jump(p);});return;}
+        if(phase==6 && ++frames>30){screenshot("world-select-compact");if(Boolean.getBoolean("worldselect.review.menuOnly")){mc.stop();phase=99;return;}source=server;phase=7;server.execute(()->{var p=server.getPlayerList().getPlayers().getFirst();jump(p);});return;}
         if((phase==7 || phase==9 || phase==11) && server!=source){
             int completing=phase;phase=90;server.execute(()->{
                 try{
@@ -95,6 +99,7 @@ public final class WorldLibraryClientReview {
                         log("Returned to latest B: actual diamond-block build and custom-dimension terrain retained; current 41 diamonds/XP intact; no duplicate world IDs");phase=10;
                     }else{
                         check(server.overworld().getSeed()!=seedA && server.overworld().getSeed()!=seedB && j.worlds().size()==3,"Unselected jump did not create new world");
+                        check(server.getWorldData().getLevelName().endsWith(" · Parallel 2"),"Library-wide world name reset after revisiting: "+server.getWorldData().getLevelName());
                         check(!Files.exists(path(server).resolve("dimensions/review/test/region/worldselect.keep")),"Random jump retained old terrain");
                         var actual=WorldSelect.journal(p);var entries=new ArrayList<>(actual.worlds());
                         while(entries.size()<128){int n=entries.size();entries.add(new WorldHopJournal.Entry(UUID.randomUUID().toString(),pathB.getFileName().toString(),"Capacity test "+n,n));}
@@ -108,8 +113,8 @@ public final class WorldLibraryClientReview {
                 }catch(Exception e){throw new RuntimeException(e);}
             });return;
         }
-        if(phase==8){phase=9;server.execute(()->jump(server.getPlayerList().getPlayers().getFirst()));return;}
-        if(phase==10){phase=11;server.execute(()->jump(server.getPlayerList().getPlayers().getFirst()));return;}
+        if(phase==8){source=server;phase=9;server.execute(()->jump(server.getPlayerList().getPlayers().getFirst()));return;}
+        if(phase==10){source=server;phase=11;server.execute(()->jump(server.getPlayerList().getPlayers().getFirst()));return;}
         if(phase==12 && ++frames>20){mc.level.disconnect();mc.disconnect(new net.minecraft.client.gui.screens.TitleScreen());mc.setScreen(new net.minecraft.client.gui.screens.worldselection.SelectWorldScreen(new net.minecraft.client.gui.screens.TitleScreen()));phase=13;frames=0;}
     }
 }

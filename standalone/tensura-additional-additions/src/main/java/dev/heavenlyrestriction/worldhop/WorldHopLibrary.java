@@ -94,12 +94,12 @@ public final class WorldHopLibrary {
     private static boolean belongs(Path world,Transaction tx)throws IOException{
         plainDirectory(world);Path marker=world.resolve(TRANSFER);return Files.isRegularFile(marker,LinkOption.NOFOLLOW_LINKS) && Files.size(marker)<100 && Files.readString(marker).equals(tx.root.getFileName().toString());
     }
-    private static void move(Path source,Path target)throws IOException{try{Files.move(source,target,StandardCopyOption.ATOMIC_MOVE);}catch(AtomicMoveNotSupportedException ex){Files.move(source,target);}}
+    private static void move(Path source,Path target)throws IOException{WorldHopIo.retry(()->{try{return Files.move(source,target,StandardCopyOption.ATOMIC_MOVE);}catch(AtomicMoveNotSupportedException ex){return Files.move(source,target);}});}
     private static void discard(Path root)throws IOException{
         // Never follow links, even in failed/stale snapshots.
         Files.walkFileTree(root,new SimpleFileVisitor<>(){
-            @Override public FileVisitResult visitFile(Path file,BasicFileAttributes attrs)throws IOException{Files.delete(file);return FileVisitResult.CONTINUE;}
-            @Override public FileVisitResult postVisitDirectory(Path dir,IOException error)throws IOException{if(error!=null)throw error;Files.delete(dir);return FileVisitResult.CONTINUE;}
+            @Override public FileVisitResult visitFile(Path file,BasicFileAttributes attrs)throws IOException{WorldHopIo.retry(()->Files.deleteIfExists(file));return FileVisitResult.CONTINUE;}
+            @Override public FileVisitResult postVisitDirectory(Path dir,IOException error)throws IOException{if(error!=null)throw error;WorldHopIo.retry(()->Files.deleteIfExists(dir));return FileVisitResult.CONTINUE;}
         });
     }
 }

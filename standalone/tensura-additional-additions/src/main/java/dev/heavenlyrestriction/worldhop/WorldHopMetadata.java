@@ -8,13 +8,16 @@ import java.util.UUID;
 public final class WorldHopMetadata {
     public static final String MARKER="heavenlyrestriction:world_hop_landing";
     public static void rewrite(Path world,long seed,UUID player,String previous,String continuation)throws IOException{
+        rewrite(world,seed,player,previous,continuation,0);
+    }
+    public static void rewrite(Path world,long seed,UUID player,String previous,String continuation,long libraryNumber)throws IOException{
         Path file=world.resolve("level.dat");CompoundTag root=read(file),data=root.getCompound("Data");
         if(!data.contains("WorldGenSettings",Tag.TAG_COMPOUND) || !data.contains("Player",Tag.TAG_COMPOUND))throw new IOException("World or single-player character data is missing");
         CompoundTag gen=data.getCompound("WorldGenSettings");if(gen.getLong("seed")==seed)throw new IOException("World Hop requires a different seed");gen.putLong("seed",seed);
         data.putBoolean("initialized",false);data.put("DragonFight",net.minecraft.world.level.dimension.end.EndDragonFight.Data.CODEC.encodeStart(NbtOps.INSTANCE,net.minecraft.world.level.dimension.end.EndDragonFight.Data.DEFAULT).getOrThrow());data.remove("WanderingTraderId");data.putInt("WanderingTraderSpawnDelay",0);data.putInt("WanderingTraderSpawnChance",0);
         // Scheduled block/function callbacks belong to the terrain that was left behind.
         data.remove("ScheduledEvents");
-        var history=WorldHopSaveCompat.advanceHistory(world,data.getString("LevelName"),seed,previous);
+        var history=WorldHopSaveCompat.advanceHistory(world,data.getString("LevelName"),seed,previous,libraryNumber);
         data.putString("LevelName",history.name()+" · Parallel "+history.hop());
         preparePlayer(data.getCompound("Player"),previous);NbtIo.writeCompressed(root,file);
         // Integrated worlds prefer level.dat Player, but also keep the matching UUID file coherent.
@@ -23,6 +26,7 @@ public final class WorldHopMetadata {
         Files.writeString(world.resolve("WORLD-HOP.txt"),"Fresh-seed continuation. Previous world: "+previous+"\nSeed: "+seed+"\nEvery dimension regenerates. Player data and progression are retained.\n");
     }
     public static CompoundTag read(Path file)throws IOException{return NbtIo.readCompressed(file,NbtAccounter.create(128L*1024*1024));}
+    public static void setName(Path world,String name)throws IOException{Path file=world.resolve("level.dat");var root=read(file);root.getCompound("Data").putString("LevelName",name);NbtIo.writeCompressed(root,file);}
     /** Keep destination world metadata, terrain, entities and time; transfer the present character. */
     public static void revisit(Path world,Path source,UUID player,String previous,String continuation)throws IOException{
         var current=read(source.resolve("level.dat")).getCompound("Data");var root=read(world.resolve("level.dat"));var data=root.getCompound("Data");

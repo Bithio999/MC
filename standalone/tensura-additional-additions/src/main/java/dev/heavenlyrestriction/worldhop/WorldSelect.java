@@ -12,7 +12,7 @@ import java.util.*;
 
 public final class WorldSelect {
     public static final String SELECTION="heavenlyrestriction:next_world";
-    public static boolean allowed(ServerPlayer p){return WorldHop.available(p) && p.isAlive() && !p.getPersistentData().contains(WorldHopMetadata.MARKER) && SkillAPI.getSkillsFrom(p).getSkill(HeavenlyRestriction.PARALLEL_WORLD_JUMPER.get()).filter(i->i.getMastery()>=0 && !i.isTemporarySkill() && !i.isSubInstance() && i.canInteractSkill(p) && HeavenlyRestriction.PARALLEL_WORLD_JUMPER.get().canActivateSkill(i,p,1)).isPresent();}
+    public static boolean allowed(ServerPlayer p){return WorldHop.available(p) && p.isAlive() && !p.getPersistentData().contains(WorldHopMetadata.MARKER) && SkillAPI.getSkillsFrom(p).getSkill(HeavenlyRestriction.PARALLEL_WORLD_JUMPER.get()).filter(i->HeavenlyRestriction.PARALLEL_WORLD_JUMPER.get().isWorldSelectLearned(i,p) && !i.isTemporarySkill() && !i.isSubInstance() && i.canInteractSkill(p) && HeavenlyRestriction.PARALLEL_WORLD_JUMPER.get().canActivateSkill(i,p,1)).isPresent();}
     /** Upgrade pre-journal saves by following only their recorded, existing sibling saves. */
     public static WorldHopJournal.Journal journal(Path world,String name,long seed)throws IOException{
         var journal=WorldHopJournal.read(world,name,seed);if(Files.exists(world.resolve(WorldHopJournal.FILE)))return journal;
@@ -28,6 +28,8 @@ public final class WorldSelect {
     }
     public static WorldHopJournal.Journal journal(ServerPlayer p)throws IOException{return journal(p.server.getWorldPath(LevelResource.ROOT).toAbsolutePath().normalize(),p.server.getWorldData().getLevelName(),p.server.overworld().getSeed());}
     public static WorldHopJournal.Entry destination(ServerPlayer p)throws IOException{
+        var owned=SkillAPI.getSkillsFrom(p).getSkill(HeavenlyRestriction.PARALLEL_WORLD_JUMPER.get());
+        if(owned.isEmpty() || !HeavenlyRestriction.PARALLEL_WORLD_JUMPER.get().isWorldSelectLearned(owned.get(),p)){p.getPersistentData().remove(SELECTION);return null;}
         String id=p.getPersistentData().getString(SELECTION);if(id.isEmpty())return null;
         var j=journal(p);var entry=j.find(id).filter(e->!e.id().equals(j.current())).orElseThrow(()->new IOException("Destination not visited"));
         if(WorldHopLibrary.resolve(p.server.getWorldPath(LevelResource.ROOT).toAbsolutePath().normalize(),entry).isEmpty())throw new IOException("Destination no longer exists");return entry;
