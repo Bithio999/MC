@@ -26,10 +26,10 @@ The outgoing penalty runs in the skill damage-calculation stage, after native pr
 
 The full Neo Otherworld client loaded its original 263-project manifest and overrides. The review player completed native Schema learning, opened Build, clicked Add six times and submitted Apply through the real network handler. The actual attribute became **10.84375×** at zero mastery and **31×** at mastery; damage remained **0.4×**. An unapplied Clear was discarded, reopening retained all six effects, and toggle-off returned regeneration to baseline.
 
-![Initial tree](../standalone/heavenly-restriction/docs/media/schema-initial-build.png)
+![Initial tree](../standalone/tensura-additional-additions/docs/media/schema-initial-build.png)
 
-![Mastered tree](../standalone/heavenly-restriction/docs/media/schema-mastered-build.png)
+![Mastered tree](../standalone/tensura-additional-additions/docs/media/schema-mastered-build.png)
 
 Both captures and the exported 64-pixel icon were visually reviewed. The authoring master and deterministic ImageMagick export script are retained. Markdown, HTML, GitHub-Wiki exports and the offline bundle include the new ability’s damage type (**None**) and complete stacking tables. All tests use disposable worlds.
 
-[Player guide](../wiki/pages/Schema.md) · [Standalone validation](../standalone/heavenly-restriction/docs/VALIDATION-1.1.9.md) · [Client fixture](../standalone/heavenly-restriction/docs/review-schema/README.md).
+[Player guide](../wiki/pages/Schema.md) · [Standalone validation](../standalone/tensura-additional-additions/docs/VALIDATION-1.1.9.md) · [Client fixture](../standalone/tensura-additional-additions/docs/review-schema/README.md).

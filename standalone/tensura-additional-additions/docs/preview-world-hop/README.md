@@ -22,7 +22,7 @@ The client waits for safe arrival and rendered terrain, records a pan in each wo
 From the repository root:
 
 ```sh
-python3 standalone/heavenly-restriction/docs/preview-world-hop/assemble_preview.py   /workspace/validation-world-hop-video/capture   docs/media/world-hop-preview/world-hop.mp4
+python3 standalone/tensura-additional-additions/docs/preview-world-hop/assemble_preview.py   /workspace/validation-world-hop-video/capture   docs/media/world-hop-preview/world-hop.mp4
 ```
 
 The editor adds title/result cards and measured captions, accelerates only a labelled loading interval, and omits idle render warmup. An optional `first-return.json` containing `first_return_at` can mark the first returned-world frame when filming was paused; the later idle gap is discarded rather than presented as loading time. `edit-timeline.json` records these cuts. Production sources and gameplay are not changed for the footage.

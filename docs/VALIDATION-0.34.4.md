@@ -21,7 +21,7 @@ The [implementation reference](research/CHAINED_PHYSICAL_0.34.4.md) records nati
 
 ## Client and documentation
 
-The isolated standalone client successfully receives and renders the translated red **“Chained blocks Musician…”** message. The forbidden skill stays unlearned with unchanged aura and maximum magicules. Its real-player dash, client landing synchronization and cooldown/recast checks also pass. [Client screenshot](../standalone/heavenly-restriction/docs/media/chained-block-message.png).
+The isolated standalone client successfully receives and renders the translated red **“Chained blocks Musician…”** message. The forbidden skill stays unlearned with unchanged aura and maximum magicules. Its real-player dash, client landing synchronization and cooldown/recast checks also pass. [Client screenshot](../standalone/tensura-additional-additions/docs/media/chained-block-message.png).
 
 The wiki/guide now show Physical damage, both stacked bonuses, corrected examples and unmultiplied racial attack-stat values. The styled edition and prepared GitHub Wiki mirror are rebuilt. Rendering geometry is unchanged. The normal standalone JAR audit excludes the optional review fixture and dependency JARs.
 

@@ -1,6 +1,6 @@
 # 1.2.1 — TensuraAdditionalAdditions rename
 
-Renames the standalone display name, resource pack description, Controls category, guide title and pause button. The release artifact is `TensuraAdditionalAdditions-1.2.1.jar`. The source project remains in `standalone/heavenly-restriction`.
+Renames the standalone display name, resource pack description, Controls category, guide title and pause button. The release artifact is `TensuraAdditionalAdditions-1.2.1.jar`. The source project remains in `standalone/tensura-additional-additions`.
 
 The `heavenlyrestriction` mod ID, registry keys, persistent data, network IDs and configuration filenames are retained. Replace the old standalone JAR; existing standalone worlds retain their content and progress. Do not install both filenames together.
 

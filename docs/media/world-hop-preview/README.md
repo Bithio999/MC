@@ -18,4 +18,4 @@ The native save/reload sequence is shown, with the accelerated portion clearly l
 | Saved progress and World Hop skill | Present | Preserved |
 | Previous world | Original save | Still available |
 
-The transition invokes the native skill activation path and uses the released world-hopping implementation. It was recorded in a copied disposable world. The [optional filming fixture and editing script](../../../standalone/heavenly-restriction/docs/preview-world-hop/README.md) are excluded from normal builds. The existing release JAR is unchanged.
+The transition invokes the native skill activation path and uses the released world-hopping implementation. It was recorded in a copied disposable world. The [optional filming fixture and editing script](../../../standalone/tensura-additional-additions/docs/preview-world-hop/README.md) are excluded from normal builds. The existing release JAR is unchanged.

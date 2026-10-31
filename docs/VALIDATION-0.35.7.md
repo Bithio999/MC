@@ -24,10 +24,10 @@ Position-aware fake players model the real connection’s teleport update: NeoFo
 
 The full **Neo Otherworld 1.1.3a** manifest and original overrides loaded on Tensura **2.0.1.4**, NeoForge **21.1.248** and GeckoLib **4.9.2**. A real player mastered Instant Move, received the learning entry, and used the native coordinate screen twice. A 20-block ordinary trip spent **200 aura** and waited for its charge; a mastered 20-block trip spent **100 aura** immediately. MP remained **700**. Natural regeneration was disabled only on the disposable review player so the payment measurements remained isolated.
 
-![Native coordinate screen](../standalone/heavenly-restriction/docs/media/instant-transmission-coordinates.png)
+![Native coordinate screen](../standalone/tensura-additional-additions/docs/media/instant-transmission-coordinates.png)
 
-![Mastered transmission](../standalone/heavenly-restriction/docs/media/instant-transmission-mastered.png)
+![Mastered transmission](../standalone/tensura-additional-additions/docs/media/instant-transmission-mastered.png)
 
 Normal standalone tests/builds target Tensura **2.0.1.3** / NeoForge **21.1.209**. Opt-in review classes and downloaded third-party jars are excluded from release packages. The distribution audit checks both new mixins, registered class, resource tags and the absence of review fixtures. Wiki Markdown, native screen captures, HTML, GitHub export and the offline bundle are regenerated.
 
-[Player guide](../wiki/pages/Instant-Transmission.md) · [Standalone validation](../standalone/heavenly-restriction/docs/VALIDATION-1.1.8.md) · [Review reproduction](../standalone/heavenly-restriction/docs/review-transmission/README.md).
+[Player guide](../wiki/pages/Instant-Transmission.md) · [Standalone validation](../standalone/tensura-additional-additions/docs/VALIDATION-1.1.8.md) · [Review reproduction](../standalone/tensura-additional-additions/docs/review-transmission/README.md).

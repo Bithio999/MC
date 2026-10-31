@@ -16,8 +16,8 @@ All **417 tests passed**: **320 full-mod native GameTests**, **86 independent st
 
 ```sh
 gradle build runGameTestServer --console=plain
-# Repeat in standalone/heavenly-restriction.
-python3 standalone/heavenly-restriction/scripts/verify-distribution.py
+# Repeat in standalone/tensura-additional-additions.
+python3 standalone/tensura-additional-additions/scripts/verify-distribution.py
 python3 scripts/verify-visual-assets.py
 PYTHONPATH=/workspace/toolchains/wiki-python python3 scripts/build-wiki.py
 ```

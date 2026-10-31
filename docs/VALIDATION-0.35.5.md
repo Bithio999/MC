@@ -32,7 +32,7 @@ The independent distribution audit verifies all common/client mixin classes, new
 
 ```sh
 gradle build runGameTestServer --console=plain
-# Independently from standalone/heavenly-restriction:
+# Independently from standalone/tensura-additional-additions:
 gradle build runGameTestServer --console=plain
 python3 scripts/verify-distribution.py
 # Repository root; Markdown 3.7 required:

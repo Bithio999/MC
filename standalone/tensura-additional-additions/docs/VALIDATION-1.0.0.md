@@ -5,7 +5,7 @@ Target: Java 21, Minecraft 1.21.1, NeoForge 21.1.209, Tensura 2.0.1.3, ManasCore
 ## Independent build and gameplay
 
 ```sh
-cd standalone/heavenly-restriction
+cd standalone/tensura-additional-additions
 python3 scripts/fetch-runtime.py
 ./gradlew build runGameTestServer
 python3 scripts/verify-distribution.py

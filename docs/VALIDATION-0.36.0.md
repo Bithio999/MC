@@ -12,7 +12,7 @@ Both final real-client reviews passed. The full review uses the normal Myths cli
 
 ![Myths guide](media/guide-myths-home.png)
 
-![Standalone guide](../standalone/heavenly-restriction/docs/media/guide-restriction-home.png)
+![Standalone guide](../standalone/tensura-additional-additions/docs/media/guide-restriction-home.png)
 
 ![Small Myths layout](media/guide-myths-small-schema.png)
 

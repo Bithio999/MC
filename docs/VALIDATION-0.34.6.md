@@ -26,14 +26,14 @@ The issue came from applying a block face offset to a ray MISS. Air aim now uses
 
 ## Real client
 
-The [opt-in targeting fixture](../standalone/heavenly-restriction/docs/targeting-review/ChainedTargetingReview.java) runs only in the isolated **Restriction Validation** world. It is excluded from production source sets and JARs.
+The [opt-in targeting fixture](../standalone/tensura-additional-additions/docs/targeting-review/ChainedTargetingReview.java) runs only in the isolated **Restriction Validation** world. It is excluded from production source sets and JARs.
 
 ```sh
-# From standalone/heavenly-restriction, on an available graphical display:
+# From standalone/tensura-additional-additions, on an available graphical display:
 gradle runClient -I docs/targeting-review/client.init.gradle
 ```
 
-The actual server player passed all seven air angles, then stopped at `(7.75, 71, 0.5)` before a target at `(8.5, 71, 0.5)`. The caster’s body did not overlap the victim. The near target lost HP, the far target retained 1,024 HP, aura became exactly 9,800 from 10,000, and cooldown was 1 second. Client position replication matched the server landing. Myths was absent from this independent run. The fixture removes its two test mobs before exit. [Captured landing](../standalone/heavenly-restriction/docs/media/chained-enemy-stop.png).
+The actual server player passed all seven air angles, then stopped at `(7.75, 71, 0.5)` before a target at `(8.5, 71, 0.5)`. The caster’s body did not overlap the victim. The near target lost HP, the far target retained 1,024 HP, aura became exactly 9,800 from 10,000, and cooldown was 1 second. Client position replication matched the server landing. Myths was absent from this independent run. The fixture removes its two test mobs before exit. [Captured landing](../standalone/tensura-additional-additions/docs/media/chained-enemy-stop.png).
 
 ## Mysticism research and packages
 

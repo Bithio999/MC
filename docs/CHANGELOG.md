@@ -163,7 +163,7 @@
 
 ## Standalone addon — Heavenly Restriction 1.0.0
 
-- Add an independent `standalone/heavenly-restriction` Gradle project and release JAR requiring Tensura, without requiring Tensura Myths.
+- Add an independent `standalone/tensura-additional-additions` Gradle project and release JAR requiring Tensura, without requiring Tensura Myths.
 - Extract Fettered Human and four evolutions, Chained, the three aura-recovery Extras and Air Sovereignty, preserving the current 0.34.1 balance, native menu integration, 90/10 growth split and fixed total-EP gates.
 - Give the addon its own `heavenlyrestriction` registry/data namespace, original icons and dash/recovery rendering. Keep all full Myths content intact.
 - Include a gameplay/install guide, 45 independent native regression tests, asset/package verification and an opt-in graphical review fixture.

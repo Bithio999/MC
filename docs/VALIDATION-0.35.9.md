@@ -18,12 +18,12 @@ The real Neo Otherworld client review passed. It uses both Add choices, Up/Down 
 
 The wiki includes the two effects, updated penalties and mixed-build screenshots. Tests and client reviews use disposable worlds.
 
-[Player guide](../wiki/pages/Schema.md) · [Client fixture](../standalone/heavenly-restriction/docs/review-schema/README.md).
+[Player guide](../wiki/pages/Schema.md) · [Client fixture](../standalone/tensura-additional-additions/docs/review-schema/README.md).
 
 The actual mixed tree `[Strength, Mitochondrial, Strength, Mitochondrial, Strength, Mitochondrial]` gave **4.28125× regeneration / +6.5625 attack** initially and **16× regeneration / +15 attack** mastered. Outgoing damage remained **0.85×** and incoming damage **1.06×**. Six Mitochondrial effects separately verified **10.84375× recovery / 0.7× damage**. Both Add choices, Up/Down, real Apply packets, draft cancellation, reopening and toggle-off were exercised. Captures were visually reviewed; all controls and four summary values fit the panel.
 
-![Initial mixed tree](../standalone/heavenly-restriction/docs/media/schema-strength-initial-build.png)
+![Initial mixed tree](../standalone/tensura-additional-additions/docs/media/schema-strength-initial-build.png)
 
-![Mastered mixed tree](../standalone/heavenly-restriction/docs/media/schema-strength-mastered-build.png)
+![Mastered mixed tree](../standalone/tensura-additional-additions/docs/media/schema-strength-mastered-build.png)
 
 Both production builds, release hashes and the standalone isolation/asset audit are checked. The real client profile uses a clean build when switching from the opt-in server profile’s replacement test fixtures.

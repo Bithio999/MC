@@ -6,7 +6,7 @@ Target: Java 21, Minecraft 1.21.1, NeoForge 21.1.209, Tensura 2.0.1.3, ManasCore
 
 ```sh
 gradle build runGameTestServer --console=plain
-python standalone/heavenly-restriction/scripts/verify-distribution.py
+python standalone/tensura-additional-additions/scripts/verify-distribution.py
 PYTHONPATH=/workspace/toolchains/wiki-python python scripts/build-wiki.py
 ```
 
@@ -31,10 +31,10 @@ The final isolated client test observed:
 - Actual Ancient Forest area magicules: **20,000**. Two native recovery pulses changed current MP **10 → 11** and current aura **0 → 409** under the review’s default configuration, including normal aura recovery.
 - Client and server current/maximum MP both **76**; total EP synchronized at **5,076** after the controlled command sequence. The client skill tag retained the 500 remaining exemption separately from the original 1,887 birth roll.
 
-[Captured client HUD](../standalone/heavenly-restriction/docs/media/chained-resource-status.png). The [opt-in review](../standalone/heavenly-restriction/docs/resource-review/ChainedResourceReview.java) runs only in **Restriction Validation** and is excluded from release JARs:
+[Captured client HUD](../standalone/tensura-additional-additions/docs/media/chained-resource-status.png). The [opt-in review](../standalone/tensura-additional-additions/docs/resource-review/ChainedResourceReview.java) runs only in **Restriction Validation** and is excluded from release JARs:
 
 ```sh
-# From standalone/heavenly-restriction, on an available graphical display:
+# From standalone/tensura-additional-additions, on an available graphical display:
 gradle runClient -I docs/resource-review/client.init.gradle
 ```
 

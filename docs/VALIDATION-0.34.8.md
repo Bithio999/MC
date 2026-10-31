@@ -33,11 +33,11 @@ The isolated **Restriction Validation** client fixture now repeats the reported 
 Each controlled cast pays exactly 200 aura from 10,000 and starts a 1-second cooldown. All seven level/upward open-air angles also pass. The enemy receives damage, the distant target retains full health, and the client’s position matches the server landing. Myths is absent in this standalone run.
 
 ```sh
-# From standalone/heavenly-restriction, on an available graphical display:
+# From standalone/tensura-additional-additions, on an available graphical display:
 gradle runClient -I docs/targeting-review/client.init.gradle
 ```
 
-[Opt-in review fixture](../standalone/heavenly-restriction/docs/targeting-review/ChainedTargetingReview.java). It clears only its prepared platform area in the isolated validation world and removes its test mobs. Optional fixtures are excluded from normal source sets and JARs.
+[Opt-in review fixture](../standalone/tensura-additional-additions/docs/targeting-review/ChainedTargetingReview.java). It clears only its prepared platform area in the isolated validation world and removes its test mobs. Optional fixtures are excluded from normal source sets and JARs.
 
 ## Distribution
 

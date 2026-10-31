@@ -23,7 +23,7 @@ Both distributions exercise:
 
 ```sh
 gradle build runGameTestServer --console=plain
-# In standalone/heavenly-restriction:
+# In standalone/tensura-additional-additions:
 gradle build runGameTestServer --console=plain
 python3 scripts/verify-distribution.py
 # From the repository root:

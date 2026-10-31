@@ -38,7 +38,7 @@ for y in range(18):
   if 5.2<d<7.5 and abs((x+y)-17)>2:seal[y][x]=(184,216,225,255) if x<9 else (108,142,163,255)
 polygon(seal,[(2,14),(13,1),(16,1),(5,16),(2,17)],'edfaff')
 polygon(seal,[(4,14),(14,2),(15,2),(5,15)],'75c3d1')
-for base,ns in [(ROOT,'wildhunt'),(ROOT/'standalone/heavenly-restriction','heavenlyrestriction')]:
+for base,ns in [(ROOT,'wildhunt'),(ROOT/'standalone/tensura-additional-additions','heavenlyrestriction')]:
     output=base/f'src/main/resources/assets/{ns}/textures/item/inverted_spear_of_heaven.png'
     output.parent.mkdir(parents=True,exist_ok=True)
     subprocess.run([exporter,str(master),'-filter','point','-resize','64x64','-channel','A','-threshold','50%','+channel','-strip',str(output)],check=True)

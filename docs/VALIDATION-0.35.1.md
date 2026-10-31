@@ -16,18 +16,18 @@ Run the native regression suites and normal production builds in both projects:
 
 ```sh
 gradle build runGameTestServer --console=plain
-# Repeat from standalone/heavenly-restriction.
-python3 standalone/heavenly-restriction/scripts/verify-distribution.py
+# Repeat from standalone/tensura-additional-additions.
+python3 standalone/tensura-additional-additions/scripts/verify-distribution.py
 python3 scripts/verify-visual-assets.py
 PYTHONPATH=/workspace/toolchains/wiki-python python3 scripts/build-wiki.py
 ```
 
 New native coverage checks upward, level and downward midair movement, exactly one payment, unchanged cooldown, rejection of immediate recasts, water along the aim ray, and Unbound stopping safely before a targeted enemy while dealing damage. Earlier terrain, resource, learning, evolution, Counter, critical and flight regressions remain. The movement tests use tracked living owners because native FakePlayer ignores connection teleports.
 
-The opt-in [real-client review](../standalone/heavenly-restriction/docs/airborne-review/README.md) runs without Myths in an isolated validation save. An actual survival player casts Chained in midair, evolves through the native learning system, and casts Unbound in midair. Both travel 16 blocks, pay 2% current aura once and retain the one-second cooldown. The client opens the unmodified native menus, verifying the mixin loads and renders.
+The opt-in [real-client review](../standalone/tensura-additional-additions/docs/airborne-review/README.md) runs without Myths in an isolated validation save. An actual survival player casts Chained in midair, evolves through the native learning system, and casts Unbound in midair. Both travel 16 blocks, pay 2% current aura once and retain the one-second cooldown. The client opens the unmodified native menus, verifying the mixin loads and renders.
 
-- [Fettered Human: Hard difficulty, starting stats, Chained and description](../standalone/heavenly-restriction/docs/media/fettered-human-selection-1.1.1.png).
-- [Unbound’s new icon in the Ultimate menu](../standalone/heavenly-restriction/docs/media/unbound-icon-1.1.1.png).
+- [Fettered Human: Hard difficulty, starting stats, Chained and description](../standalone/tensura-additional-additions/docs/media/fettered-human-selection-1.1.1.png).
+- [Unbound’s new icon in the Ultimate menu](../standalone/tensura-additional-additions/docs/media/unbound-icon-1.1.1.png).
 
 Normal builds exclude review/capture classes. The standalone auditor now checks its client mixin as well as common mixins; the visual auditor accounts for the existing procedural Counter stance and slash. Wiki articles, generated GitHub pages, offline HTML and the downloadable archive describe current mechanics. Both JARs and the wiki archive receive SHA-256 files.
 

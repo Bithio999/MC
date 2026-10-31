@@ -23,7 +23,7 @@ entry('instant-transmission','Instant Transmission','Skills','A Battlewill evolu
 entry('recovery','Aura recovery skills','Skills','Toggle a recovery skill to heal with aura. Only your strongest toggled tier works; full reserves cost nothing.',section('Hunter’s Recovery','Restore 4 HP per second, or 8 mastered, at 20 aura per base HP.'),section('Apex Renewal','Restore missing HP every half second. Cost: 30 aura per base HP, or 20 mastered.'),section('Sovereign Rebirth','Restore HP and SHP every half second. Cost: 30 aura per HP / 10 per SHP, or 20 / 5 mastered. Can prevent ordinary fatal damage while funded; native bypass and suppression rules still apply.'),section('Obtaining','Granted by the relevant hunter or Heavenly Restriction evolutions. Earlier recovery skills remain available, but do not heal in parallel.'),related=['fettered-lineage','schema'],icon='tensura:textures/skill/extra/infinite_regeneration.png'),
 entry('spear','Inverted Spear of Heaven','Gear','A rare weapon from ominous trial vault loot, with the same attack stats as a Hihiirokane Sword.',section('Stats and obtaining','80 total ordinary player attack damage; 1.6 attack speed. Rare 2% additional ominous-vault reward. Regular vaults do not drop it.'),section('Nullification engraving','Weapon hits instantly shatter barriers, remove skill status effects, and prevent skill activation for 2 seconds. The weapon can attack Spiritual Entities.','Held main-hand attacks, Severance Rush and Counter carry the engraving. Spiritual contact bypasses the spiritual-body Physical reduction, while armor, resistance, dodge and PvP rules still apply.'),related=['chained','unbound'],icon='wildhunt:textures/item/inverted_spear_of_heaven.png')]
 # Verify progression against the canonical current player guide rather than inferring from EP.
-guide=(ROOT/'standalone/heavenly-restriction/docs/GUIDE.md').read_text()
+guide=(ROOT/'standalone/tensura-additional-additions/docs/GUIDE.md').read_text()
 rows=[clean(l) for l in guide.splitlines() if l.startswith('|') and clean(l.split('|')[1]).strip() in ['Tempered Vessel','Unshackled','Heavenly Restricted','Heavenbreaker']]
 assert len(rows)==4, 'The Heavenly Restriction progression table changed'
 # Export exact displayed table values; this also keeps later balance edits synchronized.
@@ -118,7 +118,7 @@ for e in full:
     if e['category']=='Skills' and e['id'] not in {x['id'] for x in common}:e['related']=[i for i in ['skill-synthesis','godly'] if i in ids]
 full[0]['related']+=['hunters','skill-synthesis','duo-races','ananke','eschaton']
 # Both mods share only the content they actually register.
-for mod,entries,folder in [('wildhunt',full,ROOT/'src/main/resources/assets/wildhunt'),('heavenlyrestriction',common,ROOT/'standalone/heavenly-restriction/src/main/resources/assets/heavenlyrestriction')]:
+for mod,entries,folder in [('wildhunt',full,ROOT/'src/main/resources/assets/wildhunt'),('heavenlyrestriction',common,ROOT/'standalone/tensura-additional-additions/src/main/resources/assets/heavenlyrestriction')]:
     import copy
     entries=copy.deepcopy(entries)
     if mod=='heavenlyrestriction':

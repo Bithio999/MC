@@ -6,8 +6,8 @@ All **398 tests passed**: **310 full-mod native GameTests**, **11 JUnit tests**,
 
 ```sh
 gradle build runGameTestServer --console=plain
-# Also run build/runGameTestServer from standalone/heavenly-restriction.
-python standalone/heavenly-restriction/scripts/verify-distribution.py
+# Also run build/runGameTestServer from standalone/tensura-additional-additions.
+python standalone/tensura-additional-additions/scripts/verify-distribution.py
 PYTHONPATH=/workspace/toolchains/wiki-python python scripts/build-wiki.py
 ```
 
@@ -27,15 +27,15 @@ Tests use isolated native arenas. Bypass checks create a fresh damage source rat
 
 ## Real client
 
-The optional [Unbound review](../standalone/heavenly-restriction/docs/unbound-review/UnboundReview.java) runs in **Restriction Validation**, with no Myths runtime. It exercises native learning/evolution, the Ultimate list and description, a visible blocked learning entry, server/client stance state and free cancellation availability during cooldown.
+The optional [Unbound review](../standalone/tensura-additional-additions/docs/unbound-review/UnboundReview.java) runs in **Restriction Validation**, with no Myths runtime. It exercises native learning/evolution, the Ultimate list and description, a visible blocked learning entry, server/client stance state and free cancellation availability during cooldown.
 
 A real player takes an actual 20-damage hostile hit while in Counter. HP and SHP stay unchanged; both 1,024-HP enemies behind a glass wall take the slash, reaching about **448.75 HP** with the review’s disabled Martial Supremacy toggle and normal native armor/critical handling. The client then sees the stance end and movement return. This supplements the server fake-player tests, whose native invulnerability otherwise prevents real incoming hits.
 
 ```sh
-# From standalone/heavenly-restriction with a graphical display:
+# From standalone/tensura-additional-additions with a graphical display:
 gradle runClient -I docs/unbound-review/client.init.gradle
 ```
 
-[Native Ultimate menu](../standalone/heavenly-restriction/docs/media/unbound-menu.png) · [Counter stance](../standalone/heavenly-restriction/docs/media/unbound-counter-stance.png) · [Counter slash and hit feedback](../standalone/heavenly-restriction/docs/media/unbound-counter-slash.png).
+[Native Ultimate menu](../standalone/tensura-additional-additions/docs/media/unbound-menu.png) · [Counter stance](../standalone/tensura-additional-additions/docs/media/unbound-counter-stance.png) · [Counter slash and hit feedback](../standalone/tensura-additional-additions/docs/media/unbound-counter-slash.png).
 
 The review fixture is excluded from production packages. Normal builds afterward verify production-class bytes, native metadata, declared mixin classes, assets and fixture exclusions. Both JARs and the offline wiki receive SHA-256 files. The current wiki includes Unbound’s per-ability damage type and formula, Air Walk’s mastery costs, and the concise acquisition behavior.

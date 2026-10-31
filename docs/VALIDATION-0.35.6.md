@@ -27,4 +27,4 @@ All listed tests passed, and the production build/distribution checks completed 
 
 All runs use disposable validation worlds. The full Myths release targets its existing Tensura version; use the standalone release for Neo Otherworld.
 
-[Standalone validation](../standalone/heavenly-restriction/docs/VALIDATION-1.1.7.md) · [Nullification wiki](../wiki/pages/Nullification.md) · [Spear wiki](../wiki/pages/Inverted-Spear-of-Heaven.md).
+[Standalone validation](../standalone/tensura-additional-additions/docs/VALIDATION-1.1.7.md) · [Nullification wiki](../wiki/pages/Nullification.md) · [Spear wiki](../wiki/pages/Inverted-Spear-of-Heaven.md).
