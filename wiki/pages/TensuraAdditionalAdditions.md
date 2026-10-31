@@ -14,5 +14,3 @@ A standalone addon for **Tensura: Reincarnated**, focused on Heavenly Restrictio
 | Gear | [Inverted Spear of Heaven](Additions-Inverted-Spear-of-Heaven.md) · [Nullification](Additions-Nullification.md) |
 
 [Download Additions 1.5.0](../../releases/TensuraAdditionalAdditions-1.5.0.jar). Tensura Myths is not required. Do not install both addons together. Myths’ Godly skills, bosses, hunters and dual-race systems are not part of this addon.
-
-![World Select](../media/additions-world-select-1.5.0.png)
