@@ -32,7 +32,7 @@ function search() {
     const anchor = document.createElement('a');
     anchor.href = document.body.dataset.root + 'site/' + page.slug + '.html' + (page.anchor ? '#' + page.anchor : '');
     anchor.textContent = page.title;
-    if (scope === 'all') { const badge = document.createElement('small'); badge.className = 'search-result-mod'; badge.textContent = page.mod === 'myths' ? 'Tensura Myths' : 'TensuraAdditionalAdditions'; anchor.append(badge); }
+    if (scope === 'all') { const badge = document.createElement('small'); badge.className = 'search-result-mod'; badge.textContent = ({myths:'Tensura Myths',additions:'TensuraAdditionalAdditions',retired_addon:'Tensura retired_addon'}[page.mod] || 'Addon'); anchor.append(badge); }
     anchor.id = 'search-result-' + results.children.length;
     anchor.setAttribute('role', 'option');
     anchor.setAttribute('aria-selected', 'false');

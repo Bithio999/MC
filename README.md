@@ -1,17 +1,16 @@
 # Tensura Addons
 
-Two separate addons for **Tensura: Reincarnated**, **Minecraft 1.21.1** and **NeoForge**.
+Three independent addon projects for **Tensura: Reincarnated**, **Minecraft 1.21.1** and **NeoForge**.
 
 | Mod | Features | Download | Wiki |
 | --- | --- | --- | --- |
 | **Tensura Myths** | Hunter and Heavenly Restriction races, Unique/Ultimate/Godly skills, dual races, Myth bosses and otherworlders | [0.36.1 JAR](releases/tensura-myths-0.36.1.jar) | [Myths wiki](wiki/pages/Tensura-Myths.md) |
 | **TensuraAdditionalAdditions** | Heavenly Restriction, Chained/Unbound, Battlewills, Inverted Spear of Heaven, Fusion and Parallel World Jumper | [1.6.2 JAR](releases/TensuraAdditionalAdditions-1.6.2.jar) | [Additions wiki](wiki/pages/TensuraAdditionalAdditions.md) |
 
-**Install one addon per instance.** TensuraAdditionalAdditions runs independently of Tensura Myths.
 
 ## Install
 
-Use **Java 21**. Add the chosen JAR to your instance’s `mods` folder alongside Tensura and its required libraries, including ManasCore, Architectury, SmartBrainLib and TerraBlender. Both addons also require GeckoLib 4.x.
+Use **Java 21**. Add the chosen JAR to your instance’s `mods` folder alongside Tensura and its required libraries, including ManasCore, Architectury, SmartBrainLib and TerraBlender. All three addons require GeckoLib 4.x.
 
 | Addon | Supported Tensura | GeckoLib |
 | --- | --- | --- |
@@ -22,9 +21,9 @@ For multiplayer, install the same addon on client and server. **Parallel World J
 
 ## Guides and previews
 
-Press **F8** in-game, use the pause-menu guide button, or choose **Guide** below Tensura’s status panel. Each guide covers its installed addon.
+Myths and Additions: press **F8** in-game, use the pause-menu guide button, or choose **Guide** below Tensura’s status panel. Each guide covers its installed addon.
 
-[Choose your wiki](wiki/README.md) · [Download both styled wikis](releases/tensura-addon-wikis.zip). Extract the ZIP and open `index.html` for separate navigation, search, pictures and videos.
+[Choose your wiki](wiki/README.md) · [Download the styled wikis](releases/tensura-addon-wikis.zip). Extract the ZIP and open `index.html` for separate navigation, search, pictures and videos.
 
 - [Eschaton and Aion](wiki/media/eschaton-aion-anime-preview.mp4)
 - [Counter against Eschaton](docs/media/counter-preview/README.md)
@@ -36,7 +35,7 @@ Press **F8** in-game, use the pause-menu guide button, or choose **Guide** below
 | --- | --- |
 | [`src/`](src) | Tensura Myths source |
 | [`standalone/tensura-additional-additions/`](standalone/tensura-additional-additions) | Independent TensuraAdditionalAdditions project |
-| [`wiki/`](wiki/README.md) | Both gameplay wikis and their styled edition |
+| [`wiki/`](wiki/README.md) | Gameplay wikis and their styled edition |
 | [`releases/`](releases) | Built mods and offline wiki |
 | [`docs/`](docs) | Validation, development notes and research |
 | [`art/`](art) | Original artwork and editable models |

@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""Build the two scoped addon wikis and their shared offline portal (Markdown==3.7)."""
+"""Build the scoped addon wikis and their shared offline portal (Markdown==3.7)."""
 from pathlib import Path
 from urllib.parse import urlsplit
 import html,json,re,shutil,subprocess,sys,zipfile,os
 try:import markdown
 except ImportError:raise SystemExit('Install the documentation renderer: python3 -m pip install Markdown==3.7')
 ROOT=Path(__file__).resolve().parents[1];WIKI=ROOT/'wiki';SITE=WIKI/'site'
-MODS={'myths':{'name':'Tensura Myths','version':'0.36.1','home':'Tensura-Myths','mark':'M'},'additions':{'name':'TensuraAdditionalAdditions','version':'1.6.2','home':'TensuraAdditionalAdditions','mark':'A'}}
+MODS={'myths':{'name':'Tensura Myths','version':'0.36.1','home':'Tensura-Myths','mark':'M'},'additions':{'name':'TensuraAdditionalAdditions','version':'1.6.2','home':'TensuraAdditionalAdditions','mark':'A'},'retired_addon':{'name':'Tensura retired_addon','version':'1.0.0','home':'Tensura-retired_addon','mark':'K'}}
 subprocess.run([sys.executable,str(ROOT/'scripts/build-ability-index.py')],check=True)
 catalog=json.loads((WIKI/'catalog.json').read_text());metadata={e['slug']:e for e in catalog};navigation=json.loads((WIKI/'navigation.json').read_text());abilities=json.loads((WIKI/'abilities.json').read_text())
 SITE.mkdir(exist_ok=True)
@@ -73,12 +73,12 @@ def render(source,destination):
     if home:
         cards=''
         for scope,info in MODS.items():
-            image='eschaton-form-one.png' if scope=='myths' else 'additions-world-select-1.5.0.png';desc='Skills, races, Godly ascension and Myth bosses.' if scope=='myths' else 'Heavenly Restriction, Battlewills and world travel.'
+            image='retired_addon-wooden-king.png' if scope=='retired_addon' else 'eschaton-form-one.png' if scope=='myths' else 'additions-world-select-1.5.0.png';desc='Wooden Monkey King, forest arts and Tree Flight.' if scope=='retired_addon' else 'Skills, races, Godly ascension and Myth bosses.' if scope=='myths' else 'Heavenly Restriction, Battlewills and world travel.'
             cards+='<a class="mod-card '+scope+'" href="'+route(info['home'],destination)+'"><img src="'+relative(WIKI/'media'/image,destination)+'" alt="'+html.escape(info['name'])+'"><div><small>VERSION '+info['version']+'</small><h2>'+info['name']+'</h2><p>'+desc+'</p><strong>Open this wiki →</strong></div></a>'
         # The visual cards replace the Markdown comparison table.
         content=re.sub(r'<div class="article-table"><table>.*?</table></div>', '<div class="mod-grid">'+cards+'</div>',content,count=1,flags=re.S)
     toc='<details class="contents"><summary>On this page</summary>'+renderer.toc+'</details>' if len(renderer.toc_tokens)>2 and not home else ''
-    version=config['version'] if config else 'Myths 0.36.1 · Additions 1.6.2';mark=config['mark'] if config else 'T';prefix=relative(WIKI,destination)+'/'
+    version=config['version'] if config else 'Myths 0.36.1 · Additions 1.6.2 · retired_addon 1.0.0';mark=config['mark'] if config else 'T';prefix=relative(WIKI,destination)+'/'
     title_id=markdown.extensions.toc.slugify(title,'-')
     title_attr='' if re.search(r'id="'+re.escape(title_id)+r'"',content) else ' id="'+html.escape(title_id)+'"'
     article_home=route(config['home'],destination) if config else relative(WIKI/'index.html',destination)

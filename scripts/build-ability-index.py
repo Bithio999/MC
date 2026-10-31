@@ -6,7 +6,7 @@ ROOT=Path(__file__).resolve().parents[1]
 WIKI=ROOT/'wiki'
 records=json.loads((WIKI/'abilities.json').read_text())
 metadata={item['slug']:item for item in json.loads((WIKI/'catalog.json').read_text())}
-for mod,slug,home,label in [('myths','Abilities','Tensura-Myths','Tensura Myths'),('additions','Additions-Abilities','TensuraAdditionalAdditions','TensuraAdditionalAdditions')]:
+for mod,slug,home,label in [('myths','Abilities','Tensura-Myths','Tensura Myths'),('additions','Additions-Abilities','TensuraAdditionalAdditions','TensuraAdditionalAdditions'),('retired_addon','retired_addon-Abilities','Tensura-retired_addon','Tensura retired_addon')]:
     lines=['# Ability directory','',f'[All wikis](../README.md) · [{label}]({home}.md)','','Find a move below, then open its entry for targeting, damage, cost and cooldown. “None” means no direct attack damage.','']
     for tier in ['Unique','Ultimate','Godly','Extra','Battlewill','Racial','Boss']:
         entries=[a for a in records if a.get('mod','myths')==mod and a['tier']==tier]
@@ -16,4 +16,4 @@ for mod,slug,home,label in [('myths','Abilities','Tensura-Myths','Tensura Myths'
             parent=a['skill'];lines.append(f'| [{a["name"]}]({parent}.md#{a["anchor"]}) | [{metadata[parent]["title"]}]({parent}.md) | {a["kind"]} | {a["damage"]} |')
         lines+=['']
     (WIKI/'pages'/(slug+'.md')).write_text('\n'.join(lines))
-print(f'Indexed {len(records)} abilities across two addons.')
+print(f'Indexed {len(records)} abilities across the addon sections.')
