@@ -229,4 +229,4 @@ Press **Refine** to open Tensura's standard refining menu, independently of the 
 
 ## Exponentiation
 
-A reincarnation Unique with an in-slot passive. Equip the learned skill in your current Tensura preset to square supported beneficial values. Movement is excluded; attack, mining and chant speeds are included. Costs, cooldowns and learning requirements retain their normal formulas. Fractions at or below 1 are preserved to avoid reducing benefits. See [the complete affected-values list](../../../wiki/pages/Additions-Exponentiation.md).
+A reincarnation Unique with an in-slot passive. Equip the learned skill in your current Tensura preset to square supported beneficial values. Capacities and movement are excluded; attack, mining and chant speeds are included. Costs, cooldowns and learning requirements retain their normal formulas. Fractions at or below 1 are preserved to avoid reducing benefits. See [the complete affected-values list](../../../wiki/pages/Additions-Exponentiation.md).

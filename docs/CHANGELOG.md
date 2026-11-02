@@ -1,5 +1,11 @@
 # Changelog
 
+## Additions 1.8.1 — Exponentiation capacity exclusions
+
+- Remove all Exponentiation capacity multipliers and the expanded current-resource storage limit. Keep recovery and native resource-award bonuses, within normal pools.
+- Clamp legacy over-cap reserves once, retain earned permanent gains, and update native capacity/Fusion/regen regressions.
+- Add an animated preview covering every remaining native attribute and supported output category, using runtime measurements and tested examples.
+
 ## Additions 1.8.0 — Exponentiation
 
 - Add the reincarnation Unique Exponentiation: a learned in-slot passive that squares supported beneficial attributes and completed outputs. Movement is excluded; attack, mining and chant speeds are included.

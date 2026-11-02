@@ -18,7 +18,11 @@
 
 Learn the skill and equip it in your **current Tensura skill preset**. Supported beneficial final values become **x²**: 10 damage becomes 100, 5 healing becomes 25, and 4 attack speed becomes 16. Owning the skill without equipping it, an unfinished learning entry or an inactive preset gives no bonus.
 
-**Movement is excluded. Attack speed, mining speed and chant speed are included.** Values of 1 or less stay unchanged so fractions do not become weaker. Chances keep their native maximum, item drops keep normal stack limits, and extremely large numbers remain finite.
+**Capacity multipliers and movement are excluded. Attack speed, mining speed and chant speed are included.** Values of 1 or less stay unchanged so fractions do not become weaker. Chances keep their native maximum, item drops keep normal stack limits, and extremely large numbers remain finite.
+
+<video controls preload="metadata" poster="../media/exponentiation-preview-poster.png" src="https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/exponentiation-multipliers-1.8.1.mp4"></video>
+
+[Watch/download the complete multiplier preview](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/exponentiation-multipliers-1.8.1.mp4). This animated reference uses native runtime attribute measurements and tested output examples. Test inputs illustrate the square operation; they are not starting stats.
 
 ![Exponentiation in Tensura’s Unique menu](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/exponentiation-menu.png)
 
@@ -37,11 +41,11 @@ Learn the skill and equip it in your **current Tensura skill preset**. Supported
 | Experience | Squares positive player XP awards; does not generate extra XP orbs |
 | Block / mob drops | Squares each final stack quantity, capped at that item’s normal maximum stack size; one item stays one |
 
-Damage, healing, regeneration, mining and point formulas read their ordinary inputs before the completed output is squared. For example, a normal 10-damage melee hit becomes 100, rather than using a squared attack attribute and then squaring the hit again. The displayed attack attribute still shows its empowered value. Capacity and gain are distinct benefits: maximum aura and a new aura award can both be enhanced.
+Damage, healing, regeneration, mining and point formulas read their ordinary inputs before the completed output is squared. For example, a normal 10-damage melee hit becomes 100, rather than using a squared attack attribute and then squaring the hit again. The displayed attack attribute still shows its empowered value. Resource awards remain enhanced; the maximum resource pools themselves receive no multiplier.
 
 ## Affected attributes
 
-The following **63 native attributes** are covered when their value exceeds 1. Effects must already exist on your character: Exponentiation does not grant an absent barrier, element, sense or skill. Attributes used as inputs to the output calculations above are handled at that output instead of being applied twice.
+The following **55 native attributes** are covered when their value exceeds 1. Effects must already exist on your character: Exponentiation does not grant an absent barrier, element, sense or skill. Attributes used as inputs to the output calculations above are handled at that output instead of being applied twice.
 
 | Attribute | Exact ID |
 | --- | --- |
@@ -53,9 +57,6 @@ The following **63 native attributes** are covered when their value exceeds 1. E
 | Attack Speed | `minecraft:generic.attack_speed` |
 | Mob Follow Range | `minecraft:generic.follow_range` |
 | Luck | `minecraft:generic.luck` |
-| Max Absorption | `minecraft:generic.max_absorption` |
-| Max Health | `minecraft:generic.max_health` |
-| Oxygen Bonus | `minecraft:generic.oxygen_bonus` |
 | Block Break Speed | `minecraft:player.block_break_speed` |
 | Block Interaction Range | `minecraft:player.block_interaction_range` |
 | Entity Interaction Range | `minecraft:player.entity_interaction_range` |
@@ -80,7 +81,6 @@ The following **63 native attributes** are covered when their value exceeds 1. E
 | Gravity Attack Boost | `tensura:gravity_boost` |
 | Heat Sense Radius | `tensura:heat_sense_radius` |
 | Illusion Attack Boost | `tensura:illusion_boost` |
-| Lava Capacity | `tensura:lava_capacity` |
 | Light Attack Boost | `tensura:light_boost` |
 | Light Attack Resistance | `tensura:light_resistance` |
 | Lightning Attack Boost | `tensura:lightning_boost` |
@@ -89,9 +89,6 @@ The following **63 native attributes** are covered when their value exceeds 1. E
 | Magic Resistance | `tensura:magic_resistance` |
 | Magicule Gain Percentage | `tensura:magicule_gain` |
 | Magicule Regeneration Multiplier | `tensura:magicule_regeneration_multiplier` |
-| Max Aura | `tensura:max_aura` |
-| Max Magicule | `tensura:max_magicule` |
-| Max Spiritual Health | `tensura:max_spiritual_health` |
 | Auto Melee Dodge Chance | `tensura:melee_dodge_chance` |
 | Multilayer Barrier | `tensura:multilayer_barrier` |
 | Physical Barrier | `tensura:physical_barrier` |
@@ -104,18 +101,18 @@ The following **63 native attributes** are covered when their value exceeds 1. E
 | Space Attack Resistance | `tensura:space_resistance` |
 | Spiritual Health Regeneration | `tensura:spiritual_health_regeneration` |
 | Water Attack Boost | `tensura:water_boost` |
-| Water Capacity | `tensura:water_capacity` |
 | Water Attack Resistance | `tensura:water_resistance` |
 | Wind Attack Boost | `tensura:wind_boost` |
 | Wind Attack Resistance | `tensura:wind_resistance` |
 
 ## Limits and exclusions
 
+- **Capacities:** maximum HP, SHP, aura, magicules, absorption, oxygen and water/lava capacity retain normal values. Existing 1.8.0 over-cap reserves are clamped once on the next active tick; earned permanent pool gains remain earned.
 - **Movement:** walking, sprinting, flying, gliding, swimming, sneaking, lava movement, jumping, step height, fall handling, knockback, dodge displacement, dash/teleport travel and body size remain unchanged. Interaction reach and sensing distance are included.
 - **Costs and timers:** costs, cooldowns, progression requirements and drawbacks are not squared. Percentage-based costs still follow the resource amount their original formula uses.
 - **Fixed skill settings:** fixed durations, radii, target counts, Fortune/enchantment levels, recipe outputs and other hard-coded skill constants are not rewritten. Prospector still surveys 32 blocks and adds Fortune III; its completed mining speed and drop quantities can benefit.
 - **Bounded fractions:** values in 0–1, such as fractional resistance degradation, are retained. A normal 1× gain remains 1×. Probabilities expressed in percentage points can increase, up to their native chance cap.
-- **Preservation:** equipping does not repeatedly square saved base stats or refill reserves. Unequipping restores normal effective capacities and clamps current HP, SHP, aura and magicules to those capacities. Gains earned while equipped remain earned.
+- **Preservation:** equipping does not repeatedly square saved base stats or refill reserves. Equipping and unequipping leave normal effective capacities unchanged. Gains earned while equipped remain earned.
 - **Chained:** the locked maximum-magicule capacity remains locked. Exponentiation does not bypass skill acquisition restrictions.
 - **Fusion:** combining and restoring bodies transfers their existing reserves without treating the transfer as another healing/resource reward.
 

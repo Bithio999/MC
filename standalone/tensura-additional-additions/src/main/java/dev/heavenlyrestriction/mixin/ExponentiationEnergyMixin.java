@@ -28,8 +28,6 @@ public abstract class ExponentiationEnergyMixin {
     private double exponentiation$magicule(double proposed){var owner=getOwner();return owner==null || owner.level().isClientSide() || !Exponentiation.active(owner)?proposed:Exponentiation.gain(owner,getMagicule(),proposed,Exponentiation.capacity(owner,()->EnergyHelper.getMaxMagicule(owner)));}
     @ModifyVariable(method="setSpiritualHealth",at=@At("HEAD"),argsOnly=true,remap=false)
     private double exponentiation$spiritual(double proposed){var owner=getOwner();return owner==null || owner.level().isClientSide() || !Exponentiation.active(owner)?proposed:Exponentiation.gain(owner,getSpiritualHealth(),proposed,Exponentiation.capacity(owner,()->owner.getAttributeValue(TensuraAttributes.MAX_SPIRITUAL_HEALTH)));}
-    @ModifyConstant(method={"setAura","setMagicule"},constant=@Constant(doubleValue=2.147483647E9),remap=false)
-    private double exponentiation$reserveLimit(double limit){return Exponentiation.active(getOwner())?Exponentiation.square(limit):limit;}
     @WrapMethod(method="handleAuraRegen",remap=false)
     private static void exponentiation$auraRegen(IExistence energy,LivingEntity owner,double max,Operation<Void> original){try(var scope=ExponentiationContext.raw(owner,ExponentiationContext.RECOVERY)){original.call(energy,owner,max);}}
     @WrapMethod(method="handleMagiculeRegen",remap=false)

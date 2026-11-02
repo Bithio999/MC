@@ -5,7 +5,7 @@
 <script defer src="search-index.js"></script><script defer src="search.js"></script></head>
 <body data-root="../" data-mod="additions"><a class="skip" href="#article">Skip to article</a>
 <div class="global-bar"><span>TENSURA ADDON WIKIS</span><div><a href="https://tensura.wiki.gg/wiki/Tensura:_Reincarnated_Wiki">Base mod wiki</a><a href="https://github.com/Bithio999/MC">GitHub</a></div></div>
-<header class="masthead"><a class="brand" href="TensuraAdditionalAdditions.html"><span class="brand-mark" aria-hidden="true">A</span><span>TensuraAdditionalAdditions<small>1.8.0 · Minecraft 1.21.1 · NeoForge</small></span></a>
+<header class="masthead"><a class="brand" href="TensuraAdditionalAdditions.html"><span class="brand-mark" aria-hidden="true">A</span><span>TensuraAdditionalAdditions<small>1.8.1 · Minecraft 1.21.1 · NeoForge</small></span></a>
 <div class="search"><label for="wiki-search">Search TensuraAdditionalAdditions</label><input id="wiki-search" type="search" placeholder="Search names, abilities or requirements…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="search-results" aria-expanded="false"><div id="search-results" role="listbox" hidden></div><span id="search-status" class="sr-only" aria-live="polite"></span></div></header>
 <nav class="mod-switch" aria-label="Choose addon"><a href="../index.html">All wikis</a><a href="Tensura-Myths.html">Tensura Myths</a><a href="TensuraAdditionalAdditions.html" aria-current="page">TensuraAdditionalAdditions</a><a href="Tensura-retired_addon.html">Tensura retired_addon</a></nav>
 <div class="layout"><button id="navigation-toggle" aria-controls="wiki-navigation" aria-expanded="false">☰ Wiki navigation</button><nav id="wiki-navigation" class="sidebar" aria-label="TensuraAdditionalAdditions navigation"><section><h2>Start</h2><a href="TensuraAdditionalAdditions.html">Additions home</a><a href="Additions-Getting-Started.html">Install</a><a href="Additions-In-Game-Guide.html">In-game guide</a></section><section><h2>Content</h2><a href="Additions-Fettered-Human.html">Heavenly Restriction</a><a href="Additions-Skills.html">Skills</a><a href="Additions-Chained.html">Chained</a><a href="Additions-Unbound.html">Unbound</a><a href="Additions-Battlewills.html">Battlewills</a><a href="Additions-Fusion.html">Fusion</a><a href="Additions-Prospector.html">Prospector</a><a href="Additions-Parallel-World-Jumper.html">Parallel World Jumper</a><a href="Additions-Exponentiation.html" aria-current="page">Exponentiation</a><a href="Additions-Aura-Regeneration.html">Aura recovery</a><a href="Additions-Weapons.html">Equipment</a></section><section><h2>Reference</h2><a href="Additions-Abilities.html">Ability directory</a><a href="Additions-Damage-Types.html">Damage types</a><a href="Additions-Commands.html">Commands</a></section></nav>
@@ -21,7 +21,10 @@
 </details>
 <h2 id="exponentiation-passive-in-slot">Exponentiation · Passive, In Slot</h2>
 <p>Learn the skill and equip it in your <strong>current Tensura skill preset</strong>. Supported beneficial final values become <strong>x²</strong>: 10 damage becomes 100, 5 healing becomes 25, and 4 attack speed becomes 16. Owning the skill without equipping it, an unfinished learning entry or an inactive preset gives no bonus.</p>
-<p><strong>Movement is excluded. Attack speed, mining speed and chant speed are included.</strong> Values of 1 or less stay unchanged so fractions do not become weaker. Chances keep their native maximum, item drops keep normal stack limits, and extremely large numbers remain finite.</p>
+<p><strong>Capacity multipliers and movement are excluded. Attack speed, mining speed and chant speed are included.</strong> Values of 1 or less stay unchanged so fractions do not become weaker. Chances keep their native maximum, item drops keep normal stack limits, and extremely large numbers remain finite.</p>
+<video controls preload="metadata" poster="../media/exponentiation-preview-poster.png" src="../media/exponentiation-multipliers-1.8.1.mp4"></video>
+
+<p><a href="../media/exponentiation-multipliers-1.8.1.mp4">Watch/download the complete multiplier preview</a>. This animated reference uses native runtime attribute measurements and tested output examples. Test inputs illustrate the square operation; they are not starting stats.</p>
 <p><img alt="Exponentiation in Tensura’s Unique menu" src="../media/exponentiation-menu.png" /></p>
 <h2 id="outputs-and-gains">Outputs and gains</h2>
 <div class="article-table"><table>
@@ -74,9 +77,9 @@
 </tr>
 </tbody>
 </table></div>
-<p>Damage, healing, regeneration, mining and point formulas read their ordinary inputs before the completed output is squared. For example, a normal 10-damage melee hit becomes 100, rather than using a squared attack attribute and then squaring the hit again. The displayed attack attribute still shows its empowered value. Capacity and gain are distinct benefits: maximum aura and a new aura award can both be enhanced.</p>
+<p>Damage, healing, regeneration, mining and point formulas read their ordinary inputs before the completed output is squared. For example, a normal 10-damage melee hit becomes 100, rather than using a squared attack attribute and then squaring the hit again. The displayed attack attribute still shows its empowered value. Resource awards remain enhanced; the maximum resource pools themselves receive no multiplier.</p>
 <h2 id="affected-attributes">Affected attributes</h2>
-<p>The following <strong>63 native attributes</strong> are covered when their value exceeds 1. Effects must already exist on your character: Exponentiation does not grant an absent barrier, element, sense or skill. Attributes used as inputs to the output calculations above are handled at that output instead of being applied twice.</p>
+<p>The following <strong>55 native attributes</strong> are covered when their value exceeds 1. Effects must already exist on your character: Exponentiation does not grant an absent barrier, element, sense or skill. Attributes used as inputs to the output calculations above are handled at that output instead of being applied twice.</p>
 <div class="article-table"><table>
 <thead>
 <tr>
@@ -116,18 +119,6 @@
 <tr>
 <td>Luck</td>
 <td><code>minecraft:generic.luck</code></td>
-</tr>
-<tr>
-<td>Max Absorption</td>
-<td><code>minecraft:generic.max_absorption</code></td>
-</tr>
-<tr>
-<td>Max Health</td>
-<td><code>minecraft:generic.max_health</code></td>
-</tr>
-<tr>
-<td>Oxygen Bonus</td>
-<td><code>minecraft:generic.oxygen_bonus</code></td>
 </tr>
 <tr>
 <td>Block Break Speed</td>
@@ -226,10 +217,6 @@
 <td><code>tensura:illusion_boost</code></td>
 </tr>
 <tr>
-<td>Lava Capacity</td>
-<td><code>tensura:lava_capacity</code></td>
-</tr>
-<tr>
 <td>Light Attack Boost</td>
 <td><code>tensura:light_boost</code></td>
 </tr>
@@ -260,18 +247,6 @@
 <tr>
 <td>Magicule Regeneration Multiplier</td>
 <td><code>tensura:magicule_regeneration_multiplier</code></td>
-</tr>
-<tr>
-<td>Max Aura</td>
-<td><code>tensura:max_aura</code></td>
-</tr>
-<tr>
-<td>Max Magicule</td>
-<td><code>tensura:max_magicule</code></td>
-</tr>
-<tr>
-<td>Max Spiritual Health</td>
-<td><code>tensura:max_spiritual_health</code></td>
 </tr>
 <tr>
 <td>Auto Melee Dodge Chance</td>
@@ -322,10 +297,6 @@
 <td><code>tensura:water_boost</code></td>
 </tr>
 <tr>
-<td>Water Capacity</td>
-<td><code>tensura:water_capacity</code></td>
-</tr>
-<tr>
 <td>Water Attack Resistance</td>
 <td><code>tensura:water_resistance</code></td>
 </tr>
@@ -341,11 +312,12 @@
 </table></div>
 <h2 id="limits-and-exclusions">Limits and exclusions</h2>
 <ul>
+<li><strong>Capacities:</strong> maximum HP, SHP, aura, magicules, absorption, oxygen and water/lava capacity retain normal values. Existing 1.8.0 over-cap reserves are clamped once on the next active tick; earned permanent pool gains remain earned.</li>
 <li><strong>Movement:</strong> walking, sprinting, flying, gliding, swimming, sneaking, lava movement, jumping, step height, fall handling, knockback, dodge displacement, dash/teleport travel and body size remain unchanged. Interaction reach and sensing distance are included.</li>
 <li><strong>Costs and timers:</strong> costs, cooldowns, progression requirements and drawbacks are not squared. Percentage-based costs still follow the resource amount their original formula uses.</li>
 <li><strong>Fixed skill settings:</strong> fixed durations, radii, target counts, Fortune/enchantment levels, recipe outputs and other hard-coded skill constants are not rewritten. Prospector still surveys 32 blocks and adds Fortune III; its completed mining speed and drop quantities can benefit.</li>
 <li><strong>Bounded fractions:</strong> values in 0–1, such as fractional resistance degradation, are retained. A normal 1× gain remains 1×. Probabilities expressed in percentage points can increase, up to their native chance cap.</li>
-<li><strong>Preservation:</strong> equipping does not repeatedly square saved base stats or refill reserves. Unequipping restores normal effective capacities and clamps current HP, SHP, aura and magicules to those capacities. Gains earned while equipped remain earned.</li>
+<li><strong>Preservation:</strong> equipping does not repeatedly square saved base stats or refill reserves. Equipping and unequipping leave normal effective capacities unchanged. Gains earned while equipped remain earned.</li>
 <li><strong>Chained:</strong> the locked maximum-magicule capacity remains locked. Exponentiation does not bypass skill acquisition restrictions.</li>
 <li><strong>Fusion:</strong> combining and restoring bodies transfers their existing reserves without treating the transfer as another healing/resource reward.</li>
 </ul>

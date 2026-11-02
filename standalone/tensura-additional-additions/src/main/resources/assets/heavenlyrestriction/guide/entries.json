@@ -530,13 +530,13 @@
           "title": "Affected",
           "lines": [
             "Final outgoing HP/SHP damage; HP/SHP healing; aura and magicule recovery; native positive resource gains; kill EP pool awards; learning and mastery gains; XP and block/mob drop stack quantities.",
-            "Beneficial attributes: health/energy capacities, attack damage and speed, mining and chant speed, armor, barriers, elemental boosts/resistances, chances, senses, reach and other supported non-movement attributes."
+            "Beneficial attributes: attack damage and speed, mining and chant speed, armor, barriers, elemental boosts/resistances, chances, senses, reach and other supported non-movement attributes."
           ]
         },
         {
           "title": "Rules and limits",
           "lines": [
-            "Each output is squared once. Formula inputs are read normally while calculating damage, recovery, mining and point gains. Saved base stats are not repeatedly squared. Removing the skill restores normal capacities and clamps current reserves.",
+            "Each output is squared once. Formula inputs are read normally while calculating damage, recovery, mining and point gains. Saved base stats are not repeatedly squared. Maximum HP, SHP, aura, magicules, absorption, oxygen and water/lava capacities stay unchanged.",
             "Values of 1 or less are retained so fractions are not weakened. Chances stop at their native maximum; drops stop at each item’s normal stack size; finite number limits apply. Chained’s locked magicule cap remains locked."
           ]
         },
