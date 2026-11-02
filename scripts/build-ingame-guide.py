@@ -128,6 +128,7 @@ for mod,entries,folder in [('wildhunt',full,ROOT/'src/main/resources/assets/wild
     for e in entries:
         e['related']=[i for i in e['related'] if i in allowed]
         if mod=='heavenlyrestriction':
+            if e['id']=='schema':e['summary']='Obtain Schema from Tensura’s Battlewill Manual random pool. Learn: 1,000 points. Master: 2,000 points. It no longer appears automatically.'
             e['icon']=e['icon'].replace('wildhunt:','heavenlyrestriction:')
             e['summary']=e['summary'].replace('hunter or Heavenly Restriction','Heavenly Restriction')
             for sec in e['sections']:sec['lines']=[l.replace('hunter or Heavenly Restriction','Heavenly Restriction') for l in sec['lines']]

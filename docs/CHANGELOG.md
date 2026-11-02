@@ -1,5 +1,11 @@
 # Changelog
 
+## Additions 1.8.3 — Schema Battlewill Manual
+
+- Add Schema to Tensura’s configured Battlewill Manual random pool without replacing other entries or duplicating an existing Schema entry.
+- Remove automatic Schema discovery on ticks/login. Retain existing ownership, learning/mastery progress and builds.
+- Use native book charging, consumption and cooldown behavior; Schema still begins at −1,000 learning points and requires 2,000 mastery points.
+
 ## Additions 1.8.2 — Restored non-energy capacities and consolidated EP
 
 - Restore all Exponentiation capacity bonuses except maximum aura and magicules.

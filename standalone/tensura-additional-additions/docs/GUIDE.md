@@ -168,6 +168,9 @@ Example: `/heavenlyrestriction chained inherit PlayerName tensura:martial_master
 
 ## Schema
 
+Obtain Schema through Tensura’s **Battlewill Manual** random pool, then complete its 1,000-point learning entry. It is no longer automatically discovered. Existing progress and saved builds remain.
+
+
 Learn **Schema** in the Battlewill menu for **1,000 learning points**; maximum mastery is **2,000**. Press **Build** and choose **Add Mito**, **Add Str.** or **Add Regen** to organize up to six effects, including duplicates. Move selected entries with Up/Down, then Apply; closing discards drafts. Toggle Schema to activate the saved tree.
 
 - **Mitochondrial Build:** +500% aura regeneration, −5% all outgoing damage per stack.

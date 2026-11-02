@@ -117,8 +117,8 @@ public final class SchemaArt extends Battlewill {
     @Override public void onForgetSkill(ManasSkillInstance i,LivingEntity e){e.getPersistentData().remove(HEALING_CACHE);modifier(e.getAttribute(TensuraAttributes.AURA_REGENERATION_MULTIPLIER),REGEN,0,AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);modifier(e.getAttribute(Attributes.ATTACK_DAMAGE),ATTACK,0,AttributeModifier.Operation.ADD_VALUE);super.onForgetSkill(i,e);}
     @Override public void onPressed(ManasSkillInstance i,LivingEntity e,int slot,int mode){if(e instanceof ServerPlayer p && mode==0 && i.getMastery()>=0 && canActivateSkill(i,p,0))SchemaNetwork.send(p,true,"");}
     public static void register(){
-        NeoForge.EVENT_BUS.addListener((EntityTickEvent.Post e)->{if(e.getEntity() instanceof LivingEntity owner && !owner.level().isClientSide()){refresh(owner);if(owner instanceof ServerPlayer p && p.tickCount%20==0)discover(p);}});
-        NeoForge.EVENT_BUS.addListener((PlayerEvent.PlayerLoggedInEvent e)->{if(e.getEntity() instanceof ServerPlayer p){discover(p);refresh(p);}});
+        NeoForge.EVENT_BUS.addListener((EntityTickEvent.Post e)->{if(e.getEntity() instanceof LivingEntity owner && !owner.level().isClientSide()){refresh(owner);}});
+        NeoForge.EVENT_BUS.addListener((PlayerEvent.PlayerLoggedInEvent e)->{if(e.getEntity() instanceof ServerPlayer p)refresh(p);});
         // Run after native effect bonuses and pack damage handlers, including paths that skip skill callbacks.
         NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.LOWEST,(LivingDamageEvent.Pre e)->{var owner=e.getSource().getEntity() instanceof LivingEntity living?living:null;e.setNewDamage((float)(e.getNewDamage()*damageFactor(owner)*damageTakenFactor(e.getEntity())));});
         NeoForge.EVENT_BUS.addListener((LivingDamageEvent.Post e)->{if(e.getNewDamage()>0 && !e.getEntity().level().isClientSide() && e.getSource().getEntity() instanceof LivingEntity owner)trainStrength(owner);});

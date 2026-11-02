@@ -186,7 +186,7 @@
       "id": "schema",
       "title": "Schema",
       "category": "Skills",
-      "summary": "A Battlewill with a customizable six-effect tree. Learn: 1,000 points. Master: 2,000 points.",
+      "summary": "Obtain Schema from Tensura’s Battlewill Manual random pool. Learn: 1,000 points. Master: 2,000 points. It no longer appears automatically.",
       "sections": [
         {
           "title": "Use",

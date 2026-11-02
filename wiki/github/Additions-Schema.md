@@ -13,6 +13,10 @@ A Battlewill with a customizable six-effect tree. Learn: 1,000 points. Master: 2
 | Tier | Battlewill |
 
 
+## Obtaining
+
+Use Tensura’s **Battlewill Manual** to roll a Battlewill. Schema is included in its normal random pool. A Schema result opens its learning entry at **−1,000 points**; learn it normally in the Battlewill menu. It no longer appears automatically on login. Existing learned skills, unfinished learning progress and saved builds are retained.
+
 ## Use
 
 Press Build to open the tree. Choose Add Mito, Add Str. or Add Regen; select a slot to move or remove it. Apply saves; Close discards unapplied edits. Toggle Schema to activate the saved tree.
