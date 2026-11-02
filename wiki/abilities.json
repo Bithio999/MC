@@ -1363,5 +1363,16 @@
     "secondary_damage_id": null,
     "anchor": "refine",
     "mod": "additions"
+  },
+  {
+    "skill": "Additions-Exponentiation",
+    "name": "Exponentiation",
+    "tier": "Unique",
+    "kind": "Passive, In Slot",
+    "damage": "None directly; retains the original attack damage type",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "anchor": "passive",
+    "mod": "additions"
   }
 ]

@@ -43,7 +43,19 @@
     "FusionSkillTickMixin",
     "FusionEntityQueryMixin",
     "FusionCollisionMixin",
-    "ProspectorLootMixin"
+    "ProspectorLootMixin",
+    "ExponentiationAttributeMixin",
+    "ExponentiationAttackMixin",
+    "ExponentiationPlayerMixin",
+    "ExponentiationMobMixin",
+    "ExponentiationDamageMixin",
+    "ExponentiationHealthMixin",
+    "ExponentiationEnergyMixin",
+    "ExponentiationSpiritualDamageMixin",
+    "ExponentiationLearningMixin",
+    "ExponentiationGrowthMixin",
+    "ExponentiationGrowthWriteMixin",
+    "ExponentiationGainMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Exponentiation — TensuraAdditionalAdditions gameplay reference.">
+<title>Exponentiation — TensuraAdditionalAdditions</title><link rel="stylesheet" href="wiki.css">
+<script defer src="search-index.js"></script><script defer src="search.js"></script></head>
+<body data-root="../" data-mod="additions"><a class="skip" href="#article">Skip to article</a>
+<div class="global-bar"><span>TENSURA ADDON WIKIS</span><div><a href="https://tensura.wiki.gg/wiki/Tensura:_Reincarnated_Wiki">Base mod wiki</a><a href="https://github.com/Bithio999/MC">GitHub</a></div></div>
+<header class="masthead"><a class="brand" href="TensuraAdditionalAdditions.html"><span class="brand-mark" aria-hidden="true">A</span><span>TensuraAdditionalAdditions<small>1.8.0 · Minecraft 1.21.1 · NeoForge</small></span></a>
+<div class="search"><label for="wiki-search">Search TensuraAdditionalAdditions</label><input id="wiki-search" type="search" placeholder="Search names, abilities or requirements…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="search-results" aria-expanded="false"><div id="search-results" role="listbox" hidden></div><span id="search-status" class="sr-only" aria-live="polite"></span></div></header>
+<nav class="mod-switch" aria-label="Choose addon"><a href="../index.html">All wikis</a><a href="Tensura-Myths.html">Tensura Myths</a><a href="TensuraAdditionalAdditions.html" aria-current="page">TensuraAdditionalAdditions</a><a href="Tensura-retired_addon.html">Tensura retired_addon</a></nav>
+<div class="layout"><button id="navigation-toggle" aria-controls="wiki-navigation" aria-expanded="false">☰ Wiki navigation</button><nav id="wiki-navigation" class="sidebar" aria-label="TensuraAdditionalAdditions navigation"><section><h2>Start</h2><a href="TensuraAdditionalAdditions.html">Additions home</a><a href="Additions-Getting-Started.html">Install</a><a href="Additions-In-Game-Guide.html">In-game guide</a></section><section><h2>Content</h2><a href="Additions-Fettered-Human.html">Heavenly Restriction</a><a href="Additions-Skills.html">Skills</a><a href="Additions-Chained.html">Chained</a><a href="Additions-Unbound.html">Unbound</a><a href="Additions-Battlewills.html">Battlewills</a><a href="Additions-Fusion.html">Fusion</a><a href="Additions-Prospector.html">Prospector</a><a href="Additions-Parallel-World-Jumper.html">Parallel World Jumper</a><a href="Additions-Exponentiation.html" aria-current="page">Exponentiation</a><a href="Additions-Aura-Regeneration.html">Aura recovery</a><a href="Additions-Weapons.html">Equipment</a></section><section><h2>Reference</h2><a href="Additions-Abilities.html">Ability directory</a><a href="Additions-Damage-Types.html">Damage types</a><a href="Additions-Commands.html">Commands</a></section></nav>
+<main id="article" class="article-page"><div class="page-tabs"><span aria-current="page">TensuraAdditionalAdditions</span><a href="../pages/Additions-Exponentiation.md">Read Markdown</a></div><div class="article-heading"><div class="breadcrumbs"><a href="../index.html">All wikis</a> / <a href="TensuraAdditionalAdditions.html">TensuraAdditionalAdditions</a></div><h1 id="exponentiation">Exponentiation</h1><p class="subtitle">TensuraAdditionalAdditions · Skills</p></div>
+<div class="article-content"><p><a id="passive"></a></p><aside class="infobox"><h2>Exponentiation</h2><div class="infobox-portrait"><p><img alt="Exponentiation" src="../assets/additions/exponentiation.png" /></p></div><section class="infobox-section"><h3>Skills</h3><table><tbody><tr><th scope="row">Tier</th><td>Unique</td></tr><tr><th scope="row">Obtaining</th><td>Reincarnation Unique pool; eligible for Fettered Human</td></tr><tr><th scope="row">Activation</th><td>Passive, In Slot</td></tr><tr><th scope="row">Cost / cooldown</th><td>None</td></tr><tr><th scope="row">Damage type</th><td>None directly; enhanced attacks retain their original damage type</td></tr></tbody></table></section></aside><details class="contents"><summary>On this page</summary><div class="toc">
+<ul>
+<li><a href="#exponentiation-passive-in-slot">Exponentiation · Passive, In Slot</a></li>
+<li><a href="#outputs-and-gains">Outputs and gains</a></li>
+<li><a href="#affected-attributes">Affected attributes</a></li>
+<li><a href="#limits-and-exclusions">Limits and exclusions</a></li>
+</ul>
+</div>
+</details>
+<h2 id="exponentiation-passive-in-slot">Exponentiation · Passive, In Slot</h2>
+<p>Learn the skill and equip it in your <strong>current Tensura skill preset</strong>. Supported beneficial final values become <strong>x²</strong>: 10 damage becomes 100, 5 healing becomes 25, and 4 attack speed becomes 16. Owning the skill without equipping it, an unfinished learning entry or an inactive preset gives no bonus.</p>
+<p><strong>Movement is excluded. Attack speed, mining speed and chant speed are included.</strong> Values of 1 or less stay unchanged so fractions do not become weaker. Chances keep their native maximum, item drops keep normal stack limits, and extremely large numbers remain finite.</p>
+<p><img alt="Exponentiation in Tensura’s Unique menu" src="../media/exponentiation-menu.png" /></p>
+<h2 id="outputs-and-gains">Outputs and gains</h2>
+<div class="article-table"><table>
+<thead>
+<tr>
+<th>Value</th>
+<th>What changes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Outgoing HP damage</td>
+<td>Squares the completed damage after normal modifiers and reductions; retains the original damage type and immunity rules</td>
+</tr>
+<tr>
+<td>Direct SHP damage</td>
+<td>Squares the completed spiritual damage after native resistance and protection</td>
+</tr>
+<tr>
+<td>HP healing</td>
+<td>Squares the final positive healing amount, including supported direct healing and Schema bonuses</td>
+</tr>
+<tr>
+<td>SHP healing</td>
+<td>Squares positive SHP recovery; respects the effective maximum</td>
+</tr>
+<tr>
+<td>Aura / magicule recovery</td>
+<td>Squares the completed positive resource gain, including native regeneration, biome input and sleep recovery</td>
+</tr>
+<tr>
+<td>Permanent aura / magicule gains</td>
+<td>Squares each native positive pool award after its normal split; includes native kill EP awards and EnergyHelper gains</td>
+</tr>
+<tr>
+<td>Learning / mastery</td>
+<td>Squares the awarded points after native point modifiers; requirements and mastery caps stay unchanged</td>
+</tr>
+<tr>
+<td>Mining speed</td>
+<td>Squares the completed block-breaking speed after tool, enchantment and skill modifiers</td>
+</tr>
+<tr>
+<td>Experience</td>
+<td>Squares positive player XP awards; does not generate extra XP orbs</td>
+</tr>
+<tr>
+<td>Block / mob drops</td>
+<td>Squares each final stack quantity, capped at that item’s normal maximum stack size; one item stays one</td>
+</tr>
+</tbody>
+</table></div>
+<p>Damage, healing, regeneration, mining and point formulas read their ordinary inputs before the completed output is squared. For example, a normal 10-damage melee hit becomes 100, rather than using a squared attack attribute and then squaring the hit again. The displayed attack attribute still shows its empowered value. Capacity and gain are distinct benefits: maximum aura and a new aura award can both be enhanced.</p>
+<h2 id="affected-attributes">Affected attributes</h2>
+<p>The following <strong>63 native attributes</strong> are covered when their value exceeds 1. Effects must already exist on your character: Exponentiation does not grant an absent barrier, element, sense or skill. Attributes used as inputs to the output calculations above are handled at that output instead of being applied twice.</p>
+<div class="article-table"><table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Exact ID</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Critical Attack Chance</td>
+<td><code>manascore_attribute:critical_attack_chance</code></td>
+</tr>
+<tr>
+<td>Critical Damage Multiplier</td>
+<td><code>manascore_attribute:critical_damage_multiplier</code></td>
+</tr>
+<tr>
+<td>Armor</td>
+<td><code>minecraft:generic.armor</code></td>
+</tr>
+<tr>
+<td>Armor Toughness</td>
+<td><code>minecraft:generic.armor_toughness</code></td>
+</tr>
+<tr>
+<td>Attack Damage</td>
+<td><code>minecraft:generic.attack_damage</code></td>
+</tr>
+<tr>
+<td>Attack Speed</td>
+<td><code>minecraft:generic.attack_speed</code></td>
+</tr>
+<tr>
+<td>Mob Follow Range</td>
+<td><code>minecraft:generic.follow_range</code></td>
+</tr>
+<tr>
+<td>Luck</td>
+<td><code>minecraft:generic.luck</code></td>
+</tr>
+<tr>
+<td>Max Absorption</td>
+<td><code>minecraft:generic.max_absorption</code></td>
+</tr>
+<tr>
+<td>Max Health</td>
+<td><code>minecraft:generic.max_health</code></td>
+</tr>
+<tr>
+<td>Oxygen Bonus</td>
+<td><code>minecraft:generic.oxygen_bonus</code></td>
+</tr>
+<tr>
+<td>Block Break Speed</td>
+<td><code>minecraft:player.block_break_speed</code></td>
+</tr>
+<tr>
+<td>Block Interaction Range</td>
+<td><code>minecraft:player.block_interaction_range</code></td>
+</tr>
+<tr>
+<td>Entity Interaction Range</td>
+<td><code>minecraft:player.entity_interaction_range</code></td>
+</tr>
+<tr>
+<td>Mining Efficiency</td>
+<td><code>minecraft:player.mining_efficiency</code></td>
+</tr>
+<tr>
+<td>Submerged Mining Speed</td>
+<td><code>minecraft:player.submerged_mining_speed</code></td>
+</tr>
+<tr>
+<td>Nametag Distance</td>
+<td><code>neoforge:nametag_distance</code></td>
+</tr>
+<tr>
+<td>Ability Learning Gain</td>
+<td><code>tensura:ability_learning_gain</code></td>
+</tr>
+<tr>
+<td>Ability Mastery Gain</td>
+<td><code>tensura:ability_mastery_gain</code></td>
+</tr>
+<tr>
+<td>Analysis Distance</td>
+<td><code>tensura:analysis_distance</code></td>
+</tr>
+<tr>
+<td>Analysis Level</td>
+<td><code>tensura:analysis_level</code></td>
+</tr>
+<tr>
+<td>Aura Gain Percentage</td>
+<td><code>tensura:aura_gain</code></td>
+</tr>
+<tr>
+<td>Aura Regeneration Multiplier</td>
+<td><code>tensura:aura_regeneration_multiplier</code></td>
+</tr>
+<tr>
+<td>Chant Speed</td>
+<td><code>tensura:chant_speed</code></td>
+</tr>
+<tr>
+<td>Darkness Attack Boost</td>
+<td><code>tensura:darkness_boost</code></td>
+</tr>
+<tr>
+<td>Darkness Attack Resistance</td>
+<td><code>tensura:darkness_resistance</code></td>
+</tr>
+<tr>
+<td>Dodge Invulnerability</td>
+<td><code>tensura:dodge_invulnerability</code></td>
+</tr>
+<tr>
+<td>Dodge Negate Chance</td>
+<td><code>tensura:dodge_negate_chance</code></td>
+</tr>
+<tr>
+<td>Earth Attack Boost</td>
+<td><code>tensura:earth_boost</code></td>
+</tr>
+<tr>
+<td>Earth Attack Resistance</td>
+<td><code>tensura:earth_resistance</code></td>
+</tr>
+<tr>
+<td>Fire Attack Boost</td>
+<td><code>tensura:flame_boost</code></td>
+</tr>
+<tr>
+<td>Fire Attack Resistance</td>
+<td><code>tensura:flame_resistance</code></td>
+</tr>
+<tr>
+<td>Gravity Attack Boost</td>
+<td><code>tensura:gravity_boost</code></td>
+</tr>
+<tr>
+<td>Heat Sense Radius</td>
+<td><code>tensura:heat_sense_radius</code></td>
+</tr>
+<tr>
+<td>Illusion Attack Boost</td>
+<td><code>tensura:illusion_boost</code></td>
+</tr>
+<tr>
+<td>Lava Capacity</td>
+<td><code>tensura:lava_capacity</code></td>
+</tr>
+<tr>
+<td>Light Attack Boost</td>
+<td><code>tensura:light_boost</code></td>
+</tr>
+<tr>
+<td>Light Attack Resistance</td>
+<td><code>tensura:light_resistance</code></td>
+</tr>
+<tr>
+<td>Lightning Attack Boost</td>
+<td><code>tensura:lightning_boost</code></td>
+</tr>
+<tr>
+<td>Magic Barrier</td>
+<td><code>tensura:magic_barrier</code></td>
+</tr>
+<tr>
+<td>Magic Interference</td>
+<td><code>tensura:magic_interference</code></td>
+</tr>
+<tr>
+<td>Magic Resistance</td>
+<td><code>tensura:magic_resistance</code></td>
+</tr>
+<tr>
+<td>Magicule Gain Percentage</td>
+<td><code>tensura:magicule_gain</code></td>
+</tr>
+<tr>
+<td>Magicule Regeneration Multiplier</td>
+<td><code>tensura:magicule_regeneration_multiplier</code></td>
+</tr>
+<tr>
+<td>Max Aura</td>
+<td><code>tensura:max_aura</code></td>
+</tr>
+<tr>
+<td>Max Magicule</td>
+<td><code>tensura:max_magicule</code></td>
+</tr>
+<tr>
+<td>Max Spiritual Health</td>
+<td><code>tensura:max_spiritual_health</code></td>
+</tr>
+<tr>
+<td>Auto Melee Dodge Chance</td>
+<td><code>tensura:melee_dodge_chance</code></td>
+</tr>
+<tr>
+<td>Multilayer Barrier</td>
+<td><code>tensura:multilayer_barrier</code></td>
+</tr>
+<tr>
+<td>Physical Barrier</td>
+<td><code>tensura:physical_barrier</code></td>
+</tr>
+<tr>
+<td>Presence Concealment</td>
+<td><code>tensura:presence_concealment</code></td>
+</tr>
+<tr>
+<td>Presence Sense</td>
+<td><code>tensura:presence_sense</code></td>
+</tr>
+<tr>
+<td>Presence Sense Radius</td>
+<td><code>tensura:presence_sense_radius</code></td>
+</tr>
+<tr>
+<td>Auto Projectile Dodge Chance</td>
+<td><code>tensura:projectile_dodge_chance</code></td>
+</tr>
+<tr>
+<td>Sound Attack Boost</td>
+<td><code>tensura:sound_boost</code></td>
+</tr>
+<tr>
+<td>Space Attack Boost</td>
+<td><code>tensura:space_boost</code></td>
+</tr>
+<tr>
+<td>Space Attack Resistance</td>
+<td><code>tensura:space_resistance</code></td>
+</tr>
+<tr>
+<td>Spiritual Health Regeneration</td>
+<td><code>tensura:spiritual_health_regeneration</code></td>
+</tr>
+<tr>
+<td>Water Attack Boost</td>
+<td><code>tensura:water_boost</code></td>
+</tr>
+<tr>
+<td>Water Capacity</td>
+<td><code>tensura:water_capacity</code></td>
+</tr>
+<tr>
+<td>Water Attack Resistance</td>
+<td><code>tensura:water_resistance</code></td>
+</tr>
+<tr>
+<td>Wind Attack Boost</td>
+<td><code>tensura:wind_boost</code></td>
+</tr>
+<tr>
+<td>Wind Attack Resistance</td>
+<td><code>tensura:wind_resistance</code></td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="limits-and-exclusions">Limits and exclusions</h2>
+<ul>
+<li><strong>Movement:</strong> walking, sprinting, flying, gliding, swimming, sneaking, lava movement, jumping, step height, fall handling, knockback, dodge displacement, dash/teleport travel and body size remain unchanged. Interaction reach and sensing distance are included.</li>
+<li><strong>Costs and timers:</strong> costs, cooldowns, progression requirements and drawbacks are not squared. Percentage-based costs still follow the resource amount their original formula uses.</li>
+<li><strong>Fixed skill settings:</strong> fixed durations, radii, target counts, Fortune/enchantment levels, recipe outputs and other hard-coded skill constants are not rewritten. Prospector still surveys 32 blocks and adds Fortune III; its completed mining speed and drop quantities can benefit.</li>
+<li><strong>Bounded fractions:</strong> values in 0–1, such as fractional resistance degradation, are retained. A normal 1× gain remains 1×. Probabilities expressed in percentage points can increase, up to their native chance cap.</li>
+<li><strong>Preservation:</strong> equipping does not repeatedly square saved base stats or refill reserves. Unequipping restores normal effective capacities and clamps current HP, SHP, aura and magicules to those capacities. Gains earned while equipped remain earned.</li>
+<li><strong>Chained:</strong> the locked maximum-magicule capacity remains locked. Exponentiation does not bypass skill acquisition restrictions.</li>
+<li><strong>Fusion:</strong> combining and restoring bodies transfers their existing reserves without treating the transfer as another healing/resource reward.</li>
+</ul>
+<p>These tables describe the supported native attribute and output paths. An unrelated addon’s private variables, custom damage engine or separate inventory system are not automatically covered.</p></div><footer>Unofficial addon reference · Default gameplay values · Pictures and videos illustrate their recorded versions.<br>Original addon artwork. Not affiliated with ManasMods or Capcom.</footer></main></div></body></html>

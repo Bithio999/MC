@@ -18,6 +18,7 @@ Find a move below, then open its entry for targeting, damage, cost and cooldown.
 | [Fuse](Additions-Fusion.md#fuse) | [Fusion](Additions-Fusion.md) | Active, Press | None (outgoing attacks retain their damage type) |
 | [Prospector](Additions-Prospector.md#passive) | [Prospector](Additions-Prospector.md) | Passive, Toggle | None |
 | [Refine](Additions-Prospector.md#refine) | [Prospector](Additions-Prospector.md) | Active, Press | None |
+| [Exponentiation](Additions-Exponentiation.md#passive) | [Exponentiation](Additions-Exponentiation.md) | Passive, In Slot | None directly; retains the original attack damage type |
 
 ## Ultimate
 

@@ -226,3 +226,7 @@ Fusion lasts **3 minutes**. Recast Fuse, use **Pause → Separate Fusion**, or s
 Normal reincarnation Unique, also eligible for Fettered Human. Toggle in the native skill menu for +50% mining speed, +3 effective Fortune and ore vision through terrain within 32 blocks. Tool Fortune III becomes effective Fortune VI; Silk Touch keeps its normal behavior. Stone and deepslate have a 1% chance to yield an extra resource when mined with a suitable tool. Deposit markers use distinct colors/glyphs, including violet for magic ore. Look toward one to see its name, surveyed ore count and distance.
 
 Press **Refine** to open Tensura's standard refining menu, independently of the passive. Base inputs use the three left slots, reagents the five middle slots. Native recipes, Refine/Repeat buttons and stored ingredients/output remain supported. No aura/magicule cost. **Damage type: None.**
+
+## Exponentiation
+
+A reincarnation Unique with an in-slot passive. Equip the learned skill in your current Tensura preset to square supported beneficial values. Movement is excluded; attack, mining and chant speeds are included. Costs, cooldowns and learning requirements retain their normal formulas. Fractions at or below 1 are preserved to avoid reducing benefits. See [the complete affected-values list](../../../wiki/pages/Additions-Exponentiation.md).

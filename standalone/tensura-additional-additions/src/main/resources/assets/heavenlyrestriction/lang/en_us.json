@@ -24,5 +24,8 @@
   "heavenlyrestriction.skill.prospector": "Prospector",
   "heavenlyrestriction.skill.mode.prospector.refine": "Refine",
   "heavenlyrestriction.skill.prospector.description": "Toggle: +50% mining speed and +3 effective Fortune, added to your tool's Fortune. Stone and deepslate have a 1% chance to yield an extra resource when mined with a suitable tool. Sense ore deposits within 32 blocks through terrain, including magic ore; look toward a marker to identify it. Press Refine to open Tensura's refining menu. No aura or magicule cost.",
-  "heavenlyrestriction.prospector.deposit": "%s · %s blocks · %sm"
+  "heavenlyrestriction.prospector.deposit": "%s · %s blocks · %sm",
+  "heavenlyrestriction.skill.exponentiation": "Exponentiation",
+  "heavenlyrestriction.skill.mode.exponentiation.exponentiation": "Exponentiation",
+  "heavenlyrestriction.skill.exponentiation.description": "Passive, In Slot. Square beneficial final stats and outputs while equipped in your active preset: damage, HP/SHP healing, aura/magicule recovery and capacities, defenses, elemental bonuses, senses, learning/mastery, EP awards, mining, attack/casting speed, loot quantities and XP gains. Movement-related values, costs, cooldowns and requirements are excluded. Fractions below 1 are preserved, and native chance, stack and progression limits apply. No activation or upkeep cost."
 }

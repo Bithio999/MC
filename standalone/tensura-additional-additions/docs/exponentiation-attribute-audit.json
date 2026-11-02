@@ -1,0 +1,850 @@
+[
+  {
+    "id": "manascore_attribute:critical_attack_chance",
+    "name": "manascore.attribute.critical_attack_chance",
+    "included": true,
+    "role": 0,
+    "reason": "",
+    "can_change": true
+  },
+  {
+    "id": "manascore_attribute:critical_damage_multiplier",
+    "name": "manascore.attribute.critical_damage_multiplier",
+    "included": true,
+    "role": 1,
+    "reason": "",
+    "can_change": true
+  },
+  {
+    "id": "manascore_attribute:glide_speed_multiplier",
+    "name": "manascore.attribute.glide_speed_multiplier",
+    "included": false,
+    "role": 0,
+    "reason": "Movement/body geometry",
+    "can_change": false
+  },
+  {
+    "id": "manascore_attribute:lava_speed_multiplier",
+    "name": "manascore.attribute.lava_speed_multiplier",
+    "included": false,
+    "role": 0,
+    "reason": "Movement/body geometry",
+    "can_change": false
+  },
+  {
+    "id": "manascore_attribute:swim_speed_multiplier",
+    "name": "manascore.attribute.swim_speed_multiplier",
+    "included": false,
+    "role": 0,
+    "reason": "Movement/body geometry",
+    "can_change": false
+  },
+  {
+    "id": "minecraft:generic.armor",
+    "name": "attribute.name.generic.armor",
+    "included": true,
+    "role": 0,
+    "reason": "",
+    "can_change": true
+  },
+  {
+    "id": "minecraft:generic.armor_toughness",
+    "name": "attribute.name.generic.armor_toughness",
+    "included": true,
+    "role": 0,
+    "reason": "",
+    "can_change": true
+  },
+  {
+    "id": "minecraft:generic.attack_damage",
+    "name": "attribute.name.generic.attack_damage",
+    "included": true,
+    "role": 1,
+    "reason": "",
+    "can_change": true
+  },
+  {
+    "id": "minecraft:generic.attack_knockback",
+    "name": "attribute.name.generic.attack_knockback",
+    "included": false,
+    "role": 0,
+    "reason": "Movement/body geometry",
+    "can_change": false
+  },
+  {
+    "id": "minecraft:generic.attack_speed",
+    "name": "attribute.name.generic.attack_speed",
+    "included": true,
+    "role": 0,
+    "reason": "",
+    "can_change": true
+  },
+  {
+    "id": "minecraft:generic.burning_time",
+    "name": "attribute.name.generic.burning_time",
+    "included": false,
+    "role": 0,
+    "reason": "Higher values are harmful",
+    "can_change": false
+  },
+  {
+    "id": "minecraft:generic.explosion_knockback_resistance",
+    "name": "attribute.name.generic.explosion_knockback_resistance",
+    "included": false,
+    "role": 0,
+    "reason": "Movement/body geometry",
+    "can_change": false
+  },
+  {
+    "id": "minecraft:generic.fall_damage_multiplier",
+    "name": "attribute.name.generic.fall_damage_multiplier",
+    "included": false,
+    "role": 0,
+    "reason": "Higher values are harmful",
+    "can_change": false
+  },
+  {
+    "id": "minecraft:generic.flying_speed",
+    "name": "attribute.name.generic.flying_speed",
+    "included": false,
+    "role": 0,
+    "reason": "Movement/body geometry",
+    "can_change": false
+  },
+  {
+    "id": "minecraft:generic.follow_range",
+    "name": "attribute.name.generic.follow_range",
+    "included": true,
+    "role": 0,
+    "reason": "",
+    "can_change": true
+  },
+  {
+    "id": "minecraft:generic.gravity",
+    "name": "attribute.name.generic.gravity",
+    "included": false,
+    "role": 0,
+    "reason": "Movement/body geometry",
+    "can_change": false
+  },
+  {
+    "id": "minecraft:generic.jump_strength",
+    "name": "attribute.name.generic.jump_strength",
+    "included": false,
+    "role": 0,
+    "reason": "Movement/body geometry",
+    "can_change": false
+  },
+  {
+    "id": "minecraft:generic.knockback_resistance",
+    "name": "attribute.name.generic.knockback_resistance",
+    "included": false,
+    "role": 0,
+    "reason": "Movement/body geometry",
+    "can_change": false
+  },
+  {
+    "id": "minecraft:generic.luck",
+    "name": "attribute.name.generic.luck",
+    "included": true,
+    "role": 0,
+    "reason": "",
+    "can_change": true
+  },
+  {
+    "id": "minecraft:generic.max_absorption",
+    "name": "attribute.name.generic.max_absorption",
+    "included": true,
+    "role": 129,
+    "reason": "",
+    "can_change": true
+  },
+  {
+    "id": "minecraft:generic.max_health",
+    "name": "attribute.name.generic.max_health",
+    "included": true,
+    "role": 129,
+    "reason": "",
+    "can_change": true
+  },
+  {
+    "id": "minecraft:generic.movement_efficiency",
+    "name": "attribute.name.generic.movement_efficiency",
+    "included": false,
+    "role": 0,
+    "reason": "Movement/body geometry",
+    "can_change": false
+  },
+  {
+    "id": "minecraft:generic.movement_speed",
+    "name": "attribute.name.generic.movement_speed",
+    "included": false,
+    "role": 0,
+    "reason": "Movement/body geometry",
+    "can_change": false
+  },
+  {
+    "id": "minecraft:generic.oxygen_bonus",
+    "name": "attribute.name.generic.oxygen_bonus",
+    "included": true,
+    "role": 0,
+    "reason": "",
+    "can_change": true
+  },
+  {
+    "id": "minecraft:generic.safe_fall_distance",
+    "name": "attribute.name.generic.safe_fall_distance",
+    "included": false,
+    "role": 0,
+    "reason": "Movement/body geometry",
+    "can_change": false
+  },
+  {
+    "id": "minecraft:generic.scale",
+    "name": "attribute.name.generic.scale",
+    "included": false,
+    "role": 0,
+    "reason": "Movement/body geometry",
+    "can_change": false
+  },
+  {
+    "id": "minecraft:generic.step_height",
+    "name": "attribute.name.generic.step_height",
+    "included": false,
+    "role": 0,
+    "reason": "Movement/body geometry",
+    "can_change": false
+  },
+  {
+    "id": "minecraft:generic.water_movement_efficiency",
+    "name": "attribute.name.generic.water_movement_efficiency",
+    "included": false,
+    "role": 0,
+    "reason": "Movement/body geometry",
+    "can_change": false
+  },
+  {
+    "id": "minecraft:player.block_break_speed",
+    "name": "attribute.name.player.block_break_speed",
+    "included": true,
+    "role": 16,
+    "reason": "",
+    "can_change": true
+  },
+  {
+    "id": "minecraft:player.block_interaction_range",
+    "name": "attribute.name.player.block_interaction_range",
+    "included": true,
+    "role": 0,
+    "reason": "",
+    "can_change": true
+  },
+  {
+    "id": "minecraft:player.entity_interaction_range",
+    "name": "attribute.name.player.entity_interaction_range",
+    "included": true,
+    "role": 0,
+    "reason": "",
+    "can_change": true
+  },
+  {
+    "id": "minecraft:player.mining_efficiency",
+    "name": "attribute.name.player.mining_efficiency",
+    "included": true,
+    "role": 16,
+    "reason": "",
+    "can_change": true
+  },
+  {
+    "id": "minecraft:player.sneaking_speed",
+    "name": "attribute.name.player.sneaking_speed",
+    "included": false,
+    "role": 0,
+    "reason": "Movement/body geometry",
+    "can_change": false
+  },
+  {
+    "id": "minecraft:player.submerged_mining_speed",
+    "name": "attribute.name.player.submerged_mining_speed",
+    "included": true,
+    "role": 16,
+    "reason": "",
+    "can_change": true
+  },
+  {
+    "id": "minecraft:player.sweeping_damage_ratio",
+    "name": "attribute.name.player.sweeping_damage_ratio",
+    "included": true,
+    "role": 1,
+    "reason": "",
+    "can_change": false
+  },
+  {
+    "id": "minecraft:zombie.spawn_reinforcements",
+    "name": "attribute.name.zombie.spawn_reinforcements",
+    "included": false,
+    "role": 0,
+    "reason": "Costs, limits or nonnumeric/binary state",
+    "can_change": false
+  },
+  {
+    "id": "neoforge:creative_flight",
+    "name": "neoforge.creative_flight",
+    "included": false,
+    "role": 0,
+    "reason": "Movement/body geometry",
+    "can_change": false
+  },
+  {
+    "id": "neoforge:nametag_distance",
+    "name": "neoforge.name_tag_distance",
+    "included": true,
+    "role": 0,
+    "reason": "",
+    "can_change": true
+  },
+  {
+    "id": "neoforge:swim_speed",
+    "name": "neoforge.swim_speed",
+    "included": false,
+    "role": 0,
+    "reason": "Movement/body geometry",
+    "can_change": false
+  },
+  {
+    "id": "tensura:ability_learning_gain",
+    "name": "tensura.attribute.ability_learning_gain",
+    "included": true,
+    "role": 8,
+    "reason": "",
+    "can_change": true
+  },
+  {
+    "id": "tensura:ability_mastery_gain",
+    "name": "tensura.attribute.ability_mastery_gain",
+    "included": true,
+    "role": 8,
+    "reason": "",
+    "can_change": true
+  },
+  {
+    "id": "tensura:analysis_distance",
+    "name": "tensura.attribute.analysis_distance",
+    "included": true,
+    "role": 0,
+    "reason": "",
+    "can_change": true
+  },
+  {
+    "id": "tensura:analysis_level",
+    "name": "tensura.attribute.analysis_level",
+    "included": true,
+    "role": 0,
+    "reason": "",
+    "can_change": true
+  },
+  {
+    "id": "tensura:aura_gain",
+    "name": "tensura.attribute.aura_gain",
+    "included": true,
+    "role": 4,
+    "reason": "",
+    "can_change": true
+  },
+  {
+    "id": "tensura:aura_regeneration_multiplier",
+    "name": "tensura.attribute.aura_regeneration_multiplier",
+    "included": true,
+    "role": 2,
+    "reason": "",
+    "can_change": true
+  },
+  {
+    "id": "tensura:chant_speed",
+    "name": "tensura.attribute.chant_speed",
+    "included": true,
+    "role": 0,
+    "reason": "",
+    "can_change": true
+  },
+  {
+    "id": "tensura:dark_vision",
+    "name": "tensura.attribute.dark_vision",
+    "included": false,
+    "role": 0,
+    "reason": "Higher values are harmful",
+    "can_change": false
+  },
+  {
+    "id": "tensura:darkness_boost",
+    "name": "tensura.attribute.darkness_boost",
+    "included": true,
+    "role": 1,
+    "reason": "",
+    "can_change": true
+  },
+  {
+    "id": "tensura:darkness_resist_degradation",
+    "name": "tensura.attribute.darkness_resist_degradation",
+    "included": true,
+    "role": 0,
+    "reason": "",
+    "can_change": false
+  },
+  {
+    "id": "tensura:darkness_resistance",
+    "name": "tensura.attribute.darkness_resistance",
+    "included": true,
+    "role": 0,
+    "reason": "",
+    "can_change": true
+  },
+  {
+    "id": "tensura:dodge_invulnerability",
+    "name": "tensura.attribute.dodge_invulnerability",
+    "included": true,
+    "role": 0,
+    "reason": "",
+    "can_change": true
+  },
+  {
+    "id": "tensura:dodge_negate_chance",
+    "name": "tensura.attribute.dodge_negate_chance",
+    "included": true,
+    "role": 0,
+    "reason": "",
+    "can_change": true
+  },
+  {
+    "id": "tensura:dodge_strength",
+    "name": "tensura.attribute.dodge_strength",
+    "included": false,
+    "role": 0,
+    "reason": "Movement/body geometry",
+    "can_change": false
+  },
+  {
+    "id": "tensura:earth_boost",
+    "name": "tensura.attribute.earth_boost",
+    "included": true,
+    "role": 1,
+    "reason": "",
+    "can_change": true
+  },
+  {
+    "id": "tensura:earth_resist_degradation",
+    "name": "tensura.attribute.earth_resist_degradation",
+    "included": true,
+    "role": 0,
+    "reason": "",
+    "can_change": false
+  },
+  {
+    "id": "tensura:earth_resistance",
+    "name": "tensura.attribute.earth_resistance",
+    "included": true,
+    "role": 0,
+    "reason": "",
+    "can_change": true
+  },
+  {
+    "id": "tensura:flame_boost",
+    "name": "tensura.attribute.flame_boost",
+    "included": true,
+    "role": 1,
+    "reason": "",
+    "can_change": true
+  },
+  {
+    "id": "tensura:flame_resist_degradation",
+    "name": "tensura.attribute.flame_resist_degradation",
+    "included": true,
+    "role": 0,
+    "reason": "",
+    "can_change": false
+  },
+  {
+    "id": "tensura:flame_resistance",
+    "name": "tensura.attribute.flame_resistance",
+    "included": true,
+    "role": 0,
+    "reason": "",
+    "can_change": true
+  },
+  {
+    "id": "tensura:gravity_boost",
+    "name": "tensura.attribute.gravity_boost",
+    "included": true,
+    "role": 1,
+    "reason": "",
+    "can_change": true
+  },
+  {
+    "id": "tensura:gravity_resist_degradation",
+    "name": "tensura.attribute.gravity_resist_degradation",
+    "included": true,
+    "role": 0,
+    "reason": "",
+    "can_change": false
+  },
+  {
+    "id": "tensura:heat_sense_radius",
+    "name": "tensura.attribute.heat_sense_radius",
+    "included": true,
+    "role": 0,
+    "reason": "",
+    "can_change": true
+  },
+  {
+    "id": "tensura:height_multiplier",
+    "name": "tensura.attribute.height_multiplier",
+    "included": false,
+    "role": 0,
+    "reason": "Movement/body geometry",
+    "can_change": false
+  },
+  {
+    "id": "tensura:illusion_boost",
+    "name": "tensura.attribute.illusion_boost",
+    "included": true,
+    "role": 1,
+    "reason": "",
+    "can_change": true
+  },
+  {
+    "id": "tensura:lava_capacity",
+    "name": "tensura.attribute.lava_capacity",
+    "included": true,
+    "role": 0,
+    "reason": "",
+    "can_change": true
+  },
+  {
+    "id": "tensura:law_degradation",
+    "name": "tensura.attribute.law_degradation",
+    "included": true,
+    "role": 0,
+    "reason": "",
+    "can_change": false
+  },
+  {
+    "id": "tensura:light_boost",
+    "name": "tensura.attribute.light_boost",
+    "included": true,
+    "role": 1,
+    "reason": "",
+    "can_change": true
+  },
+  {
+    "id": "tensura:light_resist_degradation",
+    "name": "tensura.attribute.light_resist_degradation",
+    "included": true,
+    "role": 0,
+    "reason": "",
+    "can_change": false
+  },
+  {
+    "id": "tensura:light_resistance",
+    "name": "tensura.attribute.light_resistance",
+    "included": true,
+    "role": 0,
+    "reason": "",
+    "can_change": true
+  },
+  {
+    "id": "tensura:lightning_boost",
+    "name": "tensura.attribute.lightning_boost",
+    "included": true,
+    "role": 1,
+    "reason": "",
+    "can_change": true
+  },
+  {
+    "id": "tensura:lightning_resist_degradation",
+    "name": "tensura.attribute.lightning_resist_degradation",
+    "included": true,
+    "role": 0,
+    "reason": "",
+    "can_change": false
+  },
+  {
+    "id": "tensura:limited_spiritual_max_aura",
+    "name": "tensura.attribute.limited_spiritual_max_aura",
+    "included": false,
+    "role": 0,
+    "reason": "Higher values are harmful",
+    "can_change": false
+  },
+  {
+    "id": "tensura:limited_spiritual_max_magicule",
+    "name": "tensura.attribute.limited_spiritual_max_magicule",
+    "included": false,
+    "role": 0,
+    "reason": "Higher values are harmful",
+    "can_change": false
+  },
+  {
+    "id": "tensura:magic_barrier",
+    "name": "tensura.attribute.magic_barrier",
+    "included": true,
+    "role": 0,
+    "reason": "",
+    "can_change": true
+  },
+  {
+    "id": "tensura:magic_cost_multiplier",
+    "name": "tensura.attribute.magic_cost_multiplier",
+    "included": false,
+    "role": 0,
+    "reason": "Costs, limits or nonnumeric/binary state",
+    "can_change": false
+  },
+  {
+    "id": "tensura:magic_interference",
+    "name": "tensura.attribute.magic_interference",
+    "included": true,
+    "role": 0,
+    "reason": "",
+    "can_change": true
+  },
+  {
+    "id": "tensura:magic_resistance",
+    "name": "tensura.attribute.magic_resistance",
+    "included": true,
+    "role": 0,
+    "reason": "",
+    "can_change": true
+  },
+  {
+    "id": "tensura:magicule_gain",
+    "name": "tensura.attribute.magicule_gain",
+    "included": true,
+    "role": 4,
+    "reason": "",
+    "can_change": true
+  },
+  {
+    "id": "tensura:magicule_regeneration_multiplier",
+    "name": "tensura.attribute.magicule_regeneration_multiplier",
+    "included": true,
+    "role": 2,
+    "reason": "",
+    "can_change": true
+  },
+  {
+    "id": "tensura:max_aura",
+    "name": "tensura.attribute.max_aura",
+    "included": true,
+    "role": 129,
+    "reason": "",
+    "can_change": true
+  },
+  {
+    "id": "tensura:max_magicule",
+    "name": "tensura.attribute.max_magicule",
+    "included": true,
+    "role": 129,
+    "reason": "",
+    "can_change": true
+  },
+  {
+    "id": "tensura:max_spiritual_health",
+    "name": "tensura.attribute.max_spiritual_health",
+    "included": true,
+    "role": 129,
+    "reason": "",
+    "can_change": true
+  },
+  {
+    "id": "tensura:melee_dodge_chance",
+    "name": "tensura.attribute.melee_dodge_chance",
+    "included": true,
+    "role": 0,
+    "reason": "",
+    "can_change": true
+  },
+  {
+    "id": "tensura:multilayer_barrier",
+    "name": "tensura.attribute.multilayer_barrier",
+    "included": true,
+    "role": 0,
+    "reason": "",
+    "can_change": true
+  },
+  {
+    "id": "tensura:physical_barrier",
+    "name": "tensura.attribute.physical_barrier",
+    "included": true,
+    "role": 0,
+    "reason": "",
+    "can_change": true
+  },
+  {
+    "id": "tensura:physical_resist_degradation",
+    "name": "tensura.attribute.physical_resist_degradation",
+    "included": true,
+    "role": 0,
+    "reason": "",
+    "can_change": false
+  },
+  {
+    "id": "tensura:presence_concealment",
+    "name": "tensura.attribute.presence_concealment",
+    "included": true,
+    "role": 0,
+    "reason": "",
+    "can_change": true
+  },
+  {
+    "id": "tensura:presence_sense",
+    "name": "tensura.attribute.presence_sense",
+    "included": true,
+    "role": 0,
+    "reason": "",
+    "can_change": true
+  },
+  {
+    "id": "tensura:presence_sense_radius",
+    "name": "tensura.attribute.presence_sense_radius",
+    "included": true,
+    "role": 0,
+    "reason": "",
+    "can_change": true
+  },
+  {
+    "id": "tensura:projectile_dodge_chance",
+    "name": "tensura.attribute.projectile_dodge_chance",
+    "included": true,
+    "role": 0,
+    "reason": "",
+    "can_change": true
+  },
+  {
+    "id": "tensura:resistance_degradation",
+    "name": "tensura.attribute.resistance_degradation",
+    "included": true,
+    "role": 0,
+    "reason": "",
+    "can_change": false
+  },
+  {
+    "id": "tensura:sound_boost",
+    "name": "tensura.attribute.sound_boost",
+    "included": true,
+    "role": 1,
+    "reason": "",
+    "can_change": true
+  },
+  {
+    "id": "tensura:space_boost",
+    "name": "tensura.attribute.space_boost",
+    "included": true,
+    "role": 1,
+    "reason": "",
+    "can_change": true
+  },
+  {
+    "id": "tensura:space_resist_degradation",
+    "name": "tensura.attribute.space_resist_degradation",
+    "included": true,
+    "role": 0,
+    "reason": "",
+    "can_change": false
+  },
+  {
+    "id": "tensura:space_resistance",
+    "name": "tensura.attribute.space_resistance",
+    "included": true,
+    "role": 0,
+    "reason": "",
+    "can_change": true
+  },
+  {
+    "id": "tensura:spiritual_health_regeneration",
+    "name": "tensura.attribute.spiritual_health_regeneration",
+    "included": true,
+    "role": 2,
+    "reason": "",
+    "can_change": true
+  },
+  {
+    "id": "tensura:view_zoom",
+    "name": "tensura.attribute.view_zoom",
+    "included": false,
+    "role": 0,
+    "reason": "Movement/body geometry",
+    "can_change": false
+  },
+  {
+    "id": "tensura:warp_shot",
+    "name": "tensura.attribute.warp_shot",
+    "included": false,
+    "role": 0,
+    "reason": "Movement/body geometry",
+    "can_change": false
+  },
+  {
+    "id": "tensura:water_boost",
+    "name": "tensura.attribute.water_boost",
+    "included": true,
+    "role": 1,
+    "reason": "",
+    "can_change": true
+  },
+  {
+    "id": "tensura:water_capacity",
+    "name": "tensura.attribute.water_capacity",
+    "included": true,
+    "role": 0,
+    "reason": "",
+    "can_change": true
+  },
+  {
+    "id": "tensura:water_resist_degradation",
+    "name": "tensura.attribute.water_resist_degradation",
+    "included": true,
+    "role": 0,
+    "reason": "",
+    "can_change": false
+  },
+  {
+    "id": "tensura:water_resistance",
+    "name": "tensura.attribute.water_resistance",
+    "included": true,
+    "role": 0,
+    "reason": "",
+    "can_change": true
+  },
+  {
+    "id": "tensura:width_multiplier",
+    "name": "tensura.attribute.width_multiplier",
+    "included": false,
+    "role": 0,
+    "reason": "Movement/body geometry",
+    "can_change": false
+  },
+  {
+    "id": "tensura:wind_boost",
+    "name": "tensura.attribute.wind_boost",
+    "included": true,
+    "role": 1,
+    "reason": "",
+    "can_change": true
+  },
+  {
+    "id": "tensura:wind_resist_degradation",
+    "name": "tensura.attribute.wind_resist_degradation",
+    "included": true,
+    "role": 0,
+    "reason": "",
+    "can_change": false
+  },
+  {
+    "id": "tensura:wind_resistance",
+    "name": "tensura.attribute.wind_resistance",
+    "included": true,
+    "role": 0,
+    "reason": "",
+    "can_change": true
+  }
+]

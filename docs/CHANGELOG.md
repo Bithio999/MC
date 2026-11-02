@@ -1,5 +1,12 @@
 # Changelog
 
+## Additions 1.8.0 — Exponentiation
+
+- Add the reincarnation Unique Exponentiation: a learned in-slot passive that squares supported beneficial attributes and completed outputs. Movement is excluded; attack, mining and chant speeds are included.
+- Keep damage, recovery, mining and point awards from applying the square at both the input and output. Preserve fractional benefits, chance/stack caps, ordinary costs/cooldowns/requirements and Chained’s locked magicule cap.
+- Restore ordinary effective capacities when unequipped, preserve saved base stats, prevent save/load refills and keep Fusion transfers from becoming healing rewards.
+- Add original pixel art, an F8 guide entry, the complete affected-values wiki table, native gameplay coverage and a reproducible real-client menu/packet review.
+
 ## Standalone 1.6.2 — Fusion movement and targeting
 
 - Keep the embedded Fusion participant non-physical on both client and server, and prevent it from pushing the controlling player. Restore client physics when Fusion ends.

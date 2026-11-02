@@ -18,6 +18,7 @@ Find a move below, then open its entry for targeting, damage, cost and cooldown.
 | [Fuse](https://github.com/Bithio999/MC/wiki/Additions-Fusion#fuse) | [Fusion](https://github.com/Bithio999/MC/wiki/Additions-Fusion) | Active, Press | None (outgoing attacks retain their damage type) |
 | [Prospector](https://github.com/Bithio999/MC/wiki/Additions-Prospector#passive) | [Prospector](https://github.com/Bithio999/MC/wiki/Additions-Prospector) | Passive, Toggle | None |
 | [Refine](https://github.com/Bithio999/MC/wiki/Additions-Prospector#refine) | [Prospector](https://github.com/Bithio999/MC/wiki/Additions-Prospector) | Active, Press | None |
+| [Exponentiation](https://github.com/Bithio999/MC/wiki/Additions-Exponentiation#passive) | [Exponentiation](https://github.com/Bithio999/MC/wiki/Additions-Exponentiation) | Passive, In Slot | None directly; retains the original attack damage type |
 
 ## Ultimate
 

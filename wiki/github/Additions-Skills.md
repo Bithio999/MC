@@ -9,3 +9,5 @@
 Use Tensura’s normal Ability Selection menu. This addon has no Godly skill tier, hunter branch or skill-synthesis system.
 
 [Ability directory](https://github.com/Bithio999/MC/wiki/Additions-Abilities).
+
+[Exponentiation](https://github.com/Bithio999/MC/wiki/Additions-Exponentiation) squares supported beneficial values while learned and equipped in your current skill preset. Movement is excluded.

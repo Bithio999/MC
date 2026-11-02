@@ -1,4 +1,5 @@
 package dev.heavenlyrestriction.fusion;
+import dev.heavenlyrestriction.exponentiation.*;
 
 import dev.heavenlyrestriction.*;
 import io.github.manasmods.manascore.skill.api.*;
@@ -76,6 +77,12 @@ public final class Fusion {
     }
     /** Player targets require a server-validated invitation; direct callers cannot bypass consent. */
     private static boolean start(ServerPlayer caster,LivingEntity target,boolean consent){
+        // Fusion combines existing effective pools, even when invoked inside a native skill callback.
+        try(var primary=ExponentiationContext.raw(caster,ExponentiationContext.FINAL);var secondary=ExponentiationContext.raw(target,ExponentiationContext.FINAL)){
+            return startResolved(caster,target,consent);
+        }
+    }
+    private static boolean startResolved(ServerPlayer caster,LivingEntity target,boolean consent){
         if(!eligible(caster,target) || target instanceof ServerPlayer && !consent)return false;
         var s=new Session(caster,target);if(!Double.isFinite(s.aura+s.magicules+s.health+s.spirit) || s.health<=0 || s.spirit<0)return false;
         snapshot(caster,s);snapshot(target,s);ACTIVE.put(caster.getUUID(),s);ACTIVE.put(target.getUUID(),s);
@@ -87,7 +94,7 @@ public final class Fusion {
             }else loan(s,caster,target);
             setEffective(s.pilot,TensuraAttributes.MAX_AURA,s.aura);setEffective(s.pilot,TensuraAttributes.MAX_MAGICULE,s.magicules);setEffective(s.pilot,Attributes.MAX_HEALTH,s.health);setEffective(s.pilot,TensuraAttributes.MAX_SPIRITUAL_HEALTH,s.spirit);
             var ca=TensuraStorages.getExistenceFrom(caster);var ta=TensuraStorages.getExistenceFrom(target);double ap=1.5*(ca.getAura()+ta.getAura()),mp=1.5*(ca.getMagicule()+ta.getMagicule());
-            var pool=TensuraStorages.getExistenceFrom(s.pilot);s.pilot.setHealth(Math.min(s.health,s.initialHealth));pool.setSpiritualHealth(Math.min(s.spirit,s.initialSpirit));pool.setAura(Math.min(s.aura,ap));pool.setMagicule(Math.min(s.magicules,mp));pool.markDirty();
+            try(var transfer=ExponentiationContext.raw(s.pilot,ExponentiationContext.RESTORE)){var pool=TensuraStorages.getExistenceFrom(s.pilot);s.pilot.setHealth(Math.min(s.health,s.initialHealth));pool.setSpiritualHealth(Math.min(s.spirit,s.initialSpirit));pool.setAura(Math.min(s.aura,ap));pool.setMagicule(Math.min(s.magicules,mp));pool.markDirty();}
             if(s.subordinate){setEffective(target,TensuraAttributes.MAX_AURA,s.aura);setEffective(target,TensuraAttributes.MAX_MAGICULE,s.magicules);if(target instanceof Mob mob){mob.getNavigation().stop();mob.setNoAi(true);mob.setTarget(null);}}
             else{caster.setGameMode(GameType.SPECTATOR);if(caster.server.getPlayerList().getPlayer(caster.getUUID())==caster)caster.setCamera(target);}
             s.hidden.setInvisible(true);s.hidden.setInvulnerable(true);s.hidden.setNoGravity(true);s.hidden.noPhysics=true;
@@ -99,7 +106,15 @@ public final class Fusion {
     private static void snapshot(LivingEntity e,Session s){var t=new CompoundTag();t.putInt("vitalsVersion",2);t.putFloat("lastHealth",Math.clamp(s.initialHealth/Math.max(.01f,s.health),0,1));t.putDouble("lastSpirit",Math.clamp(s.initialSpirit/Math.max(.01,s.spirit),0,1));t.putDouble("maxSpirit",e.getAttributeValue(TensuraAttributes.MAX_SPIRITUAL_HEALTH));t.putUUID("token",s.token);t.putBoolean("invisible",e.isInvisible());t.putBoolean("invulnerable",e.isInvulnerable());t.putBoolean("gravity",e.isNoGravity());t.putBoolean("physics",e.noPhysics);t.putDouble("lastAura",Math.clamp(TensuraStorages.getExistenceFrom(e).getAura()/Math.max(1,EnergyHelper.getMaxAura(e)),0,1));t.putDouble("lastMagicule",Math.clamp(TensuraStorages.getExistenceFrom(e).getMagicule()/Math.max(1,EnergyHelper.getMaxMagicule(e)),0,1));t.putDouble("aura",EnergyHelper.getMaxAura(e));t.putDouble("magicules",EnergyHelper.getMaxMagicule(e));t.putDouble("spirit",TensuraStorages.getExistenceFrom(e).getSpiritualHealth());t.putFloat("health",e.getHealth());t.putFloat("maxHealth",e.getMaxHealth());
         if(e instanceof Mob mob)t.putBoolean("noAI",mob.isNoAi());if(e instanceof ServerPlayer p)t.putInt("gameMode",p.gameMode.getGameModeForPlayer().getId());e.getPersistentData().put(STATE,t);}
     /** Adjust effective capacity without rewriting base EP or other mods' modifiers. */
-    public static void setEffective(LivingEntity e,Holder<Attribute> type,double desired){var a=e.getAttribute(type);if(a==null)return;a.removeModifier(BOOST);double base=a.getValue();a.addTransientModifier(new AttributeModifier(BOOST,1,AttributeModifier.Operation.ADD_VALUE));double delta=a.getValue()-base;a.removeModifier(BOOST);if(Math.abs(delta)>1e-10)a.addTransientModifier(new AttributeModifier(BOOST,(desired-base)/delta,AttributeModifier.Operation.ADD_VALUE));}
+    public static void setEffective(LivingEntity e,Holder<Attribute> type,double desired){
+        var a=e.getAttribute(type);if(a==null)return;
+        // Solve the temporary modifier in the underlying linear attribute space.
+        // The requested capacity already includes Exponentiation, so invert that lens once.
+        if(desired>1 && Exponentiation.active(e) && Exponentiation.rule(type.value()).included())desired=Math.sqrt(desired);
+        try(var calculation=ExponentiationContext.raw(e,ExponentiationContext.ATTRIBUTES)){
+            a.removeModifier(BOOST);double base=a.getValue();a.addTransientModifier(new AttributeModifier(BOOST,1,AttributeModifier.Operation.ADD_VALUE));double delta=a.getValue()-base;a.removeModifier(BOOST);if(Math.abs(delta)>1e-10)a.addTransientModifier(new AttributeModifier(BOOST,(desired-base)/delta,AttributeModifier.Operation.ADD_VALUE));
+        }
+    }
     private static void loan(Session s,LivingEntity owner,LivingEntity borrower){
         var skills=SkillAPI.getSkillsFrom(borrower);
         for(var original:List.copyOf(SkillAPI.getSkillsFrom(owner).getLearnedSkills())){
@@ -129,8 +144,8 @@ public final class Fusion {
         ChainedState.refresh(e);
         if(tag.isEmpty())return;e.setInvisible(tag.getBoolean("invisible"));e.setInvulnerable(tag.getBoolean("invulnerable"));e.setNoGravity(tag.getBoolean("gravity"));e.noPhysics=tag.getBoolean("physics");if(e instanceof Mob mob)mob.setNoAi(tag.getBoolean("noAI"));
         if(e instanceof ServerPlayer p){if(p.server.getPlayerList().getPlayer(p.getUUID())==p)p.setCamera(p);if(tag.contains("gameMode"))p.setGameMode(GameType.byId(tag.getInt("gameMode")));}
-        var pool=TensuraStorages.getExistenceFrom(e);pool.setAura(Math.min(EnergyHelper.getMaxAura(e),tag.getDouble("aura")*auraFraction));pool.setMagicule(Math.min(EnergyHelper.getMaxMagicule(e),tag.getDouble("magicules")*magiculeFraction));pool.setSpiritualHealth(Math.min(e.getAttributeValue(TensuraAttributes.MAX_SPIRITUAL_HEALTH),(tag.getInt("vitalsVersion")>=2?tag.getDouble("maxSpirit"):tag.getDouble("spirit"))*spiritFraction));pool.markDirty();
-        if(e.isAlive())e.setHealth(Math.min(e.getMaxHealth(),(tag.getInt("vitalsVersion")>=2?tag.getFloat("maxHealth"):tag.getFloat("health"))*healthFraction));e.getPersistentData().remove(STATE);
+        try(var transfer=ExponentiationContext.raw(e,ExponentiationContext.RESTORE|ExponentiationContext.FINAL)){var pool=TensuraStorages.getExistenceFrom(e);pool.setAura(Math.min(EnergyHelper.getMaxAura(e),tag.getDouble("aura")*auraFraction));pool.setMagicule(Math.min(EnergyHelper.getMaxMagicule(e),tag.getDouble("magicules")*magiculeFraction));pool.setSpiritualHealth(Math.min(e.getAttributeValue(TensuraAttributes.MAX_SPIRITUAL_HEALTH),(tag.getInt("vitalsVersion")>=2?tag.getDouble("maxSpirit"):tag.getDouble("spirit"))*spiritFraction));pool.markDirty();
+        if(e.isAlive())e.setHealth(Math.min(e.getMaxHealth(),(tag.getInt("vitalsVersion")>=2?tag.getFloat("maxHealth"):tag.getFloat("health"))*healthFraction));e.getPersistentData().remove(STATE);}
     }
     private static void penalty(LivingEntity e){e.forceAddEffect(new MobEffectInstance(TensuraMobEffects.getReference(TensuraMobEffects.PARALYSIS),PENALTY,1),null);e.forceAddEffect(new MobEffectInstance(TensuraMobEffects.getReference(TensuraMobEffects.FRAGILITY),PENALTY,1),null);}
     public static void recover(LivingEntity e){if(e.level().isClientSide() || session(e)!=null)return;
@@ -149,7 +164,7 @@ public final class Fusion {
             if(s.caster.server!=server)continue;expire(s.caster,s.pilot.level().getGameTime());if(session(s.caster)==null)continue;
             if(!s.caster.isAlive() || !s.target.isAlive() || s.target.isRemoved() || s.caster.hasDisconnected() || s.target instanceof ServerPlayer p && p.hasDisconnected() || s.caster.level()!=s.target.level() || !maintained(s.caster)){end(s.caster,"Fusion ended.");continue;}
             s.hidden.setPos(s.pilot.position());s.hidden.setDeltaMovement(Vec3.ZERO);s.hidden.setInvisible(true);s.hidden.setInvulnerable(true);
-            if(s.subordinate){var pool=TensuraStorages.getExistenceFrom(s.target);var body=TensuraStorages.getExistenceFrom(s.pilot);pool.setAura(body.getAura());pool.setMagicule(body.getMagicule());pool.markDirty();}
+            if(s.subordinate){var pool=TensuraStorages.getExistenceFrom(s.target);var body=TensuraStorages.getExistenceFrom(s.pilot);try(var transfer=ExponentiationContext.raw(s.target,ExponentiationContext.RESTORE)){pool.setAura(body.getAura());pool.setMagicule(body.getMagicule());pool.markDirty();}}
             if(now%20==0){
                 setEffective(s.pilot,TensuraAttributes.MAX_AURA,s.aura);setEffective(s.pilot,TensuraAttributes.MAX_MAGICULE,s.magicules);setEffective(s.pilot,Attributes.MAX_HEALTH,s.health);setEffective(s.pilot,TensuraAttributes.MAX_SPIRITUAL_HEALTH,s.spirit);
                 for(var e:List.of(s.caster,s.target)){var state=e.getPersistentData().getCompound(STATE);state.putDouble("lastAura",Math.clamp(TensuraStorages.getExistenceFrom(s.pilot).getAura()/Math.max(1,s.aura),0,1));state.putDouble("lastMagicule",Math.clamp(TensuraStorages.getExistenceFrom(s.pilot).getMagicule()/Math.max(1,s.magicules),0,1));state.putFloat("lastHealth",s.pilot.getHealth()/Math.max(.01f,s.health));state.putDouble("lastSpirit",TensuraStorages.getExistenceFrom(s.pilot).getSpiritualHealth()/Math.max(.01,s.spirit));}

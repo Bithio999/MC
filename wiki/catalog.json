@@ -1224,5 +1224,12 @@
     "category": "Skills",
     "tier": "Unique",
     "mod": "additions"
+  },
+  {
+    "slug": "Additions-Exponentiation",
+    "title": "Exponentiation",
+    "category": "Skills",
+    "tier": "Unique",
+    "mod": "additions"
   }
 ]
