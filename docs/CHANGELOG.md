@@ -1,5 +1,11 @@
 # Changelog
 
+## Additions 1.8.2 — Restored non-energy capacities and consolidated EP
+
+- Restore all Exponentiation capacity bonuses except maximum aura and magicules.
+- Square the total native kill EP award once before its normal split and native gain caps. Remove independent aura/magicule gain-attribute and permanent-pool write multipliers; retain recovery bonuses.
+- Preserve the prior preview as a labeled 1.8.1 recording and update current descriptions and progression regressions.
+
 ## Additions 1.8.1 — Exponentiation capacity exclusions
 
 - Remove all Exponentiation capacity multipliers and the expanded current-resource storage limit. Keep recovery and native resource-award bonuses, within normal pools.

@@ -18,11 +18,11 @@
 
 Learn the skill and equip it in your **current Tensura skill preset**. Supported beneficial final values become **x²**: 10 damage becomes 100, 5 healing becomes 25, and 4 attack speed becomes 16. Owning the skill without equipping it, an unfinished learning entry or an inactive preset gives no bonus.
 
-**Capacity multipliers and movement are excluded. Attack speed, mining speed and chant speed are included.** Values of 1 or less stay unchanged so fractions do not become weaker. Chances keep their native maximum, item drops keep normal stack limits, and extremely large numbers remain finite.
+**Maximum aura/magicules and movement are excluded. Other capacity bonuses are restored. Attack speed, mining speed and chant speed are included.** Values of 1 or less stay unchanged so fractions do not become weaker. Chances keep their native maximum, item drops keep normal stack limits, and extremely large numbers remain finite.
 
 <video controls preload="metadata" poster="../media/exponentiation-preview-poster.png" src="../media/exponentiation-multipliers-1.8.1.mp4"></video>
 
-[Watch/download the complete multiplier preview](../media/exponentiation-multipliers-1.8.1.mp4). This animated reference uses native runtime attribute measurements and tested output examples. Test inputs illustrate the square operation; they are not starting stats.
+[Watch/download the recorded 1.8.1 multiplier preview](../media/exponentiation-multipliers-1.8.1.mp4). Recorded for 1.8.1: its capacity and permanent resource-gain sections predate the current changes. The tables below describe the current release. This animated reference uses native runtime attribute measurements and tested output examples. Test inputs illustrate the square operation; they are not starting stats.
 
 ![Exponentiation in Tensura’s Unique menu](../media/exponentiation-menu.png)
 
@@ -35,17 +35,18 @@ Learn the skill and equip it in your **current Tensura skill preset**. Supported
 | HP healing | Squares the final positive healing amount, including supported direct healing and Schema bonuses |
 | SHP healing | Squares positive SHP recovery; respects the effective maximum |
 | Aura / magicule recovery | Squares the completed positive resource gain, including native regeneration, biome input and sleep recovery |
-| Permanent aura / magicule gains | Squares each native positive pool award after its normal split; includes native kill EP awards and EnergyHelper gains |
+| Total EP awards | Squares the native kill EP award once **before** ordinary race/alignment splitting, existing gain modifiers and native gain caps. A 9 EP award becomes 81 EP, then splits normally. |
+| Separate aura / magicule grants | No independent permanent-pool multiplier; direct permanent grants retain their ordinary amounts. Current-resource recovery remains enhanced. |
 | Learning / mastery | Squares the awarded points after native point modifiers; requirements and mastery caps stay unchanged |
 | Mining speed | Squares the completed block-breaking speed after tool, enchantment and skill modifiers |
 | Experience | Squares positive player XP awards; does not generate extra XP orbs |
 | Block / mob drops | Squares each final stack quantity, capped at that item’s normal maximum stack size; one item stays one |
 
-Damage, healing, regeneration, mining and point formulas read their ordinary inputs before the completed output is squared. For example, a normal 10-damage melee hit becomes 100, rather than using a squared attack attribute and then squaring the hit again. The displayed attack attribute still shows its empowered value. Resource awards remain enhanced; the maximum resource pools themselves receive no multiplier.
+Damage, healing, regeneration, mining and point formulas read their ordinary inputs before the completed output is squared. For example, a normal 10-damage melee hit becomes 100, rather than using a squared attack attribute and then squaring the hit again. The displayed attack attribute still shows its empowered value. The total EP award is enhanced once; its resulting aura/magicule shares are not squared again. Maximum aura and magicules themselves receive no multiplier. Direct administrative stat edits and fixed race starting pools are not treated as earned kill EP.
 
 ## Affected attributes
 
-The following **55 native attributes** are covered when their value exceeds 1. Effects must already exist on your character: Exponentiation does not grant an absent barrier, element, sense or skill. Attributes used as inputs to the output calculations above are handled at that output instead of being applied twice.
+The following **59 native attributes** are covered when their value exceeds 1. Effects must already exist on your character: Exponentiation does not grant an absent barrier, element, sense or skill. Attributes used as inputs to the output calculations above are handled at that output instead of being applied twice.
 
 | Attribute | Exact ID |
 | --- | --- |
@@ -67,7 +68,6 @@ The following **55 native attributes** are covered when their value exceeds 1. E
 | Ability Mastery Gain | `tensura:ability_mastery_gain` |
 | Analysis Distance | `tensura:analysis_distance` |
 | Analysis Level | `tensura:analysis_level` |
-| Aura Gain Percentage | `tensura:aura_gain` |
 | Aura Regeneration Multiplier | `tensura:aura_regeneration_multiplier` |
 | Chant Speed | `tensura:chant_speed` |
 | Darkness Attack Boost | `tensura:darkness_boost` |
@@ -87,7 +87,6 @@ The following **55 native attributes** are covered when their value exceeds 1. E
 | Magic Barrier | `tensura:magic_barrier` |
 | Magic Interference | `tensura:magic_interference` |
 | Magic Resistance | `tensura:magic_resistance` |
-| Magicule Gain Percentage | `tensura:magicule_gain` |
 | Magicule Regeneration Multiplier | `tensura:magicule_regeneration_multiplier` |
 | Auto Melee Dodge Chance | `tensura:melee_dodge_chance` |
 | Multilayer Barrier | `tensura:multilayer_barrier` |
@@ -104,15 +103,23 @@ The following **55 native attributes** are covered when their value exceeds 1. E
 | Water Attack Resistance | `tensura:water_resistance` |
 | Wind Attack Boost | `tensura:wind_boost` |
 | Wind Attack Resistance | `tensura:wind_resistance` |
+| Maximum HP | `minecraft:generic.max_health` |
+| Maximum SHP | `tensura:max_spiritual_health` |
+| Maximum absorption | `minecraft:generic.max_absorption` |
+| Oxygen bonus | `minecraft:generic.oxygen_bonus` |
+| Water capacity | `tensura:water_capacity` |
+| Lava capacity | `tensura:lava_capacity` |
+
+**Oxygen capacity:** maximum air supply is squared too: the normal 300-tick / 15-second pool becomes **225 seconds (4,500 ticks)** while equipped. Existing air is not instantly refilled. Oxygen conservation is a separate supported attribute. The pool survives save/reload; a full-integer field also supports larger custom air capacities; unequipping clamps it to the ordinary maximum.
 
 ## Limits and exclusions
 
-- **Capacities:** maximum HP, SHP, aura, magicules, absorption, oxygen and water/lava capacity retain normal values. Existing 1.8.0 over-cap reserves are clamped once on the next active tick; earned permanent pool gains remain earned.
+- **Capacities:** maximum HP, SHP, absorption, oxygen and water/lava capacity are squared. Maximum aura and magicules stay normal. Legacy over-cap energy reserves are clamped once on the next active tick; earned permanent pool gains remain earned.
 - **Movement:** walking, sprinting, flying, gliding, swimming, sneaking, lava movement, jumping, step height, fall handling, knockback, dodge displacement, dash/teleport travel and body size remain unchanged. Interaction reach and sensing distance are included.
 - **Costs and timers:** costs, cooldowns, progression requirements and drawbacks are not squared. Percentage-based costs still follow the resource amount their original formula uses.
 - **Fixed skill settings:** fixed durations, radii, target counts, Fortune/enchantment levels, recipe outputs and other hard-coded skill constants are not rewritten. Prospector still surveys 32 blocks and adds Fortune III; its completed mining speed and drop quantities can benefit.
 - **Bounded fractions:** values in 0–1, such as fractional resistance degradation, are retained. A normal 1× gain remains 1×. Probabilities expressed in percentage points can increase, up to their native chance cap.
-- **Preservation:** equipping does not repeatedly square saved base stats or refill reserves. Equipping and unequipping leave normal effective capacities unchanged. Gains earned while equipped remain earned.
+- **Preservation:** equipping does not repeatedly square saved base stats or refill reserves. Unequipping restores ordinary non-energy capacities and clamps current HP/SHP as needed. Gains earned while equipped remain earned.
 - **Chained:** the locked maximum-magicule capacity remains locked. Exponentiation does not bypass skill acquisition restrictions.
 - **Fusion:** combining and restoring bodies transfers their existing reserves without treating the transfer as another healing/resource reward.
 

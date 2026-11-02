@@ -529,14 +529,14 @@
         {
           "title": "Affected",
           "lines": [
-            "Final outgoing HP/SHP damage; HP/SHP healing; aura and magicule recovery; native positive resource gains; kill EP pool awards; learning and mastery gains; XP and block/mob drop stack quantities.",
-            "Beneficial attributes: attack damage and speed, mining and chant speed, armor, barriers, elemental boosts/resistances, chances, senses, reach and other supported non-movement attributes."
+            "Final outgoing HP/SHP damage; HP/SHP healing; aura and magicule recovery; resource recovery; total kill EP awards before the normal race split; learning and mastery gains; XP and block/mob drop stack quantities.",
+            "Beneficial attributes: non-energy capacities, attack damage and speed, mining and chant speed, armor, barriers, elemental boosts/resistances, chances, senses, reach and other supported non-movement attributes."
           ]
         },
         {
           "title": "Rules and limits",
           "lines": [
-            "Each output is squared once. Formula inputs are read normally while calculating damage, recovery, mining and point gains. Saved base stats are not repeatedly squared. Maximum HP, SHP, aura, magicules, absorption, oxygen and water/lava capacities stay unchanged.",
+            "Each output is squared once. Formula inputs are read normally while calculating damage, recovery, mining and point gains. Saved base stats are not repeatedly squared. Maximum HP, SHP, absorption, oxygen and water/lava capacities are squared; maximum aura and magicules stay normal. Maximum air supply is also squared: 15 seconds becomes 225 seconds (4,500 ticks), without an instant refill.",
             "Values of 1 or less are retained so fractions are not weakened. Chances stop at their native maximum; drops stop at each item’s normal stack size; finite number limits apply. Chained’s locked magicule cap remains locked."
           ]
         },

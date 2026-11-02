@@ -170,18 +170,22 @@
   {
     "id": "minecraft:generic.max_absorption",
     "name": "attribute.name.generic.max_absorption",
-    "included": false,
-    "role": 0,
-    "reason": "Capacity (not amplified)",
-    "can_change": false
+    "included": true,
+    "role": 129,
+    "reason": "",
+    "can_change": true,
+    "before": 3.0,
+    "after": 9.0
   },
   {
     "id": "minecraft:generic.max_health",
     "name": "attribute.name.generic.max_health",
-    "included": false,
-    "role": 0,
-    "reason": "Capacity (not amplified)",
-    "can_change": false
+    "included": true,
+    "role": 129,
+    "reason": "",
+    "can_change": true,
+    "before": 3.0,
+    "after": 9.0
   },
   {
     "id": "minecraft:generic.movement_efficiency",
@@ -202,10 +206,12 @@
   {
     "id": "minecraft:generic.oxygen_bonus",
     "name": "attribute.name.generic.oxygen_bonus",
-    "included": false,
-    "role": 0,
-    "reason": "Capacity (not amplified)",
-    "can_change": false
+    "included": true,
+    "role": 128,
+    "reason": "",
+    "can_change": true,
+    "before": 3.0,
+    "after": 9.0
   },
   {
     "id": "minecraft:generic.safe_fall_distance",
@@ -382,12 +388,10 @@
   {
     "id": "tensura:aura_gain",
     "name": "tensura.attribute.aura_gain",
-    "included": true,
-    "role": 4,
-    "reason": "",
-    "can_change": true,
-    "before": 3.0,
-    "after": 9.0
+    "included": false,
+    "role": 0,
+    "reason": "Consolidated EP gain; no separate pool multiplier",
+    "can_change": false
   },
   {
     "id": "tensura:aura_regeneration_multiplier",
@@ -578,10 +582,12 @@
   {
     "id": "tensura:lava_capacity",
     "name": "tensura.attribute.lava_capacity",
-    "included": false,
-    "role": 0,
-    "reason": "Capacity (not amplified)",
-    "can_change": false
+    "included": true,
+    "role": 128,
+    "reason": "",
+    "can_change": true,
+    "before": 3.0,
+    "after": 9.0
   },
   {
     "id": "tensura:law_degradation",
@@ -694,12 +700,10 @@
   {
     "id": "tensura:magicule_gain",
     "name": "tensura.attribute.magicule_gain",
-    "included": true,
-    "role": 4,
-    "reason": "",
-    "can_change": true,
-    "before": 3.0,
-    "after": 9.0
+    "included": false,
+    "role": 0,
+    "reason": "Consolidated EP gain; no separate pool multiplier",
+    "can_change": false
   },
   {
     "id": "tensura:magicule_regeneration_multiplier",
@@ -716,7 +720,7 @@
     "name": "tensura.attribute.max_aura",
     "included": false,
     "role": 0,
-    "reason": "Capacity (not amplified)",
+    "reason": "Aura/magicule capacity (not amplified)",
     "can_change": false
   },
   {
@@ -724,16 +728,18 @@
     "name": "tensura.attribute.max_magicule",
     "included": false,
     "role": 0,
-    "reason": "Capacity (not amplified)",
+    "reason": "Aura/magicule capacity (not amplified)",
     "can_change": false
   },
   {
     "id": "tensura:max_spiritual_health",
     "name": "tensura.attribute.max_spiritual_health",
-    "included": false,
-    "role": 0,
-    "reason": "Capacity (not amplified)",
-    "can_change": false
+    "included": true,
+    "role": 129,
+    "reason": "",
+    "can_change": true,
+    "before": 3.0,
+    "after": 9.0
   },
   {
     "id": "tensura:melee_dodge_chance",
@@ -898,10 +904,12 @@
   {
     "id": "tensura:water_capacity",
     "name": "tensura.attribute.water_capacity",
-    "included": false,
-    "role": 0,
-    "reason": "Capacity (not amplified)",
-    "can_change": false
+    "included": true,
+    "role": 128,
+    "reason": "",
+    "can_change": true,
+    "before": 3.0,
+    "after": 9.0
   },
   {
     "id": "tensura:water_resist_degradation",

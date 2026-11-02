@@ -54,8 +54,7 @@
     "ExponentiationSpiritualDamageMixin",
     "ExponentiationLearningMixin",
     "ExponentiationGrowthMixin",
-    "ExponentiationGrowthWriteMixin",
-    "ExponentiationGainMixin"
+    "ExponentiationOxygenMixin"
   ],
   "injectors": {
     "defaultRequire": 1

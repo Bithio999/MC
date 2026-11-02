@@ -3,7 +3,7 @@ loaderVersion="[4,)"
 license="All Rights Reserved"
 [[mods]]
 modId="heavenlyrestriction"
-version="1.8.1"
+version="1.8.2"
 displayName="TensuraAdditionalAdditions"
 description='''Fettered Human and four evolutions, Chained and Unbound, aura recovery, Air Walk, Instant Transmission, Schema, Parallel World Jumper and the Inverted Spear of Heaven for Tensura: Reincarnated. Independent of Tensura Myths.'''
 [[dependencies.heavenlyrestriction]]

@@ -28,12 +28,14 @@ public final class Exponentiation {
     public static float squareFloat(double value){return (float)Math.min(FLOAT_LIMIT,square(value));}
     public static Rule rule(Attribute attribute){return RULES.computeIfAbsent(attribute,a->a.getMergedStyle(true).getValue()==0xF93131?new Rule(false,0,"Higher values are harmful"):classify(BuiltInRegistries.ATTRIBUTE.getKey(a)));}
     private static Rule classify(ResourceLocation id){String p=id.getPath().replace("generic.","");
-        if(p.startsWith("max_") || p.contains("capacity") || p.equals("oxygen_bonus"))return new Rule(false,0,"Capacity (not amplified)");
+        if(p.equals("max_aura") || p.equals("max_magicule"))return new Rule(false,0,"Aura/magicule capacity (not amplified)");
+        if(p.equals("aura_gain") || p.equals("magicule_gain"))return new Rule(false,0,"Consolidated EP gain; no separate pool multiplier");
         if(p.equals("gravity") || p.endsWith("_gravity") || p.equals("view_zoom") || p.matches(".*(movement|flying|flight|swim|sneak|glid|lava_speed|water_speed|sprint|walk_speed|run_speed|mount_speed|dash_speed|dash_distance|warp_shot|jump|step_height|safe_fall|fall_damage|knockback|velocity|teleport|travel|dodge_strength|height_multiplier|width_multiplier|scale).*"))return new Rule(false,0,"Movement/body geometry");
         if(p.matches(".*(cost|cooldown|consumption|requirement|penalty|damage_taken|limited_spiritual|exhaustion|spawn|reinforcement).*"))return new Rule(false,0,"Costs, limits or nonnumeric/binary state");
         int role=0;
         if(p.contains("attack_damage") || p.endsWith("_boost") || p.contains("magic_power") || p.contains("damage_multiplier") || p.contains("crit_damage") || p.contains("sweeping_damage"))role=ExponentiationContext.DAMAGE;
         if(p.startsWith("max_") || p.equals("max_health"))role|=ExponentiationContext.DAMAGE|ExponentiationContext.CAPACITY;
+        if(p.contains("capacity") || p.equals("oxygen_bonus"))role|=ExponentiationContext.CAPACITY;
         if(p.contains("regeneration") || p.contains("healing") || p.contains("recovery"))role|=ExponentiationContext.RECOVERY;
         if(p.equals("aura_gain") || p.equals("magicule_gain"))role|=ExponentiationContext.GROWTH;
         if(p.contains("mastery_gain") || p.contains("learning_gain"))role|=ExponentiationContext.LEARNING;
@@ -54,7 +56,7 @@ public final class Exponentiation {
     public static double capacity(LivingEntity owner,java.util.function.DoubleSupplier read){try(var scope=ExponentiationContext.raw(owner,ExponentiationContext.FINAL)){return read.getAsDouble();}}
     /** Removing a temporary capacity lens never leaves usable over-cap HP or reserves. Bases and modifiers are not rewritten. */
     public static void tick(EntityTickEvent.Post event){if(!(event.getEntity() instanceof LivingEntity owner) || owner.level().isClientSide())return;boolean was=owner.getPersistentData().getBoolean(WAS_ACTIVE),now=active(owner);if(!was && !now)return;owner.getPersistentData().putBoolean(WAS_ACTIVE,now);
-        if((was && !now) || (now && !owner.getPersistentData().getBoolean("heavenlyrestriction.exponentiation_no_capacity_v1")))try(var scope=ExponentiationContext.raw(owner,ExponentiationContext.RESTORE)){owner.setHealth(Math.min(owner.getHealth(),owner.getMaxHealth()));var e=TensuraStorages.getExistenceFrom(owner);e.setSpiritualHealth(Math.min(e.getSpiritualHealth(),owner.getAttributeValue(TensuraAttributes.MAX_SPIRITUAL_HEALTH)));e.setAura(Math.min(e.getAura(),EnergyHelper.getMaxAura(owner)));e.setMagicule(Math.min(e.getMagicule(),EnergyHelper.getMaxMagicule(owner)));e.markDirty();owner.getPersistentData().putBoolean("heavenlyrestriction.exponentiation_no_capacity_v1",true);}
+        if((was && !now) || (now && !owner.getPersistentData().getBoolean("heavenlyrestriction.exponentiation_energy_capacity_v2")))try(var scope=ExponentiationContext.raw(owner,ExponentiationContext.RESTORE)){owner.setAirSupply(Math.min(owner.getAirSupply(),owner.getMaxAirSupply()));owner.setHealth(Math.min(owner.getHealth(),owner.getMaxHealth()));var e=TensuraStorages.getExistenceFrom(owner);e.setSpiritualHealth(Math.min(e.getSpiritualHealth(),owner.getAttributeValue(TensuraAttributes.MAX_SPIRITUAL_HEALTH)));e.setAura(Math.min(e.getAura(),EnergyHelper.getMaxAura(owner)));e.setMagicule(Math.min(e.getMagicule(),EnergyHelper.getMaxMagicule(owner)));e.markDirty();owner.getPersistentData().putBoolean("heavenlyrestriction.exponentiation_energy_capacity_v2",true);}
     }
     private Exponentiation(){}
 }

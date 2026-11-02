@@ -4,7 +4,7 @@ from pathlib import Path
 import json,zipfile,subprocess,math
 from PIL import Image,ImageDraw,ImageFont
 R=Path(__file__).resolve().parents[4];P=Path(__file__).resolve().parents[2]
-rows=json.loads((P/'docs/exponentiation-attribute-audit.json').read_text());rows=[r for r in rows if r['can_change']]
+rows=json.loads((P/'docs/preview-exponentiation/measurements-1.8.1.json').read_text());rows=[r for r in rows if r['can_change']]
 assert len(rows)==55 and all('before' in r and 'after' in r for r in rows)
 lang={}
 for jar in [Path('/workspace/.gradle/caches/neoformruntime/artifacts/minecraft_1.21.1_client.jar'),*Path('/workspace/.gradle/caches/modules-2/files-2.1/curse.maven/tensura-reincarnated-643695/8793360').rglob('*.jar')]:
