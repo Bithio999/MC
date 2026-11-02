@@ -55,7 +55,9 @@
     "ExponentiationLearningMixin",
     "ExponentiationGrowthMixin",
     "ExponentiationOxygenMixin",
-    "SchemaManualMixin"
+    "SchemaManualMixin",
+    "LoanGrowthMixin",
+    "LoanUseMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -20,7 +20,7 @@ public abstract class ChainedReincarnationMixin {
         out.setReturnValue(ChainedReincarnation.filter(out.getReturnValue(),roller).stream().filter(skill->!(skill instanceof ParallelWorldJumperSkill) || dev.heavenlyrestriction.worldhop.WorldHop.available(roller)).toList());
     }
     @Inject(method="getSkillPool",at=@At("RETURN"),cancellable=true,remap=false)
-    private static void restriction$addonStartingPool(CallbackInfoReturnable<List<ManasSkill>> out){var pool=new ArrayList<>(out.getReturnValue());for(var skill:List.of(HeavenlyRestriction.PARALLEL_WORLD_JUMPER.get(),HeavenlyRestriction.PROSPECTOR.get(),HeavenlyRestriction.EXPONENTIATION.get()))if(!pool.contains(skill))pool.add(skill);out.setReturnValue(List.copyOf(pool));}
+    private static void restriction$addonStartingPool(CallbackInfoReturnable<List<ManasSkill>> out){var pool=new ArrayList<>(out.getReturnValue());for(var skill:List.of(HeavenlyRestriction.PARALLEL_WORLD_JUMPER.get(),HeavenlyRestriction.PROSPECTOR.get(),HeavenlyRestriction.EXPONENTIATION.get(),HeavenlyRestriction.LOAN_SHARK.get()))if(!pool.contains(skill))pool.add(skill);out.setReturnValue(List.copyOf(pool));}
     @Inject(method={"getRacePool","getRandomRacePool"},at=@At("RETURN"),cancellable=true,remap=false)
     private void restriction$startingRace(CallbackInfoReturnable<List<ManasRace>> out){var list=new ArrayList<>(out.getReturnValue());var race=HeavenlyRestriction.RESTRICTED.getFirst().get();if(!list.contains(race))list.add(race);out.setReturnValue(List.copyOf(list));}
     @WrapMethod(method="grantedUniqueSkill",remap=false)

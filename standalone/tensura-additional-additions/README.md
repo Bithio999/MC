@@ -2,7 +2,7 @@
 
 An independent **Tensura: Reincarnated** addon for **Minecraft 1.21.1 / NeoForge**. It focuses on Heavenly Restriction, Battlewills and world travel.
 
-[Download 1.8.3](../../releases/TensuraAdditionalAdditions-1.8.3.jar) · [Wiki](../../wiki/pages/TensuraAdditionalAdditions.md) · [Gameplay guide](docs/GUIDE.md) · [Validation](docs/VALIDATION-1.8.3.md)
+[Download 1.9.0](../../releases/TensuraAdditionalAdditions-1.9.0.jar) · [Wiki](../../wiki/pages/TensuraAdditionalAdditions.md) · [Gameplay guide](docs/GUIDE.md) · [Validation](docs/VALIDATION-1.9.0.md)
 
 ## Content
 
@@ -12,6 +12,7 @@ An independent **Tensura: Reincarnated** addon for **Minecraft 1.21.1 / NeoForge
 - **Inverted Spear of Heaven**, with its Nullification engraving.
 - **Exponentiation**, an in-slot Unique that squares supported beneficial stats and outputs, excluding movement.
 - **Prospector**, faster mining, stacking Fortune, subtle ore vision and native refining.
+- **Loan Shark**, skill lending with retained mastery, EP income and a searchable claim ledger.
 - **Fusion**, temporary body and skill sharing with subordinates or consenting players.
 - **Parallel World Jumper**, including World Jump and the searchable World Select menu.
 
@@ -25,7 +26,7 @@ Use **Java 21**, **Minecraft 1.21.1** and **NeoForge 21.1.209+**. Install:
 
 1. **Tensura: Reincarnated 2.0.1.3 or 2.0.1.4** and its required libraries: ManasCore 4.0.0.2, Architectury 13.0.8+, SmartBrainLib and TerraBlender.
 2. **GeckoLib 4.9.2+**, within the 4.x series.
-3. **TensuraAdditionalAdditions-1.8.3.jar**.
+3. **TensuraAdditionalAdditions-1.9.0.jar**.
 
 Install the addon on both client and server for multiplayer. Parallel World Jumper works only in private single-player. Use this addon **instead of Tensura Myths**; the loader rejects installing both.
 
@@ -47,7 +48,7 @@ python3 scripts/fetch-runtime.py
 ./gradlew build
 ```
 
-Use **Java 21**. Output: `build/libs/TensuraAdditionalAdditions-1.8.3.jar`.
+Use **Java 21**. Output: `build/libs/TensuraAdditionalAdditions-1.9.0.jar`.
 
 - `./gradlew runClient` — development client.
 - `./gradlew runGameTestServer` — native integration checks.

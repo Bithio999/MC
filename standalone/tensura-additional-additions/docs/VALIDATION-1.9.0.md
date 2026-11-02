@@ -1,0 +1,17 @@
+# 1.9.0 — Loan Shark
+
+Loan Shark adds a native Unique, Loan/Report modes, a server-owned world SavedData ledger and paged authenticated menu requests. Client payloads never specify income, elapsed time, mastery or a stolen skill. Player gifts require a recipient-bound expiring nonce; sender ownership, recipient ownership, range and eligibility are rechecked on acceptance. Invitations contain only the sender, skill identity/name and mastery. The EP-sharing/claim terms are not included in the offer payload or recipient notice.
+
+Contracts identify the exact gifted instance through a server-generated marker. Copies retain mastery, learned mode tags and cooldowns; inventories, appraisal banks and active state are not cloned. Nested new grants receive the same marker for recall. Native acquisition restrictions remain in force. Existing independent ownership and temporary/sub-ability sources are protected from overwriting/re-lending.
+
+Permanent pool writers observe positive awards after native guards, then debit half of the actual effective award, including awards crossing native storage caps. Multiple active contracts split a single half-cut. A transfer context prevents cascading debt, replayed Exponentiation or minted EP. Lender credit uses their normal alignment split, with modifier slopes accounted for; queued credit persists while unavailable or at storage limits without accumulating hidden over-cap base values. Native current-resource regeneration is not taxed.
+
+Usage is sampled in persisted server ticks. Explicit actions/channels/hits create brief activity windows; toggles, native ticking passives, resistance ownership and detected equipped combat passives are tracked separately. Offline/unloaded targets do not accrue use. Claim requires the borrower to be loaded and rechecks current use plus the full 12,000-tick idle boundary. It recalls only marked copies. An eligible theft retains mastery, removes the donor instance, and excludes Chained, all Ultimate-classified skills, already-owned skills and temporary/dependent instances. Closed contracts cannot be replayed.
+
+The menus use native Tensura SimpleButton widgets, grey/purple framed panels, skill icons, search, pagination, a mastery bar and explicit lender-side claim confirmation. The recipient's Accept/Decline screen does not show the contract terms.
+
+Open-contract indexes keep tick processing independent of closed history size. Fusion preserves contract attribution on its controlling body; recall removes both the original loan and its shared Fusion copy. Active/idle state is persisted to avoid creating a false idle gap on restart.
+
+The [real-client fixture](review-loan/README.md) passes actual invitation/Accept transport, native Unique selection, search and gift requests, retained mastery, a 240 → 120/120 EP award, two GUI scales, and the two-step Claim request with donor removal and mastery 321 retained. Ledger time is accelerated explicitly for the scripted claim check.
+
+Validation: clean baseline build and all **206 native GameTests** passed on Tensura 2.0.1.3 / NeoForge 21.1.209, alongside **30 JVM unit tests**. Regression coverage includes the Claim exclusions, consent/nonce checks, retained mastery, exact idle boundary, active versus idle income, overlapping contracts, restart serialization, capped credit, native EP awards, Exponentiation, flight usage and Fusion. Compilation against Tensura 2.0.1.4 / NeoForge 21.1.248 is checked separately; this is not a full Neo Otherworld modpack runtime test.

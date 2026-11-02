@@ -11,3 +11,5 @@ Use Tensura’s normal Ability Selection menu. This addon has no Godly skill tie
 [Ability directory](https://github.com/Bithio999/MC/wiki/Additions-Abilities).
 
 [Exponentiation](https://github.com/Bithio999/MC/wiki/Additions-Exponentiation) squares supported beneficial values while learned and equipped in your current skill preset. Movement is excluded.
+
+[Loan Shark](https://github.com/Bithio999/MC/wiki/Additions-Loan-Shark) lends skill copies, earns EP while they are used, and recalls or claims them through its report ledger.

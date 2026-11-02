@@ -27,5 +27,8 @@
   "heavenlyrestriction.prospector.deposit": "%s · %s blocks · %sm",
   "heavenlyrestriction.skill.exponentiation": "Exponentiation",
   "heavenlyrestriction.skill.mode.exponentiation.exponentiation": "Exponentiation",
-  "heavenlyrestriction.skill.exponentiation.description": "Passive, In Slot. Square beneficial final stats and outputs while equipped in your active preset: damage, HP/SHP healing, aura/magicule recovery, defenses, elemental bonuses, senses, learning/mastery, EP awards before the race split, non-energy capacities, mining, attack/casting speed, loot quantities and XP gains. Maximum aura/magicules and separate permanent aura/magicule gain multipliers, movement-related values, costs, cooldowns and requirements are excluded. Fractions below 1 are preserved, and native chance, stack and progression limits apply. No activation or upkeep cost."
+  "heavenlyrestriction.skill.exponentiation.description": "Passive, In Slot. Square beneficial final stats and outputs while equipped in your active preset: damage, HP/SHP healing, aura/magicule recovery, defenses, elemental bonuses, senses, learning/mastery, EP awards before the race split, non-energy capacities, mining, attack/casting speed, loot quantities and XP gains. Maximum aura/magicules and separate permanent aura/magicule gain multipliers, movement-related values, costs, cooldowns and requirements are excluded. Fractions below 1 are preserved, and native chance, stack and progression limits apply. No activation or upkeep cost.",
+  "heavenlyrestriction.skill.loan_shark": "Loan Shark",
+  "heavenlyrestriction.skill.mode.loan_shark.loan": "Loan",
+  "heavenlyrestriction.skill.mode.loan_shark.report": "Report"
 }

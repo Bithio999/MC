@@ -19,6 +19,8 @@ Find a move below, then open its entry for targeting, damage, cost and cooldown.
 | [Prospector](https://github.com/Bithio999/MC/wiki/Additions-Prospector#passive) | [Prospector](https://github.com/Bithio999/MC/wiki/Additions-Prospector) | Passive, Toggle | None |
 | [Refine](https://github.com/Bithio999/MC/wiki/Additions-Prospector#refine) | [Prospector](https://github.com/Bithio999/MC/wiki/Additions-Prospector) | Active, Press | None |
 | [Exponentiation](https://github.com/Bithio999/MC/wiki/Additions-Exponentiation#passive) | [Exponentiation](https://github.com/Bithio999/MC/wiki/Additions-Exponentiation) | Passive, In Slot | None directly; retains the original attack damage type |
+| [Loan](https://github.com/Bithio999/MC/wiki/Additions-Loan-Shark#loan) | [Loan Shark](https://github.com/Bithio999/MC/wiki/Additions-Loan-Shark) | Active, Press | None |
+| [Report](https://github.com/Bithio999/MC/wiki/Additions-Loan-Shark#report) | [Loan Shark](https://github.com/Bithio999/MC/wiki/Additions-Loan-Shark) | Active, Press | None |
 
 ## Ultimate
 

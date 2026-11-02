@@ -19,6 +19,8 @@ Find a move below, then open its entry for targeting, damage, cost and cooldown.
 | [Prospector](Additions-Prospector.md#passive) | [Prospector](Additions-Prospector.md) | Passive, Toggle | None |
 | [Refine](Additions-Prospector.md#refine) | [Prospector](Additions-Prospector.md) | Active, Press | None |
 | [Exponentiation](Additions-Exponentiation.md#passive) | [Exponentiation](Additions-Exponentiation.md) | Passive, In Slot | None directly; retains the original attack damage type |
+| [Loan](Additions-Loan-Shark.md#loan) | [Loan Shark](Additions-Loan-Shark.md) | Active, Press | None |
+| [Report](Additions-Loan-Shark.md#report) | [Loan Shark](Additions-Loan-Shark.md) | Active, Press | None |
 
 ## Ultimate
 

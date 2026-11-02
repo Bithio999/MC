@@ -33,6 +33,7 @@
       "id": "tensuramoreskills:satella",
       "required": false
     },
-    "heavenlyrestriction:fusion"
+    "heavenlyrestriction:fusion",
+    "heavenlyrestriction:loan_shark"
   ]
 }

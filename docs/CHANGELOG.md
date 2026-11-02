@@ -1,5 +1,11 @@
 # Changelog
 
+## Additions 1.9.0 — Loan Shark
+
+- Add the Unique Loan Shark with a searchable skill-gift picker and persistent Report/Claim ledger. Retain mastery, require player acceptance, and show only the sender, skill and mastery in the invitation.
+- Transfer one combined 50% cut of permanent EP while loans are used. Persist use/idle intervals, loan identities, income and pending credit; prevent duplicate recalls and transfer loops.
+- After ten idle minutes, Claim may also steal an unowned eligible skill with retained mastery. Chained and all Ultimate-classified skills are excluded from theft.
+
 ## Additions 1.8.3 — Schema Battlewill Manual
 
 - Add Schema to Tensura’s configured Battlewill Manual random pool without replacing other entries or duplicating an existing Schema entry.

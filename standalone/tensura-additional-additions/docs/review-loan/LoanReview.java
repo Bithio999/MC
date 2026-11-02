@@ -1,0 +1,54 @@
+package dev.heavenlyrestriction;
+import dev.heavenlyrestriction.loans.*;
+import dev.heavenlyrestriction.client.LoanScreen;
+import io.github.manasmods.manascore.skill.api.*;
+import io.github.manasmods.manascore.race.api.RaceAPI;
+import io.github.manasmods.tensura.registry.race.TensuraRaces;
+import io.github.manasmods.tensura.registry.attribute.TensuraAttributes;
+import io.github.manasmods.tensura.storage.TensuraStorages;
+import io.github.manasmods.tensura.util.EnergyHelper;
+import io.github.manasmods.tensura.client.screen.*;
+import io.github.manasmods.tensura.ability.skill.Skill;
+import net.minecraft.client.*;
+import net.minecraft.client.gui.components.*;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.level.*;
+import net.minecraft.world.level.storage.LevelResource;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
+import java.nio.file.*;
+import java.util.*;
+@EventBusSubscriber(modid=HeavenlyRestriction.ID,value=Dist.CLIENT)
+public final class LoanReview {
+ private static final Path OUT=Path.of("/workspace/validation-loan/capture");private static volatile int phase;private static int age,tick;private static volatile String error;private static UUID borrower,broker,loan;
+ private static class Menu extends AbilitySelectionScreen {
+  Menu(){super(AbilityCategoriesScreen.AbilityType.SKILL,Skill.SkillType.UNIQUE,null);}
+  void search(){searchField.setValue("Loan Shark");}
+  void choose(){int at=-1;for(int n=0;n<filtered.size();n++)if(filtered.get(n).getSkill()==HeavenlyRestriction.LOAN_SHARK.get()){at=n;break;}check(at>=0,"Missing native Unique entry");mouseClicked(guiLeft+12,guiTop+46+13*(at-listStartIndex)+5,0);check(selectedAbility!=null && selectedAbility.getSkill()==HeavenlyRestriction.LOAN_SHARK.get(),"Native selection failed");}
+ }
+ private static void check(boolean ok,String m){if(!ok){error=m;throw new IllegalStateException(m);}}
+ private static void server(java.util.function.Consumer<net.minecraft.server.level.ServerPlayer> work){var s=Minecraft.getInstance().getSingleplayerServer();s.execute(()->{try{work.accept(s.getPlayerList().getPlayers().getFirst());}catch(Throwable e){e.printStackTrace();error=e.toString();}});}
+ private static void shot(String name){try{Files.createDirectories(OUT);try(var im=Screenshot.takeScreenshot(Minecraft.getInstance().getMainRenderTarget())){im.writeToFile(OUT.resolve(name+".png"));}}catch(Exception e){error=e.toString();}}
+ private static boolean click(String text){var s=Minecraft.getInstance().screen;if(s==null)return false;for(var child:s.children())if(child instanceof Button b && b.getMessage().getString().equals(text) && b.active && b.visible){b.onPress();return true;}return false;}
+ @SubscribeEvent public static void tick(ClientTickEvent.Post event){var mc=Minecraft.getInstance();mc.options.pauseOnLostFocus=false;if(++age>9000 || error!=null){try{Files.createDirectories(OUT);Files.writeString(OUT.resolve("failure.txt"),error==null?"Timeout phase "+phase:error);}catch(Exception ignored){}mc.stop();return;}if(mc.player==null || mc.level==null || mc.getSingleplayerServer()==null || mc.getOverlay()!=null)return;
+  if(phase==0 && mc.player.tickCount>60){phase=1;mc.setScreen(null);try{Files.createDirectories(OUT);Files.deleteIfExists(OUT.resolve("passed.txt"));Files.deleteIfExists(OUT.resolve("failure.txt"));}catch(Exception ex){throw new RuntimeException(ex);}server(p->{check(p.server.getWorldPath(LevelResource.ROOT).toAbsolutePath().normalize().getFileName().toString().equals("Loan Shark Review"),"Disposable save required");p.removeAllEffects();p.getInventory().clearContent();for(var i:List.copyOf(SkillAPI.getSkillsFrom(p).getLearnedSkills()))SkillAPI.getSkillsFrom(p).forgetSkill(i);RaceAPI.getRaceFrom(p).setRace(TensuraRaces.HUMAN.get(),false);p.setGameMode(GameType.SURVIVAL);EnergyHelper.setBaseMaxEP(p,8000000);p.getAttribute(Attributes.MAX_HEALTH).setBaseValue(100);p.setHealth(100);p.getAttribute(TensuraAttributes.AURA_REGENERATION_MULTIPLIER).setBaseValue(0);p.getAttribute(TensuraAttributes.MAGICULE_REGENERATION_MULTIPLIER).setBaseValue(0);var energy=TensuraStorages.getExistenceFrom(p);energy.setAura(1000);energy.setMagicule(1000);energy.setSleepModeTime(-1);p.teleportTo(.5,159,.5);p.setYRot(180);p.setYHeadRot(180);p.setXRot(0);
+   RestrictionData.learnReward(p,HeavenlyRestriction.LOAN_SHARK.get());RestrictionData.learnReward(p,HeavenlyRestriction.SCHEMA.get());SkillAPI.getSkillsFrom(p).getSkill(HeavenlyRestriction.SCHEMA.get()).orElseThrow().setMastery(1600);RestrictionData.learnReward(p,HeavenlyRestriction.EXPONENTIATION.get());
+   var npc=new net.minecraft.world.entity.monster.Husk(EntityType.HUSK,p.serverLevel());npc.setNoAi(true);npc.setNoGravity(true);npc.setPos(.5,159,-3);npc.setCustomName(net.minecraft.network.chat.Component.literal("Aster"));p.serverLevel().addFreshEntity(npc);TensuraStorages.getExistenceFrom(npc).setPermanentOwner(p.getUUID());EnergyHelper.setBaseMaxEP(npc,100000);RestrictionData.learnReward(npc,HeavenlyRestriction.REGENERATION.getFirst().get());SkillAPI.getSkillsFrom(npc).getSkill(HeavenlyRestriction.REGENERATION.getFirst().get()).orElseThrow().setMastery(321);borrower=npc.getUUID();
+   var source=net.neoforged.neoforge.common.util.FakePlayerFactory.get(p.serverLevel(),new com.mojang.authlib.GameProfile(UUID.randomUUID(),"GuildBroker"));source.setPos(p.position().add(2,0,0));source.setGameMode(GameType.SURVIVAL);RaceAPI.getRaceFrom(source).setRace(TensuraRaces.HUMAN.get(),false);EnergyHelper.setBaseMaxEP(source,2000000);RestrictionData.learnReward(source,HeavenlyRestriction.LOAN_SHARK.get());RestrictionData.learnReward(source,HeavenlyRestriction.PROSPECTOR.get());SkillAPI.getSkillsFrom(source).getSkill(HeavenlyRestriction.PROSPECTOR.get()).orElseThrow().setMastery(550);LoanShark.see(source);broker=source.getUUID();check(LoanShark.offer(source,p,HeavenlyRestriction.PROSPECTOR.get().getRegistryName()),"Live offer failed");phase=2;});tick=0;return;}
+  if(phase==2 && mc.screen instanceof LoanScreen.GiftOffer && ++tick>15){shot("loan-shark-gift-offer");check(click("Accept"),"Accept button failed");phase=3;tick=0;return;}
+  if(phase==3 && ++tick>25){phase=4;server(p->{check(SkillAPI.getSkillsFrom(p).getSkill(HeavenlyRestriction.PROSPECTOR.get()).filter(i->i.getMastery()==550 && i.getTag().hasUUID(LoanShark.TOKEN)).isPresent(),"Real C2S acceptance did not grant mastery");});var menu=new Menu();mc.setScreen(menu);menu.search();tick=0;return;}
+  if(phase==4){tick++;if(tick==10 && mc.screen instanceof Menu m)m.choose();if(tick==20)shot("loan-shark-native-menu");if(tick>25){phase=5;mc.setScreen(null);server(p->{SkillAPI.getSkillsFrom(p).getSkill(HeavenlyRestriction.LOAN_SHARK.get()).orElseThrow().onPressed(p,0,0);});tick=0;}return;}
+  if(phase==5 && mc.screen instanceof LoanScreen && ++tick>15){for(var child:mc.screen.children())if(child instanceof EditBox box)box.setValue("Schema");phase=6;tick=0;return;}
+  if(phase==6 && ++tick>25){shot("loan-shark-loan-picker");check(click("Send gift"),"Lending action disabled");phase=7;tick=0;return;}
+  if(phase==7 && ++tick>30){phase=8;server(p->{var e=LoanShark.resolve(p.server,borrower);var gifted=SkillAPI.getSkillsFrom(e).getSkill(HeavenlyRestriction.SCHEMA.get()).orElseThrow();check(gifted.getMastery()==1600,"Loan picker lost mastery");loan=gifted.getTag().getUUID(LoanShark.TOKEN);gifted.setToggled(true);var a=e.getAttribute(TensuraAttributes.MAX_AURA);double before=EnergyHelper.getMaxEP(p),base=a.getBaseValue();a.setBaseValue(base+240);check(Math.abs(EnergyHelper.getMaxEP(p)-before-120)<.01,"Live income transfer failed");var d=LoanLedger.get(p.server);var l=d.loans.get(loan);for(int n=0;n<1200;n++){d.clock++;LoanShark.sample(d,l,e);}gifted.setToggled(false);d.clock=l.lastUsed+12001;LoanShark.open(p,1);});tick=0;return;}
+  if(phase==8 && mc.screen instanceof LoanScreen && ++tick>25){shot("loan-shark-report");mc.options.guiScale().set(3);mc.resizeDisplay();phase=9;tick=0;return;}
+  if(phase==9 && ++tick>20){shot("loan-shark-report-small");mc.options.guiScale().set(2);mc.resizeDisplay();phase=10;tick=0;return;}
+  if(phase==10 && ++tick>15){check(click("Claim"),"Claim button missing");check(click("Confirm claim"),"Claim confirm missing");phase=11;tick=0;return;}
+  if(phase==11 && ++tick>25){phase=12;server(p->{var e=LoanShark.resolve(p.server,borrower);check(SkillAPI.getSkillsFrom(e).getSkill(HeavenlyRestriction.SCHEMA.get()).isEmpty(),"Real Claim packet did not recall");check(SkillAPI.getSkillsFrom(p).getSkill(HeavenlyRestriction.REGENERATION.getFirst().get()).filter(i->i.getMastery()==321).isPresent(),"Real Claim packet lost stolen mastery");check(SkillAPI.getSkillsFrom(e).getSkill(HeavenlyRestriction.REGENERATION.getFirst().get()).isEmpty(),"Claim copied rather than removed donor skill");try{Files.writeString(OUT.resolve("passed.txt"),"PASS: actual player gift invitation/Accept packet; mastery 550 retained; native Unique selection; searchable lender picker; C2S gift; 240 EP becomes 120 borrower / 120 lender; scripted server-clock idle boundary; report at two GUI scales; confirmed C2S Claim recalls the gift and transfers a distinct skill with mastery 321.\n");}catch(Exception ex){throw new RuntimeException(ex);}});return;}
+  if(phase==12 && ++tick>10){shot("loan-shark-claimed");mc.stop();}
+ }
+}

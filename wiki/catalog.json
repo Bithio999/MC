@@ -1231,5 +1231,12 @@
     "category": "Skills",
     "tier": "Unique",
     "mod": "additions"
+  },
+  {
+    "slug": "Additions-Loan-Shark",
+    "title": "Loan Shark",
+    "category": "Skills",
+    "tier": "Unique",
+    "mod": "additions"
   }
 ]
