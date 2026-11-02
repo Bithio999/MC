@@ -13,3 +13,5 @@ The fixture selects Loan Shark in Tensura's actual Unique screen, opens the skil
 For a fast, repeatable claim check, **the fixture advances the ledger's server clock and samples usage programmatically**. It does not claim ten minutes of real play elapsed. The report captures actual server state at two GUI scales. A two-step Claim button sends the actual C2S request, recalls Schema and removes Hunter's Recovery from the target, giving it to the lender with mastery 321. Screenshots and pass/failure markers go to `/workspace/validation-loan/capture`.
 
 These are actual gameplay/UI captures of a prepared scenario, not mockups. Opt-in review classes must be excluded from the release JAR.
+
+Pass `-PloanReviewCopy=true` to exercise the same real Claim packet with `skillSteal false`. The fixture verifies that Hunter’s Recovery is copied with mastery 321, the borrower retains their original, and the ledger records **Copied**. Report/closed-record screenshots receive a `-copy` suffix. Use a fresh disposable review save for each run.

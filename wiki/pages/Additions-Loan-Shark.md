@@ -51,7 +51,14 @@ Open the searchable ledger of your gifts. Each record shows:
 - Total use time.
 - Current uninterrupted idle time, plus the last and longest intervals between uses.
 
-**Claim always recalls the gifted copy.** If it has been unused for **at least 10 minutes** and is **still idle**, Claim also removes a random eligible skill you do not own from the borrower and gives it to you, retaining mastery. **Chained and all Ultimate-classified skills are excluded from this theft pool**, including addon tiers implemented as Ultimate. The gifted copy itself can still be recalled regardless of its tier.
+**Claim always recalls the gifted copy.** If it has been unused for **at least 10 minutes** and is **still idle**, Claim also grants a random eligible skill you do not own, retaining mastery:
+
+- **`skillSteal true`:** remove the skill from the borrower and give it to you.
+- **`skillSteal false`:** give you a copy; the borrower keeps their original.
+
+Claim checks the current gamerule when used. **Chained and all Ultimate-classified skills are excluded in both modes**, including addon tiers implemented as Ultimate. The gifted copy itself can still be recalled regardless of its tier. The report distinguishes **Copied** rewards from stolen ones.
+
+![Copied claim reward](../media/loan-shark-claimed-copy.png)
 
 Claim sooner, or while the skill is in use, and it only recalls the copy. If no eligible skill can be acquired, nothing extra is taken. Claims are checked on the server; completed contracts cannot be reused. The borrower must be online or loaded to claim. An unrelated independently acquired instance is not removed as the gifted copy.
 

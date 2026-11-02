@@ -1,5 +1,10 @@
 # Changelog
 
+## Additions 1.9.2 — Claim copying
+
+- With `skillSteal false`, an eligible Claim copies its random reward and preserves the borrower’s original skill. With the rule enabled, it steals as before. Check the current rule when claiming, retain mastery and record copied rewards separately.
+- Keep gifted-copy recall, the ten-minute idle requirement and Chained/Ultimate exclusions in both modes. Update the lender confirmation, descriptions and guides.
+
 ## Additions 1.9.1 — Diminishing loan income
 
 - Reduce Loan Shark’s first active gift to 25% EP transfer. Additional active gifts on the same borrower each take 25% of the remaining gain, adding 18.75%, 14.0625%, 10.546875% and so on, approaching 100% total. Split the combined cut equally among active gifts across lenders.

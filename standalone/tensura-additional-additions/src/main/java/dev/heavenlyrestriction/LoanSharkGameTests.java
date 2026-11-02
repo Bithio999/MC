@@ -74,4 +74,45 @@ public final class LoanSharkGameTests {
         near(h,a.getValue()-before,160,"Recalled or idle gifts still taxed EP");near(h,EnergyHelper.getMaxEP(p)-income,0,"Inactive lender still received EP");h.succeed();
     }
 
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void disabledSkillStealCopiesPlayerCollateralAndPreservesMastery(GameTestHelper h){
+        var rule=h.getLevel().getGameRules().getRule(io.github.manasmods.tensura.world.TensuraGameRules.SKILL_STEAL);
+        boolean original=rule.get();
+        try{
+            rule.set(true,h.getLevel().getServer());var p=lender(h);var receiver=actor(h);receiver.setPos(p.position().add(2,0,0));
+            h.assertTrue(LoanShark.offer(p,receiver,HeavenlyRestriction.SCHEMA.get().getRegistryName()),"Gift offer failed");
+            h.assertTrue(LoanShark.reply(receiver,LoanShark.pendingOffer(receiver),true),"Gift acceptance failed");
+            var d=LoanLedger.get(p.server);var l=d.loans.get(gift(receiver).getTag().getUUID(LoanShark.TOKEN));
+            var skill=CommonSkills.SELF_REGENERATION.get();h.assertTrue(RestrictionData.learnReward(receiver,skill),"Collateral grant failed");
+            var source=SkillAPI.getSkillsFrom(receiver).getSkill(skill).orElseThrow();source.setMastery(333);source.getOrCreateTag().putString("private_bank","do not copy");
+            // Change the rule after the gift: the setting at Claim time must win.
+            rule.set(false,h.getLevel().getServer());d.clock=l.lastUsed+12000;
+            String message=LoanShark.claim(p,l.id);h.assertTrue(message.contains("Copied"),"Claim did not copy: "+message);
+            h.assertTrue(SkillAPI.getSkillsFrom(receiver).getSkill(HeavenlyRestriction.SCHEMA.get()).isEmpty(),"Gift was not recalled");
+            h.assertTrue(SkillAPI.getSkillsFrom(receiver).getSkill(skill).orElseThrow()==source,"Original skill was removed or replaced");
+            var gained=SkillAPI.getSkillsFrom(p).getSkill(skill).orElseThrow();near(h,gained.getMastery(),333,"Copied mastery lost");near(h,source.getMastery(),333,"Original mastery changed");
+            h.assertTrue(gained!=source && !gained.isTemporarySkill() && !gained.getOrCreateTag().contains("private_bank") && !gained.getOrCreateTag().hasUUID(LoanShark.TOKEN),"Copied skill retained loan/private state");
+            var restored=LoanLedger.load(d.save(new net.minecraft.nbt.CompoundTag(),p.registryAccess()),p.registryAccess());
+            h.assertTrue(restored.loans.get(l.id).status.equals("Copied") && restored.loans.get(l.id).stolen.equals(skill.getRegistryName().toString()),"Copied history was lost");
+            h.assertTrue(LoanShark.claim(p,l.id).contains("closed"),"Copied contract could be replayed");h.succeed();
+        }finally{rule.set(original,h.getLevel().getServer());}
+    }
+
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void copyClaimsKeepIdleRequirementsAndProtectedSkillExclusions(GameTestHelper h){
+        var rule=h.getLevel().getGameRules().getRule(io.github.manasmods.tensura.world.TensuraGameRules.SKILL_STEAL);boolean original=rule.get();
+        try{
+            rule.set(false,h.getLevel().getServer());var p=lender(h);var e=subordinate(h,p);var d=LoanLedger.get(p.server);
+            var l=LoanShark.lend(p,e,HeavenlyRestriction.SCHEMA.get().getRegistryName());var skill=CommonSkills.SELF_REGENERATION.get();RestrictionData.learnReward(e,skill);
+            d.clock=l.lastUsed+11999;LoanShark.claim(p,l.id);h.assertTrue(SkillAPI.getSkillsFrom(p).getSkill(skill).isEmpty(),"Early Claim copied a skill");
+            var again=LoanShark.lend(p,e,HeavenlyRestriction.SCHEMA.get().getRegistryName());gift(e).setToggled(true);d.clock=again.lastUsed+13000;LoanShark.claim(p,again.id);
+            h.assertTrue(SkillAPI.getSkillsFrom(p).getSkill(skill).isEmpty() && SkillAPI.getSkillsFrom(e).getSkill(skill).isPresent(),"Active Claim copied or removed collateral");
+            var protectedTarget=subordinate(h,p);var protectedLoan=LoanShark.lend(p,protectedTarget,HeavenlyRestriction.SCHEMA.get().getRegistryName());RestrictionData.learnReward(protectedTarget,HeavenlyRestriction.CHAINED.get());
+            d.clock=protectedLoan.lastUsed+12000;LoanShark.claim(p,protectedLoan.id);
+            h.assertTrue(SkillAPI.getSkillsFrom(protectedTarget).getSkill(HeavenlyRestriction.CHAINED.get()).isPresent() && SkillAPI.getSkillsFrom(p).getSkill(HeavenlyRestriction.CHAINED.get()).isEmpty(),"Chained was copied or removed");
+            for(var id:SkillAPI.getSkillRegistry().getIds())if(SkillAPI.getSkillRegistry().get(id) instanceof io.github.manasmods.tensura.ability.skill.Skill s2 && s2.getType()==io.github.manasmods.tensura.ability.skill.Skill.SkillType.ULTIMATE)h.assertTrue(!LoanShark.claimable(s2.createDefaultInstance()),"Ultimate allowed in copy pool");
+            h.succeed();
+        }finally{rule.set(original,h.getLevel().getServer());}
+    }
+
 }

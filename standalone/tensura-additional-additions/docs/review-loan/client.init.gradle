@@ -1,5 +1,6 @@
 gradle.projectsEvaluated {
  rootProject.sourceSets.main.java.srcDir(rootProject.file('docs/review-loan'))
+ rootProject.neoForge.runs.client.systemProperty('loan.review.copy',rootProject.providers.gradleProperty('loanReviewCopy').getOrElse('false'))
  rootProject.neoForge.runs.client.gameDirectory=rootProject.file('/workspace/validation-loan/client')
  rootProject.neoForge.runs.client.programArguments.addAll('--quickPlaySingleplayer','Loan Shark Review','--width','1280','--height','720')
 }

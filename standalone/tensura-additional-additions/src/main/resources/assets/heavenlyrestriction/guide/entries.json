@@ -587,7 +587,7 @@
           "title": "Report and Claim",
           "lines": [
             "Search by skill or borrower. Inspect EP transferred, total use time, current idle time, and last/longest idle gaps. Unloaded/online-unavailable borrowers cannot be claimed.",
-            "Claim always recalls the gifted copy. After at least 10 uninterrupted minutes idle, and only if still idle, it also removes a random eligible unowned skill from the borrower and gives it to you with mastery retained. Chained and every Ultimate-classified skill are excluded from theft.",
+            "Claim always recalls the gifted copy. After at least 10 uninterrupted minutes idle, and only if still idle, it also grants a random eligible unowned skill with retained mastery. With skillSteal true it removes the original from the borrower; with skillSteal false it copies the skill and leaves their original intact. Chained and every Ultimate-classified skill are excluded in both modes.",
             "Claim sooner or while active only recalls the copy. A closed contract cannot be claimed twice. Existing independent skill ownership is protected."
           ]
         }
