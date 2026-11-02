@@ -12,5 +12,5 @@ public abstract class ExponentiationPlayerMixin {
     @WrapMethod(method="attack")
     private void exponentiation$attack(Entity target,Operation<Void> original){try(var scope=ExponentiationContext.raw((Player)(Object)this,ExponentiationContext.DAMAGE)){original.call(target);}}
     @WrapMethod(method="getDigSpeed")
-    private float exponentiation$mining(BlockState state,BlockPos pos,Operation<Float> original){var owner=(Player)(Object)this;float speed;try(var scope=ExponentiationContext.raw(owner,ExponentiationContext.MINING)){speed=original.call(state,pos);}return Exponentiation.active(owner)?Exponentiation.squareFloat(speed):speed;}
+    private float exponentiation$mining(BlockState state,BlockPos pos,Operation<Float> original){var owner=(Player)(Object)this;float speed;try(var scope=ExponentiationContext.raw(owner,ExponentiationContext.MINING)){speed=original.call(state,pos);}return Exponentiation.active(owner)?Exponentiation.amplifyFloat(speed):speed;}
 }

@@ -15,3 +15,5 @@ For a fast, repeatable claim check, **the fixture advances the ledger's server c
 These are actual gameplay/UI captures of a prepared scenario, not mockups. Opt-in review classes must be excluded from the release JAR.
 
 Pass `-PloanReviewCopy=true` to exercise the same real Claim packet with `skillSteal false`. The fixture verifies that Hunter’s Recovery is copied with mastery 321, the borrower retains their original, and the ledger records **Copied**. Report/closed-record screenshots receive a `-copy` suffix. Use a fresh disposable review save for each run.
+
+The current fixture equips Loan Shark through the native menu and sends real mode-cycle packets for Loan → Report → Loan, then cycles to Report to open it. It checks that neither menu has mode tabs, Loan rows represent learned permanent owned skills, confirmation stays active through at least three background refreshes, and the completed gift leaves the active Report.

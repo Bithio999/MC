@@ -4,7 +4,6 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import dev.heavenlyrestriction.*;
 import net.minecraft.client.Minecraft;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.phys.*;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -41,8 +40,4 @@ public final class ProspectorClient {
         case 10->{diamond(v,p,.48f,w,c);diamond(v,p,.21f,w,c);line(v,p,-.65f,0,-.48f,0,w,c);line(v,p,.48f,0,.65f,0,w,c);}
         default->{diamond(v,p,.4f,w,c);line(v,p,-.3f,g==12?-.3f:0,.3f,g==13?.3f:0,w,c);}
     }}
-    @SubscribeEvent public static void hud(RenderGuiEvent.Post event){var mc=Minecraft.getInstance();if(mc.player==null || mc.screen!=null || mc.options.hideGui || ProspectorMining.active(mc.player).isEmpty())return;var camera=mc.gameRenderer.getMainCamera();var at=camera.getPosition();var aim=Vec3.directionFromRotation(camera.getXRot(),camera.getYRot());OreSurvey.Marker selected=null;double best=.997;
-        for(var marker:SURVEY.markers()){if(marker.pos().distToCenterSqr(mc.player.position())>32*32)continue;var d=Vec3.atCenterOf(marker.pos()).subtract(at);double dot=d.normalize().dot(aim);if(dot>best){best=dot;selected=marker;}}
-        if(selected==null)return;var text=Component.translatable("heavenlyrestriction.prospector.deposit",selected.kind().label(),selected.count(),Math.round(Vec3.atCenterOf(selected.pos()).distanceTo(mc.player.position())));var g=event.getGuiGraphics();int width=mc.font.width(text),x=(g.guiWidth()-width)/2,y=g.guiHeight()/2+17;g.fill(x-6,y-3,x+width+6,y+12,0xb0121d26);g.fill(x-6,y-3,x-4,y+12,0xcc000000|selected.kind().color());g.drawString(mc.font,text,x,y,0xffdce6eb,false);
-    }
 }

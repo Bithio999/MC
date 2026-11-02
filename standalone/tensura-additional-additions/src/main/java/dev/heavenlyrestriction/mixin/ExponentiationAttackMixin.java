@@ -5,7 +5,7 @@ import dev.heavenlyrestriction.exponentiation.*;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.damagesource.DamageSource;
 import org.spongepowered.asm.mixin.Mixin;
-/** Attack attributes remain raw while a hit is calculated; its final damage is squared once. */
+/** Attack attributes remain raw while a hit is calculated; its final damage is raised to ^1.2 once. */
 @Mixin(LivingEntity.class)
 public abstract class ExponentiationAttackMixin {
     @WrapMethod(method="hurt")

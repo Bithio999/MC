@@ -1,5 +1,11 @@
 # Changelog
 
+## Additions 1.9.3 — Skill balance and menus
+
+- Nerf Exponentiation from ^2 to ^1.2 throughout its supported outputs and capacities. Keep movement and energy-capacity exclusions, bounded values and single-application rules; update Fusion’s inverse capacity calculation and clamp legacy over-cap reserves.
+- Remove Prospector’s ore-name HUD box while retaining colored ore markers and glyphs.
+- Repair native Loan/Report mode cycling, split the menus and remove their navigation tabs. List only fully learned permanent lendable skills in Loan. Replace Loan Shark’s icon. Remove closed gifts from Report and preserve Claim confirmation across background refreshes.
+
 ## Additions 1.9.2 — Claim copying
 
 - With `skillSteal false`, an eligible Claim copies its random reward and preserves the borrower’s original skill. With the rule enabled, it steals as before. Check the current rule when claiming, retain mastery and record copied rewards separately.

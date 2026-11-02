@@ -110,7 +110,7 @@ public final class Fusion {
         var a=e.getAttribute(type);if(a==null)return;
         // Solve the temporary modifier in the underlying linear attribute space.
         // The requested capacity already includes Exponentiation, so invert that lens once.
-        if(desired>1 && Exponentiation.active(e) && Exponentiation.rule(type.value()).included())desired=Math.sqrt(desired);
+        if(desired>1 && Exponentiation.active(e) && Exponentiation.rule(type.value()).included())desired=Math.pow(desired,1/Exponentiation.POWER);
         try(var calculation=ExponentiationContext.raw(e,ExponentiationContext.ATTRIBUTES)){
             a.removeModifier(BOOST);double base=a.getValue();a.addTransientModifier(new AttributeModifier(BOOST,1,AttributeModifier.Operation.ADD_VALUE));double delta=a.getValue()-base;a.removeModifier(BOOST);if(Math.abs(delta)>1e-10)a.addTransientModifier(new AttributeModifier(BOOST,(desired-base)/delta,AttributeModifier.Operation.ADD_VALUE));
         }

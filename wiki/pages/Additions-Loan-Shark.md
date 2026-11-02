@@ -15,7 +15,9 @@
 
 ## Loan · Active, Press
 
-Aim at your **subordinate or a player within 16 blocks**, then open Loan. Search your owned skills, select one and send the gift. **Players must accept**; subordinate gifts are immediate. The invitation shows the sender, offered skill and retained mastery. It does not display the EP-sharing or Claim terms. Offers expire after 30 seconds and are rechecked when accepted.
+**Loan** and **Report** are separate native skill modes. Scroll the assigned skill slot to switch between them. Each opens its own menu, without menu tabs.
+
+Aim at your **subordinate or a player within 16 blocks**, then activate **Loan**. Search your fully learned permanent lendable skills, select one and send the gift. Unfinished learning entries and skills you do not own are hidden. **Players must accept**; subordinate gifts are immediate. The invitation shows the sender, offered skill and retained mastery. It does not display the EP-sharing or Claim terms. Offers expire after 30 seconds and are rechecked when accepted.
 
 The recipient gets a separately marked skill copy with **retained mastery**, learned mode progress and current cooldowns. Your original stays yours. Stored inventories, appraisal banks and active effects are not duplicated. Already-owned skills cannot be overwritten; temporary skills, dependent sub-abilities and Loan Shark itself are not lendable. Native acquisition restrictions still apply.
 
@@ -44,7 +46,7 @@ Casting/channeling and attributed hits count as use. Toggles count while enabled
 
 ## Report · Active, Press
 
-Open the searchable ledger of your gifts. Each record shows:
+Activate **Report** to open only the searchable ledger of your gifts. Each record shows:
 
 - Gifted skill and recipient.
 - EP transferred, including any credit waiting for you.
@@ -56,7 +58,7 @@ Open the searchable ledger of your gifts. Each record shows:
 - **`skillSteal true`:** remove the skill from the borrower and give it to you.
 - **`skillSteal false`:** give you a copy; the borrower keeps their original.
 
-Claim checks the current gamerule when used. **Chained and all Ultimate-classified skills are excluded in both modes**, including addon tiers implemented as Ultimate. The gifted copy itself can still be recalled regardless of its tier. The report distinguishes **Copied** rewards from stolen ones.
+Claim checks the current gamerule when used. **Chained and all Ultimate-classified skills are excluded in both modes**, including addon tiers implemented as Ultimate. The gifted copy itself can still be recalled regardless of its tier. The result message identifies whether the reward was copied or stolen. Claimed and recalled gifts leave Report’s active list. Confirmation remains available while its timers refresh.
 
 ![Copied claim reward](../media/loan-shark-claimed-copy.png)
 

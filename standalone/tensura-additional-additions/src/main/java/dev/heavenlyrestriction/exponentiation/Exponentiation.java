@@ -13,7 +13,7 @@ import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import java.util.*;
 
 public final class Exponentiation {
-    public static final double LIMIT=1e150;public static final float FLOAT_LIMIT=1e30f;
+    public static final double POWER=1.2,LIMIT=1e150;public static final float FLOAT_LIMIT=1e30f;
     private static final ThreadLocal<Set<LivingEntity>> CHECKING=ThreadLocal.withInitial(()->Collections.newSetFromMap(new IdentityHashMap<>()));
     private static final Map<Attribute,Rule> RULES=new java.util.concurrent.ConcurrentHashMap<>();
     private static final String WAS_ACTIVE="heavenlyrestriction.exponentiation_active";
@@ -24,8 +24,8 @@ public final class Exponentiation {
         finally{checking.remove(owner);}
     }
     /** Positive fractional values are retained: a beneficial-only skill must never turn 0.5 into 0.25. */
-    public static double square(double value){if(Double.isNaN(value))return 0;if(value<=1)return value;if(value>=Math.sqrt(LIMIT))return LIMIT;return value*value;}
-    public static float squareFloat(double value){return (float)Math.min(FLOAT_LIMIT,square(value));}
+    public static double amplify(double value){if(Double.isNaN(value))return 0;if(value<=1)return value;return Math.min(LIMIT,Math.pow(value,POWER));}
+    public static float amplifyFloat(double value){return (float)Math.min(FLOAT_LIMIT,amplify(value));}
     public static Rule rule(Attribute attribute){return RULES.computeIfAbsent(attribute,a->a.getMergedStyle(true).getValue()==0xF93131?new Rule(false,0,"Higher values are harmful"):classify(BuiltInRegistries.ATTRIBUTE.getKey(a)));}
     private static Rule classify(ResourceLocation id){String p=id.getPath().replace("generic.","");
         if(p.equals("max_aura") || p.equals("max_magicule"))return new Rule(false,0,"Aura/magicule capacity (not amplified)");
@@ -43,7 +43,7 @@ public final class Exponentiation {
         return new Rule(true,role,"");
     }
     public static double attribute(LivingEntity owner,AttributeInstance instance,double value){var rule=rule(instance.getAttribute().value());if(!rule.included || value<=1 || ExponentiationContext.rawAttribute(owner,rule.role) || !active(owner))return value;
-        double result=square(value);String path=BuiltInRegistries.ATTRIBUTE.getKey(instance.getAttribute().value()).getPath();
+        double result=amplify(value);String path=BuiltInRegistries.ATTRIBUTE.getKey(instance.getAttribute().value()).getPath();
         if(path.contains("chance") && instance.getAttribute().value() instanceof RangedAttribute ranged)result=Math.min(ranged.getMaxValue(),result);
         if(instance.getAttribute().equals(Attributes.MAX_HEALTH))result=Math.min(FLOAT_LIMIT,result);
         if(instance.getAttribute().equals(TensuraAttributes.MAX_MAGICULE))result=ChainedState.magiculeCeiling(owner,result);
@@ -51,12 +51,12 @@ public final class Exponentiation {
     }
     public static double gain(LivingEntity owner,double before,double proposed,double cap){
         if(proposed<=before || !active(owner) || ExponentiationContext.restoring(owner))return proposed;
-        return Math.max(before,Math.min(cap,before+square(proposed-before)));
+        return Math.max(before,Math.min(cap,before+amplify(proposed-before)));
     }
     public static double capacity(LivingEntity owner,java.util.function.DoubleSupplier read){try(var scope=ExponentiationContext.raw(owner,ExponentiationContext.FINAL)){return read.getAsDouble();}}
     /** Removing a temporary capacity lens never leaves usable over-cap HP or reserves. Bases and modifiers are not rewritten. */
     public static void tick(EntityTickEvent.Post event){if(!(event.getEntity() instanceof LivingEntity owner) || owner.level().isClientSide())return;boolean was=owner.getPersistentData().getBoolean(WAS_ACTIVE),now=active(owner);if(!was && !now)return;owner.getPersistentData().putBoolean(WAS_ACTIVE,now);
-        if((was && !now) || (now && !owner.getPersistentData().getBoolean("heavenlyrestriction.exponentiation_energy_capacity_v2")))try(var scope=ExponentiationContext.raw(owner,ExponentiationContext.RESTORE)){owner.setAirSupply(Math.min(owner.getAirSupply(),owner.getMaxAirSupply()));owner.setHealth(Math.min(owner.getHealth(),owner.getMaxHealth()));var e=TensuraStorages.getExistenceFrom(owner);e.setSpiritualHealth(Math.min(e.getSpiritualHealth(),owner.getAttributeValue(TensuraAttributes.MAX_SPIRITUAL_HEALTH)));e.setAura(Math.min(e.getAura(),EnergyHelper.getMaxAura(owner)));e.setMagicule(Math.min(e.getMagicule(),EnergyHelper.getMaxMagicule(owner)));e.markDirty();owner.getPersistentData().putBoolean("heavenlyrestriction.exponentiation_energy_capacity_v2",true);}
+        if((was && !now) || (now && !owner.getPersistentData().getBoolean("heavenlyrestriction.exponentiation_power_v3")))try(var scope=ExponentiationContext.raw(owner,ExponentiationContext.RESTORE)){owner.setAirSupply(Math.min(owner.getAirSupply(),owner.getMaxAirSupply()));owner.setHealth(Math.min(owner.getHealth(),owner.getMaxHealth()));var e=TensuraStorages.getExistenceFrom(owner);e.setSpiritualHealth(Math.min(e.getSpiritualHealth(),owner.getAttributeValue(TensuraAttributes.MAX_SPIRITUAL_HEALTH)));e.setAura(Math.min(e.getAura(),EnergyHelper.getMaxAura(owner)));e.setMagicule(Math.min(e.getMagicule(),EnergyHelper.getMaxMagicule(owner)));e.markDirty();owner.getPersistentData().putBoolean("heavenlyrestriction.exponentiation_power_v3",true);}
     }
     private Exponentiation(){}
 }

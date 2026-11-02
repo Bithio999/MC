@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.*;
 public abstract class ExponentiationOxygenMixin {
     private static final String AIR="heavenlyrestriction.exponentiation_air";
     @ModifyReturnValue(method="getMaxAirSupply",at=@At("RETURN"))
-    private int exponentiation$capacity(int value){return (Object)this instanceof LivingEntity owner && Exponentiation.active(owner)?(int)Math.min(Integer.MAX_VALUE,20.0*Exponentiation.square(value/20.0)):value;}
+    private int exponentiation$capacity(int value){return (Object)this instanceof LivingEntity owner && Exponentiation.active(owner)?(int)Math.min(Integer.MAX_VALUE,20.0*Exponentiation.amplify(value/20.0)):value;}
     // Vanilla stores Air as a signed short, so use a full integer for larger custom air capacities.
     @Inject(method="saveWithoutId",at=@At("RETURN"))
     private void exponentiation$save(CompoundTag tag,CallbackInfoReturnable<CompoundTag> ci){var entity=(Entity)(Object)this;if(entity instanceof LivingEntity owner && Exponentiation.active(owner))ci.getReturnValue().putInt(AIR,entity.getAirSupply());}

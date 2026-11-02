@@ -477,7 +477,7 @@
           "lines": [
             "Mining speed +50%. Fortune +3, added to the tool's existing level; Fortune III becomes effective Fortune VI. The tool is unchanged, and Silk Touch keeps its normal behavior.",
             "Correctly mining stone or deepslate has a 1% chance to find one extra resource. Common resources are more likely than rare gems; magic ore shards can appear.",
-            "Sense loaded ore deposits through terrain within 32 blocks. Faint markers use distinct colors and glyphs. Look toward a marker for its ore name, number of surveyed ore blocks and distance. Toggle off to hide them."
+            "Sense loaded ore deposits through terrain within 32 blocks. Faint markers use distinct colors and glyphs, without an ore-name text box. Toggle off to hide them."
           ]
         },
         {
@@ -503,16 +503,16 @@
       "id": "exponentiation",
       "title": "Exponentiation",
       "category": "Skills",
-      "summary": "Unique · In-slot passive. Square supported beneficial values; movement is excluded.",
+      "summary": "Unique · In-slot passive. Raise supported beneficial values to ^1.2; movement is excluded.",
       "icon": "heavenlyrestriction:textures/skill/exponentiation.png",
       "keywords": [
-        "square",
-        "squared",
         "attack speed",
         "chant speed",
         "mining",
         "beneficial",
-        "final damage"
+        "final damage",
+        "power",
+        "1.2"
       ],
       "related": [
         "prospector",
@@ -536,7 +536,7 @@
         {
           "title": "Rules and limits",
           "lines": [
-            "Each output is squared once. Formula inputs are read normally while calculating damage, recovery, mining and point gains. Saved base stats are not repeatedly squared. Maximum HP, SHP, absorption, oxygen and water/lava capacities are squared; maximum aura and magicules stay normal. Maximum air supply is also squared: 15 seconds becomes 225 seconds (4,500 ticks), without an instant refill.",
+            "Each output is raised to ^1.2 once. Formula inputs are read normally while calculating damage, recovery, mining and point gains. Saved base stats are not repeatedly exponentiated. Maximum HP, SHP, absorption, oxygen and water/lava capacities are raised to ^1.2; maximum aura and magicules stay normal. Maximum air supply uses seconds before the ^1.2 bonus: 15 seconds becomes about 25.75 seconds (515 ticks), without an instant refill.",
             "Values of 1 or less are retained so fractions are not weakened. Chances stop at their native maximum; drops stop at each item’s normal stack size; finite number limits apply. Chained’s locked magicule cap remains locked."
           ]
         },
@@ -544,7 +544,7 @@
           "title": "Excluded",
           "lines": [
             "All movement: running, flying, swimming, sneaking, jumping, dashes, teleports, knockback and body size. Attack speed, mining speed and chant speed ARE included.",
-            "No squaring of costs, cooldowns, incoming damage, progression requirements, recipe outputs, enchantment levels or fixed skill constants such as duration/radius. The web wiki lists exact native attribute IDs."
+            "No power bonus to costs, cooldowns, incoming damage, progression requirements, recipe outputs, enchantment levels or fixed skill constants such as duration/radius. The web wiki lists exact native attribute IDs."
           ]
         }
       ]
@@ -572,7 +572,7 @@
         {
           "title": "Loan",
           "lines": [
-            "Aim at your subordinate or a player within 16 blocks, then press Loan. Search your owned skills and send a gift. Players must accept; subordinate gifts are immediate. The original skill stays yours.",
+            "Loan and Report are separate native skill modes: scroll the assigned skill slot to switch. Loan opens the learned-skill picker for your aimed subordinate or player within 16 blocks; Report opens only your ledger. The menus have no tabs. Only fully learned permanent lendable skills appear. Players must accept gifts; subordinate gifts are immediate.",
             "Copies retain mastery, learned mode progress and current cooldowns. They do not clone stored inventories/banks or active effects. Already-owned skills cannot be overwritten; temporary/sub-abilities and Loan Shark itself cannot be lent."
           ]
         },
@@ -586,7 +586,7 @@
         {
           "title": "Report and Claim",
           "lines": [
-            "Search by skill or borrower. Inspect EP transferred, total use time, current idle time, and last/longest idle gaps. Unloaded/online-unavailable borrowers cannot be claimed.",
+            "Report lists only outstanding gifts. Search by skill or borrower and inspect EP transferred, use time and idle gaps. Claimed/recalled gifts leave the list. Confirmation remains available while timers refresh. Unloaded borrowers cannot be claimed.",
             "Claim always recalls the gifted copy. After at least 10 uninterrupted minutes idle, and only if still idle, it also grants a random eligible unowned skill with retained mastery. With skillSteal true it removes the original from the borrower; with skillSteal false it copies the skill and leaves their original intact. Chained and every Ultimate-classified skill are excluded in both modes.",
             "Claim sooner or while active only recalls the copy. A closed contract cannot be claimed twice. Existing independent skill ownership is protected."
           ]

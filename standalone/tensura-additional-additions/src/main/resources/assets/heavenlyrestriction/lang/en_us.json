@@ -23,11 +23,10 @@
   "heavenlyrestriction.skill.mode.fusion.fuse": "Fuse",
   "heavenlyrestriction.skill.prospector": "Prospector",
   "heavenlyrestriction.skill.mode.prospector.refine": "Refine",
-  "heavenlyrestriction.skill.prospector.description": "Toggle: +50% mining speed and +3 effective Fortune, added to your tool's Fortune. Stone and deepslate have a 1% chance to yield an extra resource when mined with a suitable tool. Sense ore deposits within 32 blocks through terrain, including magic ore; look toward a marker to identify it. Press Refine to open Tensura's refining menu. No aura or magicule cost.",
-  "heavenlyrestriction.prospector.deposit": "%s · %s blocks · %sm",
+  "heavenlyrestriction.skill.prospector.description": "Toggle: +50% mining speed and +3 effective Fortune, added to your tool's Fortune. Stone and deepslate have a 1% chance to yield an extra resource when mined with a suitable tool. Sense ore deposits within 32 blocks through terrain, including magic ore; ore types have distinct marker colors and glyphs. Press Refine to open Tensura's refining menu. No aura or magicule cost.",
   "heavenlyrestriction.skill.exponentiation": "Exponentiation",
   "heavenlyrestriction.skill.mode.exponentiation.exponentiation": "Exponentiation",
-  "heavenlyrestriction.skill.exponentiation.description": "Passive, In Slot. Square beneficial final stats and outputs while equipped in your active preset: damage, HP/SHP healing, aura/magicule recovery, defenses, elemental bonuses, senses, learning/mastery, EP awards before the race split, non-energy capacities, mining, attack/casting speed, loot quantities and XP gains. Maximum aura/magicules and separate permanent aura/magicule gain multipliers, movement-related values, costs, cooldowns and requirements are excluded. Fractions below 1 are preserved, and native chance, stack and progression limits apply. No activation or upkeep cost.",
+  "heavenlyrestriction.skill.exponentiation.description": "Passive, In Slot. Raise beneficial final stats and outputs to the power of 1.2 while equipped in your active preset: damage, HP/SHP healing, aura/magicule recovery, defenses, elemental bonuses, senses, learning/mastery, EP awards before the race split, non-energy capacities, mining, attack/casting speed, loot quantities and XP gains. Maximum aura/magicules and separate permanent aura/magicule gain multipliers, movement-related values, costs, cooldowns and requirements are excluded. Fractions below 1 are preserved, and native chance, stack and progression limits apply. No activation or upkeep cost.",
   "heavenlyrestriction.skill.loan_shark": "Loan Shark",
   "heavenlyrestriction.skill.mode.loan_shark.loan": "Loan",
   "heavenlyrestriction.skill.mode.loan_shark.report": "Report"

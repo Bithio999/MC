@@ -11,7 +11,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.nbt.CompoundTag;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.*;
-/** Setters are terminal boundaries: positive gains square, costs/damage/restores do not. */
+/** Setters are terminal boundaries: positive gains use ^1.2; costs/damage/restores do not. */
 @Mixin(value=ExistenceStorage.class,priority=500)
 public abstract class ExponentiationEnergyMixin {
     @Shadow(remap=false) protected abstract LivingEntity getOwner();

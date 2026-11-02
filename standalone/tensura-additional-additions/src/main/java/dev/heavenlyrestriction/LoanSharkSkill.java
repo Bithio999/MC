@@ -13,6 +13,7 @@ public final class LoanSharkSkill extends Skill {
     @Override public ResourceLocation getSkillIcon(){return HeavenlyRestriction.id("textures/skill/loan_shark.png");}
     @Override public MutableComponent getSkillDescription(){return Component.literal("Loan: aim at a subordinate or player to lend a copy of a learned skill, retaining mastery. While used, one gift transfers 25% of permanent EP gains. Additional active gifts each take 25% of the remaining gain: 43.75% total for two, 57.8125% for three, approaching 100% without exceeding it. The total is shared equally among active gifts. Report: inspect loans, EP income, use time and idle intervals. Claim always recalls the copy; after 10 uninterrupted minutes unused, also steal a random eligible skill you do not own, retaining its mastery. With skillSteal false, copy it instead and leave the original with the borrower. Chained and Ultimate skills remain excluded. No resource cost.");}
     @Override public int getModes(ManasSkillInstance i){return 2;}
+    @Override public int nextMode(LivingEntity e,ManasSkillInstance i,int mode,boolean reverse){return mode==0?1:0;}
     @Override public String getModeId(ManasSkillInstance i,int mode){return mode==0?"loan_shark.loan":"loan_shark.report";}
     @Override public Component getModeName(ManasSkillInstance i,int mode){return Component.literal(mode==0?"Loan":"Report");}
     @Override public boolean canBeToggled(ManasSkillInstance i,LivingEntity e){return false;}

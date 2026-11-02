@@ -115,4 +115,27 @@ public final class LoanSharkGameTests {
         }finally{rule.set(original,h.getLevel().getServer());}
     }
 
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void loanAndReportCycleAsTwoNativeModesAndOnlyOwnedLearnedSkillsAreListed(GameTestHelper h){
+        var p=lender(h);var skill=HeavenlyRestriction.LOAN_SHARK.get();var i=SkillAPI.getSkillsFrom(p).getSkill(skill).orElseThrow();
+        h.assertTrue(i.getModes()==2,"Loan Shark does not expose two modes");
+        h.assertTrue(skill.nextMode(p,i,0,false)==1 && skill.nextMode(p,i,1,false)==0 && skill.nextMode(p,i,0,true)==1 && skill.nextMode(p,i,1,true)==0,"Native mode cycling cannot reach Loan and Report");
+        h.assertTrue(skill.getModeName(i,0).getString().equals("Loan") && skill.getModeName(i,1).getString().equals("Report"),"Mode names are incorrect");
+        var latent=CommonSkills.SELF_REGENERATION.get().createLearningInstance(p);latent.setMastery(-1);SkillAPI.getSkillsFrom(p).updateSkill(latent,true);
+        h.assertTrue(SkillAPI.getSkillsFrom(p).getSkill(latent.getSkill()).isPresent(),"Learning entry fixture missing");
+        var choices=LoanShark.loanChoices(p);h.assertTrue(choices.stream().anyMatch(c->c.getSkill()==HeavenlyRestriction.SCHEMA.get()),"Learned skill missing from picker");
+        h.assertTrue(choices.stream().noneMatch(c->c.getSkill()==latent.getSkill() || c.getSkill()==skill || c.getSkill()==HeavenlyRestriction.PROSPECTOR.get()),"Picker includes unfinished, excluded or unowned skills");
+        latent.setMastery(0);h.assertTrue(LoanShark.loanChoices(p).stream().anyMatch(c->c.getSkill()==latent.getSkill()),"Newly learned skill does not become lendable");h.succeed();
+    }
+
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void reportDropsClosedGiftsButRetainsReplayProtection(GameTestHelper h){
+        var p=lender(h);var e=subordinate(h,p);var a=LoanShark.lend(p,e,HeavenlyRestriction.SCHEMA.get().getRegistryName());
+        RestrictionData.learnReward(p,HeavenlyRestriction.PROSPECTOR.get());var b=LoanShark.lend(p,e,HeavenlyRestriction.PROSPECTOR.get().getRegistryName());
+        h.assertTrue(LoanShark.reportLoans(p).size()==2,"Outstanding gifts missing from Report");
+        LoanShark.claim(p,a.id);h.assertTrue(LoanShark.reportLoans(p).size()==1 && LoanShark.reportLoans(p).getFirst().id.equals(b.id),"Recalled gift still appears active");
+        LoanShark.claim(p,b.id);h.assertTrue(LoanShark.reportLoans(p).isEmpty(),"Closed gifts remain in Report");
+        h.assertTrue(LoanLedger.get(p.server).loans.containsKey(a.id) && LoanShark.claim(p,a.id).contains("closed"),"Removing report row lost replay protection");h.succeed();
+    }
+
 }

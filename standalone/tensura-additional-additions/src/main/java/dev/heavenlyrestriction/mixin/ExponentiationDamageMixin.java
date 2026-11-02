@@ -12,5 +12,5 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(CommonHooks.class)
 public abstract class ExponentiationDamageMixin {
     @ModifyReturnValue(method="onLivingDamagePre",at=@At("RETURN"),remap=false)
-    private static float exponentiation$damage(float value,LivingEntity victim,DamageContainer damage){var owner=RestrictionData.attacker(damage.getSource());if(!victim.level().isClientSide() && owner!=victim && Exponentiation.active(owner)){float amount=Exponentiation.squareFloat(value);damage.setNewDamage(amount);return amount;}return value;}
+    private static float exponentiation$damage(float value,LivingEntity victim,DamageContainer damage){var owner=RestrictionData.attacker(damage.getSource());if(!victim.level().isClientSide() && owner!=victim && Exponentiation.active(owner)){float amount=Exponentiation.amplifyFloat(value);damage.setNewDamage(amount);return amount;}return value;}
 }
