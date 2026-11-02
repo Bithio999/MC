@@ -37,6 +37,8 @@ allowlist = []
 
 For example, adding `"tensura:creator"` to `extraBlacklist` excludes Creator without changing any other race’s pool. An explicitly allowed skill that is also blacklisted remains excluded.
 
+Prospector in TensuraAdditionalAdditions has no magicule ability cost and does not take target skills, so it remains eligible for Fettered Human. Its Refine menu consumes recipe ingredients.
+
 ## Default eligible skills
 
 The pinned native defaults leave **16** eligible starting Uniques: Berserker, Commander, Cook, Creator, Fighter, Gourmand, Martial Master, Mathematician, Observer, Pride, Reflector, Researcher, Royal Beast, Seer, Survivor and Tuner. **38** native starting Uniques are excluded. Analyst and Seeker learn projectile skills, Great Sage copies target/projectile skills, and Spearhead harvests skills from fallen subordinates.

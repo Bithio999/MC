@@ -16,6 +16,8 @@ Find a move below, then open its entry for targeting, damage, cost and cooldown.
 | [World Select](https://github.com/Bithio999/MC/wiki/Additions-Parallel-World-Jumper#world-select) | [Parallel World Jumper](https://github.com/Bithio999/MC/wiki/Additions-Parallel-World-Jumper) | Active; requires learning | None |
 | [Heavenly Restriction](https://github.com/Bithio999/MC/wiki/Additions-Chained#always-active-while-owned) | [Chained](https://github.com/Bithio999/MC/wiki/Additions-Chained) | Passive true | None |
 | [Fuse](https://github.com/Bithio999/MC/wiki/Additions-Fusion#fuse) | [Fusion](https://github.com/Bithio999/MC/wiki/Additions-Fusion) | Active, Press | None (outgoing attacks retain their damage type) |
+| [Prospector](https://github.com/Bithio999/MC/wiki/Additions-Prospector#passive) | [Prospector](https://github.com/Bithio999/MC/wiki/Additions-Prospector) | Passive, Toggle | None |
+| [Refine](https://github.com/Bithio999/MC/wiki/Additions-Prospector#refine) | [Prospector](https://github.com/Bithio999/MC/wiki/Additions-Prospector) | Active, Press | None |
 
 ## Ultimate
 

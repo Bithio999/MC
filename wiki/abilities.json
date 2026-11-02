@@ -1341,5 +1341,27 @@
     "secondary_damage_id": null,
     "anchor": "fuse",
     "mod": "additions"
+  },
+  {
+    "skill": "Additions-Prospector",
+    "name": "Prospector",
+    "tier": "Unique",
+    "kind": "Passive, Toggle",
+    "damage": "None",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "anchor": "passive",
+    "mod": "additions"
+  },
+  {
+    "skill": "Additions-Prospector",
+    "name": "Refine",
+    "tier": "Unique",
+    "kind": "Active, Press",
+    "damage": "None",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "anchor": "refine",
+    "mod": "additions"
   }
 ]

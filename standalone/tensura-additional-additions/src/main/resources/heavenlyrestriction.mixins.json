@@ -42,7 +42,8 @@
     "FusionHiddenMixin",
     "FusionSkillTickMixin",
     "FusionEntityQueryMixin",
-    "FusionCollisionMixin"
+    "FusionCollisionMixin",
+    "ProspectorLootMixin"
   ],
   "injectors": {
     "defaultRequire": 1

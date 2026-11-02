@@ -43,7 +43,7 @@
         {
           "title": "Starting resources",
           "lines": [
-            "1,500\u20132,000 aura and 50\u2013100 magicules. Chained is granted at birth and retained through evolution; starting aura is not multiplied."
+            "1,500–2,000 aura and 50–100 magicules. Chained is granted at birth and retained through evolution; starting aura is not multiplied."
           ]
         },
         {
@@ -58,7 +58,7 @@
         {
           "title": "Progression",
           "lines": [
-            "Use Tensura\u2019s race evolution menu. EP requirements check the total shown in Status. Hunter\u2019s Recovery is granted at Unshackled; Apex Renewal at Heavenly Restricted; Sovereign Rebirth at Heavenbreaker."
+            "Use Tensura’s race evolution menu. EP requirements check the total shown in Status. Hunter’s Recovery is granted at Unshackled; Apex Renewal at Heavenly Restricted; Sovereign Rebirth at Heavenbreaker."
           ]
         },
         {
@@ -71,7 +71,7 @@
         {
           "title": "Starting skill rolls",
           "lines": [
-            "Skills with magicule-cost abilities or target-skill stealing/copying are excluded from Fettered Human\u2019s starting rolls. Pride is exempt; Creator and recorded derived skills remain allowed."
+            "Skills with magicule-cost abilities or target-skill stealing/copying are excluded from Fettered Human’s starting rolls. Pride is exempt; Creator and recorded derived skills remain allowed."
           ]
         }
       ],
@@ -95,12 +95,12 @@
       "id": "chained",
       "title": "Chained",
       "category": "Skills",
-      "summary": "The lineage\u2019s Unique Skill trades magical growth and unrestricted learning for aura and physical combat.",
+      "summary": "The lineage’s Unique Skill trades magical growth and unrestricted learning for aura and physical combat.",
       "sections": [
         {
           "title": "Always active while owned",
           "lines": [
-            "Later maximum-aura gains receive 5\u00d7 growth; existing magicule capacity is retained but cannot grow. EP gains split 90% aura / 10% magicules; the blocked magicule share is not redirected.",
+            "Later maximum-aura gains receive 5× growth; existing magicule capacity is retained but cannot grow. EP gains split 90% aura / 10% magicules; the blocked magicule share is not redirected.",
             "Retain up to 1 magicule per second and convert the remaining computed regeneration, including biome and sleep bonuses, into aura.",
             "Learn Battlewills, resistances/nullifications, reincarnation skills and their derived skills, and lineage recovery skills. Blocked skills remain visible but cannot finish learning. Resistances use their configured acquisition cost in current aura."
           ]
@@ -108,7 +108,7 @@
         {
           "title": "Toggle: Martial Supremacy",
           "lines": [
-            "Battlewill learning/mastery +9; resistance learning +19. Battlewill-sourced attacks deal 5\u00d7 damage; other Physical hits deal 3\u00d7. These branches do not stack. Numeric Battlewill buffs receive 3\u00d7 effectiveness; Aura Sword is excluded."
+            "Battlewill learning/mastery +9; resistance learning +19. Battlewill-sourced attacks deal 5× damage; other Physical hits deal 3×. These branches do not stack. Numeric Battlewill buffs receive 3× effectiveness; Aura Sword is excluded."
           ]
         },
         {
@@ -127,7 +127,7 @@
           "title": "Press: Severance Rush",
           "lines": [
             "Aim and teleport up to 16 blocks, including in the air; stop before the aimed enemy. Physical damage along a 3-block radius and at the 4-block arrival. Cost: 2% current aura. Cooldown: 1 second.",
-            "Base damage: path 1.5 \u00d7 \u221aA + W; arrival 3 \u00d7 \u221aA + W. A is the base aura payment; W is the held weapon contribution. Weapon enchantments and engravings apply."
+            "Base damage: path 1.5 × √A + W; arrival 3 × √A + W. A is the base aura payment; W is the held weapon contribution. Weapon enchantments and engravings apply."
           ]
         }
       ],
@@ -149,13 +149,13 @@
         {
           "title": "Retained pact",
           "lines": [
-            "Retains Chained\u2019s restrictions, aura growth and regeneration conversion. Presets and progress carry over."
+            "Retains Chained’s restrictions, aura growth and regeneration conversion. Presets and progress carry over."
           ]
         },
         {
           "title": "Improved combat",
           "lines": [
-            "Toggle: 8\u00d7 Battlewill damage or 5\u00d7 other Physical damage; 4\u00d7 numeric Battlewill buffs except Aura Sword. The damage branches remain separate.",
+            "Toggle: 8× Battlewill damage or 5× other Physical damage; 4× numeric Battlewill buffs except Aura Sword. The damage branches remain separate.",
             "In slot: 30% damage reduction, 100% projectile dodge and 50% other dodge. Retains Fear, Slowness, Burden and Haki immunity.",
             "Mastered Broken Limit retains resistance degradation and dodge bypass, and makes your attacks critical hits."
           ]
@@ -171,7 +171,7 @@
           "lines": [
             "Press to hold a defensive stance for 3 seconds with movement speed 0. The first eligible enemy hit is negated and releases a terrain-piercing slash toward the attacker, hitting other enemies along its path.",
             "Cost: 10% current aura on entry. Cooldown: 10 seconds. Press again to cancel early for free.",
-            "Physical base damage: 10 \u00d7 negated damage + 6 \u00d7 \u221aA + W. The released weapon\u2019s damage, enchantments and engravings apply; toggle bonuses and critical hits then apply."
+            "Physical base damage: 10 × negated damage + 6 × √A + W. The released weapon’s damage, enchantments and engravings apply; toggle bonuses and critical hits then apply."
           ]
         }
       ],
@@ -197,7 +197,7 @@
         {
           "title": "Effects per stack",
           "lines": [
-            "Mitochondrial: +500% aura regeneration; \u22125% outgoing damage.",
+            "Mitochondrial: +500% aura regeneration; −5% outgoing damage.",
             "Strength: +5 base attack damage; +2% damage taken.",
             "Regenerative: +20% HP/SHP healing received; +5% aura and magicule costs. Healing bonuses apply once and respect native limits."
           ]
@@ -260,7 +260,7 @@
         {
           "title": "Learn",
           "lines": [
-            "Master your permanent Instant Move, then complete its evolution\u2019s learning entry."
+            "Master your permanent Instant Move, then complete its evolution’s learning entry."
           ]
         },
         {
@@ -291,7 +291,7 @@
       "summary": "Toggle a recovery skill to heal with aura. Only your strongest toggled tier works; full reserves cost nothing.",
       "sections": [
         {
-          "title": "Hunter\u2019s Recovery",
+          "title": "Hunter’s Recovery",
           "lines": [
             "Restore 4 HP per second, or 8 mastered, at 20 aura per base HP."
           ]
@@ -353,16 +353,16 @@
       "id": "parallel-world-jumper",
       "title": "Parallel World Jumper",
       "category": "Skills",
-      "summary": "Unique skill \u00b7 Single-player travel through a hidden library of up to 128 worlds.",
+      "summary": "Unique skill · Single-player travel through a hidden library of up to 128 worlds.",
       "sections": [
         {
-          "title": "World Jump \u00b7 Active, Press",
+          "title": "World Jump · Active, Press",
           "lines": [
             "With no destination selected, every dimension regenerates under a new seed. Your character, inventory and progression carry over. The game saves and reloads. Cooldown: 5 minutes, shared by fresh and return jumps. World Select remains usable during cooldown. No resource cost or damage."
           ]
         },
         {
-          "title": "World Select \u00b7 Active, Press \u00b7 Requires Learning",
+          "title": "World Select · Active, Press · Requires Learning",
           "lines": [
             "World Select must be learned separately. Select its mode and press the skill to gain learning points; once learned, pressing it opens the world menu.",
             "Browse previously visited worlds. Search by name or seed, choose a world, then press Set next jump. World Jump travels there once, preserving its terrain, builds and entities while bringing your current character, inventory, skills and progression.",
@@ -409,15 +409,15 @@
       "id": "fusion",
       "title": "Fusion",
       "category": "Skills",
-      "summary": "Unique skill \u00b7 Share a body and skills with a subordinate or consenting player for 3 minutes.",
+      "summary": "Unique skill · Share a body and skills with a subordinate or consenting player for 3 minutes.",
       "sections": [
         {
-          "title": "Fuse \u00b7 Active, Press",
+          "title": "Fuse · Active, Press",
           "lines": [
-            "Aim within 16 blocks at your subordinate or another player. Players must accept the invitation. You control a subordinate\u2019s fused form; a receiving player controls their own fused body.",
-            "Fused EP = (your actual max EP + the target\u2019s actual max EP) \u00d7 1.5. Aura and magicule capacities keep the participants\u2019 combined resource split. Both resources regenerate 10\u00d7 faster; final outgoing damage is doubled.",
+            "Aim within 16 blocks at your subordinate or another player. Players must accept the invitation. You control a subordinate’s fused form; a receiving player controls their own fused body.",
+            "Fused EP = (your actual max EP + the target’s actual max EP) × 1.5. Aura and magicule capacities keep the participants’ combined resource split. Both resources regenerate 10× faster; final outgoing damage is doubled.",
             "HP and SHP combine by addition: maximum HP/SHP and the remaining HP/SHP are each summed. The EP multiplier does not multiply HP or SHP. Native skill menus show the borrowed abilities in their normal categories; use f:temporary to find temporary entries.",
-            "The fused body temporarily has the participants\u2019 skills. Existing learned skills are retained. Borrowed skills and their storage/cooldown state return to their owner after separation; normal acquisition and activation restrictions apply.",
+            "The fused body temporarily has the participants’ skills. Existing learned skills are retained. Borrowed skills and their storage/cooldown state return to their owner after separation; normal acquisition and activation restrictions apply.",
             "Duration: 3 minutes. Press Fuse again or choose Separate Fusion in the pause menu to end early. The absorbed caster can also sneak to separate. No resource cost or additional cooldown."
           ]
         },
@@ -431,13 +431,13 @@
         {
           "title": "Damage type",
           "lines": [
-            "Fuse has no direct attack damage. The \u00d72 multiplier retains each attack\u2019s original damage type, including Physical, magical and direct Spiritual damage."
+            "Fuse has no direct attack damage. The ×2 multiplier retains each attack’s original damage type, including Physical, magical and direct Spiritual damage."
           ]
         },
         {
           "title": "Obtaining",
           "lines": [
-            "Available in normal Unique reincarnation rolls. Excluded from Fettered Human\u2019s roll pool because it borrows target skills."
+            "Available in normal Unique reincarnation rolls. Excluded from Fettered Human’s roll pool because it borrows target skills."
           ]
         }
       ],
@@ -456,6 +456,48 @@
         "parallel-world-jumper"
       ],
       "icon": "heavenlyrestriction:textures/skill/fusion.png"
+    },
+    {
+      "id": "prospector",
+      "title": "Prospector",
+      "category": "Skills",
+      "summary": "Mine faster, gain extra Fortune, sense ores and use native refining.",
+      "icon": "heavenlyrestriction:textures/skill/prospector.png",
+      "keywords": [
+        "mining",
+        "fortune",
+        "ore vision",
+        "magic ore",
+        "Refine",
+        "gems"
+      ],
+      "sections": [
+        {
+          "title": "Passive · Toggle",
+          "lines": [
+            "Mining speed +50%. Fortune +3, added to the tool's existing level; Fortune III becomes effective Fortune VI. The tool is unchanged, and Silk Touch keeps its normal behavior.",
+            "Correctly mining stone or deepslate has a 1% chance to find one extra resource. Common resources are more likely than rare gems; magic ore shards can appear.",
+            "Sense loaded ore deposits through terrain within 32 blocks. Faint markers use distinct colors and glyphs. Look toward a marker for its ore name, number of surveyed ore blocks and distance. Toggle off to hide them."
+          ]
+        },
+        {
+          "title": "Refine · Active, Press",
+          "lines": [
+            "Open Tensura's normal refining menu. Use its existing recipes: base inputs go in the three left slots; reagents go in the five middle slots.",
+            "Use the native Refine/Repeat buttons. Ingredients and output remain stored when the menu closes. Refine works with the passive off."
+          ]
+        },
+        {
+          "title": "Obtaining and cost",
+          "lines": [
+            "Unique skill in the normal reincarnation pool. Eligible for Fettered Human's roll. No aura or magicule activation/upkeep cost. Damage type: None."
+          ]
+        }
+      ],
+      "related": [
+        "welcome",
+        "schema"
+      ]
     }
   ]
 }

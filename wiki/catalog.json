@@ -1217,5 +1217,12 @@
     "category": "Skills",
     "tier": "Unique",
     "mod": "additions"
+  },
+  {
+    "slug": "Additions-Prospector",
+    "title": "Prospector",
+    "category": "Skills",
+    "tier": "Unique",
+    "mod": "additions"
   }
 ]
