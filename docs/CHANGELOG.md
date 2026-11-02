@@ -1,5 +1,10 @@
 # Changelog
 
+## Additions 1.9.1 — Diminishing loan income
+
+- Reduce Loan Shark’s first active gift to 25% EP transfer. Additional active gifts on the same borrower each take 25% of the remaining gain, adding 18.75%, 14.0625%, 10.546875% and so on, approaching 100% total. Split the combined cut equally among active gifts across lenders.
+- Recalculate automatically as gifts enter or leave use; retain existing contracts, earned EP, consent and Claim exclusions. Update the native description, lender menu and F8/wiki guides.
+
 ## Additions 1.9.0 — Loan Shark
 
 - Add the Unique Loan Shark with a searchable skill-gift picker and persistent Report/Claim ledger. Retain mastery, require player acceptance, and show only the sender, skill and mastery in the invitation.

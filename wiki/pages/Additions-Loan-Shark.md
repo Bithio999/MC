@@ -19,7 +19,18 @@ Aim at your **subordinate or a player within 16 blocks**, then open Loan. Search
 
 The recipient gets a separately marked skill copy with **retained mastery**, learned mode progress and current cooldowns. Your original stays yours. Stored inventories, appraisal banks and active effects are not duplicated. Already-owned skills cannot be overwritten; temporary skills, dependent sub-abilities and Loan Shark itself are not lendable. Native acquisition restrictions still apply.
 
-While the gifted skill is **in use, half of all permanent EP gains** goes to you. It includes EP earned through other skills, items or permanent-stat gains during that use. Current aura/magicule recovery is not EP income. Multiple active loans share **one 50% cut**; they do not each remove another half. Transfer payments are not taxed or squared again. Offline lenders receive queued EP credit when available.
+While a gifted skill is **in use**, it transfers **25% of all permanent EP gains**. Additional active gifts on the same borrower stack with diminishing returns: each adds 75% of the previous increase, taking 25% of the EP still remaining.
+
+| Active gifted skills | Total EP transferred |
+| --- | --- |
+| 1 | 25% |
+| 2 | 43.75% |
+| 3 | 57.8125% |
+| 4 | 68.359375% |
+
+The total approaches **100%**, never exceeding it. Split this total equally among the active gifts, including gifts from different lenders. Idle and recalled gifts do not count; gifts to different borrowers stack separately.
+
+Income includes EP earned through other skills, items or permanent-stat gains during use. Current aura/magicule recovery is not EP income. Transfer payments are not taxed or squared again. Offline lenders receive queued EP credit when available. Existing contracts automatically use the new rate; previously earned EP stays earned.
 
 Casting/channeling and attributed hits count as use. Toggles count while enabled; native ticking passives count while ticking; detected in-slot combat passives and Exponentiation count while equipped. Resistances and native pure passives that cannot be slotted remain active while owned. Brief casts/hits count for a one-second window. Native ticking eligibility keeps ongoing passives active between callbacks. An equipped active-only skill is not automatically treated as permanently in use.
 

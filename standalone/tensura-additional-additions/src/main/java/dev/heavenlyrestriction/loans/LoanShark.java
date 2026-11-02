@@ -69,10 +69,39 @@ public final class LoanShark {
     public static void tick(ServerTickEvent.Post event){var s=event.getServer();var d=LoanLedger.get(s);d.clock++;for(var l:d.active())sample(d,l,resolve(s,l.borrower));if(d.clock%20==0){for(var id:List.copyOf(d.pending.keySet()))if(resolve(s,id) instanceof ServerPlayer p)pay(d,p);SESSIONS.entrySet().removeIf(e->e.getValue().expires<d.clock);OFFERS.entrySet().removeIf(e->e.getValue().expires<d.clock);PULSES.entrySet().removeIf(e->e.getValue()<=d.clock);if(d.clock%200==0)SEEN.entrySet().removeIf(e->{var entity=e.getValue().get();return entity==null || entity.isRemoved();});}d.setDirty();}
     public static boolean transferring(){return TRANSFERRING.get()>0;}
     private static void transfer(Runnable action){int before=TRANSFERRING.get();TRANSFERRING.set(before+1);try{action.run();}finally{TRANSFERRING.set(before);}}
-    /** Called after a positive permanent pool write. Take half the actual effective award, respecting native storage limits. */
-    public static void gained(LivingEntity e,AttributeInstance a,double beforeBase,double beforeEffective){if(e==null || e.level().isClientSide() || e.getServer()==null || transferring() || ChainedContext.initializing(e) || ExponentiationContext.restoring(e))return;
-        double delta=a.getBaseValue()-beforeBase,effective=a.getValue()-beforeEffective;if(delta<=0 || effective<=0 || !Double.isFinite(delta+effective))return;var d=LoanLedger.get(e.getServer());var applicable=new LinkedHashSet<>(d.forBorrower(e.getUUID()));var fusion=Fusion.session(e);if(fusion!=null && fusion.pilot==e){applicable.addAll(d.forBorrower(fusion.caster.getUUID()));applicable.addAll(d.forBorrower(fusion.target.getUUID()));}var active=applicable.stream().filter(l->l.open() && active(d,l,e)).toList();if(active.isEmpty())return;see(e);
-        transfer(()->{double full=a.getValue(),factor=slope(a);if(factor<=0 || !Double.isFinite(factor))return;double wanted=beforeEffective+effective*.5;a.setBaseValue((wanted-offset(a))/factor);double taken=Math.max(0,full-a.getValue());if(taken<=0)return;double share=taken/active.size();for(var l:active){l.earned+=share;d.pending.merge(l.lender,share,Double::sum);}d.setDirty();for(var l:active)if(resolve(e.getServer(),l.lender) instanceof ServerPlayer p)pay(d,p);});
+    /** Transfer a diminishing share of the actual award, respecting native storage limits. */
+    public static void gained(LivingEntity e,AttributeInstance a,double beforeBase,double beforeEffective){
+        if(e==null || e.level().isClientSide() || e.getServer()==null || transferring() || ChainedContext.initializing(e) || ExponentiationContext.restoring(e))return;
+        double delta=a.getBaseValue()-beforeBase,effective=a.getValue()-beforeEffective;
+        if(delta<=0 || effective<=0 || !Double.isFinite(delta+effective))return;
+        var d=LoanLedger.get(e.getServer());
+        var applicable=new LinkedHashSet<>(d.forBorrower(e.getUUID()));
+        var fusion=Fusion.session(e);
+        if(fusion!=null && fusion.pilot==e){
+            applicable.addAll(d.forBorrower(fusion.caster.getUUID()));
+            applicable.addAll(d.forBorrower(fusion.target.getUUID()));
+        }
+        var active=applicable.stream().filter(l->l.open() && active(d,l,e)).toList();
+        if(active.isEmpty())return;
+        see(e);
+        transfer(()->{
+            double full=a.getValue(),factor=slope(a);
+            if(factor<=0 || !Double.isFinite(factor))return;
+            // Each gift takes 25% of the remaining gain: 25%, then 18.75%, then 14.0625%.
+            double retained=Math.pow(.75,active.size());
+            double wanted=beforeEffective+effective*retained;
+            a.setBaseValue((wanted-offset(a))/factor);
+            double taken=Math.max(0,full-a.getValue());
+            if(taken<=0)return;
+            // Equal shares keep entitlement independent of gift order.
+            double share=taken/active.size();
+            for(var l:active){
+                l.earned+=share;
+                d.pending.merge(l.lender,share,Double::sum);
+            }
+            d.setDirty();
+            for(var l:active)if(resolve(e.getServer(),l.lender) instanceof ServerPlayer p)pay(d,p);
+        });
     }
     private static double slope(AttributeInstance a){double base=1,total=1;for(var m:a.getModifiers())if(m.operation()==AttributeModifier.Operation.ADD_MULTIPLIED_BASE)base+=m.amount();else if(m.operation()==AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL)total*=1+m.amount();return base*total;}
     private static double offset(AttributeInstance a){double flat=0;for(var m:a.getModifiers())if(m.operation()==AttributeModifier.Operation.ADD_VALUE)flat+=m.amount();return flat*slope(a);}

@@ -553,7 +553,7 @@
       "id": "loan-shark",
       "title": "Loan Shark",
       "category": "Skills",
-      "summary": "Unique · Lend skill copies with retained mastery. Earn half of EP gains while the gifted skill is in use.",
+      "summary": "Unique · Lend skill copies with retained mastery. Transfer 25% of EP gains, stacking with diminishing returns for additional active gifts.",
       "icon": "heavenlyrestriction:textures/skill/loan_shark.png",
       "keywords": [
         "loan",
@@ -579,7 +579,7 @@
         {
           "title": "Income and usage",
           "lines": [
-            "While used, 50% of new permanent EP is transferred to the lender. Multiple active loans share one 50% cut. Current-resource regeneration is not EP. Offline lenders receive queued credit on return.",
+            "Active gifts transfer 25% of new permanent EP for one gift, 43.75% for two, 57.8125% for three and 68.359375% for four. Each additional gift takes 25% of the remaining gain; the total approaches 100% without exceeding it. Count only gifts in use on that borrower; share the total equally among active gifts, including different lenders. Current-resource regeneration is not EP. Offline lenders receive queued credit on return.",
             "Casting/channeling and attributed hits count as use; toggles count while enabled, native ticking passives while ticking, and detected in-slot passives while equipped. Resistances are continuously active while owned. Brief casts/hits use a one-second activity window."
           ]
         },
