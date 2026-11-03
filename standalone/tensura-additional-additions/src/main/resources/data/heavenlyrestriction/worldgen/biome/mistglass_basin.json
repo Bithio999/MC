@@ -85,21 +85,21 @@
     "monster": [
       {
         "type": "tensura:lizardman",
-        "weight": 12,
+        "weight": 10,
         "minCount": 1,
         "maxCount": 2
       },
       {
-        "type": "minecraft:stray",
-        "weight": 9,
+        "type": "tensura:basilisk",
+        "weight": 6,
         "minCount": 1,
-        "maxCount": 2
+        "maxCount": 1
       },
       {
-        "type": "minecraft:enderman",
+        "type": "tensura:greater_daemon",
         "weight": 4,
         "minCount": 1,
-        "maxCount": 2
+        "maxCount": 1
       }
     ],
     "underground_water_creature": [],

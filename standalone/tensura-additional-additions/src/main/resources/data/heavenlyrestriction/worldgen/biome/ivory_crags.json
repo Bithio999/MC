@@ -83,22 +83,28 @@
     "misc": [],
     "monster": [
       {
-        "type": "minecraft:husk",
-        "weight": 12,
-        "minCount": 1,
-        "maxCount": 2
-      },
-      {
-        "type": "minecraft:wither_skeleton",
-        "weight": 5,
-        "minCount": 1,
-        "maxCount": 2
-      },
-      {
         "type": "tensura:orc",
-        "weight": 9,
+        "weight": 10,
         "minCount": 1,
         "maxCount": 2
+      },
+      {
+        "type": "tensura:armorsaurus",
+        "weight": 7,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "tensura:horned_bear",
+        "weight": 6,
+        "minCount": 1,
+        "maxCount": 2
+      },
+      {
+        "type": "tensura:lesser_daemon",
+        "weight": 4,
+        "minCount": 1,
+        "maxCount": 1
       }
     ],
     "underground_water_creature": [],

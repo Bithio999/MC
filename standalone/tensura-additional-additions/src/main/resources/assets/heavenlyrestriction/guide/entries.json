@@ -625,9 +625,11 @@
         {
           "title": "Explore",
           "lines": [
-            "Ivory Crags: calcite and basalt ridges with elite Husks, Wither Skeletons and Orcs. Starwood Grove: cherry groves with elite Zombies, Spiders and Direwolves. Mistglass Basin: mossy basins with elite Strays, Endermen and Lizardmen.",
-            "These retain their original models and AI, with 2.5–5 million EP, enhanced HP/SHP and native resistances. Bosses, summons and player-owned mobs are never upgraded.",
-            "Find native magic ore, emeralds and rare diamonds in the pale stone. Player/subordinate elite kills retain normal loot and EP and add amethyst, with occasional magic ore or rare Netherite Scrap."
+            "Ivory Crags: elite Orcs, Armorsauruses, Horned Bears and Lesser Daemons. Starwood Grove: elite Direwolves, Blade Tigers and Knight Spiders. Mistglass Basin: elite Lizardmen, Basilisks and Greater Daemons. All natural spawns in the pool are Tensura creatures; bosses are excluded.",
+            "Elites retain native models, animations and combat AI, with 2.5–5 million base EP and at least 9–10 mastered skills. Their passives are enabled, and Fighter/Berserker are equipped where required. Shared defenses, sensing and Ultraspeed Regeneration are supplemented by species-specific combat skills and Uniques.",
+            "Lesser Daemons cast Fire, Water Cutter, Wind Cutter, Stone Shot and Fire Ball. Greater Daemons cast Fire Lance, Acid Shell, Icicle Lance, Tornado Blade, Thunder Orb, Stone Shot and Sleep Mist. Their native brains use spell animations, magic circles, projectiles and magicule costs.",
+            "Find native magic ore, emeralds and rare diamonds in the pale stone. Elite kills retain normal loot and EP and add amethyst, with occasional magic ore or rare Netherite Scrap.",
+            "Existing eligible unowned Tensura elites receive the expanded skill package without refilling resources or resetting EP. Existing vanilla elites are no longer spawned and remain until normal despawning. Owned mobs and summons are not upgraded."
           ]
         },
         {

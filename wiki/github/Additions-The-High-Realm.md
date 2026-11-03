@@ -37,19 +37,53 @@ The realm stays in twilight. Terrain uses existing Minecraft and Tensura blocks,
 
 | Biome | Landscape | Elite inhabitants |
 | --- | --- | --- |
-| Ivory Crags | Calcite mountains with dark basalt bands | Husks, Wither Skeletons, Orcs |
-| Starwood Grove | Pale grass and cherry groves | Zombies, Spiders, Direwolves |
-| Mistglass Basin | Mossy basins, clay and turquoise water | Strays, Endermen, Lizardmen |
+| Ivory Crags | Calcite mountains with basalt bands | Orcs, Armorsauruses, Horned Bears, Lesser Daemons |
+| Starwood Grove | Pale grass and cherry groves | Direwolves, Blade Tigers, Knight Spiders |
+| Mistglass Basin | Mossy basins, clay and turquoise water | Lizardmen, Basilisks, Greater Daemons |
 
-Elites retain their original models and behavior. **Bosses are excluded.** Player-owned mobs, summons and mobs brought from elsewhere are not upgraded.
+The natural spawn pool is **entirely Tensura mobs**. **Bosses are excluded**, including the boss-class greater elemental spirits. Elites retain their models, animations and native combat behavior. They alert to nearby survival players, including players with higher EP. Owned mobs, summons and imports are not upgraded.
 
-| Elite | Members | EP | HP | SHP | Native abilities |
-| --- | --- | ---: | ---: | ---: | --- |
-| High Bulwark | Husk, Wither Skeleton, Orc | 5,000,000 | 1,024 | 5,000 | Physical Attack Resistance; Strengthen Body |
-| High Sentinel | Stray, Enderman, Lizardman | 3,500,000 | 850 | 3,200 | Magic Resistance; Water Attack Resistance |
-| High Stalker | Zombie, Spider, Direwolf | 2,500,000 | 700 | 2,400 | Poison Resistance; Paralysis Resistance |
+| Archetype | Members | Base EP | HP floor | SHP floor |
+| --- | --- | ---: | ---: | ---: |
+| High Bulwark | Orc, Armorsaurus, Horned Bear | 5,000,000 | 1,024 | 5,000 |
+| High Sentinel | Lizardman, Basilisk, Lesser/Greater Daemon | 3,500,000 | 850 | 3,200 |
+| High Stalker | Direwolf, Blade Tiger, Knight Spider | 2,500,000 | 700 | 2,400 |
 
-These are default stat floors; native effects can alter final attributes. Elites also have stronger attacks, armor and senses. Sentinels' arrows are enhanced. Player or subordinate kills retain normal loot and EP rewards and add **1–3 Amethyst Shards**, with a **20%** chance of native Magic Ore and a **2%** chance of Netherite Scrap. Dropped elite equipment is not an extra guaranteed reward.
+Native skills can alter final stats. All elites gain **9–10 mastered skills** in addition to their retained native abilities. Their toggles are enabled; skills that require a preset slot are equipped.
+
+### Shared skills
+
+Every elite receives **Physical Attack Resistance**, **Magic Resistance**, **Magic Sense**, **Danger Sense**, and **Ultraspeed Regeneration**. Regeneration uses the native resource costs; these enemies do not receive Infinite Regeneration.
+
+### Species specialties
+
+These supplement the shared skills.
+
+| Species | Added skills |
+| --- | --- |
+| Orc | **Berserker**, Steel Strength, Strengthen Body, Pain Resistance |
+| Armorsaurus | **Survivor**, Body Armor, Scale Armor, Pierce Resistance |
+| Horned Bear | **Fighter**, Strength, Steel Strength, Pain Resistance |
+| Direwolf | Godwolf Sense, Steel Strength, Electricity Resistance, Paralysis Resistance |
+| Blade Tiger | **Seer**, **Fighter**, Steel Strength, Wind Attack Resistance |
+| Knight Spider | Body Armor, Steel Strength, Poison, Poison Resistance, Paralysis Resistance |
+| Lizardman | Scale Armor, Water Breathing, **Fighter**, Water Attack Resistance |
+| Basilisk | Scale Armor, Poison, Paralysis, Poison Nullification, Paralysis Nullification |
+| Lesser Daemon | Mana Manipulation, Flame Manipulation, Water Manipulation, Wind Manipulation |
+| Greater Daemon | Mana Manipulation, Flame Manipulation, Water Manipulation, Wind Manipulation, Lightning Manipulation |
+
+### Combat magic
+
+The daemon spells are actually used by their native combat AI, with native casting circles, attack animations, projectiles and magicule costs. Elemental manipulation skills strengthen their corresponding magic.
+
+| Caster | Magics |
+| --- | --- |
+| Lesser Daemon | Fire (bolt), Water Cutter, Wind Cutter, Stone Shot, Fire Ball |
+| Greater Daemon | Fire Lance, Acid Shell, Icicle Lance, Tornado Blade, Thunder Orb, Stone Shot, Sleep Mist |
+
+### Rewards
+
+Player or subordinate kills retain normal loot and EP and add **1–3 Amethyst Shards**, with a **20%** chance of native Magic Ore and a **2%** chance of Netherite Scrap.
 
 ## Returning
 
@@ -62,6 +96,8 @@ The small arrival sanctum is protected from normal block edits. Natural hostile 
 ## Saves and settings
 
 The dimension is added to existing saves. Its terrain, awakened gates and individual return points persist after a restart. [World Hop](https://github.com/Bithio999/MC/wiki/Additions-Parallel-World-Jumper) generates a fresh realm for a new seed; returning to a previously visited world restores that world's realm.
+
+Existing eligible unowned Tensura elites receive the new skill package without refilling their resources or resetting their EP. Existing vanilla elites are left to despawn normally; no new vanilla elites spawn.
 
 Server settings are in `serverconfig/tensura-additions-high-realm.toml`: `entryEP`, `gateChargeTicks`, `elitePower`, and `eliteSpawns`. Changing elite strength affects new spawns. Up to **256 awakened gates** can be registered in one world.
 

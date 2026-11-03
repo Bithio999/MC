@@ -43,8 +43,10 @@ public final class HighRealmGameTests {
     return l;
   }
 
-  static net.minecraft.world.entity.monster.Husk husk(ServerLevel l) {
-    var m = new net.minecraft.world.entity.monster.Husk(EntityType.HUSK, l);
+  static io.github.manasmods.tensura.entity.monster.OrcEntity orc(ServerLevel l) {
+    var m =
+        new io.github.manasmods.tensura.entity.monster.OrcEntity(
+            io.github.manasmods.tensura.registry.entity.MonsterEntityTypes.ORC.get(), l);
     m.setPos(96, 160, 96);
     return m;
   }
@@ -176,10 +178,11 @@ public final class HighRealmGameTests {
   public static void eliteUpgradePreservesIdentityGrantsNativeSkillsAndNeverRepeats(
       GameTestHelper h) {
     var l = realm(h);
-    var m = husk(l);
+    var m = orc(l);
     h.assertTrue(HighRealmElites.empower(m), "Elite upgrade failed");
     h.assertTrue(
-        m.getType() == EntityType.HUSK && m.getMaxHealth() >= 1000,
+        m.getType() == io.github.manasmods.tensura.registry.entity.MonsterEntityTypes.ORC.get()
+            && m.getMaxHealth() >= 1000,
         "Elite identity/stats incorrect");
     near(h, EnergyHelper.getBaseMaxEP(m), 5000000 * HighRealmConfig.ELITE_POWER.get(), "Elite EP");
     h.assertTrue(
@@ -195,7 +198,7 @@ public final class HighRealmGameTests {
     m.setHealth(37);
     var tag = new CompoundTag();
     m.saveWithoutId(tag);
-    var restored = husk(l);
+    var restored = orc(l);
     restored.load(tag);
     h.assertTrue(!HighRealmElites.empower(restored), "Reload upgraded elite twice");
     near(h, restored.getHealth(), 37, "Reload healed elite");
@@ -213,20 +216,20 @@ public final class HighRealmGameTests {
       h.assertTrue(
           !(entity instanceof Mob mob) || !HighRealmElites.empower(mob), "Forbidden elite " + type);
     }
-    var m = husk(l);
+    var m = orc(l);
     TensuraStorages.getExistenceFrom(m).setPermanentOwner(UUID.randomUUID());
     h.assertTrue(!HighRealmElites.empower(m), "Owned subordinate upgraded");
-    var summoned = husk(l);
+    var summoned = orc(l);
     TensuraStorages.getExistenceFrom(summoned).setSummoner(UUID.randomUUID());
     h.assertTrue(!HighRealmElites.empower(summoned), "Summon upgraded");
-    h.assertTrue(!HighRealmElites.empower(husk(h.getLevel())), "Overworld mob upgraded");
+    h.assertTrue(!HighRealmElites.empower(orc(h.getLevel())), "Overworld mob upgraded");
     h.succeed();
   }
 
   @GameTest(template = "empty", timeoutTicks = 200)
   public static void naturalSpawnsAreMarkedButImportedMobsAreUntouched(GameTestHelper h) {
     var l = realm(h);
-    var m = husk(l);
+    var m = orc(l);
     var event =
         new FinalizeSpawnEvent(
             m,
@@ -244,10 +247,10 @@ public final class HighRealmGameTests {
         "Natural elite not marked");
     NeoForge.EVENT_BUS.post(new EntityJoinLevelEvent(m, l));
     h.assertTrue(HighRealmElites.elite(m), "Natural join not empowered");
-    var imported = husk(l);
+    var imported = orc(l);
     NeoForge.EVENT_BUS.post(new EntityJoinLevelEvent(imported, l));
     h.assertTrue(!HighRealmElites.elite(imported), "Imported mob silently upgraded");
-    var summoned = husk(l);
+    var summoned = orc(l);
     NeoForge.EVENT_BUS.post(
         new FinalizeSpawnEvent(
             summoned,
@@ -273,7 +276,7 @@ public final class HighRealmGameTests {
     var center = new BlockPos(96, 160, 96);
     d.sanctuary = center;
     try {
-      var mob = husk(l);
+      var mob = orc(l);
       var spawn =
           new FinalizeSpawnEvent(
               mob,
@@ -315,7 +318,7 @@ public final class HighRealmGameTests {
   @GameTest(template = "empty", timeoutTicks = 200)
   public static void eliteRewardsUseNativeEpAndArrowsReceiveTheEliteBonus(GameTestHelper h) {
     var l = realm(h);
-    var mob = husk(l);
+    var mob = orc(l);
     HighRealmElites.empower(mob);
     var p = LoanSharkGameTests.actor(h);
     double before = EnergyHelper.getMaxEP(p);

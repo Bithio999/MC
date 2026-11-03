@@ -1,0 +1,253 @@
+package dev.heavenlyrestriction;
+
+import static dev.heavenlyrestriction.ChainedGameTests.near;
+
+import dev.heavenlyrestriction.highrealm.*;
+import io.github.manasmods.manascore.skill.api.SkillAPI;
+import io.github.manasmods.tensura.entity.monster.*;
+import io.github.manasmods.tensura.entity.template.subclass.IDaemon;
+import io.github.manasmods.tensura.registry.skill.*;
+import io.github.manasmods.tensura.storage.TensuraStorages;
+import io.github.manasmods.tensura.util.EnergyHelper;
+import java.util.*;
+import net.minecraft.core.*;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.gametest.framework.*;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.level.block.Blocks;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.entity.*;
+import net.neoforged.neoforge.event.entity.living.MobSpawnEvent;
+import net.neoforged.neoforge.gametest.*;
+import net.tslat.smartbrainlib.util.BrainUtils;
+
+@GameTestHolder(HeavenlyRestriction.ID)
+@PrefixGameTestTemplate(false)
+public final class HighRealmLoadoutGameTests {
+  static Mob mob(ServerLevel l, String name) {
+    return (Mob)
+        BuiltInRegistries.ENTITY_TYPE.get(ResourceLocation.parse("tensura:" + name)).create(l);
+  }
+
+  @GameTest(template = "empty", templateNamespace = "heavenlyrestriction", timeoutTicks = 100)
+  public static void eliteAlertTargetsHigherEpPlayersButNeverCreativeOrOwned(GameTestHelper h) {
+    var l = HighRealmGameTests.realm(h);
+    var core = new BlockPos(128, 210, 128);
+    for (int x = -4; x <= 8; x++)
+      for (int z = -4; z <= 4; z++)
+        for (int y = 0; y < 7; y++)
+          l.setBlock(core.offset(x, y, z), Blocks.AIR.defaultBlockState(), 2);
+    var p =
+        net.neoforged.neoforge.common.util.FakePlayerFactory.get(
+            l, new com.mojang.authlib.GameProfile(UUID.randomUUID(), "RealmIntruder"));
+    p.setPos(128.5, 210, 128.5);
+    p.setGameMode(net.minecraft.world.level.GameType.SURVIVAL);
+    EnergyHelper.setBaseMaxEP(p, 20000000);
+    l.addNewPlayer(p);
+    try {
+      var m = mob(l, "orc");
+      m.setPos(134.5, 210, 128.5);
+      HighRealmElites.empower(m);
+      HighRealmAggro.update(m);
+      h.assertTrue(
+          m.getTarget() == p && BrainUtils.getTargetOfEntity(m) == p,
+          "Elite did not alert to stronger player");
+      p.setGameMode(net.minecraft.world.level.GameType.CREATIVE);
+      HighRealmAggro.update(m);
+      h.assertTrue(
+          m.getTarget() == null && BrainUtils.getTargetOfEntity(m) == null,
+          "Creative target retained");
+      p.setGameMode(net.minecraft.world.level.GameType.SURVIVAL);
+      TensuraStorages.getExistenceFrom(m).setPermanentOwner(p.getUUID());
+      HighRealmAggro.update(m);
+      h.assertTrue(m.getTarget() == null, "Owned mob made hostile");
+    } finally {
+      l.removePlayerImmediately(p, Entity.RemovalReason.DISCARDED);
+    }
+    h.succeed();
+  }
+
+  @GameTest(template = "empty", templateNamespace = "heavenlyrestriction", timeoutTicks = 200)
+  public static void everySpawnIsTensuraWithMasteredUsableSpeciesLoadout(GameTestHelper h) {
+    var l = HighRealmGameTests.realm(h);
+    int count = 0;
+    for (var holder : BuiltInRegistries.ENTITY_TYPE.getTagOrEmpty(HighRealmElites.TYPES)) {
+      h.assertTrue(
+          BuiltInRegistries.ENTITY_TYPE.getKey(holder.value()).getNamespace().equals("tensura"),
+          "Vanilla spawn remains");
+      var m = (Mob) holder.value().create(l);
+      h.assertTrue(HighRealmElites.empower(m), "Profile rejected " + holder);
+      var plan = HighRealmLoadouts.forMob(m);
+      h.assertTrue(plan != null && plan.skills().size() >= 9, "Sparse loadout " + holder);
+      count++;
+      for (var skill : plan.skills()) {
+        var i = SkillAPI.getSkillsFrom(m).getSkill(skill).orElseThrow();
+        h.assertTrue(
+            i.getMastery() == i.getMaxMastery(), "Unmastered skill " + skill.getRegistryName());
+        if (i.canBeToggled(m))
+          h.assertTrue(i.isToggled(), "Disabled passive " + skill.getRegistryName());
+      }
+      for (var spell : plan.spells())
+        h.assertTrue(
+            ((IDaemon) m).getMagic(m, spell) != null,
+            "Native caster cannot access spell " + spell.getRegistryName());
+      if (plan.skills().contains(UniqueSkills.FIGHTER.get()))
+        h.assertTrue(
+            TensuraStorages.getAbilityFrom(m).getAbilitySlot(0, 0).getSkill()
+                == UniqueSkills.FIGHTER.get(),
+            "Fighter not equipped");
+    }
+    h.assertTrue(count == 10, "Unexpected pool size " + count);
+    h.succeed();
+  }
+
+  @GameTest(template = "empty", templateNamespace = "heavenlyrestriction", timeoutTicks = 100)
+  public static void existingElitesGainSkillsWithoutRefillsOrStatGrowth(GameTestHelper h) {
+    var m = mob(HighRealmGameTests.realm(h), "orc");
+    m.getPersistentData().putBoolean(HighRealmElites.MARKER, true);
+    m.getAttribute(Attributes.MAX_HEALTH).setBaseValue(1024);
+    m.setHealth(37);
+    EnergyHelper.setBaseMaxEP(m, 5000000);
+    var pool = TensuraStorages.getExistenceFrom(m);
+    pool.setAura(123);
+    pool.setMagicule(234);
+    pool.setSpiritualHealth(12);
+    HighRealmLoadouts.apply(m);
+    h.assertTrue(
+        SkillAPI.getSkillsFrom(m).getSkill(UniqueSkills.BERSERKER.get()).isPresent(),
+        "Saved elite not upgraded");
+    near(h, m.getHealth(), 37, "Migration healed");
+    near(h, pool.getAura(), 123, "Migration refilled aura");
+    near(h, pool.getMagicule(), 234, "Migration refilled magicules");
+    near(h, pool.getSpiritualHealth(), 12, "Migration refilled SHP");
+    double attack = m.getAttributeValue(Attributes.ATTACK_DAMAGE);
+    h.assertTrue(!HighRealmLoadouts.apply(m), "Upgrade repeated");
+    near(h, m.getAttributeValue(Attributes.ATTACK_DAMAGE), attack, "Modifiers stacked");
+    var owned = mob((ServerLevel) m.level(), "orc");
+    owned.getPersistentData().putBoolean(HighRealmElites.MARKER, true);
+    TensuraStorages.getExistenceFrom(owned).setPermanentOwner(UUID.randomUUID());
+    h.assertTrue(!HighRealmLoadouts.apply(owned), "Owned mob modified");
+    h.succeed();
+  }
+
+  @GameTest(template = "empty", templateNamespace = "heavenlyrestriction", timeoutTicks = 200)
+  public static void realmSurfaceRulesPermitNativeMobsButPreserveObstructionsAndOtherWorlds(
+      GameTestHelper h) {
+    var l = HighRealmGameTests.realm(h);
+    var m = mob(l, "lizardman");
+    var at = new BlockPos(160, 200, 160);
+    m.setPos(at.getX() + .5, at.getY(), at.getZ() + .5);
+    for (int x = -3; x <= 3; x++)
+      for (int z = -3; z <= 3; z++) {
+        l.setBlock(at.offset(x, -1, z), Blocks.MOSS_BLOCK.defaultBlockState(), 2);
+        for (int y = 0; y < 6; y++)
+          l.setBlock(at.offset(x, y, z), Blocks.AIR.defaultBlockState(), 2);
+        l.setBlock(at.offset(x, 6, z), Blocks.STONE.defaultBlockState(), 2);
+      }
+    var position = new MobSpawnEvent.PositionCheck(m, l, MobSpawnType.NATURAL, null);
+    NeoForge.EVENT_BUS.post(position);
+    h.assertTrue(
+        position.getResult() == MobSpawnEvent.PositionCheck.Result.SUCCEED,
+        "Lizardman still limited to below Y70 caves");
+    l.setBlock(at, Blocks.STONE.defaultBlockState(), 2);
+    var blocked = new MobSpawnEvent.PositionCheck(m, l, MobSpawnType.NATURAL, null);
+    NeoForge.EVENT_BUS.post(blocked);
+    h.assertTrue(
+        blocked.getResult() == MobSpawnEvent.PositionCheck.Result.FAIL,
+        "Obstructed spawn accepted");
+    var other =
+        new MobSpawnEvent.SpawnPlacementCheck(
+            m.getType(), h.getLevel(), MobSpawnType.NATURAL, at, l.random, false);
+    NeoForge.EVENT_BUS.post(other);
+    h.assertTrue(
+        other.getResult() == MobSpawnEvent.SpawnPlacementCheck.Result.DEFAULT,
+        "Overworld spawn rules changed");
+    l.setBlock(at, Blocks.AIR.defaultBlockState(), 2);
+    h.runAfterDelay(
+        10,
+        () -> {
+          boolean success = false;
+          for (int n = 0; n < 24; n++) {
+            var e =
+                new MobSpawnEvent.SpawnPlacementCheck(
+                    m.getType(), l, MobSpawnType.NATURAL, at, l.random, false);
+            NeoForge.EVENT_BUS.post(e);
+            success |= e.getPlacementCheckResult();
+          }
+          h.assertTrue(success, "Realm placement rule still rejects moss surface");
+          h.succeed();
+        });
+  }
+
+  @GameTest(template = "empty", templateNamespace = "heavenlyrestriction", timeoutTicks = 500)
+  public static void lesserDaemonBrainActuallyCastsLearnedCombatMagic(GameTestHelper h) {
+    fight(h, "lesser_daemon", 224);
+  }
+
+  @GameTest(template = "empty", templateNamespace = "heavenlyrestriction", timeoutTicks = 500)
+  public static void greaterDaemonBrainActuallyCastsLearnedCombatMagic(GameTestHelper h) {
+    fight(h, "greater_daemon", 288);
+  }
+
+  private static void fight(GameTestHelper h, String species, int x) {
+    var l = HighRealmGameTests.realm(h);
+    var at = new BlockPos(x, 210, 224);
+    for (int dx = -8; dx <= 24; dx++)
+      for (int z = -8; z <= 8; z++) {
+        l.setBlock(at.offset(dx, -1, z), Blocks.STONE.defaultBlockState(), 2);
+        for (int y = 0; y < 9; y++)
+          l.setBlock(at.offset(dx, y, z), Blocks.AIR.defaultBlockState(), 2);
+      }
+    for (int dx = -1; dx <= 1; dx++)
+      for (int dz = -1; dz <= 1; dz++)
+        l.setChunkForced((at.getX() >> 4) + dx, (at.getZ() >> 4) + dz, true);
+    var mage = mob(l, species);
+    mage.setPos(at.getX() + .5, at.getY(), at.getZ() + .5);
+    var projectiles = new java.util.concurrent.atomic.AtomicInteger();
+    var circles = new java.util.concurrent.atomic.AtomicInteger();
+    java.util.function.Consumer<EntityJoinLevelEvent> watch =
+        e -> {
+          if (e.getEntity() instanceof Projectile projectile && projectile.getOwner() == mage) {
+            if (projectile.getClass().getPackageName().contains("projectile.magic"))
+              projectiles.incrementAndGet();
+            if (projectile instanceof io.github.manasmods.tensura.entity.magic.MagicCircle circle
+                && circle.getMpCost() > 0) circles.incrementAndGet();
+          }
+        };
+    NeoForge.EVENT_BUS.addListener(watch);
+    mage.setNoGravity(true);
+    mage.finalizeSpawn(l, l.getCurrentDifficultyAt(at), MobSpawnType.NATURAL, null);
+    mage.getPersistentData().putBoolean(HighRealmElites.CANDIDATE, true);
+    l.addFreshEntity(mage);
+    var target = EntityType.PIG.create(l);
+    target.setPos(at.getX() + 14.5, at.getY(), at.getZ() + .5);
+    target.setNoAi(true);
+    target.setNoGravity(true);
+    target.getAttribute(Attributes.MAX_HEALTH).setBaseValue(1024);
+    target.setHealth(1024);
+    l.addFreshEntity(target);
+    mage.setLastHurtByMob(target);
+    mage.setTarget(target);
+    BrainUtils.setTargetOfEntity(mage, target);
+    double initial = TensuraStorages.getExistenceFrom(mage).getMagicule();
+    h.succeedWhen(
+        () -> {
+          h.assertTrue(
+              projectiles.get() > 0,
+              "Native brain has not spawned a magic projectile; age="
+                  + mage.tickCount
+                  + ", targetAlive="
+                  + target.isAlive()
+                  + ", circles="
+                  + circles.get());
+          h.assertTrue(circles.get() > 0, "Native casting circle with magicule cost missing");
+          NeoForge.EVENT_BUS.unregister(watch);
+          mage.discard();
+          target.discard();
+        });
+  }
+}

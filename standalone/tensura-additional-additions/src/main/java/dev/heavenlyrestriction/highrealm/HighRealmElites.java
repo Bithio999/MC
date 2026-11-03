@@ -1,7 +1,6 @@
 package dev.heavenlyrestriction.highrealm;
 
 import dev.heavenlyrestriction.*;
-import io.github.manasmods.manascore.skill.api.SkillAPI;
 import io.github.manasmods.tensura.data.TensuraEntityTags;
 import io.github.manasmods.tensura.registry.attribute.TensuraAttributes;
 import io.github.manasmods.tensura.registry.skill.*;
@@ -49,6 +48,11 @@ public final class HighRealmElites {
     NeoForge.EVENT_BUS.addListener(HighRealmElites::spawning);
     NeoForge.EVENT_BUS.addListener(HighRealmElites::joined);
     NeoForge.EVENT_BUS.addListener(HighRealmElites::drops);
+    NeoForge.EVENT_BUS.addListener(HighRealmAggro::tick);
+    NeoForge.EVENT_BUS.addListener(
+        net.neoforged.bus.api.EventPriority.LOWEST, HighRealmSpawns::placement);
+    NeoForge.EVENT_BUS.addListener(
+        net.neoforged.bus.api.EventPriority.LOWEST, HighRealmSpawns::position);
   }
 
   public static boolean elite(Entity mob) {
@@ -59,6 +63,7 @@ public final class HighRealmElites {
     return mob.getType().is(TYPES)
         && mob.getType() != EntityType.WITHER
         && mob.getType() != EntityType.ENDER_DRAGON
+        && !(mob instanceof io.github.manasmods.tensura.entity.template.GreaterSpiritEntity)
         && !mob.getType().is(BOSSES)
         && !mob.getType().is(TensuraEntityTags.HERO_BOSS)
         && !mob.getType().is(TensuraEntityTags.CLONES);
@@ -66,9 +71,12 @@ public final class HighRealmElites {
 
   public static Kind kind(Mob mob) {
     String id = BuiltInRegistries.ENTITY_TYPE.getKey(mob.getType()).getPath();
-    return Set.of("husk", "orc", "wither_skeleton").contains(id)
+    return Set.of("husk", "orc", "wither_skeleton", "armorsaurus", "horned_bear").contains(id)
         ? Kind.BULWARK
-        : Set.of("stray", "lizardman", "enderman").contains(id) ? Kind.SENTINEL : Kind.SKIRMISHER;
+        : Set.of("stray", "lizardman", "enderman", "basilisk", "lesser_daemon", "greater_daemon")
+                .contains(id)
+            ? Kind.SENTINEL
+            : Kind.SKIRMISHER;
   }
 
   private static void spawning(FinalizeSpawnEvent e) {
@@ -93,6 +101,7 @@ public final class HighRealmElites {
     if (e.getEntity() instanceof Mob mob
         && e.getLevel().dimension().equals(HighRealm.LEVEL)
         && mob.getPersistentData().getBoolean(CANDIDATE)) empower(mob);
+    if (e.getEntity() instanceof Mob mob && elite(mob)) HighRealmLoadouts.apply(mob);
     if (e.getEntity() instanceof AbstractArrow arrow
         && arrow.getOwner() instanceof Mob mob
         && elite(mob))
@@ -104,14 +113,17 @@ public final class HighRealmElites {
     if (a != null) a.setBaseValue(value);
   }
 
+  public static boolean unowned(Mob mob) {
+    return TensuraStorages.getExistenceFrom(mob).getPermanentOwner() == null
+        && TensuraStorages.getExistenceFrom(mob).getSummoner() == null
+        && !(mob instanceof net.minecraft.world.entity.TamableAnimal pet && pet.isTame());
+  }
+
   public static boolean empower(Mob mob) {
     if (elite(mob)
         || !candidate(mob)
         || !mob.level().dimension().equals(HighRealm.LEVEL)
-        || TensuraStorages.getExistenceFrom(mob).getPermanentOwner() != null
-        || TensuraStorages.getExistenceFrom(mob).getSummoner() != null
-        || mob instanceof net.minecraft.world.entity.TamableAnimal pet && pet.isTame())
-      return false;
+        || !unowned(mob)) return false;
     var k = kind(mob);
     double power = HighRealmConfig.ELITE_POWER.get();
     mob.getPersistentData().putBoolean(MARKER, true);
@@ -140,23 +152,7 @@ public final class HighRealmElites {
     energy.setAura(EnergyHelper.getMaxAura(mob));
     energy.setMagicule(EnergyHelper.getMaxMagicule(mob));
     energy.markDirty();
-    if (k == Kind.BULWARK) {
-      RestrictionData.learnReward(mob, ResistanceSkills.PHYSICAL_ATTACK_RESISTANCE.get());
-      RestrictionData.learnReward(mob, ExtraSkills.STRENGTHEN_BODY.get());
-      SkillAPI.getSkillsFrom(mob)
-          .getSkill(ExtraSkills.STRENGTHEN_BODY.get())
-          .ifPresent(
-              i -> {
-                i.setToggled(true);
-                i.onToggleOn(mob);
-              });
-    } else if (k == Kind.SENTINEL) {
-      RestrictionData.learnReward(mob, ResistanceSkills.MAGIC_RESISTANCE.get());
-      RestrictionData.learnReward(mob, ResistanceSkills.WATER_ATTACK_RESISTANCE.get());
-    } else {
-      RestrictionData.learnReward(mob, ResistanceSkills.POISON_RESISTANCE.get());
-      RestrictionData.learnReward(mob, ResistanceSkills.PARALYSIS_RESISTANCE.get());
-    }
+    HighRealmLoadouts.apply(mob);
     String title =
         k == Kind.BULWARK
             ? "High Bulwark "

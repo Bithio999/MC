@@ -1,5 +1,11 @@
 # Changelog
 
+## Additions 1.10.1 — High Realm enemies
+
+- Replace the High Realm’s natural spawn pool with ten Tensura ordinary mob species; keep bosses and greater elemental spirit bosses excluded.
+- Give each species 9–10 mastered, enabled native skills, including distinct Unique skills and native regeneration. Equip slot-dependent passives and preserve saved elite resources during loadout upgrades.
+- Add Lesser/Greater Daemons with five/seven combat magics, driven by their native spell AI. Make realm elites alert to nearby players, and use realm-specific valid surface spawn rules while preserving collisions and all other dimensions’ rules.
+
 ## Additions 1.10.0 — The High Realm
 
 - Add a persistent late-game dimension with three biomes, pale amplified ridges, native ore deposits and elite ordinary mobs. Existing saves gain the dimension automatically.

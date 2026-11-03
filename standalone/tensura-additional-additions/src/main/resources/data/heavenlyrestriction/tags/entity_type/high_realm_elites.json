@@ -1,14 +1,15 @@
 {
   "replace": false,
   "values": [
-    "minecraft:husk",
-    "minecraft:stray",
-    "minecraft:wither_skeleton",
-    "minecraft:enderman",
-    "minecraft:spider",
-    "minecraft:zombie",
     "tensura:orc",
+    "tensura:armorsaurus",
+    "tensura:horned_bear",
     "tensura:direwolf",
-    "tensura:lizardman"
+    "tensura:blade_tiger",
+    "tensura:knight_spider",
+    "tensura:lizardman",
+    "tensura:basilisk",
+    "tensura:lesser_daemon",
+    "tensura:greater_daemon"
   ]
 }

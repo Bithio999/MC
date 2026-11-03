@@ -4,7 +4,7 @@ import argparse,json,re,shutil,subprocess,tempfile
 from pathlib import Path
 from urllib.parse import urlsplit
 ROOT=Path(__file__).resolve().parents[1];WIKI=ROOT/'wiki';REPO='https://github.com/Bithio999/MC';WIKI_URL=REPO+'/wiki'
-MODS={'myths':('Tensura Myths','0.36.1','Tensura-Myths'),'additions':('TensuraAdditionalAdditions','1.10.0','TensuraAdditionalAdditions'),'retired_addon':('Tensura retired_addon','1.2.0','Tensura-retired_addon')}
+MODS={'myths':('Tensura Myths','0.36.1','Tensura-Myths'),'additions':('TensuraAdditionalAdditions','1.10.1','TensuraAdditionalAdditions'),'retired_addon':('Tensura retired_addon','1.2.0','Tensura-retired_addon')}
 def export(output):
     catalog=json.loads((WIKI/'catalog.json').read_text());output.mkdir(parents=True,exist_ok=True)
     sources=[WIKI/'README.md']+[WIKI/'pages'/(e['slug']+'.md') for e in catalog];pages={s.resolve():'Home' if s.name=='README.md' else s.stem for s in sources}
@@ -29,7 +29,7 @@ def export(output):
         for heading,entries in nav[mod]:
             sidebar+='**'+heading+'**\n\n'+'\n'.join(f'- [{label}]({WIKI_URL}/{slug})' for slug,label in entries)+'\n\n'
     (output/'_Sidebar.md').write_text(sidebar)
-    (output/'_Footer.md').write_text(f'[All wikis]({WIKI_URL}) · [Tensura Myths 0.36.1]({WIKI_URL}/Tensura-Myths) · [TensuraAdditionalAdditions 1.10.0]({WIKI_URL}/TensuraAdditionalAdditions) · [Tensura retired_addon 1.2.0]({WIKI_URL}/Tensura-retired_addon)\n\nUnofficial addon reference · [Source]({REPO})\n')
+    (output/'_Footer.md').write_text(f'[All wikis]({WIKI_URL}) · [Tensura Myths 0.36.1]({WIKI_URL}/Tensura-Myths) · [TensuraAdditionalAdditions 1.10.1]({WIKI_URL}/TensuraAdditionalAdditions) · [Tensura retired_addon 1.2.0]({WIKI_URL}/Tensura-retired_addon)\n\nUnofficial addon reference · [Source]({REPO})\n')
     print(f'Exported {len(sources)} GitHub Wiki pages with separate addon sections.')
 def publish(output):
     with tempfile.TemporaryDirectory(prefix='tensura-wikis-') as directory:
