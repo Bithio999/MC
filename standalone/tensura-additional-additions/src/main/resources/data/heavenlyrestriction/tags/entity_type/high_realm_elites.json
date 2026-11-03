@@ -9,7 +9,7 @@
     "tensura:knight_spider",
     "tensura:lizardman",
     "tensura:basilisk",
-    "tensura:lesser_daemon",
-    "tensura:greater_daemon"
+    "tensura:greater_daemon",
+    "tensura:arch_daemon"
   ]
 }

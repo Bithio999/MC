@@ -34,6 +34,86 @@ public final class HighRealmLoadoutGameTests {
   }
 
   @GameTest(template = "empty", templateNamespace = "heavenlyrestriction", timeoutTicks = 200)
+  public static void realmUsesUpgradedCasterTypesAndHighestNativeNonBossForms(GameTestHelper h) {
+    var l = HighRealmGameTests.realm(h);
+    h.assertTrue(
+        !BuiltInRegistries.ENTITY_TYPE
+            .get(ResourceLocation.parse("tensura:lesser_daemon"))
+            .is(HighRealmElites.TYPES),
+        "Lesser Daemon remains in pool");
+    var arch = mob(l, "arch_daemon");
+    h.assertTrue(HighRealmElites.empower(arch), "Arch Daemon rejected as boss");
+    h.assertTrue(
+        HighRealmLoadouts.forMob(arch).spells().size() == 8, "Arch spell package mismatched");
+    for (String species : List.of("orc", "direwolf", "lizardman")) {
+      var m = mob(l, species);
+      h.assertTrue(HighRealmElites.empower(m), "Evolved species failed");
+      var evolution = (io.github.manasmods.tensura.entity.template.subclass.INameEvolution) m;
+      h.assertTrue(
+          evolution.getCurrentEvolutionState() == evolution.getMaxEvolutionState(),
+          "Incomplete native evolution " + species);
+      if (m instanceof DirewolfEntity wolf)
+        h.assertTrue(
+            wolf.isStar()
+                && wolf.getVariant()
+                    == io.github.manasmods.tensura.entity.variant.DirewolfVariant.TEMPEST_STAR_WOLF,
+            "Wolf not highest star branch");
+      if (m instanceof LizardmanEntity dragonewt)
+        h.assertTrue(
+            dragonewt.isDragonewt()
+                && dragonewt.canFly()
+                && SkillAPI.getSkillsFrom(m).getSkill(IntrinsicSkills.DRAGON_EYE.get()).isPresent(),
+            "Dragonewt lacks native abilities");
+      double scale = m.getAttributeValue(Attributes.SCALE),
+          attack = m.getAttributeValue(Attributes.ATTACK_DAMAGE);
+      h.assertTrue(!HighRealmEvolutions.apply(m), "Evolution replayed");
+      near(h, m.getAttributeValue(Attributes.SCALE), scale, "Evolution grew twice");
+      near(h, m.getAttributeValue(Attributes.ATTACK_DAMAGE), attack, "Evolution damage compounded");
+      var tag = new net.minecraft.nbt.CompoundTag();
+      m.saveWithoutId(tag);
+      var copy = mob(l, species);
+      copy.load(tag);
+      h.assertTrue(
+          ((io.github.manasmods.tensura.entity.template.subclass.INameEvolution) copy)
+                      .getCurrentEvolutionState()
+                  == evolution.getMaxEvolutionState()
+              && !HighRealmEvolutions.apply(copy),
+          "Evolution lost on reload");
+    }
+    for (String boss : List.of("orc_lord", "orc_disaster"))
+      h.assertTrue(!HighRealmElites.empower(mob(l, boss)), "Boss added via evolution");
+    h.succeed();
+  }
+
+  @GameTest(template = "empty", templateNamespace = "heavenlyrestriction", timeoutTicks = 200)
+  public static void savedWildFormsEvolveWithoutRefillsAndOwnedFormsStayUnchanged(
+      GameTestHelper h) {
+    var l = HighRealmGameTests.realm(h);
+    for (String species : List.of("orc", "direwolf", "lizardman")) {
+      var m = mob(l, species);
+      m.getPersistentData().putBoolean(HighRealmElites.MARKER, true);
+      m.getPersistentData().putInt(HighRealmLoadouts.VERSION_KEY, 2);
+      m.getAttribute(Attributes.MAX_HEALTH).setBaseValue(1024);
+      m.setHealth(37);
+      EnergyHelper.setBaseMaxEP(m, 3500000);
+      var pool = TensuraStorages.getExistenceFrom(m);
+      pool.setAura(123);
+      pool.setMagicule(234);
+      pool.setSpiritualHealth(12);
+      HighRealmLoadouts.apply(m);
+      near(h, m.getHealth(), 37, "Evolving healed HP");
+      near(h, pool.getAura(), 123, "Evolving refilled aura");
+      near(h, pool.getMagicule(), 234, "Evolving refilled MP");
+      near(h, pool.getSpiritualHealth(), 12, "Evolving refilled SHP");
+      h.assertTrue(EnergyHelper.getBaseMaxEP(m) >= 3500000, "Native evolution cost removed EP");
+      var owned = mob(l, species);
+      TensuraStorages.getExistenceFrom(owned).setPermanentOwner(UUID.randomUUID());
+      h.assertTrue(!HighRealmEvolutions.apply(owned), "Owned form evolved");
+    }
+    h.succeed();
+  }
+
+  @GameTest(template = "empty", templateNamespace = "heavenlyrestriction", timeoutTicks = 200)
   public static void defenseRevisionUsesOneFighterAndThemedNullificationsAndBoosts(
       GameTestHelper h) {
     var l = HighRealmGameTests.realm(h);
@@ -290,13 +370,13 @@ public final class HighRealmLoadoutGameTests {
   }
 
   @GameTest(template = "empty", templateNamespace = "heavenlyrestriction", timeoutTicks = 500)
-  public static void lesserDaemonBrainActuallyCastsLearnedCombatMagic(GameTestHelper h) {
-    fight(h, "lesser_daemon", 224);
+  public static void upgradedGreaterDaemonBrainActuallyCastsLearnedCombatMagic(GameTestHelper h) {
+    fight(h, "greater_daemon", 224);
   }
 
   @GameTest(template = "empty", templateNamespace = "heavenlyrestriction", timeoutTicks = 500)
-  public static void greaterDaemonBrainActuallyCastsLearnedCombatMagic(GameTestHelper h) {
-    fight(h, "greater_daemon", 288);
+  public static void archDaemonBrainActuallyCastsLearnedCombatMagic(GameTestHelper h) {
+    fight(h, "arch_daemon", 288);
   }
 
   private static void fight(GameTestHelper h, String species, int x) {

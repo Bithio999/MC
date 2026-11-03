@@ -37,19 +37,25 @@ The realm stays in twilight. Terrain uses existing Minecraft and Tensura blocks,
 
 | Biome | Landscape | Elite inhabitants |
 | --- | --- | --- |
-| Ivory Crags | Calcite mountains with basalt bands | Orcs, Armorsauruses, Horned Bears, Lesser Daemons |
-| Starwood Grove | Pale grass and cherry groves | Direwolves, Blade Tigers, Knight Spiders |
-| Mistglass Basin | Mossy basins, clay and turquoise water | Lizardmen, Basilisks, Greater Daemons |
+| Ivory Crags | Calcite mountains with basalt bands | High Orcs, Armorsauruses, Horned Bears, Greater Daemons |
+| Starwood Grove | Pale grass and cherry groves | Tempest Star Wolves, Blade Tigers, Knight Spiders |
+| Mistglass Basin | Mossy basins, clay and turquoise water | Dragonewts, Basilisks, Arch Daemons |
 
 The natural spawn pool is **entirely Tensura mobs**. **Bosses are excluded**, including the boss-class greater elemental spirits. Elites retain their models, animations and native combat behavior. They alert to nearby survival players, including players with higher EP. Owned mobs, summons and imports are not upgraded.
 
 | Archetype | Members | Base EP | HP floor | SHP floor |
 | --- | --- | ---: | ---: | ---: |
-| High Bulwark | Orc, Armorsaurus, Horned Bear | 5,000,000 | 1,024 | 5,000 |
-| High Sentinel | Lizardman, Basilisk, Lesser/Greater Daemon | 3,500,000 | 850 | 3,200 |
-| High Stalker | Direwolf, Blade Tiger, Knight Spider | 2,500,000 | 700 | 2,400 |
+| High Bulwark | High Orc, Armorsaurus, Horned Bear | 5,000,000 | 1,024 | 5,000 |
+| High Sentinel | Dragonewt, Basilisk, Greater/Arch Daemon | 3,500,000 | 850 | 3,200 |
+| High Stalker | Tempest Star Wolf, Blade Tiger, Knight Spider | 2,500,000 | 700 | 2,400 |
 
 Native skills can alter final stats. All elites gain **11–16 core mastered skills** in addition to their retained native abilities. Their toggles are enabled; skills that require a preset slot are equipped.
+
+### Final forms
+
+The pool uses the highest implemented non-boss forms of its existing creatures: **High Orc**, **Tempest Star Wolf**, and **Dragonewt**. Wolves receive their native evolution bonuses and final star variant; Dragonewts receive native flight, Dragon Eye, Dragon Ear, Dragon Mode and a native breath skill. Creatures without a further implemented mob evolution stay in their existing forms. Orc Lord and Orc Disaster remain excluded because they are bosses.
+
+The daemon tiers are **Greater Daemon** in the crags and **Arch Daemon** in the basin. Their spell packages match each class’s native combat AI.
 
 ### Shared skills
 
@@ -61,16 +67,16 @@ These supplement the shared skills. **Fighter is reserved for Horned Bears.**
 
 | Species | Added skills |
 | --- | --- |
-| Orc | **Berserker**, Steel Strength, Strengthen Body, **Pain Nullification**, Flame Attack Resistance, Paralysis Resistance |
+| High Orc | **Berserker**, Steel Strength, Strengthen Body, **Pain Nullification**, Flame Attack Resistance, Paralysis Resistance |
 | Armorsaurus | **Survivor**, Body Armor, Scale Armor, Strength, **Physical Attack Nullification**, Pierce Resistance, Gravity Attack Resistance |
 | Horned Bear | **Fighter**, Steel Strength, **Pain Nullification**, Cold Resistance, Paralysis Resistance |
-| Direwolf | Godwolf Sense, Steel Strength, **Electricity Nullification**, Paralysis Resistance, Wind Attack Resistance, Poison Resistance |
+| Tempest Star Wolf | Godwolf Sense, Black Lightning, Ultra Instinct, Shadow Motion, Steel Strength, **Electricity Nullification**, Paralysis Resistance, Wind Attack Resistance, Poison Resistance |
 | Blade Tiger | **Seer**, Steel Strength, **Wind Attack Nullification**, Pierce Resistance, Paralysis Resistance |
 | Knight Spider | Body Armor, Steel Strength, Poison, **Poison Nullification**, Paralysis Resistance, Pierce Resistance |
-| Lizardman | Scale Armor, Water Breathing, Steel Strength, **Water Attack Nullification**, Corrosion Resistance |
+| Dragonewt | Scale Armor, Water Breathing, Steel Strength, **Water Attack Nullification**, Corrosion Resistance |
 | Basilisk | Scale Armor, Steel Strength, Poison, Paralysis, **Poison Nullification**, **Paralysis Nullification** |
-| Lesser Daemon | Mana Manipulation, Flame/Water/Wind/**Earth Manipulation**, **Flame Attack Nullification**, Water Attack Resistance |
-| Greater Daemon | Mana Manipulation, Flame/Water/Wind/Lightning/**Earth Manipulation**, **Flame Attack Nullification**, **Electricity Nullification**, Darkness Attack Resistance |
+| Greater Daemon | Mana Manipulation, Flame/Water/Wind/Lightning/**Earth Manipulation**, **Flame Attack Nullification**, Water Attack Resistance |
+| Arch Daemon | Mana Manipulation, Flame/Water/Wind/Lightning/**Earth Manipulation**, **Flame Attack Nullification**, **Electricity Nullification**, Darkness Attack Resistance |
 
 ### Combat magic
 
@@ -78,8 +84,8 @@ The daemon spells are actually used by their native combat AI, with native casti
 
 | Caster | Magics |
 | --- | --- |
-| Lesser Daemon | Fire (bolt), Water Cutter, Wind Cutter, Stone Shot, Fire Ball |
 | Greater Daemon | Fire Lance, Acid Shell, Icicle Lance, Tornado Blade, Thunder Orb, Stone Shot, Sleep Mist |
+| Arch Daemon | Fire Ball, Acid Shell, Ice Breaker, Tornado Blade, Water Jail, Mud Spears, Stone Shot, Thunder Orb |
 
 ### Rewards
 
@@ -97,7 +103,7 @@ The small arrival sanctum is protected from normal block edits. Natural hostile 
 
 The dimension is added to existing saves. Its terrain, awakened gates and individual return points persist after a restart. [World Hop](Additions-Parallel-World-Jumper.md) generates a fresh realm for a new seed; returning to a previously visited world restores that world's realm.
 
-Existing eligible unowned Tensura elites receive the new skill package without refilling their resources or resetting their EP. Existing vanilla elites are left to despawn normally; no new vanilla elites spawn.
+Existing eligible unowned elites receive applicable same-entity evolutions and loadouts when loaded, without refilling resources or reducing EP. Owned mobs remain unchanged. Old daemon entities remain until normal despawning; new spawns use the upgraded types. Existing vanilla elites are left to despawn normally; no new vanilla elites spawn.
 
 Server settings are in `serverconfig/tensura-additions-high-realm.toml`: `entryEP`, `gateChargeTicks`, `elitePower`, and `eliteSpawns`. Changing elite strength affects new spawns. Up to **256 awakened gates** can be registered in one world.
 

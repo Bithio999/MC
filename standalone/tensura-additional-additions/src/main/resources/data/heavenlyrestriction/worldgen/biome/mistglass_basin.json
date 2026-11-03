@@ -96,7 +96,7 @@
         "maxCount": 1
       },
       {
-        "type": "tensura:greater_daemon",
+        "type": "tensura:arch_daemon",
         "weight": 4,
         "minCount": 1,
         "maxCount": 1

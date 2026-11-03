@@ -5,7 +5,7 @@ import json, re, struct, tomllib, zipfile
 
 root = Path(__file__).resolve().parents[1]
 resources = root / 'src/main/resources'
-jar = root / 'build/libs/TensuraAdditionalAdditions-1.10.2.jar'
+jar = root / 'build/libs/TensuraAdditionalAdditions-1.10.3.jar'
 assets = resources / 'assets/heavenlyrestriction'
 required_art = [*(f'textures/race/{name}.png' for name in (
     'fettered_human', 'tempered_vessel', 'unshackled', 'heavenly_restricted', 'heavenbreaker')),
@@ -37,7 +37,7 @@ for name in config['mixins'] + config.get('client', []):
 with zipfile.ZipFile(jar) as z:
     names = set(z.namelist())
     mods = tomllib.loads(z.read('META-INF/neoforge.mods.toml').decode())
-    assert [(m['modId'], m['version']) for m in mods['mods']] == [('heavenlyrestriction', '1.10.2')]
+    assert [(m['modId'], m['version']) for m in mods['mods']] == [('heavenlyrestriction', '1.10.3')]
     assert mods['mods'][0]['displayName'] == 'TensuraAdditionalAdditions'
     language=json.loads(z.read('assets/heavenlyrestriction/lang/en_us.json'))
     for key,label in [('heavenlyrestriction.skill.parallel_world_jumper','Parallel World Jumper'),('heavenlyrestriction.skill.fusion','Fusion'),('heavenlyrestriction.skill.prospector','Prospector'),('heavenlyrestriction.skill.mode.prospector.refine','Refine'),('heavenlyrestriction.skill.mode.fusion.fuse','Fuse'),('heavenlyrestriction.skill.mode.parallel_world_jumper.world_hop','World Jump'),('heavenlyrestriction.skill.mode.parallel_world_jumper.world_select','World Select')]:
@@ -92,13 +92,13 @@ with zipfile.ZipFile(jar) as z:
     assert next(d for d in deps if d['modId']=='tensura')['versionRange'] == '[2.0.1.3,2.0.1.5)'
     assert next(d for d in deps if d['modId']=='geckolib')['versionRange'] == '[4.9.2,5)'
     assert not any(n.endswith('.jar') for n in names), 'Dependency jars must not be redistributed inside the addon'
-    for cls in ['HighRealm','HighRealmConfig','GatePattern','RealmData','HighRealmElites','HighRealmLoadouts','HighRealmAggro','HighRealmSpawns']:
+    for cls in ['HighRealm','HighRealmConfig','GatePattern','RealmData','HighRealmElites','HighRealmLoadouts','HighRealmAggro','HighRealmSpawns','HighRealmEvolutions']:
         assert 'dev/heavenlyrestriction/highrealm/'+cls+'.class' in names
     for path in (resources/'data/heavenlyrestriction').rglob('*.json'):
         if any(key in path.as_posix() for key in ['/worldgen/','/dimension/','/dimension_type/','high_realm_elites']):
             name=path.relative_to(resources).as_posix();assert z.read(name)==path.read_bytes(),name
     assert any(e['id']=='high-realm' and e['category']=='Dimensions' for e in guide)
-    pool=json.loads(z.read('data/heavenlyrestriction/tags/entity_type/high_realm_elites.json'))['values'];assert len(pool)==10 and all(t.startswith('tensura:') for t in pool)
+    pool=json.loads(z.read('data/heavenlyrestriction/tags/entity_type/high_realm_elites.json'))['values'];assert len(pool)==10 and all(t.startswith('tensura:') for t in pool) and 'tensura:arch_daemon' in pool and 'tensura:lesser_daemon' not in pool
     for biome in ['ivory_crags','starwood_grove','mistglass_basin']:
         spawns=json.loads(z.read('data/heavenlyrestriction/worldgen/biome/'+biome+'.json'))['spawners']['monster'];assert all(e['type'] in pool for e in spawns)
-print('Independent 1.10.2 JAR, native dependency metadata, all extracted icons/rigs/animations and mixin classes verified; no Myths classes, bundled dependencies or review fixtures.')
+print('Independent 1.10.3 JAR, native dependency metadata, all extracted icons/rigs/animations and mixin classes verified; no Myths classes, bundled dependencies or review fixtures.')

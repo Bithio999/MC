@@ -1,0 +1,13 @@
+# 1.10.3 — High Realm final forms
+
+Upgrades the crag caster from Lesser to Greater Daemon and the basin caster from Greater to Arch Daemon. The ten-type natural pool contains no Lesser Daemons and remains limited to native non-boss creatures. Greater Daemons receive the seven spells their native brain uses; Arch Daemons receive Fire Ball, Acid Shell, Ice Breaker, Tornado Blade, Water Jail, Mud Spears, Stone Shot and Thunder Orb. Both retain existing passive defenses and damage boosts; Greater Daemons also gain Lightning Manipulation for Thunder Orb.
+
+The native entity API exposes naming evolution states for Orcs, Direwolves and Lizardmen. A once-only helper advances Orcs to their highest non-boss state (High Orc), fully advances the star branch to Tempest Star Wolf, and invokes Lizardman's native Dragonewt evolution. It preserves native growth, movement, skills and flight, then refreshes dimensions. It does not set a true name or owner. The base-game `c:bosses` tag explicitly includes Orc Lord and Orc Disaster, so those remain excluded. Other roster members have no further implemented naming evolution; cosmetic variants are not treated as new progression tiers. Arch Daemon implements the interface defaults without a further implemented same-entity evolution.
+
+New elite stat floors are established before native evolution bonuses, and native skill acquisition cannot reduce the intended EP floor. Resources are filled for fresh spawns. Saved unowned same-entity elites gain missing evolution states and skills without refilling HP/SHP/aura/magicules or reducing their base EP. A persisted marker prevents repeated scale/stat growth. Owned mobs remain excluded. Older daemon entity types remain until normal despawning; no live UUID/class replacement is attempted. Fresh evolved bodies are checked for terrain collisions before joining the world.
+
+The native suite adds maximum-state/final-star-form checks, Dragonewt flight/skills, name-evolution NBT persistence and replay protection, evolved resource preservation, ownership exclusion, retained boss exclusion, and the Arch Daemon's matching spell package. Autonomous combat probes now run the new Greater and Arch Daemon tiers and observe actual magic projectiles and funded native casting-circle definitions.
+
+**237 native GameTests and 31 JVM tests passed** on Tensura 2.0.1.3 / NeoForge 21.1.209.
+
+Compatibility compilation also passed against Tensura 2.0.1.4 / NeoForge 21.1.248. This checks the optional API profile; a fresh full Neo Otherworld modpack runtime was not run. A clean baseline release build and the distribution audit passed, including final-form resources, metadata and exclusion of review fixtures from the shipped JAR.

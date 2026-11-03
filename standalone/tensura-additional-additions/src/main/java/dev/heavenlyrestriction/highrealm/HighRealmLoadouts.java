@@ -17,7 +17,7 @@ import net.minecraft.world.entity.Mob;
  */
 public final class HighRealmLoadouts {
   public static final String VERSION_KEY = "heavenlyrestriction:elite_loadout_version";
-  public static final int VERSION = 2;
+  public static final int VERSION = 3;
 
   public record Loadout(List<ManasSkill> skills, List<Magic> spells) {}
 
@@ -52,9 +52,9 @@ public final class HighRealmLoadouts {
     return new Loadout(List.copyOf(skills), List.of());
   }
 
-  private static Loadout caster(boolean greater) {
+  private static Loadout caster(int tier) {
     var base =
-        greater
+        tier >= 2
             ? pack(
                 ExtraSkills.MANA_MANIPULATION.get(),
                 ExtraSkills.FLAME_MANIPULATION.get(),
@@ -73,23 +73,41 @@ public final class HighRealmLoadouts {
                 ExtraSkills.EARTH_MANIPULATION.get(),
                 ResistanceSkills.FLAME_ATTACK_NULLIFICATION.get(),
                 ResistanceSkills.WATER_ATTACK_RESISTANCE.get());
-    return new Loadout(
-        base.skills(),
-        greater
-            ? List.of(
-                AspectualMagics.FIRE_LANCE.get(),
-                AspectualMagics.ACID_SHELL.get(),
-                AspectualMagics.ICICLE_LANCE.get(),
-                AspectualMagics.TORNADO_BLADE.get(),
-                AspectualMagics.THUNDER_ORB.get(),
-                AspectualMagics.STONE_SHOT.get(),
-                AspectualMagics.SLEEP_MIST.get())
-            : List.of(
-                AspectualMagics.FIRE.get(),
-                AspectualMagics.WATER_CUTTER.get(),
-                AspectualMagics.WIND_CUTTER.get(),
-                AspectualMagics.STONE_SHOT.get(),
-                AspectualMagics.FIRE_BALL.get()));
+    if (tier == 1) {
+      var skills = new java.util.ArrayList<ManasSkill>(base.skills());
+      skills.add(ExtraSkills.LIGHTNING_MANIPULATION.get());
+      base = new Loadout(List.copyOf(skills), List.of());
+    }
+    var spells =
+        switch (tier) {
+          case 2 ->
+              List.<Magic>of(
+                  AspectualMagics.FIRE_BALL.get(),
+                  AspectualMagics.ACID_SHELL.get(),
+                  AspectualMagics.ICE_BREAKER.get(),
+                  AspectualMagics.TORNADO_BLADE.get(),
+                  AspectualMagics.WATER_JAIL.get(),
+                  AspectualMagics.MUD_SPEARS.get(),
+                  AspectualMagics.STONE_SHOT.get(),
+                  AspectualMagics.THUNDER_ORB.get());
+          case 1 ->
+              List.<Magic>of(
+                  AspectualMagics.FIRE_LANCE.get(),
+                  AspectualMagics.ACID_SHELL.get(),
+                  AspectualMagics.ICICLE_LANCE.get(),
+                  AspectualMagics.TORNADO_BLADE.get(),
+                  AspectualMagics.THUNDER_ORB.get(),
+                  AspectualMagics.STONE_SHOT.get(),
+                  AspectualMagics.SLEEP_MIST.get());
+          default ->
+              List.<Magic>of(
+                  AspectualMagics.FIRE.get(),
+                  AspectualMagics.WATER_CUTTER.get(),
+                  AspectualMagics.WIND_CUTTER.get(),
+                  AspectualMagics.STONE_SHOT.get(),
+                  AspectualMagics.FIRE_BALL.get());
+        };
+    return new Loadout(base.skills(), spells);
   }
 
   public static Loadout forMob(Mob mob) {
@@ -125,6 +143,9 @@ public final class HighRealmLoadouts {
       case "direwolf" ->
           pack(
               ExtraSkills.GODWOLF_SENSE.get(),
+              ExtraSkills.BLACK_LIGHTNING.get(),
+              ExtraSkills.ULTRA_INSTINCT.get(),
+              ExtraSkills.SHADOW_MOTION.get(),
               ExtraSkills.STEEL_STRENGTH.get(),
               ResistanceSkills.ELECTRICITY_NULLIFICATION.get(),
               ResistanceSkills.PARALYSIS_RESISTANCE.get(),
@@ -165,8 +186,9 @@ public final class HighRealmLoadouts {
               ResistanceSkills.PARALYSIS_NULLIFICATION.get(),
               ExtraSkills.STEEL_STRENGTH.get(),
               CommonSkills.STRENGTH.get());
-      case "lesser_daemon" -> caster(false);
-      case "greater_daemon" -> caster(true);
+      case "lesser_daemon" -> caster(0);
+      case "greater_daemon" -> caster(1);
+      case "arch_daemon" -> caster(2);
       default -> null;
     };
   }
@@ -182,6 +204,9 @@ public final class HighRealmLoadouts {
     float hp = mob.getHealth();
     var pool = TensuraStorages.getExistenceFrom(mob);
     double ap = pool.getAura(), mp = pool.getMagicule(), shp = pool.getSpiritualHealth();
+    double oldBaseEP = EnergyHelper.getBaseMaxEP(mob);
+    HighRealmEvolutions.apply(mob);
+    if (EnergyHelper.getBaseMaxEP(mob) < oldBaseEP) EnergyHelper.setBaseMaxEP(mob, oldBaseEP);
     // Retire Fighter where the previous addon loadout granted it, and superseded resistances.
     if (tag.getInt(VERSION_KEY) > 0 && !loadout.skills().contains(UniqueSkills.FIGHTER.get()))
       remove(mob, UniqueSkills.FIGHTER.get());
@@ -195,6 +220,7 @@ public final class HighRealmLoadouts {
     pool.setMagicule(Math.min(mp, EnergyHelper.getMaxMagicule(mob)));
     pool.setSpiritualHealth(shp);
     pool.markDirty();
+    HighRealmEvolutions.refreshName(mob);
     tag.putInt(VERSION_KEY, VERSION);
     return true;
   }

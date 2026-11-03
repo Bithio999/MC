@@ -1,5 +1,11 @@
 # Changelog
 
+## Additions 1.10.3 — High Realm final forms
+
+- Replace Lesser Daemon spawns with Greater Daemons, and the former Greater Daemon spawns with Arch Daemons. Match their native seven/eight-magic combat repertoires.
+- Apply the highest native non-boss naming evolutions to Orcs, Direwolves and Lizardmen: High Orc, Tempest Star Wolf and Dragonewt. Preserve evolution skills, visuals, flight and native stat bonuses; retain the remaining final-form species and keep bosses excluded.
+- Persist evolution state without repeated growth. Upgrade saved unowned same-entity forms without refills/EP loss, preserve owned mobs, and reject fresh evolved bodies that would intersect terrain. Keep the 5M entry requirement.
+
 ## Additions 1.10.2 — High Realm defenses
 
 - Lower the default entry requirement to 5M actual EP, including a one-time migration of old 10M settings while preserving other custom thresholds.

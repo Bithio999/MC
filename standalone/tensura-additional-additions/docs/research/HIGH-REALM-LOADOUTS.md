@@ -18,3 +18,9 @@ See the runtime probes in `docs/review-high-realm/HighRealmLoadoutGameTests.java
 The 1.10.2 review also inspected `StrengthSkill` and `SteelStrengthSkill`: both apply `TensuraMobEffects.STRENGTHEN`, so granting both does not supply two damage multipliers. New packages omit the weaker Strength where Steel Strength is present, and migration disables redundant weaker toggles. Armorsauruses receive Strength, while reptile elites gain Steel Strength; casters gain Earth Manipulation for their existing Stone Shot.
 
 Nullifications retain native parent/lower-tier handling. The addon does not force deletion of lower entries associated with a nullification. Retiring Fighter uses exact stored-skill identity, disables its toggle and clears only matching preset slots before forgetting it. This avoids accidentally deleting a higher-tier skill returned by a general parent lookup.
+
+## Final-form audit
+
+`INameEvolution` supplies max/current/set/evolve hooks. Direwolf overrides max state to 3 and has the final `TEMPEST_STAR_WOLF` variant; its evolution grants native stat growth and star-branch abilities. Lizardman's single evolution enables `isDragonewt`, flight, Dragon Eye/Ear/Mode and a breath skill. Orc's implementation grants movement/swim bonuses but does not increment its state, so the helper sets its maximum state explicitly. The native `c:bosses` resource includes `orc_lord` and `orc_disaster`; these are not substituted for the non-boss Orc form. The other five physical species in the roster expose no further naming-evolution hook.
+
+Arch Daemon has no boss bar/class tag and its native fight tasks explicitly use Fire Ball, Acid Shell, Ice Breaker, Tornado Blade, Water Jail, Mud Spears, Stone Shot and Thunder Orb. Its interface-default naming evolution has no further implemented form. The pool therefore uses Greater/Arch Daemons as the requested caster tiers, with those actual spell lists.

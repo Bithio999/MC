@@ -8,7 +8,6 @@ import io.github.manasmods.tensura.storage.TensuraStorages;
 import io.github.manasmods.tensura.util.*;
 import java.util.*;
 import net.minecraft.core.registries.*;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.*;
@@ -73,7 +72,14 @@ public final class HighRealmElites {
     String id = BuiltInRegistries.ENTITY_TYPE.getKey(mob.getType()).getPath();
     return Set.of("husk", "orc", "wither_skeleton", "armorsaurus", "horned_bear").contains(id)
         ? Kind.BULWARK
-        : Set.of("stray", "lizardman", "enderman", "basilisk", "lesser_daemon", "greater_daemon")
+        : Set.of(
+                    "stray",
+                    "lizardman",
+                    "enderman",
+                    "basilisk",
+                    "lesser_daemon",
+                    "greater_daemon",
+                    "arch_daemon")
                 .contains(id)
             ? Kind.SENTINEL
             : Kind.SKIRMISHER;
@@ -100,7 +106,13 @@ public final class HighRealmElites {
     if (e.getLevel().isClientSide()) return;
     if (e.getEntity() instanceof Mob mob
         && e.getLevel().dimension().equals(HighRealm.LEVEL)
-        && mob.getPersistentData().getBoolean(CANDIDATE)) empower(mob);
+        && mob.getPersistentData().getBoolean(CANDIDATE)) {
+      boolean created = empower(mob);
+      if (created && !e.getLevel().noCollision(mob, mob.getBoundingBox())) {
+        e.setCanceled(true);
+        return;
+      }
+    }
     if (e.getEntity() instanceof Mob mob && elite(mob)) HighRealmLoadouts.apply(mob);
     if (e.getEntity() instanceof AbstractArrow arrow
         && arrow.getOwner() instanceof Mob mob
@@ -144,8 +156,10 @@ public final class HighRealmElites {
         Math.max(mob.getAttributeValue(Attributes.MOVEMENT_SPEED), k.speed));
     base(mob, Attributes.KNOCKBACK_RESISTANCE, k == Kind.BULWARK ? .8 : .35);
     base(mob, Attributes.FOLLOW_RANGE, 40);
-    EnergyHelper.setBaseMaxEP(mob, k.ep * power);
+    EnergyHelper.setBaseMaxEP(mob, Math.max(EnergyHelper.getBaseMaxEP(mob), k.ep * power));
     base(mob, TensuraAttributes.MAX_SPIRITUAL_HEALTH, k.shp * power);
+    HighRealmEvolutions.apply(mob);
+    EnergyHelper.setBaseMaxEP(mob, Math.max(EnergyHelper.getBaseMaxEP(mob), k.ep * power));
     mob.setHealth(mob.getMaxHealth());
     var energy = TensuraStorages.getExistenceFrom(mob);
     energy.setSpiritualHealth(mob.getAttributeValue(TensuraAttributes.MAX_SPIRITUAL_HEALTH));
@@ -153,14 +167,7 @@ public final class HighRealmElites {
     energy.setMagicule(EnergyHelper.getMaxMagicule(mob));
     energy.markDirty();
     HighRealmLoadouts.apply(mob);
-    String title =
-        k == Kind.BULWARK
-            ? "High Bulwark "
-            : k == Kind.SENTINEL ? "High Sentinel " : "High Stalker ";
-    mob.setCustomName(
-        Component.literal(title)
-            .append(mob.getType().getDescription())
-            .withStyle(net.minecraft.ChatFormatting.GOLD));
+    HighRealmEvolutions.refreshName(mob);
     if (mob.getType() == EntityType.HUSK || mob.getType() == EntityType.WITHER_SKELETON) {
       mob.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.DIAMOND_SWORD));
       mob.setDropChance(EquipmentSlot.MAINHAND, 0);
