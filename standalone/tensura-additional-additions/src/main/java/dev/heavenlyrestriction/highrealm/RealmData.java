@@ -25,6 +25,7 @@ public final class RealmData extends SavedData {
   public final Map<String, Gate> gates = new LinkedHashMap<>();
   public final Map<UUID, Home> homes = new HashMap<>();
   public BlockPos sanctuary;
+  public int balanceVersion;
   private long seed = Long.MIN_VALUE;
 
   public static RealmData get(MinecraftServer s) {
@@ -51,6 +52,7 @@ public final class RealmData extends SavedData {
   public static RealmData load(CompoundTag t, HolderLookup.Provider lookup) {
     var d = new RealmData();
     d.seed = t.getLong("seed");
+    d.balanceVersion = t.getInt("balanceVersion");
     if (t.contains("sanctuary")) d.sanctuary = BlockPos.of(t.getLong("sanctuary"));
     for (var raw : t.getList("gates", 10)) {
       try {
@@ -89,6 +91,7 @@ public final class RealmData extends SavedData {
   @Override
   public CompoundTag save(CompoundTag t, HolderLookup.Provider lookup) {
     t.putLong("seed", seed);
+    t.putInt("balanceVersion", balanceVersion);
     if (sanctuary != null) t.putLong("sanctuary", sanctuary.asLong());
     var gs = new ListTag();
     for (var g : gates.values()) {

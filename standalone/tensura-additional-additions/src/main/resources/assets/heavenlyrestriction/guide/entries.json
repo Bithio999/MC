@@ -598,7 +598,7 @@
       "id": "high-realm",
       "title": "The High Realm",
       "category": "Dimensions",
-      "summary": "Late-game dimension. Requires 10,000,000 actual maximum EP to enter; return travel has no EP requirement.",
+      "summary": "Late-game dimension. Requires 5,000,000 actual maximum EP to enter; return travel has no EP requirement.",
       "icon": "minecraft:textures/item/nether_star.png",
       "keywords": [
         "gate",
@@ -608,7 +608,7 @@
         "cherry",
         "biome",
         "dimension",
-        "10 million"
+        "5 million"
       ],
       "related": [
         "welcome",
@@ -626,7 +626,8 @@
           "title": "Explore",
           "lines": [
             "Ivory Crags: elite Orcs, Armorsauruses, Horned Bears and Lesser Daemons. Starwood Grove: elite Direwolves, Blade Tigers and Knight Spiders. Mistglass Basin: elite Lizardmen, Basilisks and Greater Daemons. All natural spawns in the pool are Tensura creatures; bosses are excluded.",
-            "Elites retain native models, animations and combat AI, with 2.5–5 million base EP and at least 9–10 mastered skills. Their passives are enabled, and Fighter/Berserker are equipped where required. Shared defenses, sensing and Ultraspeed Regeneration are supplemented by species-specific combat skills and Uniques.",
+            "Elites retain native models, animations and combat AI, with 2.5–5 million base EP and 11–16 core mastered skills. All receive spiritual and physical/magical defenses, sensing and Ultraspeed Regeneration, plus themed nullifications and damage boosts. Fighter is reserved for Horned Bears; Blade Tigers use Seer and Steel Strength, while Lizardmen use Steel Strength.",
+            "Armorsauruses nullify Physical attacks; Orcs/Horned Bears nullify Pain; Direwolves nullify Electricity; Blade Tigers nullify Wind; Lizardmen nullify Water; Knight Spiders/Basilisks nullify Poison. Basilisks also nullify Paralysis. Both daemons nullify Flame, and Greater Daemons also nullify Electricity. Native lower-tier defense entries may remain; nullifications provide the higher defense.",
             "Lesser Daemons cast Fire, Water Cutter, Wind Cutter, Stone Shot and Fire Ball. Greater Daemons cast Fire Lance, Acid Shell, Icicle Lance, Tornado Blade, Thunder Orb, Stone Shot and Sleep Mist. Their native brains use spell animations, magic circles, projectiles and magicule costs.",
             "Find native magic ore, emeralds and rare diamonds in the pale stone. Elite kills retain normal loot and EP and add amethyst, with occasional magic ore or rare Netherite Scrap.",
             "Existing eligible unowned Tensura elites receive the expanded skill package without refilling resources or resetting EP. Existing vanilla elites are no longer spawned and remain until normal despawning. Owned mobs and summons are not upgraded."
@@ -637,7 +638,7 @@
           "lines": [
             "The quartz return arch at the arrival sanctum is your return gate. Walk through it or use its central bedrock base to leave; leaving never requires EP. Return locations are saved separately for each player.",
             "The arrival sanctum is protected from normal block edits and suppresses natural spawns within 48 blocks. Avoid using beds in this dimension. The surrounding terrain is editable.",
-            "Gates, terrain and return locations persist across restarts. World Hop generates a fresh High Realm per new world; revisiting a saved world restores its realm. The server can configure entry EP, gate charge time and elite strength."
+            "Gates, terrain and return locations persist across restarts. World Hop generates a fresh High Realm per new world; revisiting a saved world restores its realm. The server can configure entry EP, gate charge time and elite strength. Existing worlds using the old 10M default are upgraded once to 5M; other custom thresholds are retained."
           ]
         }
       ]

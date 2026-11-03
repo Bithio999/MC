@@ -17,7 +17,7 @@ import net.minecraft.world.entity.Mob;
  */
 public final class HighRealmLoadouts {
   public static final String VERSION_KEY = "heavenlyrestriction:elite_loadout_version";
-  public static final int VERSION = 1;
+  public static final int VERSION = 2;
 
   public record Loadout(List<ManasSkill> skills, List<Magic> spells) {}
 
@@ -27,10 +27,28 @@ public final class HighRealmLoadouts {
             List.of(
                 ResistanceSkills.PHYSICAL_ATTACK_RESISTANCE.get(),
                 ResistanceSkills.MAGIC_RESISTANCE.get(),
+                ResistanceSkills.PAIN_RESISTANCE.get(),
+                ResistanceSkills.SPIRITUAL_ATTACK_RESISTANCE.get(),
                 ExtraSkills.MAGIC_SENSE.get(),
                 ExtraSkills.DANGER_SENSE.get(),
                 ExtraSkills.ULTRASPEED_REGENERATION.get()));
     skills.addAll(List.of(extra));
+    if (skills.contains(ExtraSkills.STEEL_STRENGTH.get()))
+      skills.remove(CommonSkills.STRENGTH.get());
+    // A nullification replaces its lower tier instead of stacking redundant defenses.
+    for (var skill : List.copyOf(skills))
+      if (skill.getRegistryName().getPath().endsWith("_nullification")) {
+        var lower =
+            SkillAPI.getSkillRegistry()
+                .get(
+                    net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(
+                        "tensura",
+                        skill
+                            .getRegistryName()
+                            .getPath()
+                            .replace("_nullification", "_resistance")));
+        if (lower != null) skills.remove(lower);
+      }
     return new Loadout(List.copyOf(skills), List.of());
   }
 
@@ -42,12 +60,19 @@ public final class HighRealmLoadouts {
                 ExtraSkills.FLAME_MANIPULATION.get(),
                 ExtraSkills.WATER_MANIPULATION.get(),
                 ExtraSkills.WIND_MANIPULATION.get(),
-                ExtraSkills.LIGHTNING_MANIPULATION.get())
+                ExtraSkills.LIGHTNING_MANIPULATION.get(),
+                ExtraSkills.EARTH_MANIPULATION.get(),
+                ResistanceSkills.FLAME_ATTACK_NULLIFICATION.get(),
+                ResistanceSkills.ELECTRICITY_NULLIFICATION.get(),
+                ResistanceSkills.DARKNESS_ATTACK_RESISTANCE.get())
             : pack(
                 ExtraSkills.MANA_MANIPULATION.get(),
                 ExtraSkills.FLAME_MANIPULATION.get(),
                 ExtraSkills.WATER_MANIPULATION.get(),
-                ExtraSkills.WIND_MANIPULATION.get());
+                ExtraSkills.WIND_MANIPULATION.get(),
+                ExtraSkills.EARTH_MANIPULATION.get(),
+                ResistanceSkills.FLAME_ATTACK_NULLIFICATION.get(),
+                ResistanceSkills.WATER_ATTACK_RESISTANCE.get());
     return new Loadout(
         base.skills(),
         greater
@@ -76,51 +101,70 @@ public final class HighRealmLoadouts {
               UniqueSkills.BERSERKER.get(),
               ExtraSkills.STEEL_STRENGTH.get(),
               ExtraSkills.STRENGTHEN_BODY.get(),
-              ResistanceSkills.PAIN_RESISTANCE.get());
+              ResistanceSkills.PAIN_NULLIFICATION.get(),
+              CommonSkills.STRENGTH.get(),
+              ResistanceSkills.FLAME_ATTACK_RESISTANCE.get(),
+              ResistanceSkills.PARALYSIS_RESISTANCE.get());
       case "armorsaurus" ->
           pack(
               UniqueSkills.SURVIVOR.get(),
               IntrinsicSkills.BODY_ARMOR.get(),
               IntrinsicSkills.SCALE_ARMOR.get(),
-              ResistanceSkills.PIERCE_RESISTANCE.get());
+              ResistanceSkills.PIERCE_RESISTANCE.get(),
+              ResistanceSkills.PHYSICAL_ATTACK_NULLIFICATION.get(),
+              CommonSkills.STRENGTH.get(),
+              ResistanceSkills.GRAVITY_ATTACK_RESISTANCE.get());
       case "horned_bear" ->
           pack(
               UniqueSkills.FIGHTER.get(),
               CommonSkills.STRENGTH.get(),
               ExtraSkills.STEEL_STRENGTH.get(),
-              ResistanceSkills.PAIN_RESISTANCE.get());
+              ResistanceSkills.PAIN_NULLIFICATION.get(),
+              ResistanceSkills.COLD_RESISTANCE.get(),
+              ResistanceSkills.PARALYSIS_RESISTANCE.get());
       case "direwolf" ->
           pack(
               ExtraSkills.GODWOLF_SENSE.get(),
               ExtraSkills.STEEL_STRENGTH.get(),
-              ResistanceSkills.ELECTRICITY_RESISTANCE.get(),
-              ResistanceSkills.PARALYSIS_RESISTANCE.get());
+              ResistanceSkills.ELECTRICITY_NULLIFICATION.get(),
+              ResistanceSkills.PARALYSIS_RESISTANCE.get(),
+              CommonSkills.STRENGTH.get(),
+              ResistanceSkills.WIND_ATTACK_RESISTANCE.get(),
+              ResistanceSkills.POISON_RESISTANCE.get());
       case "blade_tiger" ->
           pack(
               UniqueSkills.SEER.get(),
-              UniqueSkills.FIGHTER.get(),
+              CommonSkills.STRENGTH.get(),
               ExtraSkills.STEEL_STRENGTH.get(),
-              ResistanceSkills.WIND_ATTACK_RESISTANCE.get());
+              ResistanceSkills.WIND_ATTACK_NULLIFICATION.get(),
+              ResistanceSkills.PIERCE_RESISTANCE.get(),
+              ResistanceSkills.PARALYSIS_RESISTANCE.get());
       case "knight_spider" ->
           pack(
               IntrinsicSkills.BODY_ARMOR.get(),
               ExtraSkills.STEEL_STRENGTH.get(),
               CommonSkills.POISON.get(),
-              ResistanceSkills.POISON_RESISTANCE.get(),
-              ResistanceSkills.PARALYSIS_RESISTANCE.get());
+              ResistanceSkills.POISON_NULLIFICATION.get(),
+              ResistanceSkills.PARALYSIS_RESISTANCE.get(),
+              CommonSkills.STRENGTH.get(),
+              ResistanceSkills.PIERCE_RESISTANCE.get());
       case "lizardman" ->
           pack(
               IntrinsicSkills.SCALE_ARMOR.get(),
               IntrinsicSkills.WATER_BREATHING.get(),
-              UniqueSkills.FIGHTER.get(),
-              ResistanceSkills.WATER_ATTACK_RESISTANCE.get());
+              ExtraSkills.STEEL_STRENGTH.get(),
+              ResistanceSkills.WATER_ATTACK_NULLIFICATION.get(),
+              CommonSkills.STRENGTH.get(),
+              ResistanceSkills.CORROSION_RESISTANCE.get());
       case "basilisk" ->
           pack(
               IntrinsicSkills.SCALE_ARMOR.get(),
               CommonSkills.POISON.get(),
               CommonSkills.PARALYSIS.get(),
               ResistanceSkills.POISON_NULLIFICATION.get(),
-              ResistanceSkills.PARALYSIS_NULLIFICATION.get());
+              ResistanceSkills.PARALYSIS_NULLIFICATION.get(),
+              ExtraSkills.STEEL_STRENGTH.get(),
+              CommonSkills.STRENGTH.get());
       case "lesser_daemon" -> caster(false);
       case "greater_daemon" -> caster(true);
       default -> null;
@@ -138,8 +182,14 @@ public final class HighRealmLoadouts {
     float hp = mob.getHealth();
     var pool = TensuraStorages.getExistenceFrom(mob);
     double ap = pool.getAura(), mp = pool.getMagicule(), shp = pool.getSpiritualHealth();
+    // Retire Fighter where the previous addon loadout granted it, and superseded resistances.
+    if (tag.getInt(VERSION_KEY) > 0 && !loadout.skills().contains(UniqueSkills.FIGHTER.get()))
+      remove(mob, UniqueSkills.FIGHTER.get());
     for (var skill : loadout.skills()) grant(mob, skill, true);
     for (var spell : loadout.spells()) grant(mob, spell, false);
+    // Native nullifications may keep lower-tier entries; do not dismantle that hierarchy.
+    if (loadout.skills().contains(ExtraSkills.STEEL_STRENGTH.get()))
+      remove(mob, CommonSkills.STRENGTH.get());
     mob.setHealth(Math.min(hp, mob.getMaxHealth()));
     pool.setAura(Math.min(ap, EnergyHelper.getMaxAura(mob)));
     pool.setMagicule(Math.min(mp, EnergyHelper.getMaxMagicule(mob)));
@@ -147,6 +197,27 @@ public final class HighRealmLoadouts {
     pool.markDirty();
     tag.putInt(VERSION_KEY, VERSION);
     return true;
+  }
+
+  private static void remove(Mob mob, ManasSkill skill) {
+    var storage = SkillAPI.getSkillsFrom(mob);
+    storage.getLearnedSkills().stream()
+        .filter(i -> i.getSkill() == skill)
+        .findFirst()
+        .ifPresent(
+            i -> {
+              if (i.isToggled()) {
+                i.setToggled(false);
+                i.onToggleOff(mob);
+              }
+              var presets = TensuraStorages.getAbilityFrom(mob);
+              for (int preset = 0; preset < 9; preset++)
+                for (int slot = 0; slot < 3; slot++)
+                  if (presets.getAbilitySlot(preset, slot).getSkill() == skill)
+                    presets.setAbilitySlot(preset, slot, null, 0);
+              i.markDirty();
+              storage.forgetSkill(i);
+            });
   }
 
   private static void grant(Mob mob, ManasSkill skill, boolean enable) {

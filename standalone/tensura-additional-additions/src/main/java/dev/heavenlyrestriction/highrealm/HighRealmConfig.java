@@ -8,7 +8,7 @@ public final class HighRealmConfig {
       B.comment(
               "Required actual maximum EP (aura + magicules, including modifiers) to enter The High"
                   + " Realm. Leaving never requires EP.")
-          .defineInRange("entryEP", 10000000d, 0, 1e12);
+          .defineInRange("entryEP", 5000000d, 0, 1e12);
   public static final ModConfigSpec.IntValue CHARGE_TICKS =
       B.comment("Ticks spent inside an awakened gate before entry.")
           .defineInRange("gateChargeTicks", 40, 0, 200);
@@ -20,6 +20,16 @@ public final class HighRealmConfig {
   public static final ModConfigSpec.BooleanValue ELITES =
       B.comment("Enable the High Realm's natural elite spawn pool.").define("eliteSpawns", true);
   public static final ModConfigSpec SPEC = B.build();
+
+  public static void upgradeLegacyDefault(RealmData data) {
+    if (data.balanceVersion >= 2) return;
+    if (ENTRY_EP.get() == 10000000d) {
+      ENTRY_EP.set(5000000d);
+      ENTRY_EP.save();
+    }
+    data.balanceVersion = 2;
+    data.setDirty();
+  }
 
   private HighRealmConfig() {}
 }

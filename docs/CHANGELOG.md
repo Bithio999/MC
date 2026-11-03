@@ -1,5 +1,11 @@
 # Changelog
 
+## Additions 1.10.2 — High Realm defenses
+
+- Lower the default entry requirement to 5M actual EP, including a one-time migration of old 10M settings while preserving other custom thresholds.
+- Reserve Fighter for Horned Bears. Give Blade Tigers and Lizardmen distinct Steel Strength-based loadouts, add shared Pain/Spiritual defenses, themed nullifications and more species-specific resistances and damage boosts. Add Earth Manipulation to both daemon casters.
+- Upgrade saved unowned elites without refills or stat-floor resets; remove retired Fighter copies/presets and deactivate redundant weaker Strength buffs. Update the F8 and web guides.
+
 ## Additions 1.10.1 — High Realm enemies
 
 - Replace the High Realm’s natural spawn pool with ten Tensura ordinary mob species; keep bosses and greater elemental spirit bosses excluded.

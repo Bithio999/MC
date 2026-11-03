@@ -1,0 +1,13 @@
+# 1.10.2 — High Realm defenses and entry
+
+Lowers the default entry threshold to **5,000,000 actual maximum EP**. A persisted balance revision migrates an existing 10M setting to 5M once on server startup. Other custom thresholds are retained, and a later manual choice of 10M is preserved. The revision survives NBT save/load and is independent of terrain seed changes.
+
+Reserves addon-granted Fighter for Horned Bears. Blade Tigers retain Seer and Steel Strength; Lizardmen use Steel Strength. Adds Pain and Spiritual Attack defenses across the roster, signature nullifications and species-specific elemental/status resistances. Armorsauruses gain Strength, Lizardmen and Basilisks gain Steel Strength, and both daemon types gain Earth Manipulation to improve Stone Shot. Core packages contain 11–16 mastered skills, plus retained native prerequisites/abilities.
+
+Native Strength and Steel Strength both maintain the same STRENGTHEN effect. Their bonuses do not multiply, so the revised packages avoid granting weaker Strength alongside Steel Strength. Saved elites deactivate the redundant weaker buff. Nullifications retain native hierarchy behavior; native lower-tier defense entries may remain. No forced deletion of those entries is used.
+
+Versioned unowned-elite upgrades retire old Fighter copies from species that no longer receive it, turn off its modifiers and clear only its matching preset entries. HP, SHP, aura, magicules and base EP are preserved. Existing owned mobs remain excluded, and replay does not stack modifiers. The ten native mob types, terrain, gate, spell AI and loot rules are retained.
+
+Native tests cover the new Fighter distribution, signature nullifications, damage-boost skill presence, spiritual defense, migration of old Fighter/presets, promotion to Water Nullification, resource preservation and replay safety. The config scenario exercises a real old-default migration, persisted revision, later custom 10M and an existing custom 20M threshold. The suite retains autonomous Lesser/Greater Daemon projectile/casting-circle probes and all previous gate/spawn/skill/standalone regressions.
+
+**235 native GameTests and 31 JVM tests passed** on Tensura 2.0.1.3 / NeoForge 21.1.209, including the retained autonomous daemon spellcasting probes. The old default was migrated in the existing native test world, and the real server config was saved at 5M. Tensura 2.0.1.4 / NeoForge 21.1.248 API compilation also passed. This is compilation coverage, not a fresh full Neo Otherworld pack runtime test. The baseline release package is audited for matching data/assets and exclusion of opt-in review fixtures.

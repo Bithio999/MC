@@ -12,3 +12,9 @@ Reference runtime: Tensura Reincarnated **2.0.1.3**, CurseForge file **8793360**
 - Versioned loadouts upgrade only eligible unowned saved elites. The upgrade does not reapply stat floors or refill HP/SHP/aura/magicules; replay does not stack toggle modifiers. Old vanilla elites are retained, and no new ones spawn.
 
 See the runtime probes in `docs/review-high-realm/HighRealmLoadoutGameTests.java` and the release validation report for observed results.
+
+## Defense revision
+
+The 1.10.2 review also inspected `StrengthSkill` and `SteelStrengthSkill`: both apply `TensuraMobEffects.STRENGTHEN`, so granting both does not supply two damage multipliers. New packages omit the weaker Strength where Steel Strength is present, and migration disables redundant weaker toggles. Armorsauruses receive Strength, while reptile elites gain Steel Strength; casters gain Earth Manipulation for their existing Stone Shot.
+
+Nullifications retain native parent/lower-tier handling. The addon does not force deletion of lower entries associated with a nullification. Retiring Fighter uses exact stored-skill identity, disables its toggle and clears only matching preset slots before forgetting it. This avoids accidentally deleting a higher-tier skill returned by a general parent lookup.

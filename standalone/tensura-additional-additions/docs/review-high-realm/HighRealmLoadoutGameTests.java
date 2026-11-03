@@ -33,6 +33,112 @@ public final class HighRealmLoadoutGameTests {
         BuiltInRegistries.ENTITY_TYPE.get(ResourceLocation.parse("tensura:" + name)).create(l);
   }
 
+  @GameTest(template = "empty", templateNamespace = "heavenlyrestriction", timeoutTicks = 200)
+  public static void defenseRevisionUsesOneFighterAndThemedNullificationsAndBoosts(
+      GameTestHelper h) {
+    var l = HighRealmGameTests.realm(h);
+    int fighters = 0;
+    for (var holder : BuiltInRegistries.ENTITY_TYPE.getTagOrEmpty(HighRealmElites.TYPES)) {
+      var m = (Mob) holder.value().create(l);
+      HighRealmElites.empower(m);
+      var plan = HighRealmLoadouts.forMob(m);
+      h.assertTrue(plan.skills().size() >= 11, "Expanded package too small " + holder);
+      h.assertTrue(
+          plan.skills().stream()
+              .anyMatch(k -> k.getRegistryName().getPath().endsWith("_nullification")),
+          "Missing signature nullification " + holder);
+      h.assertTrue(
+          SkillAPI.getSkillsFrom(m)
+              .getSkill(ResistanceSkills.SPIRITUAL_ATTACK_RESISTANCE.get())
+              .isPresent(),
+          "Missing SHP defense");
+      if (plan.skills().contains(UniqueSkills.FIGHTER.get())) {
+        fighters++;
+        h.assertTrue(
+            BuiltInRegistries.ENTITY_TYPE.getKey(m.getType()).getPath().equals("horned_bear"),
+            "Fighter shared outside brawler");
+      }
+      h.assertTrue(
+          plan.skills().contains(CommonSkills.STRENGTH.get())
+              || plan.skills().contains(ExtraSkills.STEEL_STRENGTH.get())
+              || plan.skills().contains(ExtraSkills.MANA_MANIPULATION.get()),
+          "Missing damage boost " + holder);
+    }
+    h.assertTrue(fighters == 1, "Fighter distribution incorrect");
+    h.succeed();
+  }
+
+  @GameTest(template = "empty", templateNamespace = "heavenlyrestriction", timeoutTicks = 100)
+  public static void revisionReplacesFighterAndPromotesDefensesWithoutRefilling(GameTestHelper h) {
+    for (String species : List.of("blade_tiger", "lizardman")) {
+      var m = mob(HighRealmGameTests.realm(h), species);
+      m.getPersistentData().putBoolean(HighRealmElites.MARKER, true);
+      m.getPersistentData().putInt(HighRealmLoadouts.VERSION_KEY, 1);
+      m.getAttribute(Attributes.MAX_HEALTH).setBaseValue(1024);
+      m.setHealth(37);
+      EnergyHelper.setBaseMaxEP(m, 3500000);
+      var pool = TensuraStorages.getExistenceFrom(m);
+      pool.setAura(123);
+      pool.setMagicule(234);
+      pool.setSpiritualHealth(12);
+      RestrictionData.learnReward(m, UniqueSkills.FIGHTER.get());
+      var old = SkillAPI.getSkillsFrom(m).getSkill(UniqueSkills.FIGHTER.get()).orElseThrow();
+      old.setToggled(true);
+      old.onToggleOn(m);
+      TensuraStorages.getAbilityFrom(m).setAbilitySlot(0, 0, UniqueSkills.FIGHTER.get(), 0);
+      TensuraStorages.getAbilityFrom(m).setAbilitySlot(0, 1, ExtraSkills.MAGIC_SENSE.get(), 0);
+      RestrictionData.learnReward(m, ResistanceSkills.WATER_ATTACK_RESISTANCE.get());
+      HighRealmLoadouts.apply(m);
+      h.assertTrue(
+          SkillAPI.getSkillsFrom(m).getSkill(UniqueSkills.FIGHTER.get()).isEmpty()
+              && TensuraStorages.getAbilityFrom(m).getAbilitySlot(0, 0).getSkill() == null,
+          "Retired Fighter retained");
+      h.assertTrue(
+          TensuraStorages.getAbilityFrom(m).getAbilitySlot(0, 1).getSkill()
+              == ExtraSkills.MAGIC_SENSE.get(),
+          "Unrelated preset erased");
+      if (species.equals("lizardman"))
+        h.assertTrue(
+            SkillAPI.getSkillsFrom(m)
+                .getSkill(ResistanceSkills.WATER_ATTACK_NULLIFICATION.get())
+                .isPresent(),
+            "Water nullification missing after promotion");
+      near(h, m.getHealth(), 37, "Migration healed HP");
+      near(h, pool.getAura(), 123, "Migration refilled aura");
+      near(h, pool.getMagicule(), 234, "Migration refilled MP");
+      near(h, pool.getSpiritualHealth(), 12, "Migration refilled SHP");
+      h.assertTrue(!HighRealmLoadouts.apply(m), "Migration replayed");
+    }
+    h.succeed();
+  }
+
+  @GameTest(template = "empty", templateNamespace = "heavenlyrestriction", timeoutTicks = 100)
+  public static void fiveMillionEntryMigratesOldDefaultAndRetainsCustomChoices(GameTestHelper h) {
+    h.assertTrue(
+        HighRealmConfig.ENTRY_EP.get() == 5000000d, "Existing default did not migrate to 5M");
+    double original = HighRealmConfig.ENTRY_EP.get();
+    try {
+      var d = new RealmData();
+      HighRealmConfig.ENTRY_EP.set(10000000d);
+      HighRealmConfig.upgradeLegacyDefault(d);
+      near(h, HighRealmConfig.ENTRY_EP.get(), 5000000, "Old 10M setting not lowered");
+      var restored =
+          RealmData.load(
+              d.save(new net.minecraft.nbt.CompoundTag(), h.getLevel().registryAccess()),
+              h.getLevel().registryAccess());
+      h.assertTrue(restored.balanceVersion == 2, "Migration marker not persisted");
+      HighRealmConfig.ENTRY_EP.set(10000000d);
+      HighRealmConfig.upgradeLegacyDefault(restored);
+      near(h, HighRealmConfig.ENTRY_EP.get(), 10000000, "Later custom 10M choice overwritten");
+      HighRealmConfig.ENTRY_EP.set(20000000d);
+      HighRealmConfig.upgradeLegacyDefault(new RealmData());
+      near(h, HighRealmConfig.ENTRY_EP.get(), 20000000, "Existing custom threshold overwritten");
+    } finally {
+      HighRealmConfig.ENTRY_EP.set(original);
+    }
+    h.succeed();
+  }
+
   @GameTest(template = "empty", templateNamespace = "heavenlyrestriction", timeoutTicks = 100)
   public static void eliteAlertTargetsHigherEpPlayersButNeverCreativeOrOwned(GameTestHelper h) {
     var l = HighRealmGameTests.realm(h);

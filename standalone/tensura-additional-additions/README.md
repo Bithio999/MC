@@ -2,11 +2,11 @@
 
 An independent **Tensura: Reincarnated** addon for **Minecraft 1.21.1 / NeoForge**. It focuses on Heavenly Restriction, Battlewills and world travel.
 
-[Download 1.10.1](../../releases/TensuraAdditionalAdditions-1.10.1.jar) · [Wiki](../../wiki/pages/TensuraAdditionalAdditions.md) · [Gameplay guide](docs/GUIDE.md) · [Validation](docs/VALIDATION-1.10.1.md)
+[Download 1.10.2](../../releases/TensuraAdditionalAdditions-1.10.2.jar) · [Wiki](../../wiki/pages/TensuraAdditionalAdditions.md) · [Gameplay guide](docs/GUIDE.md) · [Validation](docs/VALIDATION-1.10.2.md)
 
 ## Content
 
-- **The High Realm**, a 10-million-EP gated dimension with three biomes, elite ordinary mobs and a protected return sanctum. [Gate and travel guide](../../wiki/pages/Additions-The-High-Realm.md).
+- **The High Realm**, a 5-million-EP gated dimension with three biomes, elite ordinary mobs and a protected return sanctum. [Gate and travel guide](../../wiki/pages/Additions-The-High-Realm.md).
 - **Fettered Human** and four evolutions ending in **Heavenbreaker**.
 - **Chained**, its automatic Ultimate evolution **Unbound**, and three aura recovery skills.
 - **Schema**, **Air Walk** and **Instant Transmission** Battlewills.
@@ -27,7 +27,7 @@ Use **Java 21**, **Minecraft 1.21.1** and **NeoForge 21.1.209+**. Install:
 
 1. **Tensura: Reincarnated 2.0.1.3 or 2.0.1.4** and its required libraries: ManasCore 4.0.0.2, Architectury 13.0.8+, SmartBrainLib and TerraBlender.
 2. **GeckoLib 4.9.2+**, within the 4.x series.
-3. **TensuraAdditionalAdditions-1.10.1.jar**.
+3. **TensuraAdditionalAdditions-1.10.2.jar**.
 
 Install the addon on both client and server for multiplayer. Parallel World Jumper works only in private single-player. Use this addon **instead of Tensura Myths**; the loader rejects installing both.
 
@@ -49,7 +49,7 @@ python3 scripts/fetch-runtime.py
 ./gradlew build
 ```
 
-Use **Java 21**. Output: `build/libs/TensuraAdditionalAdditions-1.10.1.jar`.
+Use **Java 21**. Output: `build/libs/TensuraAdditionalAdditions-1.10.2.jar`.
 
 - `./gradlew runClient` — development client.
 - `./gradlew runGameTestServer` — native integration checks.

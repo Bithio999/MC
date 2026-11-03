@@ -60,6 +60,9 @@ public final class HighRealm {
     NeoForge.EVENT_BUS.addListener(
         (net.neoforged.neoforge.event.level.ExplosionEvent.Detonate e) ->
             e.getAffectedBlocks().removeIf(pos -> protectedAt(e.getLevel(), pos)));
+    NeoForge.EVENT_BUS.addListener(
+        (net.neoforged.neoforge.event.server.ServerStartedEvent e) ->
+            HighRealmConfig.upgradeLegacyDefault(RealmData.get(e.getServer())));
     HighRealmElites.register();
   }
 
