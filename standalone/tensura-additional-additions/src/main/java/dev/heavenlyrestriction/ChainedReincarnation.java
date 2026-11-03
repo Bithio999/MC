@@ -92,6 +92,7 @@ public final class ChainedReincarnation {
         if(skill.getRegistryName()==null)return false;
         var c=(UniqueSkillConfig)ConfigRegistry.getConfig(UniqueSkillConfig.class);
         return switch(skill.getRegistryName().toString()){
+            case "heavenlyrestriction:split_mind" -> true; // Auto-casts assigned magic using its magicule cost.
             case "tensura:reaper" -> true; // Infinite Eater pays the targeted entity's current EP in MP.
             case "tensura:reverser" -> positive(c.Reverser.magiculeCostCurse);
             case "tensura:unyielding" -> positive(c.Unyielding.magiculeBackupCost);

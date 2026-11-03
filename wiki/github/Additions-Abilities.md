@@ -21,6 +21,9 @@ Find a move below, then open its entry for targeting, damage, cost and cooldown.
 | [Exponentiation](https://github.com/Bithio999/MC/wiki/Additions-Exponentiation#passive) | [Exponentiation](https://github.com/Bithio999/MC/wiki/Additions-Exponentiation) | Passive, In Slot | None directly; retains the original attack damage type |
 | [Loan](https://github.com/Bithio999/MC/wiki/Additions-Loan-Shark#loan) | [Loan Shark](https://github.com/Bithio999/MC/wiki/Additions-Loan-Shark) | Active, Press | None |
 | [Report](https://github.com/Bithio999/MC/wiki/Additions-Loan-Shark#report) | [Loan Shark](https://github.com/Bithio999/MC/wiki/Additions-Loan-Shark) | Active, Press | None |
+| [Parallel Thought](https://github.com/Bithio999/MC/wiki/Additions-Split-Mind#passive) | [Split Mind](https://github.com/Bithio999/MC/wiki/Additions-Split-Mind) | Passive, Toggle | None |
+| [Magic Assignment](https://github.com/Bithio999/MC/wiki/Additions-Split-Mind#magic-assignment) | [Split Mind](https://github.com/Bithio999/MC/wiki/Additions-Split-Mind) | Active, Press | None |
+| [Auto-Cast](https://github.com/Bithio999/MC/wiki/Additions-Split-Mind#auto-cast) | [Split Mind](https://github.com/Bithio999/MC/wiki/Additions-Split-Mind) | Active, Toggle | Assigned magic’s native damage type |
 
 ## Ultimate
 

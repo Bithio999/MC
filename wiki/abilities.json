@@ -1396,5 +1396,38 @@
     "secondary_damage_id": null,
     "anchor": "report",
     "mod": "additions"
+  },
+  {
+    "skill": "Additions-Split-Mind",
+    "name": "Parallel Thought",
+    "tier": "Unique",
+    "kind": "Passive, Toggle",
+    "damage": "None",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "anchor": "passive",
+    "mod": "additions"
+  },
+  {
+    "skill": "Additions-Split-Mind",
+    "name": "Magic Assignment",
+    "tier": "Unique",
+    "kind": "Active, Press",
+    "damage": "None",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "anchor": "magic-assignment",
+    "mod": "additions"
+  },
+  {
+    "skill": "Additions-Split-Mind",
+    "name": "Auto-Cast",
+    "tier": "Unique",
+    "kind": "Active, Toggle",
+    "damage": "Assigned magic’s native damage type",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "anchor": "auto-cast",
+    "mod": "additions"
   }
 ]

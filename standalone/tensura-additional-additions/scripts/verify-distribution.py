@@ -5,11 +5,11 @@ import json, re, struct, tomllib, zipfile
 
 root = Path(__file__).resolve().parents[1]
 resources = root / 'src/main/resources'
-jar = root / 'build/libs/TensuraAdditionalAdditions-1.10.5.jar'
+jar = root / 'build/libs/TensuraAdditionalAdditions-1.11.0.jar'
 assets = resources / 'assets/heavenlyrestriction'
 required_art = [*(f'textures/race/{name}.png' for name in (
     'fettered_human', 'tempered_vessel', 'unshackled', 'heavenly_restricted', 'heavenbreaker')),
-    'textures/battlewill/schema.png', 'textures/skill/chained.png', 'textures/battlewill/air_sovereignty.png', 'textures/skill/unbound.png', 'textures/skill/fusion.png', 'textures/skill/prospector.png', 'textures/skill/exponentiation.png', 'textures/skill/loan_shark.png',
+    'textures/battlewill/schema.png', 'textures/skill/chained.png', 'textures/battlewill/air_sovereignty.png', 'textures/skill/unbound.png', 'textures/skill/fusion.png', 'textures/skill/prospector.png', 'textures/skill/split_mind.png', 'textures/skill/exponentiation.png', 'textures/skill/loan_shark.png',
     'geo/vital_corolla.geo.json', 'animations/vital_corolla.animation.json',
     'textures/geo/grove.png', 'textures/geo/grove_glowmask.png',
     'textures/item/inverted_spear_of_heaven.png', 'textures/mob_effect/nullification.png']
@@ -37,14 +37,14 @@ for name in config['mixins'] + config.get('client', []):
 with zipfile.ZipFile(jar) as z:
     names = set(z.namelist())
     mods = tomllib.loads(z.read('META-INF/neoforge.mods.toml').decode())
-    assert [(m['modId'], m['version']) for m in mods['mods']] == [('heavenlyrestriction', '1.10.5')]
+    assert [(m['modId'], m['version']) for m in mods['mods']] == [('heavenlyrestriction', '1.11.0')]
     assert mods['mods'][0]['displayName'] == 'TensuraAdditionalAdditions'
     language=json.loads(z.read('assets/heavenlyrestriction/lang/en_us.json'))
     for key,label in [('heavenlyrestriction.skill.parallel_world_jumper','Parallel World Jumper'),('heavenlyrestriction.skill.fusion','Fusion'),('heavenlyrestriction.skill.prospector','Prospector'),('heavenlyrestriction.skill.mode.prospector.refine','Refine'),('heavenlyrestriction.skill.mode.fusion.fuse','Fuse'),('heavenlyrestriction.skill.mode.parallel_world_jumper.world_hop','World Jump'),('heavenlyrestriction.skill.mode.parallel_world_jumper.world_select','World Select')]:
         assert language[key]==label, key
     assert any(d['modId'] == 'tensura' and d['type'] == 'required' for d in mods['dependencies']['heavenlyrestriction'])
     assert any(d['modId'] == 'wildhunt' and d['type'] == 'incompatible' for d in mods['dependencies']['heavenlyrestriction'])
-    assert not any(n.startswith('dev/wildhunt/') or 'StandaloneReview' in n or 'ChainedTargetingReview' in n or 'ChainedResourceReview' in n or 'UnboundReview' in n or 'AirborneReview' in n or 'NeoOtherworldClientReview' in n or 'NeoOtherworldGameTests' in n or 'NeoOtherworldFixtures' in n or 'SpiritualReviewGameTests' in n or 'TransmissionReview' in n or 'TransmissionClientReview' in n or 'SchemaReview' in n or 'SchemaClientReview' in n or 'GuideClientReview' in n or 'SchemaProgressClientReview' in n or 'WorldHopClientReview' in n or 'WorldHopPreview' in n or 'WorldSelectClientReview' in n or 'WorldLibraryClientReview' in n or 'FusionPreview' in n or 'FusionConsentReview' in n or 'FusionMenuReview' in n or 'FusionControlReview' in n or 'ProspectorReview' in n or 'ExponentiationReview' in n or 'LoanReview' in n or 'HighRealmReview' in n for n in names)
+    assert not any(n.startswith('dev/wildhunt/') or 'StandaloneReview' in n or 'ChainedTargetingReview' in n or 'ChainedResourceReview' in n or 'UnboundReview' in n or 'AirborneReview' in n or 'NeoOtherworldClientReview' in n or 'NeoOtherworldGameTests' in n or 'NeoOtherworldFixtures' in n or 'SpiritualReviewGameTests' in n or 'TransmissionReview' in n or 'TransmissionClientReview' in n or 'SchemaReview' in n or 'SchemaClientReview' in n or 'GuideClientReview' in n or 'SchemaProgressClientReview' in n or 'WorldHopClientReview' in n or 'WorldHopPreview' in n or 'WorldSelectClientReview' in n or 'WorldLibraryClientReview' in n or 'FusionPreview' in n or 'FusionConsentReview' in n or 'FusionMenuReview' in n or 'FusionControlReview' in n or 'ProspectorReview' in n or 'ExponentiationReview' in n or 'LoanReview' in n or 'SplitMindReview' in n or 'HighRealmReview' in n for n in names)
     assert b'ftbteams' not in z.read('dev/heavenlyrestriction/TestFixtures.class'), 'Pack-only fixture leaked into release'
     for name in required_art:
         assert z.read('assets/heavenlyrestriction/' + name) == (assets / name).read_bytes(), name
@@ -68,7 +68,7 @@ with zipfile.ZipFile(jar) as z:
     for cls in ['guide/GuideCatalog', 'client/guide/GuideScreen', 'client/guide/GuideClient']:
         assert 'dev/heavenlyrestriction/' + cls + '.class' in names
     guide = json.loads(z.read('assets/heavenlyrestriction/guide/entries.json'))['entries']
-    assert len(guide) == 15 and all(not e['id'].startswith('fusion-') for e in guide)
+    assert len(guide) == 16 and all(not e['id'].startswith('fusion-') for e in guide)
     assert any(e['id']=='schema' for e in guide)
     assert any(e['id']=='parallel-world-jumper' for e in guide)
     unique=json.loads(z.read('data/tensura/tags/manascore_skill/skills/unique_skills.json'))
@@ -97,8 +97,12 @@ with zipfile.ZipFile(jar) as z:
     for path in (resources/'data/heavenlyrestriction').rglob('*.json'):
         if any(key in path.as_posix() for key in ['/worldgen/','/dimension/','/dimension_type/','high_realm_elites']):
             name=path.relative_to(resources).as_posix();assert z.read(name)==path.read_bytes(),name
+    assert 'heavenlyrestriction:split_mind' in unique['values']
+    assert any(e['id']=='split-mind' for e in guide)
+    for cls in ['SplitMindSkill','splitmind/SplitMindCasting','splitmind/SplitMindNetwork','client/SplitMindScreen']:
+        assert 'dev/heavenlyrestriction/'+cls+'.class' in names
     assert any(e['id']=='high-realm' and e['category']=='Dimensions' for e in guide)
     pool=json.loads(z.read('data/heavenlyrestriction/tags/entity_type/high_realm_elites.json'))['values'];assert len(pool)==10 and all(t.startswith('tensura:') for t in pool) and 'tensura:arch_daemon' in pool and 'tensura:lesser_daemon' not in pool
     for biome in ['ivory_crags','starwood_grove','mistglass_basin']:
         spawns=json.loads(z.read('data/heavenlyrestriction/worldgen/biome/'+biome+'.json'))['spawners']['monster'];assert all(e['type'] in pool for e in spawns)
-print('Independent 1.10.5 JAR, native dependency metadata, all extracted icons/rigs/animations and mixin classes verified; no Myths classes, bundled dependencies or review fixtures.')
+print('Independent 1.11.0 JAR, native dependency metadata, all extracted icons/rigs/animations and mixin classes verified; no Myths classes, bundled dependencies or review fixtures.')

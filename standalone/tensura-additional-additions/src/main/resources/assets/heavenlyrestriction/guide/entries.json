@@ -643,6 +643,47 @@
           ]
         }
       ]
+    },
+    {
+      "id": "split-mind",
+      "title": "Split Mind",
+      "category": "Skills",
+      "summary": "Unique skill: parallel thought, faster learning and automatic native magic casting.",
+      "icon": "heavenlyrestriction:textures/skill/split_mind.png",
+      "keywords": [
+        "magic assignment",
+        "auto cast",
+        "chant annulment",
+        "thought acceleration",
+        "spiritual",
+        "aspectual"
+      ],
+      "related": [
+        "welcome",
+        "chained"
+      ],
+      "sections": [
+        {
+          "title": "Passive toggle",
+          "lines": [
+            "Gain +9 learning point gain and +9 mastery point gain. Gain native Thought Acceleration and Chant Annulment. Mastered magic casts instantly; unmastered magic retains its accelerated casting time. This passive does not need a skill slot."
+          ]
+        },
+        {
+          "title": "Magic Assignment · Press",
+          "lines": [
+            "Open a searchable menu of your fully learned aspectual and spiritual magics. Filter by type, select a spell and press Assign magic. Assignments persist; unlearned entries and spells you do not own cannot be assigned. Clear removes the assignment and stops Auto-Cast."
+          ]
+        },
+        {
+          "title": "Auto-Cast · Press to toggle",
+          "lines": [
+            "Automatically cast the assigned magic at the nearest visible hostile mob or combat opponent within 32 blocks. Allies, owned creatures, passive bystanders and protected players are excluded. Combat opponents can include players when PvP permits.",
+            "Normal magic costs, cooldowns, cast times and activation restrictions apply. Checks for a new cast every 5 ticks; held spells finish their normal cast. Uses the spell’s first mode and native damage type. Self/buff spells retain their native behavior. Your camera is not turned and manual casting has priority. This switch is independent of the passive toggle.",
+            "No extra Split Mind resource cost. Not rolled for Fettered Human because Auto-Cast uses magicule-cost abilities; the normal server allowlist can override that rule."
+          ]
+        }
+      ]
     }
   ]
 }

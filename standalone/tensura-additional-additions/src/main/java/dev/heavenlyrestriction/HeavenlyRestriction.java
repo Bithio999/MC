@@ -20,6 +20,7 @@ public final class HeavenlyRestriction {
     public static final RegistrySupplier<ExponentiationSkill> EXPONENTIATION=SKILLS.register(id("exponentiation"),ExponentiationSkill::new);
     public static final RegistrySupplier<ProspectorSkill> PROSPECTOR=SKILLS.register(id("prospector"),ProspectorSkill::new);
     public static final RegistrySupplier<LoanSharkSkill> LOAN_SHARK=SKILLS.register(id("loan_shark"),LoanSharkSkill::new);
+    public static final RegistrySupplier<SplitMindSkill> SPLIT_MIND=SKILLS.register(id("split_mind"),SplitMindSkill::new);
     public static final RegistrySupplier<FusionSkill> FUSION=SKILLS.register(id("fusion"),FusionSkill::new);
     public static final RegistrySupplier<SchemaArt> SCHEMA=SKILLS.register(id("schema"),SchemaArt::new);
     public static final RegistrySupplier<InstantTransmissionArt> INSTANT_TRANSMISSION=SKILLS.register(id("instant_transmission"),InstantTransmissionArt::new);
@@ -31,6 +32,11 @@ public final class HeavenlyRestriction {
         SKILLS.register(id("sovereign_rebirth"),()->new AuraRegenerationSkill(3)));
     public HeavenlyRestriction(net.neoforged.bus.api.IEventBus modBus,net.neoforged.fml.ModContainer container){
         HeavenlyArsenal.register(modBus);
+        modBus.addListener(dev.heavenlyrestriction.splitmind.SplitMindNetwork::register);
+        NeoForge.EVENT_BUS.addListener(dev.heavenlyrestriction.splitmind.SplitMindCasting::tick);
+        NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerLoggedOutEvent e)->dev.heavenlyrestriction.splitmind.SplitMindCasting.cancel(e.getEntity()));
+        NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerChangedDimensionEvent e)->dev.heavenlyrestriction.splitmind.SplitMindCasting.cancel(e.getEntity()));
+        NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.entity.living.LivingDeathEvent e)->dev.heavenlyrestriction.splitmind.SplitMindCasting.cancel(e.getEntity()));
         dev.heavenlyrestriction.highrealm.HighRealm.register(modBus,container);
         dev.heavenlyrestriction.loans.LoanShark.register();
         modBus.addListener(dev.heavenlyrestriction.loans.LoanNetwork::register);
@@ -50,6 +56,7 @@ public final class HeavenlyRestriction {
         modBus.addListener(SchemaNetwork::register);
         container.registerConfig(net.neoforged.fml.config.ModConfig.Type.SERVER,ChainedReincarnationConfig.SPEC,"tensura-heavenly-restriction-reincarnation.toml");
         ArtVisualEntity.register();
+        SkillEvents.ACTIVATE_SKILL.register(dev.heavenlyrestriction.splitmind.SplitMindCasting::manualActivation);
         SkillEvents.UNLOCK_SKILL.register(ChainedState::unlock);
         SkillEvents.SKILL_DAMAGE_PRE_CALCULATION.register(ChainedState::damage);
         NeoForge.EVENT_BUS.addListener(RestrictionEvents::tick);

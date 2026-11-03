@@ -57,7 +57,10 @@
     "ExponentiationOxygenMixin",
     "SchemaManualMixin",
     "LoanGrowthMixin",
-    "LoanUseMixin"
+    "LoanUseMixin",
+    "SplitMindChantMixin",
+    "SplitMindAimMixin",
+    "SplitMindPresetMixin"
   ],
   "injectors": {
     "defaultRequire": 1

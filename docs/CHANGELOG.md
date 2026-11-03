@@ -1,5 +1,12 @@
 # Changelog
 
+## Additions 1.11.0 — Split Mind
+
+- Add the Split Mind Unique Skill: +9 learning/mastery point gain, native Thought Acceleration and Chant Annulment under one passive toggle.
+- Add a searchable, paged Magic Assignment menu with aspectual/spiritual filters and server-validated learned-only spell ownership.
+- Add independent Auto-Cast: target the nearest visible hostile or combat opponent within 32 blocks using native magic costs, cooldowns and cast times. Preserve camera orientation, track moving targets during casting, and yield to manual input. Cancel safely on lost targets, ownership changes, logout, death and dimension changes.
+- Include the normal reincarnation pool, Fettered Human’s magicule-cost blacklist, a custom icon and searchable in-game/wiki entries.
+
 ## Additions 1.10.5 — Engorger daemons
 
 - Replace Greater Daemons’ Great Sage with mastered, enabled Engorger. Apply the same replacement to saved legacy Lesser Daemon elites; retire the former addon-granted skill, toggle bonuses and preset entries when loading 1.10.4 elites.

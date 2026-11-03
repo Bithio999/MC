@@ -56,6 +56,7 @@
 - [Fusion](https://github.com/Bithio999/MC/wiki/Additions-Fusion)
 - [Prospector](https://github.com/Bithio999/MC/wiki/Additions-Prospector)
 - [Loan Shark](https://github.com/Bithio999/MC/wiki/Additions-Loan-Shark)
+- [Split Mind](https://github.com/Bithio999/MC/wiki/Additions-Split-Mind)
 - [Parallel World Jumper](https://github.com/Bithio999/MC/wiki/Additions-Parallel-World-Jumper)
 - [Exponentiation](https://github.com/Bithio999/MC/wiki/Additions-Exponentiation)
 - [Aura recovery](https://github.com/Bithio999/MC/wiki/Additions-Aura-Regeneration)

@@ -1244,5 +1244,12 @@
     "title": "The High Realm",
     "category": "Dimensions",
     "mod": "additions"
+  },
+  {
+    "slug": "Additions-Split-Mind",
+    "title": "Split Mind",
+    "category": "Skills",
+    "tier": "Unique",
+    "mod": "additions"
   }
 ]

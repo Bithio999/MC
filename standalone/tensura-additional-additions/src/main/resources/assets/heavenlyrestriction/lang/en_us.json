@@ -36,5 +36,17 @@
   "biome.heavenlyrestriction.mistglass_basin": "Mistglass Basin",
   "high_realm.heavenlyrestriction.high_orc": "High Orc",
   "high_realm.heavenlyrestriction.tempest_star_wolf": "Tempest Star Wolf",
-  "high_realm.heavenlyrestriction.dragonewt": "Dragonewt"
+  "high_realm.heavenlyrestriction.dragonewt": "Dragonewt",
+  "heavenlyrestriction.skill.split_mind": "Split Mind",
+  "heavenlyrestriction.skill.split_mind.description": "Toggle: +9 learning and mastery point gain, native Thought Acceleration and Chant Annulment (mastered magic casts instantly). Magic Assignment: choose one of your learned aspectual or spiritual magics. Auto-Cast: independently toggle automatic casting at the nearest visible hostile mob or combat opponent within 32 blocks. Normal magic costs, casting requirements and cooldowns apply. Allies and protected players are excluded.",
+  "heavenlyrestriction.skill.mode.split_mind.magic_assignment": "Magic Assignment",
+  "heavenlyrestriction.skill.mode.split_mind.auto_cast": "Auto-Cast",
+  "heavenlyrestriction.split_mind.menu": "Split Mind · Magic Assignment",
+  "heavenlyrestriction.split_mind.search": "Search learned magic…",
+  "heavenlyrestriction.split_mind.empty": "No matching learned magic",
+  "heavenlyrestriction.split_mind.assign_first": "Assign a learned magic first.",
+  "heavenlyrestriction.split_mind.auto_on": "Split Mind: Auto-Cast enabled.",
+  "heavenlyrestriction.split_mind.auto_off": "Split Mind: Auto-Cast disabled.",
+  "heavenlyrestriction.split_mind.saved": "Assignment saved.",
+  "heavenlyrestriction.split_mind.invalid": "This learned magic is no longer available."
 }

@@ -13,3 +13,5 @@ Use Tensura’s normal Ability Selection menu. This addon has no Godly skill tie
 [Exponentiation](Additions-Exponentiation.md) squares supported beneficial values while learned and equipped in your current skill preset. Movement is excluded.
 
 [Loan Shark](Additions-Loan-Shark.md) lends skill copies, earns EP while they are used, and recalls or claims them through its report ledger.
+
+[Split Mind](Additions-Split-Mind.md) adds +9 learning/mastery gain, Thought Acceleration, Chant Annulment and automatic casting of one assigned learned magic.
