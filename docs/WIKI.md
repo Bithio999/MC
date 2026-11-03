@@ -5,7 +5,7 @@ The player-facing wiki lives in `wiki/pages/*.md`; `wiki/README.md` is the share
 ## Addon sections
 
 - **Tensura Myths 0.36.1:** home `Tensura-Myths.md`; existing unprefixed article URLs remain valid.
-- **TensuraAdditionalAdditions 1.9.3:** home `TensuraAdditionalAdditions.md`; content pages use `Additions-` prefixes.
+- **TensuraAdditionalAdditions 1.9.4:** home `TensuraAdditionalAdditions.md`; content pages use `Additions-` prefixes.
 - `wiki/navigation.json` contains separate navigation groups. The site and search keep the selected scope; the shared home searches all sections and labels results by addon.
 - Shared content has separate pages. Do not link an Additions article to Myths-only content. Use the correct release/guide when checking values.
 

@@ -33,9 +33,43 @@ public final class LoanShark {
     private record Session(UUID token,UUID target,long expires,int mode){}
     private static final Map<UUID,Session> SESSIONS=new HashMap<>();
     private static final Map<Class<?>,Boolean> SLOT_PASSIVE=new HashMap<>(),PURE_PASSIVE=new HashMap<>();
-    public static void register(){NeoForge.EVENT_BUS.addListener(LoanShark::tick);NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.entity.living.LivingDamageEvent.Pre event)->{var ability=((io.github.manasmods.tensura.damage.TensuraDamageSource)event.getSource()).tensura$getAbilityInstance();var owner=RestrictionData.attacker(event.getSource());if(ability!=null && event.getNewDamage()>0)pulse(owner,ability,20);});NeoForge.EVENT_BUS.addListener((ServerStoppedEvent e)->{SEEN.clear();PULSES.clear();SESSIONS.clear();OFFERS.clear();});}
+    public static void register(){NeoForge.EVENT_BUS.addListener(LoanShark::tick);NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.entity.EntityJoinLevelEvent e)->{if(e.getEntity() instanceof LivingEntity living)borrowerLoaded(living);});NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.entity.EntityLeaveLevelEvent e)->{if(e.getEntity() instanceof LivingEntity living)retireDeadBorrower(living);});NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent e)->borrowerLoaded(e.getEntity()));NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.entity.living.LivingDamageEvent.Pre event)->{var ability=((io.github.manasmods.tensura.damage.TensuraDamageSource)event.getSource()).tensura$getAbilityInstance();var owner=RestrictionData.attacker(event.getSource());if(ability!=null && event.getNewDamage()>0)pulse(owner,ability,20);});NeoForge.EVENT_BUS.addListener((ServerStoppedEvent e)->{SEEN.clear();PULSES.clear();SESSIONS.clear();OFFERS.clear();});}
     public static void see(LivingEntity e){SEEN.put(e.getUUID(),new WeakReference<>(e));}
-    public static LivingEntity resolve(MinecraftServer s,UUID id){var p=s.getPlayerList().getPlayer(id);if(p!=null)return p;for(var level:s.getAllLevels())if(level.getEntity(id) instanceof LivingEntity e)return e;var ref=SEEN.get(id);var e=ref==null?null:ref.get();if(e!=null && e.getServer()==s && !e.isRemoved() && (!(e instanceof ServerPlayer player) || !player.hasDisconnected()))return e;SEEN.remove(id);return null;}
+    public static LivingEntity resolve(MinecraftServer s,UUID id){
+        var p=s.getPlayerList().getPlayer(id);if(p!=null)return p;
+        for(var level:s.getAllLevels())if(level.getEntity(id) instanceof LivingEntity e){
+            if(retireDeadBorrower(e))return null;
+            if(!e.isRemoved())return e;
+        }
+        var ref=SEEN.get(id);var e=ref==null?null:ref.get();
+        if(e!=null && e.getServer()==s){
+            if(retireDeadBorrower(e)){SEEN.remove(id);return null;}
+            if(!e.isRemoved() && (!(e instanceof ServerPlayer player) || !player.hasDisconnected()))return e;
+        }
+        SEEN.remove(id);return null;
+    }
+    private static void close(LoanLedger d,LoanLedger.Loan l,String status){
+        l.status=status;l.wasActive=false;PULSES.remove(l.id);d.closed(l);
+    }
+    /** A removed-but-healthy mob may merely be unloaded. Player deaths preserve their loans. */
+    public static boolean retireDeadBorrower(LivingEntity e){
+        if(e.level().isClientSide() || e.getServer()==null || e instanceof net.minecraft.world.entity.player.Player)return false;
+        if(e.getHealth()>0 && e.getRemovalReason()!=Entity.RemovalReason.KILLED)return false;
+        var d=LoanLedger.get(e.getServer());
+        for(var l:List.copyOf(d.forBorrower(e.getUUID())))close(d,l,"Deceased");
+        return true;
+    }
+    /** Revoke a closed loan's marked copies if an unavailable borrower later loads again. */
+    public static void borrowerLoaded(LivingEntity e){
+        if(e.level().isClientSide() || e.getServer()==null || retireDeadBorrower(e))return;
+        var d=LoanLedger.get(e.getServer());
+        if(d.loans.isEmpty())return;
+        for(var i:List.copyOf(SkillAPI.getSkillsFrom(e).getLearnedSkills())){
+            if(i.getTag()==null || !i.getTag().hasUUID(TOKEN))continue;
+            var loan=d.loans.get(i.getTag().getUUID(TOKEN));
+            if(loan!=null && !loan.open())SkillAPI.getSkillsFrom(e).forgetSkill(i);
+        }
+    }
     public static boolean owns(ServerPlayer p){return p.isAlive() && !p.isSpectator() && SkillAPI.getSkillsFrom(p).getSkill(HeavenlyRestriction.LOAN_SHARK.get()).filter(i->i.getMastery()>=0 && i.canInteractSkill(p)).isPresent();}
     public static boolean eligible(ServerPlayer p,LivingEntity target){return owns(p) && target!=null && target!=p && target.isAlive() && !target.isSpectator() && target.level()==p.level() && p.distanceToSqr(target)<=256 && !Fusion.hidden(target) && (target instanceof ServerPlayer || SubordinateHelper.isSubordinate(p,target));}
     public static boolean lendable(ManasSkillInstance i){return i.getMastery()>=0 && !i.isTemporarySkill() && !i.isSubInstance() && i.getSkill()!=HeavenlyRestriction.LOAN_SHARK.get() && (i.getTag()==null || !i.getTag().hasUUID(TOKEN));}
@@ -67,7 +101,7 @@ public final class LoanShark {
     private static boolean slotPassive(ManasSkill skill){if(skill instanceof ExponentiationSkill || purePassive(skill))return true;return SLOT_PASSIVE.computeIfAbsent(skill.getClass(),type->Arrays.stream(type.getMethods()).anyMatch(m->Set.of("onBeingDamaged","onTakenDamage","onDamageEntity").contains(m.getName()) && !Set.of("ManasSkill","TensuraSkill","Skill").contains(m.getDeclaringClass().getSimpleName())));}
     public static boolean active(LoanLedger d,LoanLedger.Loan l,LivingEntity e){var fusion=Fusion.session(e);if(l.skill.equals(HeavenlyRestriction.FUSION.get().getRegistryName().toString()) && fusion!=null && l.borrower.equals(fusion.caster.getUUID()) && SkillAPI.getSkillsFrom(fusion.caster).getLearnedSkills().stream().anyMatch(i->tagged(i,l.id)))return true;e=acting(e);if(e==null || !e.isAlive() || e.isSpectator())return false;for(var i:SkillAPI.getSkillsFrom(e).getLearnedSkills())if(tagged(i,l.id) && i.getMastery()>=0){if(i.isToggled() || i.getSkill() instanceof ResistSkill || i.getSkill() instanceof ChainedSkill || (!i.canBeToggled(e) && i.canTick(e)) || PULSES.getOrDefault(l.id,0L)>d.clock)return true;if(i.getSkill()==HeavenlyRestriction.AIR_SOVEREIGNTY.get() && e instanceof net.minecraft.world.entity.player.Player p && AirSovereigntyArt.authorizesFlight(p) && p.getAbilities().flying)return true;if(i.getSkill()==HeavenlyRestriction.INSTANT_TRANSMISSION.get() && e instanceof ServerPlayer p && InstantTransmissionArt.charging(p))return true;if(i.getSkill() instanceof TensuraSkill skill){if(purePassive(skill) && !i.canBeToggled(e) && !skill.canBeSlotted(i,e,0))return true;if(slotPassive(skill) && (!purePassive(skill) || !i.canBeToggled(e)) && skill.isInSlot(e,i))return true;}}return false;}
     public static void sample(LoanLedger d,LoanLedger.Loan l,LivingEntity e){boolean on=active(d,l,e);if(on){if(!l.wasActive){l.lastGap=Math.max(0,d.clock-l.lastUsed);l.longestGap=Math.max(l.longestGap,l.lastGap);}l.used++;l.lastUsed=d.clock;}l.wasActive=on;}
-    public static void tick(ServerTickEvent.Post event){var s=event.getServer();var d=LoanLedger.get(s);d.clock++;for(var l:d.active())sample(d,l,resolve(s,l.borrower));if(d.clock%20==0){for(var id:List.copyOf(d.pending.keySet()))if(resolve(s,id) instanceof ServerPlayer p)pay(d,p);SESSIONS.entrySet().removeIf(e->e.getValue().expires<d.clock);OFFERS.entrySet().removeIf(e->e.getValue().expires<d.clock);PULSES.entrySet().removeIf(e->e.getValue()<=d.clock);if(d.clock%200==0)SEEN.entrySet().removeIf(e->{var entity=e.getValue().get();return entity==null || entity.isRemoved();});}d.setDirty();}
+    public static void tick(ServerTickEvent.Post event){var s=event.getServer();var d=LoanLedger.get(s);d.clock++;for(var l:List.copyOf(d.active())){var e=resolve(s,l.borrower);if(l.open())sample(d,l,e);}if(d.clock%20==0){for(var id:List.copyOf(d.pending.keySet()))if(resolve(s,id) instanceof ServerPlayer p)pay(d,p);SESSIONS.entrySet().removeIf(e->e.getValue().expires<d.clock);OFFERS.entrySet().removeIf(e->e.getValue().expires<d.clock);PULSES.entrySet().removeIf(e->e.getValue()<=d.clock);if(d.clock%200==0)SEEN.entrySet().removeIf(e->{var entity=e.getValue().get();return entity==null || entity.isRemoved();});}d.setDirty();}
     public static boolean transferring(){return TRANSFERRING.get()>0;}
     private static void transfer(Runnable action){int before=TRANSFERRING.get();TRANSFERRING.set(before+1);try{action.run();}finally{TRANSFERRING.set(before);}}
     /** Transfer a diminishing share of the actual award, respecting native storage limits. */
@@ -109,18 +143,21 @@ public final class LoanShark {
     private static double credit(LivingEntity e,net.minecraft.core.Holder<Attribute> type,double amount){var a=e.getAttribute(type);if(a==null || amount<=0 || type.equals(TensuraAttributes.MAX_MAGICULE) && ChainedState.owned(e))return 0;double factor=slope(a);if(factor<=0 || !Double.isFinite(factor))return 0;double before=a.getValue(),limit=a.getAttribute().value() instanceof RangedAttribute r?r.getMaxValue():Double.MAX_VALUE;double desired=Math.min(limit,before+amount);if(desired<=before)return 0;a.setBaseValue((desired-offset(a))/factor);return Math.min(amount,Math.max(0,a.getValue()-before));}
 
     public static void pay(LoanLedger d,ServerPlayer p){double owed=d.pending.getOrDefault(p.getUUID(),0d);if(owed<=0 || !p.isAlive() || p.isSpectator())return;transfer(()->{var align=TensuraStorages.getExistenceFrom(p).getAlignment();double ap=align.getAuraGainMultiplier(),mp=align.getMagiculeGainMultiplier();if(ChainedState.owned(p)){ap=1;mp=0;}double sum=ap+mp;if(sum<=0)return;double paid=credit(p,TensuraAttributes.MAX_AURA,owed*ap/sum)+credit(p,TensuraAttributes.MAX_MAGICULE,owed*mp/sum);double rest=Math.max(0,owed-paid);if(rest<.00001)d.pending.remove(p.getUUID());else d.pending.put(p.getUUID(),rest);d.setDirty();});}
-    public static String claim(ServerPlayer p,UUID id){
+    public static String claim(ServerPlayer p,UUID id){return claim(p,id,true);}
+    public static String cancel(ServerPlayer p,UUID id){return claim(p,id,false);}
+    private static String claim(ServerPlayer p,UUID id,boolean allowReward){
         if(!owns(p))return "Loan Shark is unavailable.";
         var d=LoanLedger.get(p.server);var l=d.loans.get(id);
         if(l==null || !l.lender.equals(p.getUUID()) || !l.open())return "That loan is not yours or is already closed.";
         var borrower=resolve(p.server,l.borrower);
-        if(borrower==null)return "The borrower must be online or loaded to claim.";
-        boolean rewardEligible=!active(d,l,borrower) && d.clock-l.lastUsed>=DEFAULT_TICKS;
+        if(!l.open())return "The borrower has died. Loan closed.";
+        if(borrower==null){close(d,l,"Cancelled");return "Loan closed. Recall queued if the borrower returns. No extra skill taken.";}
+        boolean rewardEligible=allowReward && !active(d,l,borrower) && d.clock-l.lastUsed>=DEFAULT_TICKS;
         var holders=new ArrayList<LivingEntity>();holders.add(borrower);
         var body=acting(borrower);if(body!=borrower)holders.add(body);
         for(var holder:holders)for(var i:List.copyOf(SkillAPI.getSkillsFrom(holder).getLearnedSkills()))if(tagged(i,id))SkillAPI.getSkillsFrom(holder).forgetSkill(i);
         for(var holder:holders)if(SkillAPI.getSkillsFrom(holder).getLearnedSkills().stream().anyMatch(i->tagged(i,id)))return "The gifted skill could not be recalled.";
-        l.status="Recalled";PULSES.remove(id);d.closed(l);
+        close(d,l,"Recalled");
         if(!rewardEligible)return "Loan recalled. No skill taken.";
         // Check the live native rule when claiming, rather than when the gift was issued.
         boolean removeOriginal=TensuraGameRules.canStealSkill(borrower.level());
@@ -146,17 +183,17 @@ public final class LoanShark {
     public static void open(ServerPlayer p,int mode){if(!owns(p))return;LivingEntity target=mode==0?ObjectSelectionHelper.getTargetingEntity(p,16,false):null;if(mode==0 && !eligible(p,target)){p.displayClientMessage(Component.literal("Aim at your subordinate or a player within 16 blocks."),true);return;}var d=LoanLedger.get(p.server);see(p);if(target!=null)see(target);var session=new Session(UUID.randomUUID(),target==null?null:target.getUUID(),d.clock+2400,mode);SESSIONS.put(p.getUUID(),session);send(p,session,"",0,"",true);}
     public static void request(ServerPlayer p,UUID token,String action,String value,String query,int page){var session=SESSIONS.get(p.getUUID());if(session==null || !session.token.equals(token) || !owns(p) || session.expires<LoanLedger.get(p.server).clock)return;session=new Session(session.token,session.target,LoanLedger.get(p.server).clock+2400,session.mode);SESSIONS.put(p.getUUID(),session);String message="";
         if(action.equals("lend") && session.mode==0){ResourceLocation id=ResourceLocation.tryParse(value);var target=session.target==null?null:resolve(p.server,session.target);message=id==null?"Invalid skill.":target instanceof ServerPlayer receiver?offer(p,receiver,id)?"Gift offer sent. Awaiting acceptance.":"Unable to send offer.":lend(p,target,id)!=null?"Loan issued. Mastery retained.":"Unable to lend: target unavailable, skill owned, restricted or ineligible.";}
-        else if(action.equals("claim") && session.mode==1){try{message=claim(p,UUID.fromString(value));}catch(IllegalArgumentException ignored){message="Invalid loan.";}}
+        else if((action.equals("claim") || action.equals("close")) && session.mode==1){try{message=action.equals("close")?cancel(p,UUID.fromString(value)):claim(p,UUID.fromString(value));}catch(IllegalArgumentException ignored){message="Invalid loan.";}}
         else if(!action.equals("refresh"))return;
         send(p,session,query,page,message,false);
     }
     public static List<ManasSkillInstance> loanChoices(ServerPlayer p){return SkillAPI.getSkillsFrom(p).getLearnedSkills().stream().filter(LoanShark::lendable).toList();}
-    public static List<LoanLedger.Loan> reportLoans(ServerPlayer p){return LoanLedger.get(p.server).loans.values().stream().filter(l->l.open() && l.lender.equals(p.getUUID())).toList();}
+    public static List<LoanLedger.Loan> reportLoans(ServerPlayer p){var d=LoanLedger.get(p.server);var owned=d.active().stream().filter(l->l.lender.equals(p.getUUID())).toList();for(var l:owned)resolve(p.server,l.borrower);return owned.stream().filter(LoanLedger.Loan::open).toList();}
     private static String name(String id){var skill=SkillAPI.getSkillRegistry().get(ResourceLocation.tryParse(id));return skill==null?id:skill.getName().getString();}
     private static void send(ServerPlayer p,Session session,String query,int page,String message,boolean open){var d=LoanLedger.get(p.server);var state=new CompoundTag();state.putUUID("session",session.token);state.putBoolean("open",open);state.putInt("mode",session.mode);state.putString("message",message);state.putString("query",query);var items=new ArrayList<CompoundTag>();String q=query.toLowerCase(Locale.ROOT);
         var target=session.target==null?null:resolve(p.server,session.target);state.putString("target",target==null?"Unavailable":target.getDisplayName().getString());state.putDouble("pending",d.pending.getOrDefault(p.getUUID(),0d));
         if(session.mode==0){for(var i:loanChoices(p)){String label=i.getSkill().getName().getString();if(!label.toLowerCase(Locale.ROOT).contains(q))continue;var row=new CompoundTag();row.putString("id",i.getSkillId().toString());row.putString("skill",i.getSkillId().toString());row.putString("name",label);row.putDouble("mastery",i.getMastery());row.putInt("maxMastery",i.getMaxMastery());row.putBoolean("enabled",eligible(p,target) && lendable(i) && SkillAPI.getSkillsFrom(target).getSkill(i.getSkill()).isEmpty());row.putString("status",!lendable(i)?"Not lendable":target!=null && SkillAPI.getSkillsFrom(target).getSkill(i.getSkill()).isPresent()?"Already owned":"Mastery retained");items.add(row);}}
-        else for(var l:reportLoans(p))if((name(l.skill)+" "+l.borrowerName+" "+l.status).toLowerCase(Locale.ROOT).contains(q)){var e=resolve(p.server,l.borrower);boolean active=active(d,l,e);var row=new CompoundTag();row.putString("id",l.id.toString());row.putString("skill",l.skill);row.putString("name",name(l.skill));row.putString("borrower",l.borrowerName);row.putString("status",l.open()?e==null?"Unavailable":active?"In use":"Idle":l.status);row.putDouble("ep",l.earned);row.putLong("used",l.used);row.putLong("idle",active?0:Math.max(0,d.clock-l.lastUsed));row.putLong("gap",l.lastGap);row.putLong("longestGap",l.longestGap);row.putBoolean("enabled",l.open() && e!=null);row.putBoolean("steal",l.open() && e!=null && !active && d.clock-l.lastUsed>=DEFAULT_TICKS);row.putBoolean("copy",e!=null && !TensuraGameRules.canStealSkill(e.level()));row.putString("stolen",l.stolen.isEmpty()?"":name(l.stolen));items.add(row);}
+        else for(var l:reportLoans(p))if((name(l.skill)+" "+l.borrowerName+" "+l.status).toLowerCase(Locale.ROOT).contains(q)){var e=resolve(p.server,l.borrower);boolean active=active(d,l,e);var row=new CompoundTag();row.putString("id",l.id.toString());row.putString("skill",l.skill);row.putString("name",name(l.skill));row.putString("borrower",l.borrowerName);row.putString("status",l.open()?e==null?"Unavailable":active?"In use":"Idle":l.status);row.putDouble("ep",l.earned);row.putLong("used",l.used);row.putLong("idle",active?0:Math.max(0,d.clock-l.lastUsed));row.putLong("gap",l.lastGap);row.putLong("longestGap",l.longestGap);row.putBoolean("enabled",l.open());row.putBoolean("unavailable",e==null);row.putBoolean("steal",l.open() && e!=null && !active && d.clock-l.lastUsed>=DEFAULT_TICKS);row.putBoolean("copy",e!=null && !TensuraGameRules.canStealSkill(e.level()));row.putString("stolen",l.stolen.isEmpty()?"":name(l.stolen));items.add(row);}
         items.sort(Comparator.comparing(t->t.getString("name"),String.CASE_INSENSITIVE_ORDER));int pages=Math.max(1,(items.size()+5)/6);page=Math.clamp(page,0,pages-1);state.putInt("page",page);state.putInt("pages",pages);state.putInt("count",items.size());var rows=new ListTag();for(int n=page*6;n<Math.min(items.size(),page*6+6);n++)rows.add(items.get(n));state.put("rows",rows);LoanNetwork.send(p,state);
     }
     private LoanShark(){}

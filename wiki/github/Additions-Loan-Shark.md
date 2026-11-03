@@ -62,7 +62,11 @@ Claim checks the current gamerule when used. **Chained and all Ultimate-classifi
 
 ![Copied claim reward](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/loan-shark-claimed-copy.png)
 
-Claim sooner, or while the skill is in use, and it only recalls the copy. If no eligible skill can be acquired, nothing extra is taken. Claims are checked on the server; completed contracts cannot be reused. The borrower must be online or loaded to claim. An unrelated independently acquired instance is not removed as the gifted copy.
+Claim sooner, or while the skill is in use, and it only recalls the copy. If no eligible skill can be acquired, nothing extra is taken. Claims are checked on the server; completed contracts cannot be reused. The borrower must be online or loaded to receive an extra skill from Claim. Confirmed subordinate deaths close their loans automatically; player deaths keep respawnable loans. An unloaded living borrower remains listed as unavailable. For an older missing borrower, **Close record** removes the row without taking an extra skill and recalls the marked gift if that borrower later returns.
+
+An unrelated independently acquired instance is not removed as the gifted copy.
+
+![Close an unavailable loan](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/loan-shark-close-unavailable.png)
 
 ![Loan Shark report](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/loan-shark-report.png)
 

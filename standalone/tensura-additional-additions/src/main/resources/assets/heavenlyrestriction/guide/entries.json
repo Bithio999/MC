@@ -586,7 +586,7 @@
         {
           "title": "Report and Claim",
           "lines": [
-            "Report lists only outstanding gifts. Search by skill or borrower and inspect EP transferred, use time and idle gaps. Claimed/recalled gifts leave the list. Confirmation remains available while timers refresh. Unloaded borrowers cannot be claimed.",
+            "Report lists outstanding gifts. Claimed/recalled gifts and confirmed dead-subordinate loans leave the list. Unloading and player respawn preserve loans. Close record cancels an unavailable loan without an extra skill; its gift is recalled if the borrower returns. Confirmation stays available during refreshes.",
             "Claim always recalls the gifted copy. After at least 10 uninterrupted minutes idle, and only if still idle, it also grants a random eligible unowned skill with retained mastery. With skillSteal true it removes the original from the borrower; with skillSteal false it copies the skill and leaves their original intact. Chained and every Ultimate-classified skill are excluded in both modes.",
             "Claim sooner or while active only recalls the copy. A closed contract cannot be claimed twice. Existing independent skill ownership is protected."
           ]

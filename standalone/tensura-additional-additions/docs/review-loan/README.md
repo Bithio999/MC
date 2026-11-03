@@ -17,3 +17,5 @@ These are actual gameplay/UI captures of a prepared scenario, not mockups. Opt-i
 Pass `-PloanReviewCopy=true` to exercise the same real Claim packet with `skillSteal false`. The fixture verifies that Hunter’s Recovery is copied with mastery 321, the borrower retains their original, and the ledger records **Copied**. Report/closed-record screenshots receive a `-copy` suffix. Use a fresh disposable review save for each run.
 
 The current fixture equips Loan Shark through the native menu and sends real mode-cycle packets for Loan → Report → Loan, then cycles to Report to open it. It checks that neither menu has mode tabs, Loan rows represent learned permanent owned skills, confirmation stays active through at least three background refreshes, and the completed gift leaves the active Report.
+
+Add `-PloanReviewDeath=true` for the death/unavailable-borrower flow. The fixture kills a real subordinate, checks the active Report empties, unloads a second living borrower, clicks Close record, reloads that borrower during confirmation, and verifies the real close packet recalls only the gift without awarding collateral. The final additional proof is `death-passed.txt`.

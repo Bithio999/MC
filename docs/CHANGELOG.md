@@ -1,5 +1,10 @@
 # Changelog
 
+## Additions 1.9.4 — Dead borrower cleanup
+
+- Close confirmed dead-subordinate loans and remove them from Report, preserving earned income and queued credit. Keep loans for unloaded mobs, recovered fatal hits and respawnable players.
+- Add Close record for unavailable borrowers. It never awards collateral and recalls the marked gift when the borrower returns, allowing older missing-NPC records to be cleared safely.
+
 ## Additions 1.9.3 — Skill balance and menus
 
 - Nerf Exponentiation from ^2 to ^1.2 throughout its supported outputs and capacities. Keep movement and energy-capacity exclusions, bounded values and single-application rules; update Fusion’s inverse capacity calculation and clamp legacy over-cap reserves.

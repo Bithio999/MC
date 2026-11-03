@@ -138,4 +138,56 @@ public final class LoanSharkGameTests {
         h.assertTrue(LoanLedger.get(p.server).loans.containsKey(a.id) && LoanShark.claim(p,a.id).contains("closed"),"Removing report row lost replay protection");h.succeed();
     }
 
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void deadSubordinateLoansCloseAndPreserveEarnedCredit(GameTestHelper h){
+        var p=lender(h);var e=subordinate(h,p);var a=LoanShark.lend(p,e,HeavenlyRestriction.SCHEMA.get().getRegistryName());
+        RestrictionData.learnReward(p,HeavenlyRestriction.PROSPECTOR.get());var b=LoanShark.lend(p,e,HeavenlyRestriction.PROSPECTOR.get().getRegistryName());
+        var d=LoanLedger.get(p.server);a.earned=12.5;var offline=UUID.randomUUID();d.pending.put(offline,12.5);
+        e.hurt(e.damageSources().genericKill(),Float.MAX_VALUE);
+        h.runAfterDelay(2,()->{
+            h.assertTrue(LoanShark.reportLoans(p).isEmpty(),"Dead subordinate remains in Report");
+            h.assertTrue(!a.open() && !b.open() && d.forBorrower(e.getUUID()).isEmpty(),"Dead loans remain indexed");
+            near(h,a.earned,12.5,"Death erased earned income");near(h,d.pending.get(offline),12.5,"Death erased queued credit");
+            var loaded=LoanLedger.load(d.save(new net.minecraft.nbt.CompoundTag(),p.registryAccess()),p.registryAccess());
+            h.assertTrue(!loaded.loans.get(a.id).open() && LoanShark.claim(p,a.id).contains("closed"),"Death closure can be replayed or reopened after restart");h.succeed();
+        });
+    }
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void unavailableRecordsCanCloseAndRecallMarkedSkillsOnReturn(GameTestHelper h){
+        var p=lender(h);var e=subordinate(h,p);var l=LoanShark.lend(p,e,HeavenlyRestriction.SCHEMA.get().getRegistryName());
+        RestrictionData.learnReward(e,CommonSkills.SELF_REGENERATION.get());var id=e.getUUID();var saved=new net.minecraft.nbt.CompoundTag();e.saveWithoutId(saved);
+        e.setRemoved(net.minecraft.world.entity.Entity.RemovalReason.UNLOADED_TO_CHUNK);
+        h.runAfterDelay(2,()->{
+            h.assertTrue(LoanShark.reportLoans(p).stream().anyMatch(loan->loan.id.equals(l.id)),"Unloading closed a living borrower's loan");
+            h.assertTrue(LoanShark.resolve(p.server,id)==null,"Unloaded borrower remains resolved");
+            String message=LoanShark.claim(p,l.id);h.assertTrue(message.contains("queued") && LoanShark.reportLoans(p).isEmpty(),"Unavailable record cannot be closed");
+            var returned=net.minecraft.world.entity.EntityType.HUSK.create(h.getLevel());returned.load(saved);h.assertTrue(SkillAPI.getSkillsFrom(returned).getSkill(HeavenlyRestriction.SCHEMA.get()).isPresent(),"Saved gift absent before deferred recall");h.assertTrue(returned.getUUID().equals(id),"Borrower identity not restored");
+            h.getLevel().addFreshEntity(returned);LoanShark.borrowerLoaded(returned);
+            h.assertTrue(SkillAPI.getSkillsFrom(returned).getSkill(HeavenlyRestriction.SCHEMA.get()).isEmpty(),"Cancelled gift survived borrower reload");
+            h.assertTrue(SkillAPI.getSkillsFrom(returned).getSkill(CommonSkills.SELF_REGENERATION.get()).isPresent(),"Recall removed an unrelated original skill");h.succeed();
+        });
+    }
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void playerDeathDoesNotRetireRespawnableLoan(GameTestHelper h){
+        var p=lender(h);var receiver=actor(h);receiver.setPos(p.position().add(2,0,0));LoanShark.offer(p,receiver,HeavenlyRestriction.SCHEMA.get().getRegistryName());LoanShark.reply(receiver,LoanShark.pendingOffer(receiver),true);
+        receiver.setHealth(0);h.assertTrue(!LoanShark.retireDeadBorrower(receiver) && LoanShark.reportLoans(p).size()==1,"Player death retired a respawnable loan");receiver.setHealth(1);h.succeed();
+    }
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void totemRecoveryKeepsSubordinateLoanOpen(GameTestHelper h){
+        var p=lender(h);var e=subordinate(h,p);var l=LoanShark.lend(p,e,HeavenlyRestriction.SCHEMA.get().getRegistryName());
+        e.setItemSlot(net.minecraft.world.entity.EquipmentSlot.OFFHAND,new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.TOTEM_OF_UNDYING));
+        e.hurt(e.damageSources().mobAttack(p),1000000);
+        h.assertTrue(e.isAlive(),"Totem did not recover borrower");
+        h.runAfterDelay(2,()->{h.assertTrue(l.open() && LoanShark.reportLoans(p).size()==1,"Recovered subordinate loan closed after fatal hit");h.succeed();});
+    }
+
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void closeOnlyCannotTakeCollateralIfBorrowerReturns(GameTestHelper h){
+        var p=lender(h);var e=subordinate(h,p);var l=LoanShark.lend(p,e,HeavenlyRestriction.SCHEMA.get().getRegistryName());
+        RestrictionData.learnReward(e,CommonSkills.SELF_REGENERATION.get());LoanLedger.get(p.server).clock=l.lastUsed+13000;
+        LoanShark.cancel(p,l.id);
+        h.assertTrue(!l.open() && SkillAPI.getSkillsFrom(e).getSkill(HeavenlyRestriction.SCHEMA.get()).isEmpty(),"Close-only request did not recall the gift");
+        h.assertTrue(SkillAPI.getSkillsFrom(p).getSkill(CommonSkills.SELF_REGENERATION.get()).isEmpty() && SkillAPI.getSkillsFrom(e).getSkill(CommonSkills.SELF_REGENERATION.get()).isPresent(),"Close-only request claimed collateral from a returned borrower");h.succeed();
+    }
+
 }
