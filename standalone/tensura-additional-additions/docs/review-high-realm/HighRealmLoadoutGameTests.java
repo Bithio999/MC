@@ -34,6 +34,89 @@ public final class HighRealmLoadoutGameTests {
   }
 
   @GameTest(template = "empty", templateNamespace = "heavenlyrestriction", timeoutTicks = 200)
+  public static void engorgerReplacesPriorGreatSageWithoutRefillsOrLingeringBonuses(
+      GameTestHelper h) {
+    var l = HighRealmGameTests.realm(h);
+    var effect =
+        io.github.manasmods.tensura.registry.effect.TensuraMobEffects.getReference(
+            io.github.manasmods.tensura.registry.effect.TensuraMobEffects.ENGORGEMENT);
+    var chantAttribute =
+        io.github.manasmods.tensura.registry.attribute.TensuraAttributes.CHANT_SPEED;
+    for (String species : List.of("greater_daemon", "lesser_daemon")) {
+      var m = mob(l, species);
+      m.getPersistentData().putBoolean(HighRealmElites.MARKER, true);
+      m.getPersistentData().putInt(HighRealmLoadouts.VERSION_KEY, 4);
+      EnergyHelper.setBaseMaxEP(m, 3500000);
+      double chant = m.getAttributeValue(chantAttribute),
+          scale = m.getAttributeValue(Attributes.SCALE),
+          attack = m.getAttributeValue(Attributes.ATTACK_DAMAGE);
+      RestrictionData.learnReward(m, UniqueSkills.GREAT_SAGE.get());
+      var sage = SkillAPI.getSkillsFrom(m).getSkill(UniqueSkills.GREAT_SAGE.get()).orElseThrow();
+      sage.setMastery(sage.getMaxMastery());
+      sage.setToggled(true);
+      sage.onToggleOn(m);
+      TensuraStorages.getAbilityFrom(m).setAbilitySlot(0, 0, UniqueSkills.GREAT_SAGE.get(), 0);
+      TensuraStorages.getAbilityFrom(m).setAbilitySlot(0, 1, ExtraSkills.MAGIC_SENSE.get(), 0);
+      m.setHealth(37);
+      var pool = TensuraStorages.getExistenceFrom(m);
+      pool.setAura(123);
+      pool.setMagicule(234);
+      pool.setSpiritualHealth(12);
+      h.assertTrue(HighRealmLoadouts.apply(m), "Old daemon not updated");
+      h.assertTrue(
+          SkillAPI.getSkillsFrom(m).getSkill(UniqueSkills.GREAT_SAGE.get()).isEmpty(),
+          "Replaced Great Sage retained");
+      near(h, m.getAttributeValue(chantAttribute), chant, "Great Sage chant bonus retained");
+      h.assertTrue(
+          TensuraStorages.getAbilityFrom(m).getAbilitySlot(0, 0).getSkill() == null
+              && TensuraStorages.getAbilityFrom(m).getAbilitySlot(0, 1).getSkill()
+                  == ExtraSkills.MAGIC_SENSE.get(),
+          "Preset retirement removed unrelated slot");
+      var engorger = SkillAPI.getSkillsFrom(m).getSkill(UniqueSkills.ENGORGER.get()).orElseThrow();
+      h.assertTrue(
+          engorger.isMastered(m) && engorger.isToggled() && m.hasEffect(effect),
+          "Engorger passive inactive");
+      h.assertTrue(
+          m.getAttributeValue(Attributes.SCALE) > scale
+              && m.getAttributeValue(Attributes.ATTACK_DAMAGE) > attack,
+          "Engorgement stats missing");
+      near(h, m.getHealth(), 37, "Migration healed");
+      near(h, pool.getAura(), 123, "Migration refilled aura");
+      near(h, pool.getMagicule(), 234, "Migration refilled MP");
+      near(h, pool.getSpiritualHealth(), 12, "Migration refilled SHP");
+      double enlarged = m.getAttributeValue(Attributes.SCALE);
+      h.assertTrue(!HighRealmLoadouts.apply(m), "Migration replayed");
+      near(h, m.getAttributeValue(Attributes.SCALE), enlarged, "Scale stacked");
+      m.setHealth(37);
+      effect.value().applyEffectTick(m, 0);
+      h.assertTrue(m.getHealth() > 37, "Native Engorgement does not heal daemon");
+      var copy = mob(l, species);
+      copy.load(m.saveWithoutId(new net.minecraft.nbt.CompoundTag()));
+      h.assertTrue(
+          copy.hasEffect(effect)
+              && SkillAPI.getSkillsFrom(copy).getSkill(UniqueSkills.ENGORGER.get()).isPresent()
+              && !HighRealmLoadouts.apply(copy),
+          "Engorger state lost on reload");
+      var owned = mob(l, species);
+      owned.getPersistentData().putBoolean(HighRealmElites.MARKER, true);
+      owned.getPersistentData().putInt(HighRealmLoadouts.VERSION_KEY, 4);
+      TensuraStorages.getExistenceFrom(owned).setPermanentOwner(UUID.randomUUID());
+      RestrictionData.learnReward(owned, UniqueSkills.GREAT_SAGE.get());
+      h.assertTrue(
+          !HighRealmLoadouts.apply(owned)
+              && SkillAPI.getSkillsFrom(owned).getSkill(UniqueSkills.GREAT_SAGE.get()).isPresent(),
+          "Owned daemon altered");
+    }
+    var arch = mob(l, "arch_daemon");
+    HighRealmElites.empower(arch);
+    h.assertTrue(
+        SkillAPI.getSkillsFrom(arch).getSkill(UniqueSkills.MATHEMATICIAN.get()).isPresent()
+            && SkillAPI.getSkillsFrom(arch).getSkill(UniqueSkills.ENGORGER.get()).isEmpty(),
+        "Arch signature changed");
+    h.succeed();
+  }
+
+  @GameTest(template = "empty", templateNamespace = "heavenlyrestriction", timeoutTicks = 200)
   public static void everySpeciesHasAnEnabledNativeUniqueIncludingSavedElites(GameTestHelper h) {
     var signatures =
         Map.ofEntries(
@@ -45,9 +128,9 @@ public final class HighRealmLoadoutGameTests {
             Map.entry("knight_spider", UniqueSkills.OPPRESSOR.get()),
             Map.entry("lizardman", UniqueSkills.MARTIAL_MASTER.get()),
             Map.entry("basilisk", UniqueSkills.SURVIVOR.get()),
-            Map.entry("greater_daemon", UniqueSkills.GREAT_SAGE.get()),
+            Map.entry("greater_daemon", UniqueSkills.ENGORGER.get()),
             Map.entry("arch_daemon", UniqueSkills.MATHEMATICIAN.get()),
-            Map.entry("lesser_daemon", UniqueSkills.GREAT_SAGE.get()));
+            Map.entry("lesser_daemon", UniqueSkills.ENGORGER.get()));
     var l = HighRealmGameTests.realm(h);
     for (var entry : signatures.entrySet()) {
       var m = mob(l, entry.getKey());
@@ -89,8 +172,7 @@ public final class HighRealmLoadoutGameTests {
         h.assertTrue(
             TensuraStorages.getAbilityFrom(m).getAbilitySlot(0, 0).getSkill() == entry.getValue(),
             "In-slot Unique unequipped");
-      if (entry.getValue() == UniqueSkills.GREAT_SAGE.get()
-          || entry.getValue() == UniqueSkills.MATHEMATICIAN.get()) {
+      if (entry.getValue() == UniqueSkills.MATHEMATICIAN.get()) {
         unique.setToggled(false);
         unique.onToggleOff(m);
         h.assertTrue(

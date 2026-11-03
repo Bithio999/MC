@@ -17,7 +17,7 @@ import net.minecraft.world.entity.Mob;
  */
 public final class HighRealmLoadouts {
   public static final String VERSION_KEY = "heavenlyrestriction:elite_loadout_version";
-  public static final int VERSION = 4;
+  public static final int VERSION = 5;
 
   public record Loadout(List<ManasSkill> skills, List<Magic> spells) {}
 
@@ -108,7 +108,7 @@ public final class HighRealmLoadouts {
                   AspectualMagics.FIRE_BALL.get());
         };
     var skills = new java.util.ArrayList<ManasSkill>(base.skills());
-    skills.add(tier >= 2 ? UniqueSkills.MATHEMATICIAN.get() : UniqueSkills.GREAT_SAGE.get());
+    skills.add(tier >= 2 ? UniqueSkills.MATHEMATICIAN.get() : UniqueSkills.ENGORGER.get());
     return new Loadout(List.copyOf(skills), spells);
   }
 
@@ -216,6 +216,9 @@ public final class HighRealmLoadouts {
     // Retire Fighter where the previous addon loadout granted it, and superseded resistances.
     if (tag.getInt(VERSION_KEY) > 0 && !loadout.skills().contains(UniqueSkills.FIGHTER.get()))
       remove(mob, UniqueSkills.FIGHTER.get());
+    // Version 4 granted Great Sage to these daemon tiers; retire its toggle and preset too.
+    if (tag.getInt(VERSION_KEY) == 4 && loadout.skills().contains(UniqueSkills.ENGORGER.get()))
+      remove(mob, UniqueSkills.GREAT_SAGE.get());
     for (var skill : loadout.skills()) grant(mob, skill, true);
     for (var spell : loadout.spells()) grant(mob, spell, false);
     // Native nullifications may keep lower-tier entries; do not dismantle that hierarchy.
@@ -226,6 +229,8 @@ public final class HighRealmLoadouts {
     pool.setMagicule(Math.min(mp, EnergyHelper.getMaxMagicule(mob)));
     pool.setSpiritualHealth(shp);
     pool.markDirty();
+    // Engorgement changes scale; fresh-spawn collision checks need the enlarged body now.
+    mob.refreshDimensions();
     HighRealmEvolutions.refreshName(mob);
     tag.putInt(VERSION_KEY, VERSION);
     return true;

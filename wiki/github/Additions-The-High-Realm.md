@@ -65,7 +65,7 @@ Every elite receives **Physical Attack Resistance**, **Magic Resistance**, **Pai
 
 Every species has a **mastered Unique Skill**. These supplement the shared skills. **Fighter is reserved for Horned Bears.**
 
-Shadow Striker supplies the wolf’s acceleration and dodge; Oppressor gives the spider native arrow/fall immunity; Martial Master strengthens the Dragonewt’s physical attacks and dodge; Survivor protects the Basilisk from debilitating effects. Great Sage accelerates Greater Daemon chanting; Mathematician adds faster chanting, dodge and resistance degradation to Arch Daemons. These passives function automatically. Player-operated menus and active techniques are not driven by mob AI.
+Shadow Striker supplies the wolf’s acceleration and dodge; Oppressor gives the spider native arrow/fall immunity; Martial Master strengthens the Dragonewt’s physical attacks and dodge; Survivor protects the Basilisk from debilitating effects. Engorger enlarges Greater Daemons, boosts their combat attributes and provides native healing; Mathematician adds faster chanting, dodge and resistance degradation to Arch Daemons. These passives function automatically. Player-operated menus and active techniques are not driven by mob AI.
 
 | Species | Added skills |
 | --- | --- |
@@ -77,7 +77,7 @@ Shadow Striker supplies the wolf’s acceleration and dodge; Oppressor gives the
 | Knight Spider | **Oppressor**, Body Armor, Steel Strength, Poison, **Poison Nullification**, Paralysis Resistance, Pierce Resistance |
 | Dragonewt | **Martial Master**, Scale Armor, Water Breathing, Steel Strength, **Water Attack Nullification**, Corrosion Resistance |
 | Basilisk | **Survivor**, Scale Armor, Steel Strength, Poison, Paralysis, **Poison Nullification**, **Paralysis Nullification** |
-| Greater Daemon | **Great Sage**, Mana Manipulation, Flame/Water/Wind/Lightning/**Earth Manipulation**, **Flame Attack Nullification**, Water Attack Resistance |
+| Greater Daemon | **Engorger**, Mana Manipulation, Flame/Water/Wind/Lightning/**Earth Manipulation**, **Flame Attack Nullification**, Water Attack Resistance |
 | Arch Daemon | **Mathematician**, Mana Manipulation, Flame/Water/Wind/Lightning/**Earth Manipulation**, **Flame Attack Nullification**, **Electricity Nullification**, Darkness Attack Resistance |
 
 ### Combat magic

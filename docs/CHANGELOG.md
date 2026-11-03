@@ -1,5 +1,10 @@
 # Changelog
 
+## Additions 1.10.5 — Engorger daemons
+
+- Replace Greater Daemons’ Great Sage with mastered, enabled Engorger. Apply the same replacement to saved legacy Lesser Daemon elites; retire the former addon-granted skill, toggle bonuses and preset entries when loading 1.10.4 elites.
+- Preserve current vitals and ownership exclusions, refresh enlarged dimensions before fresh-spawn collision checks, and retain native daemon spells. Update the wiki and in-game guide.
+
 ## Additions 1.10.4 — Unique Skills for every High Realm enemy
 
 - Give every High Realm species a mastered, usable native Unique Skill. Add Shadow Striker to Tempest Star Wolves, Oppressor to Knight Spiders, Martial Master to Dragonewts, Survivor to Basilisks, Great Sage to Greater Daemons and Mathematician to Arch Daemons. Retain existing species signatures.
