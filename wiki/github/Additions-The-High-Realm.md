@@ -45,9 +45,9 @@ The natural spawn pool is **entirely Tensura mobs**. **Bosses are excluded**, in
 
 | Archetype | Members | Base EP | HP floor | SHP floor |
 | --- | --- | ---: | ---: | ---: |
-| High Bulwark | High Orc, Armorsaurus, Horned Bear | 5,000,000 | 1,024 | 5,000 |
-| High Sentinel | Dragonewt, Basilisk, Greater/Arch Daemon | 3,500,000 | 850 | 3,200 |
-| High Stalker | Tempest Star Wolf, Blade Tiger, Knight Spider | 2,500,000 | 700 | 2,400 |
+| High Bulwark | High Orc, Armorsaurus, Horned Bear | 2,500,000 | 1,024 | 5,000 |
+| High Sentinel | Dragonewt, Basilisk, Greater/Arch Daemon | 1,750,000 | 850 | 3,200 |
+| High Stalker | Tempest Star Wolf, Blade Tiger, Knight Spider | 1,250,000 | 700 | 2,400 |
 
 Native skills can alter final stats. All elites gain **11–17 core mastered skills** in addition to their retained native abilities. Their toggles are enabled; skills that require a preset slot are equipped.
 
@@ -105,7 +105,7 @@ The small arrival sanctum is protected from normal block edits. Natural hostile 
 
 The dimension is added to existing saves. Its terrain, awakened gates and individual return points persist after a restart. [World Hop](https://github.com/Bithio999/MC/wiki/Additions-Parallel-World-Jumper) generates a fresh realm for a new seed; returning to a previously visited world restores that world's realm.
 
-Existing eligible unowned elites receive applicable same-entity evolutions and loadouts when loaded, without refilling resources or reducing EP. Owned mobs remain unchanged. Old daemon entities remain until normal despawning; new spawns use the upgraded types. Existing vanilla elites are left to despawn normally; no new vanilla elites spawn.
+Existing eligible unowned elites receive applicable same-entity evolutions and loadouts when loaded, without refilling resources. Existing unowned elites also receive the halved EP balance once when loaded; current aura and magicules are capped to the new capacity. HP, SHP, damage and skill packages are unchanged. Owned mobs remain unchanged. Old daemon entities remain until normal despawning; new spawns use the upgraded types. Existing vanilla elites are left to despawn normally; no new vanilla elites spawn.
 
 Server settings are in `serverconfig/tensura-additions-high-realm.toml`: `entryEP`, `gateChargeTicks`, `elitePower`, and `eliteSpawns`. Changing elite strength affects new spawns. Up to **256 awakened gates** can be registered in one world.
 

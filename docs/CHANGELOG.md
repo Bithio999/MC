@@ -1,5 +1,10 @@
 # Changelog
 
+## Additions 1.11.2 — High Realm EP balance
+
+- Halve the completed EP package of High Realm elites: default Bulwarks 2.5M, Sentinels 1.75M and Stalkers 1.25M. Preserve aura/magicule proportions, HP, SHP, damage and loadouts.
+- Apply the reduction once to saved unowned elites when loaded, without refilling resources or repeatedly reducing EP. Owned creatures are excluded. The entry threshold remains 5M EP.
+
 ## Additions 1.11.1 — Auto-Cast mode selection
 
 - Add a mode dropdown to Magic Assignment, with native mode names, locked-mode indicators, mouse/keyboard selection and scrolling for longer lists. Keep selection controls fitted at small GUI sizes.

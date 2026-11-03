@@ -22,12 +22,14 @@ import net.neoforged.neoforge.event.entity.living.*;
 
 public final class HighRealmElites {
   public static final String MARKER = "heavenlyrestriction:high_realm_elite",
-      CANDIDATE = "heavenlyrestriction:high_realm_candidate";
+      CANDIDATE = "heavenlyrestriction:high_realm_candidate",
+      EP_REBALANCED = "heavenlyrestriction:high_realm_ep_halved";
   public static final TagKey<EntityType<?>> TYPES =
       TagKey.create(Registries.ENTITY_TYPE, HeavenlyRestriction.id("high_realm_elites"));
   private static final TagKey<EntityType<?>> BOSSES =
       TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath("c", "bosses"));
 
+  // Native evolution/loadout calibration; rebalanceEP halves the completed EP package.
   public enum Kind {
     BULWARK(5000000, 1024, 5000, 150, .27),
     SENTINEL(3500000, 850, 3200, 110, .29),
@@ -113,7 +115,10 @@ public final class HighRealmElites {
         return;
       }
     }
-    if (e.getEntity() instanceof Mob mob && elite(mob)) HighRealmLoadouts.apply(mob);
+    if (e.getEntity() instanceof Mob mob && elite(mob)) {
+      HighRealmLoadouts.apply(mob);
+      rebalanceEP(mob);
+    }
     if (e.getEntity() instanceof AbstractArrow arrow
         && arrow.getOwner() instanceof Mob mob
         && elite(mob))
@@ -167,6 +172,7 @@ public final class HighRealmElites {
     energy.setMagicule(EnergyHelper.getMaxMagicule(mob));
     energy.markDirty();
     HighRealmLoadouts.apply(mob);
+    rebalanceEP(mob);
     HighRealmEvolutions.refreshName(mob);
     if (mob.getType() == EntityType.HUSK || mob.getType() == EntityType.WITHER_SKELETON) {
       mob.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.DIAMOND_SWORD));
@@ -174,6 +180,23 @@ public final class HighRealmElites {
       mob.setItemSlot(EquipmentSlot.CHEST, new ItemStack(Items.DIAMOND_CHESTPLATE));
       mob.setDropChance(EquipmentSlot.CHEST, 0);
     }
+    return true;
+  }
+
+  /** Halve the completed native elite package once, including saved unowned elites. */
+  public static boolean rebalanceEP(Mob mob) {
+    var tag = mob.getPersistentData();
+    if (!elite(mob) || !unowned(mob) || tag.getBoolean(EP_REBALANCED)) return false;
+    // Preserve the native aura/magicule split and all unrelated stats/modifiers.
+    for (var attribute : List.of(TensuraAttributes.MAX_AURA, TensuraAttributes.MAX_MAGICULE)) {
+      var value = mob.getAttribute(attribute);
+      if (value != null) value.setBaseValue(value.getBaseValue() * .5);
+    }
+    var energy = TensuraStorages.getExistenceFrom(mob);
+    energy.setAura(Math.min(energy.getAura(), EnergyHelper.getMaxAura(mob)));
+    energy.setMagicule(Math.min(energy.getMagicule(), EnergyHelper.getMaxMagicule(mob)));
+    energy.markDirty();
+    tag.putBoolean(EP_REBALANCED, true);
     return true;
   }
 

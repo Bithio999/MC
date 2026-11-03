@@ -184,7 +184,7 @@ public final class HighRealmGameTests {
         m.getType() == io.github.manasmods.tensura.registry.entity.MonsterEntityTypes.ORC.get()
             && m.getMaxHealth() >= 1000,
         "Elite identity/stats incorrect");
-    near(h, EnergyHelper.getBaseMaxEP(m), 5000000 * HighRealmConfig.ELITE_POWER.get(), "Elite EP");
+    near(h, EnergyHelper.getBaseMaxEP(m), 2500000 * HighRealmConfig.ELITE_POWER.get(), "Elite EP");
     h.assertTrue(
         TensuraStorages.getExistenceFrom(m).getSpiritualHealth() > 4000, "Elite SHP missing");
     h.assertTrue(
@@ -202,6 +202,60 @@ public final class HighRealmGameTests {
     restored.load(tag);
     h.assertTrue(!HighRealmElites.empower(restored), "Reload upgraded elite twice");
     near(h, restored.getHealth(), 37, "Reload healed elite");
+    h.succeed();
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 200)
+  public static void savedEliteEpHalvesOnceWithoutHealingOrChangingOtherStats(GameTestHelper h) {
+    var m = orc(realm(h));
+    HighRealmElites.empower(m);
+    // Model an old saved elite with unequal aura/magicule pools.
+    m.getPersistentData().remove(HighRealmElites.EP_REBALANCED);
+    m.getAttribute(TensuraAttributes.MAX_AURA).setBaseValue(4000000);
+    m.getAttribute(TensuraAttributes.MAX_MAGICULE).setBaseValue(1000000);
+    m.setHealth(37);
+    var energy = TensuraStorages.getExistenceFrom(m);
+    // Real saved mobs have completed Tensura's first-join resource initialization.
+    energy.setSkippingEPDrop(false);
+    energy.setAura(123);
+    energy.setMagicule(900000);
+    energy.setSpiritualHealth(79);
+    double damage = m.getAttributeValue(Attributes.ATTACK_DAMAGE), hp = m.getMaxHealth();
+    var saved = new CompoundTag();
+    m.saveWithoutId(saved);
+    var restored = orc(realm(h));
+    restored.load(saved);
+    NeoForge.EVENT_BUS.post(new EntityJoinLevelEvent(restored, restored.level()));
+    near(h, restored.getAttributeBaseValue(TensuraAttributes.MAX_AURA), 2000000, "Aura not halved");
+    near(
+        h,
+        restored.getAttributeBaseValue(TensuraAttributes.MAX_MAGICULE),
+        500000,
+        "Magicules not halved");
+    var pool = TensuraStorages.getExistenceFrom(restored);
+    near(h, pool.getAura(), 123, "Migration refilled aura");
+    near(
+        h, pool.getMagicule(), EnergyHelper.getMaxMagicule(restored), "Magicules exceeded new cap");
+    near(h, restored.getHealth(), 37, "Migration healed HP");
+    near(h, pool.getSpiritualHealth(), 79, "Migration changed SHP");
+    near(h, restored.getMaxHealth(), hp, "Migration changed max HP");
+    near(
+        h,
+        restored.getAttributeValue(Attributes.ATTACK_DAMAGE),
+        damage,
+        "Migration changed damage");
+    saved = new CompoundTag();
+    restored.saveWithoutId(saved);
+    var again = orc(realm(h));
+    again.load(saved);
+    NeoForge.EVENT_BUS.post(new EntityJoinLevelEvent(again, again.level()));
+    near(h, EnergyHelper.getBaseMaxEP(again), 2500000, "Reload halved EP again");
+    var owned = orc(realm(h));
+    owned.getPersistentData().putBoolean(HighRealmElites.MARKER, true);
+    TensuraStorages.getExistenceFrom(owned).setPermanentOwner(UUID.randomUUID());
+    EnergyHelper.setBaseMaxEP(owned, 5000000);
+    h.assertTrue(!HighRealmElites.rebalanceEP(owned), "Owned elite migrated");
+    near(h, EnergyHelper.getBaseMaxEP(owned), 5000000, "Owned elite lost EP");
     h.succeed();
   }
 
