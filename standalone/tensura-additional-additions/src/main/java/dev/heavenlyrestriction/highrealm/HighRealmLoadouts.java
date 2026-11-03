@@ -17,7 +17,7 @@ import net.minecraft.world.entity.Mob;
  */
 public final class HighRealmLoadouts {
   public static final String VERSION_KEY = "heavenlyrestriction:elite_loadout_version";
-  public static final int VERSION = 3;
+  public static final int VERSION = 4;
 
   public record Loadout(List<ManasSkill> skills, List<Magic> spells) {}
 
@@ -107,7 +107,9 @@ public final class HighRealmLoadouts {
                   AspectualMagics.STONE_SHOT.get(),
                   AspectualMagics.FIRE_BALL.get());
         };
-    return new Loadout(base.skills(), spells);
+    var skills = new java.util.ArrayList<ManasSkill>(base.skills());
+    skills.add(tier >= 2 ? UniqueSkills.MATHEMATICIAN.get() : UniqueSkills.GREAT_SAGE.get());
+    return new Loadout(List.copyOf(skills), spells);
   }
 
   public static Loadout forMob(Mob mob) {
@@ -142,6 +144,7 @@ public final class HighRealmLoadouts {
               ResistanceSkills.PARALYSIS_RESISTANCE.get());
       case "direwolf" ->
           pack(
+              UniqueSkills.SHADOW_STRIKER.get(),
               ExtraSkills.GODWOLF_SENSE.get(),
               ExtraSkills.BLACK_LIGHTNING.get(),
               ExtraSkills.ULTRA_INSTINCT.get(),
@@ -162,6 +165,7 @@ public final class HighRealmLoadouts {
               ResistanceSkills.PARALYSIS_RESISTANCE.get());
       case "knight_spider" ->
           pack(
+              UniqueSkills.OPPRESSOR.get(),
               IntrinsicSkills.BODY_ARMOR.get(),
               ExtraSkills.STEEL_STRENGTH.get(),
               CommonSkills.POISON.get(),
@@ -171,6 +175,7 @@ public final class HighRealmLoadouts {
               ResistanceSkills.PIERCE_RESISTANCE.get());
       case "lizardman" ->
           pack(
+              UniqueSkills.MARTIAL_MASTER.get(),
               IntrinsicSkills.SCALE_ARMOR.get(),
               IntrinsicSkills.WATER_BREATHING.get(),
               ExtraSkills.STEEL_STRENGTH.get(),
@@ -179,6 +184,7 @@ public final class HighRealmLoadouts {
               ResistanceSkills.CORROSION_RESISTANCE.get());
       case "basilisk" ->
           pack(
+              UniqueSkills.SURVIVOR.get(),
               IntrinsicSkills.SCALE_ARMOR.get(),
               CommonSkills.POISON.get(),
               CommonSkills.PARALYSIS.get(),
@@ -255,7 +261,9 @@ public final class HighRealmLoadouts {
             i -> {
               i.setMastery(i.getMaxMastery());
               // These native Unique passives explicitly require the active preset.
-              if (skill == UniqueSkills.FIGHTER.get() || skill == UniqueSkills.BERSERKER.get())
+              if (skill == UniqueSkills.FIGHTER.get()
+                  || skill == UniqueSkills.BERSERKER.get()
+                  || skill == UniqueSkills.MARTIAL_MASTER.get())
                 TensuraStorages.getAbilityFrom(mob).setAbilitySlot(0, 0, skill, 0);
               if (enable && i.canBeToggled(mob) && !i.isToggled()) {
                 i.setToggled(true);

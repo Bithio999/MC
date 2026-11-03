@@ -123,9 +123,14 @@ public final class HeavenlyArsenalGameTests {
     }
     @GameTest(template="empty",timeoutTicks=100)
     public static void nativeActivationIsBlockedForFortyTicksWithoutSpendingResources(GameTestHelper h){
-        var p=player(h);var owner=target(h,p.position().add(0,25,0));var i=learn(owner,UniqueSkills.FIGHTER.get());owner.addEffect(new MobEffectInstance(HeavenlyArsenal.SKILL_SEAL,40));var skills=SkillAPI.getSkillsFrom(owner);double ap=TensuraStorages.getExistenceFrom(owner).getAura(),mp=TensuraStorages.getExistenceFrom(owner).getMagicule();
-        h.assertTrue(!i.getSkill().canActivateSkill(i,owner,0) && !skills.startHoldSkill(i,0,0),"Sealed native skill activated");near(h,TensuraStorages.getExistenceFrom(owner).getAura(),ap,"Blocked activation spent aura");near(h,TensuraStorages.getExistenceFrom(owner).getMagicule(),mp,"Blocked activation spent MP");
-        h.runAfterDelay(41,()->{h.assertTrue(!Nullification.sealed(owner) && i.getSkill().canActivateSkill(i,owner,0),"Seal did not expire after two seconds");h.succeed();});
+        var p=player(h);var owner=target(h,p.position().add(0,25,0));var i=learn(owner,UniqueSkills.FIGHTER.get());
+        // A freshly force-loaded arena may start ticking entities after the test clock starts.
+        h.startSequence().thenWaitUntil(()->h.assertTrue(owner.tickCount>0,"Waiting for entity simulation"))
+            .thenExecute(()->{
+                owner.addEffect(new MobEffectInstance(HeavenlyArsenal.SKILL_SEAL,40));var skills=SkillAPI.getSkillsFrom(owner);double ap=TensuraStorages.getExistenceFrom(owner).getAura(),mp=TensuraStorages.getExistenceFrom(owner).getMagicule();
+                h.assertTrue(!i.getSkill().canActivateSkill(i,owner,0) && !skills.startHoldSkill(i,0,0),"Sealed native skill activated");near(h,TensuraStorages.getExistenceFrom(owner).getAura(),ap,"Blocked activation spent aura");near(h,TensuraStorages.getExistenceFrom(owner).getMagicule(),mp,"Blocked activation spent MP");
+                h.runAfterDelay(41,()->{h.assertTrue(!Nullification.sealed(owner) && i.getSkill().canActivateSkill(i,owner,0),"Seal did not expire after two seconds; entity ticks="+owner.tickCount);h.succeed();});
+            });
     }
     @GameTest(template="empty",timeoutTicks=100)
     public static void actualOminousVaultLootRollsRareEngravedSpearsAndNormalVaultDoesNot(GameTestHelper h){

@@ -49,7 +49,7 @@ The natural spawn pool is **entirely Tensura mobs**. **Bosses are excluded**, in
 | High Sentinel | Dragonewt, Basilisk, Greater/Arch Daemon | 3,500,000 | 850 | 3,200 |
 | High Stalker | Tempest Star Wolf, Blade Tiger, Knight Spider | 2,500,000 | 700 | 2,400 |
 
-Native skills can alter final stats. All elites gain **11–16 core mastered skills** in addition to their retained native abilities. Their toggles are enabled; skills that require a preset slot are equipped.
+Native skills can alter final stats. All elites gain **11–17 core mastered skills** in addition to their retained native abilities. Their toggles are enabled; skills that require a preset slot are equipped.
 
 ### Final forms
 
@@ -63,20 +63,22 @@ Every elite receives **Physical Attack Resistance**, **Magic Resistance**, **Pai
 
 ### Species specialties
 
-These supplement the shared skills. **Fighter is reserved for Horned Bears.**
+Every species has a **mastered Unique Skill**. These supplement the shared skills. **Fighter is reserved for Horned Bears.**
+
+Shadow Striker supplies the wolf’s acceleration and dodge; Oppressor gives the spider native arrow/fall immunity; Martial Master strengthens the Dragonewt’s physical attacks and dodge; Survivor protects the Basilisk from debilitating effects. Great Sage accelerates Greater Daemon chanting; Mathematician adds faster chanting, dodge and resistance degradation to Arch Daemons. These passives function automatically. Player-operated menus and active techniques are not driven by mob AI.
 
 | Species | Added skills |
 | --- | --- |
 | High Orc | **Berserker**, Steel Strength, Strengthen Body, **Pain Nullification**, Flame Attack Resistance, Paralysis Resistance |
 | Armorsaurus | **Survivor**, Body Armor, Scale Armor, Strength, **Physical Attack Nullification**, Pierce Resistance, Gravity Attack Resistance |
 | Horned Bear | **Fighter**, Steel Strength, **Pain Nullification**, Cold Resistance, Paralysis Resistance |
-| Tempest Star Wolf | Godwolf Sense, Black Lightning, Ultra Instinct, Shadow Motion, Steel Strength, **Electricity Nullification**, Paralysis Resistance, Wind Attack Resistance, Poison Resistance |
+| Tempest Star Wolf | **Shadow Striker**, Godwolf Sense, Black Lightning, Ultra Instinct, Shadow Motion, Steel Strength, **Electricity Nullification**, Paralysis Resistance, Wind Attack Resistance, Poison Resistance |
 | Blade Tiger | **Seer**, Steel Strength, **Wind Attack Nullification**, Pierce Resistance, Paralysis Resistance |
-| Knight Spider | Body Armor, Steel Strength, Poison, **Poison Nullification**, Paralysis Resistance, Pierce Resistance |
-| Dragonewt | Scale Armor, Water Breathing, Steel Strength, **Water Attack Nullification**, Corrosion Resistance |
-| Basilisk | Scale Armor, Steel Strength, Poison, Paralysis, **Poison Nullification**, **Paralysis Nullification** |
-| Greater Daemon | Mana Manipulation, Flame/Water/Wind/Lightning/**Earth Manipulation**, **Flame Attack Nullification**, Water Attack Resistance |
-| Arch Daemon | Mana Manipulation, Flame/Water/Wind/Lightning/**Earth Manipulation**, **Flame Attack Nullification**, **Electricity Nullification**, Darkness Attack Resistance |
+| Knight Spider | **Oppressor**, Body Armor, Steel Strength, Poison, **Poison Nullification**, Paralysis Resistance, Pierce Resistance |
+| Dragonewt | **Martial Master**, Scale Armor, Water Breathing, Steel Strength, **Water Attack Nullification**, Corrosion Resistance |
+| Basilisk | **Survivor**, Scale Armor, Steel Strength, Poison, Paralysis, **Poison Nullification**, **Paralysis Nullification** |
+| Greater Daemon | **Great Sage**, Mana Manipulation, Flame/Water/Wind/Lightning/**Earth Manipulation**, **Flame Attack Nullification**, Water Attack Resistance |
+| Arch Daemon | **Mathematician**, Mana Manipulation, Flame/Water/Wind/Lightning/**Earth Manipulation**, **Flame Attack Nullification**, **Electricity Nullification**, Darkness Attack Resistance |
 
 ### Combat magic
 

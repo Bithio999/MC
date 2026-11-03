@@ -5,7 +5,7 @@ Three independent addon projects for **Tensura: Reincarnated**, **Minecraft 1.21
 | Mod | Features | Download | Wiki |
 | --- | --- | --- | --- |
 | **Tensura Myths** | Hunter and Heavenly Restriction races, Unique/Ultimate/Godly skills, dual races, Myth bosses and otherworlders | [0.36.1 JAR](releases/tensura-myths-0.36.1.jar) | [Myths wiki](wiki/pages/Tensura-Myths.md) |
-| **TensuraAdditionalAdditions** | Heavenly Restriction, Chained/Unbound, Battlewills, Inverted Spear of Heaven, Prospector, Exponentiation, Loan Shark, Fusion, Parallel World Jumper and The High Realm | [1.10.3 JAR](releases/TensuraAdditionalAdditions-1.10.3.jar) | [Additions wiki](wiki/pages/TensuraAdditionalAdditions.md) |
+| **TensuraAdditionalAdditions** | Heavenly Restriction, Chained/Unbound, Battlewills, Inverted Spear of Heaven, Prospector, Exponentiation, Loan Shark, Fusion, Parallel World Jumper and The High Realm | [1.10.4 JAR](releases/TensuraAdditionalAdditions-1.10.4.jar) | [Additions wiki](wiki/pages/TensuraAdditionalAdditions.md) |
 
 
 ## Install
@@ -53,6 +53,6 @@ python3 scripts/fetch-runtime.py
 
 `./gradlew runClient` starts a development client; `./gradlew runGameTestServer` runs native integration checks. Build output is in that project’s `build/libs/` folder. [Standalone development details](standalone/tensura-additional-additions/README.md#development).
 
-[Myths validation](docs/VALIDATION-0.36.1.md) · [Additions validation](standalone/tensura-additional-additions/docs/VALIDATION-1.10.3.md) · [Changelog](docs/CHANGELOG.md) · [Wiki authoring](docs/WIKI.md).
+[Myths validation](docs/VALIDATION-0.36.1.md) · [Additions validation](standalone/tensura-additional-additions/docs/VALIDATION-1.10.4.md) · [Changelog](docs/CHANGELOG.md) · [Wiki authoring](docs/WIKI.md).
 
 Unofficial fan project, not affiliated with ManasMods or Capcom. Get Tensura from its [official page](https://www.curseforge.com/minecraft/mc-mods/tensura-reincarnated).

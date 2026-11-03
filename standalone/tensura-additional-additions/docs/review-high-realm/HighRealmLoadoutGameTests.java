@@ -34,6 +34,138 @@ public final class HighRealmLoadoutGameTests {
   }
 
   @GameTest(template = "empty", templateNamespace = "heavenlyrestriction", timeoutTicks = 200)
+  public static void everySpeciesHasAnEnabledNativeUniqueIncludingSavedElites(GameTestHelper h) {
+    var signatures =
+        Map.ofEntries(
+            Map.entry("orc", UniqueSkills.BERSERKER.get()),
+            Map.entry("armorsaurus", UniqueSkills.SURVIVOR.get()),
+            Map.entry("horned_bear", UniqueSkills.FIGHTER.get()),
+            Map.entry("direwolf", UniqueSkills.SHADOW_STRIKER.get()),
+            Map.entry("blade_tiger", UniqueSkills.SEER.get()),
+            Map.entry("knight_spider", UniqueSkills.OPPRESSOR.get()),
+            Map.entry("lizardman", UniqueSkills.MARTIAL_MASTER.get()),
+            Map.entry("basilisk", UniqueSkills.SURVIVOR.get()),
+            Map.entry("greater_daemon", UniqueSkills.GREAT_SAGE.get()),
+            Map.entry("arch_daemon", UniqueSkills.MATHEMATICIAN.get()),
+            Map.entry("lesser_daemon", UniqueSkills.GREAT_SAGE.get()));
+    var l = HighRealmGameTests.realm(h);
+    for (var entry : signatures.entrySet()) {
+      var m = mob(l, entry.getKey());
+      // Simulate a 1.10.3 saved elite, with final form already applied.
+      m.getPersistentData().putBoolean(HighRealmElites.MARKER, true);
+      m.getPersistentData().putInt(HighRealmLoadouts.VERSION_KEY, 3);
+      m.getAttribute(Attributes.MAX_HEALTH).setBaseValue(1024);
+      EnergyHelper.setBaseMaxEP(m, 3500000);
+      HighRealmEvolutions.apply(m);
+      var pool = TensuraStorages.getExistenceFrom(m);
+      m.setHealth(37);
+      pool.setAura(123);
+      pool.setMagicule(234);
+      pool.setSpiritualHealth(12);
+      double ep = EnergyHelper.getBaseMaxEP(m);
+      h.assertTrue(HighRealmLoadouts.apply(m), "Unique migration skipped " + entry.getKey());
+      var unique = SkillAPI.getSkillsFrom(m).getSkill(entry.getValue()).orElseThrow();
+      h.assertTrue(unique.isMastered(m), "Signature not mastered " + entry.getKey());
+      if (unique.canBeToggled(m))
+        h.assertTrue(unique.isToggled(), "Disabled signature " + entry.getKey());
+      near(h, m.getHealth(), 37, "Unique migration healed");
+      near(h, pool.getAura(), 123, "Unique migration refilled aura");
+      near(h, pool.getMagicule(), 234, "Unique migration refilled MP");
+      near(h, pool.getSpiritualHealth(), 12, "Unique migration refilled SHP");
+      h.assertTrue(EnergyHelper.getBaseMaxEP(m) >= ep, "Unique acquisition consumed EP");
+      double chant =
+          m.getAttributeValue(
+              io.github.manasmods.tensura.registry.attribute.TensuraAttributes.CHANT_SPEED);
+      h.assertTrue(!HighRealmLoadouts.apply(m), "Unique migration repeated");
+      near(
+          h,
+          m.getAttributeValue(
+              io.github.manasmods.tensura.registry.attribute.TensuraAttributes.CHANT_SPEED),
+          chant,
+          "Replayed chant multiplier");
+      if (entry.getValue() == UniqueSkills.FIGHTER.get()
+          || entry.getValue() == UniqueSkills.BERSERKER.get()
+          || entry.getValue() == UniqueSkills.MARTIAL_MASTER.get())
+        h.assertTrue(
+            TensuraStorages.getAbilityFrom(m).getAbilitySlot(0, 0).getSkill() == entry.getValue(),
+            "In-slot Unique unequipped");
+      if (entry.getValue() == UniqueSkills.GREAT_SAGE.get()
+          || entry.getValue() == UniqueSkills.MATHEMATICIAN.get()) {
+        unique.setToggled(false);
+        unique.onToggleOff(m);
+        h.assertTrue(
+            chant
+                > m.getAttributeValue(
+                    io.github.manasmods.tensura.registry.attribute.TensuraAttributes.CHANT_SPEED),
+            "Caster Unique does not improve chanting");
+      }
+      var restored = mob(l, entry.getKey());
+      restored.load(m.saveWithoutId(new net.minecraft.nbt.CompoundTag()));
+      h.assertTrue(
+          restored != null
+              && SkillAPI.getSkillsFrom(restored).getSkill(entry.getValue()).isPresent(),
+          "Unique missing on reload");
+    }
+    h.succeed();
+  }
+
+  @GameTest(template = "empty", templateNamespace = "heavenlyrestriction", timeoutTicks = 200)
+  public static void newUniquePassivesAffectRealMobCombatHooks(GameTestHelper h) {
+    var l = HighRealmGameTests.realm(h);
+    var wolf = mob(l, "direwolf");
+    HighRealmElites.empower(wolf);
+    var dodge =
+        wolf.getAttribute(
+            io.github.manasmods.tensura.registry.attribute.TensuraAttributes.DODGE_STRENGTH);
+    h.assertTrue(
+        dodge.getModifier(ResourceLocation.parse("tensura:shadow_striker")) != null,
+        "Wolf acceleration/dodge inactive");
+    var arch = mob(l, "arch_daemon");
+    HighRealmElites.empower(arch);
+    h.assertTrue(
+        arch.getAttribute(
+                    io.github.manasmods.tensura.registry.attribute.TensuraAttributes
+                        .RESISTANCE_DEGRADATION)
+                .getModifier(ResourceLocation.parse("tensura:mathematician"))
+            != null,
+        "Arch degradation inactive");
+    var spider = mob(l, "knight_spider");
+    HighRealmElites.empower(spider);
+    var oppressor =
+        SkillAPI.getSkillsFrom(spider).getSkill(UniqueSkills.OPPRESSOR.get()).orElseThrow();
+    var arrow =
+        new net.minecraft.world.entity.projectile.Arrow(
+            l,
+            wolf,
+            new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.ARROW),
+            null);
+    h.assertTrue(
+        !oppressor
+            .getSkill()
+            .onBeingDamaged(oppressor, spider, spider.damageSources().arrow(arrow, wolf), 100),
+        "Spider arrow immunity inactive");
+    var dragon = mob(l, "lizardman");
+    HighRealmElites.empower(dragon);
+    var martial =
+        SkillAPI.getSkillsFrom(dragon).getSkill(UniqueSkills.MARTIAL_MASTER.get()).orElseThrow();
+    var amount = io.github.manasmods.manascore.network.api.util.Changeable.of(100f);
+    martial
+        .getSkill()
+        .onDamageEntity(martial, dragon, wolf, dragon.damageSources().mobAttack(dragon), amount);
+    h.assertTrue(amount.get() > 100, "Dragonewt slotted physical boost inactive");
+    var basilisk = mob(l, "basilisk");
+    HighRealmElites.empower(basilisk);
+    var survivor =
+        SkillAPI.getSkillsFrom(basilisk).getSkill(UniqueSkills.SURVIVOR.get()).orElseThrow();
+    h.assertTrue(
+        ((io.github.manasmods.tensura.ability.skill.unique.SurvivorSkill) survivor.getSkill())
+            .getImmuneEffects(survivor, basilisk)
+            .contains(net.minecraft.world.effect.MobEffects.MOVEMENT_SLOWDOWN),
+        "Basilisk native survival immunities missing");
+    h.succeed();
+  }
+
+  @GameTest(template = "empty", templateNamespace = "heavenlyrestriction", timeoutTicks = 200)
   public static void realmUsesUpgradedCasterTypesAndHighestNativeNonBossForms(GameTestHelper h) {
     var l = HighRealmGameTests.realm(h);
     h.assertTrue(
@@ -171,7 +303,8 @@ public final class HighRealmLoadoutGameTests {
       HighRealmLoadouts.apply(m);
       h.assertTrue(
           SkillAPI.getSkillsFrom(m).getSkill(UniqueSkills.FIGHTER.get()).isEmpty()
-              && TensuraStorages.getAbilityFrom(m).getAbilitySlot(0, 0).getSkill() == null,
+              && TensuraStorages.getAbilityFrom(m).getAbilitySlot(0, 0).getSkill()
+                  == (species.equals("lizardman") ? UniqueSkills.MARTIAL_MASTER.get() : null),
           "Retired Fighter retained");
       h.assertTrue(
           TensuraStorages.getAbilityFrom(m).getAbilitySlot(0, 1).getSkill()

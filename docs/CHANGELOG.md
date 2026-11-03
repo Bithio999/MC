@@ -1,5 +1,10 @@
 # Changelog
 
+## Additions 1.10.4 — Unique Skills for every High Realm enemy
+
+- Give every High Realm species a mastered, usable native Unique Skill. Add Shadow Striker to Tempest Star Wolves, Oppressor to Knight Spiders, Martial Master to Dragonewts, Survivor to Basilisks, Great Sage to Greater Daemons and Mathematician to Arch Daemons. Retain existing species signatures.
+- Equip Martial Master for its physical damage passive, enable native toggles, and upgrade saved unowned elites without resource refills or repeated modifiers. Legacy Lesser Daemon elites also receive Great Sage.
+
 ## Additions 1.10.3 — High Realm final forms
 
 - Replace Lesser Daemon spawns with Greater Daemons, and the former Greater Daemon spawns with Arch Daemons. Match their native seven/eight-magic combat repertoires.
