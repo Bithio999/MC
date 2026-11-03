@@ -29,10 +29,11 @@ public final class SplitMindScreen extends Screen {
       CYAN = 0xff8cdee6;
   private CompoundTag state;
   private String selected = "", query = "", notice = "";
-  private int x, y, w, h, delay = -1;
+  private int x, y, w, h, delay = -1, selectedMode, modeCursor, modeScroll;
+  private boolean modesOpen;
   private boolean pending;
   private EditBox search;
-  private SimpleButton assign, previous, next;
+  private SimpleButton assign, previous, next, modeButton;
   private final List<SimpleButton> rows = new ArrayList<>();
 
   public SplitMindScreen(CompoundTag state) {
@@ -40,6 +41,7 @@ public final class SplitMindScreen extends Screen {
     this.state = state.copy();
     query = state.getString("query");
     selected = state.getString("assignment");
+    selectedMode = state.getInt("assignedMode");
   }
 
   @SubscribeEvent
@@ -80,7 +82,13 @@ public final class SplitMindScreen extends Screen {
   private SimpleButton button(int bx, int by, int bw, String label, Runnable action) {
     return addRenderableWidget(
         new SimpleButton(
-            bx, by, bw, 18, Component.literal(label), Component.literal(label), b -> action.run()));
+            bx, by, bw, 18, Component.literal(label), Component.literal(label), b -> action.run()) {
+          @Override
+          public void setMessage(Component value) {
+            this.text = value;
+            super.setMessage(value);
+          }
+        });
   }
 
   @Override
@@ -90,6 +98,7 @@ public final class SplitMindScreen extends Screen {
     x = (width - w) / 2;
     y = (height - h) / 2;
     rows.clear();
+    modesOpen = false;
     search =
         new EditBox(
             font,
@@ -116,9 +125,22 @@ public final class SplitMindScreen extends Screen {
           List.of("All magic", "Aspectual", "Spiritual").get(n),
           () -> request("list", "", type, 0));
     }
-    int rowH = Math.max(14, Math.min(25, (h - 144) / 6));
-    for (int n = 0; n < 6; n++)
-      rows.add(addRenderableWidget(new EntryButton(x + 9, y + 74 + n * rowH, w - 18, rowH - 2, n)));
+    int rowH = Math.max(12, Math.min(22, (h - 162) / SplitMindNetwork.PAGE_SIZE));
+    for (int n = 0; n < SplitMindNetwork.PAGE_SIZE; n++)
+      rows.add(addRenderableWidget(new EntryButton(x + 9, y + 74 + n * rowH, w - 18, rowH - 1, n)));
+    modeButton =
+        button(
+            x + 9,
+            y + h - 84,
+            w - 18,
+            "Mode",
+            () -> {
+              modesOpen = !modesOpen;
+              modeCursor = 0;
+              for (int n = 0; n < modes().size(); n++)
+                if (modes().getCompound(n).getInt("id") == selectedMode) modeCursor = n;
+              modeScroll = Math.clamp(modeCursor - 2, 0, Math.max(0, modes().size() - 6));
+            });
     previous =
         button(
             x + 9,
@@ -147,6 +169,15 @@ public final class SplitMindScreen extends Screen {
             "Assign magic",
             () -> request("assign", selected, state.getInt("category"), state.getInt("page")));
     button(x + w - 63, y + h - 22, 54, "Close", this::onClose);
+    modeButton.setRenderCheck(() -> chosen() != null);
+    modeButton.setActiveCheck(() -> !pending && chosen() != null && modes().size() > 1);
+    assign.setActiveCheck(
+        () ->
+            !pending
+                && chosen() != null
+                && modeDetails(chosen(), selectedMode).getBoolean("available"));
+    previous.setActiveCheck(() -> !pending && state.getInt("page") > 0);
+    next.setActiveCheck(() -> !pending && state.getInt("page") + 1 < state.getInt("pages"));
     refresh();
   }
 
@@ -156,6 +187,7 @@ public final class SplitMindScreen extends Screen {
       rows.get(n).active = !pending;
       if (n < data().size()) {
         var row = data().getCompound(n);
+        var details = modeDetails(row, row.getString("id").equals(selected) ? selectedMode : 0);
         rows.get(n)
             .setTooltip(
                 Tooltip.create(
@@ -170,14 +202,28 @@ public final class SplitMindScreen extends Screen {
                                 "\n"
                                     + "Base magicules %.1f · Aura %.1f\n"
                                     + "Cast %.2fs · Current cooldown %ds",
-                                row.getDouble("mp"),
-                                row.getDouble("ap"),
-                                row.getInt("castTicks") / 20d,
-                                row.getInt("cooldown")))));
+                                details.getDouble("mp"),
+                                details.getDouble("ap"),
+                                details.getInt("castTicks") / 20d,
+                                details.getInt("cooldown")))));
       }
     }
     if (assign != null) {
-      assign.active = !pending && chosen() != null;
+      var option = modeDetails(chosen(), selectedMode);
+      assign.active = !pending && chosen() != null && option.getBoolean("available");
+      modeButton.visible = chosen() != null;
+      modeButton.active = !pending && modes().size() > 1;
+      modeButton.setMessage(
+          Component.literal(
+              fit("Mode: " + option.getString("name") + (modes().size() > 1 ? " ▼" : ""), w - 34)));
+      modeButton.setTooltip(
+          Tooltip.create(
+              Component.literal(
+                  option.getBoolean("channel")
+                      ? "Maintains this native held mode while a valid enemy is in range. Native"
+                          + " pulse costs/timing apply."
+                      : "Select a learned mode. Locked modes require learning or mastery in"
+                          + " Tensura. Scroll to see more modes.")));
       previous.active = !pending && state.getInt("page") > 0;
       next.active = !pending && state.getInt("page") + 1 < state.getInt("pages");
     }
@@ -186,10 +232,13 @@ public final class SplitMindScreen extends Screen {
   private void request(String action, String id, int category, int page) {
     if (pending) return;
     pending = true;
+    modesOpen = false;
     delay = -1;
     notice = "";
     refresh();
-    PacketDistributor.sendToServer(new SplitMindNetwork.Request(action, id, query, category, page));
+    PacketDistributor.sendToServer(
+        new SplitMindNetwork.Request(
+            action, id, query, category, page, id.isEmpty() ? 0 : selectedMode));
   }
 
   @Override
@@ -213,6 +262,16 @@ public final class SplitMindScreen extends Screen {
           Component.empty(),
           b -> {
             selected = data().getCompound(index).getString("id");
+            modesOpen = false;
+            selectedMode =
+                selected.equals(state.getString("assignment")) ? state.getInt("assignedMode") : 0;
+            if (!modeDetails(chosen(), selectedMode).getBoolean("available")) {
+              for (var option : modes())
+                if (((CompoundTag) option).getBoolean("available")) {
+                  selectedMode = ((CompoundTag) option).getInt("id");
+                  break;
+                }
+            }
             refresh();
           });
       this.index = index;
@@ -243,7 +302,7 @@ public final class SplitMindScreen extends Screen {
           font,
           fit(row.getString("name"), width - size - 96),
           getX() + size + 8,
-          getY() + Math.max(2, (height - 8) / 2),
+          getY() + Math.max(1, (height - 8) / 2),
           on ? GOLD : TEXT,
           false);
       String kind = assigned ? "ASSIGNED" : row.getString("type");
@@ -251,7 +310,7 @@ public final class SplitMindScreen extends Screen {
           font,
           kind,
           getX() + width - 76,
-          getY() + Math.max(2, (height - 8) / 2),
+          getY() + Math.max(1, (height - 8) / 2),
           assigned ? CYAN : MUTED,
           false);
     }
@@ -280,6 +339,8 @@ public final class SplitMindScreen extends Screen {
           y + 96,
           MUTED);
     String current = state.getString("assignedName");
+    if (!current.isEmpty() && !state.getString("assignedModeName").isEmpty())
+      current += " · " + state.getString("assignedModeName");
     g.drawString(
         font,
         fit(current.isEmpty() ? "Assigned: None" : "Assigned: " + current, w - 120),
@@ -308,6 +369,115 @@ public final class SplitMindScreen extends Screen {
         MUTED,
         false);
     super.render(g, mx, my, partial);
+    if (modesOpen) renderModes(g, mx, my);
+  }
+
+  private ListTag modes() {
+    var row = chosen();
+    return row == null ? new ListTag() : row.getList("modes", Tag.TAG_COMPOUND);
+  }
+
+  private CompoundTag modeDetails(CompoundTag row, int mode) {
+    if (row == null) return new CompoundTag();
+    var modes = row.getList("modes", Tag.TAG_COMPOUND);
+    for (var t : modes) if (((CompoundTag) t).getInt("id") == mode) return (CompoundTag) t;
+    return new CompoundTag();
+  }
+
+  private int modeTop() {
+    return modeButton.getY() - Math.min(6, modes().size()) * 16 - 2;
+  }
+
+  private void renderModes(GuiGraphics g, int mx, int my) {
+    int top = modeTop(),
+        left = modeButton.getX(),
+        width = modeButton.getWidth(),
+        size = Math.min(6, modes().size());
+    g.fill(left - 1, top - 1, left + width + 1, modeButton.getY(), 0xffa89cb5);
+    g.fill(left, top, left + width, modeButton.getY() - 1, 0xff211b29);
+    for (int n = 0; n < size; n++) {
+      int index = modeScroll + n;
+      var option = modes().getCompound(index);
+      int rowY = top + 1 + n * 16;
+      boolean hover = mx >= left && mx < left + width && my >= rowY && my < rowY + 16;
+      if (hover || index == modeCursor)
+        g.fill(left + 1, rowY, left + width - 1, rowY + 16, 0xff494052);
+      String label = option.getString("name") + (option.getBoolean("available") ? "" : " [Locked]");
+      g.drawString(
+          font,
+          fit(label, width - 20),
+          left + 5,
+          rowY + 4,
+          !option.getBoolean("available")
+              ? 0xff77717f
+              : option.getInt("id") == selectedMode ? GOLD : TEXT,
+          false);
+    }
+    if (modes().size() > 6) {
+      int bh = size * 16 - 4;
+      int thumb = Math.max(8, bh * 6 / modes().size());
+      int ty = top + 2 + (bh - thumb) * modeScroll / (modes().size() - 6);
+      g.fill(left + width - 5, top + 2, left + width - 2, top + 2 + bh, 0xff17131e);
+      g.fill(left + width - 5, ty, left + width - 2, ty + thumb, CYAN);
+    }
+  }
+
+  @Override
+  public boolean mouseClicked(double mx, double my, int button) {
+    if (!modesOpen) return super.mouseClicked(mx, my, button);
+    int top = modeTop(), left = modeButton.getX();
+    if (button == 0
+        && mx >= left
+        && mx < left + modeButton.getWidth()
+        && my >= top + 1
+        && my < modeButton.getY() - 1) {
+      int index = modeScroll + (int) (my - top - 1) / 16;
+      if (index < modes().size()) {
+        var option = modes().getCompound(index);
+        if (option.getBoolean("available")) {
+          selectedMode = option.getInt("id");
+          modesOpen = false;
+          refresh();
+        }
+      }
+    } else modesOpen = false;
+    return true;
+  }
+
+  @Override
+  public boolean mouseScrolled(double mx, double my, double dx, double dy) {
+    if (!modesOpen) return super.mouseScrolled(mx, my, dx, dy);
+    modeScroll = Math.clamp(modeScroll - (int) Math.signum(dy), 0, Math.max(0, modes().size() - 6));
+    return true;
+  }
+
+  @Override
+  public boolean keyPressed(int key, int scan, int modifiers) {
+    if (!modesOpen) return super.keyPressed(key, scan, modifiers);
+    if (key == org.lwjgl.glfw.GLFW.GLFW_KEY_ESCAPE) {
+      modesOpen = false;
+      return true;
+    }
+    if (key == org.lwjgl.glfw.GLFW.GLFW_KEY_UP || key == org.lwjgl.glfw.GLFW.GLFW_KEY_DOWN) {
+      modeCursor =
+          Math.clamp(
+              modeCursor + (key == org.lwjgl.glfw.GLFW.GLFW_KEY_UP ? -1 : 1),
+              0,
+              modes().size() - 1);
+      if (modeCursor < modeScroll) modeScroll = modeCursor;
+      if (modeCursor >= modeScroll + 6) modeScroll = modeCursor - 5;
+      return true;
+    }
+    if (key == org.lwjgl.glfw.GLFW.GLFW_KEY_ENTER || key == org.lwjgl.glfw.GLFW.GLFW_KEY_KP_ENTER) {
+      var option = modes().getCompound(modeCursor);
+      if (option.getBoolean("available")) {
+        selectedMode = option.getInt("id");
+        modesOpen = false;
+        refresh();
+      }
+      return true;
+    }
+    return true;
   }
 
   @Override

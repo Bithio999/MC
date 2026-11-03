@@ -18,11 +18,14 @@ import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
 /** Uses the owned magic instance and ManasCore's activation/hold/release lifecycle. */
 public final class SplitMindCasting {
-  public static final String ASSIGNED = "SplitMindMagic", AUTO = "SplitMindAuto";
+  public static final String ASSIGNED = "SplitMindMagic",
+      MODE = "SplitMindMode",
+      AUTO = "SplitMindAuto";
   private static final int AUTO_KEY = 3;
   private static final Map<UUID, Cast> CASTS = new HashMap<>();
 
-  private record Invocation(ServerPlayer owner, ManasSkillInstance spell) {}
+  private record Invocation(
+      ServerPlayer owner, ManasSkillInstance spell, int mode, LivingEntity target) {}
 
   private static final ThreadLocal<Invocation> INVOCATION = new ThreadLocal<>();
 
@@ -34,17 +37,23 @@ public final class SplitMindCasting {
     var context = INVOCATION.get();
     return context != null
         && key == AUTO_KEY
-        && mode == 0
+        && mode == context.mode()
         && context.spell().getSkill() == skill
         && TensuraStorages.getAbilityFrom(context.owner()) == storage
         && SkillAPI.getSkillsFrom(context.owner()).getSkill(skill).orElse(null) == context.spell()
         && eligible(context.spell());
   }
 
+  public static boolean virtualSlot(
+      io.github.manasmods.tensura.storage.ability.IAbility storage, ManasSkill skill) {
+    var context = INVOCATION.get();
+    return context != null && virtualSlot(storage, AUTO_KEY, skill, context.mode());
+  }
+
   private static <T> T autoInvoke(
-      ServerPlayer p, ManasSkillInstance spell, LivingEntity target, Supplier<T> work) {
+      ServerPlayer p, ManasSkillInstance spell, int mode, LivingEntity target, Supplier<T> work) {
     var before = INVOCATION.get();
-    INVOCATION.set(new Invocation(p, spell));
+    INVOCATION.set(new Invocation(p, spell, mode, target));
     try {
       return aim(p, target, work);
     } finally {
@@ -53,7 +62,18 @@ public final class SplitMindCasting {
     }
   }
 
-  private record Cast(ManasSkillInstance spell, TickingSkill held, UUID target) {}
+  public static void spawned(net.neoforged.neoforge.event.entity.EntityJoinLevelEvent event) {
+    var context = INVOCATION.get();
+    if (!event.getLevel().isClientSide()
+        && context != null
+        && event.getEntity()
+            instanceof io.github.manasmods.tensura.entity.projectile.TensuraFlyingProjectile shot
+        && shot.getOwner() == context.owner()
+        && shot.getLookDistance() > 0)
+      ((SplitMindProjectile) shot).additions$bindSplitMindTarget(context.target());
+  }
+
+  private record Cast(ManasSkillInstance spell, TickingSkill held, UUID target, int mode) {}
 
   public static boolean eligible(ManasSkillInstance i) {
     return i.getMastery() >= 0
@@ -66,10 +86,20 @@ public final class SplitMindCasting {
     var id = ResourceLocation.tryParse(mind.getOrCreateTag().getString(ASSIGNED));
     return id == null
         ? Optional.empty()
-        : SkillAPI.getSkillsFrom(e).getSkill(id).filter(SplitMindCasting::eligible);
+        : SkillAPI.getSkillsFrom(e)
+            .getSkill(id)
+            .filter(i -> SplitMindModes.allowed(e, i, assignedMode(mind)));
+  }
+
+  public static int assignedMode(ManasSkillInstance mind) {
+    return mind.getOrCreateTag().getInt(MODE);
   }
 
   public static boolean assign(ServerPlayer p, String id) {
+    return assign(p, id, 0);
+  }
+
+  public static boolean assign(ServerPlayer p, String id, int mode) {
     var mind =
         SkillAPI.getSkillsFrom(p)
             .getSkill(HeavenlyRestriction.SPLIT_MIND.get())
@@ -78,11 +108,15 @@ public final class SplitMindCasting {
     if (!id.isEmpty()) {
       var key = ResourceLocation.tryParse(id);
       if (key == null
-          || SkillAPI.getSkillsFrom(p).getSkill(key).filter(SplitMindCasting::eligible).isEmpty())
-        return false;
+          || SkillAPI.getSkillsFrom(p)
+              .getSkill(key)
+              .filter(i -> SplitMindModes.allowed(p, i, mode))
+              .isEmpty()) return false;
     }
+    if (id.isEmpty() && mode != 0) return false;
     cancel(p);
     mind.get().getOrCreateTag().putString(ASSIGNED, id);
+    mind.get().getOrCreateTag().putInt(MODE, mode);
     if (id.isEmpty()) mind.get().getOrCreateTag().putBoolean(AUTO, false);
     mind.get().markDirty();
     SkillAPI.getSkillsFrom(p).markDirty();
@@ -132,13 +166,13 @@ public final class SplitMindCasting {
     return e instanceof LivingEntity living && enemy(p, living) ? living : null;
   }
 
-  private static boolean funded(ServerPlayer p, ManasSkillInstance i) {
+  private static boolean funded(ServerPlayer p, ManasSkillInstance i, int mode) {
     if (p.hasInfiniteMaterials()) return true;
     var magic = (Magic) i.getSkill();
     var pool = TensuraStorages.getExistenceFrom(p);
-    return pool.getAura() >= magic.getAuraCost(p, i, 0)
+    return pool.getAura() >= magic.getAuraCost(p, i, mode)
         && pool.getMagicule()
-            >= magic.getMagiculeCost(p, i, 0)
+            >= magic.getMagiculeCost(p, i, mode)
                 * p.getAttributeValue(TensuraAttributes.MAGIC_COST_MULTIPLIER);
   }
 
@@ -175,36 +209,40 @@ public final class SplitMindCasting {
       mind.get().markDirty();
       return;
     }
+    int mode = assignedMode(mind.get());
     var storage = SkillAPI.getSkillsFrom(p);
     var current = CASTS.get(p.getUUID());
     if (current != null) {
       var enemy = target(p, current);
       if (current.spell() != spell.get()
+          || current.mode() != mode
           || enemy == null
           || !storage.getHeldSkills().contains(current.held())
-          || !spell.get().canActivateSkill(p, 0)
-          || !funded(p, spell.get())) {
+          || !spell.get().canActivateSkill(p, mode)
+          || !funded(p, spell.get(), mode)) {
         cancel(p);
         return;
       }
-      if (current.held().getDuration()
-          >= ((Magic) spell.get().getSkill()).getCastingTime(spell.get(), p)) {
+      if (!SplitMindModes.sustained(spell.get(), mode)
+          && current.held().getDuration()
+              >= ((Magic) spell.get().getSkill()).getCastingTime(spell.get(), p)) {
         try {
           var pool = TensuraStorages.getExistenceFrom(p);
           double ap = pool.getAura(), mp = pool.getMagicule(), mastery = spell.get().getMastery();
-          int cooldown = spell.get().getCoolDown(0);
+          int cooldown = spell.get().getCoolDown(mode);
           autoInvoke(
               p,
               spell.get(),
+              mode,
               enemy,
               () -> {
-                storage.handleSkillRelease(spell.get(), AUTO_KEY, 0, false);
+                storage.handleSkillRelease(spell.get(), AUTO_KEY, mode, false);
                 return true;
               });
           if (pool.getAura() < ap
               || pool.getMagicule() < mp
               || spell.get().getMastery() > mastery
-              || spell.get().getCoolDown(0) > cooldown) mind.get().addMasteryPoint(p);
+              || spell.get().getCoolDown(mode) > cooldown) mind.get().addMasteryPoint(p);
         } finally {
           cancel(p);
         }
@@ -214,21 +252,22 @@ public final class SplitMindCasting {
     if (p.tickCount % 5 != 0
         || p.isUsingItem()
         || !storage.getHeldSkills().isEmpty()
-        || !funded(p, spell.get())
+        || !funded(p, spell.get(), mode)
         || !spell.get().canInteractSkill(p)
-        || !spell.get().canActivateSkill(p, 0)
-        || spell.get().onCoolDown(0) && !spell.get().canIgnoreCoolDown(p, 0)) return;
+        || !spell.get().canActivateSkill(p, mode)
+        || spell.get().onCoolDown(mode) && !spell.get().canIgnoreCoolDown(p, mode)) return;
     var enemy = nearest(p);
     if (enemy == null) return;
-    if (autoInvoke(p, spell.get(), enemy, () -> storage.startHoldSkill(spell.get(), AUTO_KEY, 0))) {
+    if (autoInvoke(
+        p, spell.get(), mode, enemy, () -> storage.startHoldSkill(spell.get(), AUTO_KEY, mode))) {
       storage.getHeldSkills().stream()
           .filter(
               t ->
                   t.getSkill() == spell.get().getSkill()
-                      && t.getMode() == 0
+                      && t.getMode() == mode
                       && t.getKeyNumber() == AUTO_KEY)
           .findFirst()
-          .ifPresent(t -> CASTS.put(p.getUUID(), new Cast(spell.get(), t, enemy.getUUID())));
+          .ifPresent(t -> CASTS.put(p.getUUID(), new Cast(spell.get(), t, enemy.getUUID(), mode)));
     }
   }
 
@@ -238,8 +277,28 @@ public final class SplitMindCasting {
     if (cast == null || cast.held() != held || !(e instanceof ServerPlayer p))
       return original.get();
     var enemy = target(p, cast);
-    if (enemy == null) return false;
-    return autoInvoke(p, cast.spell(), enemy, original);
+    if (enemy == null || !SplitMindModes.allowed(p, cast.spell(), cast.mode())) return false;
+    var pool = TensuraStorages.getExistenceFrom(p);
+    double ap = pool.getAura(), mp = pool.getMagicule();
+    boolean keep = autoInvoke(p, cast.spell(), cast.mode(), enemy, original);
+    if (pool.getAura() < ap || pool.getMagicule() < mp)
+      SkillAPI.getSkillsFrom(p)
+          .getSkill(HeavenlyRestriction.SPLIT_MIND.get())
+          .ifPresent(i -> i.addMasteryPoint(p));
+    if (!keep
+        && SplitMindModes.sustained(cast.spell(), cast.mode())
+        && held.getDuration() >= ((Magic) cast.spell().getSkill()).getCastingTime(cast.spell(), p))
+      autoInvoke(
+          p,
+          cast.spell(),
+          cast.mode(),
+          enemy,
+          () -> {
+            SkillAPI.getSkillsFrom(p)
+                .handleSkillRelease(cast.spell(), AUTO_KEY, cast.mode(), false);
+            return true;
+          });
+    return keep;
   }
 
   private static <T> T aim(ServerPlayer p, LivingEntity target, Supplier<T> work) {
@@ -262,7 +321,7 @@ public final class SplitMindCasting {
     var cast = CASTS.remove(e.getUUID());
     if (cast == null) return;
     SkillAPI.getSkillsFrom(e).getHeldSkills().remove(cast.held());
-    cast.spell().removeAttributeModifiers(e, 0);
+    cast.spell().removeAttributeModifiers(e, cast.mode());
   }
 
   private SplitMindCasting() {}

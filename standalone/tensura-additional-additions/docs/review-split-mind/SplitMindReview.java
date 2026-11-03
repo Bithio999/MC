@@ -157,6 +157,7 @@ public final class SplitMindReview {
                     AspectualMagics.ACID_SHELL.get(),
                     AspectualMagics.WATER_CUTTER.get(),
                     AspectualMagics.THUNDER_ORB.get(),
+                    AspectualMagics.STONE_SHOT.get(),
                     SpiritualMagics.FIRE.get(),
                     SpiritualMagics.EARTH.get())) {
               RestrictionData.learnReward(p, m);
@@ -225,6 +226,75 @@ public final class SplitMindReview {
                       .equals(SpiritualMagics.FIRE.get().getRegistryName().toString()),
                   "Real assignment packet did not persist learned spiritual magic"));
       shot("split-mind-assigned");
+      search().setValue("stone");
+      button("All magic").onPress();
+      phase = 60;
+      tick = 0;
+      return;
+    }
+    if (phase == 60 && ++tick > 30) {
+      var row =
+          mc.screen.children().stream()
+              .filter(
+                  c -> c instanceof Button b && b.visible && b.getMessage().getString().isEmpty())
+              .map(c -> (Button) c)
+              .findFirst()
+              .orElseThrow();
+      row.onPress();
+      var mode =
+          mc.screen.children().stream()
+              .filter(
+                  c ->
+                      c instanceof Button b
+                          && b.visible
+                          && b.getMessage().getString().startsWith("Mode:"))
+              .map(c -> (Button) c)
+              .findFirst()
+              .orElseThrow();
+      check(mode.active, "Multi-mode spell has no active dropdown");
+      mode.onPress();
+      phase = 61;
+      tick = 0;
+      return;
+    }
+    if (phase == 61 && ++tick > 15) {
+      shot("split-mind-mode-dropdown");
+      var mode =
+          mc.screen.children().stream()
+              .filter(
+                  c ->
+                      c instanceof Button b
+                          && b.visible
+                          && b.getMessage().getString().startsWith("Mode:"))
+              .map(c -> (Button) c)
+              .findFirst()
+              .orElseThrow();
+      mc.screen.mouseClicked(mode.getX() + 12, mode.getY() - 8, 0);
+      mode.onPress();
+      mc.screen.keyPressed(org.lwjgl.glfw.GLFW.GLFW_KEY_ESCAPE, 0, 0);
+      check(
+          mc.screen instanceof SplitMindScreen,
+          "Escape closed the assignment menu instead of dropdown");
+      button("Assign magic").onPress();
+      phase = 62;
+      tick = 0;
+      return;
+    }
+    if (phase == 62 && ++tick > 30) {
+      server(
+          p -> {
+            var mind =
+                SkillAPI.getSkillsFrom(p)
+                    .getSkill(HeavenlyRestriction.SPLIT_MIND.get())
+                    .orElseThrow();
+            check(
+                mind.getOrCreateTag()
+                        .getString(SplitMindCasting.ASSIGNED)
+                        .equals(AspectualMagics.STONE_SHOT.get().getRegistryName().toString())
+                    && SplitMindCasting.assignedMode(mind) == 1,
+                "Real mode dropdown assignment did not persist Chain");
+          });
+      shot("split-mind-mode-assigned");
       mc.options.guiScale().set(4);
       mc.resizeDisplay();
       phase = 7;
@@ -292,9 +362,8 @@ public final class SplitMindReview {
             var mind = storage.getSkill(HeavenlyRestriction.SPLIT_MIND.get()).orElseThrow();
             check(
                 SplitMindCasting.assign(
-                    p, AspectualMagics.FIRE_BALL.get().getRegistryName().toString()),
-                "Live Fire Ball assignment rejected");
-            storage.getSkill(AspectualMagics.FIRE_BALL.get()).orElseThrow().setMastery(0);
+                    p, AspectualMagics.STONE_SHOT.get().getRegistryName().toString(), 1),
+                "Live Chain Stone Shot assignment rejected");
             mind.getOrCreateTag().putBoolean(SplitMindCasting.AUTO, false);
             TensuraStorages.getAbilityFrom(p)
                 .setAbilitySlot(0, 0, HeavenlyRestriction.SPLIT_MIND.get(), 1);
@@ -327,8 +396,8 @@ public final class SplitMindReview {
                   "PASS: native Unique list/name/icon; real Magic Assignment S2C; learned-only"
                       + " search/type filtering; real assign C2S persists Spiritual Fire; fitted"
                       + " controls at GUI scales 2 and 4; native Auto-Cast toggle and actual"
-                      + " automatic player/held ticks cast non-equipped Fire Ball and damage an"
-                      + " enemy without manual aiming.\n");
+                      + " automatic player/held ticks cast non-equipped Chain Stone Shot and damage"
+                      + " an enemy without manual aiming.\n");
             } catch (Exception ex) {
               throw new RuntimeException(ex);
             }

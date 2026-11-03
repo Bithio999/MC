@@ -51,6 +51,189 @@ public final class SplitMindGameTests {
   }
 
   @GameTest(template = "empty", timeoutTicks = 100)
+  public static void modeAssignmentRetainsNativeUnlocksAndOldSaveDefaults(GameTestHelper h) {
+    var p = player(h);
+    var mind = mind(p, true);
+    var stone = learn(p, AspectualMagics.STONE_SHOT.get(), false);
+    var before = stone.toNBT();
+    h.assertTrue(
+        SplitMindModes.available(p, stone).equals(Set.of(0)), "Mastery-gated mode unlocked early");
+    h.assertTrue(before.equals(stone.toNBT()), "Inspecting modes mutated learning state");
+    h.assertTrue(
+        !SplitMindCasting.assign(p, stone.getSkillId().toString(), 1)
+            && !SplitMindCasting.assign(p, stone.getSkillId().toString(), -1)
+            && !SplitMindCasting.assign(p, stone.getSkillId().toString(), 999),
+        "Invalid or locked mode accepted");
+    h.assertTrue(
+        SplitMindCasting.assign(p, stone.getSkillId().toString()),
+        "Legacy mode-zero assignment failed");
+    mind.getOrCreateTag().remove(SplitMindCasting.MODE);
+    h.assertTrue(
+        SplitMindCasting.assignedMode(mind) == 0 && SplitMindCasting.assigned(p, mind).isPresent(),
+        "Old assignment did not default to mode zero");
+    var locked =
+        SplitMindNetwork.snapshot(p, "stone", 1, 0)
+            .getList("rows", 10)
+            .getCompound(0)
+            .getList("modes", 10);
+    h.assertTrue(
+        locked.size() == 2 && !locked.getCompound(1).getBoolean("available"),
+        "Dropdown did not mark locked mode");
+    stone.setMastery(stone.getMaxMastery());
+    stone.setCoolDown(37, 0);
+    stone.setCoolDown(9, 1);
+    h.assertTrue(
+        SplitMindCasting.assign(p, stone.getSkillId().toString(), 1),
+        "Unlocked Chain assignment rejected");
+    var copy = ManasSkillInstance.fromNBT(mind.toNBT());
+    h.assertTrue(SplitMindCasting.assignedMode(copy) == 1, "Selected mode lost on reload");
+    var state = SplitMindNetwork.snapshot(p, "stone", 1, 0);
+    var options = state.getList("rows", 10).getCompound(0).getList("modes", 10);
+    h.assertTrue(
+        state.getInt("assignedMode") == 1
+            && options.getCompound(1).getInt("cooldown") == 9
+            && options.getCompound(0).getInt("cooldown") == 37,
+        "Mode-specific state/cooldowns incorrect");
+    stone.setMastery(0);
+    mind.getOrCreateTag().putBoolean(SplitMindCasting.AUTO, true);
+    SplitMindCasting.update(p);
+    h.assertTrue(
+        !mind.getOrCreateTag().getBoolean(SplitMindCasting.AUTO),
+        "Auto-cast continued after losing mode eligibility");
+    h.succeed();
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 120)
+  public static void autoCastUsesStoneShotChainModeAndItsOwnCooldown(GameTestHelper h) {
+    var p = player(h);
+    var mind = mind(p, true);
+    var stone = learn(p, AspectualMagics.STONE_SHOT.get(), true);
+    stone.setCoolDown(99, 0);
+    h.assertTrue(
+        SplitMindCasting.assign(p, stone.getSkillId().toString(), 1), "Chain assignment failed");
+    mind.getOrCreateTag().putBoolean(SplitMindCasting.AUTO, true);
+    var target = target(h, p.position().add(12, 0, 0));
+    var shots =
+        new ArrayList<io.github.manasmods.tensura.entity.projectile.magic.StoneShotProjectile>();
+    java.util.function.Consumer<EntityJoinLevelEvent> watch =
+        e -> {
+          if (e.getEntity()
+                  instanceof
+                  io.github.manasmods.tensura.entity.projectile.magic.StoneShotProjectile shot
+              && shot.getOwner() == p) shots.add(shot);
+        };
+    NeoForge.EVENT_BUS.addListener(watch);
+    afterTracking(
+        h,
+        List.of(target),
+        () -> {
+          try {
+            double mp = TensuraStorages.getExistenceFrom(p).getMagicule();
+            step(p, 5);
+            step(p, 6);
+            step(p, 7);
+            h.assertTrue(
+                shots.size() > 1
+                    && shots.stream().mapToInt(s -> s.getDelayTick()).distinct().count() > 1,
+                "Chain mode did not stagger native stones");
+            near(
+                h,
+                mp - TensuraStorages.getExistenceFrom(p).getMagicule(),
+                ((Magic) stone.getSkill()).getMagiculeCost(p, stone, 1)
+                    * p.getAttributeValue(TensuraAttributes.MAGIC_COST_MULTIPLIER),
+                "Alternate mode charged wrong cost");
+            h.assertTrue(
+                stone.getCoolDown(0) == 99 && stone.onCoolDown(1),
+                "Alternate cast used/reset primary cooldown");
+            p.setYRot(90);
+            p.setXRot(0);
+            for (var shot : shots) {
+              shot.updateShootRotation();
+              h.assertTrue(
+                  shot.getDelayVec()
+                          .normalize()
+                          .dot(
+                              target
+                                  .getBoundingBox()
+                                  .getCenter()
+                                  .subtract(shot.position())
+                                  .normalize())
+                      > .95,
+                  "Delayed Chain stone followed player camera");
+              h.assertTrue(
+                  shot.getHomingTarget() == null && shot.getLookDistance() > 0,
+                  "Auto aim changed native homing/gravity behavior");
+            }
+            int count = shots.size();
+            for (int n = 10; n < 25; n++) step(p, n);
+            h.assertTrue(shots.size() == count, "Selected mode bypassed its cooldown");
+            h.succeed();
+          } finally {
+            SplitMindCasting.cancel(p);
+            NeoForge.EVENT_BUS.unregister(watch);
+          }
+        });
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 120)
+  public static void autoCastMaintainsRepeatModeAndPaysForEachNativePulse(GameTestHelper h) {
+    var p = player(h);
+    var mind = mind(p, true);
+    var fire = learn(p, AspectualMagics.FIRE_LANCE.get(), true);
+    fire.setCoolDown(99, 0);
+    h.assertTrue(
+        SplitMindCasting.assign(p, fire.getSkillId().toString(), 1), "Repeat assignment failed");
+    mind.getOrCreateTag().putBoolean(SplitMindCasting.AUTO, true);
+    var target = target(h, p.position().add(12, 0, 0));
+    var shots = new ArrayList<Projectile>();
+    java.util.function.Consumer<EntityJoinLevelEvent> watch =
+        e -> {
+          if (e.getEntity() instanceof Projectile shot
+              && shot.getOwner() == p
+              && shot.getClass().getSimpleName().equals("FireLanceProjectile")) shots.add(shot);
+        };
+    NeoForge.EVENT_BUS.addListener(watch);
+    afterTracking(
+        h,
+        List.of(target),
+        () -> {
+          try {
+            double mp = TensuraStorages.getExistenceFrom(p).getMagicule();
+            int interval =
+                ((io.github.manasmods.tensura.config.ability.magic.AspectualMagicConfig)
+                        io.github.manasmods.manascore.config.ConfigRegistry.getConfig(
+                            io.github.manasmods.tensura.config.ability.magic.AspectualMagicConfig
+                                .class))
+                    .FireLance.castTimeRepeat;
+            step(p, 5);
+            for (int n = 6; n <= 8 + interval * 2; n++) step(p, n);
+            h.assertTrue(
+                shots.size() >= 2 && !SkillAPI.getSkillsFrom(p).getHeldSkills().isEmpty(),
+                "Repeat mode released before native pulses");
+            near(
+                h,
+                mp - TensuraStorages.getExistenceFrom(p).getMagicule(),
+                shots.size()
+                    * ((Magic) fire.getSkill()).getMagiculeCost(p, fire, 1)
+                    * p.getAttributeValue(TensuraAttributes.MAGIC_COST_MULTIPLIER),
+                "Repeat pulses were free or double-charged");
+            h.assertTrue(fire.getCoolDown(0) == 99, "Repeat mode touched Single cooldown");
+            int count = shots.size();
+            mind.getOrCreateTag().putBoolean(SplitMindCasting.AUTO, false);
+            step(p, 9 + interval * 2);
+            for (int n = 10 + interval * 2; n < 10 + interval * 4; n++) step(p, n);
+            h.assertTrue(
+                shots.size() == count && SkillAPI.getSkillsFrom(p).getHeldSkills().isEmpty(),
+                "Repeat did not stop after Auto-Cast disabled");
+            h.succeed();
+          } finally {
+            SplitMindCasting.cancel(p);
+            NeoForge.EVENT_BUS.unregister(watch);
+          }
+        });
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 100)
   public static void splitMindPassivesUseNativeChantAndSeparateThoughtModifiers(GameTestHelper h) {
     var p = player(h);
     var i = mind(p, false);

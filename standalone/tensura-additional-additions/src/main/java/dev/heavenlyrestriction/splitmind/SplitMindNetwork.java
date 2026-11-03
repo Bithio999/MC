@@ -15,9 +15,10 @@ import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 
 /** Bounded pages, server-side ownership checks; no registry-wide learnable spell list. */
 public final class SplitMindNetwork {
+  public static final int PAGE_SIZE = 5;
   public static Consumer<CompoundTag> receiver = t -> {};
 
-  public record Request(String action, String id, String query, int category, int page)
+  public record Request(String action, String id, String query, int category, int page, int mode)
       implements CustomPacketPayload {
     public static final Type<Request> TYPE =
         new Type<>(HeavenlyRestriction.id("split_mind_request"));
@@ -29,6 +30,7 @@ public final class SplitMindNetwork {
               b.writeUtf(p.query, 64);
               b.writeByte(p.category);
               b.writeInt(p.page);
+              b.writeInt(p.mode);
             },
             b ->
                 new Request(
@@ -36,6 +38,7 @@ public final class SplitMindNetwork {
                     b.readUtf(160),
                     b.readUtf(64),
                     b.readUnsignedByte(),
+                    b.readInt(),
                     b.readInt()));
 
     @Override
@@ -56,7 +59,7 @@ public final class SplitMindNetwork {
   }
 
   public static void register(RegisterPayloadHandlersEvent e) {
-    var r = e.registrar("1");
+    var r = e.registrar("2");
     r.playToServer(
         Request.TYPE,
         Request.CODEC,
@@ -101,7 +104,7 @@ public final class SplitMindNetwork {
     String message = "";
     if (request.action.equals("assign"))
       message =
-          SplitMindCasting.assign(p, request.id)
+          SplitMindCasting.assign(p, request.id, request.mode)
               ? "heavenlyrestriction.split_mind.saved"
               : "heavenlyrestriction.split_mind.invalid";
     else if (!request.action.equals("list")) return;
@@ -134,10 +137,11 @@ public final class SplitMindNetwork {
                         String.CASE_INSENSITIVE_ORDER)
                     .thenComparing(i -> i.getSkillId().toString()))
             .toList();
-    int pages = Math.max(1, (list.size() + 5) / 6);
+    int pages = Math.max(1, (list.size() + PAGE_SIZE - 1) / PAGE_SIZE);
     page = Math.clamp(page, 0, pages - 1);
     var rows = new ListTag();
-    for (var i : list.subList(page * 6, Math.min(list.size(), page * 6 + 6))) {
+    for (var i :
+        list.subList(page * PAGE_SIZE, Math.min(list.size(), page * PAGE_SIZE + PAGE_SIZE))) {
       var m = (Magic) i.getSkill();
       var row = new CompoundTag();
       row.putString("id", i.getSkillId().toString());
@@ -149,14 +153,39 @@ public final class SplitMindNetwork {
       row.putDouble("mp", m.getMagiculeCost(p, i, 0));
       row.putDouble("ap", m.getAuraCost(p, i, 0));
       row.putInt("cooldown", i.getCoolDown(0));
+      var modes = new ListTag();
+      var allowed = SplitMindModes.available(p, i);
+      for (int mode = 0; mode < SplitMindModes.count(i); mode++) {
+        var option = new CompoundTag();
+        option.putInt("id", mode);
+        option.putString("name", m.getModeName(i, mode).getString());
+        option.putBoolean("available", allowed.contains(mode));
+        option.putBoolean("channel", SplitMindModes.sustained(i, mode));
+        option.putDouble("mp", m.getMagiculeCost(p, i, mode));
+        option.putDouble("ap", m.getAuraCost(p, i, mode));
+        option.putInt("cooldown", i.getCoolDown(mode));
+        option.putInt("castTicks", m.getCastingTime(i, p));
+        modes.add(option);
+      }
+      row.put("modes", modes);
       rows.add(row);
     }
     var mind =
         SkillAPI.getSkillsFrom(p).getSkill(HeavenlyRestriction.SPLIT_MIND.get()).orElseThrow();
     out.putString("assignment", mind.getOrCreateTag().getString(SplitMindCasting.ASSIGNED));
+    out.putInt("assignedMode", SplitMindCasting.assignedMode(mind));
     out.putString(
         "assignedName",
         SplitMindCasting.assigned(p, mind).map(i -> i.getSkill().getName().getString()).orElse(""));
+    out.putString(
+        "assignedModeName",
+        SplitMindCasting.assigned(p, mind)
+            .map(
+                i ->
+                    ((Magic) i.getSkill())
+                        .getModeName(i, SplitMindCasting.assignedMode(mind))
+                        .getString())
+            .orElse(""));
     out.putBoolean("auto", mind.getOrCreateTag().getBoolean(SplitMindCasting.AUTO));
     out.putString("query", query);
     out.putInt("category", category);

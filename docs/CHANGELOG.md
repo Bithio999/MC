@@ -1,5 +1,11 @@
 # Changelog
 
+## Additions 1.11.1 — Auto-Cast mode selection
+
+- Add a mode dropdown to Magic Assignment, with native mode names, locked-mode indicators, mouse/keyboard selection and scrolling for longer lists. Keep selection controls fitted at small GUI sizes.
+- Save the spell and mode together. Default old assignments to mode 0; validate native learning/mastery requirements on the server and stop if the selected mode is no longer available.
+- Use the selected mode throughout native activation, holding, release, resource checks, cooldowns, scoped aiming and cleanup. Maintain native repeat/held modes and their per-pulse costs instead of releasing them as single casts.
+
 ## Additions 1.11.0 — Split Mind
 
 - Add the Split Mind Unique Skill: +9 learning/mastery point gain, native Thought Acceleration and Chant Annulment under one passive toggle.

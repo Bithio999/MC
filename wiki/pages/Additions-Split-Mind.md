@@ -28,13 +28,15 @@ Enable the passive checkbox in **Skills → Unique**. It does not require a skil
 
 ## Magic Assignment · Active, Press
 
-Open the searchable list of **your learned aspectual and spiritual magic**. Filter by type, select a spell, then choose **Assign magic**. Only one magic can be assigned. **Clear** removes it and stops Auto-Cast. The assignment is saved with the skill.
+Open the searchable list of **your learned aspectual and spiritual magic**. Filter by type, select a spell, then choose **Assign magic**. For a spell with multiple modes, open the **Mode dropdown** and choose the mode to cast. Locked modes require their normal learning or mastery before they can be assigned. Only one magic and mode can be assigned. **Clear** removes it and stops Auto-Cast. The assignment is saved with the skill.
 
 **Damage type:** None. **Cost / cooldown:** None.
 
 ![Searchable learned-magic assignment menu](../media/split-mind-assignment.png)
 
-![Assigned spiritual magic at a smaller GUI size](../media/split-mind-assignment-small.png)
+![Choose an unlocked spell mode](../media/split-mind-mode-dropdown.png)
+
+![Assigned magic at a smaller GUI size](../media/split-mind-assignment-small.png)
 
 <a id="auto-cast"></a>
 
@@ -42,8 +44,10 @@ Open the searchable list of **your learned aspectual and spiritual magic**. Filt
 
 Press to enable or disable automatic casting. It targets the **nearest visible hostile mob or combat opponent within 32 blocks**. Allies, owned creatures, passive bystanders and protected players are excluded; player opponents require permitted PvP.
 
-- Uses the assigned magic’s **first mode**, native damage, resource cost, cooldown and casting requirements.
+- Uses the assigned magic’s **selected mode**, native damage, resource cost, cooldown and casting requirements.
 - Checks for an available cast every **5 ticks**. Unmastered magic finishes its normal accelerated cast time; mastered magic benefits from Chant Annulment while the passive is enabled.
+- Repeat/held modes remain active at their native cadence while a target is valid; each pulse pays its normal cost.
+- Delayed shots keep the assigned target through their launch delay; no extra homing is added.
 - Tracks the target during casting. Cancels if the target leaves range, becomes protected or disappears, or if the magic becomes unavailable.
 - Leaves your camera unchanged and gives manual casting priority. Self-targeted and buff magic retain their native behavior.
 

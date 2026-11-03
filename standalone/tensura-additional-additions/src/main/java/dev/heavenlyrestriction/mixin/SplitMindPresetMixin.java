@@ -29,8 +29,7 @@ public abstract class SplitMindPresetMixin {
       cancellable = true,
       remap = false)
   private void additions$virtualHeld(ManasSkill skill, CallbackInfoReturnable<Boolean> cir) {
-    if (SplitMindCasting.virtualSlot((IAbility) (Object) this, 3, skill, 0))
-      cir.setReturnValue(true);
+    if (SplitMindCasting.virtualSlot((IAbility) (Object) this, skill)) cir.setReturnValue(true);
   }
 
   @Inject(

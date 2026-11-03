@@ -60,7 +60,8 @@
     "LoanUseMixin",
     "SplitMindChantMixin",
     "SplitMindAimMixin",
-    "SplitMindPresetMixin"
+    "SplitMindPresetMixin",
+    "SplitMindProjectileMixin"
   ],
   "injectors": {
     "defaultRequire": 1
