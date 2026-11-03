@@ -30,7 +30,8 @@
         "fettered-lineage",
         "chained",
         "schema",
-        "spear"
+        "spear",
+        "high-realm"
       ],
       "icon": "minecraft:textures/item/book.png"
     },
@@ -589,6 +590,52 @@
             "Report lists outstanding gifts. Claimed/recalled gifts and confirmed dead-subordinate loans leave the list. Unloading and player respawn preserve loans. Close record cancels an unavailable loan without an extra skill; its gift is recalled if the borrower returns. Confirmation stays available during refreshes.",
             "Claim always recalls the gifted copy. After at least 10 uninterrupted minutes idle, and only if still idle, it also grants a random eligible unowned skill with retained mastery. With skillSteal true it removes the original from the borrower; with skillSteal false it copies the skill and leaves their original intact. Chained and every Ultimate-classified skill are excluded in both modes.",
             "Claim sooner or while active only recalls the copy. A closed contract cannot be claimed twice. Existing independent skill ownership is protected."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "high-realm",
+      "title": "The High Realm",
+      "category": "Dimensions",
+      "summary": "Late-game dimension. Requires 10,000,000 actual maximum EP to enter; return travel has no EP requirement.",
+      "icon": "minecraft:textures/item/nether_star.png",
+      "keywords": [
+        "gate",
+        "portal",
+        "elite",
+        "calcite",
+        "cherry",
+        "biome",
+        "dimension",
+        "10 million"
+      ],
+      "related": [
+        "welcome",
+        "parallel-world-jumper"
+      ],
+      "sections": [
+        {
+          "title": "Build the gate",
+          "lines": [
+            "Build a vertical 5-wide, 6-tall frame with an empty 3 × 4 opening. Place Netherite Blocks at all four corners, a Lodestone at bottom center, and an Amethyst Block at top center. Fill the other twelve frame positions with Crying Obsidian. Either horizontal orientation works.",
+            "Use one Nether Star on the Lodestone to awaken the gate. The star is consumed once in survival. Stand inside for 2 seconds, or use the awakened Lodestone, to enter. Each entering player must meet the EP requirement; EP is not spent."
+          ]
+        },
+        {
+          "title": "Explore",
+          "lines": [
+            "Ivory Crags: calcite and basalt ridges with elite Husks, Wither Skeletons and Orcs. Starwood Grove: cherry groves with elite Zombies, Spiders and Direwolves. Mistglass Basin: mossy basins with elite Strays, Endermen and Lizardmen.",
+            "These retain their original models and AI, with 2.5–5 million EP, enhanced HP/SHP and native resistances. Bosses, summons and player-owned mobs are never upgraded.",
+            "Find native magic ore, emeralds and rare diamonds in the pale stone. Player/subordinate elite kills retain normal loot and EP and add amethyst, with occasional magic ore or rare Netherite Scrap."
+          ]
+        },
+        {
+          "title": "Return safely",
+          "lines": [
+            "The quartz return arch at the arrival sanctum is your return gate. Walk through it or use its central bedrock base to leave; leaving never requires EP. Return locations are saved separately for each player.",
+            "The arrival sanctum is protected from normal block edits and suppresses natural spawns within 48 blocks. Avoid using beds in this dimension. The surrounding terrain is editable.",
+            "Gates, terrain and return locations persist across restarts. World Hop generates a fresh High Realm per new world; revisiting a saved world restores its realm. The server can configure entry EP, gate charge time and elite strength."
           ]
         }
       ]

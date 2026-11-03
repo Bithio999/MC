@@ -1238,5 +1238,11 @@
     "category": "Skills",
     "tier": "Unique",
     "mod": "additions"
+  },
+  {
+    "slug": "Additions-The-High-Realm",
+    "title": "The High Realm",
+    "category": "Dimensions",
+    "mod": "additions"
   }
 ]

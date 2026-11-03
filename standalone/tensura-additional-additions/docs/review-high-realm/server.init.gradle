@@ -1,0 +1,5 @@
+gradle.projectsEvaluated {
+ rootProject.sourceSets.main.java.srcDir(rootProject.file('docs/review-high-realm'))
+ rootProject.sourceSets.main.java.exclude('**/HighRealmReview.java')
+ rootProject.sourceSets.main.resources.srcDir(rootProject.file('docs/review-high-realm/resources'))
+}

@@ -61,6 +61,10 @@
 - [Aura recovery](https://github.com/Bithio999/MC/wiki/Additions-Aura-Regeneration)
 - [Equipment](https://github.com/Bithio999/MC/wiki/Additions-Weapons)
 
+**Dimensions**
+
+- [The High Realm](https://github.com/Bithio999/MC/wiki/Additions-The-High-Realm)
+
 **Reference**
 
 - [Ability directory](https://github.com/Bithio999/MC/wiki/Additions-Abilities)

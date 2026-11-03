@@ -12,7 +12,7 @@ public record GuideCatalog(List<Entry> entries) {
     }
     public static String normalize(String text){return Normalizer.normalize(text,Normalizer.Form.NFKD).replaceAll("\\p{M}+","").toLowerCase(Locale.ROOT).strip();}
     public Entry get(String id){return entries.stream().filter(e->e.id.equals(id)).findFirst().orElse(entries.getFirst());}
-    public List<String> categories(){return java.util.stream.Stream.of("Start","Skills","Races","Gear","People","Bosses").filter(c->entries.stream().anyMatch(e->e.category.equals(c))).toList();}
+    public List<String> categories(){return java.util.stream.Stream.of("Start","Skills","Races","Gear","Dimensions","People","Bosses").filter(c->entries.stream().anyMatch(e->e.category.equals(c))).toList();}
     public List<Entry> search(String query,String category){
         var tokens=normalize(query).split("\\s+");
         return entries.stream().filter(e->category.equals("All") || e.category.equals(category))
@@ -25,7 +25,7 @@ public record GuideCatalog(List<Entry> entries) {
         if(array==null || array.isEmpty() || array.size()>300)throw new IllegalArgumentException("Invalid guide size");
         var all=new ArrayList<Entry>();var ids=new HashSet<String>();
         for(var value:array){var o=value.getAsJsonObject();String id=text(o,"id"),title=text(o,"title"),cat=text(o,"category");
-            if(!id.matches("[a-z0-9_/-]+") || !ids.add(id) || !Set.of("Start","Skills","Races","Gear","People","Bosses").contains(cat))throw new IllegalArgumentException("Invalid guide entry "+id);
+            if(!id.matches("[a-z0-9_/-]+") || !ids.add(id) || !Set.of("Start","Skills","Races","Gear","Dimensions","People","Bosses").contains(cat))throw new IllegalArgumentException("Invalid guide entry "+id);
             var sections=new ArrayList<Section>();for(var raw:o.getAsJsonArray("sections")){var s=raw.getAsJsonObject();sections.add(new Section(text(s,"title"),strings(s,"lines")));}
             all.add(new Entry(id,title,cat,text(o,"summary"),o.has("icon")?o.get("icon").getAsString():"minecraft:textures/item/book.png",strings(o,"keywords"),List.copyOf(sections),strings(o,"related")));
         }

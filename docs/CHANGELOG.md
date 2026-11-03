@@ -1,5 +1,11 @@
 # Changelog
 
+## Additions 1.10.0 — The High Realm
+
+- Add a persistent late-game dimension with three biomes, pale amplified ridges, native ore deposits and elite ordinary mobs. Existing saves gain the dimension automatically.
+- Add a 5 × 6 gate, one-time Nether Star activation and a configurable 10-million actual EP entry requirement. Preserve individual return points and provide a protected return sanctum with unrestricted exit travel.
+- Preserve native mob identities, AI and EP rewards; exclude bosses, owned mobs and summons from elite conversion. Add elite skills, stats, drops, shared gate particles and the searchable F8 Dimensions guide.
+
 ## Additions 1.9.4 — Dead borrower cleanup
 
 - Close confirmed dead-subordinate loans and remove them from Report, preserving earned income and queued credit. Keep loans for unloaded mobs, recovered fatal hits and respawnable players.

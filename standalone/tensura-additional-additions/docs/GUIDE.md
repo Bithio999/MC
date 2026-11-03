@@ -5,6 +5,12 @@ For the in-game version, press **F8**, use **Additions Guide** in the pause menu
 
 [Addon home](../README.md)
 
+## The High Realm
+
+Requires **10,000,000 actual maximum EP** to enter. Build its **5 × 6 gate** using four Netherite Blocks, twelve Crying Obsidian, one Lodestone (bottom center) and one Amethyst Block (top center). Use one Nether Star on the Lodestone, then stand in the opening for two seconds or use the activated Lodestone.
+
+Explore three biomes populated by elite ordinary mobs with native skills, enhanced EP/HP/SHP and extra drops. Bosses, owned mobs and imports are excluded. Return through the protected quartz arch or use its central bedrock base; **no EP is needed to leave**. [Gate pattern, biomes and enemy stats](../../../wiki/pages/Additions-The-High-Realm.md).
+
 ## Reincarnation and evolution
 
 Select **Fettered Human** (**Hard**) in Tensura's native reincarnation race menu. It grants **Chained** separately from the normal reincarnation Unique roll. Subsequent evolutions retain the same skill/mastery and never regrant a forgotten Chained.

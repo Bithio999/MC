@@ -1,0 +1,147 @@
+{
+  "dimensions": {
+    "minecraft:overworld": {
+      "type": "minecraft:overworld",
+      "generator": {
+        "type": "minecraft:flat",
+        "settings": {
+          "biome": "minecraft:plains",
+          "features": false,
+          "lakes": false,
+          "layers": [
+            {
+              "block": "minecraft:bedrock",
+              "height": 1
+            },
+            {
+              "block": "minecraft:dirt",
+              "height": 2
+            },
+            {
+              "block": "minecraft:grass_block",
+              "height": 1
+            }
+          ],
+          "structure_overrides": [
+            "minecraft:strongholds",
+            "minecraft:villages"
+          ]
+        }
+      }
+    },
+    "minecraft:the_end": {
+      "type": "minecraft:the_end",
+      "generator": {
+        "type": "minecraft:noise",
+        "biome_source": {
+          "type": "minecraft:the_end"
+        },
+        "settings": "minecraft:end"
+      }
+    },
+    "minecraft:the_nether": {
+      "type": "minecraft:the_nether",
+      "generator": {
+        "type": "minecraft:noise",
+        "biome_source": {
+          "type": "minecraft:multi_noise",
+          "preset": "minecraft:nether"
+        },
+        "settings": "minecraft:nether"
+      }
+    },
+    "heavenlyrestriction:high_realm": {
+      "type": "heavenlyrestriction:high_realm",
+      "generator": {
+        "type": "minecraft:noise",
+        "settings": "heavenlyrestriction:high_realm",
+        "biome_source": {
+          "type": "minecraft:multi_noise",
+          "biomes": [
+            {
+              "biome": "heavenlyrestriction:ivory_crags",
+              "parameters": {
+                "temperature": -0.65,
+                "humidity": [
+                  -1,
+                  1
+                ],
+                "continentalness": [
+                  -2,
+                  2
+                ],
+                "erosion": [
+                  -1,
+                  1
+                ],
+                "depth": [
+                  -2,
+                  2
+                ],
+                "weirdness": [
+                  -1,
+                  1
+                ],
+                "offset": 0
+              }
+            },
+            {
+              "biome": "heavenlyrestriction:starwood_grove",
+              "parameters": {
+                "temperature": 0,
+                "humidity": [
+                  -1,
+                  1
+                ],
+                "continentalness": [
+                  -2,
+                  2
+                ],
+                "erosion": [
+                  -1,
+                  1
+                ],
+                "depth": [
+                  -2,
+                  2
+                ],
+                "weirdness": [
+                  -1,
+                  1
+                ],
+                "offset": 0
+              }
+            },
+            {
+              "biome": "heavenlyrestriction:mistglass_basin",
+              "parameters": {
+                "temperature": 0.65,
+                "humidity": [
+                  -1,
+                  1
+                ],
+                "continentalness": [
+                  -2,
+                  2
+                ],
+                "erosion": [
+                  -1,
+                  1
+                ],
+                "depth": [
+                  -2,
+                  2
+                ],
+                "weirdness": [
+                  -1,
+                  1
+                ],
+                "offset": 0
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

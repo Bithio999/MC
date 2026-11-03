@@ -1,0 +1,14 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:husk",
+    "minecraft:stray",
+    "minecraft:wither_skeleton",
+    "minecraft:enderman",
+    "minecraft:spider",
+    "minecraft:zombie",
+    "tensura:orc",
+    "tensura:direwolf",
+    "tensura:lizardman"
+  ]
+}
