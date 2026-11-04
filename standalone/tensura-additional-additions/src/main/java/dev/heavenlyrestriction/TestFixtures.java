@@ -23,6 +23,14 @@ final class TestFixtures {
         RaceAPI.getRaceFrom(p).setRace(TensuraRaces.HUMAN.get(),false);EnergyHelper.setBaseMaxEP(p,20_000_000);
         var energy=TensuraStorages.getExistenceFrom(p);energy.setTrueHero(true);energy.setAura(1_000_000);energy.setMagicule(1_000_000);return p;
     }
+    @SuppressWarnings("unchecked")
+    static List<ServerPlayer> reviewRoster(ServerPlayer p) {
+        try {
+            var field=net.minecraft.server.players.PlayerList.class.getDeclaredField("players");
+            field.setAccessible(true);
+            return (List<ServerPlayer>)field.get(p.server.getPlayerList());
+        } catch(ReflectiveOperationException ex) { throw new IllegalStateException(ex); }
+    }
     static net.minecraft.world.entity.monster.Husk target(GameTestHelper h,Vec3 at){
         var e=new net.minecraft.world.entity.monster.Husk(net.minecraft.world.entity.EntityType.HUSK,h.getLevel());e.setPos(at);e.setNoAi(true);e.setNoGravity(true);e.getAttribute(Attributes.MAX_HEALTH).setBaseValue(1024);e.setHealth(1024);h.getLevel().addFreshEntity(e);return e;
     }

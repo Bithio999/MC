@@ -27,7 +27,19 @@ public final class MapReview {
   private static int age, wait;
   private static volatile String error;
   private static double originalX, originalZ;
+  private static volatile int farX = 120000, farZ = -160000;
   private static volatile UUID savedPin;
+  private static net.minecraft.server.level.ServerPlayer companion, traveler;
+
+  private static net.minecraft.nbt.CompoundTag state() {
+    try {
+      var f = MaraudersMapScreen.class.getDeclaredField("state");
+      f.setAccessible(true);
+      return (net.minecraft.nbt.CompoundTag) f.get(map());
+    } catch (ReflectiveOperationException ex) {
+      throw new IllegalStateException(ex);
+    }
+  }
 
   private static final class Menu extends AbilitySelectionScreen {
     Menu() {
@@ -51,6 +63,16 @@ public final class MapReview {
           selectedAbility != null
               && selectedAbility.getSkill() == HeavenlyRestriction.MARAUDERS_MAP.get(),
           "Native Map selection failed");
+    }
+  }
+
+  private static void fakeConnection(net.minecraft.server.level.ServerPlayer p) {
+    try {
+      var f = net.minecraft.network.Connection.class.getDeclaredField("channel");
+      f.setAccessible(true);
+      f.set(p.connection.getConnection(), new io.netty.channel.embedded.EmbeddedChannel());
+    } catch (ReflectiveOperationException ex) {
+      throw new IllegalStateException(ex);
     }
   }
 
@@ -540,6 +562,154 @@ public final class MapReview {
         error = e.toString();
         return;
       }
+      field("Search structures and pins").setValue("");
+      press("Recenter");
+      map().view.scale = 2;
+      server(
+          p -> {
+            companion =
+                net.neoforged.neoforge.common.util.FakePlayerFactory.get(
+                    p.serverLevel(),
+                    new com.mojang.authlib.GameProfile(UUID.randomUUID(), "Cartographer"));
+            fakeConnection(companion);
+            companion.setPos(originalX + 28, p.getY(), originalZ + 36);
+            TestFixtures.reviewRoster(p).add(companion);
+            var nether = p.server.getLevel(net.minecraft.world.level.Level.NETHER);
+            traveler =
+                net.neoforged.neoforge.common.util.FakePlayerFactory.get(
+                    nether, new com.mojang.authlib.GameProfile(UUID.randomUUID(), "RealmWalker"));
+            fakeConnection(traveler);
+            traveler.setPos(-40.5, 70, 120.5);
+            TestFixtures.reviewRoster(p).add(traveler);
+            var level = p.serverLevel();
+            var generator = level.getChunkSource().getGenerator();
+            for (int n = 0; n < 32; n++) {
+              int x = 120000 + n * 2048, z = -160000 + n * 1024;
+              int y =
+                  generator.getFirstOccupiedHeight(
+                      x,
+                      z,
+                      net.minecraft.world.level.levelgen.Heightmap.Types.WORLD_SURFACE_WG,
+                      level,
+                      level.getChunkSource().randomState());
+              if (y > generator.getSeaLevel() + 12) {
+                farX = x;
+                farZ = z;
+                break;
+              }
+            }
+            System.out.println("Map review remote terrain: " + farX + "," + farZ);
+          });
+      phase = 24;
+      wait = 0;
+      return;
+    }
+    if (phase == 24 && wait > 100) {
+      check(
+          state().getList("players", net.minecraft.nbt.Tag.TAG_COMPOUND).stream()
+              .anyMatch(
+                  t ->
+                      ((net.minecraft.nbt.CompoundTag) t).getString("name").equals("Cartographer")),
+          "Live player marker missing");
+      check(
+          state().getList("players", net.minecraft.nbt.Tag.TAG_COMPOUND).stream()
+              .anyMatch(
+                  t ->
+                      ((net.minecraft.nbt.CompoundTag) t)
+                          .getString("dimension")
+                          .equals("minecraft:the_nether")),
+          "Other-dimension player missing");
+      shot("marauders-map-players");
+      press("Go to…");
+      field("X").setValue(String.valueOf(farX));
+      field("Z").setValue(String.valueOf(farZ));
+      press("Center map");
+      phase = 25;
+      wait = 0;
+      return;
+    }
+    if (phase == 25 && wait > 60) {
+      if (!MapTerrainAtlas.hasPreviewAt(farX, farZ) || !MapTerrainAtlas.hasDetailAt(farX, farZ)) {
+        if (wait % 200 == 0)
+          System.out.println(
+              "Map remote wait "
+                  + wait
+                  + " tiles="
+                  + MapTerrainAtlas.tileCount()
+                  + " preview="
+                  + MapTerrainAtlas.hasPreviewAt(farX, farZ)
+                  + " detail="
+                  + MapTerrainAtlas.hasDetailAt(farX, farZ));
+        check(wait < 1800, "Unexplored native terrain/detail did not arrive within 90 seconds");
+        return;
+      }
+      check(
+          mc.level
+                  .getChunkSource()
+                  .getChunk(
+                      farX >> 4,
+                      farZ >> 4,
+                      net.minecraft.world.level.chunk.status.ChunkStatus.FULL,
+                      false)
+              == null,
+          "Distant preview became client-loaded terrain");
+      check(Math.abs(mc.player.getX() - originalX) < 4, "Mapping distant terrain moved the player");
+      phase = 26;
+      wait = 0;
+      return;
+    }
+    if (phase == 26 && wait > 300) {
+      shot("marauders-map-unexplored");
+      map().view.scale = .2;
+      map().keyPressed(org.lwjgl.glfw.GLFW.GLFW_KEY_RIGHT, 0, 0);
+      server(p -> companion.setPos(originalX + 5000, companion.getY(), originalZ + 5000));
+      phase = 27;
+      wait = 0;
+      return;
+    }
+    if (phase == 27 && wait > 300) {
+      shot("marauders-map-overview");
+      var marker =
+          state().getList("players", net.minecraft.nbt.Tag.TAG_COMPOUND).stream()
+              .map(t -> (net.minecraft.nbt.CompoundTag) t)
+              .filter(t -> t.getString("name").equals("Cartographer"))
+              .findFirst()
+              .orElseThrow();
+      check(
+          marker.getInt("x") == (int) Math.floor(originalX + 5000),
+          "Out-of-range player location did not update");
+      field("Search structures and pins").setValue("RealmWalker");
+      map().mouseClicked(24, 110, 0);
+      check(
+          !button("Show selected").active,
+          "Other-dimension location incorrectly centers current map");
+      phase = 28;
+      wait = 0;
+      return;
+    }
+    if (phase == 28 && wait > 15) {
+      shot("marauders-map-dimensions");
+      try {
+        Files.writeString(
+            OUT.resolve("passed-world-map.txt"),
+            "PASS: prior map/menu/pin/search regressions; native generator preview and 4x4-textured"
+                + " native FEATURES detail at unvisited remote coordinates; no client chunk"
+                + " load/teleport; distant live players update beyond tracking distance;"
+                + " other-dimension players visible and cannot miscenter map; zoomed-out terrain"
+                + " preview.\n");
+      } catch (Exception ex) {
+        throw new IllegalStateException(ex);
+      }
+      server(
+          p -> {
+            TestFixtures.reviewRoster(p).remove(companion);
+            TestFixtures.reviewRoster(p).remove(traveler);
+          });
+      phase = 29;
+      wait = 0;
+      return;
+    }
+    if (phase == 29 && wait > 15) {
       map().onClose();
       mc.stop();
     }

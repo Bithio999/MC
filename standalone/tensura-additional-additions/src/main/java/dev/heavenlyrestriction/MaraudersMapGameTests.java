@@ -198,4 +198,122 @@ public final class MaraudersMapGameTests {
               h.succeed();
             });
   }
+
+  @GameTest(template = "empty", timeoutTicks = 300)
+  public static void unloadedTerrainPreviewsUseNativeGeneratorWithoutLoadingChunks(
+      GameTestHelper h) {
+    var p = reader(h);
+    MapService.open(p);
+    var session = MapService.session(p);
+    session.cx = 1000000;
+    session.cz = -1000000;
+    session.radius = 2048;
+    h.assertTrue(
+        MapTerrain.valid(
+            session, Math.floorDiv(session.cx, 128), Math.floorDiv(session.cz, 128), 4, false),
+        "Valid distant tile denied");
+    h.assertTrue(!MapTerrain.valid(session, Integer.MAX_VALUE, 0, 1, false), "Overflow accepted");
+    h.assertTrue(!MapTerrain.valid(session, 0, 0, 3, false), "Nonpower spacing accepted");
+    h.assertTrue(!MapTerrain.valid(session, 0, 0, 1, false), "Off-view tile accepted");
+    int cx = session.cx >> 4, cz = session.cz >> 4;
+    h.assertTrue(
+        h.getLevel().getChunkSource().getChunkNow(cx, cz) == null,
+        "Test coordinate was already loaded");
+    var request = new CompoundTag();
+    request.putInt("tx", Math.floorDiv(session.cx, 128));
+    request.putInt("tz", Math.floorDiv(session.cz, 128));
+    request.putInt("step", 4);
+    MapService.request(p, session.token, "terrain", request);
+    h.assertTrue(!session.terrain.isEmpty(), "Terrain job never queued");
+    h.startSequence()
+        .thenWaitUntil(() -> h.assertTrue(session.terrain.isEmpty(), "Preview still running"))
+        .thenExecute(
+            () -> {
+              h.assertTrue(
+                  h.getLevel().getChunkSource().getChunkNow(cx, cz) == null,
+                  "Preview loaded distant chunk");
+              MapService.close(p);
+              h.succeed();
+            });
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 200)
+  public static void nativeSurfaceDetailUsesTheTopBlockAndDepthTint(GameTestHelper h) {
+    var p = reader(h);
+    var at = h.absolutePos(BlockPos.ZERO).offset(3, 10, 3);
+    h.getLevel()
+        .setBlockAndUpdate(
+            at, net.minecraft.world.level.block.Blocks.GOLD_BLOCK.defaultBlockState());
+    var chunk = h.getLevel().getChunkAt(at);
+    var tile = MapTerrain.detail(p.serverLevel(), chunk, Integer.MAX_VALUE);
+    int n = Math.floorMod(at.getZ(), 16) * 16 + Math.floorMod(at.getX(), 16);
+    h.assertTrue(
+        tile.getIntArray("heights")[n] == at.getY(), "Surface map has a one-block height error");
+    h.assertTrue(
+        tile.getIntArray("blocks")[n]
+            == net.minecraft.world.level.block.Block.getId(
+                net.minecraft.world.level.block.Blocks.GOLD_BLOCK.defaultBlockState()),
+        "Top material was not preserved");
+    h.assertTrue(tile.getIntArray("tints").length == 256, "Missing native biome tints");
+    h.succeed();
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 100)
+  public static void playerLocationsIncludeDistantPlayersAndOtherDimensions(GameTestHelper h) {
+    var p = reader(h);
+    var far =
+        net.neoforged.neoforge.common.util.FakePlayerFactory.get(
+            h.getLevel(),
+            new com.mojang.authlib.GameProfile(UUID.randomUUID(), "DistantCartographer"));
+    far.setPos(1000000.5, 123, -1000000.25);
+    far.setYRot(73);
+    var players = reviewRoster(p);
+    var nether = p.server.getLevel(net.minecraft.world.level.Level.NETHER);
+    h.assertTrue(nether != null, "Native Nether missing");
+    var traveler =
+        net.neoforged.neoforge.common.util.FakePlayerFactory.get(
+            nether, new com.mojang.authlib.GameProfile(UUID.randomUUID(), "RealmWalker"));
+    traveler.setPos(-40.5, 70, 120.5);
+    players.add(far);
+    players.add(traveler);
+    try {
+      var list = MapService.players(p);
+      h.assertTrue(
+          list.stream()
+              .map(t -> (CompoundTag) t)
+              .anyMatch(
+                  t ->
+                      t.getUUID("uuid").equals(traveler.getUUID())
+                          && t.getString("dimension").equals("minecraft:the_nether")),
+          "Other-dimension player omitted");
+      var marker =
+          list.stream()
+              .map(t -> (CompoundTag) t)
+              .filter(t -> t.getUUID("uuid").equals(far.getUUID()))
+              .findFirst()
+              .orElseThrow();
+      h.assertTrue(
+          marker.getDouble("px") == far.getX() && marker.getInt("y") == 123,
+          "Distant player location was rounded/lost");
+      h.assertTrue(
+          marker.getString("dimension").equals(h.getLevel().dimension().location().toString()),
+          "Player dimension missing");
+      far.setPos(1000100.5, 127, -1000001.25);
+      var updated =
+          (CompoundTag)
+              MapService.players(p).stream()
+                  .filter(t -> ((CompoundTag) t).getUUID("uuid").equals(far.getUUID()))
+                  .findFirst()
+                  .orElseThrow();
+      h.assertTrue(updated.getInt("x") == 1000100, "Location not live");
+    } finally {
+      players.remove(far);
+      players.remove(traveler);
+    }
+    h.assertTrue(
+        MapService.players(p).stream()
+            .noneMatch(t -> ((CompoundTag) t).getUUID("uuid").equals(far.getUUID())),
+        "Disconnected player retained");
+    h.succeed();
+  }
 }

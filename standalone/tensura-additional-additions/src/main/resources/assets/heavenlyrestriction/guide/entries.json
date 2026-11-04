@@ -713,7 +713,7 @@
       "id": "marauders-map",
       "title": "Marauder's Map",
       "category": "Skills",
-      "summary": "Unique · A detailed interactive map of explored terrain, real structures and private custom pins.",
+      "summary": "Unique · A detailed world atlas with unvisited terrain, live players, real structures and private pins.",
       "icon": "heavenlyrestriction:textures/skill/marauders_map.png",
       "keywords": [
         "open map",
@@ -722,7 +722,11 @@
         "village",
         "pins",
         "waypoints",
-        "zoom"
+        "zoom",
+        "players",
+        "unexplored",
+        "terrain",
+        "textures"
       ],
       "related": [
         "welcome",
@@ -734,14 +738,21 @@
           "title": "Open Map · Active, Press",
           "lines": [
             "Slot the learned Unique in Tensura’s normal menu and activate Open Map. Drag to pan and scroll to zoom at the cursor. Recenter/Home returns to you. Go to… centers the map at coordinates without moving your character. No aura or magicule cost.",
-            "Search structures and pins in the sidebar. Toggle structure or pin markers independently. Nearby structures cluster when zoomed out. The ? button explains controls and marker colors."
+            "Search players, structures and pins in the sidebar. Toggle Sites, Pins and Players independently. Nearby structures cluster when zoomed out. The ? button explains controls and marker colors."
           ]
         },
         {
           "title": "Terrain and structures",
           "lines": [
-            "Only loaded, explored terrain is recorded. Zoom in for block-level detail or out for the overview. Terrain is cached on this computer, separately for each world and dimension; revisiting a world restores its map. Older unrecorded areas appear as you revisit them.",
-            "Actual world-generation structures, including addon types, are marked when their starts are known. Locate structure… searches up to 2,048 blocks around the map center in small steps. Show result centers the found marker; unexplored terrain stays hidden. Escape cancels an active search. Move the map center to search another area."
+            "Pan or Go to… anywhere in the dimension, including unvisited/unloaded areas. Native terrain previews fill in progressively. Zoom in for block top-face textures, trees, roads and rooftops, relief and depth-shaded water. Initial previews show landforms and biome colors; surface features and player edits follow as native detail arrives. Live terrain is cached on this computer for each world and dimension.",
+            "Actual world-generation structures, including addon types, are marked when their starts are known. Locate structure… searches up to 2,048 blocks around the map center in small steps. Show result centers the found marker. Escape cancels an active search. Move the map center to search another area."
+          ]
+        },
+        {
+          "title": "Live players",
+          "lines": [
+            "All online players appear, including those beyond render distance. Locations refresh twice per second. Your own arrow is gold; others have named cyan markers. Search/select a player, then Show selected to center on them.",
+            "Players in other dimensions appear in the sidebar with dimension and coordinates; centering is disabled until you enter that dimension. Offline players disappear. Pins stay private."
           ]
         },
         {

@@ -1,5 +1,12 @@
 # Changelog
 
+## Additions 1.13.0 — World terrain and live players
+
+- Reveal native terrain previews wherever the map is panned, including unvisited/unloaded areas. Generate previews off-thread without loading chunks, then progressively refine nearby zoomed views with bounded native feature-stage tasks.
+- Add 4×4 top-face texture samples per block, improved terrain relief and elevation contours, water-depth shading, and live surface updates. Correct an existing one-block surface sampling error.
+- Show all online player locations twice per second, including players beyond entity tracking distance. Add named cyan map markers and searchable player rows, with dimension/coordinates for players in other dimensions.
+- Add an independent Players toggle, viewport acknowledgements, bounded queues/caches/generation work, and temporary non-ticking feature-stage tickets released on completion or close. Preserve private pins and native structure discovery.
+
 ## Additions 1.12.0 — Marauder’s Map
 
 - Add the Marauder’s Map Unique and Open Map mode to Tensura’s native skill menu and reincarnation pool. Free to use and eligible for Fettered Human rolls.

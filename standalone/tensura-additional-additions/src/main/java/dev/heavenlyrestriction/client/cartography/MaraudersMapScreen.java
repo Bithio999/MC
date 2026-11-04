@@ -35,7 +35,7 @@ public final class MaraudersMapScreen extends Screen {
   private CompoundTag state;
   private final UUID token;
   private int left, top, mapW, mapH, side, listTop, listBottom, scroll, age, refreshAt;
-  private boolean structures = true, pins = true, dragging, moved, returned;
+  private boolean structures = true, pins = true, players = true, dragging, moved, returned;
   private double downX, downY;
   private String selected = "";
   private EditBox search;
@@ -49,6 +49,7 @@ public final class MaraudersMapScreen extends Screen {
     super(Component.literal("Marauder's Map"));
     this.state = state.copy();
     token = state.getUUID("session");
+    MapTerrainAtlas.session(token);
     var p = Minecraft.getInstance().player;
     view.center(p == null ? 0 : p.getX(), p == null ? 0 : p.getZ());
   }
@@ -63,10 +64,15 @@ public final class MaraudersMapScreen extends Screen {
     @SubscribeEvent
     public static void tick(ClientTickEvent.Post e) {
       MapAtlas.tick();
+      MapTerrainAtlas.tick();
     }
   }
 
   public static void receive(CompoundTag data) {
+    if (data.getBoolean("terrain")) {
+      MapTerrainAtlas.receive(data);
+      return;
+    }
     if (data.hasUUID("world")) MapAtlas.context(data.getUUID("world"), data.getString("dimension"));
     var mc = Minecraft.getInstance();
     MaraudersMapScreen screen = null;
@@ -86,7 +92,9 @@ public final class MaraudersMapScreen extends Screen {
       return;
     }
     if (screen != null && data.hasUUID("session") && screen.token.equals(data.getUUID("session"))) {
-      screen.state = data.copy();
+      if (data.getBoolean("playersOnly"))
+        screen.state.put("players", data.getList("players", Tag.TAG_COMPOUND).copy());
+      else screen.state = data.copy();
       screen.filter();
     }
   }
@@ -129,8 +137,8 @@ public final class MaraudersMapScreen extends Screen {
     button(
         10,
         76,
-        (side - 12) / 2,
-        structures ? "Structures: ON" : "Structures: OFF",
+        (side - 12) / 3,
+        structures ? "Sites: ON" : "Sites: OFF",
         () -> {
           structures = !structures;
           String q = search.getValue();
@@ -139,15 +147,25 @@ public final class MaraudersMapScreen extends Screen {
           filter();
         });
     button(
-        12 + (side - 12) / 2,
+        12 + (side - 12) / 3,
         76,
-        (side - 12) / 2,
+        (side - 12) / 3,
         pins ? "Pins: ON" : "Pins: OFF",
         () -> {
           pins = !pins;
           String q = search.getValue();
           rebuildWidgets();
           search.setValue(q);
+          filter();
+        });
+    button(
+        14 + 2 * ((side - 12) / 3),
+        76,
+        (side - 12) / 3,
+        players ? "Players ✓" : "Players −",
+        () -> {
+          players = !players;
+          rebuildWidgets();
           filter();
         });
     button(left, 19, 22, "−", () -> zoom(-1, left + mapW / 2d, top + mapH / 2d));
@@ -281,6 +299,7 @@ public final class MaraudersMapScreen extends Screen {
     String q = search == null ? "" : search.getValue().toLowerCase(Locale.ROOT);
     var all = new ArrayList<CompoundTag>();
     if (pins) for (var t : state.getList("pins", Tag.TAG_COMPOUND)) all.add((CompoundTag) t);
+    if (players) for (var t : state.getList("players", Tag.TAG_COMPOUND)) all.add((CompoundTag) t);
     if (structures)
       for (var t : state.getList("markers", Tag.TAG_COMPOUND)) all.add((CompoundTag) t);
     var p = Minecraft.getInstance().player;
@@ -289,6 +308,8 @@ public final class MaraudersMapScreen extends Screen {
             !(m.getString("name")
                     + " "
                     + m.getString("type")
+                    + " "
+                    + m.getString("dimensionName")
                     + " "
                     + m.getInt("x")
                     + " "
@@ -306,7 +327,10 @@ public final class MaraudersMapScreen extends Screen {
             scroll, 0, Math.max(0, entries.size() - Math.max(1, (listBottom - listTop) / 32)));
     if (centerSelected != null) {
       var m = chosen();
-      centerSelected.active = m != null;
+      centerSelected.active =
+          m != null
+              && (!m.getBoolean("player")
+                  || m.getString("dimension").equals(state.getString("dimension")));
       edit.active = delete.active = m != null && m.getBoolean("pin");
       showResult.active = state.contains("found");
     }
@@ -321,7 +345,7 @@ public final class MaraudersMapScreen extends Screen {
       var t = new CompoundTag();
       t.putInt("x", (int) view.x);
       t.putInt("z", (int) view.z);
-      t.putInt("radius", (int) Math.min(8192, Math.max(mapW, mapH) / (2 * view.scale) + 128));
+      t.putInt("radius", (int) Math.min(65536, Math.max(mapW, mapH) / (2 * view.scale) + 128));
       request("view", t);
       refreshAt = -1;
     }
@@ -331,11 +355,26 @@ public final class MaraudersMapScreen extends Screen {
     return font.width(s) <= max ? s : font.plainSubstrByWidth(s, Math.max(0, max - 8)) + "…";
   }
 
+  public boolean terrainViewReady() {
+    return state.getInt("viewX") == (int) view.x
+        && state.getInt("viewZ") == (int) view.z
+        && state.getInt("viewRadius")
+            >= Math.min(65536, Math.max(mapW, mapH) / (2 * view.scale) + 96);
+  }
+
+  public boolean visibleChunk(int x, int z) {
+    return view.screenX(x * 16d + 16, left, mapW) >= left
+        && view.screenX(x * 16d, left, mapW) <= left + mapW
+        && view.screenZ(z * 16d + 16, top, mapH) >= top
+        && view.screenZ(z * 16d, top, mapH) <= top + mapH;
+  }
+
   private boolean inside(double x, double y) {
     return x >= left && x < left + mapW && y >= top && y < top + mapH;
   }
 
   public static int markerColor(CompoundTag m) {
+    if (m.getBoolean("player")) return 0xff91e3ed;
     if (m.getBoolean("pin")) return COLORS[Math.floorMod(m.getInt("color"), COLORS.length)];
     String id = m.getString("type");
     if (id.contains("village")) return 0xffe6c78a;
@@ -391,7 +430,9 @@ public final class MaraudersMapScreen extends Screen {
       for (int gx = left; gx < left + mapW; gx += 24)
         if (((gx - left) / 24 + (gy - top) / 24) % 2 == 0)
           g.fill(gx, gy, Math.min(left + mapW, gx + 24), Math.min(top + mapH, gy + 24), 0xff253139);
+    MapTerrainAtlas.render(g, view, left, top, mapW, mapH, false);
     MapAtlas.render(g, view, left, top, mapW, mapH);
+    MapTerrainAtlas.render(g, view, left, top, mapW, mapH, true);
     if (view.scale >= .5) {
       int grid = view.scale < 1 ? 128 : 64;
       int x0 = (int) Math.floor(view.worldX(left, left, mapW) / grid) * grid,
@@ -411,7 +452,7 @@ public final class MaraudersMapScreen extends Screen {
       int x = (int) view.screenX(m.getInt("x"), left, mapW),
           y = (int) view.screenZ(m.getInt("z"), top, mapH);
       if (!inside(x, y)) continue;
-      if (!m.getBoolean("pin")) {
+      if (!m.getBoolean("pin") && !m.getBoolean("player")) {
         long cell = ((long) Math.floorDiv(x, 18) << 32) | (Math.floorDiv(y, 18) & 0xffffffffL);
         clusters.computeIfAbsent(cell, k -> new ArrayList<>()).add(m);
       }
@@ -435,6 +476,22 @@ public final class MaraudersMapScreen extends Screen {
           marker(g, x, y, m, 1);
           hits.add(0, new Hit(x, y, m, 1));
         }
+      }
+    for (var m : entries)
+      if (m.getBoolean("player")
+          && m.getString("dimension").equals(state.getString("dimension"))
+          && (minecraft.player == null || !m.getUUID("uuid").equals(minecraft.player.getUUID()))) {
+        int px = (int) view.screenX(m.getDouble("px"), left, mapW),
+            pz = (int) view.screenZ(m.getDouble("pz"), top, mapH);
+        if (!inside(px, pz)) continue;
+        g.fill(px - 5, pz - 5, px + 6, pz + 6, 0xf0101c25);
+        g.fill(px - 3, pz - 3, px + 4, pz + 4, markerColor(m));
+        g.renderOutline(px - 6, pz - 6, 13, 13, 0xffe1f6f5);
+        String label = fit(m.getString("name"), Math.min(120, mapW / 2));
+        int labelWidth = font.width(label);
+        g.fill(px - labelWidth / 2 - 3, pz + 9, px + labelWidth / 2 + 4, pz + 21, 0xd5101b24);
+        g.drawCenteredString(font, label, px, pz + 11, markerColor(m));
+        hits.add(0, new Hit(px, pz, m, 1));
       }
     if (minecraft.player != null) {
       int px = (int) view.screenX(minecraft.player.getX(), left, mapW),
@@ -479,7 +536,10 @@ public final class MaraudersMapScreen extends Screen {
       if (chosen) g.fill(8, yy, 10, yy + 30, GOLD);
       g.drawString(font, fit(m.getString("name"), side - 24), 16, yy + 5, markerColor(m), false);
       String detail = m.getInt("x") + ", " + m.getInt("z");
-      if (minecraft.player != null)
+      boolean otherDimension =
+          m.getBoolean("player") && !m.getString("dimension").equals(state.getString("dimension"));
+      if (otherDimension) detail = m.getString("dimensionName") + " · " + detail;
+      if (minecraft.player != null && !otherDimension)
         detail +=
             " · "
                 + (int)
@@ -501,9 +561,8 @@ public final class MaraudersMapScreen extends Screen {
           font,
           Component.literal(
               search.getValue().isEmpty()
-                  ? "No markers here yet. Explore to record terrain, add a pin, or locate a"
-                      + " structure."
-                  : "No matching structures or pins."),
+                  ? "Add a pin or locate a structure. Terrain appears anywhere you move the map."
+                  : "No matching markers or players."),
           12,
           listTop + 8,
           side - 16,
@@ -527,13 +586,13 @@ public final class MaraudersMapScreen extends Screen {
               + " · "
               + state.getInt("candidates")
               + " candidates  [Esc cancels]";
+    if (note.isEmpty()) note = MapTerrainAtlas.progress();
     if (note.isEmpty() && !MapAtlas.notice.isEmpty()) note = MapAtlas.notice;
     if (note.isEmpty())
       note = "Drag to pan · Scroll to zoom · Right-click to pin · Home centers on you";
     g.drawString(font, fit(note, mapW), left, height - 20, MUTED, false);
-    if (MapAtlas.knownChunks() == 0)
-      g.drawCenteredString(
-          font, "Recording explored terrain…", left + mapW / 2, top + mapH / 2, MUTED);
+    if (MapAtlas.knownChunks() == 0 && MapTerrainAtlas.tileCount() == 0)
+      g.drawCenteredString(font, "Mapping world terrain…", left + mapW / 2, top + mapH / 2, MUTED);
     super.render(g, mx, my, partial);
     if (inside(mx, my)) {
       var hit =
@@ -548,15 +607,19 @@ public final class MaraudersMapScreen extends Screen {
         lines.add(
             Component.literal(
                 "X " + m.getInt("x") + "  Y " + m.getInt("y") + "  Z " + m.getInt("z")));
-        if (!m.getBoolean("pin"))
+        if (m.getBoolean("player"))
+          lines.add(Component.literal("Player · " + m.getString("dimensionName")).withColor(TEAL));
+        else if (!m.getBoolean("pin"))
           lines.add(Component.literal(m.getString("type")).withColor(MUTED));
         if (hit.count > 1)
           lines.add(Component.literal(hit.count + " nearby structures · zoom in").withColor(TEAL));
         lines.add(
             Component.literal(
-                    m.getBoolean("pin")
-                        ? "Click to select · Edit pin in sidebar"
-                        : "Click to select · Right-click to add a pin")
+                    m.getBoolean("player")
+                        ? "Click to select · Live location"
+                        : m.getBoolean("pin")
+                            ? "Click to select · Edit pin in sidebar"
+                            : "Click to select · Right-click to add a pin")
                 .withColor(MUTED));
         g.renderTooltip(
             font,

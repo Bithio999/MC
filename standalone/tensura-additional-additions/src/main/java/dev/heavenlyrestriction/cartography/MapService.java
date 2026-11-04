@@ -28,11 +28,15 @@ public final class MapService {
   public static final class Session {
     public final UUID token = UUID.randomUUID();
     public final String dimension;
-    public long expiry, nextRequest, nextLocate;
-    public int cx, cz, radius = 512;
+    public long expiry, nextRequest, nextLocate, terrainTick;
+    public int terrainRequests;
+    public volatile int cx, cz, radius = 512;
+    public volatile boolean terrainClosed;
     public Search search;
     public String message = "";
     public MapData.Marker found;
+    public final Set<String> terrain = new HashSet<>();
+    public final Map<String, MapTerrain.Pending> details = new LinkedHashMap<>();
 
     Session(ServerPlayer p) {
       dimension = p.level().dimension().location().toString();
@@ -130,6 +134,7 @@ public final class MapService {
   public static boolean open(ServerPlayer p) {
     if (!owns(p)) return false;
     var s = new Session(p);
+    close(p);
     SESSIONS.put(p.getUUID(), s);
     captureNearby(p);
     var t = snapshot(p, s);
@@ -146,7 +151,11 @@ public final class MapService {
   }
 
   public static void close(ServerPlayer p) {
-    SESSIONS.remove(p.getUUID());
+    var old = SESSIONS.remove(p.getUUID());
+    if (old != null) {
+      old.terrainClosed = true;
+      MapTerrain.cancel(old);
+    }
   }
 
   public static boolean validPin(ServerPlayer p, CompoundTag t) {
@@ -212,12 +221,21 @@ public final class MapService {
     s.message = "";
     var data = MapData.get(p.server);
     switch (action) {
+      case "terrain" -> {
+        if (s.terrainTick != now) {
+          s.terrainTick = now;
+          s.terrainRequests = 0;
+        }
+        if (++s.terrainRequests > 8) return;
+        MapTerrain.request(p, s, t);
+        return;
+      }
       case "view" -> {
         long x = t.getInt("x"), z = t.getInt("z");
         if (Math.abs(x) > 29999984 || Math.abs(z) > 29999984) return;
         s.cx = (int) x;
         s.cz = (int) z;
-        s.radius = Math.clamp(t.getInt("radius"), 64, 8192);
+        s.radius = Math.clamp(t.getInt("radius"), 64, 65536);
       }
       case "pin" ->
           s.message =
@@ -315,6 +333,7 @@ public final class MapService {
 
   public static void tick(ServerTickEvent.Post e) {
     generationBudget = 2;
+    MapTerrain.tick();
     var server = e.getServer();
     for (var p : server.getPlayerList().getPlayers()) {
       var s = session(p);
@@ -328,7 +347,15 @@ public final class MapService {
         MapNetwork.send(p, t);
         continue;
       }
+      MapTerrain.advance(p, s);
       if (s.search != null && !s.search.done) advance(p, s);
+      if (p.tickCount % 10 == 0) {
+        var players = new CompoundTag();
+        players.putUUID("session", s.token);
+        players.putBoolean("playersOnly", true);
+        players.put("players", players(p));
+        MapNetwork.send(p, players);
+      }
       if (p.tickCount % 20 == 0) MapNetwork.send(p, snapshot(p, s));
     }
   }
@@ -411,6 +438,10 @@ public final class MapService {
   public static CompoundTag snapshot(ServerPlayer p, Session s) {
     var t = context(p);
     t.putUUID("session", s.token);
+    t.putInt("viewX", s.cx);
+    t.putInt("viewZ", s.cz);
+    t.putInt("viewRadius", s.radius);
+    t.put("players", players(p));
     t.putString("message", s.message);
     var d = MapData.get(p.server);
     var pins = new ListTag();
@@ -464,7 +495,36 @@ public final class MapService {
     return t;
   }
 
+  public static ListTag players(ServerPlayer viewer) {
+    var list = new ListTag();
+    for (var player : viewer.server.getPlayerList().getPlayers()) {
+      var t = new CompoundTag();
+      t.putUUID("uuid", player.getUUID());
+      t.putString("id", "player/" + player.getUUID());
+      t.putString("name", player.getGameProfile().getName());
+      t.putString("dimension", player.level().dimension().location().toString());
+      t.putString("dimensionName", name(t.getString("dimension")));
+      t.putBoolean("player", true);
+      t.putInt("x", player.getBlockX());
+      t.putInt("y", player.getBlockY());
+      t.putInt("z", player.getBlockZ());
+      t.putDouble("px", player.getX());
+      t.putDouble("pz", player.getZ());
+      t.putFloat("yaw", player.getYRot());
+      list.add(t);
+    }
+    return list;
+  }
+
   public static void clear() {
+    SESSIONS
+        .values()
+        .forEach(
+            s -> {
+              s.terrainClosed = true;
+              MapTerrain.cancel(s);
+            });
+    MapTerrain.clear();
     SESSIONS.clear();
   }
 

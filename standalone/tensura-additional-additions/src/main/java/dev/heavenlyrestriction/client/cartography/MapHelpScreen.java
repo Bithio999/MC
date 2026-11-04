@@ -62,8 +62,8 @@ public final class MapHelpScreen extends Screen {
     g.drawWordWrap(
         font,
         Component.literal(
-            "Pins are private. Dark areas have not been recorded. Locate can find structures"
-                + " without revealing terrain."),
+            "Terrain appears anywhere you pan; zoom in for native surface detail. Pins are private."
+                + " Players in other dimensions appear in the list."),
         x + 14,
         y + 155,
         w - 28,

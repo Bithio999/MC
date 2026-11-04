@@ -16,4 +16,4 @@ Use Tensura’s normal Ability Selection menu. This addon has no Godly skill tie
 
 [Split Mind](Additions-Split-Mind.md) adds +9 learning/mastery gain, Thought Acceleration, Chant Annulment and automatic casting of one assigned learned magic.
 
-[Marauder's Map](Additions-Marauders-Map.md) maps explored terrain, locates world-generation structures and saves private custom pins.
+[Marauder's Map](Additions-Marauders-Map.md) maps visited and unvisited terrain, tracks all online players, locates structures and saves private pins.

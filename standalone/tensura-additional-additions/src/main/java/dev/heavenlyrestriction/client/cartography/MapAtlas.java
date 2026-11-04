@@ -15,7 +15,6 @@ import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.chunk.*;
@@ -23,7 +22,7 @@ import net.minecraft.world.level.chunk.status.ChunkStatus;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.material.MapColor;
 
-/** Client-only recorded terrain, bounded texture LRU, and asynchronous atomic disk IO. */
+/** Live recorded-terrain overlay, bounded texture LRU, and asynchronous atomic disk IO. */
 public final class MapAtlas {
   private static final ThreadPoolExecutor IO =
       new ThreadPoolExecutor(
@@ -107,7 +106,7 @@ public final class MapAtlas {
                   MessageDigest.getInstance("SHA-256")
                       .digest(dimension.getBytes(StandardCharsets.UTF_8)))
               .substring(0, 16);
-      key = world + "/" + hash + layer;
+      key = world + "/" + hash + layer + "_detail2";
       folder = mc.gameDirectory.toPath().resolve("tensura-additions/maps").resolve(key);
       loadOverview();
     } catch (Exception e) {
@@ -273,6 +272,10 @@ public final class MapAtlas {
     var r = region(Math.floorDiv(cp.x, 16), Math.floorDiv(cp.z, 16));
     int bx = Math.floorMod(cp.x, 16) * 16, bz = Math.floorMod(cp.z, 16) * 16;
     boolean below = level.dimensionType().hasCeiling();
+    if (mc.screen instanceof MaraudersMapScreen map
+        && map.view.scale >= 1
+        && map.visibleChunk(cp.x, cp.z))
+      MapTerrainAtlas.local(chunk, below ? ceilingPlane : Integer.MAX_VALUE);
     var pos = new BlockPos.MutableBlockPos();
     long red = 0, green = 0, blue = 0;
     int[] previous = new int[16];
@@ -282,7 +285,7 @@ public final class MapAtlas {
         int y =
             below
                 ? Math.min(ceilingPlane, level.getMaxBuildHeight() - 1)
-                : chunk.getHeight(Heightmap.Types.WORLD_SURFACE, x, z) - 1;
+                : chunk.getHeight(Heightmap.Types.WORLD_SURFACE, x, z);
         y = Math.max(level.getMinBuildHeight(), y);
         pos.set(wx, y, wz);
         var state = chunk.getBlockState(pos);
@@ -293,25 +296,32 @@ public final class MapAtlas {
           pos.setY(--y);
           state = chunk.getBlockState(pos);
         }
-        int color = state.getMapColor(level, pos).col;
-        if (!state.getFluidState().isEmpty()
-            && state.getFluidState().is(net.minecraft.tags.FluidTags.WATER))
-          color = BiomeColors.getAverageWaterColor(level, pos);
-        else if (state.is(Blocks.GRASS_BLOCK)
-            || state.is(Blocks.SHORT_GRASS)
-            || state.is(Blocks.FERN)) color = BiomeColors.getAverageGrassColor(level, pos);
-        else if (state.is(BlockTags.LEAVES)) {
-          // Use registered leaf tints; untinted cherry/addon leaves keep their map material color.
-          int tint = mc.getBlockColors().getColor(state, level, pos, 0);
-          if (tint != -1) color = tint & 0xffffff;
+        int tint = mc.getBlockColors().getColor(state, level, pos, 0);
+        if (state.getFluidState().is(net.minecraft.tags.FluidTags.WATER))
+          tint = BiomeColors.getAverageWaterColor(level, pos);
+        int color = MapTerrainAtlas.surfaceColor(Block.getId(state), tint);
+        int depth = 0;
+        if (state.getFluidState().is(net.minecraft.tags.FluidTags.WATER)) {
+          int floor = y;
+          while (floor > level.getMinBuildHeight()
+              && y - floor < 64
+              && chunk
+                  .getBlockState(pos.setY(floor))
+                  .getFluidState()
+                  .is(net.minecraft.tags.FluidTags.WATER)) floor--;
+          depth = y - floor;
+          pos.setY(y);
         }
-        double shade = .91;
-        if (z > 0) shade = Math.clamp(.91 + (y - previous[x]) * .035, .60, 1.12);
+        int north = z > 0 ? previous[x] : y;
         previous[x] = y;
-        if (!state.getFluidState().isEmpty()) shade *= .94;
-        int rr = (int) Math.min(255, ((color >> 16) & 255) * shade),
-            gg = (int) Math.min(255, ((color >> 8) & 255) * shade),
-            bb = (int) Math.min(255, (color & 255) * shade);
+        int west = x > 0 ? chunk.getHeight(Heightmap.Types.WORLD_SURFACE, x - 1, z) : y;
+        int east = x < 15 ? chunk.getHeight(Heightmap.Types.WORLD_SURFACE, x + 1, z) : y;
+        int south = z < 15 ? chunk.getHeight(Heightmap.Types.WORLD_SURFACE, x, z + 1) : y;
+        if (below) west = east = south = y;
+        color =
+            dev.heavenlyrestriction.cartography.MapTerrain.shade(
+                color, y, west, east, north, south, depth, 1);
+        int rr = (color >> 16) & 255, gg = (color >> 8) & 255, bb = color & 255;
         r.image.setPixelRGBA(bx + x, bz + z, abgr(0xff000000 | (rr << 16) | (gg << 8) | bb));
         red += rr;
         green += gg;
@@ -394,6 +404,7 @@ public final class MapAtlas {
   }
 
   public static void clear() {
+    MapTerrainAtlas.clear();
     flush();
     REGIONS.values().forEach(Region::close);
     REGIONS.clear();
