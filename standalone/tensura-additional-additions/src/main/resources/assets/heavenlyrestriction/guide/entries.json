@@ -648,7 +648,7 @@
         {
           "title": "Explore",
           "lines": [
-            "Ivory Crags: High Orcs, Armorsauruses, Horned Bears and Greater Daemons. Starwood Grove: Tempest Star Wolves, Blade Tigers and Knight Spiders. Mistglass Basin: Dragonewts, Basilisks and Arch Daemons. The pool stays entirely Tensura mobs; bosses remain excluded. Half of otherwise valid natural spawn attempts are accepted, with at most 16 living unowned elites within 64 blocks of a new spawn. Existing mobs remain.",
+            "Ivory Crags: High Orcs, Armorsauruses, Horned Bears and Greater Daemons. Starwood Grove: Tempest Star Wolves, Blade Tigers and Knight Spiders. Mistglass Basin: Dragonewts, Basilisks and Arch Daemons. The ordinary elite pool stays entirely Tensura mobs; Kael uses a separate rare boss spawn rule. Half of otherwise valid natural spawn attempts are accepted, with at most 16 living unowned elites within 64 blocks of a new spawn. Existing mobs remain.",
             "Elites retain native models, animations and combat AI, with 1.25–2.5 million base EP and 11–17 core mastered skills. Every species has a mastered Unique Skill: High Orc—Berserker, Armorsaurus/Basilisk—Survivor, Horned Bear—Fighter, Tempest Star Wolf—Shadow Striker, Blade Tiger—Seer, Knight Spider—Oppressor, Dragonewt—Martial Master, Greater Daemon—Engorger, Arch Daemon—Mathematician. Their usable passives are enabled and required skill slots are equipped. All retain themed defenses, sensing, regeneration and damage boosts.",
             "Orcs use their highest non-boss naming evolution; wolves use the final Tempest Star Wolf branch; Lizardmen evolve into Dragonewts with native flight and dragon abilities. The remaining creatures already use their highest implemented non-boss mob forms. Orc Lord/Disaster are excluded as bosses.",
             "Greater Daemons cast Fire Lance, Acid Shell, Icicle Lance, Tornado Blade, Thunder Orb, Stone Shot and Sleep Mist. Arch Daemons cast Fire Ball, Acid Shell, Ice Breaker, Tornado Blade, Water Jail, Mud Spears, Stone Shot and Thunder Orb, using their native AI and casting effects.",
@@ -668,11 +668,8 @@
         {
           "title": "Kael Veyr · Rare otherworlder boss",
           "lines": [
-            "A 15,000,000 actual-EP Human Saint / True Hero with 9,900 HP and 34,100 SHP under default native settings. He wears a dark embroidered coat, has silver hair, and wields a Hihiirokane Sword. Separate health and spiritual-body bars appear nearby.",
-            "A weight-1 natural spawn in all three realm biomes, with an additional 2.5% acceptance roll, at least 20 minutes between accepted spawns realm-wide, no other wild Kael within 512 blocks, and no spawning within 192 blocks of the return sanctum. These are chance-based encounters, not a guaranteed timed respawn.",
-            "His three mastered Uniques are Martial Master, Mathematician and Seer. Native support includes Ultraspeed Regeneration, Steel Strength, Strengthen Body, perception/casting skills and a curated resistance/nullification package. Regeneration spends his native resources.",
-            "Rift Draw warns, blinks to safe ground by the target, then makes a physical aura slash. Fallen Constellation warns six locations before light lances strike. Tempest Verse casts native wind magic. Starless Waltz sends three physical aura-slash fronts after a longer warning and joins his rotation below half HP. Dodge behind or outside the warned fans.",
-            "Drops include Hihiirokane Ingots, Magic Ore, Echo Shards and Netherite Scrap, plus native otherworlder skill-drop rules. Server options control rare spawning, acceptance chance and cooldown."
+            "Rare 15M actual-EP Human Saint / True Hero. Default native bonuses give 9,900 HP and 34,100 SHP; only HP has a boss bar. He uses a Hihiirokane Sword, mastered Martial Master, Mathematician and Seer, Aura Slash, Wind Domination and learned wind magic. Infinite Regeneration restores HP/SHP with magicules. Native skill costs, cooldowns and seals apply.",
+            "Natural spawning uses weight 1 and a 2.5% acceptance roll, with a 20-minute realm-wide cooldown, no other wild Kael within 512 blocks, and no spawning within 192 blocks of the return sanctum. The cooldown permits future rolls, not a guaranteed spawn. Loot includes Hihiirokane Ingots, Magic Ore, Echo Shards and Netherite Scrap."
           ]
         }
       ]

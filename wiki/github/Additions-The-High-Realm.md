@@ -97,7 +97,7 @@ Player or subordinate kills retain normal loot and EP and add **1–3 Amethyst S
 
 ## Rare otherworlder boss
 
-**[Kael Veyr, the Starless Wayfarer](https://github.com/Bithio999/MC/wiki/Additions-Kael-Veyr)** is a **15 million EP** Human Saint / True Hero who can rarely appear in any of the realm’s three biomes. He uses a Hihiirokane Sword, native wind magic and warned celestial attacks.
+**[Kael Veyr, the Starless Wayfarer](https://github.com/Bithio999/MC/wiki/Additions-Kael-Veyr)** is a **15 million EP** Human Saint / True Hero who can rarely appear in any of the realm’s three biomes. He uses a Hihiirokane Sword, native sword arts, Wind Domination and learned wind magic.
 
 He has a separate spawn rule from ordinary elites: **weight 1**, an additional **2.5% acceptance roll**, a **20-minute realm-wide spawn cooldown**, no other wild Kael within **512 blocks**, and no spawning within **192 blocks** of the return sanctum. An elapsed cooldown allows another roll; it does not guarantee a spawn.
 

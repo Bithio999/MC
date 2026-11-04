@@ -13,7 +13,7 @@ An otherworlder who survived the loss of his own world. His silver hair, dark em
 | HP / SHP | **9,900 / 34,100** with native race and support bonuses |
 | Location | All three High Realm biomes |
 | Weapon | Hihiirokane Sword |
-| Health display | Separate HP and spiritual-body boss bars |
+| Health display | HP boss bar |
 
 ## Finding Kael
 
@@ -23,22 +23,26 @@ The cooldown allows future attempts; it is **not a guaranteed respawn timer**. H
 
 ## Combat
 
-His native Uniques are **Martial Master**, **Mathematician** and **Seer**, all mastered and equipped in his active preset. Support includes **Steel Strength**, **Strengthen Body**, **Ultraspeed Regeneration**, **Universal Perception**, **Thought Acceleration**, **Chant Annulment**, **Mana Manipulation**, **Wind Manipulation** and battlewills.
+Kael fights with his **owned Tensura abilities**. Damage, costs, cooldowns, casting time and effects follow the native skills and server configuration.
 
-He has native physical, magical and spiritual resistance, several elemental resistances, and spatial, wind, poison, paralysis and pain nullifications. His regeneration uses native resources. Skill seals interrupt his signature moves. The spiritual-body bar and red hit flash make SHP damage visible.
+His mastered Uniques are **Martial Master**, **Mathematician** and **Seer**, equipped in his native preset. Support includes **Steel Strength**, **Strengthen Body**, **Infinite Regeneration**, **Universal Perception**, **Thought Acceleration**, **Chant Annulment**, **Mana Manipulation**, **Wind Domination** and battlewills.
 
-| Technique | What happens | Damage type |
+Infinite Regeneration restores HP and SHP using magicules. Wind Domination boosts wind damage and degrades wind resistance. His native physical, magical, spiritual and elemental defenses remain active. Red hit feedback also indicates SHP damage.
+
+| Native ability | Use | Damage type |
 | --- | --- | --- |
-| **Rift Draw** | A short warning, a blink to safe ground beside the target, then a sweeping sword strike. | Physical · aura slash |
-| **Fallen Constellation** | Six sigils warn the targeted area before descending light lances strike each location. Move out of the marked circles. | Light |
-| **Tempest Verse** | A wind-magic cast using native Tornado Blade or a close-range Aerial Blade. Native spell costs, cooldowns and defenses apply. | Wind + native magic |
-| **Starless Waltz** | Three warned, traveling sword fronts sweep different angles. Added to his rotation below half HP. Move behind him or outside the fan edges. | Physical · aura slash |
+| **Sword attacks** | Hihiirokane Sword melee. | Physical |
+| **Aura Slash** | Native weapon-based ranged slash. | Physical · aura slash |
+| **Martial Master** | Native dash when grounded with a safe destination near the target. | Physical |
+| **Wind Domination** | Wind spheres at range and a held wind breath nearby. | Wind |
+| **Wind Cutter** | Native wind-blade projectiles. | Wind + magic |
+| **Tornado Blade** | Native wind tornado. | Wind + magic |
+| **Aerial Blade** | Close-range wind magic with its native pull. | Wind |
+| **Seer** | Future Vision when wounded; native cooldowns apply. | — |
 
-![Fallen Constellation’s warnings and descending lances](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/kael-constellation-charge.png)
+![Kael using Wind Domination’s native breath](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/kael-native-wind-breath.png)
 
-![Starless Waltz’s traveling crescent](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/kael-waltz-wave.png)
-
-![Tempest Verse casting native wind magic](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/kael-tempest-release.png)
+![Kael casting native Tornado Blade](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/kael-native-tornado.png)
 
 ## Rewards
 

@@ -74,15 +74,17 @@ public final class WayfarerReview {
         (net.minecraft.server.level.ServerLevel) boss.level(), from.x, from.y, from.z, yaw, pitch);
   }
 
-  private static void cast(int mode) {
+  private static void cast(WayfarerCombat.Action action, int distance) {
     server(
         p -> {
-          boss.cancelPattern();
+          boss.combat().cancel();
           boss.teleportTo(root.x, root.y, root.z);
+          dummy.setPos(root.add(0, 0, distance));
           boss.setTarget(dummy);
           dummy.setTarget(boss);
           boss.setNoAi(false);
-          check(boss.beginPattern(mode), "Could not start pattern " + mode);
+          check(boss.combat().begin(action), "Could not activate native ability " + action);
+          boss.combat().delay(200);
         });
   }
 
@@ -212,7 +214,7 @@ public final class WayfarerReview {
       mc.options.fov().set(58);
       server(
           p -> {
-            camera(p, root.add(22, 14, 25), root.add(0, 4, 7));
+            camera(p, root.add(16, 9, 20), root.add(0, 3, 7));
             dummy = new Husk(EntityType.HUSK, boss.level());
             dummy.setNoAi(true);
             dummy.setNoGravity(false);
@@ -228,90 +230,75 @@ public final class WayfarerReview {
             EnergyHelper.setBaseMaxEP(dummy, 20_000_000);
             dummy.setTarget(boss);
             boss.setTarget(dummy);
-            boss.cancelPattern();
+            boss.combat().cancel();
             boss.setNoAi(true);
           });
       return;
     }
     if (phase == 2 && wait > 25) {
-      cast(KaelVeyrEntity.CONSTELLATION);
+      cast(WayfarerCombat.Action.WIND_SPHERE, 12);
       phase = 3;
       wait = 0;
       return;
     }
-    if (phase == 3 && wait > 22) {
-      shot("kael-constellation-charge");
+    if (phase == 3 && wait > 3) {
+      shot("kael-native-wind-sphere");
       phase = 4;
+      wait = 0;
       return;
     }
-    if (phase == 4 && wait > 37) {
-      shot("kael-constellation-impact");
+    if (phase == 4 && wait > 35) {
+      cast(WayfarerCombat.Action.WIND_BREATH, 8);
       phase = 5;
       wait = 0;
       return;
     }
-    if (phase == 5 && wait > 45) {
-      cast(KaelVeyrEntity.WALTZ);
+    if (phase == 5 && wait > 12) {
+      shot("kael-native-wind-breath");
       phase = 6;
       wait = 0;
       return;
     }
-    if (phase == 6 && wait > 20) {
-      shot("kael-waltz-warning");
+    if (phase == 6 && wait > 45) {
+      cast(WayfarerCombat.Action.AURA_SLASH, 12);
       phase = 7;
+      wait = 0;
       return;
     }
-    if (phase == 7 && wait > 41) {
-      shot("kael-waltz-wave");
+    if (phase == 7 && wait > 3) {
+      shot("kael-native-aura-slash");
       phase = 8;
       wait = 0;
       return;
     }
-    if (phase == 8 && wait > 55) {
-      cast(KaelVeyrEntity.TEMPEST);
+    if (phase == 8 && wait > 45) {
+      cast(WayfarerCombat.Action.TORNADO_BLADE, 14);
       phase = 9;
       wait = 0;
       return;
     }
-    if (phase == 9 && wait > 18) {
-      shot("kael-tempest-charge");
+    if (phase == 9 && wait > 15) {
+      shot("kael-native-tornado");
       phase = 10;
-      return;
-    }
-    if (phase == 10 && wait > 39) {
-      shot("kael-tempest-release");
-      phase = 11;
       wait = 0;
       return;
     }
-    if (phase == 11 && wait > 50) {
-      cast(KaelVeyrEntity.RIFT_DRAW);
-      phase = 12;
-      wait = 0;
-      return;
-    }
-    if (phase == 12 && wait > 24) {
-      shot("kael-rift-draw");
-      phase = 13;
-      wait = 0;
-      return;
-    }
-    if (phase == 13 && wait > 25) {
+    if (phase == 10 && wait > 45) {
       server(
           p -> {
             check(
                 dummy.getHealth() < dummy.getMaxHealth()
                     || TensuraStorages.getExistenceFrom(dummy).getSpiritualHealth() < 200000,
-                "Encounter did not deal real HP/SHP damage");
-            boss.cancelPattern();
+                "Native abilities did not damage the combat target");
+            boss.combat().cancel();
             boss.setNoAi(true);
           });
       Files.createDirectories(OUT);
       Files.writeString(
           OUT.resolve("passed.txt"),
-          "PASS: existing-world High Realm spawn; native otherworlder renderer and original skin;"
-              + " 15M actual EP; separate HP/SHP bars; forced constellation, Waltz, Tempest and"
-              + " safe blink patterns; real HP/SHP damage to native-race combat target.\n");
+          "PASS: existing-world High Realm boss, native renderer, 15M actual EP, one HP boss bar,"
+              + " native Wind Domination sphere/breath, Aura Slash and Tornado Blade; real HP/SHP"
+              + " damage.\n");
       phase = 999;
       mc.stop();
     }

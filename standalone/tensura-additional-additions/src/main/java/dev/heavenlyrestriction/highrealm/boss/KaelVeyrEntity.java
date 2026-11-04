@@ -48,39 +48,21 @@ import net.tslat.smartbrainlib.util.BrainUtils;
 public final class KaelVeyrEntity extends OtherworlderEntity
     implements SmartBrainOwner<KaelVeyrEntity> {
   public static final double EP = 15_000_000, HP = 8_000, SHP = 24_000;
-  public static final int RIFT_DRAW = 1, CONSTELLATION = 2, TEMPEST = 3, WALTZ = 4;
-  private static final EntityDataAccessor<Integer> PATTERN =
-      SynchedEntityData.defineId(KaelVeyrEntity.class, EntityDataSerializers.INT);
-  private static final EntityDataAccessor<Integer> DURATION =
-      SynchedEntityData.defineId(KaelVeyrEntity.class, EntityDataSerializers.INT);
-  private static final EntityDataAccessor<Long> START =
-      SynchedEntityData.defineId(KaelVeyrEntity.class, EntityDataSerializers.LONG);
+  private static final EntityDataAccessor<Boolean> CASTING =
+      SynchedEntityData.defineId(KaelVeyrEntity.class, EntityDataSerializers.BOOLEAN);
   private static final EntityDataAccessor<Long> HIT_UNTIL =
       SynchedEntityData.defineId(KaelVeyrEntity.class, EntityDataSerializers.LONG);
-  private static final EntityDataAccessor<org.joml.Vector3f> ORIGIN =
-      SynchedEntityData.defineId(KaelVeyrEntity.class, EntityDataSerializers.VECTOR3);
-  private static final EntityDataAccessor<org.joml.Vector3f> AIM =
-      SynchedEntityData.defineId(KaelVeyrEntity.class, EntityDataSerializers.VECTOR3);
   private final ServerBossEvent healthBar =
       new ServerBossEvent(
           Component.translatable("boss.heavenlyrestriction.kael_veyr"),
           BossEvent.BossBarColor.BLUE,
           BossEvent.BossBarOverlay.NOTCHED_20);
-  private final ServerBossEvent soulBar =
-      new ServerBossEvent(
-          Component.translatable("boss.heavenlyrestriction.kael_veyr_soul"),
-          BossEvent.BossBarColor.PURPLE,
-          BossEvent.BossBarOverlay.PROGRESS);
   private final Set<ServerPlayer> watchers = new HashSet<>();
-  private final Set<UUID> waveHits = new HashSet<>();
+  private final WayfarerCombat combat = new WayfarerCombat(this);
   private boolean initialized, observed;
   private float oldHP;
   private double oldSHP;
   private BlockPos anchor;
-  private long nextSpecial;
-  private int sequence, tempestCasts;
-  private ManasSkill activeMagic;
-  private UUID castTarget;
 
   public KaelVeyrEntity(EntityType<? extends KaelVeyrEntity> type, Level level) {
     super(type, level);
@@ -152,16 +134,16 @@ public final class KaelVeyrEntity extends OtherworlderEntity
   @Override
   protected void defineSynchedData(SynchedEntityData.Builder b) {
     super.defineSynchedData(b);
-    b.define(PATTERN, 0);
-    b.define(DURATION, 0);
-    b.define(START, 0L);
+    b.define(CASTING, false);
     b.define(HIT_UNTIL, 0L);
-    b.define(ORIGIN, new org.joml.Vector3f());
-    b.define(AIM, new org.joml.Vector3f());
   }
 
   public void initialize() {
-    if (initialized || level().isClientSide()) return;
+    if (level().isClientSide()) return;
+    if (initialized) {
+      WayfarerLoadout.upgrade(this);
+      return;
+    }
     setAge(0);
     anchor = blockPosition();
     RaceAPI.getRaceFrom(this).setRace(TensuraRaces.HUMAN_SAINT.get(), false);
@@ -181,7 +163,7 @@ public final class KaelVeyrEntity extends OtherworlderEntity
     setHealth(getMaxHealth());
     setDropChance(EquipmentSlot.MAINHAND, 0);
     TensuraBehaviourHelper.setHome(this, (ServerLevel) level(), anchor);
-    nextSpecial = level().getGameTime() + 80;
+    combat.delay(80);
     initialized = true;
     observe();
   }
@@ -195,39 +177,20 @@ public final class KaelVeyrEntity extends OtherworlderEntity
     return initialized;
   }
 
-  public int pattern() {
-    return entityData.get(PATTERN);
+  public WayfarerCombat combat() {
+    return combat;
   }
 
-  public int duration() {
-    return entityData.get(DURATION);
+  public boolean casting() {
+    return entityData.get(CASTING);
   }
 
-  public float patternAge(float partial) {
-    return (float) Math.max(0, level().getGameTime() - entityData.get(START)) + partial;
-  }
-
-  public Vec3 patternOrigin() {
-    var p = entityData.get(ORIGIN);
-    return position().add(p.x, p.y, p.z);
-  }
-
-  public Vec3 patternAim() {
-    var p = entityData.get(AIM);
-    return position().add(p.x, p.y, p.z);
-  }
-
-  public void preservePatternOrigin(Vec3 origin, Vec3 aim) {
-    entityData.set(ORIGIN, origin.subtract(position()).toVector3f());
-    entityData.set(AIM, aim.subtract(position()).toVector3f());
+  void setCasting(boolean casting) {
+    entityData.set(CASTING, casting);
   }
 
   public boolean hitFlash() {
     return entityData.get(HIT_UNTIL) > level().getGameTime();
-  }
-
-  public Set<UUID> waveHits() {
-    return waveHits;
   }
 
   public boolean eligible(LivingEntity target) {
@@ -248,58 +211,6 @@ public final class KaelVeyrEntity extends OtherworlderEntity
     return eligible(target);
   }
 
-  public boolean beginPattern(int mode) {
-    var target = getTarget();
-    if (!initialized
-        || isTame()
-        || isNoAi()
-        || pattern() != 0
-        || !eligible(target)
-        || distanceToSqr(target) > 48 * 48) return false;
-    if (!WayfarerCombat.ready(this, mode)) return false;
-    if (mode == TEMPEST) activeMagic = WayfarerCombat.spell(this).getSkill();
-    int time = WayfarerCombat.duration(this, mode);
-    entityData.set(PATTERN, mode);
-    entityData.set(DURATION, time);
-    entityData.set(START, level().getGameTime());
-    entityData.set(ORIGIN, new org.joml.Vector3f());
-    entityData.set(AIM, target.getBoundingBox().getCenter().subtract(position()).toVector3f());
-    castTarget = target.getUUID();
-    waveHits.clear();
-    getNavigation().stop();
-    setDeltaMovement(getDeltaMovement().multiply(0, 1, 0));
-    nextSpecial = level().getGameTime() + time + (getHealth() < getMaxHealth() * .5 ? 40 : 65);
-    WayfarerCombat.start(this, mode);
-    return true;
-  }
-
-  public LivingEntity castTarget() {
-    return level() instanceof ServerLevel level
-            && castTarget != null
-            && level.getEntity(castTarget) instanceof LivingEntity e
-        ? e
-        : null;
-  }
-
-  public ManasSkill activeMagic() {
-    return activeMagic;
-  }
-
-  public int spellPreference() {
-    return tempestCasts;
-  }
-
-  public void magicReleased() {
-    tempestCasts++;
-  }
-
-  public void cancelPattern() {
-    activeMagic = null;
-    entityData.set(PATTERN, 0);
-    castTarget = null;
-    waveHits.clear();
-  }
-
   private void observe() {
     var shp = TensuraStorages.getExistenceFrom(this).getSpiritualHealth();
     if (observed && (getHealth() < oldHP - .01 || shp < oldSHP - .01))
@@ -312,13 +223,6 @@ public final class KaelVeyrEntity extends OtherworlderEntity
   private void updateBars() {
     if (!(level() instanceof ServerLevel level)) return;
     healthBar.setProgress(Math.clamp(getHealth() / Math.max(1, getMaxHealth()), 0, 1));
-    soulBar.setProgress(
-        (float)
-            Math.clamp(
-                TensuraStorages.getExistenceFrom(this).getSpiritualHealth()
-                    / Math.max(1, getAttributeValue(TensuraAttributes.MAX_SPIRITUAL_HEALTH)),
-                0,
-                1));
     healthBar.setColor(
         getHealth() < getMaxHealth() * .5
             ? BossEvent.BossBarColor.YELLOW
@@ -330,13 +234,11 @@ public final class KaelVeyrEntity extends OtherworlderEntity
     for (var p : List.copyOf(watchers))
       if (!near.contains(p)) {
         healthBar.removePlayer(p);
-        soulBar.removePlayer(p);
         watchers.remove(p);
       }
     for (var p : near)
       if (watchers.add(p)) {
         healthBar.addPlayer(p);
-        soulBar.addPlayer(p);
       }
   }
 
@@ -345,13 +247,12 @@ public final class KaelVeyrEntity extends OtherworlderEntity
     super.stopSeenByPlayer(p);
     watchers.remove(p);
     healthBar.removePlayer(p);
-    soulBar.removePlayer(p);
   }
 
   @Override
   public void remove(Entity.RemovalReason reason) {
+    combat.cancel();
     healthBar.removeAllPlayers();
-    soulBar.removeAllPlayers();
     watchers.clear();
     super.remove(reason);
   }
@@ -359,9 +260,8 @@ public final class KaelVeyrEntity extends OtherworlderEntity
   @Override
   protected void applyTamingSideEffects() {
     super.applyTamingSideEffects();
-    cancelPattern();
+    combat.cancel();
     healthBar.removeAllPlayers();
-    soulBar.removeAllPlayers();
     watchers.clear();
   }
 
@@ -376,7 +276,7 @@ public final class KaelVeyrEntity extends OtherworlderEntity
     initialize();
     tickBrain(this);
     if (isTame()) {
-      if (pattern() != 0) cancelPattern();
+      combat.cancel();
       return;
     }
     if (tickCount % 10 == 0) {
@@ -396,26 +296,7 @@ public final class KaelVeyrEntity extends OtherworlderEntity
       }
       if (target != null) BrainUtils.setTargetOfEntity(this, target);
     }
-    if (pattern() != 0) {
-      if (!eligible(castTarget())
-          || io.github.manasmods.tensura.ability.SkillUtils.shouldCancelInteraction(this))
-        cancelPattern();
-      else {
-        getNavigation().stop();
-        setDeltaMovement(getDeltaMovement().multiply(0, 1, 0));
-        WayfarerCombat.tick(this, (int) patternAge(0));
-        if (patternAge(0) > duration()) cancelPattern();
-      }
-    } else if (level().getGameTime() >= nextSpecial
-        && eligible(getTarget())
-        && hasLineOfSight(getTarget())) {
-      int[] order =
-          getHealth() < getMaxHealth() * .5
-              ? new int[] {WALTZ, TEMPEST, CONSTELLATION, RIFT_DRAW}
-              : new int[] {RIFT_DRAW, TEMPEST, CONSTELLATION, TEMPEST};
-      if (!beginPattern(order[Math.floorMod(sequence++, order.length)]))
-        nextSpecial = level().getGameTime() + 20;
-    }
+    combat.tick();
   }
 
   @Override
@@ -463,10 +344,10 @@ public final class KaelVeyrEntity extends OtherworlderEntity
                 (boss, target) -> !boss.eligible(target) || boss.distanceToSqr(target) > 80 * 80),
         new SetWalkTargetToAttackTarget<KaelVeyrEntity>()
             .speedMod((e, t) -> 1.15f)
-            .startCondition(e -> e.pattern() == 0),
+            .startCondition(e -> !e.casting()),
         new AnimatableMeleeAttack<KaelVeyrEntity>(0)
             .attackInterval(e -> 24)
-            .startCondition(e -> e.pattern() == 0)
+            .startCondition(e -> !e.casting())
             .whenStarting(e -> e.swing(InteractionHand.MAIN_HAND, true)));
   }
 
@@ -474,9 +355,6 @@ public final class KaelVeyrEntity extends OtherworlderEntity
   public void addAdditionalSaveData(CompoundTag tag) {
     super.addAdditionalSaveData(tag);
     tag.putBoolean("WayfarerInitialized", initialized);
-    tag.putLong("WayfarerNextCast", nextSpecial);
-    tag.putInt("WayfarerSequence", sequence);
-    tag.putInt("WayfarerTempestCasts", tempestCasts);
     if (anchor != null) tag.putLong("WayfarerAnchor", anchor.asLong());
   }
 
@@ -488,10 +366,8 @@ public final class KaelVeyrEntity extends OtherworlderEntity
         tag.contains("WayfarerAnchor")
             ? BlockPos.of(tag.getLong("WayfarerAnchor"))
             : blockPosition();
-    nextSpecial = Math.max(level().getGameTime() + 60, tag.getLong("WayfarerNextCast"));
-    sequence = tag.getInt("WayfarerSequence");
-    tempestCasts = tag.getInt("WayfarerTempestCasts");
     observed = false;
-    cancelPattern();
+    combat.cancel();
+    combat.delay(60);
   }
 }

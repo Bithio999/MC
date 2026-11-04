@@ -110,7 +110,8 @@ public final class KaelVeyrGameTests {
     near(h, TensuraStorages.getExistenceFrom(copy).getMagicule(), 789, "Reload refilled MP");
     near(
         h, TensuraStorages.getExistenceFrom(copy).getSpiritualHealth(), 123, "Reload refilled SHP");
-    h.assertTrue(copy.pattern() == 0, "Reload resumed an unsafe cast");
+    h.assertTrue(
+        !copy.casting() && copy.combat().active() == null, "Reload resumed an unsafe cast");
     e.discard();
     copy.discard();
     h.succeed();
@@ -199,30 +200,62 @@ public final class KaelVeyrGameTests {
     h.succeed();
   }
 
-  @GameTest(template = "empty", timeoutTicks = 150)
-  public static void kaelWarnedConstellationHitsAndResourceSealCancelsIt(GameTestHelper h) {
-    var e = boss(h);
-    var target = target(h, e.position().add(0, 0, 7));
+  private static net.minecraft.world.entity.monster.Husk enemy(
+      GameTestHelper h, KaelVeyrEntity e, double distance) {
+    var target = target(h, e.position().add(0, 0, distance));
     target.setTarget(e);
     e.setTarget(target);
-    e.setNoAi(false);
-    double before = TensuraStorages.getExistenceFrom(e).getMagicule();
-    h.assertTrue(e.beginPattern(KaelVeyrEntity.CONSTELLATION), "Cast failed");
-    near(
+    return target;
+  }
+
+  private static void release(KaelVeyrEntity e) {
+    int limit = 0;
+    while (e.combat().active() != null && limit++ < 400) e.combat().tick();
+    if (e.combat().active() != null) throw new IllegalStateException("Native cast never completed");
+  }
+
+  private static boolean ownsProjectile(GameTestHelper h, KaelVeyrEntity e, String path) {
+    for (var entity : h.getLevel().getAllEntities())
+      if (entity instanceof net.minecraft.world.entity.projectile.Projectile p
+          && !p.isRemoved()
+          && p.getOwner() == e
+          && net.minecraft.core.registries.BuiltInRegistries.ENTITY_TYPE
+              .getKey(p.getType())
+              .getPath()
+              .equals(path)) return true;
+    return false;
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 120)
+  public static void kaelUsesNativeAuraSlashAndWindDominationSphereWithNativeCosts(
+      GameTestHelper h) {
+    var e = boss(h);
+    var target = enemy(h, e, 12);
+    afterTracking(
         h,
-        TensuraStorages.getExistenceFrom(e).getMagicule(),
-        before - 18000,
-        "Custom mana cost incorrect");
-    h.runAfterDelay(
-        40,
+        java.util.List.of(target),
         () -> {
+          e.setNoAi(false);
+          var pool = TensuraStorages.getExistenceFrom(e);
+          double aura = pool.getAura(), mana = pool.getMagicule();
           h.assertTrue(
-              target.getHealth() < target.getMaxHealth(),
-              "Warning never became damaging native light hit");
-          e.cancelPattern();
+              e.combat().begin(WayfarerCombat.Action.AURA_SLASH),
+              "Native Aura Slash did not begin");
+          h.assertTrue(
+              pool.getAura() < aura && ownsProjectile(h, e, "aura_slash"),
+              "Native slash projectile/cost missing");
+          h.assertTrue(
+              !e.combat().begin(WayfarerCombat.Action.AURA_SLASH), "Aura Slash cooldown ignored");
+          h.assertTrue(
+              e.combat().begin(WayfarerCombat.Action.WIND_SPHERE),
+              "Native wind sphere did not begin");
+          h.assertTrue(
+              pool.getMagicule() < mana && ownsProjectile(h, e, "wind_sphere"),
+              "Native wind sphere/cost missing");
+          h.assertTrue(!e.isShiftKeyDown(), "AI left the alternate-mode stance enabled");
           e.addEffect(
               new net.minecraft.world.effect.MobEffectInstance(HeavenlyArsenal.SKILL_SEAL, 60));
-          h.assertTrue(!e.beginPattern(KaelVeyrEntity.CONSTELLATION), "Skill seal ignored");
+          h.assertTrue(!e.combat().begin(WayfarerCombat.Action.WIND_CUTTER), "Skill seal ignored");
           e.discard();
           target.discard();
           h.succeed();
@@ -230,42 +263,111 @@ public final class KaelVeyrGameTests {
   }
 
   @GameTest(template = "empty", timeoutTicks = 120)
-  public static void kaelNativeTempestCreatesActualMagicAndSpendsMagicules(GameTestHelper h) {
+  public static void kaelReleasesOwnedNativeWindCutterTornadoAndCloseRangeAerialBlade(
+      GameTestHelper h) {
     var e = boss(h);
-    var target = target(h, e.position().add(0, 0, 14));
-    target.setTarget(e);
-    e.setTarget(target);
-    e.setNoAi(false);
-    double before = TensuraStorages.getExistenceFrom(e).getMagicule();
-    h.assertTrue(e.beginPattern(KaelVeyrEntity.TEMPEST), "Native spell could not begin");
-    h.runAfterDelay(
-        40,
+    var target = enemy(h, e, 14);
+    afterTracking(
+        h,
+        java.util.List.of(target),
         () -> {
+          e.setNoAi(false);
+          var pool = TensuraStorages.getExistenceFrom(e);
+          double before = pool.getMagicule();
           h.assertTrue(
-              TensuraStorages.getExistenceFrom(e).getMagicule() < before,
-              "Native magic did not spend resources");
-          boolean projectile = false;
-          for (var entity : h.getLevel().getAllEntities())
-            if (entity
-                    instanceof
-                    io.github.manasmods.tensura.entity.projectile.magic.WindTornadoProjectile wind
-                && wind.getOwner() == e) projectile = true;
+              e.combat().begin(WayfarerCombat.Action.WIND_CUTTER), "Wind Cutter did not begin");
+          release(e);
           h.assertTrue(
-              projectile, "Native Tempest did not create its owned Wind Tornado projectile");
-          e.cancelPattern();
+              pool.getMagicule() < before && ownsProjectile(h, e, "wind_blade"),
+              "Native Wind Cutter release missing");
+          before = pool.getMagicule();
+          h.assertTrue(
+              e.combat().begin(WayfarerCombat.Action.TORNADO_BLADE), "Tornado Blade did not begin");
+          release(e);
+          h.assertTrue(
+              pool.getMagicule() < before && ownsProjectile(h, e, "wind_tornado"),
+              "Native Tornado Blade release missing");
+          h.assertTrue(
+              !e.combat().ready(WayfarerCombat.Action.AERIAL_BLADE),
+              "Aerial Blade ignored native range");
           target.setPos(e.position().add(2, 0, 0));
-          e.setTarget(target);
-          h.assertTrue(
-              e.beginPattern(KaelVeyrEntity.TEMPEST), "Close-range wind follow-up did not begin");
-          h.assertTrue(
-              e.activeMagic()
-                  == io.github.manasmods.tensura.registry.magic.SpiritualMagics.AERIAL_BLADE.get(),
-              "Native wind spell preference did not alternate in range");
+          h.runAfterDelay(
+              2,
+              () -> {
+                double mana = pool.getMagicule();
+                h.assertTrue(
+                    e.combat().begin(WayfarerCombat.Action.AERIAL_BLADE),
+                    "Aerial Blade did not begin in range");
+                release(e);
+                h.assertTrue(
+                    pool.getMagicule() < mana && target.getHealth() < target.getMaxHealth(),
+                    "Native Aerial Blade did not spend mana/deal damage");
+                e.discard();
+                target.discard();
+                h.succeed();
+              });
+        });
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 120)
+  public static void kaelChannelsNativeWindBreathAndSealsCancelIt(GameTestHelper h) {
+    var e = boss(h);
+    var target = enemy(h, e, 8);
+    afterTracking(
+        h,
+        java.util.List.of(target),
+        () -> {
+          e.setNoAi(false);
           double mana = TensuraStorages.getExistenceFrom(e).getMagicule();
-          WayfarerCombat.tick(e, e.duration() - 12);
+          h.assertTrue(
+              e.combat().begin(WayfarerCombat.Action.WIND_BREATH), "Native breath did not begin");
+          h.assertTrue(
+              e.casting() && ownsProjectile(h, e, "wind_breath"),
+              "Native held wind breath missing");
           h.assertTrue(
               TensuraStorages.getExistenceFrom(e).getMagicule() < mana,
-              "Close-range native Aerial Blade did not spend mana");
+              "Breath did not use native resource cost");
+          e.addEffect(
+              new net.minecraft.world.effect.MobEffectInstance(HeavenlyArsenal.SKILL_SEAL, 60));
+          e.combat().tick();
+          h.assertTrue(
+              !e.casting() && e.combat().active() == null, "Sealed breath kept channeling");
+          h.assertTrue(
+              !ownsProjectile(h, e, "wind_breath"),
+              "Sealed breath left an owned projectile behind");
+          e.discard();
+          target.discard();
+          h.succeed();
+        });
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 120)
+  public static void kaelUsesActualMartialMasterDashAndAvoidsUnsafeLandings(GameTestHelper h) {
+    var e = boss(h);
+    var root = e.blockPosition();
+    for (int x = -6; x <= 6; x++)
+      for (int z = -2; z <= 35; z++)
+        h.getLevel().setBlock(root.offset(x, -1, z), Blocks.STONE.defaultBlockState(), 2);
+    var target = enemy(h, e, 9);
+    afterTracking(
+        h,
+        java.util.List.of(target),
+        () -> {
+          e.setNoAi(false);
+          e.setOnGround(true);
+          var before = e.position();
+          double aura = TensuraStorages.getExistenceFrom(e).getAura();
+          h.assertTrue(
+              e.combat().begin(WayfarerCombat.Action.MARTIAL_DASH),
+              "Native Martial Master dash did not begin");
+          h.assertTrue(
+              e.position().distanceToSqr(before) > 4
+                  && TensuraStorages.getExistenceFrom(e).getAura() < aura,
+              "Native dash did not teleport/spend aura");
+          h.assertTrue(
+              h.getLevel().noCollision(e, e.getBoundingBox())
+                  && h.getLevel().getBlockState(e.blockPosition().below()).isSolid(),
+              "Native dash landed unsafely");
           e.discard();
           target.discard();
           h.succeed();
@@ -273,59 +375,137 @@ public final class KaelVeyrGameTests {
   }
 
   @GameTest(template = "empty", timeoutTicks = 100)
-  public static void kaelBlinkFindsSolidSafeLandingAndDealsNativeAuraSlash(GameTestHelper h) {
+  public static void kaelUpgradeReplacesOldSkillsWithoutRefillingOrStackingModifiers(
+      GameTestHelper h) {
     var e = boss(h);
-    var root = e.blockPosition();
-    for (int x = -10; x <= 10; x++)
-      for (int z = -10; z <= 14; z++)
-        h.getLevel().setBlock(root.offset(x, -1, z), Blocks.STONE.defaultBlockState(), 2);
-    var dummy = target(h, e.position().add(0, 0, 7));
-    afterTracking(
+    var skills = SkillAPI.getSkillsFrom(e);
+    double wind = e.getAttributeValue(TensuraAttributes.WIND_BOOST);
+    var extras =
+        java.util.List.of(
+            io.github.manasmods.tensura.registry.skill.ExtraSkills.INFINITE_REGENERATION.get(),
+            io.github.manasmods.tensura.registry.skill.ExtraSkills.WIND_DOMINATION.get());
+    for (var skill : extras)
+      skills
+          .getSkill(skill)
+          .ifPresent(
+              i -> {
+                i.setToggled(false);
+                i.onToggleOff(e);
+                skills.forgetSkill(i);
+              });
+    for (var skill :
+        java.util.List.of(
+            io.github.manasmods.tensura.registry.skill.ExtraSkills.ULTRASPEED_REGENERATION.get(),
+            io.github.manasmods.tensura.registry.skill.ExtraSkills.WIND_MANIPULATION.get())) {
+      RestrictionData.learnReward(e, skill);
+      var i = skills.getSkill(skill).orElseThrow();
+      i.setMastery(i.getMaxMastery());
+      i.setToggled(true);
+      i.onToggleOn(e);
+    }
+    e.getPersistentData().putInt("heavenlyrestriction:wayfarer_loadout", 1);
+    TensuraStorages.getAbilityFrom(e)
+        .setAbilitySlot(
+            8,
+            2,
+            io.github.manasmods.tensura.registry.skill.ExtraSkills.WIND_MANIPULATION.get(),
+            0);
+    e.setHealth(1234);
+    var pool = TensuraStorages.getExistenceFrom(e);
+    pool.setAura(456);
+    pool.setMagicule(789);
+    pool.setSpiritualHealth(123);
+    e.initialize();
+    h.assertTrue(
+        TensuraStorages.getAbilityFrom(e).getAbilitySlot(8, 2).getSkill() == null,
+        "Upgrade left a superseded skill in a saved preset");
+    for (var skill : extras)
+      h.assertTrue(
+          skills.getSkill(skill).map(i -> i.isToggled() && i.isMastered(e)).orElse(false),
+          "Upgraded passive missing");
+    h.assertTrue(
+        skills
+                .getSkill(
+                    io.github.manasmods.tensura.registry.skill.ExtraSkills.ULTRASPEED_REGENERATION
+                        .get())
+                .isEmpty()
+            && skills
+                .getSkill(
+                    io.github.manasmods.tensura.registry.skill.ExtraSkills.WIND_MANIPULATION.get())
+                .isEmpty(),
+        "Old passives retained");
+    near(h, e.getHealth(), 1234, "Upgrade refilled HP");
+    near(h, pool.getAura(), 456, "Upgrade refilled aura");
+    near(h, pool.getMagicule(), 789, "Upgrade refilled mana");
+    near(h, pool.getSpiritualHealth(), 123, "Upgrade refilled SHP");
+    near(h, EnergyHelper.getMaxEP(e), 15_000_000, "Upgrade changed EP");
+    near(h, e.getAttributeValue(TensuraAttributes.WIND_BOOST), wind, "Wind bonus stacked");
+    e.initialize();
+    near(
         h,
-        java.util.List.of(dummy),
-        () -> {
-          dummy.setTarget(e);
-          e.setTarget(dummy);
-          e.setNoAi(false);
-          Vec3 before = e.position();
-          h.assertTrue(e.beginPattern(KaelVeyrEntity.RIFT_DRAW), "Rift Draw did not begin");
-          WayfarerCombat.tick(e, WayfarerCombat.DRAW_WINDUP);
-          h.assertTrue(e.position().distanceToSqr(before) > 4, "Rift Draw did not teleport");
-          h.assertTrue(
-              h.getLevel().noCollision(e, e.getBoundingBox())
-                  && h.getLevel().getBlockState(e.blockPosition().below()).isSolid(),
-              "Blink landed in collision or above unsafe air");
-          h.assertTrue(
-              dummy.getHealth() < dummy.getMaxHealth(), "Blink slash did not deal actual damage");
-          e.discard();
-          dummy.discard();
-          h.succeed();
-        });
+        e.getAttributeValue(TensuraAttributes.WIND_BOOST),
+        wind,
+        "Repeated upgrade stacked wind bonus");
+    e.discard();
+    h.succeed();
   }
 
   @GameTest(template = "empty", timeoutTicks = 100)
-  public static void kaelWaltzMovingFrontDamagesTargetsAndDoesNotTargetCreativePlayers(
+  public static void kaelInfiniteRegenerationHealsHPAndSHPUsingNativeMagiculesAndHasOneBossBar(
       GameTestHelper h) {
     var e = boss(h);
-    var dummy = target(h, e.position().add(0, 0, 7));
+    var pool = TensuraStorages.getExistenceFrom(e);
+    e.setHealth(e.getMaxHealth() - 100);
+    double max = e.getAttributeValue(TensuraAttributes.MAX_SPIRITUAL_HEALTH);
+    pool.setSpiritualHealth(max - 100);
+    var effect =
+        io.github.manasmods.tensura.registry.effect.TensuraMobEffects.getReference(
+            io.github.manasmods.tensura.registry.effect.TensuraMobEffects.INSTANT_REGENERATION);
+    var regeneration = e.getEffect(effect);
+    h.assertTrue(
+        regeneration != null && regeneration.getAmplifier() == 1,
+        "Infinite Regeneration native effect missing");
+    double mana = pool.getMagicule();
+    effect.value().applyEffectTick(e, 1);
+    near(h, e.getHealth(), e.getMaxHealth(), "Infinite Regeneration did not restore HP");
+    near(h, pool.getSpiritualHealth(), max, "Infinite Regeneration did not restore SHP");
+    h.assertTrue(pool.getMagicule() < mana, "Native regeneration did not spend mana");
+    long bars =
+        java.util.Arrays.stream(KaelVeyrEntity.class.getDeclaredFields())
+            .filter(f -> f.getType() == net.minecraft.server.level.ServerBossEvent.class)
+            .count();
+    h.assertTrue(bars == 1, "Boss has an extra SHP bar");
+    e.discard();
+    h.succeed();
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 150)
+  public static void kaelAutonomousAIActuallyUsesOwnedNativeAbilities(GameTestHelper h) {
+    var e = boss(h);
+    var target = enemy(h, e, 14);
+    java.util.concurrent.atomic.AtomicBoolean cast =
+        new java.util.concurrent.atomic.AtomicBoolean();
+    java.util.function.Consumer<net.neoforged.neoforge.event.entity.EntityJoinLevelEvent> listener =
+        event -> {
+          if (event.getEntity() instanceof net.minecraft.world.entity.projectile.Projectile p
+              && p.getOwner() == e) cast.set(true);
+        };
+    NeoForge.EVENT_BUS.addListener(listener);
     afterTracking(
         h,
-        java.util.List.of(dummy),
+        java.util.List.of(target),
         () -> {
-          dummy.setTarget(e);
-          e.setTarget(dummy);
           e.setNoAi(false);
-          h.assertTrue(e.beginPattern(KaelVeyrEntity.WALTZ), "Waltz did not begin");
-          WayfarerCombat.tick(e, WayfarerCombat.WALTZ_WINDUP + 14 + 2);
-          h.assertTrue(
-              dummy.getHealth() < dummy.getMaxHealth(),
-              "Waltz never damaged a target in its moving front");
-          var p = player(h);
-          p.setGameMode(net.minecraft.world.level.GameType.CREATIVE);
-          h.assertTrue(!e.eligible(p), "Boss targets creative players");
-          e.discard();
-          dummy.discard();
-          h.succeed();
+          e.combat().delay(0);
+          h.runAfterDelay(
+              45,
+              () -> {
+                NeoForge.EVENT_BUS.unregister(listener);
+                h.assertTrue(cast.get(), "Autonomous AI never released a native projectile");
+                e.discard();
+                target.discard();
+                h.succeed();
+              });
         });
   }
 }

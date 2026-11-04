@@ -1,5 +1,11 @@
 # Changelog
 
+## Additions 1.17.1 — Native Wayfarer combat
+
+- Replace Kael’s signature attacks and custom combat effects with actual use of his owned native skills: sword arts, Wind Domination, learned wind spells and Seer. Respect native damage, costs, cooldowns, casting and seals.
+- Upgrade Ultraspeed Regeneration to Infinite Regeneration and Wind Manipulation to Wind Domination. Upgrade saved Kaels without refilling resources or changing EP.
+- Remove the SHP boss bar; retain the HP bar and spiritual-body hit feedback. Refresh the encounter guides and native gameplay captures.
+
 ## Additions 1.17.0 — The Starless Wayfarer
 
 - Add Kael Veyr, a native otherworlder Human Saint / True Hero boss with 15M actual EP, an original 128px skin and emissive embroidery, native Hihiirokane equipment, three mastered Uniques and a curated native support/magic package.

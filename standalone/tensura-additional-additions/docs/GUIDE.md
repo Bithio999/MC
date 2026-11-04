@@ -243,13 +243,11 @@ A reincarnation Unique with an in-slot passive. Equip the learned skill in your 
 EP awards use ^1.2 once before the ordinary race split. Separate permanent aura/magicule gains are not multiplied; regeneration remains boosted.
 
 
-### Kael Veyr · Starless Wayfarer
+### Kael Veyr · Rare otherworlder boss
 
-A rare **15M actual-EP** Human Saint / True Hero in all three High Realm biomes. Default native race/support bonuses yield **9,900 HP** and **34,100 SHP**. His original silver-haired skin, dark coat and Hihiirokane Sword distinguish him from ordinary elites.
+A rare **15M actual EP** Human Saint / True Hero in The High Realm, with **9,900 HP / 34,100 SHP** under default native bonuses and one HP boss bar. He carries a Hihiirokane Sword and uses his native mastered Martial Master, Mathematician and Seer skills, Aura Slash, Wind Domination, Wind Cutter, Tornado Blade and close-range Aerial Blade. Infinite Regeneration restores HP and SHP using magicules. Native damage, costs, cooldowns and seals apply.
 
-Three mastered Uniques—**Martial Master, Mathematician and Seer**—support his swordplay, wind magic and warned signature attacks. Rift Draw and Starless Waltz deal **physical aura-slash damage**; Fallen Constellation deals **light damage**; Tempest Verse uses **native wind/magic damage**. Native defenses, costs, regeneration and skill-sealing effects apply.
-
-Natural spawning uses weight 1, a 2.5% candidate acceptance roll, a 20-minute realm-wide cooldown, a 512-block exclusion around another wild Kael, and a 192-block return-sanctum exclusion. The cooldown is not a guaranteed respawn timer. New server options tune boss spawning, chance and cooldown. Rewards include Hihiirokane Ingots, Magic Ore, Echo Shards and Netherite Scrap, with native otherworlder Unique-drop rules. [Full encounter and pictures](../../../wiki/pages/Additions-Kael-Veyr.md).
+Natural spawning uses weight 1, a 2.5% candidate acceptance roll, a 20-minute realm-wide cooldown, a 512-block exclusion around another wild Kael, and a 192-block return-sanctum exclusion. The cooldown is not a guaranteed respawn timer. Rewards include native materials and otherworlder Unique-drop rules. [Encounter guide](../../../wiki/pages/Additions-Kael-Veyr.md).
 
 ## Unique mastery bonuses
 
