@@ -5,7 +5,7 @@ import json, re, struct, tomllib, zipfile
 
 root = Path(__file__).resolve().parents[1]
 resources = root / 'src/main/resources'
-jar = root / 'build/libs/TensuraAdditionalAdditions-1.11.3.jar'
+jar = root / 'build/libs/TensuraAdditionalAdditions-1.11.4.jar'
 assets = resources / 'assets/heavenlyrestriction'
 required_art = [*(f'textures/race/{name}.png' for name in (
     'fettered_human', 'tempered_vessel', 'unshackled', 'heavenly_restricted', 'heavenbreaker')),
@@ -37,7 +37,7 @@ for name in config['mixins'] + config.get('client', []):
 with zipfile.ZipFile(jar) as z:
     names = set(z.namelist())
     mods = tomllib.loads(z.read('META-INF/neoforge.mods.toml').decode())
-    assert [(m['modId'], m['version']) for m in mods['mods']] == [('heavenlyrestriction', '1.11.3')]
+    assert [(m['modId'], m['version']) for m in mods['mods']] == [('heavenlyrestriction', '1.11.4')]
     assert mods['mods'][0]['displayName'] == 'TensuraAdditionalAdditions'
     language=json.loads(z.read('assets/heavenlyrestriction/lang/en_us.json'))
     for key,label in [('heavenlyrestriction.skill.parallel_world_jumper','Parallel World Jumper'),('heavenlyrestriction.skill.fusion','Fusion'),('heavenlyrestriction.skill.prospector','Prospector'),('heavenlyrestriction.skill.mode.prospector.refine','Refine'),('heavenlyrestriction.skill.mode.fusion.fuse','Fuse'),('heavenlyrestriction.skill.mode.parallel_world_jumper.world_hop','World Jump'),('heavenlyrestriction.skill.mode.parallel_world_jumper.world_select','World Select')]:
@@ -82,8 +82,9 @@ with zipfile.ZipFile(jar) as z:
     assert any(e['id']=='exponentiation' for e in guide)
     assert any(e['id']=='prospector' for e in guide)
     for cls in ['client/prospector/OreSurvey','client/prospector/ProspectorClient','client/prospector/ProspectorMaterial']:assert 'dev/heavenlyrestriction/'+cls+'.class' in names
-    path='data/heavenlyrestriction/loot_table/gameplay/prospector_finds.json'
-    assert z.read(path)==(resources/path).read_bytes()
+    for table in ['prospector_finds','prospector_finds_mastered']:
+        path='data/heavenlyrestriction/loot_table/gameplay/'+table+'.json'
+        assert z.read(path)==(resources/path).read_bytes()
     for cls in ['worldhop/WorldHop','worldhop/WorldHopFiles','worldhop/WorldHopIo','worldhop/WorldHopMetadata','worldhop/WorldHopSaveCompat','worldhop/WorldHopNetwork','client/WorldHopClient','worldhop/WorldHopLibrary','worldhop/WorldHopMigration','worldhop/WorldHopJournal','worldhop/WorldSelect','client/WorldSelectScreen','fusion/Fusion','fusion/FusionNetwork','fusion/FusionReturns','client/FusionClient']:
         assert 'dev/heavenlyrestriction/'+cls+'.class' in names
     pause = 'data/heavenlyrestriction/tags/mob_effect/pauses_energy_regeneration.json'
@@ -105,4 +106,4 @@ with zipfile.ZipFile(jar) as z:
     pool=json.loads(z.read('data/heavenlyrestriction/tags/entity_type/high_realm_elites.json'))['values'];assert len(pool)==10 and all(t.startswith('tensura:') for t in pool) and 'tensura:arch_daemon' in pool and 'tensura:lesser_daemon' not in pool
     for biome in ['ivory_crags','starwood_grove','mistglass_basin']:
         spawns=json.loads(z.read('data/heavenlyrestriction/worldgen/biome/'+biome+'.json'))['spawners']['monster'];assert all(e['type'] in pool for e in spawns)
-print('Independent 1.11.3 JAR, native dependency metadata, all extracted icons/rigs/animations and mixin classes verified; no Myths classes, bundled dependencies or review fixtures.')
+print('Independent 1.11.4 JAR, native dependency metadata, all extracted icons/rigs/animations and mixin classes verified; no Myths classes, bundled dependencies or review fixtures.')

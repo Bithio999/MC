@@ -1,5 +1,12 @@
 # Changelog
 
+## Additions 1.11.4 — Unique mastery bonuses
+
+- Mastered Split Mind reduces Auto-Cast magicule bills by 25%, including held pulses; use the same discounted amount for affordability and assignment-menu costs. Manual casting and aura costs retain their normal amounts.
+- Mastered Loan Shark reduces the uninterrupted idle period for Claim rewards from 10 to 8 minutes. Server checks, report readiness and the sender's menu use the current mastery threshold.
+- Mastered Fusion snapshots a 4:30 duration and 1.75× combined EP when cast, including current and maximum resources, borrowed-skill lifetime and its visual. HP/SHP, 10× regeneration, 2× damage and five-minute penalties retain their existing rules.
+- Mastered Prospector uses a 1.5% stone/deepslate find rate and a rarer-material-weighted loot table. Diamond/emerald/magic ore shards collectively rise from 6% to 18% of successful finds.
+
 ## Additions 1.11.3 — Split Mind fixes and fewer High Realm spawns
 
 - Stop Auto-Cast from applying native casting movement/range modifiers, removing its camera zoom and movement slowdown. Manual magic keeps its normal casting effects.

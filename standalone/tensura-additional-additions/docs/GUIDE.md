@@ -226,13 +226,13 @@ Only the active save appears in Singleplayer. Visited worlds live in its hidden 
 
 ## Fusion — Unique
 
-**Fuse · Active, Press.** Aim at your subordinate or a willing player within 16 blocks. Players accept a consent prompt. You control a subordinate’s fused form; a receiving player remains in control. Fused EP is **1.5 × combined actual max EP**, with **10× aura/magicule regeneration** and **2× final outgoing damage**. **HP and SHP add together**, including both maximum capacities and remaining amounts; neither receives the EP multiplier. Borrowed skills appear in Tensura’s normal categories (Skills, Magic or Battlewills); `f:temporary` finds temporary entries. Borrowed skills last for Fusion and preserve their owner’s storage and cooldown state. Native skill restrictions still apply. Fuse deals no direct damage and retains each boosted attack’s damage type.
+**Fuse · Active, Press.** Aim at your subordinate or a willing player within 16 blocks. Players accept a consent prompt. You control a subordinate’s fused form; a receiving player remains in control. Fused EP is **1.5 × combined actual max EP**, or **1.75 × when mastered**, with **10× aura/magicule regeneration** and **2× final outgoing damage**. **HP and SHP add together**, including both maximum capacities and remaining amounts; neither receives the EP multiplier. Borrowed skills appear in Tensura’s normal categories (Skills, Magic or Battlewills); `f:temporary` finds temporary entries. Borrowed skills last for Fusion and preserve their owner’s storage and cooldown state. Native skill restrictions still apply. Fuse deals no direct damage and retains each boosted attack’s damage type.
 
-Fusion lasts **3 minutes**. Recast Fuse, use **Pause → Separate Fusion**, or sneak as the absorbed caster to separate early. Both parties receive **Paralysis II and Fragility II for 5 minutes**. Original capacities return and remaining resources are divided proportionally. No cost or additional cooldown. Available in normal Unique rolls; excluded from Fettered Human’s target-skill-copying pool.
+Fusion lasts **3 minutes**, or **4 minutes 30 seconds when mastered**. Recast Fuse, use **Pause → Separate Fusion**, or sneak as the absorbed caster to separate early. Both parties receive **Paralysis II and Fragility II for 5 minutes**. Original capacities return and remaining resources are divided proportionally. No cost or additional cooldown. Available in normal Unique rolls; excluded from Fettered Human’s target-skill-copying pool.
 
 ## Prospector — Unique Skill
 
-Normal reincarnation Unique, also eligible for Fettered Human. Toggle in the native skill menu for +50% mining speed, +3 effective Fortune and ore vision through terrain within 32 blocks. Tool Fortune III becomes effective Fortune VI; Silk Touch keeps its normal behavior. Stone and deepslate have a 1% chance to yield an extra resource when mined with a suitable tool. Deposit markers use distinct colors/glyphs, including violet for magic ore. Look toward one to see its name, surveyed ore count and distance.
+Normal reincarnation Unique, also eligible for Fettered Human. Toggle in the native skill menu for +50% mining speed, +3 effective Fortune and ore vision through terrain within 32 blocks. Tool Fortune III becomes effective Fortune VI; Silk Touch keeps its normal behavior. Stone and deepslate have a 1% chance to yield an extra resource when mined with a suitable tool; mastery raises this to 1.5% and favors rarer materials. Deposit markers use distinct colors/glyphs, including violet for magic ore. Markers identify ore types without an ore-name text box.
 
 Press **Refine** to open Tensura's standard refining menu, independently of the passive. Base inputs use the three left slots, reagents the five middle slots. Native recipes, Refine/Repeat buttons and stored ingredients/output remain supported. No aura/magicule cost. **Damage type: None.**
 
@@ -241,3 +241,13 @@ Press **Refine** to open Tensura's standard refining menu, independently of the 
 A reincarnation Unique with an in-slot passive. Equip the learned skill in your current Tensura preset to raise supported beneficial values to ^1.2. Maximum aura/magicules and movement are excluded; other capacities (including maximum air) use ^1.2. Attack, mining and chant speeds are included. Costs, cooldowns and learning requirements retain their normal formulas. Fractions at or below 1 are preserved to avoid reducing benefits. See [the complete affected-values list](../../../wiki/pages/Additions-Exponentiation.md).
 
 EP awards use ^1.2 once before the ordinary race split. Separate permanent aura/magicule gains are not multiplied; regeneration remains boosted.
+
+
+## Unique mastery bonuses
+
+| Skill | Mastered effect |
+| --- | --- |
+| Split Mind | Auto-Cast costs 25% fewer magicules, including repeat pulses. Manual magic and aura costs keep their normal values. |
+| Loan Shark | Claim can grant an extra skill after 8 uninterrupted idle minutes, down from 10. The gift must still be idle. |
+| Fusion | 4 minutes 30 seconds; 1.75× combined EP. HP/SHP still add normally. |
+| Prospector | 1.5% stone/deepslate find chance; diamond, emerald and magic ore shards together make up 18% of successful finds instead of 6%. |

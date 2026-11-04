@@ -150,7 +150,7 @@ public final class SplitMindNetwork {
       row.putString("type", m.getType() == Magic.MagicType.ASPECTUAL ? "Aspectual" : "Spiritual");
       row.putBoolean("mastered", i.isMastered(p));
       row.putInt("castTicks", m.getCastingTime(i, p));
-      row.putDouble("mp", m.getMagiculeCost(p, i, 0));
+      row.putDouble("mp", m.getMagiculeCost(p, i, 0) * SplitMindCasting.magiculeFactor(p));
       row.putDouble("ap", m.getAuraCost(p, i, 0));
       row.putInt("cooldown", i.getCoolDown(0));
       var modes = new ListTag();
@@ -161,7 +161,7 @@ public final class SplitMindNetwork {
         option.putString("name", m.getModeName(i, mode).getString());
         option.putBoolean("available", allowed.contains(mode));
         option.putBoolean("channel", SplitMindModes.sustained(i, mode));
-        option.putDouble("mp", m.getMagiculeCost(p, i, mode));
+        option.putDouble("mp", m.getMagiculeCost(p, i, mode) * SplitMindCasting.magiculeFactor(p));
         option.putDouble("ap", m.getAuraCost(p, i, mode));
         option.putInt("cooldown", i.getCoolDown(mode));
         option.putInt("castTicks", m.getCastingTime(i, p));

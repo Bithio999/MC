@@ -53,7 +53,7 @@ Activate **Report** to open only the searchable ledger of your gifts. Each recor
 - Total use time.
 - Current uninterrupted idle time, plus the last and longest intervals between uses.
 
-**Claim always recalls the gifted copy.** If it has been unused for **at least 10 minutes** and is **still idle**, Claim also grants a random eligible skill you do not own, retaining mastery:
+**Claim always recalls the gifted copy.** If it has been unused for **at least 10 minutes (8 when Loan Shark is mastered)** and is **still idle**, Claim also grants a random eligible skill you do not own, retaining mastery:
 
 - **`skillSteal true`:** remove the skill from the borrower and give it to you.
 - **`skillSteal false`:** give you a copy; the borrower keeps their original.

@@ -7,7 +7,7 @@
 | Skill data | Value |
 | --- | --- |
 | Tier | Unique |
-| Duration | 3 minutes |
+| Duration | 3 minutes; **4 minutes 30 seconds when mastered** |
 | Range | 16 blocks |
 | Cost | None |
 | Additional cooldown | None |
@@ -21,12 +21,14 @@ Aim at your subordinate or another player. Players must accept the invitation. Y
 
 | Fused benefit | Effect |
 | --- | --- |
-| EP | **(Your actual max EP + target’s actual max EP) × 1.5** |
-| HP and SHP | **Add both participants’ maximum and remaining HP/SHP**; no 1.5× health multiplier |
-| Resource split | Combined aura and magicule capacities, each multiplied by 1.5 |
+| EP | **(Your actual max EP + target’s actual max EP) × 1.5**; **× 1.75 when mastered** |
+| HP and SHP | **Add both participants’ maximum and remaining HP/SHP**; the EP multiplier does not multiply health |
+| Resource split | Combined aura and magicule capacities, each multiplied by 1.5, or **1.75 when mastered** |
 | Regeneration | **10×** aura and magicule regeneration, including normal biome bonuses |
 | Damage | **2× final outgoing damage**, retaining Physical, magical or Spiritual type |
 | Skills | Temporary skill sharing; existing learned skills are retained |
+
+Mastery is checked on the player casting Fuse when the fusion begins.
 
 Press **Fuse** again or choose **Pause → Separate Fusion** to end early. The absorbed caster can also sneak to separate. Fusion cannot be nested.
 

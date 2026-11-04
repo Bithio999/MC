@@ -18,6 +18,8 @@ import java.util.Optional;
 
 public final class ProspectorMining {
     public static final ResourceKey<LootTable> FINDS=ResourceKey.create(Registries.LOOT_TABLE,HeavenlyRestriction.id("gameplay/prospector_finds"));
+    public static final ResourceKey<LootTable> MASTERED_FINDS=ResourceKey.create(Registries.LOOT_TABLE,HeavenlyRestriction.id("gameplay/prospector_finds_mastered"));
+    public static ResourceKey<LootTable> findsTable(LivingEntity owner){return active(owner).filter(i->i.isMastered(owner)).isPresent()?MASTERED_FINDS:FINDS;}
     public static Optional<ManasSkillInstance> active(LivingEntity owner){
         if(owner==null || !owner.isAlive() || owner.isSpectator())return Optional.empty();
         return SkillAPI.getSkillsFrom(owner).getSkill(HeavenlyRestriction.PROSPECTOR.get()).filter(i->i.getMastery()>=0 && i.isToggled() && i.canInteractSkill(owner));
@@ -32,7 +34,7 @@ public final class ProspectorMining {
     public static void finds(BlockDropsEvent e){
         if(!(e.getBreaker() instanceof ServerPlayer p) || p.isCreative() || active(p).isEmpty() || !(e.getState().is(Blocks.STONE) || e.getState().is(Blocks.DEEPSLATE)) || !e.getTool().isCorrectToolForDrops(e.getState()))return;
         var params=new LootParams.Builder(e.getLevel()).withParameter(LootContextParams.ORIGIN,Vec3.atCenterOf(e.getPos())).withParameter(LootContextParams.BLOCK_STATE,e.getState()).withParameter(LootContextParams.TOOL,e.getTool()).withParameter(LootContextParams.THIS_ENTITY,p).create(LootContextParamSets.BLOCK);
-        for(var stack:e.getLevel().getServer().reloadableRegistries().getLootTable(FINDS).getRandomItems(params))e.getDrops().add(new ItemEntity(e.getLevel(),e.getPos().getX()+.5,e.getPos().getY()+.5,e.getPos().getZ()+.5,stack));
+        for(var stack:e.getLevel().getServer().reloadableRegistries().getLootTable(findsTable(p)).getRandomItems(params))e.getDrops().add(new ItemEntity(e.getLevel(),e.getPos().getX()+.5,e.getPos().getY()+.5,e.getPos().getZ()+.5,stack));
     }
     private ProspectorMining(){}
 }

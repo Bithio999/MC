@@ -148,7 +148,7 @@ public final class SplitMindGameTests {
                     .filter(shot -> shot.getClass().getSimpleName().equals("FireLanceProjectile"))
                     .count();
             double expected =
-                (lanceCount * ((Magic) auto.getSkill()).getMagiculeCost(p, auto, 1)
+                (lanceCount * ((Magic) auto.getSkill()).getMagiculeCost(p, auto, 1) * .75
                         + ((Magic) manual.getSkill()).getMagiculeCost(p, manual, 0))
                     * p.getAttributeValue(TensuraAttributes.MAGIC_COST_MULTIPLIER);
             near(
@@ -266,6 +266,7 @@ public final class SplitMindGameTests {
                 h,
                 mp - TensuraStorages.getExistenceFrom(p).getMagicule(),
                 ((Magic) stone.getSkill()).getMagiculeCost(p, stone, 1)
+                    * .75
                     * p.getAttributeValue(TensuraAttributes.MAGIC_COST_MULTIPLIER),
                 "Alternate mode charged wrong cost");
             h.assertTrue(
@@ -341,6 +342,7 @@ public final class SplitMindGameTests {
                 mp - TensuraStorages.getExistenceFrom(p).getMagicule(),
                 shots.size()
                     * ((Magic) fire.getSkill()).getMagiculeCost(p, fire, 1)
+                    * .75
                     * p.getAttributeValue(TensuraAttributes.MAGIC_COST_MULTIPLIER),
                 "Repeat pulses were free or double-charged");
             h.assertTrue(fire.getCoolDown(0) == 99, "Repeat mode touched Single cooldown");
@@ -523,6 +525,7 @@ public final class SplitMindGameTests {
             h.assertTrue(!projectiles.isEmpty(), "Native magic did not cast");
             double cost =
                 ((Magic) fire.getSkill()).getMagiculeCost(p, fire, 0)
+                    * .75
                     * p.getAttributeValue(TensuraAttributes.MAGIC_COST_MULTIPLIER);
             near(
                 h,

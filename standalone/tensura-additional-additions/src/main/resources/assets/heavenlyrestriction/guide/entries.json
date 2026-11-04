@@ -440,6 +440,12 @@
           "lines": [
             "Available in normal Unique reincarnation rolls. Excluded from Fettered Human’s roll pool because it borrows target skills."
           ]
+        },
+        {
+          "title": "Mastery",
+          "lines": [
+            "Fuse lasts 4 minutes 30 seconds and multiplies combined EP by 1.75 instead of 1.5. Mastery is checked on the caster when fusion begins. HP/SHP still add normally; regeneration, damage and separation penalties retain their normal values."
+          ]
         }
       ],
       "keywords": [
@@ -492,6 +498,12 @@
           "title": "Obtaining and cost",
           "lines": [
             "Unique skill in the normal reincarnation pool. Eligible for Fettered Human's roll. No aura or magicule activation/upkeep cost. Damage type: None."
+          ]
+        },
+        {
+          "title": "Mastery",
+          "lines": [
+            "Stone/deepslate finds increase from 1% to 1.5%. Among successful finds, diamond rises from 2% to 7%, emerald from 1% to 4% and magic ore shard from 3% to 7%; uncommon materials also receive more weight. The passive must be enabled."
           ]
         }
       ],
@@ -591,6 +603,12 @@
             "Claim always recalls the gifted copy. After at least 10 uninterrupted minutes idle, and only if still idle, it also grants a random eligible unowned skill with retained mastery. With skillSteal true it removes the original from the borrower; with skillSteal false it copies the skill and leaves their original intact. Chained and every Ultimate-classified skill are excluded in both modes.",
             "Claim sooner or while active only recalls the copy. A closed contract cannot be claimed twice. Existing independent skill ownership is protected."
           ]
+        },
+        {
+          "title": "Mastery",
+          "lines": [
+            "Claim can grant an extra skill after 8 uninterrupted minutes idle instead of 10. The gifted skill must still be idle when claimed; all eligibility and skillSteal rules still apply."
+          ]
         }
       ]
     },
@@ -681,6 +699,12 @@
             "Automatically cast the assigned magic at the nearest visible hostile mob or combat opponent within 32 blocks. Allies, owned creatures, passive bystanders and protected players are excluded. Combat opponents can include players when PvP permits.",
             "Normal magic costs, cooldowns, cast times and activation restrictions apply. Checks for a new cast every 5 ticks; held spells finish their normal cast. Uses the selected mode’s native damage, costs and cooldown. Repeat/held modes continue at their native cadence while a valid target remains. Self/buff spells retain their native behavior. Auto-Cast does not turn or zoom your camera or apply casting slowdown. Different manually cast spells can run at the same time; manual use of the assigned spell takes priority because its cooldown and casting state are shared. This switch is independent of the passive toggle.",
             "No extra Split Mind resource cost. Not rolled for Fettered Human because Auto-Cast uses magicule-cost abilities; the normal server allowlist can override that rule."
+          ]
+        },
+        {
+          "title": "Mastery",
+          "lines": [
+            "Auto-Cast costs 25% fewer magicules, including repeat/held pulses. Aura costs and manual magic costs stay unchanged. The Magic Assignment menu shows the discounted magicule cost."
           ]
         }
       ]

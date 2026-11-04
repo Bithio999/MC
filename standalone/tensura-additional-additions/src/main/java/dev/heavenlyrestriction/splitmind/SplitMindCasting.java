@@ -56,6 +56,15 @@ public final class SplitMindCasting {
     return context != null && context.owner() == owner && context.spell() == spell;
   }
 
+  public static double magiculeFactor(LivingEntity owner) {
+    return SkillAPI.getSkillsFrom(owner)
+            .getSkill(HeavenlyRestriction.SPLIT_MIND.get())
+            .filter(i -> i.getMastery() >= 0 && i.isMastered(owner))
+            .isPresent()
+        ? .75
+        : 1;
+  }
+
   private static <T> T autoInvoke(
       ServerPlayer p, ManasSkillInstance spell, int mode, LivingEntity target, Supplier<T> work) {
     var before = INVOCATION.get();
@@ -179,6 +188,7 @@ public final class SplitMindCasting {
     return pool.getAura() >= magic.getAuraCost(p, i, mode)
         && pool.getMagicule()
             >= magic.getMagiculeCost(p, i, mode)
+                * magiculeFactor(p)
                 * p.getAttributeValue(TensuraAttributes.MAGIC_COST_MULTIPLIER);
   }
 

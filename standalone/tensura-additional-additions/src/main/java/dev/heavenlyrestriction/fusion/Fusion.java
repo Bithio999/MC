@@ -40,9 +40,9 @@ public final class Fusion {
     private static final Map<UUID,Invitation> INVITES=new HashMap<>();
     public static final class Session {
         public final UUID token=UUID.randomUUID();public final ServerPlayer caster,pilot;public final LivingEntity target,hidden;public final boolean subordinate;public final long until;
-        public final double aura,magicules;public final float health,initialHealth;public final double spirit,initialSpirit;public final List<Loan> loans=new ArrayList<>();public ArtVisualEntity visual;
-        private Session(ServerPlayer caster,LivingEntity target){this.caster=caster;this.target=target;subordinate=!(target instanceof ServerPlayer);pilot=subordinate?caster:(ServerPlayer)target;hidden=subordinate?target:caster;until=caster.serverLevel().getGameTime()+DURATION;
-            health=caster.getMaxHealth()+target.getMaxHealth();spirit=caster.getAttributeValue(TensuraAttributes.MAX_SPIRITUAL_HEALTH)+target.getAttributeValue(TensuraAttributes.MAX_SPIRITUAL_HEALTH);initialHealth=caster.getHealth()+target.getHealth();initialSpirit=TensuraStorages.getExistenceFrom(caster).getSpiritualHealth()+TensuraStorages.getExistenceFrom(target).getSpiritualHealth();aura=1.5*(EnergyHelper.getMaxAura(caster)+EnergyHelper.getMaxAura(target));magicules=1.5*(EnergyHelper.getMaxMagicule(caster)+EnergyHelper.getMaxMagicule(target));}
+        public final int duration;public final double epMultiplier;public final double aura,magicules;public final float health,initialHealth;public final double spirit,initialSpirit;public final List<Loan> loans=new ArrayList<>();public ArtVisualEntity visual;
+        private Session(ServerPlayer caster,LivingEntity target){this.caster=caster;this.target=target;subordinate=!(target instanceof ServerPlayer);pilot=subordinate?caster:(ServerPlayer)target;hidden=subordinate?target:caster;boolean mastered=SkillAPI.getSkillsFrom(caster).getSkill(HeavenlyRestriction.FUSION.get()).filter(i->i.getMastery()>=0 && i.isMastered(caster)).isPresent();duration=mastered?5400:DURATION;epMultiplier=mastered?1.75:1.5;until=caster.serverLevel().getGameTime()+duration;
+            health=caster.getMaxHealth()+target.getMaxHealth();spirit=caster.getAttributeValue(TensuraAttributes.MAX_SPIRITUAL_HEALTH)+target.getAttributeValue(TensuraAttributes.MAX_SPIRITUAL_HEALTH);initialHealth=caster.getHealth()+target.getHealth();initialSpirit=TensuraStorages.getExistenceFrom(caster).getSpiritualHealth()+TensuraStorages.getExistenceFrom(target).getSpiritualHealth();aura=epMultiplier*(EnergyHelper.getMaxAura(caster)+EnergyHelper.getMaxAura(target));magicules=epMultiplier*(EnergyHelper.getMaxMagicule(caster)+EnergyHelper.getMaxMagicule(target));}
     }
     private record Loan(LivingEntity owner,LivingEntity borrower,ManasSkill skill,int originalTime){}
     public static java.util.function.Predicate<LivingEntity> clientHidden=e->false;
@@ -93,13 +93,13 @@ public final class Fusion {
                 loan(s,target,caster);loan(s,caster,target);
             }else loan(s,caster,target);
             setEffective(s.pilot,TensuraAttributes.MAX_AURA,s.aura);setEffective(s.pilot,TensuraAttributes.MAX_MAGICULE,s.magicules);setEffective(s.pilot,Attributes.MAX_HEALTH,s.health);setEffective(s.pilot,TensuraAttributes.MAX_SPIRITUAL_HEALTH,s.spirit);
-            var ca=TensuraStorages.getExistenceFrom(caster);var ta=TensuraStorages.getExistenceFrom(target);double ap=1.5*(ca.getAura()+ta.getAura()),mp=1.5*(ca.getMagicule()+ta.getMagicule());
+            var ca=TensuraStorages.getExistenceFrom(caster);var ta=TensuraStorages.getExistenceFrom(target);double ap=s.epMultiplier*(ca.getAura()+ta.getAura()),mp=s.epMultiplier*(ca.getMagicule()+ta.getMagicule());
             try(var transfer=ExponentiationContext.raw(s.pilot,ExponentiationContext.RESTORE)){var pool=TensuraStorages.getExistenceFrom(s.pilot);s.pilot.setHealth(Math.min(s.health,s.initialHealth));pool.setSpiritualHealth(Math.min(s.spirit,s.initialSpirit));pool.setAura(Math.min(s.aura,ap));pool.setMagicule(Math.min(s.magicules,mp));pool.markDirty();}
             if(s.subordinate){setEffective(target,TensuraAttributes.MAX_AURA,s.aura);setEffective(target,TensuraAttributes.MAX_MAGICULE,s.magicules);if(target instanceof Mob mob){mob.getNavigation().stop();mob.setNoAi(true);mob.setTarget(null);}}
             else{caster.setGameMode(GameType.SPECTATOR);if(caster.server.getPlayerList().getPlayer(caster.getUUID())==caster)caster.setCamera(target);}
             s.hidden.setInvisible(true);s.hidden.setInvulnerable(true);s.hidden.setNoGravity(true);s.hidden.noPhysics=true;
             SkillAPI.getSkillsFrom(caster).getSkill(HeavenlyRestriction.FUSION.get()).ifPresent(i->i.addMasteryPoint(caster));
-            s.visual=ArtVisualEntity.spawn(s.pilot.level(),ArtVisualEntity.FUSION,s.pilot.position(),Vec3.ZERO,DURATION);s.visual.setCaster(s.pilot);
+            s.visual=ArtVisualEntity.spawn(s.pilot.level(),ArtVisualEntity.FUSION,s.pilot.position(),Vec3.ZERO,s.duration);s.visual.setCaster(s.pilot);
             burst(s.pilot,true);broadcast(s,false);return true;
         }catch(RuntimeException ex){org.slf4j.LoggerFactory.getLogger("TensuraAdditionalAdditions/Fusion").error("Could not form fusion",ex);end(caster,"Fusion could not form. Both bodies were restored.");return false;}
     }
@@ -119,7 +119,7 @@ public final class Fusion {
         var skills=SkillAPI.getSkillsFrom(borrower);
         for(var original:List.copyOf(SkillAPI.getSkillsFrom(owner).getLearnedSkills())){
             var previous=skills.getSkill(original.getSkill());if(original.getMastery()<0 || original.isSubInstance() || original.getRemoveTime()==0 || previous.filter(i->i.getMastery()>=0).isPresent())continue;
-            var copy=original.copy();copy.setRemoveTime(original.getRemoveTime()>0?Math.min(DURATION/20,original.getRemoveTime()):-2);copy.getOrCreateTag().putUUID(LOAN,s.token);previous.ifPresent(i->copy.getOrCreateTag().put(SHADOW,i.toNBT()));copy.getOrCreateTag().putUUID(ORIGIN,owner.getUUID());copy.getOrCreateTag().putInt(ORIGINAL_TIME,original.getRemoveTime());copy.setToggled(false);
+            var copy=original.copy();copy.setRemoveTime(original.getRemoveTime()>0?Math.min(s.duration/20,original.getRemoveTime()):-2);copy.getOrCreateTag().putUUID(LOAN,s.token);previous.ifPresent(i->copy.getOrCreateTag().put(SHADOW,i.toNBT()));copy.getOrCreateTag().putUUID(ORIGIN,owner.getUUID());copy.getOrCreateTag().putInt(ORIGINAL_TIME,original.getRemoveTime());copy.setToggled(false);
             // Shared storage/banks must have one authoritative state, never two extractable inventories.
             skills.updateSkill(copy,true);if(skills.getSkill(copy.getSkill()).filter(i->i.getTag()!=null && i.getTag().hasUUID(LOAN)).isPresent())s.loans.add(new Loan(owner,borrower,original.getSkill(),original.getRemoveTime()));
         }
