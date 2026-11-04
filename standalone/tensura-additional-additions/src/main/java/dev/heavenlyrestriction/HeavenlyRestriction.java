@@ -21,6 +21,7 @@ public final class HeavenlyRestriction {
     public static final RegistrySupplier<ProspectorSkill> PROSPECTOR=SKILLS.register(id("prospector"),ProspectorSkill::new);
     public static final RegistrySupplier<LoanSharkSkill> LOAN_SHARK=SKILLS.register(id("loan_shark"),LoanSharkSkill::new);
     public static final RegistrySupplier<SplitMindSkill> SPLIT_MIND=SKILLS.register(id("split_mind"),SplitMindSkill::new);
+    public static final RegistrySupplier<MaraudersMapSkill> MARAUDERS_MAP=SKILLS.register(id("marauders_map"),MaraudersMapSkill::new);
     public static final RegistrySupplier<FusionSkill> FUSION=SKILLS.register(id("fusion"),FusionSkill::new);
     public static final RegistrySupplier<SchemaArt> SCHEMA=SKILLS.register(id("schema"),SchemaArt::new);
     public static final RegistrySupplier<InstantTransmissionArt> INSTANT_TRANSMISSION=SKILLS.register(id("instant_transmission"),InstantTransmissionArt::new);
@@ -32,6 +33,13 @@ public final class HeavenlyRestriction {
         SKILLS.register(id("sovereign_rebirth"),()->new AuraRegenerationSkill(3)));
     public HeavenlyRestriction(net.neoforged.bus.api.IEventBus modBus,net.neoforged.fml.ModContainer container){
         HeavenlyArsenal.register(modBus);
+        modBus.addListener(dev.heavenlyrestriction.cartography.MapNetwork::register);
+        NeoForge.EVENT_BUS.addListener(dev.heavenlyrestriction.cartography.MapService::tick);
+        NeoForge.EVENT_BUS.addListener(dev.heavenlyrestriction.cartography.MapService::loaded);
+        NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent e)->{if(e.getEntity() instanceof net.minecraft.server.level.ServerPlayer p)dev.heavenlyrestriction.cartography.MapService.login(p);});
+        NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerChangedDimensionEvent e)->{if(e.getEntity() instanceof net.minecraft.server.level.ServerPlayer p){dev.heavenlyrestriction.cartography.MapService.changedDimension(p);}});
+        NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerLoggedOutEvent e)->{if(e.getEntity() instanceof net.minecraft.server.level.ServerPlayer p)dev.heavenlyrestriction.cartography.MapService.close(p);});
+        NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.server.ServerStoppingEvent e)->dev.heavenlyrestriction.cartography.MapService.clear());
         modBus.addListener(dev.heavenlyrestriction.splitmind.SplitMindNetwork::register);
         NeoForge.EVENT_BUS.addListener(dev.heavenlyrestriction.splitmind.SplitMindCasting::tick);
         NeoForge.EVENT_BUS.addListener(dev.heavenlyrestriction.splitmind.SplitMindCasting::spawned);

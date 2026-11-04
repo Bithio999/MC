@@ -50,6 +50,7 @@
 
 - [Heavenly Restriction](https://github.com/Bithio999/MC/wiki/Additions-Fettered-Human)
 - [Skills](https://github.com/Bithio999/MC/wiki/Additions-Skills)
+- [Marauder's Map](https://github.com/Bithio999/MC/wiki/Additions-Marauders-Map)
 - [Chained](https://github.com/Bithio999/MC/wiki/Additions-Chained)
 - [Unbound](https://github.com/Bithio999/MC/wiki/Additions-Unbound)
 - [Battlewills](https://github.com/Bithio999/MC/wiki/Additions-Battlewills)

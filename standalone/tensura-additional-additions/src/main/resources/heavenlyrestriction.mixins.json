@@ -63,7 +63,8 @@
     "SplitMindPresetMixin",
     "SplitMindProjectileMixin",
     "SplitMindCastingModifiersMixin",
-    "SplitMindCastingLockMixin"
+    "SplitMindCastingLockMixin",
+    "MapChunkAccess"
   ],
   "injectors": {
     "defaultRequire": 1

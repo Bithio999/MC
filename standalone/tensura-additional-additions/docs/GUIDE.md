@@ -251,3 +251,12 @@ EP awards use ^1.2 once before the ordinary race split. Separate permanent aura/
 | Loan Shark | Claim can grant an extra skill after 8 uninterrupted idle minutes, down from 10. The gift must still be idle. |
 | Fusion | 4 minutes 30 seconds; 1.75× combined EP. HP/SHP still add normally. |
 | Prospector | 1.5% stone/deepslate find chance; diamond, emerald and magic ore shards together make up 18% of successful finds instead of 6%. |
+
+
+## Marauder’s Map — Unique
+
+Slot the learned skill and activate **Open Map**. Drag to pan, scroll to zoom, and use **Recenter/Home** to find yourself. **Go to…** centers the map at coordinates without moving the player. Search or toggle structures and pins; **?** shows controls and the color legend.
+
+Explored terrain is recorded and cached on this computer. Real world-generation structures, including addon types, are marked when known. **Locate structure…** searches up to 2,048 blocks around the map center; **Show result** centers the found marker. Unexplored terrain stays hidden. Escape cancels an active search.
+
+Right-click the map or use **Add pin/N** for a named X/Y/Z pin with one of eight colors and six icons. Select pins to center, edit or delete them; deletion requires confirmation. Up to 256 private pins per player are saved on the server across dimensions. No resource cost, additional cooldown or direct damage. Eligible for Fettered Human reincarnation rolls. [Map reference and pictures](../../../wiki/pages/Additions-Marauders-Map.md).

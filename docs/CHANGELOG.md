@@ -1,5 +1,13 @@
 # Changelog
 
+## Additions 1.12.0 — Marauder’s Map
+
+- Add the Marauder’s Map Unique and Open Map mode to Tensura’s native skill menu and reincarnation pool. Free to use and eligible for Fettered Human rolls.
+- Add a crisp north-up terrain atlas with block-level detail, relief shading, biome colors and a coarse overview; cursor-centered zoom, drag/keyboard pan, recentering, coordinate navigation and a scale bar.
+- Record explored client terrain with bounded texture memory, asynchronous atomic disk caching and separate world/dimension atlases. Keep unexplored terrain hidden.
+- Mark real native/addon structures, cluster crowded markers, and provide searchable markers/types, independent pin/structure toggles and an in-game legend. Structure discovery scans within 2,048 blocks with bounded work and native nonblocking structure-start tasks.
+- Add up to 256 private server-saved pins per player, with editable names/XYZ, eight colors, six icons and confirmed deletion. Validate ownership, sessions and coordinates; close safely on dimension changes or skill loss.
+
 ## Additions 1.11.4 — Unique mastery bonuses
 
 - Mastered Split Mind reduces Auto-Cast magicule bills by 25%, including held pulses; use the same discounted amount for affordability and assignment-menu costs. Manual casting and aura costs retain their normal amounts.

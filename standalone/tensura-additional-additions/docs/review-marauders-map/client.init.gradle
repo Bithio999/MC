@@ -1,0 +1,5 @@
+gradle.projectsEvaluated {
+ rootProject.sourceSets.main.java.srcDir(rootProject.file('docs/review-marauders-map'))
+ rootProject.neoForge.runs.client.gameDirectory=rootProject.file('/workspace/validation-marauders-map/client')
+ rootProject.neoForge.runs.client.programArguments.addAll('--quickPlaySingleplayer','Marauders Map Review','--width','1280','--height','720')
+}

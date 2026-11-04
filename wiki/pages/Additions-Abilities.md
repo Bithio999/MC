@@ -24,6 +24,7 @@ Find a move below, then open its entry for targeting, damage, cost and cooldown.
 | [Parallel Thought](Additions-Split-Mind.md#passive) | [Split Mind](Additions-Split-Mind.md) | Passive, Toggle | None |
 | [Magic Assignment](Additions-Split-Mind.md#magic-assignment) | [Split Mind](Additions-Split-Mind.md) | Active, Press | None |
 | [Auto-Cast](Additions-Split-Mind.md#auto-cast) | [Split Mind](Additions-Split-Mind.md) | Active, Toggle | Assigned magic’s native damage type |
+| [Open Map](Additions-Marauders-Map.md#open-map) | [Marauder's Map](Additions-Marauders-Map.md) | Active, Press | None |
 
 ## Ultimate
 

@@ -1251,5 +1251,12 @@
     "category": "Skills",
     "tier": "Unique",
     "mod": "additions"
+  },
+  {
+    "slug": "Additions-Marauders-Map",
+    "title": "Marauder's Map",
+    "category": "Skills",
+    "tier": "Unique",
+    "mod": "additions"
   }
 ]

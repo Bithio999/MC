@@ -15,3 +15,5 @@ Use Tensura’s normal Ability Selection menu. This addon has no Godly skill tie
 [Loan Shark](https://github.com/Bithio999/MC/wiki/Additions-Loan-Shark) lends skill copies, earns EP while they are used, and recalls or claims them through its report ledger.
 
 [Split Mind](https://github.com/Bithio999/MC/wiki/Additions-Split-Mind) adds +9 learning/mastery gain, Thought Acceleration, Chant Annulment and automatic casting of one assigned learned magic.
+
+[Marauder's Map](https://github.com/Bithio999/MC/wiki/Additions-Marauders-Map) maps explored terrain, locates world-generation structures and saves private custom pins.

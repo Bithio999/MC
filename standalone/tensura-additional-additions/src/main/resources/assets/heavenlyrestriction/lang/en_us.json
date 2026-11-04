@@ -48,5 +48,8 @@
   "heavenlyrestriction.split_mind.auto_on": "Split Mind: Auto-Cast enabled.",
   "heavenlyrestriction.split_mind.auto_off": "Split Mind: Auto-Cast disabled.",
   "heavenlyrestriction.split_mind.saved": "Assignment saved.",
-  "heavenlyrestriction.split_mind.invalid": "This learned magic is no longer available."
+  "heavenlyrestriction.split_mind.invalid": "This learned magic is no longer available.",
+  "heavenlyrestriction.skill.marauders_map": "Marauder's Map",
+  "heavenlyrestriction.skill.mode.marauders_map.open_map": "Open Map",
+  "heavenlyrestriction.skill.marauders_map.description": "Open a detailed, interactive map of explored terrain. Pan and zoom, search native and addon structures, and save private named pins with custom colors and icons. Locate searches nearby structure placements without revealing unexplored terrain. No aura or magicule cost."
 }
