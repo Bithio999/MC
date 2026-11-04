@@ -1,5 +1,12 @@
 # Changelog
 
+## Additions 1.16.1 — Sortable structure browser
+
+- List the complete structure registry in Locate, removing the old 1,024-entry cap.
+- Add Name A–Z and Mod A–Z sorting, visible mod labels, complete-ID tooltips and a draggable scrollbar. Live search filters names, mod display names and IDs.
+- Preserve selection while sorting/filtering, disable search when the selection is filtered out, and retain query/sort state on resize. The existing map-centered Locate range remains 100,000 blocks.
+
+
 ## Additions 1.16.0 — Dimension atlas and shared exploration
 
 - Replace the permanent marker-action button grid with contextual dropdowns; right-click empty map space for Add pin here. Add flat atlas controls, compact Layers/Map Tools menus and opaque dialogs that prevent parent text bleeding through.

@@ -537,7 +537,6 @@ public final class MapService {
     var registry = p.registryAccess().registryOrThrow(Registries.STRUCTURE);
     registry.entrySet().stream()
         .sorted(Comparator.comparing(a -> a.getKey().location().toString()))
-        .limit(1024)
         .forEach(
             entry -> {
               var tag = new CompoundTag();

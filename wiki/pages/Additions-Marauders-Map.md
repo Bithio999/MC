@@ -61,9 +61,15 @@ Enable **Structures** under **Layers** to show automatic vanilla and addon marke
 
 Locations follow native generation rules, variants, frequency and biome requirements. Saved structures take precedence. Unvisited sites say **World-generation location** in their tooltip; actual generation confirms the start. Automatic markers do not require generating terrain or spawning mobs. Use custom pins for player-built landmarks.
 
-**Locate structure…** searches a chosen structure type up to **100,000 blocks around the viewed map center**. The search runs in the background and centers on a result automatically. **Map tools → Show located structure** returns to it later. **Escape cancels** a search. If nothing is found, pan to another area and try again.
+**Locate structure…** opens the full list of registered vanilla and addon structures. Choose **Name A–Z** for alphabetical order or **Mod A–Z** to group by mod, with alphabetical names inside each group. Each entry shows its mod; hover for the complete structure ID. The search bar narrows entries as you type by name, mod or ID. Scroll or drag the scrollbar to browse the list.
 
-![Search native and addon structure types](../media/marauders-map-structure-search.png)
+![All structures sorted alphabetically](../media/marauders-map-structures-alphabetical.png)
+
+![Structures grouped by mod](../media/marauders-map-structures-by-mod.png)
+
+Select an entry and press **Start search** to search up to **100,000 blocks around the viewed map center**. The search runs in the background and centers on a result automatically. **Map tools → Show located structure** returns to it later. **Escape cancels** a search. If nothing is found, pan to another area and try again.
+
+![Live search narrows vanilla and addon structures](../media/marauders-map-structures-filtered-large.png)
 
 | Structure group | Color |
 | --- | --- |

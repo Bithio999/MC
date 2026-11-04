@@ -262,6 +262,69 @@ public final class MapReview {
     }
   }
 
+  @SuppressWarnings("unchecked")
+  private static List<Object> structureEntries(String field) {
+    try {
+      var f = MapStructureScreen.class.getDeclaredField(field);
+      f.setAccessible(true);
+      return (List<Object>) f.get(Minecraft.getInstance().screen);
+    } catch (ReflectiveOperationException ex) {
+      throw new IllegalStateException(ex);
+    }
+  }
+
+  private static String structureValue(Object entry, String name) {
+    try {
+      var m = entry.getClass().getDeclaredMethod(name);
+      m.setAccessible(true);
+      return (String) m.invoke(entry);
+    } catch (ReflectiveOperationException ex) {
+      throw new IllegalStateException(ex);
+    }
+  }
+
+  private static net.minecraft.nbt.CompoundTag stateFromParent() {
+    try {
+      var parent = MapStructureScreen.class.getDeclaredField("parent");
+      parent.setAccessible(true);
+      var f = MaraudersMapScreen.class.getDeclaredField("state");
+      f.setAccessible(true);
+      return (net.minecraft.nbt.CompoundTag) f.get(parent.get(Minecraft.getInstance().screen));
+    } catch (ReflectiveOperationException ex) {
+      throw new IllegalStateException(ex);
+    }
+  }
+
+  private static String structureSelection() {
+    try {
+      var f = MapStructureScreen.class.getDeclaredField("selected");
+      f.setAccessible(true);
+      return (String) f.get(Minecraft.getInstance().screen);
+    } catch (ReflectiveOperationException ex) {
+      throw new IllegalStateException(ex);
+    }
+  }
+
+  private static void checkStructureSort(boolean mod) {
+    var entries = structureEntries("filtered");
+    for (int i = 1; i < entries.size(); i++) {
+      String a = structureValue(entries.get(i - 1), mod ? "mod" : "name"),
+          b = structureValue(entries.get(i), mod ? "mod" : "name");
+      check(
+          String.CASE_INSENSITIVE_ORDER.compare(a, b) <= 0,
+          "Structure browser sort did not update");
+      if (mod && a.equalsIgnoreCase(b))
+        check(
+            String.CASE_INSENSITIVE_ORDER.compare(
+                    structureValue(entries.get(i - 1), "name"),
+                    structureValue(entries.get(i), "name"))
+                <= 0,
+            "Structures within a mod were not alphabetical");
+    }
+  }
+
+  private static String browserSelected;
+
   private static boolean uiReviewEnabled() {
     return Boolean.getBoolean("heavenlyrestriction.review.uiOnly")
         || !(Boolean.getBoolean("heavenlyrestriction.review.travelOnly")
@@ -531,8 +594,105 @@ public final class MapReview {
     }
     if (phase == 617 && wait > 15) {
       fits();
+      check(
+          structureEntries("all").size()
+              == stateFromParent().getList("types", net.minecraft.nbt.Tag.TAG_COMPOUND).size(),
+          "Browser did not include every advertised structure");
+      check(
+          structureEntries("all").size() == structureEntries("filtered").size(),
+          "Blank search hid structures");
+      checkStructureSort(false);
+      shot("marauders-map-structures-alphabetical");
+      press("Mod A–Z");
+      checkStructureSort(true);
+      var first = structureEntries("filtered").getFirst();
+      press(structureValue(first, "name"));
+      browserSelected = structureSelection();
+      check(
+          browserSelected.equals(structureValue(first, "id")),
+          "Row did not select its actual structure");
+      phase = 620;
+      wait = 0;
+      return;
+    }
+    if (phase == 620 && wait > 15) {
+      shot("marauders-map-structures-by-mod");
+      String query = "";
+      for (char c : "village".toCharArray()) {
+        query += c;
+        field("Find a structure type").setValue(query);
+        for (var e : structureEntries("filtered"))
+          check(
+              (structureValue(e, "name")
+                      + " "
+                      + structureValue(e, "id")
+                      + " "
+                      + structureValue(e, "mod"))
+                  .toLowerCase(Locale.ROOT)
+                  .contains(query),
+              "Live search did not narrow entries");
+      }
+      check(!structureEntries("filtered").isEmpty(), "Village search returned no results");
+      checkStructureSort(true);
+      field("Find a structure type").setValue("no_structure_should_match_987654");
+      check(
+          structureEntries("filtered").isEmpty() && !button("Start search").active,
+          "No-match query allowed the previous selection");
+      field("Find a structure type").setValue("");
+      check(
+          structureSelection().equals(browserSelected) && button("Start search").active,
+          "Sorting/searching lost the selected structure");
       field("Find a structure type").setValue("village");
+      phase = 621;
+      wait = 0;
+      return;
+    }
+    if (phase == 621 && wait > 15) {
       shot("marauders-map-structure-search");
+      mc.options.guiScale().set(2);
+      mc.resizeDisplay();
+      check(
+          field("Find a structure type").getValue().equals("village"),
+          "Resizing cleared live search");
+      checkStructureSort(true);
+      fits();
+      phase = 622;
+      wait = 0;
+      return;
+    }
+    if (phase == 622 && wait > 15) {
+      shot("marauders-map-structures-filtered-large");
+      field("Find a structure type").setValue("tensura");
+      check(!structureEntries("filtered").isEmpty(), "Mod namespace search returned no entries");
+      for (var e : structureEntries("filtered"))
+        check(
+            structureValue(e, "namespace").equals("tensura"),
+            "Mod search included unrelated structures");
+      field("Find a structure type").setValue("");
+      press("Name A–Z");
+      checkStructureSort(false);
+      var screen = mc.screen;
+      try {
+        var l = MapStructureScreen.class.getDeclaredField("left");
+        var w = MapStructureScreen.class.getDeclaredField("w");
+        var t = MapStructureScreen.class.getDeclaredField("listTop");
+        var r = MapStructureScreen.class.getDeclaredField("rows");
+        var offset = MapStructureScreen.class.getDeclaredField("offset");
+        for (var f : List.of(l, w, t, r, offset)) f.setAccessible(true);
+        int x = l.getInt(screen) + w.getInt(screen) - 15,
+            y = t.getInt(screen),
+            height = ((List<?>) r.get(screen)).size() * 24;
+        screen.mouseClicked(x, y + height - 1, 0);
+        screen.mouseReleased(x, y + height - 1, 0);
+        check(offset.getInt(screen) > 0, "Dragging scrollbar did not reach later structures");
+        screen.mouseClicked(x, y, 0);
+        screen.mouseReleased(x, y, 0);
+        check(offset.getInt(screen) == 0, "Scrollbar could not return to start");
+      } catch (ReflectiveOperationException ex) {
+        throw new IllegalStateException(ex);
+      }
+      mc.options.guiScale().set(4);
+      mc.resizeDisplay();
       press("Cancel");
       press("Map tools ▾");
       action("Map guide");

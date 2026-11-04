@@ -759,7 +759,8 @@
           "lines": [
             "Pan anywhere, including unloaded terrain. Native previews fill in progressively; zoom in for block top-face textures, roads, roofs, trees, relief and water depth. Nether views look below the roof.",
             "With Structures enabled under Layers, vanilla and addon markers appear automatically at every zoom, including unexplored regions. World-generation locations become confirmed when their structure generates. Dense sites cluster with counts; zoom in to separate them.",
-            "Locate structure… searches up to 100,000 blocks around the viewed map center. The map centers on a result automatically. Escape cancels a search. Structures OFF pauses automatic discovery. Player-built landmarks use custom pins."
+            "Locate structure… searches up to 100,000 blocks around the viewed map center. The map centers on a result automatically. Escape cancels a search. Structures OFF pauses automatic discovery. Player-built landmarks use custom pins.",
+            "Locate structure… lists every registered structure. Name A–Z sorts alphabetically; Mod A–Z groups by mod and sorts names inside each group. Entries show their mod and full IDs on hover. Search narrows names, mods and IDs as you type. Scroll or drag the scrollbar, select an entry and press Start search."
           ]
         },
         {
