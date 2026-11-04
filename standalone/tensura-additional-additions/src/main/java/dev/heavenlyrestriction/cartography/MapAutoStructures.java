@@ -137,7 +137,7 @@ public final class MapAutoStructures {
       var job = JOBS.get(key);
       if (job == null) {
         if (JOBS.size() >= 8) return;
-        job = submit(p.serverLevel(), key);
+        job = submit(MapService.level(p, s), key);
         if (job == null) return;
       }
       job.watchers.add(s.token);

@@ -6,10 +6,14 @@ import net.minecraft.nbt.*;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.level.saveddata.SavedData;
 
-/** World-specific structures and private pins. Terrain pixels never pass through the server. */
+/**
+ * World-specific structures and private pins. Shared terrain summaries are world-specific; full
+ * detail is stored asynchronously.
+ */
 public final class MapData extends SavedData {
   public static final int MAX_PINS = 256, MAX_STRUCTURES = 65536;
   public UUID world = UUID.randomUUID();
+  public final SharedTerrainIndex explored = new SharedTerrainIndex();
   private long seed = Long.MIN_VALUE;
   public final LinkedHashMap<String, Marker> structures = new LinkedHashMap<>();
   private final Map<UUID, LinkedHashMap<UUID, Pin>> pins = new HashMap<>();
@@ -91,6 +95,7 @@ public final class MapData extends SavedData {
       world = UUID.randomUUID();
       structures.clear();
       pins.clear();
+      explored.clear();
     }
     seed = next;
     setDirty();
@@ -165,6 +170,26 @@ public final class MapData extends SavedData {
           owners.add(o);
         });
     tag.put("owners", owners);
+    var terrain = new ListTag();
+    var byLayer = new LinkedHashMap<String, java.util.List<SharedTerrainIndex.Entry>>();
+    explored
+        .entries()
+        .forEach(e -> byLayer.computeIfAbsent(e.layer(), k -> new java.util.ArrayList<>()).add(e));
+    byLayer.forEach(
+        (layer, entries) -> {
+          var row = new CompoundTag();
+          row.putString("layer", layer);
+          int[] pixels = new int[entries.size() * 3];
+          for (int i = 0; i < entries.size(); i++) {
+            var entry = entries.get(i);
+            pixels[i * 3] = entry.x();
+            pixels[i * 3 + 1] = entry.z();
+            pixels[i * 3 + 2] = entry.color();
+          }
+          row.putIntArray("pixels", pixels);
+          terrain.add(row);
+        });
+    tag.put("exploredTerrain", terrain);
     return tag;
   }
 
@@ -184,6 +209,12 @@ public final class MapData extends SavedData {
         var value = (CompoundTag) p;
         if (value.hasUUID("uuid")) d.putPin(o.getUUID("owner"), Pin.load(value));
       }
+    }
+    for (var row : tag.getList("exploredTerrain", Tag.TAG_COMPOUND)) {
+      var t = (CompoundTag) row;
+      int[] pixels = t.getIntArray("pixels");
+      for (int i = 0; i + 2 < pixels.length && d.explored.size() < SharedTerrainIndex.LIMIT; i += 3)
+        d.explored.put(t.getString("layer"), pixels[i], pixels[i + 1], pixels[i + 2]);
     }
     d.setDirty(false);
     return d;

@@ -56,7 +56,7 @@ public final class MapPinScreen extends Screen {
 
   private Button button(int xx, int yy, int ww, String text, Runnable action) {
     return addRenderableWidget(
-        Button.builder(Component.literal(text), b -> action.run()).bounds(xx, yy, ww, 20).build());
+        MapUi.button(Component.literal(text), b -> action.run()).bounds(xx, yy, ww, 20).build());
   }
 
   private void remember() {
@@ -162,7 +162,7 @@ public final class MapPinScreen extends Screen {
       }
       int yy = Integer.parseInt(y.getValue().strip());
       if (name.getValue().isBlank()) throw new IllegalArgumentException("Give this pin a name.");
-      if (yy < minecraft.level.getMinBuildHeight() || yy >= minecraft.level.getMaxBuildHeight())
+      if (yy < parent.minY() || yy >= parent.maxY())
         throw new IllegalArgumentException("Y must be inside this dimension's build range.");
       var data = pin.copy();
       data.putString("name", name.getValue().strip());
@@ -188,10 +188,8 @@ public final class MapPinScreen extends Screen {
 
   @Override
   public void render(GuiGraphics g, int mx, int my, float partial) {
-    parent.render(g, -100, -100, partial);
-    g.fill(0, 0, width, height, 0xc010171d);
-    g.fill(left, top, left + w, top + h, 0xff202d34);
-    g.renderOutline(left, top, w, h, 0xff65726b);
+    MapUi.backdrop(g, width, height);
+    MapUi.panel(g, left, top, w, h);
     g.drawString(font, title, left + 16, top + 14, MaraudersMapScreen.GOLD, false);
     if (removing)
       g.drawWordWrap(

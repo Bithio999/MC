@@ -171,6 +171,28 @@ public final class MapReview {
   }
 
   private static void press(String text) {
+    if (Minecraft.getInstance().screen instanceof MaraudersMapScreen) {
+      if (text.equals("Go to…") || text.equals("Show result")) {
+        press("Map tools ▾");
+        action(text.equals("Go to…") ? "Go to coordinates" : "Show located structure");
+        return;
+      }
+      if (text.equals("Travel…")) {
+        var m = map();
+        var found = state().getCompound("found");
+        try {
+          var method =
+              MaraudersMapScreen.class.getDeclaredMethod(
+                  "markerMenu", net.minecraft.nbt.CompoundTag.class, int.class, int.class);
+          method.setAccessible(true);
+          method.invoke(m, found, m.width - 150, 50);
+        } catch (ReflectiveOperationException e) {
+          throw new IllegalStateException(e);
+        }
+        action("Travel…");
+        return;
+      }
+    }
     var b = button(text);
     check(b.active && b.visible, "Inactive button: " + text);
     Minecraft.getInstance()
@@ -240,6 +262,320 @@ public final class MapReview {
     }
   }
 
+  private static boolean uiReviewEnabled() {
+    return Boolean.getBoolean("heavenlyrestriction.review.uiOnly")
+        || !(Boolean.getBoolean("heavenlyrestriction.review.travelOnly")
+            || Boolean.getBoolean("heavenlyrestriction.review.surveyOnly"));
+  }
+
+  private static Object popupField(String name) {
+    try {
+      var f = MaraudersMapScreen.class.getDeclaredField("popup");
+      f.setAccessible(true);
+      var popup = f.get(map());
+      check(popup != null, "No dropdown open");
+      var field = popup.getClass().getDeclaredField(name);
+      field.setAccessible(true);
+      return field.get(popup);
+    } catch (ReflectiveOperationException e) {
+      throw new IllegalStateException(e);
+    }
+  }
+
+  private static void action(String prefix) {
+    try {
+      var f = MaraudersMapScreen.class.getDeclaredField("popup");
+      f.setAccessible(true);
+      var popup = f.get(map());
+      check(popup != null, "No dropdown for " + prefix);
+      var items = popup.getClass().getDeclaredMethod("items");
+      items.setAccessible(true);
+      var all = (java.util.List<?>) items.invoke(popup);
+      var header = popup.getClass().getDeclaredMethod("header");
+      header.setAccessible(true);
+      int row = -1;
+      for (int i = 0; i < all.size(); i++) {
+        var label = all.get(i).getClass().getDeclaredMethod("label");
+        label.setAccessible(true);
+        if (((String) label.invoke(all.get(i))).startsWith(prefix)) {
+          row = i;
+          break;
+        }
+      }
+      check(row >= 0, "Dropdown action missing: " + prefix);
+      int x = (int) popupField("x"), y = (int) popupField("y");
+      map().mouseClicked(x + 25, y + (int) header.invoke(popup) + row * 21 + 10, 0);
+    } catch (ReflectiveOperationException e) {
+      throw new IllegalStateException(e);
+    }
+  }
+
+  private static void canvasContext() {
+    var m = map();
+    m.mouseClicked(m.width - 90, m.height / 2d, 1);
+  }
+
+  private static volatile boolean sharedReady;
+
+  private static void uiReview(Minecraft mc) {
+    if (phase == 600 && mc.screen instanceof MaraudersMapScreen && wait > 90) {
+      fits();
+      check(
+          mc.screen.children().stream().filter(w -> w instanceof Button).count() <= 12,
+          "Too many permanent buttons");
+      shot("marauders-map-redesign");
+      press("Layers ▾");
+      phase = 601;
+      wait = 0;
+      return;
+    }
+    if (phase == 601 && wait > 15) {
+      shot("marauders-map-layers");
+      map().keyPressed(256, 0, 0);
+      canvasContext();
+      phase = 602;
+      wait = 0;
+      return;
+    }
+    if (phase == 602 && wait > 15) {
+      shot("marauders-map-pin-context");
+      action("Add pin here");
+      check(mc.screen instanceof MapPinScreen, "Right-click action did not open editor");
+      fits();
+      field("Pin name").setValue("Camp Willow");
+      field("Y").setValue("4000");
+      press("Save pin");
+      check(mc.screen instanceof MapPinScreen, "Invalid pin accepted");
+      field("Y").setValue("80");
+      phase = 603;
+      wait = 0;
+      return;
+    }
+    if (phase == 603 && wait > 15) {
+      shot("marauders-map-pin-editor");
+      press("Save pin");
+      phase = 604;
+      wait = 0;
+      return;
+    }
+    if (phase == 604 && mc.screen instanceof MaraudersMapScreen && wait > 25) {
+      field("Search structures and pins").setValue("Camp Willow");
+      map().mouseClicked(24, 110, 0);
+      phase = 605;
+      wait = 0;
+      return;
+    }
+    if (phase == 605 && wait > 15) {
+      shot("marauders-map-marker-actions");
+      action("Edit pin");
+      field("Pin name").setValue("Camp Willow Home");
+      press("Save pin");
+      phase = 606;
+      wait = 0;
+      return;
+    }
+    if (phase == 606 && wait > 25) {
+      field("Search structures and pins").setValue("Camp Willow Home");
+      map().mouseClicked(24, 110, 0);
+      action("Delete pin");
+      phase = 607;
+      wait = 0;
+      return;
+    }
+    if (phase == 607 && wait > 15) {
+      shot("marauders-map-delete-confirm");
+      press("Keep pin");
+      field("Search structures and pins").setValue("");
+      press("Map tools ▾");
+      action("Go to coordinates");
+      phase = 608;
+      wait = 0;
+      return;
+    }
+    if (phase == 608 && wait > 15) {
+      shot("marauders-map-goto");
+      press("Center map");
+      press("The Nether");
+      phase = 609;
+      wait = 0;
+      return;
+    }
+    if (phase == 609 && wait > 60) {
+      check(wait < 1800, "Nether view timed out");
+      if (!map().dimension().equals("minecraft:the_nether")
+          || !MapTerrainAtlas.hasPreviewAt((int) map().view.x, (int) map().view.z)) return;
+      fits();
+      check(Math.abs(mc.player.getX() - originalX) < 4, "Dimension tab teleported player");
+      shot("marauders-map-nether");
+      canvasContext();
+      action("Add pin here");
+      field("Pin name").setValue("Nether camp");
+      field("Y").setValue("-10");
+      press("Save pin");
+      check(mc.screen instanceof MapPinScreen, "Nether pin accepted negative build height");
+      field("Y").setValue("64");
+      press("Save pin");
+      phase = 610;
+      wait = 0;
+      return;
+    }
+    if (phase == 610 && wait > 30) {
+      check(
+          state().getList("pins", net.minecraft.nbt.Tag.TAG_COMPOUND).stream()
+              .anyMatch(
+                  t -> ((net.minecraft.nbt.CompoundTag) t).getString("name").equals("Nether camp")),
+          "Remote pin missing");
+      press("Other dimensions");
+      phase = 611;
+      wait = 0;
+      return;
+    }
+    if (phase == 611 && wait > 15) {
+      shot("marauders-map-other-dimensions");
+      for (char c : "high".toCharArray()) map().charTyped(c, 0);
+      action("High Realm");
+      phase = 612;
+      wait = 0;
+      return;
+    }
+    if (phase == 612 && wait > 60) {
+      check(wait < 1800, "High Realm view timed out");
+      if (!map().dimension().equals("heavenlyrestriction:high_realm")
+          || !MapTerrainAtlas.hasPreviewAt((int) map().view.x, (int) map().view.z)) return;
+      fits();
+      shot("marauders-map-high-realm");
+      press("The End");
+      phase = 613;
+      wait = 0;
+      return;
+    }
+    if (phase == 613 && wait > 60) {
+      check(wait < 1800, "End view timed out");
+      if (!map().dimension().equals("minecraft:the_end")
+          || !MapTerrainAtlas.hasPreviewAt((int) map().view.x, (int) map().view.z)) return;
+      fits();
+      shot("marauders-map-end");
+      press("Overworld");
+      phase = 614;
+      wait = 0;
+      return;
+    }
+    if (phase == 614 && wait > 30 && map().dimension().equals("minecraft:overworld")) {
+      check(Math.abs(map().view.x - originalX) < 400, "Dimension view position was not remembered");
+      server(
+          p -> {
+            var level = p.serverLevel();
+            farX = 8192;
+            farZ = 8192;
+            companion =
+                net.neoforged.neoforge.common.util.FakePlayerFactory.get(
+                    level, new com.mojang.authlib.GameProfile(UUID.randomUUID(), "Cartographer"));
+            fakeConnection(companion);
+            companion.setPos(farX + 8.5, 202, farZ + 8.5);
+            level.getChunk(farX >> 4, farZ >> 4);
+            level.setChunkForced(farX >> 4, farZ >> 4, true);
+            for (int z = 0; z < 16; z++)
+              for (int x = 0; x < 16; x++)
+                level.setBlock(
+                    new BlockPos(farX + x, 200, farZ + z),
+                    (x / 4 + z / 4) % 2 == 0
+                        ? net.minecraft.world.level.block.Blocks.MAGENTA_CONCRETE
+                            .defaultBlockState()
+                        : net.minecraft.world.level.block.Blocks.WHITE_CONCRETE.defaultBlockState(),
+                    2);
+            TestFixtures.reviewRoster(p).add(companion);
+          });
+      phase = 615;
+      wait = 0;
+      return;
+    }
+    if (phase == 615 && wait > 120) {
+      server(
+          p -> {
+            var data = MapData.get(p.server);
+            check(
+                data.explored.sample(
+                        MapExploration.layer("minecraft:overworld", Integer.MAX_VALUE),
+                        farX,
+                        farZ,
+                        16)
+                    != 0,
+                "Online explorer without Map did not record terrain automatically");
+            sharedReady = true;
+          });
+      map().view.center(farX + 8, farZ + 8);
+      map().view.scale = 3;
+      map().keyPressed(262, 0, 0);
+      phase = 616;
+      wait = 0;
+      return;
+    }
+    if (phase == 616 && wait > 80 && sharedReady) {
+      check(wait < 1800, "Shared surface detail timed out");
+      if (!MapTerrainAtlas.hasSharedDetailAt(farX + 8, farZ + 8)) return;
+      check(
+          mc.level
+                  .getChunkSource()
+                  .getChunk(
+                      farX >> 4,
+                      farZ >> 4,
+                      net.minecraft.world.level.chunk.status.ChunkStatus.FULL,
+                      false)
+              == null,
+          "Other player terrain became client loaded");
+      shot("marauders-map-shared-exploration");
+      press("Locate structure…");
+      phase = 617;
+      wait = 0;
+      return;
+    }
+    if (phase == 617 && wait > 15) {
+      fits();
+      field("Find a structure type").setValue("village");
+      shot("marauders-map-structure-search");
+      press("Cancel");
+      press("Map tools ▾");
+      action("Map guide");
+      phase = 618;
+      wait = 0;
+      return;
+    }
+    if (phase == 618 && wait > 15) {
+      fits();
+      shot("marauders-map-help");
+      press("Back to map");
+      mc.options.guiScale().set(2);
+      mc.resizeDisplay();
+      phase = 619;
+      wait = 0;
+      return;
+    }
+    if (phase == 619 && wait > 35) {
+      fits();
+      shot("marauders-map-redesign-large");
+      server(
+          p -> {
+            TestFixtures.reviewRoster(p).remove(companion);
+            p.serverLevel().setChunkForced(farX >> 4, farZ >> 4, false);
+          });
+      try {
+        Files.writeString(
+            OUT.resolve("passed-ui.txt"),
+            "PASS: flat controls and contextual marker/right-click menus; pin create/edit/delete"
+                + " confirmation and viewed-dimension height bounds; all three vanilla tabs and"
+                + " searchable High Realm dropdown; active tab and remembered camera; no character"
+                + " teleport; actual surface from a distant player without Map delivered from"
+                + " shared exploration, with no client chunk load; opaque pin/search/help dialogs;"
+                + " GUI scales 2 and 4.\n");
+      } catch (Exception e) {
+        throw new IllegalStateException(e);
+      }
+      phase = 999;
+      map().onClose();
+      mc.stop();
+    }
+  }
+
   private static void exercise() {
     var mc = Minecraft.getInstance();
     if (error != null) {
@@ -306,6 +642,18 @@ public final class MapReview {
             MapService.login(p);
             phase = 2;
           });
+      return;
+    }
+    if (phase == 2 && wait > 100 && uiReviewEnabled()) {
+      mc.options.guiScale().set(4);
+      mc.resizeDisplay();
+      open();
+      phase = 600;
+      wait = 0;
+      return;
+    }
+    if (uiReviewEnabled() && phase >= 600 && phase < 999) {
+      uiReview(mc);
       return;
     }
     if (phase == 2 && wait > 100 && Boolean.getBoolean("heavenlyrestriction.review.surveyOnly")) {
@@ -486,7 +834,7 @@ public final class MapReview {
       return;
     }
     if (phase == 12 && wait > 30) {
-      if (!button("Show result").active) {
+      if (!state().contains("found")) {
         check(wait < 1200, "Real village was not located within 60 seconds");
         return;
       }
@@ -821,7 +1169,7 @@ public final class MapReview {
       return;
     }
     if (phase == 32 && wait > 30) {
-      if (!button("Show result").active) {
+      if (!state().contains("found")) {
         check(wait < 1800, "100k native ring search did not find a stronghold within 90 seconds");
         return;
       }
@@ -859,7 +1207,7 @@ public final class MapReview {
     }
     if (phase == 33 && wait > 30) {
       fits();
-      check(button("Travel…").active, "Travel button not enabled with owned spatial skills");
+      check(state().getInt("travelSkills") > 0, "Travel not enabled with owned spatial skills");
       press("Travel…");
       phase = 34;
       wait = 0;
@@ -929,7 +1277,7 @@ public final class MapReview {
       return;
     }
     if (phase == 40 && wait > 20) {
-      if (!button("Show result").active) {
+      if (!state().contains("found")) {
         check(wait < 1200, "Recorded long-range result missing");
         return;
       }

@@ -52,6 +52,14 @@ public final class MapTravel {
         .toList();
   }
 
+  private static boolean allowedDimension(ServerPlayer p, ManasSkillInstance i, String dimension) {
+    if (((ISpatialMovement) i.getSkill()).getBlacklistDimensions().contains(dimension))
+      return false;
+    // Native spatial movement normally supplies a same-dimension destination list. Browsing another
+    // dimension must never grant a cross-dimension ability the owned skill does not provide.
+    return dimension.equals(p.level().dimension().location().toString());
+  }
+
   private static MapData.Marker marker(ServerPlayer p, MapService.Session s, String id) {
     var m = MapData.get(p.server).structures.get(id);
     if (m == null && s.found != null && s.found.key().equals(id)) m = s.found;
@@ -63,6 +71,7 @@ public final class MapTravel {
     if (m == null) return false;
     var options = new ListTag();
     for (var i : skills(p)) {
+      if (!allowedDimension(p, i, s.dimension)) continue;
       var tag = new CompoundTag();
       tag.putString("id", i.getSkill().getRegistryName().toString());
       tag.putString("name", i.getSkill().getName().getString());
@@ -85,8 +94,8 @@ public final class MapTravel {
     var key = ResourceLocation.tryParse(skillId);
     if (m == null || key == null) return false;
     var i = SkillAPI.getSkillsFrom(p).getSkill(key).orElse(null);
-    if (i == null || !eligible(p, i)) return false;
-    var level = p.serverLevel();
+    if (i == null || !eligible(p, i) || !allowedDimension(p, i, s.dimension)) return false;
+    var level = MapService.level(p, s);
     var pos = new ChunkPos(m.x() >> 4, m.z() >> 4);
     if (!level.getWorldBorder().isWithinBounds(new BlockPos(m.x(), m.y(), m.z()))) return false;
     UUID ticket = UUID.randomUUID();
@@ -118,14 +127,14 @@ public final class MapTravel {
     }
     cancel(s);
     var owned = SkillAPI.getSkillsFrom(p).getSkill(job.skill).orElse(null);
-    if (owned == null || !eligible(p, owned)) {
+    if (owned == null || !eligible(p, owned) || !allowedDimension(p, owned, s.dimension)) {
       s.message = "That teleport skill is no longer available.";
       return;
     }
     try {
       var result = job.future.getNow(null);
       var chunk = result != null && result.isSuccess() ? result.orElse(null) : null;
-      if (chunk != null) MapService.capture(p.serverLevel(), chunk);
+      if (chunk != null) MapService.capture(job.level, chunk);
       if (chunk != null && job.marker.predicted()) {
         var type =
             p.registryAccess()
@@ -139,7 +148,8 @@ public final class MapTravel {
           return;
         }
       }
-      var arrival = chunk == null ? null : landing(p, chunk, job.marker.x(), job.marker.z());
+      var arrival =
+          chunk == null ? null : landing(p, job.level, chunk, job.marker.x(), job.marker.z());
       if (arrival == null) {
         s.message =
             "No safe surface arrival found in that structure's chunk. Choose another structure.";
@@ -165,7 +175,11 @@ public final class MapTravel {
   }
 
   public static BlockPos landing(ServerPlayer p, ChunkAccess chunk, int x, int z) {
-    var level = p.serverLevel();
+    return landing(p, p.serverLevel(), chunk, x, z);
+  }
+
+  private static BlockPos landing(
+      ServerPlayer p, ServerLevel level, ChunkAccess chunk, int x, int z) {
     var cp = chunk.getPos();
     var columns = new ArrayList<BlockPos>();
     for (int dz = 0; dz < 16; dz++)
@@ -175,7 +189,9 @@ public final class MapTravel {
     for (var at : columns) {
       int top =
           level.dimensionType().hasCeiling()
-              ? Math.min(p.getBlockY() + 16, level.getMaxBuildHeight() - 2)
+              ? Math.min(
+                  (level == p.serverLevel() ? p.getBlockY() : 64) + 16,
+                  level.getMaxBuildHeight() - 2)
               : Math.min(
                   chunk.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, at.getX(), at.getZ())
                       + 1,

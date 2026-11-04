@@ -30,6 +30,10 @@ public final class MapTerrainAtlas {
   private static final class Tile {
     final DynamicTexture texture;
     final ResourceLocation id;
+    DynamicTexture explored;
+    ResourceLocation exploredId;
+    final long received = age;
+    boolean shared;
 
     Tile(NativeImage image) {
       texture = new DynamicTexture(image);
@@ -39,6 +43,10 @@ public final class MapTerrainAtlas {
     void close() {
       Minecraft.getInstance().getTextureManager().release(id);
       texture.close();
+      if (explored != null) {
+        Minecraft.getInstance().getTextureManager().release(exploredId);
+        explored.close();
+      }
     }
   }
 
@@ -81,7 +89,8 @@ public final class MapTerrainAtlas {
     int pending = (int) WAITING.values().stream().filter(expiry -> expiry - age > 60).count();
     if (pending >= 6) return;
     for (var key : desired) {
-      if (TILES.containsKey(key) || WAITING.containsKey(key.id())) continue;
+      if ((TILES.containsKey(key) && age - TILES.get(key).received < 600)
+          || WAITING.containsKey(key.id())) continue;
       var t = new CompoundTag();
       t.putInt("tx", key.x);
       t.putInt("tz", key.z);
@@ -154,7 +163,22 @@ public final class MapTerrainAtlas {
       for (int z = 0; z < 32; z++)
         for (int x = 0; x < 32; x++) image.setPixelRGBA(x, z, abgr(pixels[z * 32 + x]));
     }
-    var previous = TILES.put(key, new Tile(image));
+    var tile = new Tile(image);
+    tile.shared = t.getBoolean("shared");
+    int[] recorded = t.getIntArray("explored");
+    if (!detail
+        && recorded.length == 1024
+        && java.util.Arrays.stream(recorded).anyMatch(c -> c != 0)) {
+      var overlay = new NativeImage(32, 32, true);
+      for (int z = 0; z < 32; z++)
+        for (int x = 0; x < 32; x++) overlay.setPixelRGBA(x, z, abgr(recorded[z * 32 + x]));
+      tile.explored = new DynamicTexture(overlay);
+      tile.exploredId =
+          Minecraft.getInstance()
+              .getTextureManager()
+              .register("marauders_map_shared", tile.explored);
+    }
+    var previous = TILES.put(key, tile);
     if (previous != null) previous.close();
     while (TILES.size() > 768) {
       var it = TILES.entrySet().iterator();
@@ -311,6 +335,8 @@ public final class MapTerrainAtlas {
         ey = (int) Math.ceil(v.screenZ((k.z + 1d) * span, top, h));
     int size = k.detail ? 64 : 32;
     g.blit(tile.id, x, y, ex - x, ey - y, 0f, 0f, size, size, size, size);
+    if (tile.exploredId != null)
+      g.blit(tile.exploredId, x, y, ex - x, ey - y, 0f, 0f, 32, 32, 32, 32);
   }
 
   public static boolean hasPreviewAt(int x, int z) {
@@ -324,6 +350,11 @@ public final class MapTerrainAtlas {
 
   public static boolean hasDetailAt(int x, int z) {
     return TILES.containsKey(new Key(x >> 4, z >> 4, 1, true, false));
+  }
+
+  public static boolean hasSharedDetailAt(int x, int z) {
+    var tile = TILES.get(new Key(x >> 4, z >> 4, 1, true, false));
+    return tile != null && tile.shared;
   }
 
   public static int tileCount() {

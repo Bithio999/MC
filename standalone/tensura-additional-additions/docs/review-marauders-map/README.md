@@ -11,10 +11,10 @@ The new scenarios check native registration/reincarnation eligibility and learne
 For the integrated client, copy a **disposable normal-generation save** into `/workspace/validation-marauders-map/client/saves/Marauders Map Review`, with the normal baseline runtime dependencies. The opt-in fixture refuses other directory names. It resets the review character and its pins, locates a real village, and moves the review player there. Never use a personal save.
 
 ```sh
-DISPLAY=:99 LIBGL_ALWAYS_SOFTWARE=1 ALSOFT_DRIVERS=null ./gradlew clean runClient -I docs/review-marauders-map/client.init.gradle
+DISPLAY=:99 LIBGL_ALWAYS_SOFTWARE=1 ALSOFT_DRIVERS=null ./gradlew clean runClient -PmapUiOnly=true -I docs/review-marauders-map/client.init.gradle
 ```
 
-The fixture selects the skill in Tensura’s native Unique menu and activates it through the native skill lifecycle. It exercises real map panning, zoom, recentering, help/legend, private pin create/edit/invalid input/confirmation/delete and reopen, real structure search including Tensura types and a native village marker, coordinate navigation without teleporting, terrain PNG persistence, and fitted map/pin controls at GUI scales 2 and 4. Screenshots and a pass/fail marker are written to `/workspace/validation-marauders-map/capture`.
+The original pre-1.16 fixture selects the skill in Tensura’s native Unique menu and activates it through the native skill lifecycle. It exercises real map panning, zoom, recentering, help/legend, private pin create/edit/invalid input/confirmation/delete and reopen, real structure search including Tensura types and a native village marker, coordinate navigation without teleporting, terrain PNG persistence, and fitted map/pin controls at GUI scales 2 and 4. Screenshots and a pass/fail marker are written to `/workspace/validation-marauders-map/capture`.
 
 Clean between profiles. The client fixture and the High Realm test preset must not enter a release; the distribution audit checks their exclusion.
 
@@ -25,3 +25,11 @@ The 1.14 extension additionally performs an actual cold stronghold-ring search f
 For a targeted travel rerun after the full original review has passed, add `-PmapTravelOnly=true` to the client command. This starts at the long-range search and native-menu handoff cases in the same guarded disposable world.
 
 The 1.15 automatic-discovery review runs with `-PmapSurveyOnly=true`. It opens a wide unexplored viewport at 300,000 / −310,000, waits for automatic vanilla/addon markers without Locate, pans to another area and changes zoom, checks that distant region files were not created and full terrain chunks were not loaded, then explicitly generates one native structure start to compare its exact type and bounding box. Require `passed-auto-structures.txt`; screenshots use the `marauders-map-auto-*` prefix.
+
+## 1.16 dimension atlas review
+
+Use `-PmapUiOnly=true` for the current UI review (the historical full sequence above describes the earlier permanent-button layout). This uses the same guarded disposable save and outputs `passed-ui.txt`. It exercises actual dropdown clicks and keyboard filtering, private pin create/edit/confirmation, the viewed dimension’s build-height validation, all vanilla dimension tabs, the Other dimensions dropdown and High Realm, selected-tab rendering, remembered cameras, and GUI scales 2 and 4. It checks that dimension browsing leaves the character in place.
+
+A disposable online FakePlayer without the skill explores a checkerboard build 8,000 blocks away. The fixture verifies automatic shared recording and receipt of actual shared surface detail, while the viewing client has no loaded chunk there. It captures the revised atlas, dropdowns, opaque dialogs and shared exploration. This is a simulated server roster with embedded channels, not a second connected human client.
+
+The native suite adds remote-session isolation, stale/unknown-dimension rejection, private remote pins, shared overview persistence and asynchronous detail palette round-tripping. JVM tests cover sparse explored-terrain mip levels, negative coordinates, layer isolation, replacement/removal and restoring the index from saved base entries.

@@ -43,7 +43,11 @@ public class MapStructureSearch {
   private Future<?> work;
 
   protected MapStructureSearch(ServerPlayer player, Holder<Structure> type, int x, int z) {
-    level = player.serverLevel();
+    this(player.serverLevel(), type, x, z);
+  }
+
+  protected MapStructureSearch(ServerLevel level, Holder<Structure> type, int x, int z) {
+    this.level = level;
     this.type = type;
     blockX = x;
     blockZ = z;

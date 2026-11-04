@@ -713,7 +713,7 @@
       "id": "marauders-map",
       "title": "Marauder's Map",
       "category": "Skills",
-      "summary": "Unique · A detailed world atlas with unvisited terrain, live players, real structures and private pins.",
+      "summary": "Unique · A dimension atlas with shared exploration, structures, live players and private pins.",
       "icon": "heavenlyrestriction:textures/skill/marauders_map.png",
       "keywords": [
         "open map",
@@ -726,7 +726,13 @@
         "players",
         "unexplored",
         "terrain",
-        "textures"
+        "textures",
+        "dimensions",
+        "nether",
+        "end",
+        "shared",
+        "exploration",
+        "context menu"
       ],
       "related": [
         "welcome",
@@ -737,45 +743,37 @@
         {
           "title": "Open Map · Active, Press",
           "lines": [
-            "Slot the learned Unique in Tensura’s normal menu and activate Open Map. Drag to pan and scroll to zoom at the cursor. Recenter/Home returns to you. Go to… centers the map at coordinates without moving your character. No aura or magicule cost.",
-            "Search players, structures and pins in the sidebar. Toggle Sites, Pins and Players independently. Nearby structures cluster when zoomed out. The ? button explains controls and marker colors."
+            "Slot the learned Unique in Tensura’s normal menu and activate Open Map. Drag to pan, scroll to zoom, and press Home or the compass button to return to your location. No resource cost or cooldown.",
+            "Click a marker on the map or in the list for its actions. Right-click empty map space and choose Add pin here…. Layers controls structures, pins and players. Map tools has Go to coordinates… and the map guide."
+          ]
+        },
+        {
+          "title": "Dimensions and shared exploration",
+          "lines": [
+            "The grass, crimson nylium and end-stone tabs show the Overworld, Nether and End. Hover for their names. The eye tab opens a searchable Other dimensions dropdown. Each dimension remembers its map position and zoom; changing tabs never moves your character.",
+            "Terrain explored by any online player is recorded on the server and shared, even if they do not own this skill. Actual explored surfaces and builds appear for everyone. Recording begins with this version and refreshes over time without forcing terrain loads. Custom pins remain private."
           ]
         },
         {
           "title": "Terrain and structures",
           "lines": [
-            "Pan or Go to… anywhere in the dimension, including unvisited/unloaded areas. Native terrain previews fill in progressively. Zoom in for block top-face textures, trees, roads and rooftops, relief and depth-shaded water. Initial previews show landforms and biome colors; surface features and player edits follow as native detail arrives. Live terrain is cached on this computer for each world and dimension.",
-            "World-generation structures, including addon types, appear automatically as you pan and zoom. Locate structure… searches up to 100,000 blocks around the map center in small steps. Show result centers the found marker. Escape cancels an active search. Move the map center to search another area."
+            "Pan anywhere, including unloaded terrain. Native previews fill in progressively; zoom in for block top-face textures, roads, roofs, trees, relief and water depth. Nether views look below the roof.",
+            "With Structures enabled under Layers, vanilla and addon markers appear automatically at every zoom, including unexplored regions. World-generation locations become confirmed when their structure generates. Dense sites cluster with counts; zoom in to separate them.",
+            "Locate structure… searches up to 100,000 blocks around the viewed map center. The map centers on a result automatically. Escape cancels a search. Structures OFF pauses automatic discovery. Player-built landmarks use custom pins."
           ]
         },
         {
-          "title": "Automatic structure markers",
+          "title": "Travel and players",
           "lines": [
-            "With Sites enabled, natural structure markers appear automatically for the visible map area at every zoom level, including unexplored regions. Pan or zoom to survey another area; Locate is not required. The bottom bar shows progress while discovery fills in.",
-            "Vanilla and addon structure locations follow native world-generation rules. Saved structures take precedence. Unvisited sites say World-generation location in their tooltip and become confirmed when the area generates. Dense sites cluster with counts; zoom in to separate them. Sites OFF pauses automatic discovery.",
-            "Automatic markers do not generate terrain or spawn mobs. Player-built structures use custom pins. Locate remains a separate 100,000-block search around the viewed map center."
-          ]
-        },
-        {
-          "title": "Travel to a structure",
-          "lines": [
-            "Select a structure or use Locate, then press Travel…. Choose a learned, usable coordinate-teleport skill. Spatial Motion, Spatial Manipulation, Instant Transmission and other native spatial-movement skills are supported.",
-            "The skill’s native menu opens with a clear surface arrival near the structure prefilled. Check or edit X/Y/Z, then confirm Warp. Preparing coordinates is free; the confirmed teleport keeps normal resource costs, charge time, mastery, cooldown and restrictions. The map does not grant teleport skills.",
-            "Rare structure searches can take longer; they run in the background and Escape cancels them."
-          ]
-        },
-        {
-          "title": "Live players",
-          "lines": [
-            "All online players appear, including those beyond render distance. Locations refresh twice per second. Your own arrow is gold; others have named cyan markers. Search/select a player, then Focus to center on them.",
-            "Players in other dimensions appear in the sidebar with dimension and coordinates; centering is disabled until you enter that dimension. Offline players disappear. Pins stay private."
+            "Select a structure in your current dimension and choose Travel… in its actions. Choose a learned usable coordinate-teleport skill. Its native menu opens with a safe surface arrival prefilled. Confirm Warp to teleport with that skill’s normal costs and restrictions. Merely browsing another dimension never grants cross-dimension travel.",
+            "All online player locations refresh twice per second, including players beyond render distance. Your arrow is gold; other players are cyan. Focus on map in a player’s actions switches to their dimension and centers on them. Offline players disappear."
           ]
         },
         {
           "title": "Custom pins",
           "lines": [
-            "Right-click the map or press Add pin/N. Set a name, X/Y/Z, one of eight colors and one of six icons. Save pin stores it privately on the server. Select a pin to edit, center or delete it; deletion requires confirmation.",
-            "Up to 256 pins per player across dimensions. Only this dimension’s pins are shown. Pins survive reconnects; other players do not see them."
+            "Right-click the map and choose Add pin here…, or press N for the map center. Set a name, X/Y/Z, one of eight colors and one of six icons. Select an existing pin to Focus, Edit or Delete it. Deletion requires confirmation.",
+            "Up to 256 private pins per player across dimensions. Only the viewed dimension’s pins appear. Pins survive reconnects and remain invisible to other players."
           ]
         }
       ]

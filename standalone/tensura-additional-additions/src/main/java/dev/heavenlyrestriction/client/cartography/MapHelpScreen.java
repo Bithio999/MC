@@ -1,7 +1,6 @@
 package dev.heavenlyrestriction.client.cartography;
 
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
@@ -21,25 +20,23 @@ public final class MapHelpScreen extends Screen {
     x = (width - w) / 2;
     y = (height - h) / 2;
     addRenderableWidget(
-        Button.builder(Component.literal("Back to map"), b -> onClose())
+        MapUi.button(Component.literal("Back to map"), b -> onClose())
             .bounds(x + 14, y + h - 33, w - 28, 20)
             .build());
   }
 
   @Override
   public void render(GuiGraphics g, int mx, int my, float partial) {
-    parent.render(g, -100, -100, partial);
-    g.fill(0, 0, width, height, 0xc010171d);
-    g.fill(x, y, x + w, y + h, 0xff202d34);
-    g.renderOutline(x, y, w, h, 0xff65726b);
+    MapUi.backdrop(g, width, height);
+    MapUi.panel(g, x, y, w, h);
     g.drawString(font, "MAP GUIDE", x + 14, y + 14, MaraudersMapScreen.GOLD, false);
     g.drawWordWrap(
         font,
         Component.literal(
             "Drag to pan · Scroll to zoom at the cursor\n"
-                + "Right-click to add a pin · Home to recenter\n"
-                + "F to search markers · N for a new pin\n"
-                + "Go to… moves the map to coordinates."),
+                + "Click a marker for its actions\n"
+                + "Right-click for a pin · Home finds you\n"
+                + "F searches · N creates a pin"),
         x + 14,
         y + 37,
         w - 28,
@@ -62,8 +59,8 @@ public final class MapHelpScreen extends Screen {
     g.drawWordWrap(
         font,
         Component.literal(
-            "Terrain appears anywhere you pan; zoom in for native surface detail. Pins are private."
-                + " Players in other dimensions appear in the list."),
+            "Dimension tabs switch the view. Explored terrain is shared between players. Custom"
+                + " pins are private."),
         x + 14,
         y + 155,
         w - 28,

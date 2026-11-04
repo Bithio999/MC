@@ -1,5 +1,13 @@
 # Changelog
 
+## Additions 1.16.0 — Dimension atlas and shared exploration
+
+- Replace the permanent marker-action button grid with contextual dropdowns; right-click empty map space for Add pin here. Add flat atlas controls, compact Layers/Map Tools menus and opaque dialogs that prevent parent text bleeding through.
+- Add illustrated Overworld, Nether and End tabs plus a searchable Other dimensions dropdown. Preserve each dimension’s camera; rotate session tokens and cancel old work when switching. Browse remotely without moving the character, and validate pins against the viewed dimension.
+- Record actual loaded terrain around all online players in a shared server atlas. Persist real surfaces with stable block-state palettes, use bounded asynchronous I/O and serve recorded detail to other clients. A sparse color pyramid shares exploration at distant zoom levels without scanning the world.
+- Keep private pins, live player markers, automatic structure discovery and Locate’s 100,000-block search around the viewed map center. Located results center automatically; marker travel retains native spatial-skill restrictions.
+
+
 ## Additions 1.15.0 — Automatic world structure markers
 
 - Discover vanilla and addon structure markers automatically for the visible map area, including unvisited/unloaded regions and wide zoom. Use native placement, biome and weighted variant generation on disposable unsaved chunks, and read existing starts first. Do not generate terrain, create new region files, add chunk tickets or spawn mobs for the automatic survey.

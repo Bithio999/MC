@@ -23,7 +23,7 @@ public final class MapService {
 
   public static final class Session {
     public final UUID token = UUID.randomUUID();
-    public final String dimension;
+    public final String dimension, originDimension;
     public long expiry, nextRequest, nextLocate, terrainTick;
     public int terrainRequests;
     public volatile int cx, cz, radius = 512;
@@ -37,7 +37,12 @@ public final class MapService {
     public final Map<String, MapTerrain.Pending> details = new LinkedHashMap<>();
 
     Session(ServerPlayer p) {
-      dimension = p.level().dimension().location().toString();
+      this(p, p.level().dimension().location().toString());
+    }
+
+    Session(ServerPlayer p, String dimension) {
+      this.dimension = dimension;
+      originDimension = p.level().dimension().location().toString();
       cx = p.getBlockX();
       cz = p.getBlockZ();
       expiry = p.serverLevel().getGameTime() + 12000;
@@ -45,8 +50,8 @@ public final class MapService {
   }
 
   public static final class Search extends MapStructureSearch {
-    Search(ServerPlayer p, Holder<Structure> type, int x, int z) {
-      super(p, type, x, z);
+    Search(ServerLevel level, Holder<Structure> type, int x, int z) {
+      super(level, type, x, z);
     }
   }
 
@@ -73,6 +78,19 @@ public final class MapService {
         out.append(Character.toUpperCase(word.charAt(0))).append(word.substring(1));
       }
     return out.toString();
+  }
+
+  public static ServerLevel level(ServerPlayer p, Session s) {
+    var id = ResourceLocation.parse(s.dimension);
+    var level =
+        p.server.getLevel(net.minecraft.resources.ResourceKey.create(Registries.DIMENSION, id));
+    return java.util.Objects.requireNonNull(level, "Viewed map dimension is no longer available");
+  }
+
+  public static int plane(ServerPlayer p, ServerLevel level) {
+    return level.dimensionType().hasCeiling()
+        ? (level == p.serverLevel() ? Math.floorDiv(p.getBlockY(), 16) * 16 : 64)
+        : Integer.MAX_VALUE;
   }
 
   public static CompoundTag context(ServerPlayer p) {
@@ -118,25 +136,33 @@ public final class MapService {
   }
 
   public static boolean validPin(ServerPlayer p, CompoundTag t) {
+    return validPin(p, t, p.serverLevel());
+  }
+
+  private static boolean validPin(ServerPlayer p, CompoundTag t, ServerLevel level) {
     String label = t.getString("name");
     return !label.isBlank()
         && label.length() <= 64
         && label.codePoints().noneMatch(c -> Character.isISOControl(c) || c == 167)
         && Math.abs((long) t.getInt("x")) <= 29999984
         && Math.abs((long) t.getInt("z")) <= 29999984
-        && t.getInt("y") >= p.level().getMinBuildHeight()
-        && t.getInt("y") < p.level().getMaxBuildHeight()
+        && t.getInt("y") >= level.getMinBuildHeight()
+        && t.getInt("y") < level.getMaxBuildHeight()
         && t.getInt("color") >= 0
         && t.getInt("color") < 8
         && t.getInt("icon") >= 0
         && t.getInt("icon") < 6
-        && p.level()
+        && level
             .getWorldBorder()
             .isWithinBounds(new BlockPos(t.getInt("x"), t.getInt("y"), t.getInt("z")));
   }
 
   public static boolean pin(ServerPlayer p, CompoundTag t) {
-    if (!owns(p) || !validPin(p, t)) return false;
+    return pin(p, t, p.serverLevel());
+  }
+
+  private static boolean pin(ServerPlayer p, CompoundTag t, ServerLevel level) {
+    if (!owns(p) || !validPin(p, t, level)) return false;
     UUID id = t.hasUUID("uuid") ? t.getUUID("uuid") : UUID.randomUUID();
     var d = MapData.get(p.server);
     if (t.hasUUID("uuid") && d.pins(p.getUUID()).stream().noneMatch(a -> a.id().equals(id)))
@@ -145,7 +171,7 @@ public final class MapService {
         p.getUUID(),
         new MapData.Pin(
             id,
-            p.level().dimension().location().toString(),
+            level.dimension().location().toString(),
             t.getString("name").strip(),
             t.getInt("x"),
             t.getInt("y"),
@@ -158,7 +184,12 @@ public final class MapService {
     var s = session(p);
     if (s == null || !s.token.equals(token)) return;
     if (!owns(p)
-        || !s.dimension.equals(p.level().dimension().location().toString())
+        || !p.server
+            .levelKeys()
+            .contains(
+                net.minecraft.resources.ResourceKey.create(
+                    Registries.DIMENSION, ResourceLocation.parse(s.dimension)))
+        || !s.originDimension.equals(p.level().dimension().location().toString())
         || p.level().getGameTime() > s.expiry) {
       close(p);
       var end = context(p);
@@ -179,6 +210,33 @@ public final class MapService {
     s.expiry = now + 12000;
     if (!action.equals("terrain")) s.message = "";
     var data = MapData.get(p.server);
+    if (action.equals("dimension")) {
+      var id = ResourceLocation.tryParse(t.getString("dimension"));
+      var target =
+          id == null
+              ? null
+              : p.server.getLevel(
+                  net.minecraft.resources.ResourceKey.create(Registries.DIMENSION, id));
+      if (target == null
+          || Math.abs((long) t.getInt("x")) > MapView.LIMIT
+          || Math.abs((long) t.getInt("z")) > MapView.LIMIT) {
+        var rejected = snapshot(p, s);
+        rejected.putBoolean("dimensionFailed", true);
+        rejected.putString("message", "That dimension is no longer available.");
+        MapNetwork.send(p, rejected);
+        return;
+      }
+      close(p);
+      var next = new Session(p, id.toString());
+      next.cx = t.getInt("x");
+      next.cz = t.getInt("z");
+      SESSIONS.put(p.getUUID(), next);
+      var reply = snapshot(p, next);
+      reply.putUUID("previousSession", s.token);
+      reply.putBoolean("dimensionChanged", true);
+      MapNetwork.send(p, reply);
+      return;
+    }
     switch (action) {
       case "terrain" -> {
         if (s.terrainTick != now) {
@@ -210,7 +268,7 @@ public final class MapService {
       }
       case "pin" ->
           s.message =
-              pin(p, t)
+              pin(p, t, level(p, s))
                   ? "Pin saved."
                   : "Could not save pin. Use a name, valid coordinates and at most 256 pins.";
       case "delete" -> {
@@ -252,10 +310,10 @@ public final class MapService {
           s.message =
               "Found "
                   + name(id.toString())
-                  + " in recorded structures. Select Show result to center it.";
+                  + " in recorded structures. The map will center on the result.";
           break;
         }
-        s.search = new Search(p, holder.get(), s.cx, s.cz);
+        s.search = new Search(level(p, s), holder.get(), s.cx, s.cz);
         s.message =
             s.search.done
                 ? (s.search.error.isEmpty()
@@ -312,11 +370,17 @@ public final class MapService {
     generationBudget = 2;
     MapTerrain.tick();
     var server = e.getServer();
+    MapExploration.tick(server);
     for (var p : server.getPlayerList().getPlayers()) {
       var s = session(p);
       if (s == null) continue;
       if (!owns(p)
-          || !s.dimension.equals(p.level().dimension().location().toString())
+          || !p.server
+              .levelKeys()
+              .contains(
+                  net.minecraft.resources.ResourceKey.create(
+                      Registries.DIMENSION, ResourceLocation.parse(s.dimension)))
+          || !s.originDimension.equals(p.level().dimension().location().toString())
           || p.level().getGameTime() > s.expiry) {
         close(p);
         var t = context(p);
@@ -343,7 +407,7 @@ public final class MapService {
   public static void advance(ServerPlayer p, Session s) {
     var job = s.search;
     if (job == null || job.done) return;
-    var level = p.serverLevel();
+    var level = level(p, s);
     if (job.pending != null) {
       if (!job.pending.isDone()) {
         job.refreshTicket();
@@ -376,7 +440,7 @@ public final class MapService {
             }
             job.stop();
             job.done = true;
-            s.message = "Found " + name(id) + ". Select Show result to center it.";
+            s.message = "Found " + name(id) + ". The map will center on the result.";
             return;
           }
         }
@@ -410,6 +474,22 @@ public final class MapService {
 
   public static CompoundTag snapshot(ServerPlayer p, Session s) {
     var t = context(p);
+    var level = level(p, s);
+    t.putString("playerDimension", s.originDimension);
+    t.putString("dimension", s.dimension);
+    t.putString("dimensionName", name(s.dimension));
+    t.putInt("minY", level.getMinBuildHeight());
+    t.putInt("maxY", level.getMaxBuildHeight());
+    t.putInt("plane", plane(p, level));
+    var dimensions = new ListTag();
+    for (var other : p.server.getAllLevels()) {
+      var dimension = new CompoundTag();
+      String id = other.dimension().location().toString();
+      dimension.putString("id", id);
+      dimension.putString("name", name(id));
+      dimensions.add(dimension);
+    }
+    t.put("dimensions", dimensions);
     t.putUUID("session", s.token);
     t.putInt("viewX", s.cx);
     t.putInt("viewZ", s.cz);
@@ -515,6 +595,7 @@ public final class MapService {
             });
     MapAutoStructures.clear();
     MapTerrain.clear();
+    MapExploration.clear();
     SESSIONS.clear();
   }
 

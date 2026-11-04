@@ -7,12 +7,12 @@
 | Skill data | Value |
 | --- | --- |
 | Tier | Unique |
-| Obtaining | Normal reincarnation Unique pool; eligible for Fettered Human |
-| Role | World terrain, live players, structures and custom pins |
+| Obtaining | Reincarnation Unique pool; eligible for Fettered Human |
+| Role | Dimension atlas, shared exploration, structures, players and private pins |
 | Cost / cooldown | None |
 | Damage type | None |
 
-![The interactive map showing real village terrain and structure markers](../media/marauders-map.png)
+![The dimension atlas and its compact controls](../media/marauders-map-redesign.png)
 
 <a id="open-map"></a>
 
@@ -22,41 +22,46 @@ Slot the learned skill in Tensura’s **Skills → Unique** menu and activate **
 
 | Control | Action |
 | --- | --- |
-| Drag | Pan the map |
-| Mouse wheel / + / − | Zoom at the cursor |
-| Recenter / Home | Return to your position |
-| Focus | Center the selected marker |
-| Travel… | Choose an owned spatial skill and prefill its teleport menu for a structure |
-| Go to… | Center on X/Z coordinates; your character stays in place |
-| Sidebar search | Filter player, structure and pin names, types or coordinates |
-| Sites / Pins / Players | Show or hide each marker group |
-| ? | Controls and color legend |
+| Drag / mouse wheel | Pan / zoom at the cursor |
+| Compass button / Home | Return to your location |
+| Click a marker or sidebar entry | Open its relevant actions |
+| Right-click empty map space | Open **Add pin here…** |
+| Layers | Show or hide structures, pins and players |
+| Map tools | Coordinate navigation, located result and map guide |
+| Sidebar search / F | Filter marker names, types, players or coordinates |
+| N | Create a pin at the map center |
 
-North stays at the top. The gold arrow shows your position and facing. The bottom bar shows cursor coordinates and a distance scale. Crowded structure markers cluster as you zoom out; zoom in or use the sidebar to choose a marker.
+North stays at the top. The scale bar shows distance; the footer shows cursor coordinates and survey progress. Nearby structures cluster with counts when zoomed out. Zoom in to separate them.
 
-## Terrain and structures
+![Actions appear when a marker is selected](../media/marauders-map-marker-actions.png)
 
-Pan or **Go to…** anywhere in the dimension, including places nobody has visited. A seed-based native terrain preview fills in progressively, followed by finer detail. You do not need to travel there.
+## Dimension tabs
 
-Zoom in for native surface detail: block top-face textures, roads, roofs, trees, terrain relief, subtle elevation contours and depth-shaded water. Distant detail is generated in small batches; allow it time to fill in. The initial terrain preview shows landforms and biome colors; surface features and player edits appear when native detail arrives. Newly visited terrain updates from the live client and is cached on this computer, separately for each world and dimension.
+The **grass block**, **crimson nylium** and **end stone** tabs show the **Overworld**, **Nether** and **End**. Hover over a tab to see its name. The selected dimension has a colored underline.
 
-![Native surface textures and live player locations](../media/marauders-map-players.png)
+The **eye** tab opens **Other dimensions**, a scrollable dropdown for addon dimensions. Type to filter it, then choose a dimension. Each dimension remembers its map position and zoom. Browsing never teleports your character.
 
-![Unvisited terrain over 100,000 blocks from the character](../media/marauders-map-unexplored.png)
+![The searchable Other dimensions dropdown](../media/marauders-map-other-dimensions.png)
 
-![A broad terrain overview](../media/marauders-map-overview.png)
+![Viewing the Nether below its roof](../media/marauders-map-nether.png)
 
-With **Sites: ON**, structure markers appear automatically for the part of the world you are viewing, **at every zoom level**, including unexplored regions. Pan or zoom to discover another area; **Locate is not required**. The bottom bar shows discovery progress while new areas fill in.
+![Viewing The High Realm from the atlas](../media/marauders-map-high-realm.png)
 
-Locations follow the world’s generation rules, including native/addon structure variants, placement frequency and biome requirements. Existing saved structures take precedence. Unvisited locations are labeled **World-generation location** in their tooltip; visiting or generating that area confirms the start. These markers do not require generating terrain or spawning mobs in the background.
+## Terrain and shared exploration
 
-![Automatic structure markers in an unexplored zoomed-out region](../media/marauders-map-auto-structures.png)
+Pan anywhere, including places nobody has visited. Native terrain previews fill in progressively; zoom in for block top-face textures, roads, roofs, trees, relief and depth-shaded water. Distant detail arrives in small batches. Nether maps look below the roof.
 
-![New markers revealed by panning](../media/marauders-map-auto-pan.png)
+**Exploration is shared between players on the same server.** Actual terrain and builds around all online players are recorded, including players without this skill. Those recorded surfaces can be viewed by other players without visiting or loading the area on their client. Recording starts with this version and refreshes gradually as players explore. Existing local map caches still work. **Custom pins remain private.**
 
-Dense views group nearby sites and show their full count; zoom in to separate them. **Sites: OFF** hides the markers and pauses automatic discovery. Player-built structures use your own pins. The separate **Locate** search still starts from the center of the viewed map.
+![A distant player’s actual build appears through shared exploration](../media/marauders-map-shared-exploration.png)
 
-**Locate structure…** opens a searchable list of structure types. Choose one and press **Start search** to search up to **100,000 blocks around the map center**. **Show result** centers the found marker. The search runs in the background; rare types can take longer. **Escape cancels** an active search. If nothing is found, move the map center and search another area; some types do not generate in the current dimension.
+## Structure markers and Locate
+
+Enable **Structures** under **Layers** to show automatic vanilla and addon markers for the viewed area, at every zoom level and in unexplored regions. Panning or zooming starts discovery; **Locate is not required**. The footer reports progress. Turning Structures off pauses discovery.
+
+Locations follow native generation rules, variants, frequency and biome requirements. Saved structures take precedence. Unvisited sites say **World-generation location** in their tooltip; actual generation confirms the start. Automatic markers do not require generating terrain or spawning mobs. Use custom pins for player-built landmarks.
+
+**Locate structure…** searches a chosen structure type up to **100,000 blocks around the viewed map center**. The search runs in the background and centers on a result automatically. **Map tools → Show located structure** returns to it later. **Escape cancels** a search. If nothing is found, pan to another area and try again.
 
 ![Search native and addon structure types](../media/marauders-map-structure-search.png)
 
@@ -66,37 +71,27 @@ Dense views group nearby sites and show their full count; zoom in to separate th
 | Temples and pyramids | Orange |
 | Fortresses, outposts and strongholds | Coral |
 | Ocean structures | Blue |
-| Ancient cities, trial chambers and mineshafts | Violet |
+| Ancient cities, trials and mineshafts | Violet |
 | Other and addon structures | Teal |
 
-## Travel to a structure
+## Travel and player locations
 
-Select a structure marker, or find one with **Locate structure…** and press **Show result**, then press **Travel…**. Choose one of your **learned, usable coordinate-teleport skills**. **Spatial Motion**, **Spatial Manipulation**, **Instant Transmission** and other skills using Tensura’s spatial-movement interface are supported.
+Select a structure in your character’s current dimension and choose **Travel…** from its actions. Choose a learned, usable coordinate-teleport skill such as **Spatial Motion**, **Spatial Manipulation** or **Instant Transmission**.
 
-![Choose an owned teleport skill](../media/marauders-map-travel-skills.png)
+The skill’s native menu opens with **X, Y, Z and dimension prefilled** for a safe surface arrival near the structure. Check the coordinates and confirm **Warp**. Underground structures use a surface approach. If no clear ground is available, choose another structure.
 
-Tensura’s own teleport menu opens with **X, Y, Z and dimension prefilled** for a clear surface arrival near the structure. Check or edit the coordinates, then confirm with the native **Warp** button. Underground structures use a surface approach above them. If that chunk has no clear ground, the map reports that it cannot prepare an arrival.
+![The native teleport menu with arrival coordinates filled in](../media/marauders-map-spatial-motion.png)
 
-![Spatial Motion with a prefilled destination](../media/marauders-map-spatial-motion.png)
+Preparing coordinates is free. Confirming Warp uses the skill’s normal resource cost, charge time, mastery, cooldown and restrictions. The atlas grants no teleport skill or cross-dimension travel; remote tabs are for viewing.
 
-![The same destination in Instant Transmission’s native menu](../media/marauders-map-instant-transmission.png)
-
-Opening the map, choosing a skill and preparing coordinates do not teleport you or charge resources. The confirmed teleport uses the chosen skill’s **normal resource cost, charge time, mastery effects, cooldown and restrictions**. The map does not grant a teleport skill. **Travel…** is disabled without a usable compatible skill.
-
-## Player locations
-
-**Players** shows all online players, including those outside your render distance. The server refreshes their locations twice per second. Your own arrow stays gold; other players have labeled cyan markers. Search a player’s name, select them, and press **Focus** to center on them.
-
-Players in other dimensions appear in the sidebar with their dimension and coordinates. Their markers appear on that dimension’s map; centering is disabled while you are in another dimension. Offline players disappear. Private pins remain private.
-
-![A player in another dimension](../media/marauders-map-dimensions.png)
+**Players** shows all online players, including those beyond render distance. Locations update twice per second. Your arrow is gold; other players have named cyan markers. Select a player and choose **Focus on map** to center their location and switch to their dimension if needed. Offline players disappear.
 
 ## Custom pins
 
-**Right-click the map**, press **Add pin**, or press **N**. Give the pin a name and coordinates, then choose from **8 colors** and **6 icons**: Pin, Home, Danger, Treasure, Portal or Camp. Press **Save pin**.
+**Right-click empty map space → Add pin here…**, or press **N** for the map center. Give the pin a name and X/Y/Z coordinates, then choose from **8 colors** and **6 icons**: Pin, Home, Danger, Treasure, Portal or Camp.
 
-![Name, coordinates and custom pin appearance](../media/marauders-map-pin-editor.png)
+![The right-click pin menu](../media/marauders-map-pin-context.png)
 
-Select a pin in the sidebar or on the map to center on it, edit it, or delete it. Deletion requires confirmation. Up to **256 pins per player across dimensions** are stored privately on the server. They survive reconnects; other players cannot view or edit them. Only the current dimension’s pins appear.
+![The pin editor](../media/marauders-map-pin-editor.png)
 
-![A saved and selected custom pin](../media/marauders-map-custom-pin.png)
+Select a pin to open **Focus on map**, **Edit pin…** or **Delete pin…**. Deletion requires confirmation. Up to **256 pins per player across dimensions** are saved privately on the server and survive reconnects. Only the viewed dimension’s pins appear; other players cannot see or edit them.

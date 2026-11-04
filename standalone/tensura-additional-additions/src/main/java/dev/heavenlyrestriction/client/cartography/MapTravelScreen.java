@@ -2,7 +2,6 @@ package dev.heavenlyrestriction.client.cartography;
 
 import java.util.*;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.nbt.*;
 import net.minecraft.network.chat.Component;
@@ -31,7 +30,7 @@ public final class MapTravelScreen extends Screen {
     for (int n = 0; n < count && offset + n < skills.size(); n++) {
       var skill = skills.get(offset + n);
       addRenderableWidget(
-          Button.builder(
+          MapUi.button(
                   Component.literal(font.plainSubstrByWidth(skill.getString("name"), w - 44)),
                   b -> {
                     var t = new CompoundTag();
@@ -44,17 +43,15 @@ public final class MapTravelScreen extends Screen {
               .build());
     }
     addRenderableWidget(
-        Button.builder(Component.literal("Back to map"), b -> onClose())
+        MapUi.button(Component.literal("Back to map"), b -> onClose())
             .bounds(x + 14, y + h - 33, w - 28, 20)
             .build());
   }
 
   @Override
   public void render(GuiGraphics g, int mx, int my, float partial) {
-    parent.render(g, -100, -100, partial);
-    g.fill(0, 0, width, height, 0xc010171d);
-    g.fill(x, y, x + w, y + h, 0xff202d34);
-    g.renderOutline(x, y, w, h, 0xff65726b);
+    MapUi.backdrop(g, width, height);
+    MapUi.panel(g, x, y, w, h);
     g.drawString(
         font,
         "TRAVEL TO " + font.plainSubstrByWidth(target.getString("name"), w - 88),

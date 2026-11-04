@@ -273,6 +273,7 @@ public final class MapAtlas {
     int bx = Math.floorMod(cp.x, 16) * 16, bz = Math.floorMod(cp.z, 16) * 16;
     boolean below = level.dimensionType().hasCeiling();
     if (mc.screen instanceof MaraudersMapScreen map
+        && map.dimension().equals(dimension)
         && map.view.scale >= 1
         && map.visibleChunk(cp.x, cp.z))
       MapTerrainAtlas.local(chunk, below ? ceilingPlane : Integer.MAX_VALUE);

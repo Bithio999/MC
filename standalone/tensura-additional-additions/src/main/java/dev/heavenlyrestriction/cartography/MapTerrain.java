@@ -71,12 +71,11 @@ public final class MapTerrain {
     if (!valid(s, x, z, step, detail)) return;
     String id = (detail ? "d/" : quick ? "q/" : "p/") + x + "/" + z + "/" + step;
     if (s.terrain.size() >= MAX_PENDING || !s.terrain.add(id)) return;
-    var level = p.serverLevel();
-    int plane =
-        level.dimensionType().hasCeiling()
-            ? Math.floorDiv(p.getBlockY(), 16) * 16
-            : Integer.MAX_VALUE;
+    var level = MapService.level(p, s);
+    int plane = MapService.plane(p, level);
     if (detail) {
+      if (MapExploration.request(p, s, level, x, z, plane, id, tile -> deliver(p, s, id, tile)))
+        return;
       if (ticks < nextDetail
           || ACTIVE.size() >= 2
           || s.details.size() >= 2
@@ -138,7 +137,7 @@ public final class MapTerrain {
                     CACHE.put(key, result);
                     while (CACHE.size() > 512) CACHE.remove(CACHE.keySet().iterator().next());
                   }
-                  if (MapService.session(p) != s || !MapService.owns(p)) return;
+                  if (MapService.session(p) != s || s.terrainClosed || !MapService.owns(p)) return;
                   if (result == null) {
                     s.terrain.remove(id);
                     reject(p, s, id);
@@ -307,6 +306,11 @@ public final class MapTerrain {
     t.putUUID("session", s.token);
     t.putBoolean("terrain", true);
     t.putString("tile", id);
+    t.putString("dimension", s.dimension);
+    t.putIntArray(
+        "explored",
+        MapExploration.overlay(
+            p.server, s.dimension, MapService.plane(p, MapService.level(p, s)), t));
     MapNetwork.send(p, t);
   }
 
@@ -405,8 +409,8 @@ public final class MapTerrain {
         var result = pending.future.getNow(null);
         if (result != null && result.isSuccess()) {
           var chunk = result.orElse(null);
-          MapService.capture(p.serverLevel(), chunk);
-          deliver(p, s, e.getKey(), detail(p.serverLevel(), chunk, pending.plane));
+          MapService.capture(pending.level, chunk);
+          deliver(p, s, e.getKey(), detail(pending.level, chunk, pending.plane));
           continue;
         }
       } catch (RuntimeException ignored) {

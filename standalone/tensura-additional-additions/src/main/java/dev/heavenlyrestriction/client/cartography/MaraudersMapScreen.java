@@ -33,13 +33,16 @@ public final class MaraudersMapScreen extends Screen {
   public static final String[] ICONS = {"Pin", "Home", "Danger", "Treasure", "Portal", "Camp"};
   public final MapView view = new MapView();
   private CompoundTag state;
-  private final UUID token;
+  private UUID token;
   private int left, top, mapW, mapH, side, listTop, listBottom, scroll, age, refreshAt;
   private boolean structures = true, pins = true, players = true, dragging, moved, returned;
   private double downX, downY;
   private String selected = "";
   private EditBox search;
-  private Button centerSelected, edit, delete, showResult, travel;
+  private MapPopup popup;
+  private String pendingDimension = "";
+  private final Map<String, double[]> dimensionViews = new HashMap<>();
+  private String lastFound = "";
   private List<CompoundTag> entries = List.of();
   private final List<Hit> hits = new ArrayList<>();
 
@@ -49,6 +52,7 @@ public final class MaraudersMapScreen extends Screen {
     super(Component.literal("Marauder's Map"));
     this.state = state.copy();
     token = state.getUUID("session");
+    MapTerrainAtlas.clear();
     MapTerrainAtlas.session(token);
     var p = Minecraft.getInstance().player;
     view.center(p == null ? 0 : p.getX(), p == null ? 0 : p.getZ());
@@ -73,7 +77,12 @@ public final class MaraudersMapScreen extends Screen {
       MapTerrainAtlas.receive(data);
       return;
     }
-    if (data.hasUUID("world")) MapAtlas.context(data.getUUID("world"), data.getString("dimension"));
+    if (data.hasUUID("world"))
+      MapAtlas.context(
+          data.getUUID("world"),
+          data.contains("playerDimension")
+              ? data.getString("playerDimension")
+              : data.getString("dimension"));
     var mc = Minecraft.getInstance();
     MaraudersMapScreen screen = null;
     if (mc.screen instanceof MaraudersMapScreen m) screen = m;
@@ -81,7 +90,28 @@ public final class MaraudersMapScreen extends Screen {
     else if (mc.screen instanceof MapStructureScreen s) screen = s.parent;
     else if (mc.screen instanceof MapHelpScreen h) screen = h.parent;
     else if (mc.screen instanceof MapTravelScreen t) screen = t.parent;
+    if (screen != null
+        && data.getBoolean("dimensionChanged")
+        && data.hasUUID("previousSession")
+        && screen.token.equals(data.getUUID("previousSession"))) {
+      screen.token = data.getUUID("session");
+      screen.state = data.copy();
+      screen.pendingDimension = "";
+      screen.selected = "";
+      screen.scroll = 0;
+      screen.lastFound = "";
+      screen.popup = null;
+      double[] saved = screen.dimensionViews.get(data.getString("dimension"));
+      screen.view.center(data.getInt("viewX"), data.getInt("viewZ"));
+      if (saved != null) screen.view.scale = saved[2];
+      MapTerrainAtlas.clear();
+      MapTerrainAtlas.session(screen.token);
+      if (mc.screen != screen) mc.setScreen(screen);
+      else screen.rebuildWidgets();
+      return;
+    }
     if (screen != null && data.hasUUID("session") && screen.token.equals(data.getUUID("session"))) {
+      if (data.getBoolean("dimensionFailed")) screen.pendingDimension = "";
       if (data.contains("travelOptions")) {
         mc.setScreen(
             new MapTravelScreen(
@@ -128,7 +158,18 @@ public final class MaraudersMapScreen extends Screen {
     if (screen != null && data.hasUUID("session") && screen.token.equals(data.getUUID("session"))) {
       if (data.getBoolean("playersOnly"))
         screen.state.put("players", data.getList("players", Tag.TAG_COMPOUND).copy());
-      else screen.state = data.copy();
+      else {
+        screen.state = data.copy();
+        if (data.contains("found")) {
+          var found = data.getCompound("found");
+          if (!found.getString("id").equals(screen.lastFound)) {
+            screen.lastFound = found.getString("id");
+            screen.selected = screen.lastFound;
+            screen.search.setValue("");
+            screen.center(found.getInt("x"), found.getInt("z"));
+          }
+        }
+      }
       screen.filter();
     }
   }
@@ -140,9 +181,7 @@ public final class MaraudersMapScreen extends Screen {
 
   private Button button(int x, int y, int w, String label, Runnable action) {
     var b =
-        Button.builder(Component.literal(label), ignore -> action.run())
-            .bounds(x, y, w, 20)
-            .build();
+        MapUi.button(Component.literal(label), ignore -> action.run()).bounds(x, y, w, 20).build();
     addRenderableWidget(b);
     return b;
   }
@@ -150,15 +189,16 @@ public final class MaraudersMapScreen extends Screen {
   @Override
   protected void init() {
     String savedQuery = search == null ? "" : search.getValue();
-    side = Math.clamp(width / 4, 166, 224);
+    side = Math.clamp(width / 4, 148, 210);
     left = side + 12;
-    top = 44;
+    top = 49;
     mapW = Math.max(40, width - left - 10);
-    mapH = Math.max(40, height - top - 43);
-    listTop = 100;
-    listBottom = height - 111;
+    mapH = Math.max(40, height - top - 39);
+    listTop = 103;
+    listBottom = height - 48;
+    popup = null;
     search =
-        new EditBox(font, 10, 53, side - 8, 18, Component.literal("Search structures and pins"));
+        new EditBox(font, 10, 49, side - 8, 18, Component.literal("Search structures and pins"));
     search.setMaxLength(96);
     search.setValue(savedQuery);
     search.setHint(Component.literal("Search markers…"));
@@ -168,131 +208,244 @@ public final class MaraudersMapScreen extends Screen {
           filter();
         });
     addRenderableWidget(search);
-    button(
-        10,
-        76,
-        (side - 12) / 3,
-        structures ? "Sites: ON" : "Sites: OFF",
-        () -> {
-          structures = !structures;
-          String q = search.getValue();
-          rebuildWidgets();
-          search.setValue(q);
-          filter();
-        });
-    button(
-        12 + (side - 12) / 3,
-        76,
-        (side - 12) / 3,
-        pins ? "Pins: ON" : "Pins: OFF",
-        () -> {
-          pins = !pins;
-          String q = search.getValue();
-          rebuildWidgets();
-          search.setValue(q);
-          filter();
-        });
-    button(
-        14 + 2 * ((side - 12) / 3),
-        76,
-        (side - 12) / 3,
-        players ? "Players ✓" : "Players −",
-        () -> {
-          players = !players;
-          rebuildWidgets();
-          filter();
-        });
-    button(left, 19, 22, "−", () -> zoom(-1, left + mapW / 2d, top + mapH / 2d));
-    button(left + 25, 19, 22, "+", () -> zoom(1, left + mapW / 2d, top + mapH / 2d));
-    button(left + (mapW < 205 ? 46 : 52), 19, mapW < 205 ? 50 : 88, "Recenter", this::centerPlayer);
-    int right = left + mapW;
-    button(
-        right - (mapW < 205 ? 32 : 62),
-        19,
-        mapW < 205 ? 32 : 62,
-        mapW < 205 ? "X" : "Close",
-        this::onClose);
-    centerSelected =
-        button(
+    button(10, 74, (side - 12) / 2, "Layers ▾", this::layersMenu);
+    button(12 + (side - 12) / 2, 74, (side - 12) / 2, "Map tools ▾", this::toolsMenu);
+    String[] dimensions = {"minecraft:overworld", "minecraft:the_nether", "minecraft:the_end"};
+    String[] labels = {"Overworld", "The Nether", "The End"};
+    net.minecraft.world.item.Item[] art = {
+      net.minecraft.world.item.Items.GRASS_BLOCK,
+      net.minecraft.world.item.Items.CRIMSON_NYLIUM,
+      net.minecraft.world.item.Items.END_STONE
+    };
+    int[] accent = {0xff9acb83, 0xffef9a72, 0xffd0b0f0};
+    for (int i = 0; i < 3; i++) {
+      String id = dimensions[i];
+      var tab =
+          new MapDimensionTab(
+              left + i * 34,
+              10,
+              labels[i],
+              art[i],
+              dimension().equals(id),
+              accent[i],
+              () -> switchDimension(id));
+      tab.active = hasDimension(id);
+      addRenderableWidget(tab);
+    }
+    boolean other = !Arrays.asList(dimensions).contains(dimension());
+    addRenderableWidget(
+        new MapDimensionTab(
+            left + 102,
             10,
-            height - 105,
-            (side - 12) / 3,
-            "Focus",
-            () -> {
-              var m = chosen();
-              if (m != null) {
-                view.center(m.getInt("x"), m.getInt("z"));
-                refreshAt = age + 1;
-              }
-            });
+            other ? "Other · " + state.getString("dimensionName") : "Other dimensions",
+            net.minecraft.world.item.Items.ENDER_EYE,
+            other,
+            TEAL,
+            this::otherDimensions));
+    var recenter = button(left + mapW - 48, 14, 22, "⌖", this::centerPlayer);
+    recenter.setTooltip(Tooltip.create(Component.literal("Your location · Home")));
+    var close = button(left + mapW - 22, 14, 22, "×", this::onClose);
+    close.setTooltip(Tooltip.create(Component.literal("Close map")));
     button(
-        12 + (side - 12) / 3,
-        height - 105,
-        (side - 12) / 3,
-        "Go to…",
-        () -> minecraft.setScreen(MapPinScreen.gotoPoint(this)));
-    travel =
-        button(
-            14 + 2 * ((side - 12) / 3),
-            height - 105,
-            (side - 12) / 3,
-            "Travel…",
-            () -> {
-              var m = travelTarget();
-              if (m != null) {
-                var t = new CompoundTag();
-                t.putString("id", m.getString("id"));
-                request("routes", t);
-              }
-            });
-    button(10, height - 81, (side - 12) / 2, "Add pin", () -> pinAt(view.x, view.z));
-    edit =
-        button(
-            12 + (side - 12) / 2,
-            height - 81,
-            (side - 12) / 2,
-            "Edit pin",
-            () -> {
-              var m = chosen();
-              if (m != null && m.getBoolean("pin")) minecraft.setScreen(new MapPinScreen(this, m));
-            });
+        left + mapW - 49,
+        top + mapH - 25,
+        20,
+        "−",
+        () -> zoom(-1, left + mapW / 2d, top + mapH / 2d));
+    button(
+        left + mapW - 26,
+        top + mapH - 25,
+        20,
+        "+",
+        () -> zoom(1, left + mapW / 2d, top + mapH / 2d));
     button(
         10,
-        height - 57,
+        height - 34,
         side - 8,
         "Locate structure…",
         () ->
             minecraft.setScreen(
                 new MapStructureScreen(this, state.getList("types", Tag.TAG_COMPOUND))));
-    delete =
-        button(
-            10,
-            height - 33,
-            (side - 12) / 2,
-            "Delete pin",
-            () -> {
-              var m = chosen();
-              if (m != null && m.getBoolean("pin"))
-                minecraft.setScreen(MapPinScreen.delete(this, m));
-            });
-    showResult =
-        button(
-            12 + (side - 12) / 2,
-            height - 33,
-            (side - 12) / 2,
-            "Show result",
-            () -> {
-              if (state.contains("found")) {
-                var m = state.getCompound("found");
-                search.setValue("");
-                view.center(m.getInt("x"), m.getInt("z"));
-                selected = m.getString("id");
-                refreshAt = age + 1;
-              }
-            });
-    button(side - 22, 8, 20, "?", () -> minecraft.setScreen(new MapHelpScreen(this)));
     filter();
     refreshAt = age + 1;
+  }
+
+  public String dimension() {
+    return state.getString("dimension");
+  }
+
+  int minY() {
+    return state.contains("minY") ? state.getInt("minY") : minecraft.level.getMinBuildHeight();
+  }
+
+  int maxY() {
+    return state.contains("maxY") ? state.getInt("maxY") : minecraft.level.getMaxBuildHeight();
+  }
+
+  private boolean localDimension() {
+    return minecraft.level != null
+        && dimension().equals(minecraft.level.dimension().location().toString());
+  }
+
+  private boolean hasDimension(String id) {
+    return state.getList("dimensions", Tag.TAG_COMPOUND).stream()
+        .anyMatch(t -> ((CompoundTag) t).getString("id").equals(id));
+  }
+
+  private void menu(String title, List<MapPopup.Action> actions, int x, int y, boolean search) {
+    dragging = false;
+    this.search.setFocused(false);
+    clearFocus();
+    popup = new MapPopup(title, actions, x, y, width, height, search);
+  }
+
+  private void layersMenu() {
+    menu(
+        "Map layers",
+        List.of(
+            new MapPopup.Action(
+                (structures ? "✓ " : "  ") + "Structures",
+                () -> {
+                  structures = !structures;
+                  filter();
+                  refresh();
+                }),
+            new MapPopup.Action(
+                (pins ? "✓ " : "  ") + "Custom pins",
+                () -> {
+                  pins = !pins;
+                  filter();
+                }),
+            new MapPopup.Action(
+                (players ? "✓ " : "  ") + "Players",
+                () -> {
+                  players = !players;
+                  filter();
+                })),
+        10,
+        96,
+        false);
+  }
+
+  private void toolsMenu() {
+    var actions = new ArrayList<MapPopup.Action>();
+    actions.add(
+        new MapPopup.Action(
+            "Go to coordinates…", () -> minecraft.setScreen(MapPinScreen.gotoPoint(this))));
+    if (state.contains("found"))
+      actions.add(
+          new MapPopup.Action(
+              "Show located structure",
+              () -> {
+                var found = state.getCompound("found");
+                search.setValue("");
+                selected = found.getString("id");
+                center(found.getInt("x"), found.getInt("z"));
+              }));
+    actions.add(
+        new MapPopup.Action("Map guide", () -> minecraft.setScreen(new MapHelpScreen(this))));
+    menu("Map tools", actions, 12 + (side - 12) / 2, 96, false);
+  }
+
+  private void otherDimensions() {
+    var actions = new ArrayList<MapPopup.Action>();
+    state.getList("dimensions", Tag.TAG_COMPOUND).stream()
+        .map(t -> (CompoundTag) t)
+        .filter(
+            t ->
+                !Set.of("minecraft:overworld", "minecraft:the_nether", "minecraft:the_end")
+                    .contains(t.getString("id")))
+        .sorted(Comparator.comparing(t -> t.getString("name")))
+        .forEach(
+            t ->
+                actions.add(
+                    new MapPopup.Action(
+                        t.getString("name") + " · " + t.getString("id"),
+                        () -> switchDimension(t.getString("id")))));
+    menu("Other dimensions", actions, left + 102, 43, true);
+  }
+
+  public void switchDimension(String id) {
+    if (!pendingDimension.isEmpty() || !hasDimension(id) || dimension().equals(id)) return;
+    dimensionViews.put(dimension(), new double[] {view.x, view.z, view.scale});
+    double[] saved = dimensionViews.get(id);
+    double x = saved == null ? view.x : saved[0], z = saved == null ? view.z : saved[1];
+    if (saved == null && minecraft.level != null) {
+      String actual = minecraft.level.dimension().location().toString();
+      if (id.equals(actual) && minecraft.player != null) {
+        x = minecraft.player.getX();
+        z = minecraft.player.getZ();
+      } else if (dimension().equals("minecraft:overworld") && id.equals("minecraft:the_nether")) {
+        x /= 8;
+        z /= 8;
+      } else if (dimension().equals("minecraft:the_nether") && id.equals("minecraft:overworld")) {
+        x *= 8;
+        z *= 8;
+      } else {
+        x = 0;
+        z = 0;
+      }
+    }
+    var t = new CompoundTag();
+    t.putString("dimension", id);
+    t.putInt("x", Mth.floor(Math.clamp(x, -MapView.LIMIT, MapView.LIMIT)));
+    t.putInt("z", Mth.floor(Math.clamp(z, -MapView.LIMIT, MapView.LIMIT)));
+    pendingDimension = id;
+    popup = null;
+    request("dimension", t);
+  }
+
+  private void markerMenu(CompoundTag marker, int x, int y) {
+    selected = marker.getString("id");
+    var m = marker.copy();
+    var actions = new ArrayList<MapPopup.Action>();
+    actions.add(
+        new MapPopup.Action(
+            "Focus on map",
+            () -> {
+              if (!m.getString("dimension").isEmpty()
+                  && !m.getString("dimension").equals(dimension())) {
+                dimensionViews.put(
+                    m.getString("dimension"),
+                    new double[] {m.getInt("x"), m.getInt("z"), view.scale});
+                switchDimension(m.getString("dimension"));
+              } else center(m.getInt("x"), m.getInt("z"));
+            }));
+    if (m.getBoolean("pin")) {
+      actions.add(
+          new MapPopup.Action("Edit pin…", () -> minecraft.setScreen(new MapPinScreen(this, m))));
+      actions.add(
+          new MapPopup.Action(
+              "Delete pin…", () -> minecraft.setScreen(MapPinScreen.delete(this, m))));
+    } else if (!m.getBoolean("player")) {
+      actions.add(
+          new MapPopup.Action(
+              "Travel…",
+              state.getInt("travelSkills") > 0
+                  && !state.getBoolean("preparingTravel")
+                  && localDimension(),
+              () -> {
+                var t = new CompoundTag();
+                t.putString("id", m.getString("id"));
+                request("routes", t);
+              }));
+      actions.add(
+          new MapPopup.Action("Save as custom pin…", () -> pinAt(m.getInt("x"), m.getInt("z"))));
+    }
+    menu(m.getString("name"), actions, x, y, false);
+    filter();
+  }
+
+  private void canvasMenu(double mx, double my) {
+    double x = view.worldX(mx, left, mapW), z = view.worldZ(my, top, mapH);
+    menu(
+        "X " + Mth.floor(x) + " · Z " + Mth.floor(z),
+        List.of(
+            new MapPopup.Action("Add pin here…", () -> pinAt(x, z)),
+            new MapPopup.Action("Center here", () -> center(x, z))),
+        (int) mx,
+        (int) my,
+        false);
   }
 
   void request(String action, CompoundTag data) {
@@ -309,7 +462,14 @@ public final class MaraudersMapScreen extends Screen {
   }
 
   private void centerPlayer() {
-    if (minecraft.player != null) center(minecraft.player.getX(), minecraft.player.getZ());
+    if (minecraft.player != null) {
+      if (!localDimension()) {
+        String id = minecraft.player.level().dimension().location().toString();
+        dimensionViews.put(
+            id, new double[] {minecraft.player.getX(), minecraft.player.getZ(), view.scale});
+        switchDimension(id);
+      } else center(minecraft.player.getX(), minecraft.player.getZ());
+    }
   }
 
   private void zoom(double step, double mx, double my) {
@@ -322,16 +482,14 @@ public final class MaraudersMapScreen extends Screen {
     p.putInt("x", (int) Math.floor(x));
     p.putInt("z", (int) Math.floor(z));
     int y = minecraft.player == null ? 64 : minecraft.player.getBlockY();
-    if (minecraft.level != null
+    if (localDimension()
         && minecraft.level.hasChunk((int) Math.floor(x) >> 4, (int) Math.floor(z) >> 4))
       y =
           minecraft.level.getHeight(
               net.minecraft.world.level.levelgen.Heightmap.Types.WORLD_SURFACE,
               (int) Math.floor(x),
               (int) Math.floor(z));
-    p.putInt(
-        "y",
-        Mth.clamp(y, minecraft.level.getMinBuildHeight(), minecraft.level.getMaxBuildHeight() - 1));
+    p.putInt("y", Mth.clamp(y, minY(), maxY() - 1));
     p.putString("name", "");
     minecraft.setScreen(new MapPinScreen(this, p));
   }
@@ -379,25 +537,6 @@ public final class MaraudersMapScreen extends Screen {
     scroll =
         Math.clamp(
             scroll, 0, Math.max(0, entries.size() - Math.max(1, (listBottom - listTop) / 32)));
-    if (centerSelected != null) {
-      var m = chosen();
-      centerSelected.active =
-          m != null
-              && (!m.getBoolean("player")
-                  || m.getString("dimension").equals(state.getString("dimension")));
-      edit.active = delete.active = m != null && m.getBoolean("pin");
-      showResult.active = state.contains("found");
-      travel.active =
-          travelTarget() != null
-              && state.getInt("travelSkills") > 0
-              && !state.getBoolean("preparingTravel");
-      travel.setTooltip(
-          Tooltip.create(
-              Component.literal(
-                  state.getInt("travelSkills") > 0
-                      ? "Open a teleport skill with arrival coordinates for this structure"
-                      : "Requires a learned, usable coordinate-teleport skill")));
-    }
   }
 
   @Override
@@ -405,7 +544,7 @@ public final class MaraudersMapScreen extends Screen {
     age++;
     if (age % 100 == 0 && refreshAt < 0) refreshAt = age;
     if (age % 20 == 0) filter();
-    if (refreshAt > 0 && age >= refreshAt) {
+    if (refreshAt > 0 && age >= refreshAt && pendingDimension.isEmpty()) {
       var t = new CompoundTag();
       t.putInt("x", (int) view.x);
       t.putInt("z", (int) view.z);
@@ -425,7 +564,8 @@ public final class MaraudersMapScreen extends Screen {
   }
 
   public boolean terrainViewReady() {
-    return state.getInt("viewX") == (int) view.x
+    return pendingDimension.isEmpty()
+        && state.getInt("viewX") == (int) view.x
         && state.getInt("viewZ") == (int) view.z
         && state.getInt("viewRadius")
             >= Math.min(65536, Math.max(mapW, mapH) / (2 * view.scale) + 96);
@@ -490,7 +630,7 @@ public final class MaraudersMapScreen extends Screen {
     g.fill(0, 0, width, height, 0xff10171d);
     g.fill(0, 0, side + 4, height, 0xff19232a);
     g.fill(side + 4, 0, side + 5, height, 0xff3c4b50);
-    g.drawString(font, "MARAUDER'S MAP", 10, 12, GOLD, false);
+    g.drawString(font, fit("MARAUDER'S MAP", side - 14), 10, 12, GOLD, false);
     g.drawString(font, fit(state.getString("dimensionName"), side - 12), 10, 29, MUTED, false);
     g.fill(left - 1, top - 1, left + mapW + 1, top + mapH + 1, 0xff526165);
     g.fill(left, top, left + mapW, top + mapH, 0xff202c32);
@@ -500,7 +640,7 @@ public final class MaraudersMapScreen extends Screen {
         if (((gx - left) / 24 + (gy - top) / 24) % 2 == 0)
           g.fill(gx, gy, Math.min(left + mapW, gx + 24), Math.min(top + mapH, gy + 24), 0xff253139);
     MapTerrainAtlas.render(g, view, left, top, mapW, mapH, false);
-    MapAtlas.render(g, view, left, top, mapW, mapH);
+    if (localDimension()) MapAtlas.render(g, view, left, top, mapW, mapH);
     MapTerrainAtlas.render(g, view, left, top, mapW, mapH, true);
     if (view.scale >= .5) {
       int grid = view.scale < 1 ? 128 : 64;
@@ -563,7 +703,7 @@ public final class MaraudersMapScreen extends Screen {
         g.drawCenteredString(font, label, px, pz + 11, markerColor(m));
         hits.add(0, new Hit(px, pz, m, 1));
       }
-    if (minecraft.player != null) {
+    if (minecraft.player != null && localDimension()) {
       int px = (int) view.screenX(minecraft.player.getX(), left, mapW),
           pz = (int) view.screenZ(minecraft.player.getZ(), top, mapH);
       if (inside(px, pz)) {
@@ -609,7 +749,7 @@ public final class MaraudersMapScreen extends Screen {
       boolean otherDimension =
           m.getBoolean("player") && !m.getString("dimension").equals(state.getString("dimension"));
       if (otherDimension) detail = m.getString("dimensionName") + " · " + detail;
-      if (minecraft.player != null && !otherDimension)
+      if (minecraft.player != null && !otherDimension && localDimension())
         detail +=
             " · "
                 + (int)
@@ -631,7 +771,7 @@ public final class MaraudersMapScreen extends Screen {
           font,
           Component.literal(
               search.getValue().isEmpty()
-                  ? "Add a pin or locate a structure. Terrain appears anywhere you move the map."
+                  ? "Markers appear as this area is surveyed. Right-click the map to add a pin."
                   : "No matching markers or players."),
           12,
           listTop + 8,
@@ -647,8 +787,22 @@ public final class MaraudersMapScreen extends Screen {
                 + (int) Math.floor(view.worldZ(my, top, mapH))
             : "Center  " + (int) view.x + ", " + (int) view.z;
     g.drawString(
-        font, fit(location + "  ·  " + MapAtlas.layer(), mapW), left, height - 35, TEXT, false);
-    String note = state.getString("message");
+        font,
+        fit(
+            location
+                + "  ·  "
+                + (state.getInt("plane") == Integer.MAX_VALUE
+                    ? "Surface terrain"
+                    : "Below roof · Y " + state.getInt("plane")),
+            mapW),
+        left,
+        height - 35,
+        TEXT,
+        false);
+    String note =
+        pendingDimension.isEmpty()
+            ? state.getString("message")
+            : "Opening " + MapService.name(pendingDimension) + "…";
     if (state.getBoolean("searching"))
       note =
           "Searching "
@@ -673,8 +827,9 @@ public final class MaraudersMapScreen extends Screen {
     g.drawString(font, fit(note, mapW), left, height - 20, MUTED, false);
     if (MapAtlas.knownChunks() == 0 && MapTerrainAtlas.tileCount() == 0)
       g.drawCenteredString(font, "Mapping world terrain…", left + mapW / 2, top + mapH / 2, MUTED);
-    super.render(g, mx, my, partial);
-    if (inside(mx, my)) {
+    super.render(g, popup == null ? mx : -100, popup == null ? my : -100, partial);
+    if (popup != null) popup.render(g, mx, my);
+    if (popup == null && inside(mx, my)) {
       var hit =
           hits.stream()
               .filter(h -> Math.abs(h.x - mx) < 9 && Math.abs(h.y - my) < 9)
@@ -700,8 +855,8 @@ public final class MaraudersMapScreen extends Screen {
                     m.getBoolean("player")
                         ? "Click to select · Live location"
                         : m.getBoolean("pin")
-                            ? "Click to select · Edit pin in sidebar"
-                            : "Click to select · Right-click to add a pin")
+                            ? "Click for pin actions"
+                            : "Click for structure actions")
                 .withColor(MUTED));
         g.renderTooltip(
             font,
@@ -716,11 +871,21 @@ public final class MaraudersMapScreen extends Screen {
 
   @Override
   public boolean mouseClicked(double mx, double my, int button) {
+    if (popup != null) {
+      var current = popup;
+      if (current.click(mx, my, button) && popup == current) popup = null;
+      return true;
+    }
+    if (!pendingDimension.isEmpty()) return true;
+    // Floating controls are inside the canvas; they must receive clicks before pan/selection.
+    if (children().stream()
+        .anyMatch(w -> w instanceof AbstractWidget a && a.visible && a.isMouseOver(mx, my)))
+      return super.mouseClicked(mx, my, button);
     if (inside(mx, my)) {
       search.setFocused(false);
       clearFocus();
       if (button == 1) {
-        pinAt(view.worldX(mx, left, mapW), view.worldZ(my, top, mapH));
+        canvasMenu(mx, my);
         return true;
       }
       if (button == 0) {
@@ -736,8 +901,7 @@ public final class MaraudersMapScreen extends Screen {
       clearFocus();
       int n = scroll + (int) (my - listTop) / 32;
       if (n < entries.size()) {
-        selected = entries.get(n).getString("id");
-        filter();
+        markerMenu(entries.get(n), (int) mx + 8, (int) my + 4);
         return true;
       }
     }
@@ -768,8 +932,7 @@ public final class MaraudersMapScreen extends Screen {
                 .findFirst()
                 .orElse(null);
         if (hit != null) {
-          selected = hit.marker.getString("id");
-          filter();
+          markerMenu(hit.marker, (int) mx + 8, (int) my + 4);
         }
       }
       return true;
@@ -779,6 +942,10 @@ public final class MaraudersMapScreen extends Screen {
 
   @Override
   public boolean mouseScrolled(double mx, double my, double dx, double dy) {
+    if (popup != null) {
+      popup.scroll(dy);
+      return true;
+    }
     if (inside(mx, my)) {
       zoom(dy, mx, my);
       return true;
@@ -794,6 +961,11 @@ public final class MaraudersMapScreen extends Screen {
 
   @Override
   public boolean keyPressed(int key, int scan, int modifiers) {
+    if (popup != null) {
+      var current = popup;
+      if (current.key(key) && popup == current) popup = null;
+      return true;
+    }
     if (key == org.lwjgl.glfw.GLFW.GLFW_KEY_ESCAPE && state.getBoolean("searching")) {
       search.setFocused(false);
       clearFocus();
@@ -836,6 +1008,15 @@ public final class MaraudersMapScreen extends Screen {
       return true;
     }
     return super.keyPressed(key, scan, modifiers);
+  }
+
+  @Override
+  public boolean charTyped(char c, int modifiers) {
+    if (popup != null) {
+      popup.type(c);
+      return true;
+    }
+    return super.charTyped(c, modifiers);
   }
 
   @Override

@@ -21,6 +21,136 @@ import net.neoforged.neoforge.gametest.*;
 @GameTestHolder(HeavenlyRestriction.ID)
 @PrefixGameTestTemplate(false)
 public final class MaraudersMapGameTests {
+  @GameTest(template = "empty", timeoutTicks = 100)
+  public static void remoteDimensionBrowsingRotatesSessionAndKeepsPhysicalPlayerInPlace(
+      GameTestHelper h) {
+    var p = reader(h);
+    MapService.open(p);
+    var old = MapService.session(p);
+    double x = p.getX(), z = p.getZ();
+    var target = new CompoundTag();
+    target.putString("dimension", "minecraft:the_nether");
+    target.putInt("x", -1200);
+    target.putInt("z", 2400);
+    MapService.request(p, old.token, "dimension", target);
+    var next = MapService.session(p);
+    h.assertTrue(
+        next != old
+            && next.dimension.equals("minecraft:the_nether")
+            && !next.token.equals(old.token),
+        "Dimension did not replace session");
+    h.assertTrue(
+        next.originDimension.equals(p.level().dimension().location().toString())
+            && p.getX() == x
+            && p.getZ() == z,
+        "Browsing teleported the player");
+    var snapshot = MapService.snapshot(p, next);
+    h.assertTrue(
+        snapshot.getString("dimension").equals("minecraft:the_nether")
+            && snapshot.getInt("plane") == 64,
+        "Remote metadata uses physical dimension");
+    h.assertTrue(
+        snapshot.getList("dimensions", Tag.TAG_COMPOUND).stream()
+            .anyMatch(
+                t -> ((CompoundTag) t).getString("id").equals("heavenlyrestriction:high_realm")),
+        "Other dimension omitted");
+    var stale = pin(p, "Stale session");
+    MapService.request(p, old.token, "pin", stale);
+    h.assertTrue(
+        MapData.get(p.server).pins(p.getUUID()).isEmpty(), "Old session modified new dimension");
+    target.putString("dimension", "missing:not_a_dimension");
+    MapService.request(p, next.token, "dimension", target);
+    h.assertTrue(MapService.session(p) == next, "Unknown dimension accepted");
+    MapService.close(p);
+    h.succeed();
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 100)
+  public static void remotePinsUseViewedDimensionBuildRangeAndStayPrivate(GameTestHelper h) {
+    var p = reader(h);
+    var other = reader(h);
+    MapService.open(p);
+    var target = new CompoundTag();
+    target.putString("dimension", "minecraft:the_nether");
+    MapService.request(p, MapService.session(p).token, "dimension", target);
+    var session = MapService.session(p);
+    var t = pin(p, "Nether camp");
+    t.putInt("y", 64);
+    MapService.request(p, session.token, "pin", t);
+    var saved = MapData.get(p.server).pins(p.getUUID());
+    h.assertTrue(
+        saved.size() == 1 && saved.getFirst().dimension().equals("minecraft:the_nether"),
+        "Pin saved in physical dimension");
+    t = pin(p, "Below Nether");
+    t.putInt("y", -10);
+    MapService.request(p, session.token, "pin", t);
+    h.assertTrue(
+        MapData.get(p.server).pins(p.getUUID()).size() == 1, "Viewed height bounds ignored");
+    h.assertTrue(
+        MapData.get(p.server).pins(other.getUUID()).isEmpty(),
+        "Shared exploration leaked private pins");
+    MapService.close(p);
+    h.succeed();
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 200)
+  public static void sharedExplorationPersistsAndServesAnotherPlayersActualSurfaceWithoutLoading(
+      GameTestHelper h) {
+    var explorer = player(h);
+    var reader = reader(h);
+    var level = h.getLevel();
+    var at = h.absolutePos(new BlockPos(4, 3, 4));
+    var chunk = level.getChunkAt(at);
+    MapExploration.record(level, chunk, Integer.MAX_VALUE);
+    var data = MapData.get(reader.server);
+    String dimension = level.dimension().location().toString(),
+        layer = MapExploration.layer(dimension, Integer.MAX_VALUE);
+    h.assertTrue(
+        data.explored.sample(
+                layer, chunk.getPos().getMinBlockX(), chunk.getPos().getMinBlockZ(), 16)
+            != 0,
+        "Explorer with no Map did not contribute");
+    var saved =
+        MapData.load(
+            data.save(new CompoundTag(), reader.registryAccess()), reader.registryAccess());
+    h.assertTrue(
+        saved.explored.sample(layer, at.getX(), at.getZ(), 16)
+            == data.explored.sample(layer, at.getX(), at.getZ(), 16),
+        "Shared overview not saved");
+    MapExploration.flush();
+    MapExploration.clear();
+    MapService.open(reader);
+    var session = MapService.session(reader);
+    var received = new java.util.concurrent.atomic.AtomicReference<CompoundTag>();
+    h.assertTrue(
+        MapExploration.request(
+            reader,
+            session,
+            level,
+            chunk.getPos().x,
+            chunk.getPos().z,
+            Integer.MAX_VALUE,
+            "test",
+            received::set),
+        "Explored disk tile not requested");
+    h.startSequence()
+        .thenWaitUntil(
+            () -> {
+              h.assertTrue(received.get() != null, "Waiting for shared detail");
+              var expected = MapTerrain.detail(level, chunk, Integer.MAX_VALUE);
+              h.assertTrue(
+                  java.util.Arrays.equals(
+                      received.get().getIntArray("blocks"), expected.getIntArray("blocks")),
+                  "Stable palette lost real surface blocks");
+              h.assertTrue(
+                  java.util.Arrays.equals(
+                      received.get().getIntArray("heights"), expected.getIntArray("heights")),
+                  "Shared surface heights differ");
+              MapService.close(reader);
+            })
+        .thenSucceed();
+  }
+
   private static ServerPlayer reader(GameTestHelper h) {
     var p = player(h);
     RestrictionData.learnReward(p, HeavenlyRestriction.MARAUDERS_MAP.get());
