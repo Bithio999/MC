@@ -97,7 +97,8 @@ public final class HighRealmElites {
         || !candidate(mob)
         || sanctuary != null
             && mob.position().distanceToSqr(net.minecraft.world.phys.Vec3.atCenterOf(sanctuary))
-                < 48 * 48) {
+                < 48 * 48
+        || !HighRealmSpawns.allowNatural(mob)) {
       e.setSpawnCancelled(true);
       return;
     }

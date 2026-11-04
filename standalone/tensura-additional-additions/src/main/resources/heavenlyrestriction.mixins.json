@@ -61,7 +61,9 @@
     "SplitMindChantMixin",
     "SplitMindAimMixin",
     "SplitMindPresetMixin",
-    "SplitMindProjectileMixin"
+    "SplitMindProjectileMixin",
+    "SplitMindCastingModifiersMixin",
+    "SplitMindCastingLockMixin"
   ],
   "injectors": {
     "defaultRequire": 1

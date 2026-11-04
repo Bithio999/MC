@@ -21,3 +21,5 @@ The fixture refuses other save-directory names. It resets the review character a
 The client fixture intentionally does **not** load the test-only flat preset. Clean between profiles so review classes and the preset override cannot reach a release. `scripts/verify-distribution.py` checks their exclusion.
 
 The EP-balance scenario checks once-only halving for a saved elite with unequal aura/magicule capacities, current-resource clamping without healing, unchanged HP/SHP/damage, reload persistence and ownership exclusion. Fresh elite creation also verifies the halved EP.
+
+The spawn-density scenario verifies the seeded 50% acceptance rate through actual FinalizeSpawnEvents, the sixteen-elite local cap and resumption below it, and unaffected commands, summons and Overworld spawns.

@@ -56,5 +56,22 @@ public final class HighRealmSpawns {
             : MobSpawnEvent.PositionCheck.Result.FAIL);
   }
 
+  /** Once per finalized spawn, never on reloads, imports, commands or summons. */
+  public static boolean allowNatural(Mob mob) {
+    if (mob.getRandom().nextDouble() >= HighRealmConfig.SPAWN_CHANCE.get()) return false;
+    return mob.level()
+            .getEntitiesOfClass(
+                Mob.class,
+                mob.getBoundingBox().inflate(64),
+                other ->
+                    other != mob
+                        && other.isAlive()
+                        && HighRealmElites.elite(other)
+                        && HighRealmElites.unowned(other)
+                        && mob.distanceToSqr(other) <= 64 * 64)
+            .size()
+        < HighRealmConfig.LOCAL_CAP.get();
+  }
+
   private HighRealmSpawns() {}
 }

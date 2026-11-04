@@ -50,6 +50,132 @@ public final class SplitMindGameTests {
     SplitMindCasting.update(p);
   }
 
+  @GameTest(template = "empty", timeoutTicks = 120)
+  public static void autoCastDoesNotChangeMovementAndAllowsManualMagic(GameTestHelper h) {
+    parallelMagic(h, false);
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 120)
+  public static void autoCastStartsAndContinuesWhileManualMagicIsChanted(GameTestHelper h) {
+    parallelMagic(h, true);
+  }
+
+  private static void parallelMagic(GameTestHelper h, boolean manualFirst) {
+    var p = player(h);
+    var mind = mind(p, false);
+    var auto = learn(p, AspectualMagics.FIRE_LANCE.get(), true);
+    var manual = learn(p, AspectualMagics.FIRE_BALL.get(), false);
+    var storage = SkillAPI.getSkillsFrom(p);
+    TensuraStorages.getAbilityFrom(p).setAbilitySlot(0, 0, manual.getSkill(), 0);
+    h.assertTrue(SplitMindCasting.assign(p, auto.getSkillId().toString(), 1), "Repeat assignment");
+    mind.getOrCreateTag().putBoolean(SplitMindCasting.AUTO, true);
+    var target = target(h, p.position().add(12, 0, 0));
+    var shots = new ArrayList<Projectile>();
+    java.util.function.Consumer<EntityJoinLevelEvent> watch =
+        event -> {
+          if (event.getEntity() instanceof Projectile shot && shot.getOwner() == p) shots.add(shot);
+        };
+    NeoForge.EVENT_BUS.addListener(watch);
+    afterTracking(
+        h,
+        List.of(target),
+        () -> {
+          try {
+            double movement = p.getAttributeValue(Attributes.MOVEMENT_SPEED);
+            double range = p.getAttributeValue(Attributes.BLOCK_INTERACTION_RANGE);
+            var autoId = ((Magic) auto.getSkill()).getCastingResourceLocation();
+            var manualId = ((Magic) manual.getSkill()).getCastingResourceLocation();
+            if (manualFirst)
+              h.assertTrue(storage.startHoldSkill(manual, 0, 0), "Manual start first");
+            step(p, 5);
+            h.assertTrue(
+                storage.getHeldSkills().stream().anyMatch(t -> t.getKeyNumber() == 3),
+                "Auto did not start");
+            h.assertTrue(
+                !p.getAttribute(Attributes.MOVEMENT_SPEED).hasModifier(autoId),
+                "Auto added casting/FOV modifier");
+            if (!manualFirst) {
+              near(
+                  h,
+                  p.getAttributeValue(Attributes.MOVEMENT_SPEED),
+                  movement,
+                  "Auto changed speed/FOV");
+              near(
+                  h,
+                  p.getAttributeValue(Attributes.BLOCK_INTERACTION_RANGE),
+                  range,
+                  "Auto changed interaction range");
+              h.assertTrue(storage.startHoldSkill(manual, 0, 0), "Manual start during Auto");
+            }
+            h.assertTrue(storage.getHeldSkills().size() == 2, "Different spells did not overlap");
+            h.assertTrue(
+                p.getAttribute(Attributes.MOVEMENT_SPEED).hasModifier(manualId),
+                "Manual modifiers removed");
+            double mp = TensuraStorages.getExistenceFrom(p).getMagicule();
+            int interval =
+                ((io.github.manasmods.tensura.config.ability.magic.AspectualMagicConfig)
+                        io.github.manasmods.manascore.config.ConfigRegistry.getConfig(
+                            io.github.manasmods.tensura.config.ability.magic.AspectualMagicConfig
+                                .class))
+                    .FireLance.castTimeRepeat;
+            int castTicks = ((Magic) manual.getSkill()).getCastingTime(manual, p);
+            for (int n = 6; n < 8 + Math.max(castTicks, interval * 2); n++) step(p, n);
+            h.assertTrue(
+                shots.stream()
+                    .anyMatch(
+                        shot -> shot.getClass().getSimpleName().equals("FireLanceProjectile")),
+                "Auto pulses blocked during manual chant");
+            var manualHold =
+                storage.getHeldSkills().stream()
+                    .filter(t -> t.getKeyNumber() == 0)
+                    .findFirst()
+                    .orElseThrow();
+            h.assertTrue(manualHold.getDuration() >= castTicks, "Manual chant did not advance");
+            int pulses = shots.size();
+            storage.handleSkillRelease(manual, 0, 0, false);
+            h.assertTrue(
+                shots.stream()
+                    .anyMatch(shot -> shot.getClass().getSimpleName().equals("FireBallProjectile")),
+                "Manual release did not fire");
+            h.assertTrue(
+                storage.getHeldSkills().size() == 1
+                    && storage.getHeldSkills().getFirst().getKeyNumber() == 3,
+                "Manual release interrupted Auto");
+            for (int n = 0; n < interval + 2; n++) step(p, 200 + n);
+            h.assertTrue(shots.size() > pulses + 1, "Auto did not continue after manual release");
+            long lanceCount =
+                shots.stream()
+                    .filter(shot -> shot.getClass().getSimpleName().equals("FireLanceProjectile"))
+                    .count();
+            double expected =
+                (lanceCount * ((Magic) auto.getSkill()).getMagiculeCost(p, auto, 1)
+                        + ((Magic) manual.getSkill()).getMagiculeCost(p, manual, 0))
+                    * p.getAttributeValue(TensuraAttributes.MAGIC_COST_MULTIPLIER);
+            near(
+                h,
+                mp - TensuraStorages.getExistenceFrom(p).getMagicule(),
+                expected,
+                "Concurrent casts paid wrong costs");
+            h.assertTrue(manual.onCoolDown(0), "Manual cooldown missing");
+            SplitMindCasting.cancel(p);
+            near(
+                h,
+                p.getAttributeValue(Attributes.MOVEMENT_SPEED),
+                movement,
+                "Stopped casts left speed/FOV changed");
+            near(
+                h,
+                p.getAttributeValue(Attributes.BLOCK_INTERACTION_RANGE),
+                range,
+                "Stopped casts left range changed");
+            h.succeed();
+          } finally {
+            SplitMindCasting.cancel(p);
+            NeoForge.EVENT_BUS.unregister(watch);
+          }
+        });
+  }
+
   @GameTest(template = "empty", timeoutTicks = 100)
   public static void modeAssignmentRetainsNativeUnlocksAndOldSaveDefaults(GameTestHelper h) {
     var p = player(h);

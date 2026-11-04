@@ -625,7 +625,7 @@
         {
           "title": "Explore",
           "lines": [
-            "Ivory Crags: High Orcs, Armorsauruses, Horned Bears and Greater Daemons. Starwood Grove: Tempest Star Wolves, Blade Tigers and Knight Spiders. Mistglass Basin: Dragonewts, Basilisks and Arch Daemons. The pool stays entirely Tensura mobs; bosses remain excluded.",
+            "Ivory Crags: High Orcs, Armorsauruses, Horned Bears and Greater Daemons. Starwood Grove: Tempest Star Wolves, Blade Tigers and Knight Spiders. Mistglass Basin: Dragonewts, Basilisks and Arch Daemons. The pool stays entirely Tensura mobs; bosses remain excluded. Half of otherwise valid natural spawn attempts are accepted, with at most 16 living unowned elites within 64 blocks of a new spawn. Existing mobs remain.",
             "Elites retain native models, animations and combat AI, with 1.25–2.5 million base EP and 11–17 core mastered skills. Every species has a mastered Unique Skill: High Orc—Berserker, Armorsaurus/Basilisk—Survivor, Horned Bear—Fighter, Tempest Star Wolf—Shadow Striker, Blade Tiger—Seer, Knight Spider—Oppressor, Dragonewt—Martial Master, Greater Daemon—Engorger, Arch Daemon—Mathematician. Their usable passives are enabled and required skill slots are equipped. All retain themed defenses, sensing, regeneration and damage boosts.",
             "Orcs use their highest non-boss naming evolution; wolves use the final Tempest Star Wolf branch; Lizardmen evolve into Dragonewts with native flight and dragon abilities. The remaining creatures already use their highest implemented non-boss mob forms. Orc Lord/Disaster are excluded as bosses.",
             "Greater Daemons cast Fire Lance, Acid Shell, Icicle Lance, Tornado Blade, Thunder Orb, Stone Shot and Sleep Mist. Arch Daemons cast Fire Ball, Acid Shell, Ice Breaker, Tornado Blade, Water Jail, Mud Spears, Stone Shot and Thunder Orb, using their native AI and casting effects.",
@@ -639,7 +639,7 @@
           "lines": [
             "The quartz return arch at the arrival sanctum is your return gate. Walk through it or use its central bedrock base to leave; leaving never requires EP. Return locations are saved separately for each player.",
             "The arrival sanctum is protected from normal block edits and suppresses natural spawns within 48 blocks. Avoid using beds in this dimension. The surrounding terrain is editable.",
-            "Gates, terrain and return locations persist across restarts. World Hop generates a fresh High Realm per new world; revisiting a saved world restores its realm. The server can configure entry EP, gate charge time and elite strength. Existing worlds using the old 10M default are upgraded once to 5M; other custom thresholds are retained."
+            "Gates, terrain and return locations persist across restarts. World Hop generates a fresh High Realm per new world; revisiting a saved world restores its realm. The server can configure entry EP, gate charge time, elite strength, spawn chance and the local elite cap. Existing worlds using the old 10M default are upgraded once to 5M; other custom thresholds are retained."
           ]
         }
       ]
@@ -679,7 +679,7 @@
           "title": "Auto-Cast · Press to toggle",
           "lines": [
             "Automatically cast the assigned magic at the nearest visible hostile mob or combat opponent within 32 blocks. Allies, owned creatures, passive bystanders and protected players are excluded. Combat opponents can include players when PvP permits.",
-            "Normal magic costs, cooldowns, cast times and activation restrictions apply. Checks for a new cast every 5 ticks; held spells finish their normal cast. Uses the selected mode’s native damage, costs and cooldown. Repeat/held modes continue at their native cadence while a valid target remains. Self/buff spells retain their native behavior. Your camera is not turned and manual casting has priority. This switch is independent of the passive toggle.",
+            "Normal magic costs, cooldowns, cast times and activation restrictions apply. Checks for a new cast every 5 ticks; held spells finish their normal cast. Uses the selected mode’s native damage, costs and cooldown. Repeat/held modes continue at their native cadence while a valid target remains. Self/buff spells retain their native behavior. Auto-Cast does not turn or zoom your camera or apply casting slowdown. Different manually cast spells can run at the same time; manual use of the assigned spell takes priority because its cooldown and casting state are shared. This switch is independent of the passive toggle.",
             "No extra Split Mind resource cost. Not rolled for Fettered Human because Auto-Cast uses magicule-cost abilities; the normal server allowlist can override that rule."
           ]
         }

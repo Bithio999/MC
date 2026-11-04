@@ -50,6 +50,12 @@ public final class SplitMindCasting {
     return context != null && virtualSlot(storage, AUTO_KEY, skill, context.mode());
   }
 
+  /** Exact server-owned callback scope; ordinary/manual casting keeps all native rules. */
+  public static boolean automatic(LivingEntity owner, ManasSkillInstance spell) {
+    var context = INVOCATION.get();
+    return context != null && context.owner() == owner && context.spell() == spell;
+  }
+
   private static <T> T autoInvoke(
       ServerPlayer p, ManasSkillInstance spell, int mode, LivingEntity target, Supplier<T> work) {
     var before = INVOCATION.get();
@@ -181,7 +187,13 @@ public final class SplitMindCasting {
       LivingEntity e,
       int key,
       int mode) {
-    if (key >= 0 && key < 3) cancel(e);
+    var current = CASTS.get(e.getUUID());
+    // One owned spell instance shares its cooldown/tag state. Manual use of that same
+    // spell takes priority, while every different spell can run alongside automation.
+    if (INVOCATION.get() == null
+        && current != null
+        && skill.get() != null
+        && current.spell().getSkill() == skill.get().getSkill()) cancel(e);
     return dev.architectury.event.EventResult.pass();
   }
 
@@ -250,8 +262,7 @@ public final class SplitMindCasting {
       return;
     }
     if (p.tickCount % 5 != 0
-        || p.isUsingItem()
-        || !storage.getHeldSkills().isEmpty()
+        || storage.getHeldSkills().stream().anyMatch(t -> t.getSkill() == spell.get().getSkill())
         || !funded(p, spell.get(), mode)
         || !spell.get().canInteractSkill(p)
         || !spell.get().canActivateSkill(p, mode)

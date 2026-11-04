@@ -28,6 +28,12 @@ public final class SplitMindReview {
   private static volatile int phase;
   private static int age, tick;
   private static volatile String error;
+  private static float baseFov;
+  private static double baseSpeed;
+  private static volatile int manualCastTime, autoShots, manualShots, shotsAfterManual;
+  private static java.util.function.Consumer<
+          net.neoforged.neoforge.event.entity.EntityJoinLevelEvent>
+      castWatch;
 
   private static final class Menu extends AbilitySelectionScreen {
     Menu() {
@@ -389,24 +395,176 @@ public final class SplitMindReview {
                     .orElseThrow();
             mind.getOrCreateTag().putBoolean(SplitMindCasting.AUTO, false);
             SplitMindCasting.cancel(p);
+            phase = 20;
+          });
+      return;
+    }
+    if (phase == 20) {
+      phase = 21;
+      tick = 0;
+      server(
+          p -> {
+            autoEnemy.discard();
+            for (var shot :
+                p.serverLevel()
+                    .getEntitiesOfClass(
+                        net.minecraft.world.entity.projectile.Projectile.class,
+                        p.getBoundingBox().inflate(64))) if (shot.getOwner() == p) shot.discard();
+            autoEnemy =
+                new net.minecraft.world.entity.monster.Husk(
+                    net.minecraft.world.entity.EntityType.HUSK, p.serverLevel());
+            autoEnemy.setPos(11.5, 200, 1.5);
+            autoEnemy.setNoAi(true);
+            autoEnemy.setNoGravity(true);
+            // The earlier damage test is complete; keep this camera/concurrency target alive.
+            autoEnemy.setInvulnerable(true);
+            p.serverLevel().addFreshEntity(autoEnemy);
+            var skills = SkillAPI.getSkillsFrom(p);
+            var mind = skills.getSkill(HeavenlyRestriction.SPLIT_MIND.get()).orElseThrow();
+            mind.onToggleOff(p);
+            var auto = skills.getSkill(AspectualMagics.FIRE_LANCE.get()).orElseThrow();
+            auto.setCoolDowns(0);
+            auto.setMastery(auto.getMaxMastery());
+            var manual = skills.getSkill(AspectualMagics.FIRE_BALL.get()).orElseThrow();
+            manual.setCoolDowns(0);
+            manual.setMastery(0);
+            TensuraStorages.getAbilityFrom(p).setAbilitySlot(0, 1, manual.getSkill(), 0);
+            manualCastTime =
+                ((io.github.manasmods.tensura.ability.magic.Magic) manual.getSkill())
+                    .getCastingTime(manual, p);
+            check(manualCastTime > 20, "Manual chant too short for camera review");
+            check(
+                SplitMindCasting.assign(p, auto.getSkillId().toString(), 1),
+                "Repeat assignment rejected");
+            castWatch =
+                event -> {
+                  if (event.getEntity()
+                          instanceof net.minecraft.world.entity.projectile.Projectile shot
+                      && shot.getOwner() == p) {
+                    if (shot.getClass().getSimpleName().equals("FireLanceProjectile")) autoShots++;
+                    if (shot.getClass().getSimpleName().equals("FireBallProjectile")) manualShots++;
+                  }
+                };
+            net.neoforged.neoforge.common.NeoForge.EVENT_BUS.addListener(castWatch);
+            phase = 22;
+            tick = 0;
+          });
+      return;
+    }
+    if (phase == 22 && ++tick > 25) {
+      baseFov = mc.player.getFieldOfViewModifier();
+      baseSpeed =
+          mc.player.getAttributeValue(
+              net.minecraft.world.entity.ai.attributes.Attributes.MOVEMENT_SPEED);
+      phase = 23;
+      tick = 0;
+      server(
+          p ->
+              SkillAPI.getSkillsFrom(p)
+                  .getSkill(HeavenlyRestriction.SPLIT_MIND.get())
+                  .orElseThrow()
+                  .getOrCreateTag()
+                  .putBoolean(SplitMindCasting.AUTO, true));
+      return;
+    }
+    if (phase == 23 && ++tick > 35) {
+      check(
+          Math.abs(mc.player.getFieldOfViewModifier() - baseFov) < 0.0001,
+          "Auto-Cast changed client FOV");
+      check(
+          Math.abs(
+                  mc.player.getAttributeValue(
+                          net.minecraft.world.entity.ai.attributes.Attributes.MOVEMENT_SPEED)
+                      - baseSpeed)
+              < 0.00001,
+          "Auto-Cast changed client movement speed");
+      phase = 24;
+      tick = 0;
+      server(
+          p -> {
+            var storage = SkillAPI.getSkillsFrom(p);
+            check(
+                storage.getHeldSkills().stream().anyMatch(t -> t.getKeyNumber() == 3),
+                "Auto repeat was not holding; target="
+                    + autoEnemy.isAlive()
+                    + ",nearest="
+                    + SplitMindCasting.nearest(p)
+                    + ",MP="
+                    + TensuraStorages.getExistenceFrom(p).getMagicule());
+            var manual = storage.getSkill(AspectualMagics.FIRE_BALL.get()).orElseThrow();
+            check(
+                storage.startHoldSkill(manual, 1, 0),
+                "Live manual magic rejected during Auto-Cast");
+            check(storage.getHeldSkills().size() == 2, "Live casts did not overlap");
+          });
+      return;
+    }
+    if (phase == 24 && ++tick > 10) {
+      check(
+          Math.abs(mc.player.getFieldOfViewModifier() - baseFov) > 0.0001,
+          "Manual cast lost its native client FOV effect");
+      phase = 25;
+      return;
+    }
+    if (phase == 25 && ++tick > manualCastTime + 15) {
+      phase = 26;
+      tick = 0;
+      server(
+          p -> {
+            var storage = SkillAPI.getSkillsFrom(p);
+            check(
+                storage.getHeldSkills().size() == 2 && autoShots > 0,
+                "Live overlapping chants did not progress");
+            var manual = storage.getSkill(AspectualMagics.FIRE_BALL.get()).orElseThrow();
+            storage.handleSkillRelease(manual, 1, 0, false);
+            check(manualShots > 0, "Live manual release did not spawn a fireball");
+            check(
+                storage.getHeldSkills().size() == 1
+                    && storage.getHeldSkills().getFirst().getKeyNumber() == 3,
+                "Live release stopped Auto-Cast");
+            shotsAfterManual = autoShots;
+            phase = 27;
+          });
+      return;
+    }
+    if (phase == 27 && ++tick > 50) {
+      check(
+          Math.abs(mc.player.getFieldOfViewModifier() - baseFov) < 0.0001,
+          "Auto-Cast kept client zoom after manual release");
+      check(
+          Math.abs(
+                  mc.player.getAttributeValue(
+                          net.minecraft.world.entity.ai.attributes.Attributes.MOVEMENT_SPEED)
+                      - baseSpeed)
+              < 0.00001,
+          "Auto-Cast kept a speed modifier after manual release");
+      phase = 28;
+      server(
+          p -> {
+            check(autoShots > shotsAfterManual, "Live auto pulses stopped after manual release");
+            SkillAPI.getSkillsFrom(p)
+                .getSkill(HeavenlyRestriction.SPLIT_MIND.get())
+                .orElseThrow()
+                .getOrCreateTag()
+                .putBoolean(SplitMindCasting.AUTO, false);
+            SplitMindCasting.cancel(p);
+            net.neoforged.neoforge.common.NeoForge.EVENT_BUS.unregister(castWatch);
             autoEnemy.discard();
             try {
               Files.writeString(
                   OUT.resolve("passed.txt"),
-                  "PASS: native Unique list/name/icon; real Magic Assignment S2C; learned-only"
-                      + " search/type filtering; real assign C2S persists Spiritual Fire; fitted"
-                      + " controls at GUI scales 2 and 4; native Auto-Cast toggle and actual"
-                      + " automatic player/held ticks cast non-equipped Chain Stone Shot and damage"
-                      + " an enemy without manual aiming.\n");
+                  "PASS: native Unique menu and real C2S/S2C mode assignment; fitted GUI scales"
+                      + " 2/4; automatic Chain Stone Shot damages an enemy while looking away; real"
+                      + " client FOV and movement unchanged by Auto-Cast; manual Fireball chants"
+                      + " and fires alongside automatic Repeat Fire Lance; native manual FOV"
+                      + " retained, restored after release while auto pulses continue.\n");
             } catch (Exception ex) {
               throw new RuntimeException(ex);
             }
-            phase = 12;
+            phase = 29;
           });
       return;
     }
-    if (phase == 12) {
-      mc.stop();
-    }
+    if (phase == 29) mc.stop();
   }
 }

@@ -1,5 +1,12 @@
 # Changelog
 
+## Additions 1.11.3 — Split Mind fixes and fewer High Realm spawns
+
+- Stop Auto-Cast from applying native casting movement/range modifiers, removing its camera zoom and movement slowdown. Manual magic keeps its normal casting effects.
+- Allow different manually cast spells to chant and release alongside Auto-Cast in either order. Ignore only the other-chant lock for internal automatic invocations; keep normal anti-magic, skill seals, resources and cooldowns.
+- Manual use of the assigned spell takes priority over its automatic hold so shared spell state and cooldowns cannot conflict.
+- Accept 50% of otherwise valid High Realm natural/chunk-generation spawns and limit new spawns to areas with fewer than 16 living unowned elites within 64 blocks. Add configurable `eliteSpawnChance` and `eliteLocalCap`; preserve existing mobs and command/summon/foreign-dimension spawning.
+
 ## Additions 1.11.2 — High Realm EP balance
 
 - Halve the completed EP package of High Realm elites: default Bulwarks 2.5M, Sentinels 1.75M and Stalkers 1.25M. Preserve aura/magicule proportions, HP, SHP, damage and loadouts.

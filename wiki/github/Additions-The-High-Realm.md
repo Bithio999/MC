@@ -51,6 +51,8 @@ The natural spawn pool is **entirely Tensura mobs**. **Bosses are excluded**, in
 
 Native skills can alter final stats. All elites gain **11–17 core mastered skills** in addition to their retained native abilities. Their toggles are enabled; skills that require a preset slot are equipped.
 
+Natural spawning accepts **50% of otherwise valid attempts** and stops adding enemies when **16 living unowned elites are already within 64 blocks**. Existing mobs remain; spawning resumes as the area clears. Commands, summons and other dimensions retain their normal rules.
+
 ### Final forms
 
 The pool uses the highest implemented non-boss forms of its existing creatures: **High Orc**, **Tempest Star Wolf**, and **Dragonewt**. Wolves receive their native evolution bonuses and final star variant; Dragonewts receive native flight, Dragon Eye, Dragon Ear, Dragon Mode and a native breath skill. Creatures without a further implemented mob evolution stay in their existing forms. Orc Lord and Orc Disaster remain excluded because they are bosses.
@@ -107,7 +109,7 @@ The dimension is added to existing saves. Its terrain, awakened gates and indivi
 
 Existing eligible unowned elites receive applicable same-entity evolutions and loadouts when loaded, without refilling resources. Existing unowned elites also receive the halved EP balance once when loaded; current aura and magicules are capped to the new capacity. HP, SHP, damage and skill packages are unchanged. Owned mobs remain unchanged. Old daemon entities remain until normal despawning; new spawns use the upgraded types. Existing vanilla elites are left to despawn normally; no new vanilla elites spawn.
 
-Server settings are in `serverconfig/tensura-additions-high-realm.toml`: `entryEP`, `gateChargeTicks`, `elitePower`, and `eliteSpawns`. Changing elite strength affects new spawns. Up to **256 awakened gates** can be registered in one world.
+Server settings are in `serverconfig/tensura-additions-high-realm.toml`: `entryEP`, `gateChargeTicks`, `elitePower`, `eliteSpawns`, `eliteSpawnChance` (default `0.5`) and `eliteLocalCap` (default `16`). Changing elite strength affects new spawns. Up to **256 awakened gates** can be registered in one world.
 
 Find this page under **Dimensions** in the searchable **F8 guide**.
 

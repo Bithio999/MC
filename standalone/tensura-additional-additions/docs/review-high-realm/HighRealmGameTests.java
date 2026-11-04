@@ -295,7 +295,13 @@ public final class HighRealmGameTests {
             MobSpawnType.NATURAL,
             null,
             null);
-    NeoForge.EVENT_BUS.post(event);
+    double chance = HighRealmConfig.SPAWN_CHANCE.get();
+    try {
+      HighRealmConfig.SPAWN_CHANCE.set(1d);
+      NeoForge.EVENT_BUS.post(event);
+    } finally {
+      HighRealmConfig.SPAWN_CHANCE.set(chance);
+    }
     h.assertTrue(
         !event.isSpawnCancelled() && m.getPersistentData().getBoolean(HighRealmElites.CANDIDATE),
         "Natural elite not marked");
@@ -320,6 +326,120 @@ public final class HighRealmGameTests {
         !summoned.getPersistentData().getBoolean(HighRealmElites.CANDIDATE),
         "Summoned spawn marked");
     h.succeed();
+  }
+
+  private static FinalizeSpawnEvent spawnEvent(Mob mob, MobSpawnType reason) {
+    var level = (ServerLevel) mob.level();
+    var event =
+        new FinalizeSpawnEvent(
+            mob,
+            level,
+            mob.getX(),
+            mob.getY(),
+            mob.getZ(),
+            level.getCurrentDifficultyAt(mob.blockPosition()),
+            reason,
+            null,
+            null);
+    // The fixture reuses candidates; NeoForge stores cancellation on the mob itself.
+    event.setSpawnCancelled(false);
+    NeoForge.EVENT_BUS.post(event);
+    return event;
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 200)
+  public static void naturalSpawnRateAndLocalCrowdingAreLimitedWithoutTouchingImports(
+      GameTestHelper h) {
+    var level = realm(h);
+    var candidate = orc(level);
+    candidate.setPos(2048, 250, 2048);
+    candidate.getRandom().setSeed(9247);
+    double chance = HighRealmConfig.SPAWN_CHANCE.get();
+    try {
+      HighRealmConfig.SPAWN_CHANCE.set(.5d);
+      int accepted = 0;
+      for (int n = 0; n < 200; n++) {
+        candidate.getPersistentData().remove(HighRealmElites.CANDIDATE);
+        if (!spawnEvent(candidate, MobSpawnType.NATURAL).isSpawnCancelled()) accepted++;
+      }
+      h.assertTrue(
+          accepted >= 70 && accepted <= 130,
+          "Natural acceptance rate was not approximately halved: " + accepted);
+      HighRealmConfig.SPAWN_CHANCE.set(0d);
+      h.assertTrue(
+          spawnEvent(candidate, MobSpawnType.CHUNK_GENERATION).isSpawnCancelled(),
+          "Zero chance did not suppress generation spawns");
+      h.assertTrue(
+          !spawnEvent(orc(h.getLevel()), MobSpawnType.NATURAL).isSpawnCancelled(),
+          "Overworld spawning changed");
+    } finally {
+      HighRealmConfig.SPAWN_CHANCE.set(chance);
+    }
+    // Natural spawning runs in tracked chunks. Let the native entity lookup register
+    // this isolated population before exercising the spatial density check.
+    var chunk = new net.minecraft.world.level.ChunkPos(candidate.blockPosition());
+    boolean forced = level.getForcedChunks().contains(chunk.toLong());
+    level.setChunkForced(chunk.x, chunk.z, true);
+    var population = new java.util.ArrayList<Mob>();
+    for (int n = 0; n < 16; n++) {
+      var mob = orc(level);
+      mob.setPos(2050 + n * .5, 250, 2048);
+      mob.setNoAi(true);
+      mob.setNoGravity(true);
+      mob.noPhysics = true;
+      HighRealmElites.empower(mob);
+      level.addFreshEntity(mob);
+      population.add(mob);
+    }
+    h.startSequence()
+        .thenWaitUntil(
+            () ->
+                h.assertTrue(
+                    level
+                            .getEntitiesOfClass(
+                                Mob.class,
+                                candidate.getBoundingBox().inflate(64),
+                                HighRealmElites::elite)
+                            .size()
+                        >= 16,
+                    "Fixture population is not tracked"))
+        .thenExecute(
+            () -> {
+              double oldChance = HighRealmConfig.SPAWN_CHANCE.get();
+              int oldCap = HighRealmConfig.LOCAL_CAP.get();
+              try {
+                HighRealmConfig.SPAWN_CHANCE.set(1d);
+                HighRealmConfig.LOCAL_CAP.set(16);
+                h.assertTrue(
+                    level
+                            .getEntitiesOfClass(
+                                Mob.class,
+                                candidate.getBoundingBox().inflate(64),
+                                HighRealmElites::elite)
+                            .size()
+                        >= 16,
+                    "Fixture population is not tracked");
+                h.assertTrue(
+                    spawnEvent(candidate, MobSpawnType.NATURAL).isSpawnCancelled(),
+                    "Crowded area accepted a seventeenth elite");
+                h.assertTrue(
+                    !spawnEvent(candidate, MobSpawnType.COMMAND).isSpawnCancelled(),
+                    "Command spawn was throttled");
+                h.assertTrue(
+                    !spawnEvent(candidate, MobSpawnType.MOB_SUMMONED).isSpawnCancelled(),
+                    "Summon was throttled");
+                population.removeFirst().discard();
+                h.assertTrue(
+                    !spawnEvent(candidate, MobSpawnType.NATURAL).isSpawnCancelled(),
+                    "Spawn did not resume below local cap");
+                h.succeed();
+              } finally {
+                population.forEach(Entity::discard);
+                HighRealmConfig.SPAWN_CHANCE.set(oldChance);
+                HighRealmConfig.LOCAL_CAP.set(oldCap);
+                level.setChunkForced(chunk.x, chunk.z, forced);
+              }
+            });
   }
 
   @GameTest(template = "empty", timeoutTicks = 200)

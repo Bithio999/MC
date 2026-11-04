@@ -49,7 +49,7 @@ Press to enable or disable automatic casting. It targets the **nearest visible h
 - Repeat/held modes remain active at their native cadence while a target is valid; each pulse pays its normal cost.
 - Delayed shots keep the assigned target through their launch delay; no extra homing is added.
 - Tracks the target during casting. Cancels if the target leaves range, becomes protected or disappears, or if the magic becomes unavailable.
-- Leaves your camera unchanged and gives manual casting priority. Self-targeted and buff magic retain their native behavior.
+- Auto-Cast does not apply casting slowdown or camera zoom. You can manually chant and cast a different spell at the same time. Manually using the assigned spell pauses its automatic cast because they share one cooldown and casting state. Self-targeted and buff magic retain their native behavior.
 
 Successful paid casts train Split Mind; menu clicks and toggle switching do not. This switch is independent of the passive checkbox. **Damage type:** Whatever the assigned magic normally deals. **Cost:** Its normal aura/magicules. **Cooldown:** Its normal cooldown; no additional Split Mind cooldown.
 

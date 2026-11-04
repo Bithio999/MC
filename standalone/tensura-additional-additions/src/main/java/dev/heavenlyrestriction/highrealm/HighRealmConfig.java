@@ -17,6 +17,12 @@ public final class HighRealmConfig {
               "Multiplier for High Realm elite health, SHP, EP and attack floors. Applied only when"
                   + " a new elite spawns.")
           .defineInRange("elitePower", 1d, .25, 10);
+  public static final ModConfigSpec.DoubleValue SPAWN_CHANCE =
+      B.comment("Fraction of otherwise valid High Realm natural/chunk-generation spawns accepted.")
+          .defineInRange("eliteSpawnChance", .5d, 0, 1);
+  public static final ModConfigSpec.IntValue LOCAL_CAP =
+      B.comment("Maximum living unowned High Realm elites within 64 blocks of a new natural spawn.")
+          .defineInRange("eliteLocalCap", 16, 1, 64);
   public static final ModConfigSpec.BooleanValue ELITES =
       B.comment("Enable the High Realm's natural elite spawn pool.").define("eliteSpawns", true);
   public static final ModConfigSpec SPEC = B.build();
