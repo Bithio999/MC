@@ -28,6 +28,35 @@ public final class MapReview {
   private static volatile String error;
   private static double originalX, originalZ;
   private static volatile int farX = 120000, farZ = -160000;
+  private static double warpX, warpY, warpZ;
+
+  private static net.minecraft.client.gui.components.EditBox nativeField(String name) {
+    try {
+      var f =
+          io.github.manasmods.tensura.client.screen.SpatialMovementScreen.class.getDeclaredField(
+              name);
+      f.setAccessible(true);
+      return (net.minecraft.client.gui.components.EditBox) f.get(Minecraft.getInstance().screen);
+    } catch (ReflectiveOperationException ex) {
+      throw new IllegalStateException(ex);
+    }
+  }
+
+  private static String nativeSkill() {
+    try {
+      var f =
+          io.github.manasmods.tensura.client.screen.SpatialMovementScreen.class.getDeclaredField(
+              "skill");
+      f.setAccessible(true);
+      return ((io.github.manasmods.manascore.skill.api.ManasSkill)
+              f.get(Minecraft.getInstance().screen))
+          .getRegistryName()
+          .toString();
+    } catch (ReflectiveOperationException ex) {
+      throw new IllegalStateException(ex);
+    }
+  }
+
   private static volatile UUID savedPin;
   private static net.minecraft.server.level.ServerPlayer companion, traveler;
 
@@ -254,6 +283,17 @@ public final class MapReview {
           });
       return;
     }
+    if (phase == 2 && wait > 100 && Boolean.getBoolean("heavenlyrestriction.review.travelOnly")) {
+      open();
+      phase = 50;
+      wait = 0;
+      return;
+    }
+    if (phase == 50 && mc.screen instanceof MaraudersMapScreen && wait > 20) {
+      phase = 29;
+      wait = 16;
+      return;
+    }
     if (phase == 2 && wait > 100) {
       check(MapAtlas.knownChunks() > 20, "Explored terrain recorder did not run");
       var menu = new Menu();
@@ -415,16 +455,17 @@ public final class MapReview {
       return;
     }
     if (phase == 12 && wait > 30) {
-      check(button("Show result").active, "Real village structure was not indexed/located");
+      if (!button("Show result").active) {
+        check(wait < 1200, "Real village was not located within 60 seconds");
+        return;
+      }
       server(
           p -> {
             var search = MapService.session(p).search;
             check(
-                search != null
-                    && search.done
-                    && search.checked > 0
-                    && search.candidates > 0
-                    && MapService.session(p).found != null,
+                MapService.session(p).found != null
+                    && (search == null
+                        || (search.done && search.checked > 0 && search.candidates > 0)),
                 "Incremental native village discovery did not run");
           });
       press("Show result");
@@ -680,9 +721,7 @@ public final class MapReview {
           "Out-of-range player location did not update");
       field("Search structures and pins").setValue("RealmWalker");
       map().mouseClicked(24, 110, 0);
-      check(
-          !button("Show selected").active,
-          "Other-dimension location incorrectly centers current map");
+      check(!button("Focus").active, "Other-dimension location incorrectly centers current map");
       phase = 28;
       wait = 0;
       return;
@@ -710,7 +749,276 @@ public final class MapReview {
       return;
     }
     if (phase == 29 && wait > 15) {
-      map().onClose();
+      field("Search structures and pins").setValue("");
+      press("Go to…");
+      field("X").setValue("70000");
+      field("Z").setValue("-70000");
+      press("Center map");
+      map().view.scale = .2;
+      server(
+          p -> {
+            RestrictionData.learnReward(
+                p, io.github.manasmods.tensura.registry.skill.ExtraSkills.SPATIAL_MOTION.get());
+            RestrictionData.learnReward(p, HeavenlyRestriction.INSTANT_TRANSMISSION.get());
+            var i =
+                SkillAPI.getSkillsFrom(p)
+                    .getSkill(HeavenlyRestriction.INSTANT_TRANSMISSION.get())
+                    .orElseThrow();
+            i.setMastery(i.getMaxMastery());
+            MapData.get(p.server)
+                .structures
+                .entrySet()
+                .removeIf(e -> e.getValue().type().equals("minecraft:stronghold"));
+          });
+      phase = 30;
+      wait = 0;
+      return;
+    }
+    if (phase == 30 && wait > 30) {
+      press("Locate structure…");
+      field("Find a structure type").setValue("stronghold");
+      phase = 31;
+      wait = 0;
+      return;
+    }
+    if (phase == 31 && wait > 10) {
+      press("Stronghold");
+      shot("marauders-map-long-search");
+      press("Start search");
+      phase = 32;
+      wait = 0;
+      return;
+    }
+    if (phase == 32 && wait > 30) {
+      if (!button("Show result").active) {
+        check(wait < 1800, "100k native ring search did not find a stronghold within 90 seconds");
+        return;
+      }
+      server(
+          p -> {
+            var session = MapService.session(p);
+            var found = session.found;
+            check(
+                found != null
+                    && session.search != null
+                    && session.search.done
+                    && session.search.checked > 0
+                    && session.search.candidates > 0,
+                "Long-range search used no native worker/candidates");
+            double distance = Math.hypot(found.x() - 70000d, found.z() + 70000d);
+            check(
+                distance > 2048 && distance <= 100000,
+                "Search did not discover a structure beyond the old range");
+            System.out.println(
+                "Map review 100k search: "
+                    + found.x()
+                    + ","
+                    + found.z()
+                    + " distance="
+                    + distance
+                    + " checked="
+                    + session.search.checked
+                    + " candidates="
+                    + session.search.candidates);
+          });
+      press("Show result");
+      phase = 33;
+      wait = 0;
+      return;
+    }
+    if (phase == 33 && wait > 30) {
+      fits();
+      check(button("Travel…").active, "Travel button not enabled with owned spatial skills");
+      press("Travel…");
+      phase = 34;
+      wait = 0;
+      return;
+    }
+    if (phase == 34 && wait > 15) {
+      check(mc.screen instanceof MapTravelScreen, "Spatial skill chooser did not open");
+      fits();
+      check(
+          button("Spatial Motion").active && button("Instant Transmission").active,
+          "Owned spatial skills missing");
+      shot("marauders-map-travel-skills");
+      press("Spatial Motion");
+      phase = 35;
+      wait = 0;
+      return;
+    }
+    if (phase == 35 && wait > 15) {
+      if (!(mc.screen instanceof MapWarpScreen)) {
+        check(wait < 1800, "Native Spatial Motion menu handoff timed out");
+        return;
+      }
+      check(nativeSkill().equals("tensura:spatial_motion"), "Wrong native menu skill");
+      warpX = Double.parseDouble(nativeField("fieldX").getValue());
+      warpY = Double.parseDouble(nativeField("fieldY").getValue());
+      warpZ = Double.parseDouble(nativeField("fieldZ").getValue());
+      check(
+          Math.abs(warpX - originalX) > 1000 || Math.abs(warpZ - originalZ) > 1000,
+          "Destination not prefilled");
+      check(
+          Math.abs(mc.player.getX() - originalX) < 4, "Opening native menu teleported the player");
+      mc.gui.getChat().clearMessages(false);
+      phase = 36;
+      wait = 0;
+      return;
+    }
+    if (phase == 36 && wait > 15) {
+      shot("marauders-map-spatial-motion");
+      mc.screen.onClose();
+      open();
+      phase = 37;
+      wait = 0;
+      return;
+    }
+    if (phase == 37 && wait > 20) {
+      var m = map();
+      press("Go to…");
+      field("X").setValue("70000");
+      field("Z").setValue("-70000");
+      press("Center map");
+      phase = 38;
+      wait = 0;
+      return;
+    }
+    if (phase == 38 && wait > 20) {
+      press("Locate structure…");
+      field("Find a structure type").setValue("stronghold");
+      phase = 39;
+      wait = 0;
+      return;
+    }
+    if (phase == 39 && wait > 10) {
+      press("Stronghold");
+      press("Start search");
+      phase = 40;
+      wait = 0;
+      return;
+    }
+    if (phase == 40 && wait > 20) {
+      if (!button("Show result").active) {
+        check(wait < 1200, "Recorded long-range result missing");
+        return;
+      }
+      press("Show result");
+      phase = 401;
+      wait = 0;
+      return;
+    }
+    if (phase == 401 && wait > 15) {
+      press("Travel…");
+      phase = 402;
+      wait = 0;
+      return;
+    }
+    if (phase == 402 && wait > 15) {
+      press("Instant Transmission");
+      phase = 403;
+      wait = 0;
+      return;
+    }
+    if (phase == 403 && wait > 15) {
+      if (!(mc.screen instanceof MapWarpScreen)) {
+        check(wait < 1200, "Instant Transmission native menu did not open");
+        return;
+      }
+      check(
+          nativeSkill().equals("heavenlyrestriction:instant_transmission"),
+          "Wrong aura teleport skill");
+      check(
+          Math.abs(Double.parseDouble(nativeField("fieldX").getValue()) - warpX) < .01
+              && Math.abs(Double.parseDouble(nativeField("fieldZ").getValue()) - warpZ) < .01,
+          "Reopened route lost coordinates");
+      server(
+          p -> {
+            p.setGameMode(net.minecraft.world.level.GameType.SURVIVAL);
+            p.getAttribute(
+                    io.github.manasmods.tensura.registry.attribute.TensuraAttributes.MAX_AURA)
+                .setBaseValue(20000000);
+            p.getAttribute(
+                    io.github.manasmods.tensura.registry.attribute.TensuraAttributes.MAX_MAGICULE)
+                .setBaseValue(20000000);
+            var e = io.github.manasmods.tensura.storage.TensuraStorages.getExistenceFrom(p);
+            e.setAura(10000000);
+            e.setMagicule(1000000);
+          });
+      phase = 404;
+      wait = 0;
+      return;
+    }
+    if (phase == 404 && wait > 20) {
+      mc.gui.getChat().clearMessages(false);
+      var x = nativeField("fieldX");
+      double gx = x.getX() - 49 + 80, gy = x.getY() - 38 + 110;
+      org.lwjgl.glfw.GLFW.glfwSetCursorPos(
+          mc.getWindow().getWindow(),
+          gx * mc.getWindow().getScreenWidth() / (double) mc.screen.width,
+          gy * mc.getWindow().getScreenHeight() / (double) mc.screen.height);
+      phase = 407;
+      wait = 0;
+      return;
+    }
+    if (phase == 407 && wait > 12) {
+      shot("marauders-map-instant-transmission");
+      var x = nativeField("fieldX");
+      var warpButton =
+          mc.screen.children().stream()
+              .filter(
+                  w ->
+                      w instanceof Button b
+                          && b.getX() == x.getX() + 21
+                          && b.getY() == x.getY() + 62)
+              .map(w -> (Button) w)
+              .findFirst()
+              .orElseThrow();
+      mc.screen.setFocused(warpButton);
+      check(
+          mc.screen.keyPressed(org.lwjgl.glfw.GLFW.GLFW_KEY_ENTER, 0, 0),
+          "Native Warp keyboard confirmation was not accepted");
+      server(
+          p ->
+              System.out.println(
+                  "Map warp confirmation: aura="
+                      + io.github.manasmods.tensura.storage.TensuraStorages.getExistenceFrom(p)
+                          .getAura()
+                      + " max="
+                      + io.github.manasmods.tensura.util.EnergyHelper.getMaxAura(p)
+                      + " mastered="
+                      + SkillAPI.getSkillsFrom(p)
+                          .getSkill(HeavenlyRestriction.INSTANT_TRANSMISSION.get())
+                          .orElseThrow()
+                          .isMastered(p)));
+      phase = 405;
+      wait = 0;
+      return;
+    }
+    if (phase == 405 && wait > 30) {
+      if (Math.hypot(mc.player.getX() - warpX, mc.player.getZ() - warpZ) > 2) {
+        check(wait < 600, "Native Warp confirmation did not teleport to found structure");
+        return;
+      }
+      check(
+          Math.abs(mc.player.getY() - warpY) < 4,
+          "Arrival Y did not match the prefilled safe location");
+      phase = 406;
+      wait = 0;
+      return;
+    }
+    if (phase == 406 && wait > 25) {
+      shot("marauders-map-arrival");
+      try {
+        Files.writeString(
+            OUT.resolve("passed-travel.txt"),
+            "PASS: actual cold native stronghold search beyond 2,048 and within 100,000 blocks;"
+                + " owned-only spatial skill chooser; prefilled native Spatial Motion and Instant"
+                + " Transmission menus; no warp before confirmation; actual native Warp button"
+                + " keyboard confirmation and mastered aura-based teleport to a safe surface"
+                + " arrival.\n");
+      } catch (Exception ex) {
+        throw new IllegalStateException(ex);
+      }
       mc.stop();
     }
   }

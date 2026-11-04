@@ -1,5 +1,11 @@
 # Changelog
 
+## Additions 1.14.0 — Long-range structure discovery and spatial travel
+
+- Increase Marauder’s Map Locate to a 100,000-block radius around the map center. Scan native random-spread placement regions and stronghold rings in a bounded background worker, filter native generation points/biomes, and verify real structure starts asynchronously. Remove the old 128-candidate stopping limit; retain cancellation and non-ticking, temporary chunk tickets.
+- Add Travel for selected/found structures. Offer only owned, learned and usable native spatial-movement skills, prepare clear surface arrival coordinates asynchronously, and prefill Tensura’s own coordinate menu. Spatial Motion and the aura-based Instant Transmission use their normal confirmation, costs, charge, mastery, cooldown and restrictions.
+- Add a compact spatial-skill chooser, a Focus / Go to / Travel control row, native-menu destination labels, handoff ownership rechecks and safe cancellation on lost skill/session/dimension. Preparing a route neither teleports the player nor spends resources.
+
 ## Additions 1.13.0 — World terrain and live players
 
 - Reveal native terrain previews wherever the map is panned, including unvisited/unloaded areas. Generate previews off-thread without loading chunks, then progressively refine nearby zoomed views with bounded native feature-stage tasks.

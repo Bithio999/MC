@@ -25,6 +25,8 @@ Slot the learned skill in Tensura’s **Skills → Unique** menu and activate **
 | Drag | Pan the map |
 | Mouse wheel / + / − | Zoom at the cursor |
 | Recenter / Home | Return to your position |
+| Focus | Center the selected marker |
+| Travel… | Choose an owned spatial skill and prefill its teleport menu for a structure |
 | Go to… | Center on X/Z coordinates; your character stays in place |
 | Sidebar search | Filter player, structure and pin names, types or coordinates |
 | Sites / Pins / Players | Show or hide each marker group |
@@ -46,7 +48,7 @@ Zoom in for native surface detail: block top-face textures, roads, roofs, trees,
 
 Real world-generation structures, including addon types, are marked when their starts are known. Player-built structures are marked with your own pins.
 
-**Locate structure…** opens a searchable list of structure types. Choose one and press **Start search** to search up to **2,048 blocks around the map center**. **Show result** centers the found marker. **Escape cancels** an active search. If nothing is found, move the map center and search another area; some types do not generate in the current dimension.
+**Locate structure…** opens a searchable list of structure types. Choose one and press **Start search** to search up to **100,000 blocks around the map center**. **Show result** centers the found marker. The search runs in the background; rare types can take longer. **Escape cancels** an active search. If nothing is found, move the map center and search another area; some types do not generate in the current dimension.
 
 ![Search native and addon structure types](../media/marauders-map-structure-search.png)
 
@@ -58,6 +60,20 @@ Real world-generation structures, including addon types, are marked when their s
 | Ocean structures | Blue |
 | Ancient cities, trial chambers and mineshafts | Violet |
 | Other and addon structures | Teal |
+
+## Travel to a structure
+
+Select a structure marker, or find one with **Locate structure…** and press **Show result**, then press **Travel…**. Choose one of your **learned, usable coordinate-teleport skills**. **Spatial Motion**, **Spatial Manipulation**, **Instant Transmission** and other skills using Tensura’s spatial-movement interface are supported.
+
+![Choose an owned teleport skill](../media/marauders-map-travel-skills.png)
+
+Tensura’s own teleport menu opens with **X, Y, Z and dimension prefilled** for a clear surface arrival near the structure. Check or edit the coordinates, then confirm with the native **Warp** button. Underground structures use a surface approach above them. If that chunk has no clear ground, the map reports that it cannot prepare an arrival.
+
+![Spatial Motion with a prefilled destination](../media/marauders-map-spatial-motion.png)
+
+![The same destination in Instant Transmission’s native menu](../media/marauders-map-instant-transmission.png)
+
+Opening the map, choosing a skill and preparing coordinates do not teleport you or charge resources. The confirmed teleport uses the chosen skill’s **normal resource cost, charge time, mastery effects, cooldown and restrictions**. The map does not grant a teleport skill. **Travel…** is disabled without a usable compatible skill.
 
 ## Player locations
 

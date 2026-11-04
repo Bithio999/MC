@@ -745,7 +745,15 @@
           "title": "Terrain and structures",
           "lines": [
             "Pan or Go to… anywhere in the dimension, including unvisited/unloaded areas. Native terrain previews fill in progressively. Zoom in for block top-face textures, trees, roads and rooftops, relief and depth-shaded water. Initial previews show landforms and biome colors; surface features and player edits follow as native detail arrives. Live terrain is cached on this computer for each world and dimension.",
-            "Actual world-generation structures, including addon types, are marked when their starts are known. Locate structure… searches up to 2,048 blocks around the map center in small steps. Show result centers the found marker. Escape cancels an active search. Move the map center to search another area."
+            "Actual world-generation structures, including addon types, are marked when their starts are known. Locate structure… searches up to 100,000 blocks around the map center in small steps. Show result centers the found marker. Escape cancels an active search. Move the map center to search another area."
+          ]
+        },
+        {
+          "title": "Travel to a structure",
+          "lines": [
+            "Select a structure or use Locate, then press Travel…. Choose a learned, usable coordinate-teleport skill. Spatial Motion, Spatial Manipulation, Instant Transmission and other native spatial-movement skills are supported.",
+            "The skill’s native menu opens with a clear surface arrival near the structure prefilled. Check or edit X/Y/Z, then confirm Warp. Preparing coordinates is free; the confirmed teleport keeps normal resource costs, charge time, mastery, cooldown and restrictions. The map does not grant teleport skills.",
+            "Rare structure searches can take longer; they run in the background and Escape cancels them."
           ]
         },
         {

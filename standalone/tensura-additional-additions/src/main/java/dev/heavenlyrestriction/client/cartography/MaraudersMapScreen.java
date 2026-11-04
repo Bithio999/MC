@@ -39,7 +39,7 @@ public final class MaraudersMapScreen extends Screen {
   private double downX, downY;
   private String selected = "";
   private EditBox search;
-  private Button centerSelected, edit, delete, showResult;
+  private Button centerSelected, edit, delete, showResult, travel;
   private List<CompoundTag> entries = List.of();
   private final List<Hit> hits = new ArrayList<>();
 
@@ -80,6 +80,40 @@ public final class MaraudersMapScreen extends Screen {
     else if (mc.screen instanceof MapPinScreen p) screen = p.parent;
     else if (mc.screen instanceof MapStructureScreen s) screen = s.parent;
     else if (mc.screen instanceof MapHelpScreen h) screen = h.parent;
+    else if (mc.screen instanceof MapTravelScreen t) screen = t.parent;
+    if (screen != null && data.hasUUID("session") && screen.token.equals(data.getUUID("session"))) {
+      if (data.contains("travelOptions")) {
+        mc.setScreen(
+            new MapTravelScreen(
+                screen,
+                data.getCompound("target"),
+                data.getList("travelOptions", Tag.TAG_COMPOUND)));
+        return;
+      }
+      if (data.getBoolean("openTravel")) {
+        var key = net.minecraft.resources.ResourceLocation.tryParse(data.getString("skill"));
+        var skill =
+            key == null
+                ? null
+                : io.github.manasmods.manascore.skill.api.SkillAPI.getSkillRegistry().get(key);
+        if (skill instanceof io.github.manasmods.tensura.ability.subclass.ISpatialMovement) {
+          screen.returned = true;
+          MapAtlas.flush();
+          var dimensions =
+              data.getList("dimensions", Tag.TAG_STRING).stream()
+                  .map(net.minecraft.nbt.Tag::getAsString)
+                  .toList();
+          mc.setScreen(
+              new MapWarpScreen(
+                  (io.github.manasmods.manascore.skill.api.ManasSkill
+                          & io.github.manasmods.tensura.ability.subclass.ISpatialMovement)
+                      skill,
+                  dimensions,
+                  data));
+        }
+        return;
+      }
+    }
     if (data.getBoolean("closed")) {
       if (screen != null) {
         screen.returned = true;
@@ -182,8 +216,8 @@ public final class MaraudersMapScreen extends Screen {
         button(
             10,
             height - 105,
-            side - 70,
-            "Show selected",
+            (side - 12) / 3,
+            "Focus",
             () -> {
               var m = chosen();
               if (m != null) {
@@ -192,11 +226,25 @@ public final class MaraudersMapScreen extends Screen {
               }
             });
     button(
-        side - 55,
+        12 + (side - 12) / 3,
         height - 105,
-        57,
+        (side - 12) / 3,
         "Go to…",
         () -> minecraft.setScreen(MapPinScreen.gotoPoint(this)));
+    travel =
+        button(
+            14 + 2 * ((side - 12) / 3),
+            height - 105,
+            (side - 12) / 3,
+            "Travel…",
+            () -> {
+              var m = travelTarget();
+              if (m != null) {
+                var t = new CompoundTag();
+                t.putString("id", m.getString("id"));
+                request("routes", t);
+              }
+            });
     button(10, height - 81, (side - 12) / 2, "Add pin", () -> pinAt(view.x, view.z));
     edit =
         button(
@@ -295,6 +343,12 @@ public final class MaraudersMapScreen extends Screen {
         .orElse(null);
   }
 
+  private CompoundTag travelTarget() {
+    var m = chosen();
+    if (m != null) return !m.getBoolean("pin") && !m.getBoolean("player") ? m : null;
+    return state.contains("found") ? state.getCompound("found") : null;
+  }
+
   private void filter() {
     String q = search == null ? "" : search.getValue().toLowerCase(Locale.ROOT);
     var all = new ArrayList<CompoundTag>();
@@ -333,6 +387,16 @@ public final class MaraudersMapScreen extends Screen {
                   || m.getString("dimension").equals(state.getString("dimension")));
       edit.active = delete.active = m != null && m.getBoolean("pin");
       showResult.active = state.contains("found");
+      travel.active =
+          travelTarget() != null
+              && state.getInt("travelSkills") > 0
+              && !state.getBoolean("preparingTravel");
+      travel.setTooltip(
+          Tooltip.create(
+              Component.literal(
+                  state.getInt("travelSkills") > 0
+                      ? "Open a teleport skill with arrival coordinates for this structure"
+                      : "Requires a learned, usable coordinate-teleport skill")));
     }
   }
 
@@ -586,6 +650,7 @@ public final class MaraudersMapScreen extends Screen {
               + " · "
               + state.getInt("candidates")
               + " candidates  [Esc cancels]";
+    if (state.getBoolean("preparingTravel")) note = "Preparing safe arrival coordinates…";
     if (note.isEmpty()) note = MapTerrainAtlas.progress();
     if (note.isEmpty() && !MapAtlas.notice.isEmpty()) note = MapAtlas.notice;
     if (note.isEmpty())

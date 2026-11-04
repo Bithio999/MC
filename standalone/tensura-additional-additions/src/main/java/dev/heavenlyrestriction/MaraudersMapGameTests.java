@@ -175,10 +175,10 @@ public final class MaraudersMapGameTests {
     t.putString("type", "minecraft:buried_treasure");
     MapService.request(p, s.token, "locate", t);
     if (s.search != null && !s.search.done) {
-      int before = s.search.checked;
       MapService.advance(p, s);
       h.assertTrue(
-          s.search.checked - before <= MapService.SCAN_BUDGET, "Search exceeded tick budget");
+          s.search.pending == null || !s.search.pending.isCompletedExceptionally(),
+          "Native search scheduling failed");
     }
     s.nextRequest = 0;
     MapService.request(p, s.token, "cancel", new CompoundTag());
@@ -315,5 +315,189 @@ public final class MaraudersMapGameTests {
             .noneMatch(t -> ((CompoundTag) t).getUUID("uuid").equals(far.getUUID())),
         "Disconnected player retained");
     h.succeed();
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 100)
+  public static void locateUsesAHundredThousandBlockRadiusAndRejectsOutsideResults(
+      GameTestHelper h) {
+    var p = reader(h);
+    MapService.open(p);
+    var session = MapService.session(p);
+    session.cx = 22000000;
+    session.cz = -22000000;
+    var d = MapData.get(p.server);
+    String dim = p.level().dimension().location().toString();
+    var inside =
+        new MapData.Marker(
+            "range/" + p.getUUID(),
+            "minecraft:stronghold",
+            dim,
+            session.cx + 90000,
+            40,
+            session.cz);
+    var outside =
+        new MapData.Marker(
+            "outside/" + p.getUUID(),
+            "minecraft:stronghold",
+            dim,
+            session.cx + 100001,
+            40,
+            session.cz);
+    d.add(inside);
+    d.add(outside);
+    var request = new CompoundTag();
+    request.putString("type", "minecraft:stronghold");
+    MapService.request(p, session.token, "locate", request);
+    h.assertTrue(
+        MapService.SEARCH_RANGE == 100000 && session.found == inside,
+        "Distant in-range structure not found");
+    d.structures.remove(inside.key());
+    session.nextLocate = 0;
+    MapService.request(p, session.token, "locate", request);
+    h.assertTrue(session.found == null, "Out-of-range structure returned");
+    if (session.search != null) {
+      var job = session.search;
+      MapService.request(p, session.token, "cancel", new CompoundTag());
+      h.assertTrue(job.cancelled, "Cancelled background search kept running");
+    }
+    d.structures.remove(outside.key());
+    MapService.close(p);
+    h.succeed();
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 100)
+  public static void travelOnlyOffersOwnedLearnedUsableCoordinateSkills(GameTestHelper h) {
+    var p = reader(h);
+    h.assertTrue(MapTravel.skills(p).isEmpty(), "Unowned spatial skills offered");
+    var skill = io.github.manasmods.tensura.registry.skill.ExtraSkills.SPATIAL_MOTION.get();
+    RestrictionData.learnReward(p, skill);
+    var i = SkillAPI.getSkillsFrom(p).getSkill(skill).orElseThrow();
+    i.setMastery(-1);
+    h.assertTrue(MapTravel.skills(p).isEmpty(), "Unlearned spatial skill offered");
+    i.setMastery(0);
+    h.assertTrue(
+        MapTravel.skills(p).stream().anyMatch(a -> a == i), "Learned Spatial Motion missing");
+    int mode =
+        ((io.github.manasmods.tensura.ability.subclass.ISpatialMovement) skill)
+            .getSpatialMovementModeIndex();
+    i.setCoolDown(40, mode);
+    h.assertTrue(!MapTravel.eligible(p, i), "Cooldown bypassed");
+    i.setCoolDown(0, mode);
+    RestrictionData.learnReward(p, HeavenlyRestriction.INSTANT_TRANSMISSION.get());
+    h.assertTrue(MapTravel.skills(p).size() == 2, "Aura-based Instant Transmission not compatible");
+    p.addEffect(new net.minecraft.world.effect.MobEffectInstance(HeavenlyArsenal.SKILL_SEAL, 40));
+    h.assertTrue(MapTravel.skills(p).isEmpty(), "Sealed skills offered");
+    h.succeed();
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 200)
+  public static void travelPreparesSafeNativeCoordinatesWithoutWarpingOrCharging(GameTestHelper h) {
+    var p = reader(h);
+    RestrictionData.learnReward(p, HeavenlyRestriction.INSTANT_TRANSMISSION.get());
+    MapService.open(p);
+    var session = MapService.session(p);
+    var marker =
+        new MapData.Marker(
+            "travel/" + p.getUUID(),
+            "minecraft:village_plains",
+            session.dimension,
+            p.getBlockX(),
+            p.getBlockY(),
+            p.getBlockZ());
+    MapData.get(p.server).add(marker);
+    var energy = io.github.manasmods.tensura.storage.TensuraStorages.getExistenceFrom(p);
+    double aura = energy.getAura(), magicules = energy.getMagicule();
+    var before = p.position();
+    h.assertTrue(
+        !MapTravel.prepare(p, session, marker.key(), "tensura:spatial_motion"),
+        "Unowned skill authorized");
+    h.assertTrue(
+        !MapTravel.prepare(
+            p,
+            session,
+            "forged-target",
+            HeavenlyRestriction.INSTANT_TRANSMISSION.get().getRegistryName().toString()),
+        "Forged destination authorized");
+    h.assertTrue(
+        MapTravel.prepare(
+            p,
+            session,
+            marker.key(),
+            HeavenlyRestriction.INSTANT_TRANSMISSION.get().getRegistryName().toString()),
+        "Owned native spatial skill rejected");
+    var pending = session.travel;
+    h.assertTrue(
+        !MapTravel.prepare(
+            p,
+            session,
+            marker.key(),
+            HeavenlyRestriction.INSTANT_TRANSMISSION.get().getRegistryName().toString()),
+        "Duplicate arrival job accepted");
+    h.startSequence()
+        .thenWaitUntil(() -> h.assertTrue(pending.future().isDone(), "Arrival chunk not ready"))
+        .thenExecute(
+            () -> {
+              var chunk = pending.future().getNow(null).orElse(null);
+              var landing = MapTravel.landing(p, chunk, marker.x(), marker.z());
+              h.assertTrue(
+                  landing != null
+                      && chunk.getBlockState(landing).getCollisionShape(chunk, landing).isEmpty()
+                      && chunk
+                          .getBlockState(landing.above())
+                          .getCollisionShape(chunk, landing.above())
+                          .isEmpty(),
+                  "Arrival has no body clearance");
+              MapTravel.advance(p, session);
+              h.assertTrue(
+                  MapService.session(p) == null, "Native menu handoff did not close atlas session");
+              h.assertTrue(p.position().equals(before), "Preparing menu teleported player");
+              h.assertTrue(
+                  energy.getAura() == aura && energy.getMagicule() == magicules,
+                  "Preparing menu charged resources");
+              MapData.get(p.server).structures.remove(marker.key());
+              h.succeed();
+            });
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 200)
+  public static void forgottenTeleportSkillsCancelTheHandoff(GameTestHelper h) {
+    var p = reader(h);
+    RestrictionData.learnReward(p, HeavenlyRestriction.INSTANT_TRANSMISSION.get());
+    MapService.open(p);
+    var session = MapService.session(p);
+    var marker =
+        new MapData.Marker(
+            "forgotten/" + p.getUUID(),
+            "minecraft:village_plains",
+            session.dimension,
+            p.getBlockX(),
+            p.getBlockY(),
+            p.getBlockZ());
+    MapData.get(p.server).add(marker);
+    h.assertTrue(
+        MapTravel.prepare(
+            p,
+            session,
+            marker.key(),
+            HeavenlyRestriction.INSTANT_TRANSMISSION.get().getRegistryName().toString()),
+        "Prepare failed");
+    var pending = session.travel;
+    SkillAPI.getSkillsFrom(p)
+        .forgetSkill(
+            SkillAPI.getSkillsFrom(p)
+                .getSkill(HeavenlyRestriction.INSTANT_TRANSMISSION.get())
+                .orElseThrow());
+    h.startSequence()
+        .thenWaitUntil(() -> h.assertTrue(pending.future().isDone(), "Arrival not ready"))
+        .thenExecute(
+            () -> {
+              MapTravel.advance(p, session);
+              h.assertTrue(
+                  MapService.session(p) == session && session.travel == null,
+                  "Forgotten skill still opened native menu");
+              MapService.close(p);
+              MapData.get(p.server).structures.remove(marker.key());
+              h.succeed();
+            });
   }
 }

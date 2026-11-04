@@ -3,17 +3,13 @@ package dev.heavenlyrestriction.cartography;
 import dev.heavenlyrestriction.HeavenlyRestriction;
 import io.github.manasmods.manascore.skill.api.SkillAPI;
 import java.util.*;
-import java.util.concurrent.CompletableFuture;
 import net.minecraft.core.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.*;
-import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.chunk.*;
-import net.minecraft.world.level.chunk.status.ChunkStatus;
 import net.minecraft.world.level.levelgen.structure.*;
-import net.minecraft.world.level.levelgen.structure.placement.StructurePlacement;
 import net.neoforged.neoforge.event.level.ChunkEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 
@@ -21,7 +17,7 @@ import net.neoforged.neoforge.event.tick.ServerTickEvent;
  * Native, verified structure starts; bounded incremental discovery with no synchronous chunk waits.
  */
 public final class MapService {
-  public static final int SEARCH_RADIUS = 128, SCAN_BUDGET = 512, MAX_CANDIDATES = 128;
+  public static final int SEARCH_RANGE = 100000, SEARCH_RADIUS = SEARCH_RANGE / 16;
   private static int generationBudget = 2;
   private static final Map<UUID, Session> SESSIONS = new HashMap<>();
 
@@ -33,6 +29,7 @@ public final class MapService {
     public volatile int cx, cz, radius = 512;
     public volatile boolean terrainClosed;
     public Search search;
+    public MapTravel.Pending travel;
     public String message = "";
     public MapData.Marker found;
     public final Set<String> terrain = new HashSet<>();
@@ -46,51 +43,9 @@ public final class MapService {
     }
   }
 
-  public static final class Search {
-    public final Holder<Structure> type;
-    public final List<StructurePlacement> placements;
-    public final int x, z;
-    public int ring, edge, checked, candidates;
-    public CompletableFuture<ChunkResult<ChunkAccess>> pending;
-    public boolean done;
-    public ChunkPos ready;
-
+  public static final class Search extends MapStructureSearch {
     Search(ServerPlayer p, Holder<Structure> type, int x, int z) {
-      this.type = type;
-      this.x = x >> 4;
-      this.z = z >> 4;
-      placements =
-          p.serverLevel().getChunkSource().getGeneratorState().getPlacementsForStructure(type);
-      if (placements.isEmpty()) done = true;
-    }
-
-    private ChunkPos next() {
-      if (ring > SEARCH_RADIUS) return null;
-      if (ring == 0) {
-        ring = 1;
-        return new ChunkPos(x, z);
-      }
-      int side = ring * 2;
-      int segment = edge / side, offset = edge % side;
-      int dx =
-          switch (segment) {
-            case 0 -> -ring + offset;
-            case 1 -> ring;
-            case 2 -> ring - offset;
-            default -> -ring;
-          };
-      int dz =
-          switch (segment) {
-            case 0 -> -ring;
-            case 1 -> -ring + offset;
-            case 2 -> ring;
-            default -> ring - offset;
-          };
-      if (++edge == side * 4) {
-        edge = 0;
-        ring++;
-      }
-      return new ChunkPos(x + dx, z + dz);
+      super(p, type, x, z);
     }
   }
 
@@ -155,6 +110,8 @@ public final class MapService {
     if (old != null) {
       old.terrainClosed = true;
       MapTerrain.cancel(old);
+      MapTravel.cancel(old);
+      if (old.search != null) old.search.stop();
     }
   }
 
@@ -218,7 +175,7 @@ public final class MapService {
       s.nextRequest = now + 6;
     }
     s.expiry = now + 12000;
-    s.message = "";
+    if (!action.equals("terrain")) s.message = "";
     var data = MapData.get(p.server);
     switch (action) {
       case "terrain" -> {
@@ -229,6 +186,17 @@ public final class MapService {
         if (++s.terrainRequests > 8) return;
         MapTerrain.request(p, s, t);
         return;
+      }
+      case "routes" -> {
+        if (!MapTravel.options(p, s, t.getString("id"))) {
+          s.message = "No usable coordinate-teleport skill is available for that structure.";
+          MapNetwork.send(p, snapshot(p, s));
+        }
+        return;
+      }
+      case "travel" -> {
+        if (!MapTravel.prepare(p, s, t.getString("id"), t.getString("skill")))
+          s.message = "Could not prepare travel. Check your teleport skill and try again.";
       }
       case "view" -> {
         long x = t.getInt("x"), z = t.getInt("z");
@@ -256,6 +224,8 @@ public final class MapService {
           return;
         }
         s.nextLocate = now + 100;
+        if (s.search != null) s.search.stop();
+        s.search = null;
         var id = ResourceLocation.tryParse(t.getString("type"));
         var holder =
             id == null
@@ -268,7 +238,8 @@ public final class MapService {
                     m ->
                         m.dimension().equals(s.dimension)
                             && m.type().equals(id.toString())
-                            && Math.hypot(m.x() - (double) s.cx, m.z() - (double) s.cz) <= 2048)
+                            && Math.hypot(m.x() - (double) s.cx, m.z() - (double) s.cz)
+                                <= SEARCH_RANGE)
                 .min(
                     Comparator.comparingDouble(
                         m -> Math.hypot(m.x() - (double) s.cx, m.z() - (double) s.cz)))
@@ -284,10 +255,13 @@ public final class MapService {
         s.search = new Search(p, holder.get(), s.cx, s.cz);
         s.message =
             s.search.done
-                ? "That structure has no world-generation placement in this dimension."
-                : "Searching around the map center…";
+                ? (s.search.error.isEmpty()
+                    ? "That structure has no world-generation placement in this dimension."
+                    : s.search.error)
+                : "Searching within 100,000 blocks of the map center…";
       }
       case "cancel" -> {
+        if (s.search != null) s.search.stop();
         s.search = null;
         s.message = "Structure search cancelled.";
       }
@@ -348,6 +322,8 @@ public final class MapService {
         continue;
       }
       MapTerrain.advance(p, s);
+      MapTravel.advance(p, s);
+      if (session(p) != s) continue;
       if (s.search != null && !s.search.done) advance(p, s);
       if (p.tickCount % 10 == 0) {
         var players = new CompoundTag();
@@ -365,7 +341,11 @@ public final class MapService {
     if (job == null || job.done) return;
     var level = p.serverLevel();
     if (job.pending != null) {
-      if (!job.pending.isDone()) return;
+      if (!job.pending.isDone()) {
+        job.refreshTicket();
+        return;
+      }
+      job.releaseTicket();
       try {
         var chunk = job.pending.getNow(null);
         if (chunk != null && chunk.isSuccess()) {
@@ -383,6 +363,14 @@ public final class MapService {
                                 && m.key().endsWith("/" + access.getPos().toLong()))
                     .findFirst()
                     .orElse(null);
+            if (s.found == null
+                || Math.hypot(s.found.x() - (double) job.blockX, s.found.z() - (double) job.blockZ)
+                    > SEARCH_RANGE) {
+              s.found = null;
+              job.pending = null;
+              return;
+            }
+            job.stop();
             job.done = true;
             s.message = "Found " + name(id) + ". Select Show result to center it.";
             return;
@@ -393,45 +381,26 @@ public final class MapService {
       }
       job.pending = null;
     }
+    if (job.ready == null) job.ready = job.poll();
     if (job.ready != null) {
       if (generationBudget <= 0) return;
       generationBudget--;
-      job.pending =
-          ((dev.heavenlyrestriction.mixin.MapChunkAccess) level.getChunkSource())
-              .additions$mapFuture(job.ready.x, job.ready.z, ChunkStatus.STRUCTURE_STARTS, true);
-      job.ready = null;
+      try {
+        job.schedule();
+      } catch (RuntimeException ex) {
+        job.stop();
+        job.done = true;
+        s.message = "Search could not read that structure. Try another search.";
+      }
       return;
     }
-    var state = level.getChunkSource().getGeneratorState();
-    for (int n = 0; n < SCAN_BUDGET; n++) {
-      var pos = job.next();
-      if (pos == null || job.candidates >= MAX_CANDIDATES) {
-        job.done = true;
-        s.message =
-            "No matching structure found in this search. Move the map center and search again.";
-        return;
-      }
-      job.checked++;
-      if ((long) (pos.x - job.x) * (pos.x - job.x) + (long) (pos.z - job.z) * (pos.z - job.z)
-          > SEARCH_RADIUS * SEARCH_RADIUS) continue;
-      if (Math.abs((long) pos.getMinBlockX()) > 29999984
-          || Math.abs((long) pos.getMinBlockZ()) > 29999984) continue;
-      if (!level
-          .getWorldBorder()
-          .isWithinBounds(
-              new BlockPos(
-                  pos.getMinBlockX() + 8, level.getMinBuildHeight(), pos.getMinBlockZ() + 8)))
-        continue;
-      boolean candidate = false;
-      for (var placement : job.placements)
-        if (placement.isStructureChunk(state, pos.x, pos.z)) {
-          candidate = true;
-          break;
-        }
-      if (!candidate) continue;
-      job.candidates++;
-      job.ready = pos;
-      return;
+    if (job.exhausted()) {
+      job.done = true;
+      s.message =
+          job.error.isEmpty()
+              ? "No matching structure found within 100,000 blocks of the search center."
+              : job.error;
+      job.stop();
     }
   }
 
@@ -441,6 +410,8 @@ public final class MapService {
     t.putInt("viewX", s.cx);
     t.putInt("viewZ", s.cz);
     t.putInt("viewRadius", s.radius);
+    t.putInt("travelSkills", MapTravel.skills(p).size());
+    t.putBoolean("preparingTravel", s.travel != null);
     t.put("players", players(p));
     t.putString("message", s.message);
     var d = MapData.get(p.server);
@@ -523,6 +494,8 @@ public final class MapService {
             s -> {
               s.terrainClosed = true;
               MapTerrain.cancel(s);
+              MapTravel.cancel(s);
+              if (s.search != null) s.search.stop();
             });
     MapTerrain.clear();
     SESSIONS.clear();

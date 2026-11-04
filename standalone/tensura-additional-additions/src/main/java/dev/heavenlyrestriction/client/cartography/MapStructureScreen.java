@@ -115,8 +115,8 @@ public final class MapStructureScreen extends Screen {
     g.drawWordWrap(
         font,
         Component.literal(
-            "Searches up to 2,048 blocks around the map center. Unexplored terrain stays hidden."
-                + " Addon structures are included."),
+            "Searches up to 100,000 blocks around the map center. Addon structures are included."
+                + " Esc cancels."),
         left + 14,
         top + h - 80,
         w - 28,

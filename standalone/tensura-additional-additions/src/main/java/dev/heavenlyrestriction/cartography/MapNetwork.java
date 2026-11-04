@@ -44,7 +44,7 @@ public final class MapNetwork {
   }
 
   public static void register(RegisterPayloadHandlersEvent e) {
-    var r = e.registrar("2");
+    var r = e.registrar("3");
     r.playToServer(
         Request.TYPE,
         Request.CODEC,
