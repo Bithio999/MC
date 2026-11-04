@@ -25,6 +25,19 @@ public final class HighRealmConfig {
           .defineInRange("eliteLocalCap", 16, 1, 64);
   public static final ModConfigSpec.BooleanValue ELITES =
       B.comment("Enable the High Realm's natural elite spawn pool.").define("eliteSpawns", true);
+  public static final ModConfigSpec.BooleanValue WAYFARER_SPAWNS =
+      B.comment("Enable Kael Veyr, the rare High Realm otherworlder boss.")
+          .define("wayfarerSpawns", true);
+  public static final ModConfigSpec.DoubleValue WAYFARER_CHANCE =
+      B.comment(
+              "Additional acceptance chance for the weight-1 boss spawn candidate, independent of"
+                  + " elite density.")
+          .defineInRange("wayfarerSpawnChance", .025d, 0, 1);
+  public static final ModConfigSpec.IntValue WAYFARER_COOLDOWN =
+      B.comment(
+              "Minimum ticks between accepted natural Wayfarer spawns across this realm. 24000 = 20"
+                  + " minutes.")
+          .defineInRange("wayfarerSpawnCooldown", 24000, 200, 1728000);
   public static final ModConfigSpec SPEC = B.build();
 
   public static void upgradeLegacyDefault(RealmData data) {

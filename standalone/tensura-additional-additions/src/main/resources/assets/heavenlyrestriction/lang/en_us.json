@@ -51,5 +51,11 @@
   "heavenlyrestriction.split_mind.invalid": "This learned magic is no longer available.",
   "heavenlyrestriction.skill.marauders_map": "Marauder's Map",
   "heavenlyrestriction.skill.mode.marauders_map.open_map": "Open Map",
-  "heavenlyrestriction.skill.marauders_map.description": "Open a detailed world map with automatic structure markers wherever you pan or zoom, including unexplored terrain. Track players, save private pins and Locate structures within 100,000 blocks of the viewed map center. Travel prefills an owned spatial skill’s native menu; its normal costs and restrictions apply."
+  "heavenlyrestriction.skill.marauders_map.description": "Open a detailed world map with automatic structure markers wherever you pan or zoom, including unexplored terrain. Track players, save private pins and Locate structures within 100,000 blocks of the viewed map center. Travel prefills an owned spatial skill’s native menu; its normal costs and restrictions apply.",
+  "entity.heavenlyrestriction.kael_veyr": "Kael Veyr",
+  "item.heavenlyrestriction.kael_veyr_spawn_egg": "Kael Veyr Spawn Egg",
+  "boss.heavenlyrestriction.kael_veyr": "Kael Veyr · 15M EP",
+  "boss.heavenlyrestriction.kael_veyr_soul": "Starless Wayfarer · Spiritual Body",
+  "advancement.heavenlyrestriction.starless.title": "A Star Finally Falls",
+  "advancement.heavenlyrestriction.starless.description": "Defeat Kael Veyr, the Starless Wayfarer"
 }

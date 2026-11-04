@@ -95,6 +95,12 @@ The daemon spells are actually used by their native combat AI, with native casti
 
 Player or subordinate kills retain normal loot and EP and add **1–3 Amethyst Shards**, with a **20%** chance of native Magic Ore and a **2%** chance of Netherite Scrap.
 
+## Rare otherworlder boss
+
+**[Kael Veyr, the Starless Wayfarer](https://github.com/Bithio999/MC/wiki/Additions-Kael-Veyr)** is a **15 million EP** Human Saint / True Hero who can rarely appear in any of the realm’s three biomes. He uses a Hihiirokane Sword, native wind magic and warned celestial attacks.
+
+He has a separate spawn rule from ordinary elites: **weight 1**, an additional **2.5% acceptance roll**, a **20-minute realm-wide spawn cooldown**, no other wild Kael within **512 blocks**, and no spawning within **192 blocks** of the return sanctum. An elapsed cooldown allows another roll; it does not guarantee a spawn.
+
 ## Returning
 
 The **quartz return arch** in the arrival sanctum is the return gate. Walk through it or use its central bedrock base. **Leaving has no EP requirement.** Each player returns near their own entrance; obstructed exits use nearby safe ground or the Overworld spawn.
@@ -109,7 +115,7 @@ The dimension is added to existing saves. Its terrain, awakened gates and indivi
 
 Existing eligible unowned elites receive applicable same-entity evolutions and loadouts when loaded, without refilling resources. Existing unowned elites also receive the halved EP balance once when loaded; current aura and magicules are capped to the new capacity. HP, SHP, damage and skill packages are unchanged. Owned mobs remain unchanged. Old daemon entities remain until normal despawning; new spawns use the upgraded types. Existing vanilla elites are left to despawn normally; no new vanilla elites spawn.
 
-Server settings are in `serverconfig/tensura-additions-high-realm.toml`: `entryEP`, `gateChargeTicks`, `elitePower`, `eliteSpawns`, `eliteSpawnChance` (default `0.5`) and `eliteLocalCap` (default `16`). Changing elite strength affects new spawns. Up to **256 awakened gates** can be registered in one world.
+Server settings are in `serverconfig/tensura-additions-high-realm.toml`: `entryEP`, `gateChargeTicks`, `elitePower`, `eliteSpawns`, `eliteSpawnChance` (default `0.5`) and `eliteLocalCap` (default `16`). Kael uses `wayfarerSpawns`, `wayfarerSpawnChance` (default `0.025`) and `wayfarerSpawnCooldown` (default `24000` ticks). Changing elite strength affects new spawns. Up to **256 awakened gates** can be registered in one world.
 
 Find this page under **Dimensions** in the searchable **F8 guide**.
 

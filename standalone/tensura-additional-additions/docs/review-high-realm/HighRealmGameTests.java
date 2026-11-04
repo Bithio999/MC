@@ -66,7 +66,8 @@ public final class HighRealmGameTests {
               .allMatch(
                   s -> {
                     var m = s.type.create(l);
-                    return m instanceof Mob mob && HighRealmElites.candidate(mob);
+                    return m instanceof dev.heavenlyrestriction.highrealm.boss.KaelVeyrEntity
+                        || m instanceof Mob mob && HighRealmElites.candidate(mob);
                   }),
           "Biome can spawn non-whitelisted mobs");
     }

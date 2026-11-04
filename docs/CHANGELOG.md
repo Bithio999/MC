@@ -1,5 +1,13 @@
 # Changelog
 
+## Additions 1.17.0 — The Starless Wayfarer
+
+- Add Kael Veyr, a native otherworlder Human Saint / True Hero boss with 15M actual EP, an original 128px skin and emissive embroidery, native Hihiirokane equipment, three mastered Uniques and a curated native support/magic package.
+- Add warned Rift Draw, Fallen Constellation, native Tempest Verse and three-wave Starless Waltz. Use native damage, resource spending, spell cooldowns, HP/SHP, regeneration, skill sealing and otherworlder rules. Add HP/SHP boss bars and visible feedback for spiritual-body hits.
+- Add rare High Realm biome spawning with a configurable chance/cooldown, local boss exclusion and sanctum protection. Keep the boss outside ordinary elite conversion and EP halving. Persist cooldown and wounded resources across saves.
+- Add native material loot, a defeat advancement, creative spawn egg and encounter guides with in-game captures.
+
+
 ## Additions 1.16.1 — Sortable structure browser
 
 - List the complete structure registry in Locate, removing the old 1,024-entry cap.

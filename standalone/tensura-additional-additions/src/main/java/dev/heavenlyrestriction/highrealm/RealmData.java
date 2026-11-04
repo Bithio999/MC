@@ -26,6 +26,7 @@ public final class RealmData extends SavedData {
   public final Map<UUID, Home> homes = new HashMap<>();
   public BlockPos sanctuary;
   public int balanceVersion;
+  public long nextWayfarerSpawn;
   private long seed = Long.MIN_VALUE;
 
   public static RealmData get(MinecraftServer s) {
@@ -38,6 +39,7 @@ public final class RealmData extends SavedData {
       d.gates.clear();
       d.homes.clear();
       d.sanctuary = null;
+      d.nextWayfarerSpawn = 0;
       d.seed = s.overworld().getSeed();
       d.setDirty();
     }
@@ -53,6 +55,7 @@ public final class RealmData extends SavedData {
     var d = new RealmData();
     d.seed = t.getLong("seed");
     d.balanceVersion = t.getInt("balanceVersion");
+    d.nextWayfarerSpawn = t.getLong("nextWayfarerSpawn");
     if (t.contains("sanctuary")) d.sanctuary = BlockPos.of(t.getLong("sanctuary"));
     for (var raw : t.getList("gates", 10)) {
       try {
@@ -92,6 +95,7 @@ public final class RealmData extends SavedData {
   public CompoundTag save(CompoundTag t, HolderLookup.Provider lookup) {
     t.putLong("seed", seed);
     t.putInt("balanceVersion", balanceVersion);
+    t.putLong("nextWayfarerSpawn", nextWayfarerSpawn);
     if (sanctuary != null) t.putLong("sanctuary", sanctuary.asLong());
     var gs = new ListTag();
     for (var g : gates.values()) {

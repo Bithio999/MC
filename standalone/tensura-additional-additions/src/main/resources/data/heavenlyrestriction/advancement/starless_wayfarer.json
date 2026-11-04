@@ -1,0 +1,28 @@
+{
+  "parent": "minecraft:adventure/root",
+  "display": {
+    "icon": {
+      "id": "minecraft:echo_shard"
+    },
+    "title": {
+      "translate": "advancement.heavenlyrestriction.starless.title"
+    },
+    "description": {
+      "translate": "advancement.heavenlyrestriction.starless.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "defeat": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "type": "heavenlyrestriction:kael_veyr"
+        }
+      }
+    }
+  }
+}

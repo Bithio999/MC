@@ -5,7 +5,7 @@ import json, re, struct, tomllib, zipfile
 
 root = Path(__file__).resolve().parents[1]
 resources = root / 'src/main/resources'
-jar = root / 'build/libs/TensuraAdditionalAdditions-1.16.1.jar'
+jar = root / 'build/libs/TensuraAdditionalAdditions-1.17.0.jar'
 assets = resources / 'assets/heavenlyrestriction'
 required_art = [*(f'textures/race/{name}.png' for name in (
     'fettered_human', 'tempered_vessel', 'unshackled', 'heavenly_restricted', 'heavenbreaker')),
@@ -37,14 +37,14 @@ for name in config['mixins'] + config.get('client', []):
 with zipfile.ZipFile(jar) as z:
     names = set(z.namelist())
     mods = tomllib.loads(z.read('META-INF/neoforge.mods.toml').decode())
-    assert [(m['modId'], m['version']) for m in mods['mods']] == [('heavenlyrestriction', '1.16.1')]
+    assert [(m['modId'], m['version']) for m in mods['mods']] == [('heavenlyrestriction', '1.17.0')]
     assert mods['mods'][0]['displayName'] == 'TensuraAdditionalAdditions'
     language=json.loads(z.read('assets/heavenlyrestriction/lang/en_us.json'))
     for key,label in [('heavenlyrestriction.skill.parallel_world_jumper','Parallel World Jumper'),('heavenlyrestriction.skill.fusion','Fusion'),('heavenlyrestriction.skill.prospector','Prospector'),('heavenlyrestriction.skill.mode.prospector.refine','Refine'),('heavenlyrestriction.skill.mode.fusion.fuse','Fuse'),('heavenlyrestriction.skill.mode.parallel_world_jumper.world_hop','World Jump'),('heavenlyrestriction.skill.mode.parallel_world_jumper.world_select','World Select')]:
         assert language[key]==label, key
     assert any(d['modId'] == 'tensura' and d['type'] == 'required' for d in mods['dependencies']['heavenlyrestriction'])
     assert any(d['modId'] == 'wildhunt' and d['type'] == 'incompatible' for d in mods['dependencies']['heavenlyrestriction'])
-    assert not any(n.startswith('dev/wildhunt/') or 'StandaloneReview' in n or 'ChainedTargetingReview' in n or 'ChainedResourceReview' in n or 'UnboundReview' in n or 'AirborneReview' in n or 'NeoOtherworldClientReview' in n or 'NeoOtherworldGameTests' in n or 'NeoOtherworldFixtures' in n or 'SpiritualReviewGameTests' in n or 'TransmissionReview' in n or 'TransmissionClientReview' in n or 'SchemaReview' in n or 'SchemaClientReview' in n or 'GuideClientReview' in n or 'SchemaProgressClientReview' in n or 'WorldHopClientReview' in n or 'WorldHopPreview' in n or 'WorldSelectClientReview' in n or 'WorldLibraryClientReview' in n or 'FusionPreview' in n or 'FusionConsentReview' in n or 'FusionMenuReview' in n or 'FusionControlReview' in n or 'ProspectorReview' in n or 'ExponentiationReview' in n or 'LoanReview' in n or 'MapReview' in n or 'SplitMindReview' in n or 'HighRealmReview' in n for n in names)
+    assert not any(n.startswith('dev/wildhunt/') or 'StandaloneReview' in n or 'ChainedTargetingReview' in n or 'ChainedResourceReview' in n or 'UnboundReview' in n or 'AirborneReview' in n or 'NeoOtherworldClientReview' in n or 'NeoOtherworldGameTests' in n or 'NeoOtherworldFixtures' in n or 'SpiritualReviewGameTests' in n or 'TransmissionReview' in n or 'TransmissionClientReview' in n or 'SchemaReview' in n or 'SchemaClientReview' in n or 'GuideClientReview' in n or 'SchemaProgressClientReview' in n or 'WorldHopClientReview' in n or 'WorldHopPreview' in n or 'WorldSelectClientReview' in n or 'WorldLibraryClientReview' in n or 'FusionPreview' in n or 'FusionConsentReview' in n or 'FusionMenuReview' in n or 'FusionControlReview' in n or 'ProspectorReview' in n or 'ExponentiationReview' in n or 'LoanReview' in n or 'WayfarerReview' in n or 'KaelVeyrGameTests' in n or 'MapReview' in n or 'SplitMindReview' in n or 'HighRealmReview' in n for n in names)
     assert b'ftbteams' not in z.read('dev/heavenlyrestriction/TestFixtures.class'), 'Pack-only fixture leaked into release'
     for name in required_art:
         assert z.read('assets/heavenlyrestriction/' + name) == (assets / name).read_bytes(), name
@@ -109,5 +109,15 @@ with zipfile.ZipFile(jar) as z:
     assert any(e['id']=='high-realm' and e['category']=='Dimensions' for e in guide)
     pool=json.loads(z.read('data/heavenlyrestriction/tags/entity_type/high_realm_elites.json'))['values'];assert len(pool)==10 and all(t.startswith('tensura:') for t in pool) and 'tensura:arch_daemon' in pool and 'tensura:lesser_daemon' not in pool
     for biome in ['ivory_crags','starwood_grove','mistglass_basin']:
-        spawns=json.loads(z.read('data/heavenlyrestriction/worldgen/biome/'+biome+'.json'))['spawners']['monster'];assert all(e['type'] in pool for e in spawns)
-print('Independent 1.16.1 JAR, native dependency metadata, all extracted icons/rigs/animations and mixin classes verified; no Myths classes, bundled dependencies or review fixtures.')
+        spawns=json.loads(z.read('data/heavenlyrestriction/worldgen/biome/'+biome+'.json'))['spawners']['monster'];assert all(e['type'] in pool or e['type']=='heavenlyrestriction:kael_veyr' for e in spawns);boss=[e for e in spawns if e['type']=='heavenlyrestriction:kael_veyr'];assert len(boss)==1 and boss[0]['weight']==1 and boss[0]['minCount']==boss[0]['maxCount']==1
+    for cls in ['WayfarerContent','WayfarerSpawns','WayfarerLoadout','KaelVeyrEntity','WayfarerCombat']:
+        assert 'dev/heavenlyrestriction/highrealm/boss/'+cls+'.class' in names
+    assert 'dev/heavenlyrestriction/client/WayfarerRenderer.class' in names
+    for name in ['kael_veyr','kael_veyr_emissive']:
+        path='assets/heavenlyrestriction/textures/entity/'+name+'.png'
+        assert z.read(path)==(resources/path).read_bytes()
+        assert struct.unpack('>II',z.read(path)[16:24])==(128,128)
+    for path in ['data/heavenlyrestriction/loot_table/entities/kael_veyr.json','data/heavenlyrestriction/advancement/starless_wayfarer.json','data/c/tags/entity_type/bosses.json','data/tensura/tags/entity_type/boss_for_hero.json','assets/heavenlyrestriction/models/item/kael_veyr_spawn_egg.json']:
+        assert z.read(path)==(resources/path).read_bytes()
+    assert language['entity.heavenlyrestriction.kael_veyr']=='Kael Veyr'
+print('Independent 1.17.0 JAR, native dependency metadata, all extracted icons/rigs/animations and mixin classes verified; no Myths classes, bundled dependencies or review fixtures.')

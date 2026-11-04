@@ -626,7 +626,12 @@
         "cherry",
         "biome",
         "dimension",
-        "5 million"
+        "5 million",
+        "kael",
+        "veyr",
+        "starless wayfarer",
+        "boss",
+        "otherworlder"
       ],
       "related": [
         "welcome",
@@ -658,6 +663,16 @@
             "The quartz return arch at the arrival sanctum is your return gate. Walk through it or use its central bedrock base to leave; leaving never requires EP. Return locations are saved separately for each player.",
             "The arrival sanctum is protected from normal block edits and suppresses natural spawns within 48 blocks. Avoid using beds in this dimension. The surrounding terrain is editable.",
             "Gates, terrain and return locations persist across restarts. World Hop generates a fresh High Realm per new world; revisiting a saved world restores its realm. The server can configure entry EP, gate charge time, elite strength, spawn chance and the local elite cap. Existing worlds using the old 10M default are upgraded once to 5M; other custom thresholds are retained."
+          ]
+        },
+        {
+          "title": "Kael Veyr · Rare otherworlder boss",
+          "lines": [
+            "A 15,000,000 actual-EP Human Saint / True Hero with 9,900 HP and 34,100 SHP under default native settings. He wears a dark embroidered coat, has silver hair, and wields a Hihiirokane Sword. Separate health and spiritual-body bars appear nearby.",
+            "A weight-1 natural spawn in all three realm biomes, with an additional 2.5% acceptance roll, at least 20 minutes between accepted spawns realm-wide, no other wild Kael within 512 blocks, and no spawning within 192 blocks of the return sanctum. These are chance-based encounters, not a guaranteed timed respawn.",
+            "His three mastered Uniques are Martial Master, Mathematician and Seer. Native support includes Ultraspeed Regeneration, Steel Strength, Strengthen Body, perception/casting skills and a curated resistance/nullification package. Regeneration spends his native resources.",
+            "Rift Draw warns, blinks to safe ground by the target, then makes a physical aura slash. Fallen Constellation warns six locations before light lances strike. Tempest Verse casts native wind magic. Starless Waltz sends three physical aura-slash fronts after a longer warning and joins his rotation below half HP. Dodge behind or outside the warned fans.",
+            "Drops include Hihiirokane Ingots, Magic Ore, Echo Shards and Netherite Scrap, plus native otherworlder skill-drop rules. Server options control rare spawning, acceptance chance and cooldown."
           ]
         }
       ]

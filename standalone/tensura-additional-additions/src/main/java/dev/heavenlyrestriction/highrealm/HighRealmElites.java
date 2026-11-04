@@ -92,6 +92,7 @@ public final class HighRealmElites {
         || e.getSpawnType() != MobSpawnType.NATURAL
             && e.getSpawnType() != MobSpawnType.CHUNK_GENERATION) return;
     var mob = e.getEntity();
+    if (mob instanceof dev.heavenlyrestriction.highrealm.boss.KaelVeyrEntity) return;
     var sanctuary = RealmData.get(e.getLevel().getServer()).sanctuary;
     if (!HighRealmConfig.ELITES.get()
         || !candidate(mob)

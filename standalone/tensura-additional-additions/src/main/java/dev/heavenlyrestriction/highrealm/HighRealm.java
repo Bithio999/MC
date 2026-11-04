@@ -64,6 +64,7 @@ public final class HighRealm {
         (net.neoforged.neoforge.event.server.ServerStartedEvent e) ->
             HighRealmConfig.upgradeLegacyDefault(RealmData.get(e.getServer())));
     HighRealmElites.register();
+    dev.heavenlyrestriction.highrealm.boss.WayfarerContent.register(bus);
   }
 
   public static boolean enoughEP(ServerPlayer p) {

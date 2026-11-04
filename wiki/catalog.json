@@ -1258,5 +1258,11 @@
     "category": "Skills",
     "tier": "Unique",
     "mod": "additions"
+  },
+  {
+    "slug": "Additions-Kael-Veyr",
+    "title": "Kael Veyr, the Starless Wayfarer",
+    "category": "Bosses",
+    "mod": "additions"
   }
 ]

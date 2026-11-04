@@ -67,6 +67,10 @@
 
 - [The High Realm](https://github.com/Bithio999/MC/wiki/Additions-The-High-Realm)
 
+**Bosses**
+
+- [Kael Veyr](https://github.com/Bithio999/MC/wiki/Additions-Kael-Veyr)
+
 **Reference**
 
 - [Ability directory](https://github.com/Bithio999/MC/wiki/Additions-Abilities)
