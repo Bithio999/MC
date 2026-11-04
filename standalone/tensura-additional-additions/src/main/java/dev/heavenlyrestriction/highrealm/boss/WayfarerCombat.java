@@ -26,8 +26,6 @@ import net.minecraft.world.phys.Vec3;
 public final class WayfarerCombat {
   public enum Action {
     AURA_SLASH(() -> MeleeArts.AURA_SLASH.get(), 3, 32, 20),
-    WIND_SPHERE(() -> ExtraSkills.WIND_DOMINATION.get(), 5, 32, 30),
-    WIND_BREATH(() -> ExtraSkills.WIND_DOMINATION.get(), 0, 12, 100),
     WIND_CUTTER(() -> AspectualMagics.WIND_CUTTER.get(), 4, 32, 30),
     TORNADO_BLADE(() -> AspectualMagics.TORNADO_BLADE.get(), 5, 32, 50),
     AERIAL_BLADE(() -> SpiritualMagics.AERIAL_BLADE.get(), 0, 4, 40),
@@ -47,10 +45,6 @@ public final class WayfarerCombat {
 
     public ManasSkill skill() {
       return skill.get();
-    }
-
-    boolean crouch() {
-      return this == WIND_SPHERE;
     }
   }
 
@@ -82,9 +76,9 @@ public final class WayfarerCombat {
     return SkillAPI.getSkillsFrom(boss).getSkill(action.skill()).orElse(null);
   }
 
-  private boolean withStance(Action action, Supplier<Boolean> call) {
+  private boolean withStance(Supplier<Boolean> call) {
     boolean old = boss.isShiftKeyDown();
-    boss.setShiftKeyDown(action.crouch());
+    boss.setShiftKeyDown(false);
     try {
       return call.get();
     } finally {
@@ -114,8 +108,7 @@ public final class WayfarerCombat {
         || !i.canInteractSkill(boss)
         || !i.canActivateSkill(boss, 0)) return false;
     if (action == Action.FUTURE_VISION
-        && (boss.getHealth() > boss.getMaxHealth() * .75
-            || boss.hasEffect(TensuraMobEffects.getReference(TensuraMobEffects.FUTURE_VISION))))
+        && boss.hasEffect(TensuraMobEffects.getReference(TensuraMobEffects.FUTURE_VISION)))
       return false;
     if (action == Action.MARTIAL_DASH) {
       if (!boss.onGround() && !boss.isInWaterOrBubble()
@@ -123,7 +116,6 @@ public final class WayfarerCombat {
       if (!safeNativeDash()) return false;
     }
     return withStance(
-        action,
         () -> {
           var skill = (TensuraSkill) action.skill();
           var pool = TensuraStorages.getExistenceFrom(boss);
@@ -173,9 +165,7 @@ public final class WayfarerCombat {
     target = boss.getTarget().getUUID();
     held = 0;
     duration =
-        action.skill() instanceof Magic magic
-            ? Math.max(0, magic.getCastingTime(i, boss))
-            : action == Action.WIND_BREATH ? 40 : 0;
+        action.skill() instanceof Magic magic ? Math.max(0, magic.getCastingTime(i, boss)) : 0;
     nextUse.put(action, boss.level().getGameTime() + Math.max(action.interval, duration + 10));
     if (action.skill() instanceof Magic magic) {
       if (duration > 1)
@@ -195,16 +185,12 @@ public final class WayfarerCombat {
       hold();
     } else {
       withStance(
-          action,
           () -> {
             action.skill().onPressed(i, boss, 0, 0);
             return true;
           });
       i.markDirty();
-      if (action == Action.WIND_BREATH) {
-        boss.setCasting(true);
-        hold();
-      } else cancel();
+      cancel();
     }
     return true;
   }
@@ -212,13 +198,12 @@ public final class WayfarerCombat {
   private void hold() {
     var i = instance(active);
     Action action = active;
-    if (i == null || !withStance(action, () -> action.skill().onHeld(i, boss, held, 0))) {
+    if (i == null || !withStance(() -> action.skill().onHeld(i, boss, held, 0))) {
       cancel();
       return;
     }
     if (held >= duration) {
       withStance(
-          action,
           () -> {
             action.skill().onRelease(i, boss, held, 0, 0);
             return true;
@@ -252,24 +237,15 @@ public final class WayfarerCombat {
       hold();
     } else if (boss.level().getGameTime() >= nextDecision) {
       delay(20);
-      var choices = Arrays.stream(Action.values()).filter(this::ready).toList();
-      if (!choices.isEmpty()) begin(choices.get(boss.getRandom().nextInt(choices.size())));
+      if (ready(Action.FUTURE_VISION)) begin(Action.FUTURE_VISION);
+      else {
+        var choices = Arrays.stream(Action.values()).filter(this::ready).toList();
+        if (!choices.isEmpty()) begin(choices.get(boss.getRandom().nextInt(choices.size())));
+      }
     }
   }
 
   public void cancel() {
-    if (active == Action.WIND_BREATH
-        && boss.level() instanceof net.minecraft.server.level.ServerLevel level) {
-      var i = instance(active);
-      if (i != null) {
-        int id = i.getOrCreateTag().getInt("BreathEntity");
-        if (level.getEntity(id)
-                instanceof io.github.manasmods.tensura.entity.magic.breath.BreathEntity breath
-            && breath.getOwner() == boss) breath.discard();
-        i.getOrCreateTag().remove("BreathEntity");
-        i.markDirty();
-      }
-    }
     if (circle != null) {
       if (active != null) {
         var i = instance(active);

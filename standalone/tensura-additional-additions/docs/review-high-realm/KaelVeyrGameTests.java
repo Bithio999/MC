@@ -227,8 +227,7 @@ public final class KaelVeyrGameTests {
   }
 
   @GameTest(template = "empty", timeoutTicks = 120)
-  public static void kaelUsesNativeAuraSlashAndWindDominationSphereWithNativeCosts(
-      GameTestHelper h) {
+  public static void kaelUsesNativeAuraSlashWithNativeCostCooldownAndSkillSeals(GameTestHelper h) {
     var e = boss(h);
     var target = enemy(h, e, 12);
     afterTracking(
@@ -237,7 +236,7 @@ public final class KaelVeyrGameTests {
         () -> {
           e.setNoAi(false);
           var pool = TensuraStorages.getExistenceFrom(e);
-          double aura = pool.getAura(), mana = pool.getMagicule();
+          double aura = pool.getAura();
           h.assertTrue(
               e.combat().begin(WayfarerCombat.Action.AURA_SLASH),
               "Native Aura Slash did not begin");
@@ -246,13 +245,6 @@ public final class KaelVeyrGameTests {
               "Native slash projectile/cost missing");
           h.assertTrue(
               !e.combat().begin(WayfarerCombat.Action.AURA_SLASH), "Aura Slash cooldown ignored");
-          h.assertTrue(
-              e.combat().begin(WayfarerCombat.Action.WIND_SPHERE),
-              "Native wind sphere did not begin");
-          h.assertTrue(
-              pool.getMagicule() < mana && ownsProjectile(h, e, "wind_sphere"),
-              "Native wind sphere/cost missing");
-          h.assertTrue(!e.isShiftKeyDown(), "AI left the alternate-mode stance enabled");
           e.addEffect(
               new net.minecraft.world.effect.MobEffectInstance(HeavenlyArsenal.SKILL_SEAL, 60));
           h.assertTrue(!e.combat().begin(WayfarerCombat.Action.WIND_CUTTER), "Skill seal ignored");
@@ -310,7 +302,8 @@ public final class KaelVeyrGameTests {
   }
 
   @GameTest(template = "empty", timeoutTicks = 120)
-  public static void kaelChannelsNativeWindBreathAndSealsCancelIt(GameTestHelper h) {
+  public static void kaelUsesUniquePassivesAndFutureVisionAtFullHealthWithoutDominationAttacks(
+      GameTestHelper h) {
     var e = boss(h);
     var target = enemy(h, e, 8);
     afterTracking(
@@ -318,23 +311,49 @@ public final class KaelVeyrGameTests {
         java.util.List.of(target),
         () -> {
           e.setNoAi(false);
-          double mana = TensuraStorages.getExistenceFrom(e).getMagicule();
-          h.assertTrue(
-              e.combat().begin(WayfarerCombat.Action.WIND_BREATH), "Native breath did not begin");
-          h.assertTrue(
-              e.casting() && ownsProjectile(h, e, "wind_breath"),
-              "Native held wind breath missing");
-          h.assertTrue(
-              TensuraStorages.getExistenceFrom(e).getMagicule() < mana,
-              "Breath did not use native resource cost");
-          e.addEffect(
-              new net.minecraft.world.effect.MobEffectInstance(HeavenlyArsenal.SKILL_SEAL, 60));
+          var effect =
+              io.github.manasmods.tensura.registry.effect.TensuraMobEffects.getReference(
+                  io.github.manasmods.tensura.registry.effect.TensuraMobEffects.FUTURE_VISION);
+          var seer =
+              SkillAPI.getSkillsFrom(e)
+                  .getSkill(io.github.manasmods.tensura.registry.skill.UniqueSkills.SEER.get())
+                  .orElseThrow();
+          near(h, e.getHealth(), e.getMaxHealth(), "Fixture is not at full HP");
+          e.combat().delay(0);
           e.combat().tick();
           h.assertTrue(
-              !e.casting() && e.combat().active() == null, "Sealed breath kept channeling");
+              e.hasEffect(effect) && seer.onCoolDown(0),
+              "AI did not activate native Future Vision at full HP");
           h.assertTrue(
-              !ownsProjectile(h, e, "wind_breath"),
-              "Sealed breath left an owned projectile behind");
+              !e.combat().begin(WayfarerCombat.Action.FUTURE_VISION),
+              "AI toggled Future Vision off while active");
+          e.removeEffect(effect);
+          h.assertTrue(
+              !e.combat().ready(WayfarerCombat.Action.FUTURE_VISION),
+              "Seer's native cooldown was bypassed");
+          for (var id : java.util.List.of("martial_master", "mathematician", "seer"))
+            h.assertTrue(
+                e.getAttribute(TensuraAttributes.AUTO_MELEE_DODGE_CHANCE)
+                    .hasModifier(
+                        net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(
+                            "tensura", id)),
+                "Unique passive missing: " + id);
+          h.assertTrue(
+              e.getAttribute(TensuraAttributes.RESISTANCE_DEGRADATION)
+                  .hasModifier(
+                      net.minecraft.resources.ResourceLocation.parse("tensura:mathematician")),
+              "Mathematician degradation is inactive");
+          var wind =
+              SkillAPI.getSkillsFrom(e)
+                  .getSkill(
+                      io.github.manasmods.tensura.registry.skill.ExtraSkills.WIND_DOMINATION.get())
+                  .orElseThrow();
+          h.assertTrue(
+              wind.isToggled() && wind.isMastered(e), "Wind Domination passive was removed");
+          for (var action : WayfarerCombat.Action.values())
+            h.assertTrue(
+                action.skill() != wind.getSkill(),
+                "Wind Domination active remains in the combat choices");
           e.discard();
           target.discard();
           h.succeed();

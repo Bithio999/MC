@@ -1,5 +1,11 @@
 # Changelog
 
+## Additions 1.17.2 — Magic and battlewill combat
+
+- Remove Wind Domination breath and sphere attacks from Kael’s AI; retain its native passive wind boost/degradation. His offense uses sword attacks, battlewills, learned magic and Martial Master.
+- Let Seer activate Future Vision at full health during combat and prioritize it when available. Respect its native cooldown and avoid toggling it off while active.
+- Document how each Unique skill contributes and refresh the native magic captures.
+
 ## Additions 1.17.1 — Native Wayfarer combat
 
 - Replace Kael’s signature attacks and custom combat effects with actual use of his owned native skills: sword arts, Wind Domination, learned wind spells and Seer. Respect native damage, costs, cooldowns, casting and seals.

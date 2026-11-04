@@ -236,25 +236,25 @@ public final class WayfarerReview {
       return;
     }
     if (phase == 2 && wait > 25) {
-      cast(WayfarerCombat.Action.WIND_SPHERE, 12);
+      cast(WayfarerCombat.Action.WIND_CUTTER, 12);
       phase = 3;
       wait = 0;
       return;
     }
     if (phase == 3 && wait > 3) {
-      shot("kael-native-wind-sphere");
+      shot("kael-native-wind-cutter");
       phase = 4;
       wait = 0;
       return;
     }
     if (phase == 4 && wait > 35) {
-      cast(WayfarerCombat.Action.WIND_BREATH, 8);
+      cast(WayfarerCombat.Action.TORNADO_BLADE, 14);
       phase = 5;
       wait = 0;
       return;
     }
     if (phase == 5 && wait > 12) {
-      shot("kael-native-wind-breath");
+      shot("kael-native-tornado");
       phase = 6;
       wait = 0;
       return;
@@ -272,13 +272,13 @@ public final class WayfarerReview {
       return;
     }
     if (phase == 8 && wait > 45) {
-      cast(WayfarerCombat.Action.TORNADO_BLADE, 14);
+      cast(WayfarerCombat.Action.AERIAL_BLADE, 2);
       phase = 9;
       wait = 0;
       return;
     }
-    if (phase == 9 && wait > 15) {
-      shot("kael-native-tornado");
+    if (phase == 9 && wait > 3) {
+      shot("kael-native-aerial-blade");
       phase = 10;
       wait = 0;
       return;
@@ -297,7 +297,7 @@ public final class WayfarerReview {
       Files.writeString(
           OUT.resolve("passed.txt"),
           "PASS: existing-world High Realm boss, native renderer, 15M actual EP, one HP boss bar,"
-              + " native Wind Domination sphere/breath, Aura Slash and Tornado Blade; real HP/SHP"
+              + " native Wind Cutter, Tornado Blade, Aura Slash and Aerial Blade; real HP/SHP"
               + " damage.\n");
       phase = 999;
       mc.stop();

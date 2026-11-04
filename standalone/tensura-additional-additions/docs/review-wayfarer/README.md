@@ -6,7 +6,7 @@ This opt-in fixture uses an existing disposable normal-generation save named **W
 DISPLAY=:99 LIBGL_ALWAYS_SOFTWARE=1 ALSOFT_DRIVERS=null ./gradlew clean runClient -I docs/review-wayfarer/client.init.gradle
 ```
 
-The fixture verifies 15,000,000 actual EP, the native otherworlder renderer, one HP boss bar and real damage to a native-race combat target. It activates native Wind Domination spheres and breath, Aura Slash and Tornado Blade, and captures gameplay at 1280×720. PNGs and a pass/fail marker are written to `/workspace/validation-wayfarer/capture`.
+The fixture verifies 15,000,000 actual EP, the native otherworlder renderer, one HP boss bar and real damage to a native-race combat target. It activates native Wind Cutter, Tornado Blade, Aura Slash and Aerial Blade, and captures gameplay at 1280×720. PNGs and a pass/fail marker are written to `/workspace/validation-wayfarer/capture`.
 
 Server regressions live in `docs/review-high-realm/KaelVeyrGameTests.java` and run with the existing High Realm GameTest profile:
 

@@ -27,20 +27,25 @@ Kael fights with his **owned Tensura abilities**. Damage, costs, cooldowns, cast
 
 His mastered Uniques are **Martial Master**, **Mathematician** and **Seer**, equipped in his native preset. Support includes **Steel Strength**, **Strengthen Body**, **Infinite Regeneration**, **Universal Perception**, **Thought Acceleration**, **Chant Annulment**, **Mana Manipulation**, **Wind Domination** and battlewills.
 
-Infinite Regeneration restores HP and SHP using magicules. Wind Domination boosts wind damage and degrades wind resistance. His native physical, magical, spiritual and elemental defenses remain active. Red hit feedback also indicates SHP damage.
+Infinite Regeneration restores HP and SHP using magicules. Wind Domination is used **only as a passive**, boosting wind damage and degrading wind resistance. His attacks use native magic, battlewills and Martial Master. His native physical, magical, spiritual and elemental defenses remain active. Red hit feedback also indicates SHP damage.
 
 | Native ability | Use | Damage type |
 | --- | --- | --- |
 | **Sword attacks** | Hihiirokane Sword melee. | Physical |
 | **Aura Slash** | Native weapon-based ranged slash. | Physical · aura slash |
 | **Martial Master** | Native dash when grounded with a safe destination near the target. | Physical |
-| **Wind Domination** | Wind spheres at range and a held wind breath nearby. | Wind |
 | **Wind Cutter** | Native wind-blade projectiles. | Wind + magic |
 | **Tornado Blade** | Native wind tornado. | Wind + magic |
 | **Aerial Blade** | Close-range wind magic with its native pull. | Wind |
-| **Seer** | Future Vision when wounded; native cooldowns apply. | — |
+| **Seer** | Future Vision during combat, including at full HP; native cooldowns apply. | — |
 
-![Kael using Wind Domination’s native breath](../media/kael-native-wind-breath.png)
+### Unique skill use
+
+- **Martial Master:** native combat passives and the grounded dash.
+- **Mathematician:** native casting, resistance degradation, dodge, dodge-negation and critical bonuses. Its appraisal activation is player-only.
+- **Seer:** native defensive/critical passives and Future Vision. Kael prioritizes activating Future Vision when available, without toggling it off while active.
+
+![Kael using native Wind Cutter](../media/kael-native-wind-cutter.png)
 
 ![Kael casting native Tornado Blade](../media/kael-native-tornado.png)
 
