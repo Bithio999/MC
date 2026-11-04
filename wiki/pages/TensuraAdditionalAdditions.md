@@ -8,15 +8,13 @@ A standalone addon for **Tensura: Reincarnated**, focused on Heavenly Restrictio
 | --- | --- |
 | Start | [Install](Additions-Getting-Started.md) · [In-game guide](Additions-In-Game-Guide.md) |
 | Race | [Heavenly Restriction](Additions-Fettered-Human.md) |
-| Skills | [Chained](Additions-Chained.md) · [Unbound](Additions-Unbound.md) · [Split Mind](Additions-Split-Mind.md) · [Loan Shark](Additions-Loan-Shark.md) · [Fusion](Additions-Fusion.md) · [Prospector](Additions-Prospector.md) · [Exponentiation](Additions-Exponentiation.md) · [Aura recovery](Additions-Aura-Regeneration.md) |
+| Skills | [Chained](Additions-Chained.md) · [Unbound](Additions-Unbound.md) · [Split Mind](Additions-Split-Mind.md) · [Loan Shark](Additions-Loan-Shark.md) · [Fusion](Additions-Fusion.md) · [Prospector](Additions-Prospector.md) · [Exponentiation](Additions-Exponentiation.md) · [Aura recovery](Additions-Aura-Regeneration.md) · [Marauder’s Map](Additions-Marauders-Map.md)|
 | Battlewills | [Schema](Additions-Schema.md) · [Air Walk](Additions-Air-Walk.md) · [Instant Transmission](Additions-Instant-Transmission.md) |
 | Dimensions | [The High Realm](Additions-The-High-Realm.md) |
 | World travel | [Parallel World Jumper](Additions-Parallel-World-Jumper.md) |
 | Gear | [Inverted Spear of Heaven](Additions-Inverted-Spear-of-Heaven.md) · [Nullification](Additions-Nullification.md) |
 
 [Download Additions 1.17.0](../../releases/TensuraAdditionalAdditions-1.17.0.jar). Tensura Myths is not required. Do not install both addons together. Myths’ Godly skills, bosses, hunters and dual-race systems are not part of this addon.
-
-[Marauder’s Map](Additions-Marauders-Map.md) — world terrain previews, textured surface detail, live players, structure discovery and private custom pins.
 
 ## Rare boss
 
