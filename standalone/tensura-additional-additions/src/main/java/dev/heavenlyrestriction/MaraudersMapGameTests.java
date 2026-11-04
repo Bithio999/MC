@@ -500,4 +500,200 @@ public final class MaraudersMapGameTests {
               h.succeed();
             });
   }
+
+  @GameTest(template = "empty", timeoutTicks = 100)
+  public static void generatedLocationTagsPersistButConfirmedStartsAlwaysWin(GameTestHelper h) {
+    var p = reader(h);
+    var d = MapData.get(p.server);
+    String dim = p.level().dimension().location().toString();
+    String key =
+        dim
+            + "/minecraft:buried_treasure/"
+            + net.minecraft.world.level.ChunkPos.asLong(12345, -54321);
+    var predicted =
+        new MapData.Marker(key, "minecraft:buried_treasure", dim, 197530, 60, -869128, true);
+    d.add(predicted);
+    var restored = MapData.load(d.save(new CompoundTag(), p.registryAccess()), p.registryAccess());
+    h.assertTrue(restored.structures.get(key).predicted(), "Worldgen marker tag lost");
+    var confirmed = new MapData.Marker(key, "minecraft:buried_treasure", dim, 197532, 62, -869126);
+    d.add(confirmed);
+    d.add(predicted);
+    h.assertTrue(d.structures.get(key) == confirmed, "Prediction overwrote confirmed terrain");
+    d.structures.remove(key);
+    h.succeed();
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 100)
+  public static void surveyFollowsViewportCanBeDisabledAndValidatesItsBounds(GameTestHelper h) {
+    var p = reader(h);
+    MapService.open(p);
+    var s = MapService.session(p);
+    var t = new CompoundTag();
+    t.putInt("x", 300000);
+    t.putInt("z", -310000);
+    t.putInt("radius", 2048);
+    t.putInt("minX", 299000);
+    t.putInt("maxX", 301000);
+    t.putInt("minZ", -311000);
+    t.putInt("maxZ", -309000);
+    t.putBoolean("survey", true);
+    MapService.request(p, s.token, "view", t);
+    h.assertTrue(s.survey != null && s.survey.total() > 0, "Viewport survey not scheduled");
+    var old = s.survey;
+    var bad = t.copy();
+    bad.putInt("maxX", Integer.MAX_VALUE);
+    MapAutoStructures.view(p, s, bad);
+    h.assertTrue(s.survey == old, "Invalid survey bounds accepted");
+    t.putBoolean("survey", false);
+    MapAutoStructures.view(p, s, t);
+    h.assertTrue(s.survey == null, "Hiding structures did not stop survey");
+    MapService.close(p);
+    h.succeed();
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 800)
+  public static void automaticWideViewFindsNativeStructuresWithoutLoadingTerrain(GameTestHelper h) {
+    var p = reader(h);
+    MapService.open(p);
+    var s = MapService.session(p);
+    var t = new CompoundTag();
+    t.putInt("x", 300000);
+    t.putInt("z", -310000);
+    t.putInt("radius", 900);
+    t.putInt("minX", 299488);
+    t.putInt("maxX", 300511);
+    t.putInt("minZ", -310512);
+    t.putInt("maxZ", -309489);
+    t.putBoolean("survey", true);
+    MapService.request(p, s.token, "view", t);
+    h.startSequence()
+        .thenWaitUntil(
+            () -> {
+              MapAutoStructures.advance(p, s);
+              h.assertTrue(
+                  s.survey.completed() == s.survey.total(), "Automatic discovery still working");
+            })
+        .thenExecute(
+            () -> {
+              h.assertTrue(!s.survey.error, "Automatic discovery failed");
+              var d = MapData.get(p.server);
+              if (!p.serverLevel().structureManager().shouldGenerateStructures()) {
+                h.assertTrue(
+                    d.structures.values().stream()
+                        .noneMatch(
+                            a ->
+                                a.predicted()
+                                    && Math.abs(a.x() - 300000) < 1800
+                                    && Math.abs(a.z() + 310000) < 1800),
+                    "Survey ignored structures-disabled world settings");
+                h.assertTrue(
+                    p.serverLevel().getChunkSource().getChunkNow(300000 >> 4, -310000 >> 4) == null,
+                    "Disabled survey loaded terrain");
+                MapService.close(p);
+                h.succeed();
+                return;
+              }
+              var m =
+                  d.structures.values().stream()
+                      .filter(
+                          a ->
+                              a.dimension().equals(s.dimension)
+                                  && a.predicted()
+                                  && Math.abs(a.x() - 300000) < 1800
+                                  && Math.abs(a.z() + 310000) < 1800)
+                      .findFirst()
+                      .orElseThrow();
+              int split = m.key().lastIndexOf('/');
+              var pos =
+                  new net.minecraft.world.level.ChunkPos(
+                      Long.parseLong(m.key().substring(split + 1)));
+              h.assertTrue(
+                  p.serverLevel().getChunkSource().getChunkNow(pos.x, pos.z) == null,
+                  "Survey loaded distant terrain");
+              var actual =
+                  p.serverLevel()
+                      .getChunk(
+                          pos.x,
+                          pos.z,
+                          net.minecraft.world.level.chunk.status.ChunkStatus.STRUCTURE_STARTS);
+              var type =
+                  p.registryAccess()
+                      .registryOrThrow(net.minecraft.core.registries.Registries.STRUCTURE)
+                      .get(net.minecraft.resources.ResourceLocation.parse(m.type()));
+              var start = actual.getStartForStructure(type);
+              h.assertTrue(
+                  start != null && start.isValid(),
+                  "Generated marker selected a nonexistent native variant");
+              var box = start.getBoundingBox();
+              h.assertTrue(
+                  m.x() == box.getCenter().getX()
+                      && m.z() == box.getCenter().getZ()
+                      && m.y() == box.minY(),
+                  "Marker differed from actual native start");
+              MapService.capture(p.serverLevel(), actual);
+              h.assertTrue(
+                  !d.structures.get(m.key()).predicted(),
+                  "Actual start did not confirm prediction");
+              MapService.close(p);
+              h.succeed();
+            });
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 100)
+  public static void surveyMemoizationMatchesNativeNoiseAndIsolatesMutableColumns(
+      GameTestHelper h) {
+    var level =
+        h.getLevel().getServer().getLevel(dev.heavenlyrestriction.highrealm.HighRealm.LEVEL);
+    var generator = level.getChunkSource().getGenerator();
+    var random = level.getChunkSource().randomState();
+    int x = 127, z = -139, y = level.getMinBuildHeight() + 8;
+    int expected =
+        generator.getBaseHeight(
+            x,
+            z,
+            net.minecraft.world.level.levelgen.Heightmap.Types.WORLD_SURFACE_WG,
+            level,
+            random);
+    var original = generator.getBaseColumn(x, z, level, random).getBlock(y);
+    try (var cache = SurveyNoiseCache.open()) {
+      int first =
+          generator.getBaseHeight(
+              x,
+              z,
+              net.minecraft.world.level.levelgen.Heightmap.Types.WORLD_SURFACE_WG,
+              level,
+              random);
+      int second =
+          generator.getBaseHeight(
+              x,
+              z,
+              net.minecraft.world.level.levelgen.Heightmap.Types.WORLD_SURFACE_WG,
+              level,
+              random);
+      h.assertTrue(
+          first == expected && second == expected && cache.heightHits > 0,
+          "Survey height memoization changed native results");
+      var column = generator.getBaseColumn(x, z, level, random);
+      column.setBlock(
+          y,
+          original.is(net.minecraft.world.level.block.Blocks.DIRT)
+              ? net.minecraft.world.level.block.Blocks.STONE.defaultBlockState()
+              : net.minecraft.world.level.block.Blocks.DIRT.defaultBlockState());
+      var copy = generator.getBaseColumn(x, z, level, random);
+      h.assertTrue(
+          copy.getBlock(y).equals(original) && cache.columnHits > 0,
+          "Caller mutation contaminated cached native columns");
+    }
+    h.assertTrue(
+        SurveyNoiseCache.height(
+                generator,
+                x,
+                z,
+                net.minecraft.world.level.levelgen.Heightmap.Types.WORLD_SURFACE_WG,
+                level,
+                random)
+            == null,
+        "Memoization escaped survey scope");
+    h.succeed();
+  }
 }

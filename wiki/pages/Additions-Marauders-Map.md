@@ -46,7 +46,15 @@ Zoom in for native surface detail: block top-face textures, roads, roofs, trees,
 
 ![A broad terrain overview](../media/marauders-map-overview.png)
 
-Real world-generation structures, including addon types, are marked when their starts are known. Player-built structures are marked with your own pins.
+With **Sites: ON**, structure markers appear automatically for the part of the world you are viewing, **at every zoom level**, including unexplored regions. Pan or zoom to discover another area; **Locate is not required**. The bottom bar shows discovery progress while new areas fill in.
+
+Locations follow the world’s generation rules, including native/addon structure variants, placement frequency and biome requirements. Existing saved structures take precedence. Unvisited locations are labeled **World-generation location** in their tooltip; visiting or generating that area confirms the start. These markers do not require generating terrain or spawning mobs in the background.
+
+![Automatic structure markers in an unexplored zoomed-out region](../media/marauders-map-auto-structures.png)
+
+![New markers revealed by panning](../media/marauders-map-auto-pan.png)
+
+Dense views group nearby sites and show their full count; zoom in to separate them. **Sites: OFF** hides the markers and pauses automatic discovery. Player-built structures use your own pins. The separate **Locate** search still starts from the center of the viewed map.
 
 **Locate structure…** opens a searchable list of structure types. Choose one and press **Start search** to search up to **100,000 blocks around the map center**. **Show result** centers the found marker. The search runs in the background; rare types can take longer. **Escape cancels** an active search. If nothing is found, move the map center and search another area; some types do not generate in the current dimension.
 
@@ -77,7 +85,7 @@ Opening the map, choosing a skill and preparing coordinates do not teleport you 
 
 ## Player locations
 
-**Players** shows all online players, including those outside your render distance. The server refreshes their locations twice per second. Your own arrow stays gold; other players have labeled cyan markers. Search a player’s name, select them, and press **Show selected** to center on them.
+**Players** shows all online players, including those outside your render distance. The server refreshes their locations twice per second. Your own arrow stays gold; other players have labeled cyan markers. Search a player’s name, select them, and press **Focus** to center on them.
 
 Players in other dimensions appear in the sidebar with their dimension and coordinates. Their markers appear on that dimension’s map; centering is disabled while you are in another dimension. Offline players disappear. Private pins remain private.
 

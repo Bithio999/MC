@@ -29,6 +29,31 @@ public final class MapReview {
   private static double originalX, originalZ;
   private static volatile int farX = 120000, farZ = -160000;
   private static double warpX, warpY, warpZ;
+  private static net.minecraft.nbt.CompoundTag autoMarker;
+  private static volatile boolean autoVerified;
+  private static Set<String> surveyRegionsBefore = Set.of();
+
+  private static Set<String> surveyRegions(net.minecraft.server.level.ServerPlayer p) {
+    var dir = p.server.getWorldPath(LevelResource.ROOT).resolve("region");
+    var out = new HashSet<String>();
+    try (var paths = Files.list(dir)) {
+      paths.forEach(
+          path -> {
+            String[] parts = path.getFileName().toString().split("\\.");
+            if (parts.length == 4 && parts[0].equals("r")) {
+              try {
+                int x = Integer.parseInt(parts[1]) * 512, z = Integer.parseInt(parts[2]) * 512;
+                if (Math.abs(x - 300000) < 10000 && Math.abs(z + 310000) < 10000)
+                  out.add(path.getFileName().toString());
+              } catch (NumberFormatException ignored) {
+              }
+            }
+          });
+    } catch (java.io.IOException ex) {
+      throw new IllegalStateException(ex);
+    }
+    return out;
+  }
 
   private static net.minecraft.client.gui.components.EditBox nativeField(String name) {
     try {
@@ -281,6 +306,12 @@ public final class MapReview {
             MapService.login(p);
             phase = 2;
           });
+      return;
+    }
+    if (phase == 2 && wait > 100 && Boolean.getBoolean("heavenlyrestriction.review.surveyOnly")) {
+      open();
+      phase = 500;
+      wait = 0;
       return;
     }
     if (phase == 2 && wait > 100 && Boolean.getBoolean("heavenlyrestriction.review.travelOnly")) {
@@ -1019,6 +1050,170 @@ public final class MapReview {
       } catch (Exception ex) {
         throw new IllegalStateException(ex);
       }
+      mc.stop();
+    }
+    if (phase == 500 && mc.screen instanceof MaraudersMapScreen && wait > 20) {
+      mc.options.guiScale().set(4);
+      mc.resizeDisplay();
+      fits();
+      server(
+          p -> {
+            check(
+                p.serverLevel().structureManager().shouldGenerateStructures(),
+                "Review world disables structures");
+            MapData.get(p.server).structures.clear();
+            MapData.get(p.server).setDirty();
+            surveyRegionsBefore = surveyRegions(p);
+          });
+      map().view.scale = .125;
+      press("Go to…");
+      field("X").setValue("300000");
+      field("Z").setValue("-310000");
+      press("Center map");
+      phase = 501;
+      wait = 0;
+      return;
+    }
+    if (phase == 501 && wait > 30) {
+      if (state().getInt("viewX") != 300000
+          || state().getBoolean("surveying")
+          || state().getInt("surveyTotal") == 0) {
+        if (wait % 200 == 0)
+          System.out.println(
+              "Auto structures: "
+                  + state().getInt("surveyDone")
+                  + "/"
+                  + state().getInt("surveyTotal"));
+        check(wait < 6000, "Automatic unexplored-area discovery timed out");
+        return;
+      }
+      check(!state().getBoolean("surveyError"), "Automatic discovery reported an error");
+      var markers = state().getList("markers", net.minecraft.nbt.Tag.TAG_COMPOUND);
+      check(
+          markers.size() > 15,
+          "Too few automatic markers in unexplored wide view: " + markers.size());
+      check(
+          markers.stream()
+              .anyMatch(t -> ((net.minecraft.nbt.CompoundTag) t).getBoolean("predicted")),
+          "No ungenerated-area locations found");
+      server(
+          p -> {
+            check(MapService.session(p).search == null, "Automatic view required Locate");
+            check(
+                surveyRegions(p).equals(surveyRegionsBefore),
+                "Survey created distant region files");
+          });
+      System.out.println("Auto structures first view markers=" + markers.size());
+      phase = 502;
+      wait = 0;
+      return;
+    }
+    if (phase == 502 && wait > 15) {
+      shot("marauders-map-auto-structures");
+      press("Go to…");
+      field("X").setValue("302048");
+      field("Z").setValue("-310000");
+      press("Center map");
+      phase = 503;
+      wait = 0;
+      return;
+    }
+    if (phase == 503 && wait > 30) {
+      if (state().getInt("viewX") != 302048 || state().getBoolean("surveying")) {
+        check(wait < 6000, "Panned automatic survey did not finish");
+        return;
+      }
+      check(!state().getBoolean("surveyError"), "Panned survey failed");
+      var markers = state().getList("markers", net.minecraft.nbt.Tag.TAG_COMPOUND);
+      check(markers.size() > 15, "Panned map did not reveal structures");
+      autoMarker =
+          markers.stream()
+              .map(t -> (net.minecraft.nbt.CompoundTag) t)
+              .filter(t -> t.getBoolean("predicted"))
+              .findFirst()
+              .orElseThrow()
+              .copy();
+      server(
+          p ->
+              check(
+                  surveyRegions(p).equals(surveyRegionsBefore),
+                  "Panning generated terrain regions"));
+      phase = 504;
+      wait = 0;
+      return;
+    }
+    if (phase == 504 && wait > 15) {
+      shot("marauders-map-auto-pan");
+      map().view.scale = .5;
+      press("Go to…");
+      field("X").setValue(String.valueOf(autoMarker.getInt("x")));
+      field("Z").setValue(String.valueOf(autoMarker.getInt("z")));
+      press("Center map");
+      phase = 505;
+      wait = 0;
+      return;
+    }
+    if (phase == 505 && wait > 30) {
+      if (state().getBoolean("surveying")) {
+        check(wait < 1800, "Zoomed automatic survey stalled");
+        return;
+      }
+      shot("marauders-map-auto-zoom");
+      server(
+          p -> {
+            check(surveyRegions(p).equals(surveyRegionsBefore), "Zooming created terrain regions");
+            String key = autoMarker.getString("id");
+            long packed = Long.parseLong(key.substring(key.lastIndexOf('/') + 1));
+            var pos = new net.minecraft.world.level.ChunkPos(packed);
+            check(
+                p.serverLevel().getChunkSource().getChunkNow(pos.x, pos.z) == null,
+                "Survey loaded unseen terrain");
+            var access =
+                p.serverLevel()
+                    .getChunk(
+                        pos.x,
+                        pos.z,
+                        net.minecraft.world.level.chunk.status.ChunkStatus.STRUCTURE_STARTS);
+            var type =
+                p.registryAccess()
+                    .registryOrThrow(net.minecraft.core.registries.Registries.STRUCTURE)
+                    .get(
+                        net.minecraft.resources.ResourceLocation.parse(
+                            autoMarker.getString("type")));
+            var start = access.getStartForStructure(type);
+            check(
+                start != null && start.isValid(),
+                "Automatic marker picked wrong native structure variant");
+            var box = start.getBoundingBox();
+            check(
+                box.getCenter().getX() == autoMarker.getInt("x")
+                    && box.getCenter().getZ() == autoMarker.getInt("z")
+                    && box.minY() == autoMarker.getInt("y"),
+                "Automatic coordinates differed from actual generation");
+            MapService.capture(p.serverLevel(), access);
+            check(
+                !MapData.get(p.server).structures.get(key).predicted(),
+                "Native confirmation did not replace prediction");
+            System.out.println("Auto structures verified native start: " + autoMarker);
+            autoVerified = true;
+          });
+      phase = 506;
+      wait = 0;
+      return;
+    }
+    if (phase == 506 && wait > 20 && autoVerified) {
+      try {
+        Files.writeString(
+            OUT.resolve("passed-auto-structures.txt"),
+            "PASS: automatic markers in an unexplored wide view, independent panning and zoom"
+                + " discovery without Locate; no distant region-file creation or full terrain"
+                + " loads; exact native structure variant/bounds comparison; generated locations"
+                + " upgraded to confirmed starts.\n");
+      } catch (Exception ex) {
+        throw new IllegalStateException(ex);
+      }
+      phase = 999;
+      map().onClose();
       mc.stop();
     }
   }

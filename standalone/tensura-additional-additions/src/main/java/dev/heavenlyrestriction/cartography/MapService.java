@@ -29,6 +29,7 @@ public final class MapService {
     public volatile int cx, cz, radius = 512;
     public volatile boolean terrainClosed;
     public Search search;
+    public MapAutoStructures.View survey;
     public MapTravel.Pending travel;
     public String message = "";
     public MapData.Marker found;
@@ -109,6 +110,7 @@ public final class MapService {
     var old = SESSIONS.remove(p.getUUID());
     if (old != null) {
       old.terrainClosed = true;
+      MapAutoStructures.cancel(old);
       MapTerrain.cancel(old);
       MapTravel.cancel(old);
       if (old.search != null) old.search.stop();
@@ -204,6 +206,7 @@ public final class MapService {
         s.cx = (int) x;
         s.cz = (int) z;
         s.radius = Math.clamp(t.getInt("radius"), 64, 65536);
+        MapAutoStructures.view(p, s, t);
       }
       case "pin" ->
           s.message =
@@ -321,6 +324,7 @@ public final class MapService {
         MapNetwork.send(p, t);
         continue;
       }
+      MapAutoStructures.advance(p, s);
       MapTerrain.advance(p, s);
       MapTravel.advance(p, s);
       if (session(p) != s) continue;
@@ -414,6 +418,12 @@ public final class MapService {
     t.putBoolean("preparingTravel", s.travel != null);
     t.put("players", players(p));
     t.putString("message", s.message);
+    t.putBoolean("surveying", s.survey != null && s.survey.completed() < s.survey.total());
+    if (s.survey != null) {
+      t.putInt("surveyDone", s.survey.completed());
+      t.putInt("surveyTotal", s.survey.total());
+      t.putBoolean("surveyError", s.survey.error);
+    }
     var d = MapData.get(p.server);
     var pins = new ListTag();
     d.pins(p.getUUID()).stream()
@@ -421,22 +431,27 @@ public final class MapService {
         .forEach(pin -> pins.add(pin.tag()));
     t.put("pins", pins);
     var marks = new ListTag();
-    d.structures.values().stream()
-        .filter(
-            m ->
-                m.dimension().equals(s.dimension)
-                    && Math.abs((long) m.x() - s.cx) <= s.radius
-                    && Math.abs((long) m.z() - s.cz) <= s.radius)
-        .sorted(
-            Comparator.comparingDouble(
-                m -> Math.hypot(m.x() - (double) s.cx, m.z() - (double) s.cz)))
-        .limit(2048)
-        .forEach(
-            m -> {
-              var tag = m.tag();
-              tag.putString("name", name(m.type()));
-              marks.add(tag);
-            });
+    var visible =
+        d.structures.values().stream()
+            .filter(
+                m ->
+                    m.dimension().equals(s.dimension)
+                        && Math.abs((long) m.x() - s.cx) <= s.radius
+                        && Math.abs((long) m.z() - s.cz) <= s.radius)
+            .sorted(
+                Comparator.comparingDouble(
+                    m -> Math.hypot(m.x() - (double) s.cx, m.z() - (double) s.cz)))
+            .map(m -> new StructureMarkerClusters.Point<>(m, m.x(), m.z(), m.type()))
+            .toList();
+    for (var group : StructureMarkerClusters.group(visible, 2048)) {
+      var m = group.representative();
+      var tag = m.tag();
+      tag.putString(
+          "name",
+          name(m.type()) + (group.count() > 1 ? " (+" + (group.count() - 1) + " nearby)" : ""));
+      tag.putInt("count", group.count());
+      marks.add(tag);
+    }
     t.put("markers", marks);
     var types = new ListTag();
     var registry = p.registryAccess().registryOrThrow(Registries.STRUCTURE);
@@ -493,10 +508,12 @@ public final class MapService {
         .forEach(
             s -> {
               s.terrainClosed = true;
+              MapAutoStructures.cancel(s);
               MapTerrain.cancel(s);
               MapTravel.cancel(s);
               if (s.search != null) s.search.stop();
             });
+    MapAutoStructures.clear();
     MapTerrain.clear();
     SESSIONS.clear();
   }

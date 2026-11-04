@@ -51,5 +51,5 @@
   "heavenlyrestriction.split_mind.invalid": "This learned magic is no longer available.",
   "heavenlyrestriction.skill.marauders_map": "Marauder's Map",
   "heavenlyrestriction.skill.mode.marauders_map.open_map": "Open Map",
-  "heavenlyrestriction.skill.marauders_map.description": "Open a detailed world map, including unvisited terrain. Track online players, save private pins, and search structures within 100,000 blocks of the map center. Travel opens an owned spatial skill’s native teleport menu with arrival coordinates prefilled. Teleport costs and restrictions still apply."
+  "heavenlyrestriction.skill.marauders_map.description": "Open a detailed world map with automatic structure markers wherever you pan or zoom, including unexplored terrain. Track players, save private pins and Locate structures within 100,000 blocks of the viewed map center. Travel prefills an owned spatial skill’s native menu; its normal costs and restrictions apply."
 }

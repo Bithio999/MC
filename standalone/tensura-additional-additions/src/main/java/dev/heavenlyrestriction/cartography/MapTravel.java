@@ -124,10 +124,22 @@ public final class MapTravel {
     }
     try {
       var result = job.future.getNow(null);
-      var arrival =
-          result != null && result.isSuccess()
-              ? landing(p, result.orElse(null), job.marker.x(), job.marker.z())
-              : null;
+      var chunk = result != null && result.isSuccess() ? result.orElse(null) : null;
+      if (chunk != null) MapService.capture(p.serverLevel(), chunk);
+      if (chunk != null && job.marker.predicted()) {
+        var type =
+            p.registryAccess()
+                .registryOrThrow(net.minecraft.core.registries.Registries.STRUCTURE)
+                .get(ResourceLocation.parse(job.marker.type()));
+        var start = type == null ? null : chunk.getStartForStructure(type);
+        if (start == null || !start.isValid()) {
+          MapData.get(p.server).structures.remove(job.marker.key());
+          MapData.get(p.server).setDirty();
+          s.message = "That world-generation location has no structure in the saved terrain.";
+          return;
+        }
+      }
+      var arrival = chunk == null ? null : landing(p, chunk, job.marker.x(), job.marker.z());
       if (arrival == null) {
         s.message =
             "No safe surface arrival found in that structure's chunk. Choose another structure.";

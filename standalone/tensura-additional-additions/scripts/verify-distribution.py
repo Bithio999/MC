@@ -5,7 +5,7 @@ import json, re, struct, tomllib, zipfile
 
 root = Path(__file__).resolve().parents[1]
 resources = root / 'src/main/resources'
-jar = root / 'build/libs/TensuraAdditionalAdditions-1.14.0.jar'
+jar = root / 'build/libs/TensuraAdditionalAdditions-1.15.0.jar'
 assets = resources / 'assets/heavenlyrestriction'
 required_art = [*(f'textures/race/{name}.png' for name in (
     'fettered_human', 'tempered_vessel', 'unshackled', 'heavenly_restricted', 'heavenbreaker')),
@@ -37,7 +37,7 @@ for name in config['mixins'] + config.get('client', []):
 with zipfile.ZipFile(jar) as z:
     names = set(z.namelist())
     mods = tomllib.loads(z.read('META-INF/neoforge.mods.toml').decode())
-    assert [(m['modId'], m['version']) for m in mods['mods']] == [('heavenlyrestriction', '1.14.0')]
+    assert [(m['modId'], m['version']) for m in mods['mods']] == [('heavenlyrestriction', '1.15.0')]
     assert mods['mods'][0]['displayName'] == 'TensuraAdditionalAdditions'
     language=json.loads(z.read('assets/heavenlyrestriction/lang/en_us.json'))
     for key,label in [('heavenlyrestriction.skill.parallel_world_jumper','Parallel World Jumper'),('heavenlyrestriction.skill.fusion','Fusion'),('heavenlyrestriction.skill.prospector','Prospector'),('heavenlyrestriction.skill.mode.prospector.refine','Refine'),('heavenlyrestriction.skill.mode.fusion.fuse','Fuse'),('heavenlyrestriction.skill.mode.parallel_world_jumper.world_hop','World Jump'),('heavenlyrestriction.skill.mode.parallel_world_jumper.world_select','World Select')]:
@@ -102,7 +102,7 @@ with zipfile.ZipFile(jar) as z:
     assert any(e['id']=='split-mind' for e in guide)
     assert any(e['id']=='marauders-map' for e in guide)
     assert 'heavenlyrestriction:marauders_map' in unique['values']
-    for cls in ['MaraudersMapSkill','cartography/MapData','cartography/MapService','cartography/MapTerrain','cartography/MapStructureSearch','cartography/StructureSearchGrid','cartography/MapTravel','client/cartography/MapTravelScreen','client/cartography/MapWarpScreen','client/cartography/MapTerrainAtlas','client/cartography/MapAtlas','client/cartography/MaraudersMapScreen']:
+    for cls in ['MaraudersMapSkill','cartography/MapData','cartography/MapService','cartography/MapTerrain','cartography/MapAutoStructures','cartography/SurveyTiles','cartography/SurveyNoiseCache','cartography/StructureMarkerClusters','cartography/MapStructureSearch','cartography/StructureSearchGrid','cartography/MapTravel','client/cartography/MapTravelScreen','client/cartography/MapWarpScreen','client/cartography/MapTerrainAtlas','client/cartography/MapAtlas','client/cartography/MaraudersMapScreen']:
         assert 'dev/heavenlyrestriction/'+cls+'.class' in names
     for cls in ['SplitMindSkill','splitmind/SplitMindCasting', 'splitmind/SplitMindModes', 'splitmind/SplitMindProjectile','splitmind/SplitMindNetwork','client/SplitMindScreen']:
         assert 'dev/heavenlyrestriction/'+cls+'.class' in names
@@ -110,4 +110,4 @@ with zipfile.ZipFile(jar) as z:
     pool=json.loads(z.read('data/heavenlyrestriction/tags/entity_type/high_realm_elites.json'))['values'];assert len(pool)==10 and all(t.startswith('tensura:') for t in pool) and 'tensura:arch_daemon' in pool and 'tensura:lesser_daemon' not in pool
     for biome in ['ivory_crags','starwood_grove','mistglass_basin']:
         spawns=json.loads(z.read('data/heavenlyrestriction/worldgen/biome/'+biome+'.json'))['spawners']['monster'];assert all(e['type'] in pool for e in spawns)
-print('Independent 1.14.0 JAR, native dependency metadata, all extracted icons/rigs/animations and mixin classes verified; no Myths classes, bundled dependencies or review fixtures.')
+print('Independent 1.15.0 JAR, native dependency metadata, all extracted icons/rigs/animations and mixin classes verified; no Myths classes, bundled dependencies or review fixtures.')

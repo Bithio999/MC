@@ -410,6 +410,11 @@ public final class MaraudersMapScreen extends Screen {
       t.putInt("x", (int) view.x);
       t.putInt("z", (int) view.z);
       t.putInt("radius", (int) Math.min(65536, Math.max(mapW, mapH) / (2 * view.scale) + 128));
+      t.putBoolean("survey", structures);
+      t.putInt("minX", (int) Math.floor(view.worldX(left, left, mapW)));
+      t.putInt("maxX", (int) Math.ceil(view.worldX(left + mapW, left, mapW)));
+      t.putInt("minZ", (int) Math.floor(view.worldZ(top, top, mapH)));
+      t.putInt("maxZ", (int) Math.ceil(view.worldZ(top + mapH, top, mapH)));
       request("view", t);
       refreshAt = -1;
     }
@@ -529,8 +534,9 @@ public final class MaraudersMapScreen extends Screen {
               .orElse(group.getFirst());
       int x = (int) view.screenX(m.getInt("x"), left, mapW),
           y = (int) view.screenZ(m.getInt("z"), top, mapH);
-      marker(g, x, y, m, group.size());
-      hits.add(new Hit(x, y, m, group.size()));
+      int count = group.stream().mapToInt(a -> Math.max(1, a.getInt("count"))).sum();
+      marker(g, x, y, m, count);
+      hits.add(new Hit(x, y, m, count));
     }
     for (var m : entries)
       if (m.getBoolean("pin")) {
@@ -651,6 +657,15 @@ public final class MaraudersMapScreen extends Screen {
               + state.getInt("candidates")
               + " candidates  [Esc cancels]";
     if (state.getBoolean("preparingTravel")) note = "Preparing safe arrival coordinates…";
+    if (note.isEmpty() && state.getBoolean("surveying"))
+      note =
+          "Discovering structures · "
+              + state.getInt("surveyDone")
+              + "/"
+              + state.getInt("surveyTotal")
+              + " areas";
+    if (note.isEmpty() && state.getBoolean("surveyError"))
+      note = "Some structures could not be read. Reopen the map to retry.";
     if (note.isEmpty()) note = MapTerrainAtlas.progress();
     if (note.isEmpty() && !MapAtlas.notice.isEmpty()) note = MapAtlas.notice;
     if (note.isEmpty())
@@ -676,6 +691,8 @@ public final class MaraudersMapScreen extends Screen {
           lines.add(Component.literal("Player · " + m.getString("dimensionName")).withColor(TEAL));
         else if (!m.getBoolean("pin"))
           lines.add(Component.literal(m.getString("type")).withColor(MUTED));
+        if (m.getBoolean("predicted"))
+          lines.add(Component.literal("World-generation location").withColor(TEAL));
         if (hit.count > 1)
           lines.add(Component.literal(hit.count + " nearby structures · zoom in").withColor(TEAL));
         lines.add(

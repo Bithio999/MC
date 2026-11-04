@@ -64,7 +64,8 @@
     "SplitMindProjectileMixin",
     "SplitMindCastingModifiersMixin",
     "SplitMindCastingLockMixin",
-    "MapChunkAccess"
+    "MapChunkAccess",
+    "MapSurveyNoiseMixin"
   ],
   "injectors": {
     "defaultRequire": 1

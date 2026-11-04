@@ -745,7 +745,15 @@
           "title": "Terrain and structures",
           "lines": [
             "Pan or Go to… anywhere in the dimension, including unvisited/unloaded areas. Native terrain previews fill in progressively. Zoom in for block top-face textures, trees, roads and rooftops, relief and depth-shaded water. Initial previews show landforms and biome colors; surface features and player edits follow as native detail arrives. Live terrain is cached on this computer for each world and dimension.",
-            "Actual world-generation structures, including addon types, are marked when their starts are known. Locate structure… searches up to 100,000 blocks around the map center in small steps. Show result centers the found marker. Escape cancels an active search. Move the map center to search another area."
+            "World-generation structures, including addon types, appear automatically as you pan and zoom. Locate structure… searches up to 100,000 blocks around the map center in small steps. Show result centers the found marker. Escape cancels an active search. Move the map center to search another area."
+          ]
+        },
+        {
+          "title": "Automatic structure markers",
+          "lines": [
+            "With Sites enabled, natural structure markers appear automatically for the visible map area at every zoom level, including unexplored regions. Pan or zoom to survey another area; Locate is not required. The bottom bar shows progress while discovery fills in.",
+            "Vanilla and addon structure locations follow native world-generation rules. Saved structures take precedence. Unvisited sites say World-generation location in their tooltip and become confirmed when the area generates. Dense sites cluster with counts; zoom in to separate them. Sites OFF pauses automatic discovery.",
+            "Automatic markers do not generate terrain or spawn mobs. Player-built structures use custom pins. Locate remains a separate 100,000-block search around the viewed map center."
           ]
         },
         {
@@ -759,7 +767,7 @@
         {
           "title": "Live players",
           "lines": [
-            "All online players appear, including those beyond render distance. Locations refresh twice per second. Your own arrow is gold; others have named cyan markers. Search/select a player, then Show selected to center on them.",
+            "All online players appear, including those beyond render distance. Locations refresh twice per second. Your own arrow is gold; others have named cyan markers. Search/select a player, then Focus to center on them.",
             "Players in other dimensions appear in the sidebar with dimension and coordinates; centering is disabled until you enter that dimension. Offline players disappear. Pins stay private."
           ]
         },

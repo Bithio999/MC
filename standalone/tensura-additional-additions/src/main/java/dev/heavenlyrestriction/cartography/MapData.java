@@ -14,11 +14,17 @@ public final class MapData extends SavedData {
   public final LinkedHashMap<String, Marker> structures = new LinkedHashMap<>();
   private final Map<UUID, LinkedHashMap<UUID, Pin>> pins = new HashMap<>();
 
-  public record Marker(String key, String type, String dimension, int x, int y, int z) {
+  public record Marker(
+      String key, String type, String dimension, int x, int y, int z, boolean predicted) {
+    public Marker(String key, String type, String dimension, int x, int y, int z) {
+      this(key, type, dimension, x, y, z, false);
+    }
+
     public CompoundTag tag() {
       var t = new CompoundTag();
       t.putString("id", key);
       t.putString("type", type);
+      t.putBoolean("predicted", predicted);
       t.putString("dimension", dimension);
       t.putInt("x", x);
       t.putInt("y", y);
@@ -33,7 +39,8 @@ public final class MapData extends SavedData {
           t.getString("dimension"),
           t.getInt("x"),
           t.getInt("y"),
-          t.getInt("z"));
+          t.getInt("z"),
+          t.getBoolean("predicted"));
     }
   }
 
@@ -109,11 +116,35 @@ public final class MapData extends SavedData {
   }
 
   public void add(Marker marker) {
-    if (marker.equals(structures.get(marker.key()))) return;
+    var old = structures.get(marker.key());
+    if (marker.equals(old) || (old != null && !old.predicted() && marker.predicted())) return;
     structures.put(marker.key(), marker);
     while (structures.size() > MAX_STRUCTURES)
       structures.remove(structures.keySet().iterator().next());
     setDirty();
+  }
+
+  public void replaceSurveyTile(String dimension, SurveyTiles.Tile tile, List<Marker> markers) {
+    boolean removed =
+        structures
+            .values()
+            .removeIf(
+                m -> {
+                  if (!m.predicted() || !m.dimension().equals(dimension)) return false;
+                  try {
+                    long packed = Long.parseLong(m.key().substring(m.key().lastIndexOf('/') + 1));
+                    int x = net.minecraft.world.level.ChunkPos.getX(packed),
+                        z = net.minecraft.world.level.ChunkPos.getZ(packed);
+                    return x >= tile.minChunkX()
+                        && x < tile.minChunkX() + tile.chunks()
+                        && z >= tile.minChunkZ()
+                        && z < tile.minChunkZ() + tile.chunks();
+                  } catch (RuntimeException ignored) {
+                    return false;
+                  }
+                });
+    if (removed) setDirty();
+    markers.forEach(this::add);
   }
 
   @Override

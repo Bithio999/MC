@@ -1,5 +1,12 @@
 # Changelog
 
+## Additions 1.15.0 — Automatic world structure markers
+
+- Discover vanilla and addon structure markers automatically for the visible map area, including unvisited/unloaded regions and wide zoom. Use native placement, biome and weighted variant generation on disposable unsaved chunks, and read existing starts first. Do not generate terrain, create new region files, add chunk tickets or spawn mobs for the automatic survey.
+- Add view-driven cancellable work, shared bounded tile/sample caches, discovery progress and a Sites toggle that pauses surveying. Scope exact noise-sample memoization to the survey and copy mutable columns so callers cannot change cached results.
+- Preserve all represented sites in dense views through adaptive counted clusters. Save world-generation markers with a tag, give confirmed starts precedence and verify unvisited destinations before handing travel to a native skill menu.
+- Preserve Locate’s existing 100,000-block radius around the viewed map center and native teleport behavior.
+
 ## Additions 1.14.0 — Long-range structure discovery and spatial travel
 
 - Increase Marauder’s Map Locate to a 100,000-block radius around the map center. Scan native random-spread placement regions and stronghold rings in a bounded background worker, filter native generation points/biomes, and verify real structure starts asynchronously. Remove the old 128-candidate stopping limit; retain cancellation and non-ticking, temporary chunk tickets.
