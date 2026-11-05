@@ -37,6 +37,7 @@ public final class MapTerrainAtlas {
 
     Tile(NativeImage image) {
       texture = new DynamicTexture(image);
+      texture.setFilter(false, false);
       id = Minecraft.getInstance().getTextureManager().register("marauders_map_terrain", texture);
     }
 
@@ -55,7 +56,38 @@ public final class MapTerrainAtlas {
   private static final Map<Integer, int[]> PALETTE = new HashMap<>();
   private static List<Key> desired = List.of();
   private static long age;
-  private static UUID session;
+  private static UUID session, world;
+  private static String dimension = "";
+  private static int plane;
+
+  private record Plan(
+      int minX,
+      int minZ,
+      int maxX,
+      int maxZ,
+      int step,
+      boolean detail,
+      int width,
+      int height,
+      int detailX,
+      int detailZ,
+      double scale) {}
+
+  private static Plan plan;
+  private static List<Key> background = List.of(), details = List.of();
+
+  public static void context(CompoundTag state) {
+    UUID nextWorld = state.hasUUID("world") ? state.getUUID("world") : null;
+    String nextDimension = state.getString("dimension");
+    int nextPlane = state.getInt("plane");
+    if (Objects.equals(world, nextWorld) && dimension.equals(nextDimension) && plane == nextPlane)
+      return;
+    clear();
+    world = nextWorld;
+    dimension = nextDimension;
+    plane = nextPlane;
+  }
+
   private static int visible, ready;
 
   public static void session(UUID value) {
@@ -63,6 +95,7 @@ public final class MapTerrainAtlas {
       session = value;
       WAITING.clear();
       desired = List.of();
+      plan = null;
     }
   }
 
@@ -72,7 +105,10 @@ public final class MapTerrainAtlas {
     WAITING.clear();
     PALETTE.clear();
     desired = List.of();
-    session = null;
+    session = world = null;
+    dimension = "";
+    plan = null;
+    background = details = List.of();
     ready = visible = 0;
   }
 
@@ -86,7 +122,9 @@ public final class MapTerrainAtlas {
         || !(Minecraft.getInstance().screen instanceof MaraudersMapScreen map)
         || !map.terrainViewReady()) return;
     WAITING.entrySet().removeIf(e -> e.getValue() < age);
-    int pending = (int) WAITING.values().stream().filter(expiry -> expiry - age > 60).count();
+    // Requests outside the current viewport must not block its new tiles.
+    int pending =
+        (int) desired.stream().filter(k -> WAITING.getOrDefault(k.id(), 0L) - age > 12).count();
     if (pending >= 6) return;
     for (var key : desired) {
       if ((TILES.containsKey(key) && age - TILES.get(key).received < 600)
@@ -116,7 +154,7 @@ public final class MapTerrainAtlas {
     if (session == null || !t.hasUUID("session") || !session.equals(t.getUUID("session"))) return;
     String id = t.getString("tile");
     if (t.getBoolean("retry")) {
-      WAITING.put(id, age + 40);
+      WAITING.put(id, age + 12);
       return;
     }
     WAITING.remove(id);
@@ -173,6 +211,7 @@ public final class MapTerrainAtlas {
       for (int z = 0; z < 32; z++)
         for (int x = 0; x < 32; x++) overlay.setPixelRGBA(x, z, abgr(recorded[z * 32 + x]));
       tile.explored = new DynamicTexture(overlay);
+      tile.explored.setFilter(false, false);
       tile.exploredId =
           Minecraft.getInstance()
               .getTextureManager()
@@ -180,7 +219,7 @@ public final class MapTerrainAtlas {
     }
     var previous = TILES.put(key, tile);
     if (previous != null) previous.close();
-    while (TILES.size() > 768) {
+    while (TILES.size() > 1024) {
       var it = TILES.entrySet().iterator();
       var old = it.next();
       it.remove();
@@ -297,31 +336,48 @@ public final class MapTerrainAtlas {
 
   public static void render(
       GuiGraphics g, MapView v, int left, int top, int width, int height, boolean detailLayer) {
-    int coarse = 1;
-    while (coarse < Math.max(width, height) / v.scale / 128) coarse *= 2;
-    int fine = Math.max(1, coarse / 2);
-    var quick = keys(v, left, top, width, height, coarse, false, true);
-    var fineKeys = keys(v, left, top, width, height, fine, false);
-    var details = v.scale >= 1 ? keys(v, left, top, width, height, 1, true) : List.<Key>of();
+    int step = MapTileLayout.step(v.scale, width, height), span = 32 * step;
+    var next =
+        new Plan(
+            Math.floorDiv((int) Math.floor(v.worldX(left, left, width)), span),
+            Math.floorDiv((int) Math.floor(v.worldZ(top, top, height)), span),
+            Math.floorDiv((int) Math.floor(v.worldX(left + width, left, width)), span),
+            Math.floorDiv((int) Math.floor(v.worldZ(top + height, top, height)), span),
+            step,
+            v.scale >= 1,
+            width,
+            height,
+            (int) Math.floor(v.x / 16),
+            (int) Math.floor(v.z / 16),
+            v.scale);
+    if (!next.equals(plan)) {
+      plan = next;
+      var cover = keys(v, left, top, width, height, Math.min(512, step * 4), false, true);
+      var quick = keys(v, left, top, width, height, Math.min(512, step * 2), false, true);
+      var relief = keys(v, left, top, width, height, step, false);
+      details = next.detail ? keys(v, left, top, width, height, 1, true) : List.of();
+      var requests = new ArrayList<Key>();
+      // Cover the viewport before spending generation time on native block detail.
+      requests.addAll(cover);
+      if (step < 256) requests.addAll(quick);
+      requests.addAll(relief.subList(0, Math.min(4, relief.size())));
+      requests.addAll(details.subList(0, Math.min(4, details.size())));
+      requests.addAll(relief.subList(Math.min(4, relief.size()), relief.size()));
+      requests.addAll(details.subList(Math.min(4, details.size()), details.size()));
+      desired = List.copyOf(requests);
+      var fallback = new ArrayList<Key>();
+      for (int lod = Math.min(512, step * 4); lod >= step; lod /= 2) {
+        fallback.addAll(keys(v, left, top, width, height, lod, false, true));
+        fallback.addAll(keys(v, left, top, width, height, lod, false));
+        if (lod == 1) break;
+      }
+      background = List.copyOf(fallback);
+    }
     if (!detailLayer) {
-      com.mojang.blaze3d.systems.RenderSystem.enableBlend();
-      var candidates = new ArrayList<Key>();
-      candidates.addAll(quick.subList(0, Math.min(4, quick.size())));
-      candidates.addAll(details.subList(0, Math.min(4, details.size())));
-      candidates.addAll(quick.subList(Math.min(4, quick.size()), quick.size()));
-      candidates.addAll(details.subList(Math.min(4, details.size()), details.size()));
-      candidates.addAll(fineKeys);
-      desired = List.copyOf(candidates);
       visible = desired.size();
       ready = (int) desired.stream().filter(TILES::containsKey).count();
-      // Cached coarser tiles provide continuity while the new zoom level fills.
-      for (int step = Math.min(512, coarse * 4); step >= fine; step /= 2) {
-        for (var k : keys(v, left, top, width, height, step, false, true))
-          draw(g, TILES.get(k), k, v, left, top, width, height);
-        for (var k : keys(v, left, top, width, height, step, false))
-          draw(g, TILES.get(k), k, v, left, top, width, height);
-        if (step == 1) break;
-      }
+      com.mojang.blaze3d.systems.RenderSystem.enableBlend();
+      for (var k : background) draw(g, TILES.get(k), k, v, left, top, width, height);
     } else for (var k : details) draw(g, TILES.get(k), k, v, left, top, width, height);
   }
 

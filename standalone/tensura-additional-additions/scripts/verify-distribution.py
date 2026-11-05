@@ -5,7 +5,7 @@ import json, re, struct, tomllib, zipfile
 
 root = Path(__file__).resolve().parents[1]
 resources = root / 'src/main/resources'
-jar = root / 'build/libs/TensuraAdditionalAdditions-1.18.1.jar'
+jar = root / 'build/libs/TensuraAdditionalAdditions-1.19.0.jar'
 assets = resources / 'assets/heavenlyrestriction'
 required_art = [*(f'textures/race/{name}.png' for name in (
     'fettered_human', 'tempered_vessel', 'unshackled', 'heavenly_restricted', 'heavenbreaker')),
@@ -37,14 +37,14 @@ for name in config['mixins'] + config.get('client', []):
 with zipfile.ZipFile(jar) as z:
     names = set(z.namelist())
     mods = tomllib.loads(z.read('META-INF/neoforge.mods.toml').decode())
-    assert [(m['modId'], m['version']) for m in mods['mods']] == [('heavenlyrestriction', '1.18.1')]
+    assert [(m['modId'], m['version']) for m in mods['mods']] == [('heavenlyrestriction', '1.19.0')]
     assert mods['mods'][0]['displayName'] == 'TensuraAdditionalAdditions'
     language=json.loads(z.read('assets/heavenlyrestriction/lang/en_us.json'))
     for key,label in [('heavenlyrestriction.skill.parallel_world_jumper','Parallel World Jumper'),('heavenlyrestriction.skill.fusion','Fusion'),('heavenlyrestriction.skill.prospector','Prospector'),('heavenlyrestriction.skill.mode.prospector.refine','Refine'),('heavenlyrestriction.skill.mode.fusion.fuse','Fuse'),('heavenlyrestriction.skill.mode.parallel_world_jumper.world_hop','World Jump'),('heavenlyrestriction.skill.mode.parallel_world_jumper.world_select','World Select')]:
         assert language[key]==label, key
     assert any(d['modId'] == 'tensura' and d['type'] == 'required' for d in mods['dependencies']['heavenlyrestriction'])
     assert any(d['modId'] == 'wildhunt' and d['type'] == 'incompatible' for d in mods['dependencies']['heavenlyrestriction'])
-    assert not any(n.startswith('dev/wildhunt/') or 'StandaloneReview' in n or 'ChainedTargetingReview' in n or 'ChainedResourceReview' in n or 'UnboundReview' in n or 'AirborneReview' in n or 'NeoOtherworldClientReview' in n or 'NeoOtherworldGameTests' in n or 'NeoOtherworldFixtures' in n or 'SpiritualReviewGameTests' in n or 'TransmissionReview' in n or 'TransmissionClientReview' in n or 'SchemaReview' in n or 'SchemaClientReview' in n or 'GuideClientReview' in n or 'SchemaProgressClientReview' in n or 'WorldHopClientReview' in n or 'WorldHopPreview' in n or 'WorldSelectClientReview' in n or 'WorldLibraryClientReview' in n or 'FusionPreview' in n or 'FusionConsentReview' in n or 'FusionMenuReview' in n or 'FusionControlReview' in n or 'ProspectorReview' in n or 'ExponentiationReview' in n or 'LoanReview' in n or 'WayfarerReview' in n or 'KaelVeyrGameTests' in n or 'MapReview' in n or 'SplitMindReview' in n or 'HighRealmReview' in n for n in names)
+    assert not any(n.startswith('dev/wildhunt/') or 'StandaloneReview' in n or 'ChainedTargetingReview' in n or 'ChainedResourceReview' in n or 'UnboundReview' in n or 'AirborneReview' in n or 'NeoOtherworldClientReview' in n or 'NeoOtherworldGameTests' in n or 'NeoOtherworldFixtures' in n or 'SpiritualReviewGameTests' in n or 'TransmissionReview' in n or 'TransmissionClientReview' in n or 'SchemaReview' in n or 'SchemaClientReview' in n or 'GuideClientReview' in n or 'SchemaProgressClientReview' in n or 'WorldHopClientReview' in n or 'WorldHopPreview' in n or 'WorldSelectClientReview' in n or 'WorldLibraryClientReview' in n or 'FusionPreview' in n or 'FusionConsentReview' in n or 'FusionMenuReview' in n or 'FusionControlReview' in n or 'ProspectorReview' in n or 'ExponentiationReview' in n or 'LoanReview' in n or 'WayfarerReview' in n or 'KaelVeyrGameTests' in n or 'MapReview' in n or 'MapPerformanceReview' in n or 'MapClarityReview' in n or 'SplitMindReview' in n or 'HighRealmReview' in n for n in names)
     assert b'ftbteams' not in z.read('dev/heavenlyrestriction/TestFixtures.class'), 'Pack-only fixture leaked into release'
     for name in required_art:
         assert z.read('assets/heavenlyrestriction/' + name) == (assets / name).read_bytes(), name
@@ -116,7 +116,7 @@ with zipfile.ZipFile(jar) as z:
     assert any(e['id']=='split-mind' for e in guide)
     assert any(e['id']=='marauders-map' and any(s['title']=='Dimensions and shared exploration' for s in e['sections']) for e in guide)
     assert 'heavenlyrestriction:marauders_map' in unique['values']
-    for cls in ['MaraudersMapSkill','cartography/MapData','cartography/MapService','cartography/MapTerrain','cartography/MapAutoStructures','cartography/MapExploration','cartography/SharedTerrainIndex','client/cartography/MapUi','client/cartography/MapPopup','client/cartography/MapDimensionTab','cartography/SurveyTiles','cartography/SurveyNoiseCache','cartography/StructureMarkerClusters','cartography/MapStructureSearch','cartography/StructureSearchGrid','cartography/MapTravel','client/cartography/MapTravelScreen','client/cartography/MapWarpScreen','client/cartography/MapTerrainAtlas','client/cartography/MapAtlas','client/cartography/MaraudersMapScreen']:
+    for cls in ['MaraudersMapSkill','cartography/MapData','cartography/MapColorMip','cartography/MapTileLayout','cartography/StructureMarkerIndex','client/cartography/MapRegionMips','cartography/MapService','cartography/MapTerrain','cartography/MapAutoStructures','cartography/MapExploration','cartography/SharedTerrainIndex','client/cartography/MapUi','client/cartography/MapPopup','client/cartography/MapDimensionTab','cartography/SurveyTiles','cartography/SurveyNoiseCache','cartography/StructureMarkerClusters','cartography/MapStructureSearch','cartography/StructureSearchGrid','cartography/MapTravel','client/cartography/MapTravelScreen','client/cartography/MapWarpScreen','client/cartography/MapTerrainAtlas','client/cartography/MapAtlas','client/cartography/MaraudersMapScreen']:
         assert 'dev/heavenlyrestriction/'+cls+'.class' in names
     for cls in ['SplitMindSkill','splitmind/SplitMindCasting', 'splitmind/SplitMindModes', 'splitmind/SplitMindProjectile','splitmind/SplitMindNetwork','client/SplitMindScreen']:
         assert 'dev/heavenlyrestriction/'+cls+'.class' in names
@@ -134,4 +134,4 @@ with zipfile.ZipFile(jar) as z:
     for path in ['data/heavenlyrestriction/loot_table/entities/kael_veyr.json','data/heavenlyrestriction/advancement/starless_wayfarer.json','data/c/tags/entity_type/bosses.json','data/tensura/tags/entity_type/boss_for_hero.json','assets/heavenlyrestriction/models/item/kael_veyr_spawn_egg.json']:
         assert z.read(path)==(resources/path).read_bytes()
     assert language['entity.heavenlyrestriction.kael_veyr']=='Kael Veyr'
-print('Independent 1.18.1 JAR, native dependency metadata, all extracted icons/rigs/animations and mixin classes verified; no Myths classes, bundled dependencies or review fixtures.')
+print('Independent 1.19.0 JAR, native dependency metadata, all extracted icons/rigs/animations and mixin classes verified; no Myths classes, bundled dependencies or review fixtures.')

@@ -42,6 +42,26 @@ public final class MapAutoStructures {
   private static final LinkedHashMap<Key, Cached> CACHE = new LinkedHashMap<>(32, .75f, true);
   private static final Map<Key, Job> JOBS = new HashMap<>();
 
+  private record ChunkKey(UUID world, String dimension, long chunk) {}
+
+  // Cache empty starts too: changing zoom must not regenerate the same rejected candidates.
+  private static final Map<ChunkKey, List<MapData.Marker>> CHUNKS =
+      Collections.synchronizedMap(
+          new LinkedHashMap<>(256, .75f, true) {
+            @Override
+            protected boolean removeEldestEntry(Map.Entry<ChunkKey, List<MapData.Marker>> entry) {
+              return size() > 4096;
+            }
+          });
+
+  public static List<MapData.Marker> cached(UUID world, String dimension, ChunkPos pos) {
+    return CHUNKS.get(new ChunkKey(world, dimension, pos.toLong()));
+  }
+
+  public static void invalidate(UUID world, String dimension, ChunkPos pos) {
+    CHUNKS.remove(new ChunkKey(world, dimension, pos.toLong()));
+  }
+
   public static final class View {
     final List<SurveyTiles.Tile> tiles;
     final Set<SurveyTiles.Tile> done = new HashSet<>();
@@ -69,6 +89,7 @@ public final class MapAutoStructures {
   private static final class Job {
     final Key key;
     final Set<UUID> watchers = new HashSet<>();
+    final ArrayBlockingQueue<MapData.Marker> discovered = new ArrayBlockingQueue<>(512);
     volatile boolean cancelled;
     Future<?> future;
 
@@ -106,8 +127,15 @@ public final class MapAutoStructures {
     var old = s.survey;
     if (old != null && old.minX == minX && old.minZ == minZ && old.maxX == maxX && old.maxZ == maxZ)
       return;
-    cancel(s);
-    s.survey = new View(minX, minZ, maxX, maxZ);
+    var next = new View(minX, minZ, maxX, maxZ);
+    if (old != null) {
+      next.done.addAll(old.done);
+      next.done.retainAll(next.tiles);
+      next.error = old.error;
+      if (old.active != null && next.tiles.contains(old.active.tile)) next.active = old.active;
+      else detach(s);
+    }
+    s.survey = next;
   }
 
   public static void advance(ServerPlayer p, MapService.Session s) {
@@ -115,6 +143,13 @@ public final class MapAutoStructures {
     if (view == null) return;
     UUID world = MapData.get(p.server).world;
     if (view.active != null) {
+      var running = JOBS.get(view.active);
+      if (running != null)
+        for (int n = 0; n < 256; n++) {
+          var marker = running.discovered.poll();
+          if (marker == null) break;
+          MapData.get(p.server).add(marker);
+        }
       var completed = CACHE.get(view.active);
       if (completed != null) {
         view.done.add(view.active.tile);
@@ -243,6 +278,18 @@ public final class MapAutoStructures {
                         || wx >= maxX
                         || wz < minZ
                         || wz >= maxZ) continue;
+                    var chunkKey = new ChunkKey(key.world, key.dimension, pos.toLong());
+                    var reused = CHUNKS.get(chunkKey);
+                    if (reused != null) {
+                      for (var marker : reused) {
+                        if (markers.size() >= 65536 && !markers.containsKey(marker.key()))
+                          throw new IllegalStateException("Survey tile marker limit exceeded");
+                        markers.put(marker.key(), marker);
+                        job.discovered.offer(marker);
+                      }
+                      continue;
+                    }
+                    var local = new LinkedHashMap<String, MapData.Marker>();
                     // Read saved starts first. Existing terrain must win over regenerated
                     // predictions.
                     var regionPath =
@@ -271,17 +318,21 @@ public final class MapAutoStructures {
                                   pieces, starts.getCompound(name), seed);
                           if (start != null && start.isValid())
                             add(
-                                markers,
+                                local,
                                 key.dimension,
                                 structures.getKey(start.getStructure()).toString(),
                                 pos,
                                 start,
                                 false);
                         }
+                        publishChunk(job, chunkKey, local, markers, epoch);
                         continue;
                       }
                     }
-                    if (!generate) continue;
+                    if (!generate) {
+                      publishChunk(job, chunkKey, local, markers, epoch);
+                      continue;
+                    }
                     // Exactly the native weighted set/variant/fallback algorithm, against an
                     // unsaved chunk.
                     var proto = new ProtoChunk(pos, UpgradeData.EMPTY, height, biomes, null);
@@ -289,12 +340,13 @@ public final class MapAutoStructures {
                     for (var entry : proto.getAllStarts().entrySet())
                       if (entry.getValue() != null && entry.getValue().isValid())
                         add(
-                            markers,
+                            local,
                             key.dimension,
                             structures.getKey(entry.getKey()).toString(),
                             pos,
                             entry.getValue(),
                             true);
+                    publishChunk(job, chunkKey, local, markers, epoch);
                   }
                 } catch (InterruptedException ex) {
                   Thread.currentThread().interrupt();
@@ -332,6 +384,23 @@ public final class MapAutoStructures {
     } catch (RejectedExecutionException ex) {
       JOBS.remove(key);
       return null;
+    }
+  }
+
+  private static void publishChunk(
+      Job job,
+      ChunkKey key,
+      Map<String, MapData.Marker> local,
+      Map<String, MapData.Marker> all,
+      long epoch) {
+    if (!job.alive() || epoch != EPOCH.get()) return;
+    var result = List.copyOf(local.values());
+    CHUNKS.put(key, result);
+    for (var marker : result) {
+      if (all.size() >= 65536 && !all.containsKey(marker.key()))
+        throw new IllegalStateException("Survey tile marker limit exceeded");
+      all.put(marker.key(), marker);
+      job.discovered.offer(marker);
     }
   }
 
@@ -398,6 +467,7 @@ public final class MapAutoStructures {
     JOBS.values().forEach(Job::cancel);
     JOBS.clear();
     CACHE.clear();
+    CHUNKS.clear();
     cachedMarkers = 0;
     WORKER.getQueue().clear();
   }

@@ -1,0 +1,7 @@
+gradle.projectsEvaluated {
+ rootProject.sourceSets.main.java.srcDir(rootProject.file('docs/review-map-performance'))
+ rootProject.neoForge.runs.client.gameDirectory=rootProject.file('/workspace/validation-marauders-map/client')
+ rootProject.neoForge.runs.client.systemProperty('additions.mapBenchmark', rootProject.providers.gradleProperty('mapBenchmark').getOrElse('after'))
+ if (rootProject.providers.gradleProperty('mapClarity').isPresent()) rootProject.neoForge.runs.client.systemProperty('additions.mapClarity','true')
+ rootProject.neoForge.runs.client.programArguments.addAll('--quickPlaySingleplayer','Marauders Map Review','--width','1280','--height','720')
+}

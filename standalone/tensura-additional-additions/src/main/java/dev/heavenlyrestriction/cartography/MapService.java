@@ -31,6 +31,7 @@ public final class MapService {
     public Search search;
     public MapAutoStructures.View survey;
     public MapTravel.Pending travel;
+    private ListTag catalog;
     public String message = "";
     public MapData.Marker found;
     public final Set<String> terrain = new HashSet<>();
@@ -250,7 +251,7 @@ public final class MapService {
       case "routes" -> {
         if (!MapTravel.options(p, s, t.getString("id"))) {
           s.message = "No usable coordinate-teleport skill is available for that structure.";
-          MapNetwork.send(p, snapshot(p, s));
+          MapNetwork.send(p, snapshot(p, s, false));
         }
         return;
       }
@@ -281,7 +282,7 @@ public final class MapService {
       case "locate" -> {
         if (now < s.nextLocate) {
           s.message = "Please wait a moment before starting another search.";
-          MapNetwork.send(p, snapshot(p, s));
+          MapNetwork.send(p, snapshot(p, s, false));
           return;
         }
         s.nextLocate = now + 100;
@@ -330,12 +331,17 @@ public final class MapService {
         return;
       }
     }
-    MapNetwork.send(p, snapshot(p, s));
+    MapNetwork.send(p, snapshot(p, s, false));
   }
 
   public static void loaded(ChunkEvent.Load e) {
-    if (e.getLevel() instanceof ServerLevel level && level.getServer().overworld() != null)
+    if (e.getLevel() instanceof ServerLevel level && level.getServer().overworld() != null) {
+      MapAutoStructures.invalidate(
+          MapData.get(level.getServer()).world,
+          level.dimension().location().toString(),
+          e.getChunk().getPos());
       capture(level, e.getChunk());
+    }
   }
 
   public static void capture(ServerLevel level, ChunkAccess chunk) {
@@ -400,7 +406,7 @@ public final class MapService {
         players.put("players", players(p));
         MapNetwork.send(p, players);
       }
-      if (p.tickCount % 20 == 0) MapNetwork.send(p, snapshot(p, s));
+      if (p.tickCount % 20 == 0) MapNetwork.send(p, snapshot(p, s, false));
     }
   }
 
@@ -473,6 +479,10 @@ public final class MapService {
   }
 
   public static CompoundTag snapshot(ServerPlayer p, Session s) {
+    return snapshot(p, s, true);
+  }
+
+  private static CompoundTag snapshot(ServerPlayer p, Session s, boolean includeCatalog) {
     var t = context(p);
     var level = level(p, s);
     t.putString("playerDimension", s.originDimension);
@@ -512,12 +522,10 @@ public final class MapService {
     t.put("pins", pins);
     var marks = new ListTag();
     var visible =
-        d.structures.values().stream()
-            .filter(
-                m ->
-                    m.dimension().equals(s.dimension)
-                        && Math.abs((long) m.x() - s.cx) <= s.radius
-                        && Math.abs((long) m.z() - s.cz) <= s.radius)
+        d
+            .structuresIn(
+                s.dimension, s.cx - s.radius, s.cz - s.radius, s.cx + s.radius, s.cz + s.radius)
+            .stream()
             .sorted(
                 Comparator.comparingDouble(
                     m -> Math.hypot(m.x() - (double) s.cx, m.z() - (double) s.cz)))
@@ -533,19 +541,24 @@ public final class MapService {
       marks.add(tag);
     }
     t.put("markers", marks);
-    var types = new ListTag();
-    var registry = p.registryAccess().registryOrThrow(Registries.STRUCTURE);
-    registry.entrySet().stream()
-        .sorted(Comparator.comparing(a -> a.getKey().location().toString()))
-        .forEach(
-            entry -> {
-              var tag = new CompoundTag();
-              String id = entry.getKey().location().toString();
-              tag.putString("id", id);
-              tag.putString("name", name(id));
-              types.add(tag);
-            });
-    t.put("types", types);
+    // The registry is immutable for the session. Keep it on the client rather than
+    // rebuilding and transmitting the complete modpack catalog every second.
+    if (includeCatalog && s.catalog == null) {
+      var types = new ListTag();
+      var registry = p.registryAccess().registryOrThrow(Registries.STRUCTURE);
+      registry.entrySet().stream()
+          .sorted(Comparator.comparing(a -> a.getKey().location().toString()))
+          .forEach(
+              entry -> {
+                var tag = new CompoundTag();
+                String id = entry.getKey().location().toString();
+                tag.putString("id", id);
+                tag.putString("name", name(id));
+                types.add(tag);
+              });
+      s.catalog = types;
+    }
+    if (includeCatalog) t.put("types", s.catalog.copy());
     if (s.search != null) {
       t.putBoolean("searching", !s.search.done);
       t.putInt("checked", s.search.checked);

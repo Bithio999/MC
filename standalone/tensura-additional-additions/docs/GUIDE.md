@@ -276,3 +276,8 @@ All online player locations update twice per second. **Focus on map** in their a
 Combine one Bulwark Shard, one Sentinel Shard, one Skirmisher Shard and one Starless Core in a crafting grid. Matching unowned High Realm elites have a 25% shard chance after a player/subordinate kill; Kael drops one core.
 
 Combine equipment on the left with the orb on the right of an anvil. Taking the result costs one orb and one XP level, and raises every eligible engraving by one, beyond normal maximum levels. Curses, blessings and ordinary enchantments stay unchanged. Once per piece, with a tooltip marking the applied infusion. Repairs and normal equipment upgrades retain that history.
+
+
+## Marauder’s Map
+
+Open the learned Unique to pan and zoom across dimensions. A crisp biome preview appears first, then terrain relief; recorded surfaces and zoomed-in native detail show actual blocks and builds. Recent terrain is retained when reopening the map. Exploration is shared, custom pins stay private, and structure markers appear as they are discovered. **Locate structure…** keeps its searchable vanilla/addon catalog and searches up to **100,000 blocks around the viewed map center**. [Controls and travel](../../../wiki/pages/Additions-Marauders-Map.md).

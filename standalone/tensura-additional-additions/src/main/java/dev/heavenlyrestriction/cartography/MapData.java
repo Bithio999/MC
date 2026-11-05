@@ -15,7 +15,27 @@ public final class MapData extends SavedData {
   public UUID world = UUID.randomUUID();
   public final SharedTerrainIndex explored = new SharedTerrainIndex();
   private long seed = Long.MIN_VALUE;
-  public final LinkedHashMap<String, Marker> structures = new LinkedHashMap<>();
+  private final StructureMarkerIndex<Marker> structureIndex = new StructureMarkerIndex<>();
+  private final LinkedHashMap<String, Marker> markerData = new LinkedHashMap<>();
+  public final Map<String, Marker> structures = Collections.unmodifiableMap(markerData);
+
+  public Marker removeStructure(String key) {
+    structureIndex.remove(key);
+    var removed = markerData.remove(key);
+    if (removed != null) setDirty();
+    return removed;
+  }
+
+  public void clearStructures() {
+    structureIndex.clear();
+    markerData.clear();
+    setDirty();
+  }
+
+  public List<Marker> structuresIn(String dimension, int minX, int minZ, int maxX, int maxZ) {
+    return structureIndex.query(dimension, minX, minZ, maxX, maxZ);
+  }
+
   private final Map<UUID, LinkedHashMap<UUID, Pin>> pins = new HashMap<>();
 
   public record Marker(
@@ -93,7 +113,7 @@ public final class MapData extends SavedData {
     if (seed == next) return;
     if (seed != Long.MIN_VALUE) {
       world = UUID.randomUUID();
-      structures.clear();
+      clearStructures();
       pins.clear();
       explored.clear();
     }
@@ -123,17 +143,17 @@ public final class MapData extends SavedData {
   public void add(Marker marker) {
     var old = structures.get(marker.key());
     if (marker.equals(old) || (old != null && !old.predicted() && marker.predicted())) return;
-    structures.put(marker.key(), marker);
+    markerData.put(marker.key(), marker);
+    structureIndex.put(marker.key(), marker.dimension(), marker.x(), marker.z(), marker);
     while (structures.size() > MAX_STRUCTURES)
-      structures.remove(structures.keySet().iterator().next());
+      removeStructure(structures.keySet().iterator().next());
     setDirty();
   }
 
   public void replaceSurveyTile(String dimension, SurveyTiles.Tile tile, List<Marker> markers) {
-    boolean removed =
-        structures
-            .values()
-            .removeIf(
+    var removed =
+        structures.values().stream()
+            .filter(
                 m -> {
                   if (!m.predicted() || !m.dimension().equals(dimension)) return false;
                   try {
@@ -147,8 +167,11 @@ public final class MapData extends SavedData {
                   } catch (RuntimeException ignored) {
                     return false;
                   }
-                });
-    if (removed) setDirty();
+                })
+            .map(Marker::key)
+            .toList();
+    removed.forEach(this::removeStructure);
+    if (!removed.isEmpty()) setDirty();
     markers.forEach(this::add);
   }
 
@@ -200,7 +223,7 @@ public final class MapData extends SavedData {
     for (var t : tag.getList("structures", Tag.TAG_COMPOUND)) {
       if (d.structures.size() >= MAX_STRUCTURES) break;
       var m = Marker.load((CompoundTag) t);
-      if (!m.key().isEmpty()) d.structures.put(m.key(), m);
+      if (!m.key().isEmpty()) d.add(m);
     }
     for (var t : tag.getList("owners", Tag.TAG_COMPOUND)) {
       var o = (CompoundTag) t;

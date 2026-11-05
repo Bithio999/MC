@@ -142,7 +142,7 @@ public final class MapTravel {
                 .get(ResourceLocation.parse(job.marker.type()));
         var start = type == null ? null : chunk.getStartForStructure(type);
         if (start == null || !start.isValid()) {
-          MapData.get(p.server).structures.remove(job.marker.key());
+          MapData.get(p.server).removeStructure(job.marker.key());
           MapData.get(p.server).setDirty();
           s.message = "That world-generation location has no structure in the saved terrain.";
           return;

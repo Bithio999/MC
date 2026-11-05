@@ -481,7 +481,7 @@ public final class MaraudersMapGameTests {
     h.assertTrue(
         MapService.SEARCH_RANGE == 100000 && session.found == inside,
         "Distant in-range structure not found");
-    d.structures.remove(inside.key());
+    d.removeStructure(inside.key());
     session.nextLocate = 0;
     MapService.request(p, session.token, "locate", request);
     h.assertTrue(session.found == null, "Out-of-range structure returned");
@@ -490,7 +490,7 @@ public final class MaraudersMapGameTests {
       MapService.request(p, session.token, "cancel", new CompoundTag());
       h.assertTrue(job.cancelled, "Cancelled background search kept running");
     }
-    d.structures.remove(outside.key());
+    d.removeStructure(outside.key());
     MapService.close(p);
     h.succeed();
   }
@@ -584,7 +584,7 @@ public final class MaraudersMapGameTests {
               h.assertTrue(
                   energy.getAura() == aura && energy.getMagicule() == magicules,
                   "Preparing menu charged resources");
-              MapData.get(p.server).structures.remove(marker.key());
+              MapData.get(p.server).removeStructure(marker.key());
               h.succeed();
             });
   }
@@ -626,7 +626,7 @@ public final class MaraudersMapGameTests {
                   MapService.session(p) == session && session.travel == null,
                   "Forgotten skill still opened native menu");
               MapService.close(p);
-              MapData.get(p.server).structures.remove(marker.key());
+              MapData.get(p.server).removeStructure(marker.key());
               h.succeed();
             });
   }
@@ -649,7 +649,7 @@ public final class MaraudersMapGameTests {
     d.add(confirmed);
     d.add(predicted);
     h.assertTrue(d.structures.get(key) == confirmed, "Prediction overwrote confirmed terrain");
-    d.structures.remove(key);
+    d.removeStructure(key);
     h.succeed();
   }
 
@@ -825,5 +825,104 @@ public final class MaraudersMapGameTests {
             == null,
         "Memoization escaped survey scope");
     h.succeed();
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 100)
+  public static void structureSpatialIndexTracksConfirmationPersistenceAndRemoval(
+      GameTestHelper h) {
+    var data = new MapData();
+    var predicted =
+        new MapData.Marker(
+            "overworld/village/-1",
+            "minecraft:village_plains",
+            "minecraft:overworld",
+            -512,
+            70,
+            -1,
+            true);
+    data.add(predicted);
+    data.add(
+        new MapData.Marker(
+            "nether/fortress/1", "minecraft:fortress", "minecraft:the_nether", -512, 60, -1));
+    h.assertTrue(
+        data.structuresIn("minecraft:overworld", -512, -1, 0, 0).equals(List.of(predicted)),
+        "Index leaked dimension or missed negative boundary");
+    var confirmed =
+        new MapData.Marker(predicted.key(), predicted.type(), predicted.dimension(), -510, 68, -2);
+    data.add(confirmed);
+    data.add(predicted);
+    h.assertTrue(
+        data.structuresIn("minecraft:overworld", -510, -2, -510, -2).equals(List.of(confirmed)),
+        "Prediction displaced confirmed indexed start");
+    var restored =
+        MapData.load(
+            data.save(new CompoundTag(), h.getLevel().registryAccess()),
+            h.getLevel().registryAccess());
+    h.assertTrue(
+        restored.structuresIn("minecraft:overworld", -510, -2, -510, -2).equals(List.of(confirmed)),
+        "Restored starts were not indexed");
+    restored.removeStructure(confirmed.key());
+    h.assertTrue(
+        restored.structuresIn("minecraft:overworld", -1000, -1000, 1000, 1000).isEmpty(),
+        "Removed marker survived in index");
+    data.ensureSeed(1);
+    data.ensureSeed(2);
+    h.assertTrue(
+        data.structuresIn("minecraft:the_nether", -1000, -1000, 1000, 1000).isEmpty(),
+        "Seed change left indexed markers behind");
+    h.succeed();
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 600)
+  public static void smallViewportPanKeepsCompletedStructureTiles(GameTestHelper h) {
+    var p = reader(h);
+    MapService.open(p);
+    var s = MapService.session(p);
+    s.cx = 360000;
+    s.cz = -370000;
+    s.radius = 2048;
+    var input = new CompoundTag();
+    input.putInt("minX", s.cx - 600);
+    input.putInt("maxX", s.cx + 600);
+    input.putInt("minZ", s.cz - 600);
+    input.putInt("maxZ", s.cz + 600);
+    MapAutoStructures.view(p, s, input);
+    h.startSequence()
+        .thenWaitUntil(
+            () -> {
+              MapAutoStructures.advance(p, s);
+              h.assertTrue(s.survey.completed() > 0, "Waiting for first completed tile");
+            })
+        .thenExecute(
+            () -> {
+              int completed = s.survey.completed();
+              var tiles =
+                  SurveyTiles.plan(
+                      input.getInt("minX"),
+                      input.getInt("minZ"),
+                      input.getInt("maxX"),
+                      input.getInt("maxZ"));
+              input.putInt("minX", input.getInt("minX") + 1);
+              input.putInt("maxX", input.getInt("maxX") + 1);
+              h.assertTrue(
+                  new HashSet<>(tiles)
+                      .equals(
+                          new HashSet<>(
+                              SurveyTiles.plan(
+                                  input.getInt("minX"),
+                                  input.getInt("minZ"),
+                                  input.getInt("maxX"),
+                                  input.getInt("maxZ")))),
+                  "Fixture crossed tile boundary");
+              MapAutoStructures.view(p, s, input);
+              h.assertTrue(
+                  s.survey.completed() == completed,
+                  "Small pan discarded completed native surveys");
+              input.putBoolean("survey", false);
+              MapAutoStructures.view(p, s, input);
+              h.assertTrue(s.survey == null, "Survey could not be cancelled after reuse");
+              MapService.close(p);
+            })
+        .thenSucceed();
   }
 }

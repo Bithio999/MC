@@ -71,6 +71,9 @@ public class MapStructureSearch {
     var registry = level.registryAccess();
     var templates = level.getStructureManager();
     long seed = level.getSeed();
+    UUID world = MapData.get(level.getServer()).world;
+    String dimension = level.dimension().location().toString();
+    String typeId = type.unwrapKey().orElseThrow().location().toString();
     double minX = Math.max(-MapView.LIMIT, level.getWorldBorder().getMinX()),
         maxX = Math.min(MapView.LIMIT, level.getWorldBorder().getMaxX()),
         minZ = Math.max(-MapView.LIMIT, level.getWorldBorder().getMinZ()),
@@ -80,7 +83,7 @@ public class MapStructureSearch {
       work =
           WORKER.submit(
               () -> {
-                try {
+                try (var memo = SurveyNoiseCache.open()) {
                   var cursors = new ArrayList<Cursor>();
                   for (var placement : placements) {
                     Iterator<ChunkPos> iterator;
@@ -152,6 +155,9 @@ public class MapStructureSearch {
                     if (wx < minX || wx >= maxX || wz < minZ || wz >= maxZ) continue;
                     if (!cursor.placement.isStructureChunk(state, pos.x, pos.z)) continue;
                     if (candidates < Integer.MAX_VALUE) candidates++;
+                    var known = MapAutoStructures.cached(world, dimension, pos);
+                    if (known != null && known.stream().noneMatch(m -> m.type().equals(typeId)))
+                      continue;
                     var context =
                         new Structure.GenerationContext(
                             registry,
@@ -163,7 +169,8 @@ public class MapStructureSearch {
                             pos,
                             height,
                             type.value().biomes()::contains);
-                    if (type.value().findValidGenerationPoint(context).isEmpty()) continue;
+                    if (known == null && type.value().findValidGenerationPoint(context).isEmpty())
+                      continue;
                     while (!cancelled && !found.offer(pos, 50, TimeUnit.MILLISECONDS)) {}
                   }
                 } catch (InterruptedException ex) {

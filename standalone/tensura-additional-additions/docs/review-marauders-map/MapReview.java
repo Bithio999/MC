@@ -1569,7 +1569,7 @@ public final class MapReview {
             check(
                 p.serverLevel().structureManager().shouldGenerateStructures(),
                 "Review world disables structures");
-            MapData.get(p.server).structures.clear();
+            MapData.get(p.server).clearStructures();
             MapData.get(p.server).setDirty();
             surveyRegionsBefore = surveyRegions(p);
           });

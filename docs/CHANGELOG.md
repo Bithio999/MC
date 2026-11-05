@@ -1,5 +1,12 @@
 # Changelog
 
+## Additions 1.19.0 — Faster, clearer Marauder’s Map
+
+- Replace enlarged, interpolated previews with screen-density biome tiles and progressive native-height relief. Keep biome boundaries crisp and recorded block pixels visible when zoomed out.
+- Retain preview textures when reopening the map, reuse native height samples across tiles/zooms, share identical in-flight requests between viewers, and use bounded background workers. Cache viewport plans and prioritize coverage before native chunk detail.
+- Keep overlapping automatic structure surveys running while panning, publish discoveries incrementally and cache verified starts—including empty results—across zoom levels. Reuse survey results and scoped noise samples in Locate while preserving native final verification.
+- Index saved markers by dimension and region, and send the immutable structure catalog on session initialization rather than every live update. Preserve the 100,000-block map-centered search, modded structures, shared exploration, pins, dimension tabs and native teleport handoff.
+
 ## Additions 1.18.1 — Engraving effects reference and native blessing exclusions
 
 - Document every eligible native engraving, Additions’ Nullification and Mysticism’s two engravings, with before/after values, native caps, fixed effects and the four-core recipe limitation.

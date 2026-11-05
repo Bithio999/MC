@@ -23,8 +23,8 @@ public final class MapTerrain {
   private static final AtomicLong EPOCH = new AtomicLong();
   private static final ThreadPoolExecutor WORKER =
       new ThreadPoolExecutor(
-          1,
-          1,
+          2,
+          2,
           0,
           TimeUnit.SECONDS,
           new ArrayBlockingQueue<>(16),
@@ -34,6 +34,22 @@ public final class MapTerrain {
             return t;
           },
           new ThreadPoolExecutor.AbortPolicy());
+
+  private record Subscriber(ServerPlayer player, MapService.Session session, String id) {}
+
+  private static final class Work {
+    final Map<UUID, Subscriber> subscribers = new ConcurrentHashMap<>();
+    Future<?> future;
+
+    boolean alive(long epoch, int x, int z, int step) {
+      return epoch == EPOCH.get()
+          && !Thread.currentThread().isInterrupted()
+          && subscribers.values().stream()
+              .anyMatch(a -> !a.session.terrainClosed && valid(a.session, x, z, step, false));
+    }
+  }
+
+  private static final Map<CacheKey, Work> RUNNING = new HashMap<>();
 
   private record CacheKey(
       UUID world, String dimension, int x, int z, int step, int plane, boolean quick) {}
@@ -70,7 +86,12 @@ public final class MapTerrain {
     int x = request.getInt("tx"), z = request.getInt("tz"), step = request.getInt("step");
     if (!valid(s, x, z, step, detail)) return;
     String id = (detail ? "d/" : quick ? "q/" : "p/") + x + "/" + z + "/" + step;
-    if (s.terrain.size() >= MAX_PENDING || !s.terrain.add(id)) return;
+    if (s.terrain.contains(id)) return;
+    if (s.terrain.size() >= MAX_PENDING) {
+      reject(p, s, id);
+      return;
+    }
+    s.terrain.add(id);
     var level = MapService.level(p, s);
     int plane = MapService.plane(p, level);
     if (detail) {
@@ -105,52 +126,109 @@ public final class MapTerrain {
       deliver(p, s, id, cached);
       return;
     }
-    // Capture immutable world-generation inputs. The worker never accesses the live level/chunks.
+    var existing = RUNNING.get(key);
+    if (existing != null) {
+      existing.subscribers.put(s.token, new Subscriber(p, s, id));
+      return;
+    }
+    // Immutable generation inputs only: workers never touch live chunks or level storage.
     var generator = level.getChunkSource().getGenerator();
     var random = level.getChunkSource().randomState();
     var height = LevelHeightAccessor.create(level.getMinBuildHeight(), level.getHeight());
     long epoch = EPOCH.get();
+    var work = new Work();
+    work.subscribers.put(s.token, new Subscriber(p, s, id));
+    RUNNING.put(key, work);
     try {
-      WORKER.execute(
-          () -> {
-            CompoundTag tile = null;
-            try {
-              tile =
-                  preview(
-                      generator,
-                      random,
-                      height,
-                      x,
-                      z,
-                      step,
-                      plane,
-                      epoch,
-                      quick,
-                      () -> !s.terrainClosed && valid(s, x, z, step, false));
-            } catch (RuntimeException ignored) {
-            }
-            CompoundTag result = tile;
-            p.server.execute(
-                () -> {
-                  if (epoch != EPOCH.get()) return;
-                  if (result != null) {
-                    CACHE.put(key, result);
-                    while (CACHE.size() > 512) CACHE.remove(CACHE.keySet().iterator().next());
-                  }
-                  if (MapService.session(p) != s || s.terrainClosed || !MapService.owns(p)) return;
-                  if (result == null) {
-                    s.terrain.remove(id);
-                    reject(p, s, id);
-                  } else deliver(p, s, id, result);
-                });
-          });
+      WORKER.purge();
+      work.future =
+          WORKER.submit(
+              () -> {
+                CompoundTag tile = null;
+                try {
+                  tile =
+                      preview(
+                          generator,
+                          random,
+                          height,
+                          x,
+                          z,
+                          step,
+                          plane,
+                          epoch,
+                          quick,
+                          () -> work.alive(epoch, x, z, step));
+                } catch (RuntimeException ignored) {
+                }
+                CompoundTag result = tile;
+                p.server.execute(
+                    () -> {
+                      if (epoch != EPOCH.get() || RUNNING.get(key) != work) return;
+                      RUNNING.remove(key);
+                      if (result != null) {
+                        CACHE.put(key, result);
+                        while (CACHE.size() > 1024) CACHE.remove(CACHE.keySet().iterator().next());
+                      }
+                      for (var subscriber : work.subscribers.values()) {
+                        var player = subscriber.player;
+                        var session = subscriber.session;
+                        if (MapService.session(player) != session
+                            || session.terrainClosed
+                            || !MapService.owns(player)) continue;
+                        if (result == null) {
+                          session.terrain.remove(subscriber.id);
+                          reject(player, session, subscriber.id);
+                        } else deliver(player, session, subscriber.id, result);
+                      }
+                    });
+              });
     } catch (RejectedExecutionException ex) {
+      RUNNING.remove(key);
       s.terrain.remove(id);
       reject(p, s, id);
     }
   }
 
-  /** Real native base terrain; no chunk requests, world writes, tickets or seed disclosure. */
+  private record SampleKey(
+      ChunkGenerator generator, RandomState random, int min, int height, int x, int z) {}
+
+  private record Surface(int y, int floor) {}
+
+  private static final Map<SampleKey, Surface> SAMPLES =
+      Collections.synchronizedMap(
+          new LinkedHashMap<>(1024, .75f, true) {
+            @Override
+            protected boolean removeEldestEntry(Map.Entry<SampleKey, Surface> e) {
+              return size() > 32768;
+            }
+          });
+
+  private static Surface surface(
+      ChunkGenerator generator,
+      RandomState random,
+      LevelHeightAccessor height,
+      int x,
+      int z,
+      long epoch) {
+    var key =
+        new SampleKey(generator, random, height.getMinBuildHeight(), height.getHeight(), x, z);
+    var cached = SAMPLES.get(key);
+    if (cached != null) return cached;
+    int y =
+        generator.getFirstOccupiedHeight(x, z, Heightmap.Types.WORLD_SURFACE_WG, height, random);
+    int floor =
+        y < generator.getSeaLevel()
+            ? generator.getFirstOccupiedHeight(x, z, Heightmap.Types.OCEAN_FLOOR_WG, height, random)
+            : y;
+    var result = new Surface(y, floor);
+    if (epoch == EPOCH.get()) SAMPLES.put(key, result);
+    return result;
+  }
+
+  /**
+   * Fast native biome overview followed by native-height relief; colors are never
+   * enlarged/interpolated.
+   */
   public static CompoundTag preview(
       ChunkGenerator generator,
       RandomState random,
@@ -162,9 +240,6 @@ public final class MapTerrain {
       long epoch,
       boolean quick,
       java.util.function.BooleanSupplier active) {
-    int resolution = quick ? 8 : SIZE, stride = SIZE / resolution;
-    int n = resolution + 2;
-    int[] heights = new int[n * n], colors = new int[n * n], depths = new int[n * n];
     boolean below = plane != Integer.MAX_VALUE;
     var sampleHeight =
         below
@@ -176,75 +251,113 @@ public final class MapTerrain {
         generator instanceof NoiseBasedChunkGenerator noise
             ? noise.generatorSettings().value().defaultFluid().getFluidState()
             : null;
-    for (int z = 0; z < n; z++) {
-      if (epoch != EPOCH.get() || !active.getAsBoolean()) return null;
-      for (int x = 0; x < n; x++) {
-        int wx = tx * SIZE * step + (x - 1) * step * stride;
-        int wz = tz * SIZE * step + (z - 1) * step * stride;
-        int y;
-        boolean water = false, lava = false;
-        y =
-            generator.getFirstOccupiedHeight(
-                wx, wz, Heightmap.Types.WORLD_SURFACE_WG, sampleHeight, random);
-        if (y < generator.getSeaLevel()) {
-          if (fluid != null) {
-            water = fluid.is(FluidTags.WATER);
-            lava = fluid.is(FluidTags.LAVA);
-          } else if (!(generator instanceof NoiseBasedChunkGenerator)) {
-            var state = generator.getBaseColumn(wx, wz, sampleHeight, random).getBlock(y);
-            water = state.getFluidState().is(FluidTags.WATER);
-            lava = state.getFluidState().is(FluidTags.LAVA);
-          }
+    boolean defaultWater = fluid != null && fluid.is(FluidTags.WATER);
+    boolean defaultLava = fluid != null && fluid.is(FluidTags.LAVA);
+    int stride = 8, n = SIZE / stride + 2;
+    int[] samples = new int[n * n], floors = new int[n * n];
+    if (!quick)
+      for (int z = 0; z < n; z++) {
+        if (epoch != EPOCH.get() || !active.getAsBoolean()) return null;
+        for (int x = 0; x < n; x++) {
+          var point =
+              surface(
+                  generator,
+                  random,
+                  sampleHeight,
+                  tx * SIZE * step + (x - 1) * step * stride,
+                  tz * SIZE * step + (z - 1) * step * stride,
+                  epoch);
+          samples[z * n + x] = point.y;
+          floors[z * n + x] = point.floor;
         }
+      }
+    int size = SIZE + 2;
+    int[] heights = new int[size * size],
+        colors = new int[size * size],
+        depths = new int[size * size];
+    var biomes = new HashMap<Long, Holder<Biome>>();
+    for (int z = 0; z < size; z++) {
+      if (epoch != EPOCH.get() || !active.getAsBoolean()) return null;
+      for (int x = 0; x < size; x++) {
+        int wx = tx * SIZE * step + (x - 1) * step;
+        int wz = tz * SIZE * step + (z - 1) * step;
+        int y =
+            quick
+                ? (below
+                    ? Math.min(plane, sampleHeight.getMaxBuildHeight() - 1)
+                    : generator.getSeaLevel())
+                : interpolateHeight(
+                    samples, n, (x - 1) / (double) stride + 1, (z - 1) / (double) stride + 1);
+        long biomeKey = BlockPos.asLong(wx >> 2, y >> 2, wz >> 2);
+        int sy = y;
         var biome =
-            generator.getBiomeSource().getNoiseBiome(wx >> 2, y >> 2, wz >> 2, random.sampler());
-        int at = z * n + x;
+            biomes.computeIfAbsent(
+                biomeKey,
+                k ->
+                    generator
+                        .getBiomeSource()
+                        .getNoiseBiome(wx >> 2, sy >> 2, wz >> 2, random.sampler()));
+        boolean water =
+            quick
+                ? !below
+                    && (biome.is(net.minecraft.tags.BiomeTags.IS_OCEAN)
+                        || biome.is(net.minecraft.tags.BiomeTags.IS_RIVER))
+                : defaultWater && y < generator.getSeaLevel();
+        boolean lava = !quick && defaultLava && y < generator.getSeaLevel();
+        int at = z * size + x;
         heights[at] = y;
         depths[at] =
-            water
+            !quick && water
                 ? Math.max(
                     0,
                     y
-                        - generator.getFirstOccupiedHeight(
-                            wx, wz, Heightmap.Types.OCEAN_FLOOR_WG, sampleHeight, random))
+                        - interpolateHeight(
+                            floors,
+                            n,
+                            (x - 1) / (double) stride + 1,
+                            (z - 1) / (double) stride + 1))
                 : 0;
-        colors[at] = terrainColor(biome, wx, y, wz, water, lava, below);
+        colors[at] =
+            !quick && y < sampleHeight.getMinBuildHeight()
+                ? 0x141524
+                : terrainColor(biome, wx, y, wz, water, lava, below);
       }
     }
-    int[] raster = new int[resolution * resolution];
-    for (int z = 0; z < resolution; z++)
-      for (int x = 0; x < resolution; x++) {
-        int at = (z + 1) * n + x + 1;
-        raster[z * resolution + x] =
-            shade(
-                colors[at],
-                heights[at],
-                heights[at - 1],
-                heights[at + 1],
-                heights[at - n],
-                heights[at + n],
-                depths[at],
-                step * stride);
-      }
     int[] pixels = new int[SIZE * SIZE];
     for (int z = 0; z < SIZE; z++)
       for (int x = 0; x < SIZE; x++) {
-        double rx = x / (double) stride, rz = z / (double) stride;
-        int x0 = (int) rx,
-            z0 = (int) rz,
-            x1 = Math.min(resolution - 1, x0 + 1),
-            z1 = Math.min(resolution - 1, z0 + 1);
-        int upper = mix(raster[z0 * resolution + x0], raster[z0 * resolution + x1], rx - x0);
-        int lower = mix(raster[z1 * resolution + x0], raster[z1 * resolution + x1], rx - x0);
-        pixels[z * SIZE + x] = 0xff000000 | mix(upper, lower, rz - z0);
+        int at = (z + 1) * size + x + 1;
+        pixels[z * SIZE + x] =
+            quick
+                ? 0xff000000 | colors[at]
+                : shade(
+                    colors[at],
+                    heights[at],
+                    heights[at - 1],
+                    heights[at + 1],
+                    heights[at - size],
+                    heights[at + size],
+                    depths[at],
+                    step);
       }
-    var t = new CompoundTag();
-    t.putInt("tx", tx);
-    t.putInt("tz", tz);
-    t.putInt("step", step);
-    t.putIntArray("pixels", pixels);
-    t.putBoolean("quick", quick);
-    return t;
+    var tile = new CompoundTag();
+    tile.putInt("tx", tx);
+    tile.putInt("tz", tz);
+    tile.putInt("step", step);
+    tile.putIntArray("pixels", pixels);
+    tile.putBoolean("quick", quick);
+    return tile;
+  }
+
+  static int interpolateHeight(int[] values, int width, double x, double z) {
+    int x0 = Math.clamp((int) Math.floor(x), 0, width - 1),
+        z0 = Math.clamp((int) Math.floor(z), 0, width - 1);
+    int x1 = Math.min(width - 1, x0 + 1), z1 = Math.min(width - 1, z0 + 1);
+    double dx = x - x0, dz = z - z0;
+    return (int)
+        Math.round(
+            (values[z0 * width + x0] * (1 - dx) + values[z0 * width + x1] * dx) * (1 - dz)
+                + (values[z1 * width + x0] * (1 - dx) + values[z1 * width + x1] * dx) * dz);
   }
 
   private static int terrainColor(
@@ -431,6 +544,16 @@ public final class MapTerrain {
   }
 
   public static void cancel(MapService.Session session) {
+    var it = RUNNING.entrySet().iterator();
+    while (it.hasNext()) {
+      var work = it.next().getValue();
+      work.subscribers.remove(session.token);
+      if (work.subscribers.isEmpty()) {
+        if (work.future != null) work.future.cancel(true);
+        it.remove();
+      }
+    }
+    WORKER.purge();
     session.details.values().forEach(MapTerrain::release);
     session.details.clear();
     session.terrain.clear();
@@ -439,7 +562,15 @@ public final class MapTerrain {
   public static void clear() {
     nextDetail = ticks;
     EPOCH.incrementAndGet();
+    RUNNING
+        .values()
+        .forEach(
+            w -> {
+              if (w.future != null) w.future.cancel(true);
+            });
+    RUNNING.clear();
     CACHE.clear();
+    SAMPLES.clear();
     ACTIVE.clear();
     WORKER.getQueue().clear();
   }

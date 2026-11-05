@@ -39,20 +39,16 @@ public final class MapAtlas {
           new ThreadPoolExecutor.AbortPolicy());
   private static final LinkedHashMap<Long, Region> REGIONS = new LinkedHashMap<>(32, .75f, true);
   private static final LinkedHashMap<Long, Integer> OVERVIEW = new LinkedHashMap<>();
+  private static final Map<Long, Integer> KNOWN_REGIONS = new HashMap<>();
   private static final LinkedHashMap<Long, Long> SAMPLED = new LinkedHashMap<>();
   private static UUID world;
   private static String dimension = "", key = "";
   private static Path folder;
-  private static long epoch, tick, version;
+  private static long epoch, tick;
   private static int scan, ceilingPlane, scanRadius = -1;
   private static List<ChunkPos> offsets = List.of();
   private static boolean overviewDirty;
   public static volatile String notice = "";
-  private static DynamicTexture overviewTexture;
-  private static ResourceLocation overviewId;
-  private static double lastX = Double.NaN, lastZ, lastScale;
-  private static int lastW, lastH;
-  private static long lastVersion = -1;
 
   private static final class Region {
     final int x, z;
@@ -121,7 +117,7 @@ public final class MapAtlas {
         : "Surface terrain";
   }
 
-  private static void submit(Runnable task, Runnable rejected) {
+  static void submit(Runnable task, Runnable rejected) {
     try {
       IO.execute(task);
     } catch (RejectedExecutionException e) {
@@ -149,8 +145,10 @@ public final class MapAtlas {
               .execute(
                   () -> {
                     if (generation != epoch) return;
-                    rows.forEach(OVERVIEW::putIfAbsent);
-                    version++;
+                    rows.forEach(
+                        (pos, color) -> {
+                          if (OVERVIEW.putIfAbsent(pos, color) == null) rememberChunk(pos, 1);
+                        });
                   });
         },
         () -> {});
@@ -166,7 +164,7 @@ public final class MapAtlas {
     var r = new Region(x, z);
     REGIONS.put(id, r);
     load(r);
-    while (REGIONS.size() > 128) {
+    while (REGIONS.size() > 192) {
       var first = REGIONS.entrySet().iterator();
       var old = first.next();
       first.remove();
@@ -208,7 +206,6 @@ public final class MapAtlas {
                       result.close();
                       r.upload = true;
                     }
-                    version++;
                   });
         },
         () -> r.loading = false);
@@ -329,16 +326,21 @@ public final class MapAtlas {
         blue += bb;
       }
     r.fresh.set(Math.floorMod(cp.z, 16) * 16 + Math.floorMod(cp.x, 16));
+    MapRegionMips.changed(r.x, r.z, r.image, bx, bz);
     r.dirty = true;
     r.upload = true;
     int average =
         0xff000000 | ((int) (red / 256) << 16) | ((int) (green / 256) << 8) | (int) (blue / 256);
     var old = OVERVIEW.put(cp.toLong(), average);
+    if (old == null) rememberChunk(cp.toLong(), 1);
     if (old == null || old != average) {
       overviewDirty = true;
-      version++;
     }
-    while (OVERVIEW.size() > 262144) OVERVIEW.remove(OVERVIEW.keySet().iterator().next());
+    while (OVERVIEW.size() > 262144) {
+      long removed = OVERVIEW.keySet().iterator().next();
+      OVERVIEW.remove(removed);
+      rememberChunk(removed, -1);
+    }
   }
 
   private static void save(Region r) {
@@ -391,6 +393,13 @@ public final class MapAtlas {
         () -> overviewDirty = true);
   }
 
+  private static void rememberChunk(long chunk, int delta) {
+    long region = ChunkPos.asLong(ChunkPos.getX(chunk) >> 4, ChunkPos.getZ(chunk) >> 4);
+    int count = KNOWN_REGIONS.getOrDefault(region, 0) + delta;
+    if (count <= 0) KNOWN_REGIONS.remove(region);
+    else KNOWN_REGIONS.put(region, count);
+  }
+
   private static void move(Path from, Path to) throws IOException {
     try {
       Files.move(from, to, StandardCopyOption.ATOMIC_MOVE, StandardCopyOption.REPLACE_EXISTING);
@@ -410,20 +419,15 @@ public final class MapAtlas {
     REGIONS.values().forEach(Region::close);
     REGIONS.clear();
     OVERVIEW.clear();
+    KNOWN_REGIONS.clear();
     SAMPLED.clear();
-    if (overviewTexture != null) {
-      Minecraft.getInstance().getTextureManager().release(overviewId);
-      overviewTexture.close();
-      overviewTexture = null;
-    }
+    MapRegionMips.clear();
     world = null;
     dimension = "";
     folder = null;
     epoch++;
     scan = 0;
-    version++;
     overviewDirty = false;
-    lastX = Double.NaN;
     notice = "";
   }
 
@@ -435,23 +439,40 @@ public final class MapAtlas {
     if (folder == null) return;
     com.mojang.blaze3d.systems.RenderSystem.enableBlend();
     com.mojang.blaze3d.systems.RenderSystem.defaultBlendFunc();
-    if (view.scale < .5) {
-      overview(g, view, left, top, width, height);
-      return;
-    }
     int minX = Math.floorDiv((int) Math.floor(view.worldX(left, left, width)), 256),
         maxX = Math.floorDiv((int) Math.ceil(view.worldX(left + width, left, width)), 256),
         minZ = Math.floorDiv((int) Math.floor(view.worldZ(top, top, height)), 256),
         maxZ = Math.floorDiv((int) Math.ceil(view.worldZ(top + height, top, height)), 256);
-    if ((long) (maxX - minX + 1) * (maxZ - minZ + 1) > 96) {
-      overview(g, view, left, top, width, height);
-      return;
-    }
+    long regionCount = (long) (maxX - minX + 1) * (maxZ - minZ + 1);
+    if (regionCount > 16384) return;
+    int mipStep =
+        view.scale < .5 || regionCount > 176
+            ? Math.clamp(Integer.highestOneBit(Math.max(2, (int) (1 / view.scale))), 2, 8)
+            : 1;
     for (int z = minZ; z <= maxZ; z++)
       for (int x = minX; x <= maxX; x++) {
+        if (!KNOWN_REGIONS.containsKey(ChunkPos.asLong(x, z))) continue;
+        if (mipStep > 1) {
+          var live = REGIONS.get(net.minecraft.world.level.ChunkPos.asLong(x, z));
+          MapRegionMips.draw(
+              g,
+              view,
+              x,
+              z,
+              mipStep,
+              folder,
+              live == null ? null : live.image,
+              live == null ? new BitSet() : live.fresh,
+              left,
+              top,
+              width,
+              height);
+          continue;
+        }
         var r = region(x, z);
         if (r.texture == null) {
           r.texture = new DynamicTexture(r.image);
+          r.texture.setFilter(false, false);
           r.id =
               Minecraft.getInstance()
                   .getTextureManager()
@@ -464,39 +485,6 @@ public final class MapAtlas {
             ey = (int) Math.ceil(view.screenZ(z * 256d + 256, top, height));
         g.blit(r.id, sx, sy, ex - sx, ey - sy, 0f, 0f, 256, 256, 256, 256);
       }
-  }
-
-  private static void overview(GuiGraphics g, MapView v, int left, int top, int width, int height) {
-    if (overviewTexture == null) {
-      overviewTexture = new DynamicTexture(256, 256, true);
-      overviewId =
-          Minecraft.getInstance()
-              .getTextureManager()
-              .register("marauders_map_overview", overviewTexture);
-    }
-    if (v.x != lastX
-        || v.z != lastZ
-        || v.scale != lastScale
-        || width != lastW
-        || height != lastH
-        || lastVersion != version) {
-      var image = overviewTexture.getPixels();
-      for (int y = 0; y < 256; y++)
-        for (int x = 0; x < 256; x++) {
-          int wx = (int) Math.floor(v.worldX(left + (x + .5) * width / 256d, left, width)),
-              wz = (int) Math.floor(v.worldZ(top + (y + .5) * height / 256d, top, height));
-          int color = OVERVIEW.getOrDefault(ChunkPos.asLong(wx >> 4, wz >> 4), 0);
-          image.setPixelRGBA(x, y, abgr(color));
-        }
-      overviewTexture.upload();
-      lastX = v.x;
-      lastZ = v.z;
-      lastScale = v.scale;
-      lastW = width;
-      lastH = height;
-      lastVersion = version;
-    }
-    g.blit(overviewId, left, top, width, height, 0f, 0f, 256, 256, 256, 256);
   }
 
   private MapAtlas() {}

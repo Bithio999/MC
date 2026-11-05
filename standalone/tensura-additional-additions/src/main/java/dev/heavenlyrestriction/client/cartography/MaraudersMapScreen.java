@@ -52,7 +52,7 @@ public final class MaraudersMapScreen extends Screen {
     super(Component.literal("Marauder's Map"));
     this.state = state.copy();
     token = state.getUUID("session");
-    MapTerrainAtlas.clear();
+    MapTerrainAtlas.context(state);
     MapTerrainAtlas.session(token);
     var p = Minecraft.getInstance().player;
     view.center(p == null ? 0 : p.getX(), p == null ? 0 : p.getZ());
@@ -104,7 +104,7 @@ public final class MaraudersMapScreen extends Screen {
       double[] saved = screen.dimensionViews.get(data.getString("dimension"));
       screen.view.center(data.getInt("viewX"), data.getInt("viewZ"));
       if (saved != null) screen.view.scale = saved[2];
-      MapTerrainAtlas.clear();
+      MapTerrainAtlas.context(data);
       MapTerrainAtlas.session(screen.token);
       if (mc.screen != screen) mc.setScreen(screen);
       else screen.rebuildWidgets();
@@ -159,7 +159,11 @@ public final class MaraudersMapScreen extends Screen {
       if (data.getBoolean("playersOnly"))
         screen.state.put("players", data.getList("players", Tag.TAG_COMPOUND).copy());
       else {
+        var catalog = screen.state.getList("types", Tag.TAG_COMPOUND);
         screen.state = data.copy();
+        if (!data.contains("types")) screen.state.put("types", catalog);
+        MapTerrainAtlas.context(screen.state);
+        MapTerrainAtlas.session(screen.token);
         if (data.contains("found")) {
           var found = data.getCompound("found");
           if (!found.getString("id").equals(screen.lastFound)) {

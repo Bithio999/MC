@@ -49,7 +49,9 @@ The **eye** tab opens **Other dimensions**, a scrollable dropdown for addon dime
 
 ## Terrain and shared exploration
 
-Pan anywhere, including places nobody has visited. Native terrain previews fill in progressively; zoom in for block top-face textures, roads, roofs, trees, relief and depth-shaded water. Distant detail arrives in small batches. Nether maps look below the roof.
+Pan anywhere, including places nobody has visited. A crisp biome overview appears first, followed by terrain relief. Unexplored terrain is a world-generation preview; trees, builds and exact surfaces appear through recorded exploration or native detail when you zoom in. Recorded block pixels remain visible when zoomed out. Nether maps look below the roof. Reopening the map reuses recently viewed terrain.
+
+![Crisp terrain and relief in an unexplored region](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/marauders-map-crisp-unexplored.png)
 
 **Exploration is shared between players on the same server.** Actual terrain and builds around all online players are recorded, including players without this skill. Those recorded surfaces can be viewed by other players without visiting or loading the area on their client. Recording starts with this version and refreshes gradually as players explore. Existing local map caches still work. **Custom pins remain private.**
 
@@ -57,7 +59,7 @@ Pan anywhere, including places nobody has visited. Native terrain previews fill 
 
 ## Structure markers and Locate
 
-Enable **Structures** under **Layers** to show automatic vanilla and addon markers for the viewed area, at every zoom level and in unexplored regions. Panning or zooming starts discovery; **Locate is not required**. The footer reports progress. Turning Structures off pauses discovery.
+Enable **Structures** under **Layers** to show automatic vanilla and addon markers for the viewed area, at every zoom level and in unexplored regions. Panning or zooming starts discovery; **Locate is not required**. Markers appear as they are found, and overlapping views reuse completed discovery. The footer reports progress. Turning Structures off pauses discovery.
 
 Locations follow native generation rules, variants, frequency and biome requirements. Saved structures take precedence. Unvisited sites say **World-generation location** in their tooltip; actual generation confirms the start. Automatic markers do not require generating terrain or spawning mobs. Use custom pins for player-built landmarks.
 
