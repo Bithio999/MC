@@ -1,5 +1,12 @@
 # Changelog
 
+## Additions 1.18.0 — Chromatic Orb
+
+- Add Bulwark, Sentinel and Skirmisher Shards with a 25% drop chance from matching unowned High Realm elites after player/subordinate kills. Add one guaranteed Starless Core to Kael's loot and a shapeless four-ingredient Chromatic Orb recipe.
+- Combine the orb with equipment in an anvil to raise all eligible engravings by one, beyond normal maximum levels. Exclude curses, blessings and ordinary enchantments; consume one orb and one XP level only when the result is taken.
+- Persist a one-use infusion marker through repairs, renaming, grinding, smithing and normal gear evolution. Preserve enhanced engraving levels through ordinary anvil repairs.
+- Add original item sprites, a searchable in-game guide entry and wiki crafting/use instructions.
+
 ## Additions 1.17.4 — Divine Human
 
 - Evolve Kael to native Divine Human, the final human evolution, while retaining True Hero status and the 15M actual EP cap.

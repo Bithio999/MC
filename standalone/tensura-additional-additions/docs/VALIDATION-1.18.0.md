@@ -1,0 +1,17 @@
+# 1.18.0 — Chromatic Orb
+
+The crafting chain adds three native elite-archetype shards, one guaranteed Starless Core in Kael's loot table, and a shapeless recipe using one of each. Eligible player/subordinate kills have a fixed 25% chance of the corresponding shard; owned mobs and ordinary mobs are excluded. The three archetypes reuse the existing High Realm classification.
+
+The anvil recipe copies the equipment and increments each eligible engraving by exactly one, even past its configured maximum. It changes neither ordinary enchantments nor curses/blessings. Eligibility follows a data-driven tag defaulting to Tensura's engraving tag. Exclusions include Minecraft's curse tag, the exclusion tag, native configured curse engravings and blessing/curse registry IDs or tag names. Separate blessing components and all unrelated item components remain unchanged. Pack authors can extend the eligibility and exclusion tags.
+
+The orb is consumed only when the player takes the valid result, using native anvil consumption of one right-slot item and one XP level. Invalid, already-infused or protected-only equipment produces no result. Enchanted books are ineligible. The serialization ceiling of 255 rejects the entire operation rather than consuming an orb without raising every eligible engraving.
+
+A persisted and synchronized boolean component records the single infusion. Ordinary anvil repair preserves the marker from either ingredient and retains any existing enhanced engraving levels present on the result. Grindstone and crafting repair retain the history while allowing normal disenchantment. Native smithing and gear evolution copy the component patch. A tooltip marks enhanced equipment.
+
+Native integration scenarios cover actual anvil preview/take, exactly-one orb consumption, XP cost, simultaneous engravings beyond max, protected and ordinary enchantments, native configured curses, input immutability, retained damage/EP/custom data/name, repeat-use rejection, both anvil repair orders, renaming, grindstone and crafting repair, item save/network codecs, native smithing, spear initialization, loaded crafting and boss loot recipes, and seeded native drop events for all three archetypes with ownership/credit exclusions. The opt-in server profile uses two test-only blessing fixtures; the production audit excludes them and verifies the main eligibility tag.
+
+All **298 required native GameTests passed** on Tensura 2.0.1.3 / NeoForge 21.1.209, including all eight Chromatic scenarios. All **49 JVM tests passed**. The integrated client review also passed in the guarded disposable existing save: real C2S inventory clicks took the result, consumed one orb/XP level, synchronized the infusion component and tooltip, and rejected a second application. Native anvil captures show Crushing II and Severance II beyond their usual max with Sharpness, Curse of Enervation and Tsukumogami unchanged.
+
+The optional Tensura 2.0.1.4 / NeoForge 21.1.248 API profile compiled successfully. This is API coverage, not a full Neo Otherworld modpack runtime test.
+
+The production build passed all 49 JVM tests, including the full 18-entry in-game guide catalog. The standalone distribution audit passed: native metadata, all sprites and recipes, the persistent/synchronized component and registered mixins are included; review classes, protected test enchantments, their eligibility overlay and bundled dependencies are excluded.

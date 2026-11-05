@@ -67,7 +67,10 @@
     "SplitMindCastingModifiersMixin",
     "SplitMindCastingLockMixin",
     "MapChunkAccess",
-    "MapSurveyNoiseMixin"
+    "MapSurveyNoiseMixin",
+    "ChromaticAnvilMixin",
+    "ChromaticGrindstoneMixin",
+    "ChromaticRepairMixin"
   ],
   "injectors": {
     "defaultRequire": 1

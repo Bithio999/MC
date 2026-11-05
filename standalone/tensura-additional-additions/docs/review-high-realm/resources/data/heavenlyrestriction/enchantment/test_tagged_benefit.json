@@ -1,0 +1,23 @@
+{
+  "anvil_cost": 1,
+  "description": {
+    "text": "Test protected benefit"
+  },
+  "effects": {},
+  "max_cost": {
+    "base": 10,
+    "per_level_above_first": 0
+  },
+  "max_level": 3,
+  "min_cost": {
+    "base": 1,
+    "per_level_above_first": 0
+  },
+  "slots": [
+    "mainhand"
+  ],
+  "supported_items": [
+    "minecraft:diamond_sword"
+  ],
+  "weight": 1
+}

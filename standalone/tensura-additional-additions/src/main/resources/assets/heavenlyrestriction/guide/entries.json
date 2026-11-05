@@ -790,6 +790,49 @@
           ]
         }
       ]
+    },
+    {
+      "id": "chromatic-orb",
+      "title": "Chromatic Orb",
+      "category": "Gear",
+      "summary": "One-time anvil enhancement: +1 to all eligible engraving levels, beyond normal limits.",
+      "icon": "heavenlyrestriction:textures/item/chromatic_orb.png",
+      "keywords": [
+        "orb",
+        "engraving",
+        "upgrade",
+        "anvil",
+        "bulwark",
+        "sentinel",
+        "skirmisher",
+        "shard",
+        "starless",
+        "core",
+        "kael",
+        "curse",
+        "blessing"
+      ],
+      "related": [
+        "high-realm",
+        "spear"
+      ],
+      "sections": [
+        {
+          "title": "Craft",
+          "lines": [
+            "Combine one Bulwark Shard, one Sentinel Shard, one Skirmisher Shard and one Starless Core in any crafting arrangement. Makes one orb.",
+            "Matching unowned High Realm elites have a 25% chance to drop their archetype shard after a player or subordinate kill. Kael drops one Starless Core. Ordinary mobs and owned subordinates do not drop shards."
+          ]
+        },
+        {
+          "title": "Use",
+          "lines": [
+            "Put equipment in the left anvil slot and an orb in the right slot. Taking the result consumes one orb and one XP level.",
+            "Every eligible engraving gains one level, even beyond its normal maximum. Curses, blessings and ordinary enchantments stay unchanged. At least one eligible engraving is required.",
+            "Once per equipment piece. The tooltip marks an applied infusion; repairs, renaming, grinding, smithing and normal gear evolution retain that history. Grinding still removes engravings normally."
+          ]
+        }
+      ]
     }
   ]
 }

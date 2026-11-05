@@ -33,6 +33,7 @@ public final class HeavenlyRestriction {
         SKILLS.register(id("sovereign_rebirth"),()->new AuraRegenerationSkill(3)));
     public HeavenlyRestriction(net.neoforged.bus.api.IEventBus modBus,net.neoforged.fml.ModContainer container){
         HeavenlyArsenal.register(modBus);
+        dev.heavenlyrestriction.chromatic.ChromaticContent.register(modBus);
         modBus.addListener(dev.heavenlyrestriction.cartography.MapNetwork::register);
         NeoForge.EVENT_BUS.addListener(dev.heavenlyrestriction.cartography.MapService::tick);
         NeoForge.EVENT_BUS.addListener(dev.heavenlyrestriction.cartography.MapService::loaded);

@@ -59,6 +59,8 @@ Infinite Regeneration restores HP and SHP using magicules. Wind Domination is us
 
 ## Rewards
 
+- **1 Starless Core** for crafting a [Chromatic Orb](https://github.com/Bithio999/MC/wiki/Additions-Chromatic-Orb)
+
 - **4–8 Hihiirokane Ingots**
 - **8–16 Magic Ore**
 - **2–4 Echo Shards**

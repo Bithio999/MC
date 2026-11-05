@@ -1,0 +1,33 @@
+{
+  "values": [
+    "#minecraft:curse",
+    {
+      "id": "#c:blessings",
+      "required": false
+    },
+    {
+      "id": "#c:enchantments/blessings",
+      "required": false
+    },
+    {
+      "id": "#c:curses",
+      "required": false
+    },
+    {
+      "id": "#c:enchantments/curses",
+      "required": false
+    },
+    {
+      "id": "#tensura:blessing",
+      "required": false
+    },
+    {
+      "id": "#tensura:blessings",
+      "required": false
+    },
+    {
+      "id": "#mysticism:blessings",
+      "required": false
+    }
+  ]
+}

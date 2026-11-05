@@ -121,3 +121,7 @@ Find this page under **Dimensions** in the searchable **F8 guide**.
 
 
 The entry default is **5M EP**. On the first upgrade, existing worlds using the old **10M** setting move to **5M**. Other custom thresholds are retained; later manual changes are preserved.
+
+## Chromatic crafting
+
+Unowned elites have a **25% chance** to drop their archetype’s Bulwark, Sentinel or Skirmisher Shard when killed by a player or their subordinate. Combine one of each with Kael’s guaranteed **Starless Core** to craft a [Chromatic Orb](Additions-Chromatic-Orb.md).

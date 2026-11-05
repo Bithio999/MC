@@ -216,6 +216,8 @@ public final class HighRealmElites {
       if (ore != Items.AIR) add(e, new ItemStack(ore));
     }
     if (random.nextInt(50) == 0) add(e, new ItemStack(Items.NETHERITE_SCRAP));
+    if (unowned(mob) && random.nextInt(4) == 0)
+      add(e, new ItemStack(dev.heavenlyrestriction.chromatic.ChromaticContent.shard(kind(mob))));
   }
 
   private static void add(LivingDropsEvent event, ItemStack stack) {

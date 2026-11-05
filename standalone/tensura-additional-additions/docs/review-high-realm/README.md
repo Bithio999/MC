@@ -23,3 +23,5 @@ The client fixture intentionally does **not** load the test-only flat preset. Cl
 The EP-balance scenario checks once-only halving for a saved elite with unequal aura/magicule capacities, current-resource clamping without healing, unchanged HP/SHP/damage, reload persistence and ownership exclusion. Fresh elite creation also verifies the halved EP.
 
 The spawn-density scenario verifies the seeded 50% acceptance rate through actual FinalizeSpawnEvents, the sixteen-elite local cap and resumption below it, and unaffected commands, summons and Overworld spawns.
+
+The Chromatic Orb scenarios use two test-only protected enchantments and an eligibility-tag overlay to verify blessing exclusions. The server profile gives those review resources precedence over main resources; production uses the main tags. Clean before packaging so those test enchantments and the test-only eligibility overlay cannot be shipped.

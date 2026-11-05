@@ -5,7 +5,7 @@ import json, re, struct, tomllib, zipfile
 
 root = Path(__file__).resolve().parents[1]
 resources = root / 'src/main/resources'
-jar = root / 'build/libs/TensuraAdditionalAdditions-1.17.4.jar'
+jar = root / 'build/libs/TensuraAdditionalAdditions-1.18.0.jar'
 assets = resources / 'assets/heavenlyrestriction'
 required_art = [*(f'textures/race/{name}.png' for name in (
     'fettered_human', 'tempered_vessel', 'unshackled', 'heavenly_restricted', 'heavenbreaker')),
@@ -37,7 +37,7 @@ for name in config['mixins'] + config.get('client', []):
 with zipfile.ZipFile(jar) as z:
     names = set(z.namelist())
     mods = tomllib.loads(z.read('META-INF/neoforge.mods.toml').decode())
-    assert [(m['modId'], m['version']) for m in mods['mods']] == [('heavenlyrestriction', '1.17.4')]
+    assert [(m['modId'], m['version']) for m in mods['mods']] == [('heavenlyrestriction', '1.18.0')]
     assert mods['mods'][0]['displayName'] == 'TensuraAdditionalAdditions'
     language=json.loads(z.read('assets/heavenlyrestriction/lang/en_us.json'))
     for key,label in [('heavenlyrestriction.skill.parallel_world_jumper','Parallel World Jumper'),('heavenlyrestriction.skill.fusion','Fusion'),('heavenlyrestriction.skill.prospector','Prospector'),('heavenlyrestriction.skill.mode.prospector.refine','Refine'),('heavenlyrestriction.skill.mode.fusion.fuse','Fuse'),('heavenlyrestriction.skill.mode.parallel_world_jumper.world_hop','World Jump'),('heavenlyrestriction.skill.mode.parallel_world_jumper.world_select','World Select')]:
@@ -68,7 +68,21 @@ with zipfile.ZipFile(jar) as z:
     for cls in ['guide/GuideCatalog', 'client/guide/GuideScreen', 'client/guide/GuideClient']:
         assert 'dev/heavenlyrestriction/' + cls + '.class' in names
     guide = json.loads(z.read('assets/heavenlyrestriction/guide/entries.json'))['entries']
-    assert len(guide) == 17 and all(not e['id'].startswith('fusion-') for e in guide)
+    assert len(guide) == 18 and all(not e['id'].startswith('fusion-') for e in guide)
+    assert any(e['id']=='chromatic-orb' for e in guide)
+    assert 'dev/heavenlyrestriction/ChromaticGameTests.class' not in names
+    assert 'dev/heavenlyrestriction/ChromaticReview.class' not in names
+    assert not any('test_blessing' in n or 'test_tagged_benefit' in n for n in names)
+    assert 'data/heavenlyrestriction/tags/enchantment/blessings.json' not in names
+    for cls in ['ChromaticContent','ChromaticOrb']:
+        assert 'dev/heavenlyrestriction/chromatic/'+cls+'.class' in names
+    for item in ['chromatic_orb','bulwark_shard','sentinel_shard','skirmisher_shard','starless_core']:
+        for suffix in ['models/item/'+item+'.json','textures/item/'+item+'.png']:
+            path='assets/heavenlyrestriction/'+suffix
+            assert z.read(path)==(resources/path).read_bytes()
+        assert language['item.heavenlyrestriction.'+item]
+    for path in ['data/heavenlyrestriction/recipe/chromatic_orb.json','data/heavenlyrestriction/advancement/recipes/chromatic_orb.json','data/heavenlyrestriction/tags/enchantment/chromatic_eligible.json','data/heavenlyrestriction/tags/enchantment/chromatic_excluded.json']:
+        assert z.read(path)==(resources/path).read_bytes()
     assert any(e['id']=='schema' for e in guide)
     assert any(e['id']=='parallel-world-jumper' for e in guide)
     unique=json.loads(z.read('data/tensura/tags/manascore_skill/skills/unique_skills.json'))
@@ -120,4 +134,4 @@ with zipfile.ZipFile(jar) as z:
     for path in ['data/heavenlyrestriction/loot_table/entities/kael_veyr.json','data/heavenlyrestriction/advancement/starless_wayfarer.json','data/c/tags/entity_type/bosses.json','data/tensura/tags/entity_type/boss_for_hero.json','assets/heavenlyrestriction/models/item/kael_veyr_spawn_egg.json']:
         assert z.read(path)==(resources/path).read_bytes()
     assert language['entity.heavenlyrestriction.kael_veyr']=='Kael Veyr'
-print('Independent 1.17.4 JAR, native dependency metadata, all extracted icons/rigs/animations and mixin classes verified; no Myths classes, bundled dependencies or review fixtures.')
+print('Independent 1.18.0 JAR, native dependency metadata, all extracted icons/rigs/animations and mixin classes verified; no Myths classes, bundled dependencies or review fixtures.')

@@ -270,3 +270,9 @@ Native terrain previews and automatic vanilla/addon structure markers fill in as
 **Locate structure…** lists all registered structures. Sort by **Name A–Z** or **Mod A–Z**; each entry shows its mod. Search filters names, mods and IDs as you type. Select an entry and press **Start search** to search up to **100,000 blocks around the viewed map center** and center on a result automatically. Escape cancels a search. A structure’s **Travel…** action opens an owned, usable spatial skill’s native coordinate menu. Confirming Warp uses its normal costs and restrictions; remote dimension browsing grants no cross-dimension teleport.
 
 All online player locations update twice per second. **Focus on map** in their actions centers their location and switches the viewed dimension when needed. Up to **256 private pins per player across dimensions** can be saved, edited or deleted; deletion needs confirmation. No cost, cooldown or damage. Eligible for Fettered Human reincarnation rolls. [Map guide and pictures](../../../wiki/pages/Additions-Marauders-Map.md).
+
+### Chromatic Orb
+
+Combine one Bulwark Shard, one Sentinel Shard, one Skirmisher Shard and one Starless Core in a crafting grid. Matching unowned High Realm elites have a 25% shard chance after a player/subordinate kill; Kael drops one core.
+
+Combine equipment on the left with the orb on the right of an anvil. Taking the result costs one orb and one XP level, and raises every eligible engraving by one, beyond normal maximum levels. Curses, blessings and ordinary enchantments stay unchanged. Once per piece, with a tooltip marking the applied infusion. Repairs and normal equipment upgrades retain that history.

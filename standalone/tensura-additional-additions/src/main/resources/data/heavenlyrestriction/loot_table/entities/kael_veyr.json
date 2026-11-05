@@ -77,6 +77,15 @@
           ]
         }
       ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "heavenlyrestriction:starless_core"
+        }
+      ]
     }
   ]
 }

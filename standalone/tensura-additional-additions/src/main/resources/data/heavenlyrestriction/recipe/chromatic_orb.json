@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "heavenlyrestriction:bulwark_shard"
+    },
+    {
+      "item": "heavenlyrestriction:sentinel_shard"
+    },
+    {
+      "item": "heavenlyrestriction:skirmisher_shard"
+    },
+    {
+      "item": "heavenlyrestriction:starless_core"
+    }
+  ],
+  "result": {
+    "id": "heavenlyrestriction:chromatic_orb",
+    "count": 1
+  }
+}

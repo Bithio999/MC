@@ -1,5 +1,6 @@
 gradle.projectsEvaluated {
  rootProject.sourceSets.main.java.srcDir(rootProject.file('docs/review-high-realm'))
  rootProject.sourceSets.main.java.exclude('**/HighRealmReview.java')
- rootProject.sourceSets.main.resources.srcDir(rootProject.file('docs/review-high-realm/resources'))
+ rootProject.sourceSets.main.resources.setSrcDirs([rootProject.file('docs/review-high-realm/resources'), rootProject.file('src/main/resources')])
+ rootProject.tasks.named('processResources').configure { duplicatesStrategy = DuplicatesStrategy.EXCLUDE }
 }
