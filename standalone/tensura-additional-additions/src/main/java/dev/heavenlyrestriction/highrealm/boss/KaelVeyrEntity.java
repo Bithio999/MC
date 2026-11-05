@@ -142,6 +142,7 @@ public final class KaelVeyrEntity extends OtherworlderEntity
     if (level().isClientSide()) return;
     if (initialized) {
       WayfarerLoadout.upgrade(this);
+      capEP();
       return;
     }
     setAge(0);
@@ -150,6 +151,7 @@ public final class KaelVeyrEntity extends OtherworlderEntity
     var weapon = BuiltInRegistries.ITEM.get(ResourceLocation.parse("tensura:hihiirokane_sword"));
     inventory.setItem(getSlotId(EquipmentSlot.MAINHAND), new ItemStack(weapon));
     updateContainerEquipment();
+    TensuraStorages.getExistenceFrom(this).setTrueHero(true);
     WayfarerLoadout.apply(this);
     base(Attributes.MAX_HEALTH, HP);
     base(TensuraAttributes.MAX_SPIRITUAL_HEALTH, SHP);
@@ -166,6 +168,51 @@ public final class KaelVeyrEntity extends OtherworlderEntity
     combat.delay(80);
     initialized = true;
     observe();
+  }
+
+  /** Hard cap actual EP, including native kill rewards; never refill wounded resource pools. */
+  public void capEP() {
+    if (level().isClientSide() || !initialized) return;
+    double total = EnergyHelper.getMaxEP(this);
+    if (total <= EP) return;
+    double ratio = EP / total;
+    capCapacity(getAttribute(TensuraAttributes.MAX_AURA), EnergyHelper.getMaxAura(this) * ratio);
+    capCapacity(
+        getAttribute(TensuraAttributes.MAX_MAGICULE), EnergyHelper.getMaxMagicule(this) * ratio);
+    var pool = TensuraStorages.getExistenceFrom(this);
+    pool.setAura(Math.min(pool.getAura(), EnergyHelper.getMaxAura(this)));
+    pool.setMagicule(Math.min(pool.getMagicule(), EnergyHelper.getMaxMagicule(this)));
+    pool.markDirty();
+  }
+
+  private static void capCapacity(AttributeInstance attribute, double desired) {
+    if (attribute == null) return;
+    attribute.setBaseValue(Math.max(0, baseForCapacity(attribute, desired)));
+  }
+
+  /** Clamp before Tensura's growth listener can award stats/healing for rejected EP. */
+  public double capGrowth(AttributeInstance attribute, double proposed) {
+    if (!initialized || level().isClientSide() || proposed <= attribute.getBaseValue())
+      return proposed;
+    boolean aura = attribute.getAttribute().equals(TensuraAttributes.MAX_AURA);
+    if (!aura && !attribute.getAttribute().equals(TensuraAttributes.MAX_MAGICULE)) return proposed;
+    if (EnergyHelper.getMaxEP(this) >= EP - .000001) return attribute.getBaseValue();
+    double other = aura ? EnergyHelper.getMaxMagicule(this) : EnergyHelper.getMaxAura(this);
+    double maximum = Math.max(0, baseForCapacity(attribute, Math.max(0, EP - other)));
+    return Math.min(proposed, Math.max(attribute.getBaseValue(), maximum));
+  }
+
+  private static double baseForCapacity(AttributeInstance attribute, double desired) {
+    double added = 0, multipliedBase = 1, multipliedTotal = 1;
+    for (var modifier : attribute.getModifiers()) {
+      switch (modifier.operation()) {
+        case ADD_VALUE -> added += modifier.amount();
+        case ADD_MULTIPLIED_BASE -> multipliedBase += modifier.amount();
+        case ADD_MULTIPLIED_TOTAL -> multipliedTotal *= 1 + modifier.amount();
+      }
+    }
+    double multiplier = multipliedBase * multipliedTotal;
+    return multiplier > 0 ? desired / multiplier - added : attribute.getBaseValue();
   }
 
   private void base(net.minecraft.core.Holder<Attribute> key, double value) {
@@ -303,7 +350,10 @@ public final class KaelVeyrEntity extends OtherworlderEntity
   public void tick() {
     super.tick();
     if (!level().isClientSide()) {
-      if (initialized) observe();
+      if (initialized) {
+        capEP();
+        observe();
+      }
       if (tickCount % 10 == 0) updateBars();
     }
   }

@@ -1,5 +1,11 @@
 # Changelog
 
+## Additions 1.17.3 — Hero skill package
+
+- Add mastered, active Law Manipulation, Divine Ki Release, Eye of Truth and Unpredictability to Kael. Use native Cleanse against eligible afflictions and Magic Takeover against eligible hostile spells.
+- Open combat with native Magic Wind Transform, respecting its native cost, duration and cooldown without accidentally switching it off.
+- Cap Kael at 15M actual EP, including native kill rewards and saved overgrown entities. Upgrade existing Kaels without refilling HP, SHP, aura or magicules.
+
 ## Additions 1.17.2 — Magic and battlewill combat
 
 - Remove Wind Domination breath and sphere attacks from Kael’s AI; retain its native passive wind boost/degradation. His offense uses sword attacks, battlewills, learned magic and Martial Master.

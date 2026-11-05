@@ -54,6 +54,8 @@
     "ExponentiationSpiritualDamageMixin",
     "ExponentiationLearningMixin",
     "ExponentiationGrowthMixin",
+    "WayfarerGrowthMixin",
+    "WayfarerCapacityMixin",
     "ExponentiationOxygenMixin",
     "SchemaManualMixin",
     "LoanGrowthMixin",

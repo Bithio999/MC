@@ -668,7 +668,7 @@
         {
           "title": "Kael Veyr · Rare otherworlder boss",
           "lines": [
-            "Rare 15M actual-EP Human Saint / True Hero. Default native bonuses give 9,900 HP and 34,100 SHP; only HP has a boss bar. He uses a Hihiirokane Sword, mastered Martial Master, Mathematician and Seer, Aura Slash and learned wind magic. Wind Domination supplies passive bonuses only. Seer uses Future Vision during combat on its native cooldown. Infinite Regeneration restores HP/SHP with magicules. Native skill costs, cooldowns and seals apply.",
+            "Rare Human Saint / True Hero, capped at 15M actual EP even after kills. Default native bonuses give 9,900 HP and 34,100 SHP; only HP has a boss bar. He uses a Hihiirokane Sword, Martial Master, Mathematician, Seer, Aura Slash and wind magic. He opens fights with Magic Wind Transform. Law Manipulation cleanses harmful effects and takes over enemy magic when valid. Divine Ki Release, Eye of Truth and Unpredictability are mastered and active. Wind Domination supplies passive bonuses only. Infinite Regeneration restores HP/SHP with magicules. Native skill costs, cooldowns and seals apply.",
             "Natural spawning uses weight 1 and a 2.5% acceptance roll, with a 20-minute realm-wide cooldown, no other wild Kael within 512 blocks, and no spawning within 192 blocks of the return sanctum. The cooldown permits future rolls, not a guaranteed spawn. Loot includes Hihiirokane Ingots, Magic Ore, Echo Shards and Netherite Scrap."
           ]
         }

@@ -236,6 +236,20 @@ public final class WayfarerReview {
       return;
     }
     if (phase == 2 && wait > 25) {
+      cast(WayfarerCombat.Action.WIND_TRANSFORM, 12);
+      phase = 20;
+      wait = 0;
+      return;
+    }
+    if (phase == 20 && wait > 12) {
+      server(
+          p ->
+              check(
+                  io.github.manasmods.tensura.ability.skill.MagicElementalTransformSkill
+                      .hasMagicTransformEffect(
+                          boss, io.github.manasmods.tensura.ability.magic.Element.WIND),
+                  "Opening native Magic Wind Transform was not active"));
+      shot("kael-native-wind-transform");
       cast(WayfarerCombat.Action.WIND_CUTTER, 12);
       phase = 3;
       wait = 0;

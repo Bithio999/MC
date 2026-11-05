@@ -13,7 +13,7 @@ import java.util.*;
  */
 public final class WayfarerLoadout {
   private static final String VERSION = "heavenlyrestriction:wayfarer_loadout";
-  private static final int CURRENT = 2;
+  private static final int CURRENT = 3;
 
   public static List<ManasSkill> uniques() {
     return List.of(
@@ -32,6 +32,10 @@ public final class WayfarerLoadout {
         ExtraSkills.CHANT_ANNULMENT.get(),
         ExtraSkills.MANA_MANIPULATION.get(),
         ExtraSkills.WIND_DOMINATION.get(),
+        ExtraSkills.LAW_MANIPULATION.get(),
+        IntrinsicSkills.DIVINE_KI_RELEASE.get(),
+        IntrinsicSkills.EYE_OF_TRUTH.get(),
+        IntrinsicSkills.UNPREDICTABILITY.get(),
         ResistanceSkills.PHYSICAL_ATTACK_RESISTANCE.get(),
         ResistanceSkills.MAGIC_RESISTANCE.get(),
         ResistanceSkills.SPIRITUAL_ATTACK_RESISTANCE.get(),
@@ -95,6 +99,7 @@ public final class WayfarerLoadout {
     for (var skill : uniques()) grant(boss, skill, true);
     for (var skill : support()) grant(boss, skill, true);
     for (var skill : magic()) grant(boss, skill, false);
+    grant(boss, ExtraSkills.MAGIC_WIND_TRANSFORM.get(), false);
     for (int slot = 0; slot < uniques().size(); slot++)
       TensuraStorages.getAbilityFrom(boss).setAbilitySlot(0, slot, uniques().get(slot), 0);
     boss.getPersistentData().putInt(VERSION, CURRENT);
@@ -105,7 +110,10 @@ public final class WayfarerLoadout {
     if (storage.getSkill(skill).isEmpty()) RestrictionData.learnReward(boss, skill);
     var instance = storage.getSkill(skill).orElseThrow();
     instance.setMastery(instance.getMaxMastery());
-    if (toggle && instance.canBeToggled(boss) && !instance.isToggled()) {
+    if (toggle
+        && !instance.isToggled()
+        // Explicit boss grant: Divine Ki normally requires a Divine race, beyond Saint.
+        && (instance.canBeToggled(boss) || skill == IntrinsicSkills.DIVINE_KI_RELEASE.get())) {
       instance.setToggled(true);
       instance.onToggleOn(boss);
     }

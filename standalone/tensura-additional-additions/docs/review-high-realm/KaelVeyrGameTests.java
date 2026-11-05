@@ -87,6 +87,27 @@ public final class KaelVeyrGameTests {
           TensuraStorages.getAbilityFrom(e).getAbilitySlot(0, slot).getSkill()
               == WayfarerLoadout.uniques().get(slot),
           "Inactive unique preset");
+    for (var skill :
+        java.util.List.of(
+            io.github.manasmods.tensura.registry.skill.ExtraSkills.LAW_MANIPULATION.get(),
+            io.github.manasmods.tensura.registry.skill.IntrinsicSkills.DIVINE_KI_RELEASE.get(),
+            io.github.manasmods.tensura.registry.skill.IntrinsicSkills.EYE_OF_TRUTH.get(),
+            io.github.manasmods.tensura.registry.skill.IntrinsicSkills.UNPREDICTABILITY.get()))
+      h.assertTrue(
+          storage.getSkill(skill).orElseThrow().isToggled(),
+          "New native passive inactive: " + skill.getRegistryName());
+    for (var entry :
+        java.util.Map.of(
+                TensuraAttributes.LAW_DEGRADATION, "law_manipulation",
+                TensuraAttributes.PHYSICAL_RESIST_DEGRADATION, "divine_ki_release",
+                TensuraAttributes.DODGE_NEGATE_CHANCE, "unpredictability")
+            .entrySet())
+      h.assertTrue(
+          e.getAttribute(entry.getKey())
+              .hasModifier(
+                  net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(
+                      "tensura", entry.getValue())),
+          "New passive did not apply its native modifier: " + entry.getValue());
     e.discard();
     h.succeed();
   }
@@ -320,6 +341,20 @@ public final class KaelVeyrGameTests {
                   .orElseThrow();
           near(h, e.getHealth(), e.getMaxHealth(), "Fixture is not at full HP");
           e.combat().delay(0);
+          double openingMana = TensuraStorages.getExistenceFrom(e).getMagicule();
+          e.combat().tick();
+          h.assertTrue(
+              io.github.manasmods.tensura.ability.skill.MagicElementalTransformSkill
+                  .hasMagicTransformEffect(
+                      e, io.github.manasmods.tensura.ability.magic.Element.WIND),
+              "First combat decision did not use native Magic Wind Transform");
+          h.assertTrue(
+              TensuraStorages.getExistenceFrom(e).getMagicule() < openingMana,
+              "Opening transformation did not pay native magicule cost");
+          h.assertTrue(
+              !e.combat().ready(WayfarerCombat.Action.WIND_TRANSFORM),
+              "AI would switch off its active transformation");
+          e.combat().delay(0);
           e.combat().tick();
           h.assertTrue(
               e.hasEffect(effect) && seer.onCoolDown(0),
@@ -517,7 +552,7 @@ public final class KaelVeyrGameTests {
           e.setNoAi(false);
           e.combat().delay(0);
           h.runAfterDelay(
-              45,
+              90,
               () -> {
                 NeoForge.EVENT_BUS.unregister(listener);
                 h.assertTrue(cast.get(), "Autonomous AI never released a native projectile");
@@ -526,5 +561,183 @@ public final class KaelVeyrGameTests {
                 h.succeed();
               });
         });
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 120)
+  public static void kaelAutonomouslyCleansesSeveranceAndCookWithoutRefilling(GameTestHelper h) {
+    var e = boss(h);
+    var target = enemy(h, e, 8);
+    afterTracking(
+        h,
+        java.util.List.of(target),
+        () -> {
+          e.setNoAi(false);
+          var pool = TensuraStorages.getExistenceFrom(e);
+          pool.setMagicule(1000);
+          e.setHealth(1234);
+          TensuraStorages.getEffectFrom(e).setSeveranceAmount(300);
+          e.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH)
+              .addOrReplacePermanentModifier(
+                  new net.minecraft.world.entity.ai.attributes.AttributeModifier(
+                      io.github.manasmods.tensura.ability.skill.unique.CookSkill.COOK,
+                      -100,
+                      net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation
+                          .ADD_VALUE));
+          // Let the autonomous decision path choose native Cleanse rather than invoking it
+          // directly.
+          e.combat().tick();
+          e.combat().delay(0);
+          e.combat().tick();
+          near(
+              h,
+              TensuraStorages.getEffectFrom(e).getSeveranceAmount(),
+              0,
+              "Native Cleanse missed Severance");
+          h.assertTrue(
+              !e.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH)
+                  .hasModifier(io.github.manasmods.tensura.ability.skill.unique.CookSkill.COOK),
+              "Native Cleanse missed Cook's maximum-HP reduction");
+          near(h, e.getHealth(), 1234, "Cleanse refilled current HP");
+          h.assertTrue(
+              !e.combat().ready(WayfarerCombat.Action.LAW_CLEANSE),
+              "Cleanse repeats without an affliction");
+          e.discard();
+          target.discard();
+          h.succeed();
+        });
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 120)
+  public static void kaelUsesNativeLawTakeoverToInterruptAnEnemySpell(GameTestHelper h) {
+    var e = boss(h);
+    var target = enemy(h, e, 8);
+    var spell = io.github.manasmods.tensura.registry.magic.AspectualMagics.WIND_CUTTER.get();
+    RestrictionData.learnReward(target, spell);
+    var instance = SkillAPI.getSkillsFrom(target).getSkill(spell).orElseThrow();
+    instance.setMastery(instance.getMaxMastery());
+    var circle =
+        io.github.manasmods.tensura.entity.magic.MagicCircle.castMagicCircle(
+            1.6f,
+            200,
+            io.github.manasmods.tensura.entity.variant.MagicCircleVariant.WIND,
+            target,
+            instance.getOrCreateTag(),
+            .8f,
+            Vec3.ZERO,
+            instance,
+            0,
+            com.mojang.datafixers.util.Pair.of(0d, spell.getMagiculeCost(target, instance, 0)));
+    h.assertTrue(circle != null, "Enemy native casting circle missing");
+    afterTracking(
+        h,
+        java.util.List.of(target),
+        () -> {
+          e.setNoAi(false);
+          e.combat().tick();
+          e.combat().delay(0);
+          e.combat().tick();
+          h.assertTrue(
+              circle.isRemoved() && instance.onCoolDown(0),
+              "Native Law Takeover did not interrupt the enemy spell and set its cooldown");
+          h.assertTrue(
+              !e.combat().ready(WayfarerCombat.Action.LAW_TAKEOVER),
+              "Takeover repeats on a removed spell");
+          e.discard();
+          target.discard();
+          h.succeed();
+        });
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 100)
+  public static void kaelCapsNativePlayerKillRewardsAndSavedGrowthWithoutHealing(GameTestHelper h) {
+    var e = boss(h);
+    var victim = player(h);
+    var pool = TensuraStorages.getExistenceFrom(e);
+    pool.setMagicule(789);
+    pool.setAura(456);
+    e.setHealth(1234);
+    pool.setSpiritualHealth(123);
+    double attack =
+        e.getAttributeValue(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE);
+    double maxHP = e.getMaxHealth();
+    for (int n = 0; n < 12; n++) {
+      io.github.manasmods.tensura.handler.DeathHandler.gainEPEntity(e, victim, 1_000_000);
+      near(h, EnergyHelper.getMaxEP(e), 15_000_000, "Player kill award exceeded actual EP cap");
+    }
+    near(h, e.getHealth(), 1234, "Rejected EP still awarded native kill healing");
+    near(h, e.getMaxHealth(), maxHP, "Rejected EP still awarded native health growth");
+    near(
+        h,
+        e.getAttributeValue(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE),
+        attack,
+        "Rejected EP still awarded native attack growth");
+    // Growth below the ceiling still works and stops exactly at the remaining capacity.
+    EnergyHelper.setBaseMaxEP(e, 14_999_999);
+    io.github.manasmods.tensura.handler.DeathHandler.gainEPEntity(e, victim, 1_000_000);
+    near(h, EnergyHelper.getMaxEP(e), 15_000_000, "Native reward failed below the ceiling");
+    e.setHealth(1234);
+    e.getAttribute(TensuraAttributes.MAX_AURA)
+        .addOrReplacePermanentModifier(
+            new net.minecraft.world.entity.ai.attributes.AttributeModifier(
+                HeavenlyRestriction.id("test_kael_capacity"),
+                .5,
+                net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation
+                    .ADD_MULTIPLIED_TOTAL));
+    e.getAttribute(TensuraAttributes.MAX_MAGICULE)
+        .addOrReplacePermanentModifier(
+            new net.minecraft.world.entity.ai.attributes.AttributeModifier(
+                HeavenlyRestriction.id("test_kael_capacity"),
+                1000,
+                net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE));
+    e.capEP();
+    near(h, EnergyHelper.getMaxEP(e), 15_000_000, "Actual cap ignored capacity modifiers");
+    near(h, e.getHealth(), 1234, "Capacity clamp healed Kael");
+    // Synthesize old saved attributes before initialization; new live writes cannot exceed the cap.
+    for (var skill :
+        java.util.List.of(
+            io.github.manasmods.tensura.registry.skill.ExtraSkills.LAW_MANIPULATION.get(),
+            io.github.manasmods.tensura.registry.skill.ExtraSkills.MAGIC_WIND_TRANSFORM.get(),
+            io.github.manasmods.tensura.registry.skill.IntrinsicSkills.DIVINE_KI_RELEASE.get(),
+            io.github.manasmods.tensura.registry.skill.IntrinsicSkills.EYE_OF_TRUTH.get(),
+            io.github.manasmods.tensura.registry.skill.IntrinsicSkills.UNPREDICTABILITY.get())) {
+      var i = SkillAPI.getSkillsFrom(e).getSkill(skill).orElseThrow();
+      if (i.isToggled()) {
+        i.setToggled(false);
+        i.onToggleOff(e);
+      }
+      SkillAPI.getSkillsFrom(e).forgetSkill(i);
+    }
+    var saved = new CompoundTag();
+    e.saveWithoutId(saved);
+    for (var attribute : saved.getList("attributes", net.minecraft.nbt.Tag.TAG_COMPOUND)) {
+      var data = (CompoundTag) attribute;
+      if (data.getString("id").equals("tensura:max_aura")
+          || data.getString("id").equals("tensura:max_magicule"))
+        data.putDouble("base", 10_000_000);
+    }
+    var copy = WayfarerContent.KAEL.get().create(h.getLevel());
+    copy.load(saved);
+    h.assertTrue(EnergyHelper.getMaxEP(copy) > 15_000_000, "Legacy save fixture was not overgrown");
+    copy.getPersistentData().putInt("heavenlyrestriction:wayfarer_loadout", 2);
+    copy.setHealth(1234);
+    var restored = TensuraStorages.getExistenceFrom(copy);
+    restored.setMagicule(789);
+    restored.setAura(456);
+    restored.setSpiritualHealth(123);
+    copy.initialize();
+    near(h, EnergyHelper.getMaxEP(copy), 15_000_000, "Saved overgrown boss was not capped");
+    near(h, restored.getMagicule(), 789, "Cap/migration refilled mana");
+    near(h, restored.getAura(), 456, "Cap/migration refilled aura");
+    near(h, restored.getSpiritualHealth(), 123, "Cap/migration refilled SHP");
+    near(h, copy.getHealth(), 1234, "Cap/migration refilled HP");
+    h.assertTrue(
+        SkillAPI.getSkillsFrom(copy)
+            .getSkill(io.github.manasmods.tensura.registry.skill.IntrinsicSkills.EYE_OF_TRUTH.get())
+            .orElseThrow()
+            .isToggled(),
+        "Existing saved Kael did not gain the hero intrinsics");
+    e.discard();
+    copy.discard();
+    h.succeed();
   }
 }

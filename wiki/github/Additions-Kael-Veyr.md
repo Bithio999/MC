@@ -9,7 +9,7 @@ An otherworlder who survived the loss of his own world. His silver hair, dark em
 | Boss data | Default |
 | --- | --- |
 | Race / awakening | Human Saint · True Hero |
-| Actual EP | **15,000,000** |
+| Actual EP | **15,000,000 maximum** · kill rewards cannot exceed this cap |
 | HP / SHP | **9,900 / 34,100** with native race and support bonuses |
 | Location | All three High Realm biomes |
 | Weapon | Hihiirokane Sword |
@@ -25,7 +25,11 @@ The cooldown allows future attempts; it is **not a guaranteed respawn timer**. H
 
 Kael fights with his **owned Tensura abilities**. Damage, costs, cooldowns, casting time and effects follow the native skills and server configuration.
 
-His mastered Uniques are **Martial Master**, **Mathematician** and **Seer**, equipped in his native preset. Support includes **Steel Strength**, **Strengthen Body**, **Infinite Regeneration**, **Universal Perception**, **Thought Acceleration**, **Chant Annulment**, **Mana Manipulation**, **Wind Domination** and battlewills.
+His mastered Uniques are **Martial Master**, **Mathematician** and **Seer**, equipped in his native preset. Support includes **Steel Strength**, **Strengthen Body**, **Infinite Regeneration**, **Universal Perception**, **Thought Acceleration**, **Chant Annulment**, **Mana Manipulation**, **Wind Domination**, **Law Manipulation**, **Magic Wind Transform**, **Divine Ki Release**, **Eye of Truth**, **Unpredictability** and battlewills.
+
+He opens combat with **Magic Wind Transform**, using its native duration and magicule cost. **Law Manipulation** cleanses Severance, Cook’s maximum-HP reduction and native cleanseable effects when needed; its Magic Takeover interrupts eligible enemy casting circles or takes over eligible magical projectiles. Native range and EP protection apply.
+
+**Divine Ki Release**, **Eye of Truth** and **Unpredictability** are mastered and enabled. Divine Ki Release is an explicit boss grant alongside his Saint race.
 
 Infinite Regeneration restores HP and SHP using magicules. Wind Domination is used **only as a passive**, boosting wind damage and degrading wind resistance. His attacks use native magic, battlewills and Martial Master. His native physical, magical, spiritual and elemental defenses remain active. Red hit feedback also indicates SHP damage.
 
@@ -37,6 +41,8 @@ Infinite Regeneration restores HP and SHP using magicules. Wind Domination is us
 | **Wind Cutter** | Native wind-blade projectiles. | Wind + magic |
 | **Tornado Blade** | Native wind tornado. | Wind + magic |
 | **Aerial Blade** | Close-range wind magic with its native pull. | Wind |
+| **Magic Wind Transform** | Native transformation at the start of combat; never cancelled by repeated activation. | — |
+| **Law Manipulation** | Self-Cleanse and contextual Magic Takeover, plus its native passive. | — |
 | **Seer** | Future Vision during combat, including at full HP; native cooldowns apply. | — |
 
 ### Unique skill use
@@ -44,6 +50,8 @@ Infinite Regeneration restores HP and SHP using magicules. Wind Domination is us
 - **Martial Master:** native combat passives and the grounded dash.
 - **Mathematician:** native casting, resistance degradation, dodge, dodge-negation and critical bonuses. Its appraisal activation is player-only.
 - **Seer:** native defensive/critical passives and Future Vision. Kael prioritizes activating Future Vision when available, without toggling it off while active.
+
+![Kael using native Magic Wind Transform](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/kael-native-wind-transform.png)
 
 ![Kael using native Wind Cutter](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/kael-native-wind-cutter.png)
 
