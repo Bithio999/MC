@@ -1,6 +1,11 @@
 {
   "values": [
     "#minecraft:curse",
+    "tensura:vitality",
+    "tensura:vigor",
+    "tensura:transcendence",
+    "tensura:growth",
+    "tensura:restoration",
     {
       "id": "#c:blessings",
       "required": false

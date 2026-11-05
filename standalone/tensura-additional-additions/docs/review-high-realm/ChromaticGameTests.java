@@ -62,6 +62,41 @@ public final class ChromaticGameTests {
   }
 
   @GameTest(template = "empty", timeoutTicks = 100)
+  public static void chromaticExcludesEveryNativeBlessingDespiteItsNonBlessingRegistryId(
+      GameTestHelper h) {
+    var p = player(h);
+    for (String id : List.of("vitality", "vigor", "transcendence", "growth", "restoration")) {
+      var blessing = enchantment(h, "tensura:" + id);
+      h.assertTrue(
+          blessing.is(ChromaticOrb.ELIGIBLE),
+          "Fixture blessing is not in the native engraving pool");
+      h.assertTrue(
+          !ChromaticOrb.eligible(blessing), "Native blessing can still be upgraded: " + id);
+      var gear = sword(h);
+      gear.enchant(blessing, blessing.value().getMaxLevel());
+      var menu = anvil(p, gear, new ItemStack(ChromaticContent.ORB.get()));
+      var result = menu.getSlot(2).getItem();
+      h.assertTrue(!result.isEmpty(), "Mixed equipment lost its ordinary engraving upgrade");
+      h.assertTrue(
+          EnchantmentHelper.getItemEnchantmentLevel(blessing, result)
+              == blessing.value().getMaxLevel(),
+          "Native blessing level changed: " + id);
+      h.assertTrue(
+          level(h, result, "tensura:crushing") == level(h, gear, "tensura:crushing") + 1,
+          "Eligible engraving did not upgrade alongside protected blessing");
+      menu.removed(p);
+      var only = new ItemStack(Items.DIAMOND_SWORD);
+      only.enchant(blessing, 1);
+      var rejected = anvil(p, only, new ItemStack(ChromaticContent.ORB.get()));
+      h.assertTrue(
+          rejected.getSlot(2).getItem().isEmpty(),
+          "Blessing-only gear consumed an infusion: " + id);
+      rejected.removed(p);
+    }
+    h.succeed();
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 100)
   public static void chromaticRaisesAllEngravingsPastCapsButNeverCursesBlessingsOrVanilla(
       GameTestHelper h) {
     var p = player(h);

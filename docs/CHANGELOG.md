@@ -1,5 +1,11 @@
 # Changelog
 
+## Additions 1.18.1 — Engraving effects reference and native blessing exclusions
+
+- Document every eligible native engraving, Additions’ Nullification and Mysticism’s two engravings, with before/after values, native caps, fixed effects and the four-core recipe limitation.
+- Explicitly exclude Tensura’s five native blessings. Their IDs omit “blessing” and their native tags do not identify them as blessings, so the earlier generic filter missed them. Keep mixed gear eligible for its ordinary engravings and reject blessing-only infusions.
+- Add real native blessing regressions and concise effect/limit information to the in-game guide.
+
 ## Additions 1.18.0 — Chromatic Orb
 
 - Add Bulwark, Sentinel and Skirmisher Shards with a 25% drop chance from matching unowned High Realm elites after player/subordinate kills. Add one guaranteed Starless Core to Kael's loot and a shapeless four-ingredient Chromatic Orb recipe.

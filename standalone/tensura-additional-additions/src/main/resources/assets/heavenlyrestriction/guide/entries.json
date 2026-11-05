@@ -810,7 +810,18 @@
         "core",
         "kael",
         "curse",
-        "blessing"
+        "blessing",
+        "crushing",
+        "severance",
+        "magic capacity",
+        "magicule absorption",
+        "slotting",
+        "nullification",
+        "vitality",
+        "vigor",
+        "transcendence",
+        "growth",
+        "restoration"
       ],
       "related": [
         "high-realm",
@@ -830,6 +841,22 @@
             "Put equipment in the left anvil slot and an orb in the right slot. Taking the result consumes one orb and one XP level.",
             "Every eligible engraving gains one level, even beyond its normal maximum. Curses, blessings and ordinary enchantments stay unchanged. At least one eligible engraving is required.",
             "Once per equipment piece. The tooltip marks an applied infusion; repairs, renaming, grinding, smithing and normal gear evolution retain that history. Grinding still removes engravings normally."
+          ]
+        },
+        {
+          "title": "Upgrade examples",
+          "lines": [
+            "Crushing I → II: weapon bonus 50% → 100%, mining efficiency 5 → 8, and extra durability damage per attack 5 → 10.",
+            "Magic Capacity III → IV adds a fourth stored-magic slot. Magicule Absorption II → III adds +3 instead of +2 to magicule regeneration; with base 1 and no other bonuses, total regeneration is 4× instead of 3×.",
+            "Severance I → II raises flat attack damage from +3 to +6, but the anti-healing wound fraction stays capped at 50%."
+          ]
+        },
+        {
+          "title": "Native limits",
+          "lines": [
+            "Breathing Support II and Nullification II have the same functional effects as level I. Nullification still seals skills for 2 seconds. Mysticism’s Boreal Frost II also keeps its original duration and amplifier.",
+            "Slotting IV can hold four cores, but the supported native versions have no four-core combination recipes. A supported recipe is required for a core-combination attack or cast.",
+            "Blessings of Vitality, Vigor, Transcendence, Growth and Restoration stay unchanged, as do curses, Tsukumogami and ordinary enchantments."
           ]
         }
       ]
