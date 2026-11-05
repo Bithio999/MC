@@ -8,9 +8,9 @@ An otherworlder who survived the loss of his own world. His silver hair, dark em
 
 | Boss data | Default |
 | --- | --- |
-| Race / awakening | Human Saint · True Hero |
+| Race / awakening | Divine Human · True Hero |
 | Actual EP | **15,000,000 maximum** · kill rewards cannot exceed this cap |
-| HP / SHP | **9,900 / 34,100** with native race and support bonuses |
+| HP / SHP | **10,000 / 37,100** with native race and support bonuses |
 | Location | All three High Realm biomes |
 | Weapon | Hihiirokane Sword |
 | Health display | HP boss bar |
@@ -29,7 +29,7 @@ His mastered Uniques are **Martial Master**, **Mathematician** and **Seer**, equ
 
 He opens combat with **Magic Wind Transform**, using its native duration and magicule cost. **Law Manipulation** cleanses Severance, Cook’s maximum-HP reduction and native cleanseable effects when needed; its Magic Takeover interrupts eligible enemy casting circles or takes over eligible magical projectiles. Native range and EP protection apply.
 
-**Divine Ki Release**, **Eye of Truth** and **Unpredictability** are mastered and enabled. Divine Ki Release is an explicit boss grant alongside his Saint race.
+**Divine Ki Release**, **Eye of Truth** and **Unpredictability** are mastered and enabled. His Divine Human race qualifies for Divine Ki Release natively.
 
 Infinite Regeneration restores HP and SHP using magicules. Wind Domination is used **only as a passive**, boosting wind damage and degrading wind resistance. His attacks use native magic, battlewills and Martial Master. His native physical, magical, spiritual and elemental defenses remain active. Red hit feedback also indicates SHP damage.
 

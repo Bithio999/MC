@@ -39,12 +39,13 @@ public final class KaelVeyrGameTests {
   }
 
   @GameTest(template = "empty", timeoutTicks = 100)
-  public static void kaelUsesNativeOtherworlderSaintAndFifteenMillionActualEP(GameTestHelper h) {
+  public static void kaelUsesNativeOtherworlderDivineHumanAndFifteenMillionActualEP(
+      GameTestHelper h) {
     var e = boss(h);
     h.assertTrue(e.initialized(), "Join did not initialize boss");
     h.assertTrue(
-        RaceAPI.getRaceFrom(e).getRace().orElseThrow().getRace() == TensuraRaces.HUMAN_SAINT.get(),
-        "Race is not native Human Saint");
+        RaceAPI.getRaceFrom(e).getRace().orElseThrow().getRace() == TensuraRaces.DIVINE_HUMAN.get(),
+        "Race is not native Divine Human");
     near(h, EnergyHelper.getMaxEP(e), 15_000_000, "Actual EP incorrect");
     System.out.println(
         "Kael stats: HP="
@@ -135,6 +136,71 @@ public final class KaelVeyrGameTests {
         !copy.casting() && copy.combat().active() == null, "Reload resumed an unsafe cast");
     e.discard();
     copy.discard();
+    h.succeed();
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 100)
+  public static void savedSaintKaelEvolvesOnceWithoutRefillingOrResettingEquipment(
+      GameTestHelper h) {
+    var e = boss(h);
+    double divineHP = e.getMaxHealth();
+    double divineSHP = e.getAttributeValue(TensuraAttributes.MAX_SPIRITUAL_HEALTH);
+    var weapon = e.getMainHandItem().copy();
+    RaceAPI.getRaceFrom(e).setRace(TensuraRaces.HUMAN_SAINT.get(), false);
+    e.getPersistentData().putInt("heavenlyrestriction:wayfarer_loadout", 3);
+    e.setHealth(1234);
+    var pool = TensuraStorages.getExistenceFrom(e);
+    pool.setAura(456);
+    pool.setMagicule(789);
+    pool.setSpiritualHealth(123);
+    var saved = new CompoundTag();
+    e.saveWithoutId(saved);
+    var copy = WayfarerContent.KAEL.get().create(h.getLevel());
+    copy.load(saved);
+    copy.initialize();
+    var race = RaceAPI.getRaceFrom(copy).getRace().orElseThrow();
+    h.assertTrue(race.getRace() == TensuraRaces.DIVINE_HUMAN.get(), "Saved Saint did not evolve");
+    h.assertTrue(race.getRace().getNextEvolutions(race, copy).isEmpty(), "Race is not terminal");
+    near(h, copy.getMaxHealth(), divineHP, "Divine HP modifiers missing or stacked");
+    near(
+        h,
+        copy.getAttributeValue(TensuraAttributes.MAX_SPIRITUAL_HEALTH),
+        divineSHP,
+        "Divine SHP modifiers missing or stacked");
+    near(h, EnergyHelper.getMaxEP(copy), 15_000_000, "Race upgrade changed actual EP");
+    var restored = TensuraStorages.getExistenceFrom(copy);
+    near(h, copy.getHealth(), 1234, "Race upgrade healed HP");
+    near(h, restored.getAura(), 456, "Race upgrade refilled aura");
+    near(h, restored.getMagicule(), 789, "Race upgrade refilled magicules");
+    near(h, restored.getSpiritualHealth(), 123, "Race upgrade refilled SHP");
+    h.assertTrue(restored.isTrueHero(), "Race upgrade lost True Hero status");
+    h.assertTrue(
+        net.minecraft.world.item.ItemStack.isSameItemSameComponents(copy.getMainHandItem(), weapon),
+        "Race upgrade replaced native weapon/engravings");
+    var ki =
+        SkillAPI.getSkillsFrom(copy)
+            .getSkill(
+                io.github.manasmods.tensura.registry.skill.IntrinsicSkills.DIVINE_KI_RELEASE.get())
+            .orElseThrow();
+    h.assertTrue(
+        ki.canBeToggled(copy) && ki.isToggled(), "Divine Ki is not natively eligible and active");
+    copy.initialize();
+    near(h, copy.getMaxHealth(), divineHP, "Repeated initialization stacked racial HP");
+    near(h, restored.getMagicule(), 789, "Repeated initialization refilled magicules");
+    var persisted = new CompoundTag();
+    copy.saveWithoutId(persisted);
+    var reloaded = WayfarerContent.KAEL.get().create(h.getLevel());
+    reloaded.load(persisted);
+    reloaded.initialize();
+    h.assertTrue(
+        RaceAPI.getRaceFrom(reloaded).getRace().orElseThrow().getRace()
+            == TensuraRaces.DIVINE_HUMAN.get(),
+        "Divine evolution did not persist");
+    near(h, reloaded.getMaxHealth(), divineHP, "Reload stacked racial HP");
+    near(h, reloaded.getHealth(), 1234, "Reload healed the upgraded boss");
+    e.discard();
+    copy.discard();
+    reloaded.discard();
     h.succeed();
   }
 

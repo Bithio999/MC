@@ -245,7 +245,7 @@ EP awards use ^1.2 once before the ordinary race split. Separate permanent aura/
 
 ### Kael Veyr · Rare otherworlder boss
 
-Rare Human Saint / True Hero, capped at 15M actual EP even after kills. Default native bonuses give 9,900 HP and 34,100 SHP; only HP has a boss bar. He uses a Hihiirokane Sword, Martial Master, Mathematician, Seer, Aura Slash and wind magic. He opens fights with Magic Wind Transform. Law Manipulation cleanses harmful effects and takes over enemy magic when valid. Divine Ki Release, Eye of Truth and Unpredictability are mastered and active. Wind Domination supplies passive bonuses only. Infinite Regeneration restores HP/SHP with magicules. Native skill costs, cooldowns and seals apply.
+Rare Divine Human / True Hero, capped at 15M actual EP even after kills. Default native bonuses give 10,000 HP and 37,100 SHP; only HP has a boss bar. He uses a Hihiirokane Sword, Martial Master, Mathematician, Seer, Aura Slash and wind magic. He opens fights with Magic Wind Transform. Law Manipulation cleanses harmful effects and takes over enemy magic when valid. Divine Ki Release, Eye of Truth and Unpredictability are mastered and active. Wind Domination supplies passive bonuses only. Infinite Regeneration restores HP/SHP with magicules. Native skill costs, cooldowns and seals apply.
 
 Natural spawning uses weight 1, a 2.5% candidate acceptance roll, a 20-minute realm-wide cooldown, a 512-block exclusion around another wild Kael, and a 192-block return-sanctum exclusion. The cooldown is not a guaranteed respawn timer. Rewards include native materials and otherworlder Unique-drop rules. [Encounter guide](../../../wiki/pages/Additions-Kael-Veyr.md).
 

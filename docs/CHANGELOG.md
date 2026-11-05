@@ -1,5 +1,10 @@
 # Changelog
 
+## Additions 1.17.4 — Divine Human
+
+- Evolve Kael to native Divine Human, the final human evolution, while retaining True Hero status and the 15M actual EP cap.
+- Upgrade saved Saint Kaels without healing or replacing equipment. Apply native Divine race bonuses and remove the special Divine Ki toggle exception, since his race now qualifies normally.
+
 ## Additions 1.17.3 — Hero skill package
 
 - Add mastered, active Law Manipulation, Divine Ki Release, Eye of Truth and Unpredictability to Kael. Use native Cleanse against eligible afflictions and Magic Takeover against eligible hostile spells.

@@ -147,7 +147,7 @@ public final class KaelVeyrEntity extends OtherworlderEntity
     }
     setAge(0);
     anchor = blockPosition();
-    RaceAPI.getRaceFrom(this).setRace(TensuraRaces.HUMAN_SAINT.get(), false);
+    RaceAPI.getRaceFrom(this).setRace(TensuraRaces.DIVINE_HUMAN.get(), false);
     var weapon = BuiltInRegistries.ITEM.get(ResourceLocation.parse("tensura:hihiirokane_sword"));
     inventory.setItem(getSlotId(EquipmentSlot.MAINHAND), new ItemStack(weapon));
     updateContainerEquipment();

@@ -6,7 +6,7 @@ import html,json,re,shutil,subprocess,sys,zipfile,os
 try:import markdown
 except ImportError:raise SystemExit('Install the documentation renderer: python3 -m pip install Markdown==3.7')
 ROOT=Path(__file__).resolve().parents[1];WIKI=ROOT/'wiki';SITE=WIKI/'site'
-MODS={'myths':{'name':'Tensura Myths','version':'0.36.1','home':'Tensura-Myths','mark':'M'},'additions':{'name':'TensuraAdditionalAdditions','version':'1.17.3','home':'TensuraAdditionalAdditions','mark':'A'},'retired_addon':{'name':'Tensura retired_addon','version':'1.2.0','home':'Tensura-retired_addon','mark':'K'}}
+MODS={'myths':{'name':'Tensura Myths','version':'0.36.1','home':'Tensura-Myths','mark':'M'},'additions':{'name':'TensuraAdditionalAdditions','version':'1.17.4','home':'TensuraAdditionalAdditions','mark':'A'},'retired_addon':{'name':'Tensura retired_addon','version':'1.2.0','home':'Tensura-retired_addon','mark':'K'}}
 subprocess.run([sys.executable,str(ROOT/'scripts/build-ability-index.py')],check=True)
 catalog=json.loads((WIKI/'catalog.json').read_text());metadata={e['slug']:e for e in catalog};navigation=json.loads((WIKI/'navigation.json').read_text());abilities=json.loads((WIKI/'abilities.json').read_text())
 SITE.mkdir(exist_ok=True)
@@ -78,7 +78,7 @@ def render(source,destination):
         # The visual cards replace the Markdown comparison table.
         content=re.sub(r'<div class="article-table"><table>.*?</table></div>', '<div class="mod-grid">'+cards+'</div>',content,count=1,flags=re.S)
     toc='<details class="contents"><summary>On this page</summary>'+renderer.toc+'</details>' if len(renderer.toc_tokens)>2 and not home else ''
-    version=config['version'] if config else 'Myths 0.36.1 · Additions 1.17.3 · retired_addon 1.2.0';mark=config['mark'] if config else 'T';prefix=relative(WIKI,destination)+'/'
+    version=config['version'] if config else 'Myths 0.36.1 · Additions 1.17.4 · retired_addon 1.2.0';mark=config['mark'] if config else 'T';prefix=relative(WIKI,destination)+'/'
     title_id=markdown.extensions.toc.slugify(title,'-')
     title_attr='' if re.search(r'id="'+re.escape(title_id)+r'"',content) else ' id="'+html.escape(title_id)+'"'
     article_home=route(config['home'],destination) if config else relative(WIKI/'index.html',destination)

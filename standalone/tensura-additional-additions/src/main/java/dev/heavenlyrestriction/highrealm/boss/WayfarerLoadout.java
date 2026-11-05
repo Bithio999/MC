@@ -1,9 +1,11 @@
 package dev.heavenlyrestriction.highrealm.boss;
 
 import dev.heavenlyrestriction.RestrictionData;
+import io.github.manasmods.manascore.race.api.RaceAPI;
 import io.github.manasmods.manascore.skill.api.*;
 import io.github.manasmods.tensura.registry.battlewill.*;
 import io.github.manasmods.tensura.registry.magic.*;
+import io.github.manasmods.tensura.registry.race.TensuraRaces;
 import io.github.manasmods.tensura.registry.skill.*;
 import io.github.manasmods.tensura.storage.TensuraStorages;
 import java.util.*;
@@ -13,7 +15,7 @@ import java.util.*;
  */
 public final class WayfarerLoadout {
   private static final String VERSION = "heavenlyrestriction:wayfarer_loadout";
-  private static final int CURRENT = 3;
+  private static final int CURRENT = 4;
 
   public static List<ManasSkill> uniques() {
     return List.of(
@@ -66,6 +68,9 @@ public final class WayfarerLoadout {
     var pool = TensuraStorages.getExistenceFrom(boss);
     float hp = boss.getHealth();
     double ap = pool.getAura(), mp = pool.getMagicule(), shp = pool.getSpiritualHealth();
+    var race = RaceAPI.getRaceFrom(boss);
+    if (race.getRace().map(i -> i.getRace() != TensuraRaces.DIVINE_HUMAN.get()).orElse(true))
+      race.setRace(TensuraRaces.DIVINE_HUMAN.get(), false);
     remove(boss, ExtraSkills.ULTRASPEED_REGENERATION.get());
     remove(boss, ExtraSkills.WIND_MANIPULATION.get());
     apply(boss);
@@ -110,10 +115,7 @@ public final class WayfarerLoadout {
     if (storage.getSkill(skill).isEmpty()) RestrictionData.learnReward(boss, skill);
     var instance = storage.getSkill(skill).orElseThrow();
     instance.setMastery(instance.getMaxMastery());
-    if (toggle
-        && !instance.isToggled()
-        // Explicit boss grant: Divine Ki normally requires a Divine race, beyond Saint.
-        && (instance.canBeToggled(boss) || skill == IntrinsicSkills.DIVINE_KI_RELEASE.get())) {
+    if (toggle && !instance.isToggled() && instance.canBeToggled(boss)) {
       instance.setToggled(true);
       instance.onToggleOn(boss);
     }
