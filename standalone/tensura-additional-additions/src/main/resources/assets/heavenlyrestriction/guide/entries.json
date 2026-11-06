@@ -884,13 +884,13 @@
         {
           "title": "Obtaining and stats",
           "lines": [
-            "Kael Veyr wields Vesper and drops one with Afterwind I. Baseline attack damage: 96 with 1 base attack. Attack speed: 1.7; extra reach: 1 block. Durability: 3,960; repair with Hihiirokane Ingots."
+            "Kael Veyr wields Vesper and drops one with Afterwind I. Baseline attack damage: 105 with 1 base attack. Attack speed: 1.7; extra reach: 1 block. Durability: 3,960; repair with Hihiirokane Ingots."
           ]
         },
         {
           "title": "Afterwind",
           "lines": [
-            "While holding Vesper, successfully dealing Wind damage marks that enemy for 5 seconds. Your next direct sword strike on that enemy releases a Wind cut after 0.2 seconds. The cut deals 20% of your raw attack attribute, with normal Wind bonuses and defenses.",
+            "While holding Vesper, successfully dealing Wind damage marks that enemy for 5 seconds. Your next direct sword strike on that enemy releases a Wind cut after 0.2 seconds. The cut deals 30% of your raw attack attribute, with normal Wind bonuses and defenses.",
             "One cut per wielder every 3 seconds. Marks do not stack. Switching away, death or changing dimension cancels the pending cut. The enemy must remain within 12 blocks.",
             "Damage types: Physical for ordinary sword hits; Wind elemental for Afterwind. No extra resource cost."
           ]
@@ -898,7 +898,7 @@
         {
           "title": "Chromatic Orb",
           "lines": [
-            "One Chromatic Orb can raise Afterwind to level II: the raw-attack coefficient increases from 20% to 25%. Cooldown, delay and mark duration stay the same."
+            "One Chromatic Orb can raise Afterwind to level II: the raw-attack coefficient increases from 30% to 75%. Cooldown, delay and mark duration stay the same."
           ]
         }
       ]

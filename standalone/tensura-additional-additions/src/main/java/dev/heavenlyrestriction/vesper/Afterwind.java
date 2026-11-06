@@ -27,6 +27,7 @@ public final class Afterwind {
   public static final ResourceKey<DamageType> DAMAGE =
       ResourceKey.create(Registries.DAMAGE_TYPE, HeavenlyRestriction.id("afterwind"));
   public static final int MARK_TICKS = 100, COOLDOWN_TICKS = 60, DELAY_TICKS = 4;
+  public static final double RANGE = 12;
   private static final Map<LivingEntity, State> STATES = new WeakHashMap<>();
   private static final ThreadLocal<Map<LivingEntity, Set<LivingEntity>>> OBSERVING =
       ThreadLocal.withInitial(IdentityHashMap::new);
@@ -83,7 +84,7 @@ public final class Afterwind {
   }
 
   public static double coefficient(int level) {
-    return level < 1 ? 0 : .15 + .05 * level;
+    return level < 1 ? 0 : .30 + .45 * (level - 1);
   }
 
   public static Hit before(LivingEntity target, DamageSource source) {
@@ -187,7 +188,7 @@ public final class Afterwind {
             && target.level() == cut.level
             && target.isAlive()
             && !target.isRemoved()
-            && owner.distanceToSqr(target) <= 144
+            && owner.distanceToSqr(target) <= RANGE * RANGE
             && RestrictionData.canHarm(owner, target)
             && cut.damage > 0) {
           target.hurt(source(owner), cut.damage);

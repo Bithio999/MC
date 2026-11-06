@@ -48,10 +48,22 @@ public final class WayfarerReview {
     }
 
     @Override
+    public boolean isPauseScreen() {
+      return false;
+    }
+
+    @Override
     public void render(net.minecraft.client.gui.GuiGraphics g, int x, int y, float partial) {
       g.fill(0, 0, width, height, 0xff101b29);
       var stack = Minecraft.getInstance().player.getMainHandItem();
-      g.drawCenteredString(font, "Vesper", width / 2, 30, 0xffe1c78b);
+      g.drawCenteredString(
+          font,
+          dev.heavenlyrestriction.chromatic.ChromaticOrb.infused(stack)
+              ? "Vesper · Chromatic Orb upgrade"
+              : "Vesper",
+          width / 2,
+          30,
+          0xffe1c78b);
       g.pose().pushPose();
       g.pose().translate(width - 170, height / 2 - 65, 0);
       g.pose().scale(7, 7, 1);
@@ -63,6 +75,39 @@ public final class WayfarerReview {
 
   private static void check(boolean ok, String message) {
     if (!ok) throw new IllegalStateException(message);
+  }
+
+  private static void checkVesperTooltip(boolean upgraded) {
+    var mc = Minecraft.getInstance();
+    var lines =
+        mc
+            .player
+            .getMainHandItem()
+            .getTooltipLines(
+                net.minecraft.world.item.Item.TooltipContext.of(mc.level),
+                mc.player,
+                net.minecraft.world.item.TooltipFlag.NORMAL)
+            .stream()
+            .map(net.minecraft.network.chat.Component::getString)
+            .toList();
+    String heading = upgraded ? "Afterwind II" : "Afterwind";
+    int name = lines.indexOf(heading);
+    int effect = -1;
+    for (int n = 0; n < lines.size(); n++)
+      if (lines.get(n).contains((upgraded ? "75%" : "30%") + " raw attack")) effect = n;
+    check(name >= 0 && effect > name, "Wrong engraving heading/effect order: " + lines);
+    check(
+        lines.stream().anyMatch(l -> l.contains("105 Attack Damage")),
+        "Native attack attribute missing/wrong: " + lines);
+    check(
+        lines.stream()
+            .anyMatch(l -> l.contains("0.2s") && l.contains("3s") && l.contains("12 blocks")),
+        "Live Afterwind timing missing: " + lines);
+    check(
+        lines.stream().filter(l -> l.contains("EP:")).count() == 1
+            && lines.stream().anyMatch(l -> l.contains("1,000,000/1,000,000")),
+        "EP tooltip duplicated/unformatted: " + lines);
+    System.out.println("[Vesper tooltip " + (upgraded ? "II" : "I") + "] " + lines);
   }
 
   private static void server(java.util.function.Consumer<ServerPlayer> fn) {
@@ -411,11 +456,26 @@ public final class WayfarerReview {
       return;
     }
     if (phase == 904 && wait > 20) {
+      checkVesperTooltip(false);
       shot("vesper-item");
+      server(
+          p -> {
+            var next = dev.heavenlyrestriction.chromatic.ChromaticOrb.upgrade(p.getMainHandItem());
+            check(!next.isEmpty(), "Chromatic Orb could not upgrade Vesper");
+            p.setItemSlot(EquipmentSlot.MAINHAND, next);
+          });
+      phase = 905;
+      wait = 0;
+      return;
+    }
+    if (phase == 905 && wait > 20) {
+      checkVesperTooltip(true);
+      shot("vesper-item-ii");
       Files.writeString(
           OUT.resolve("passed-vesper.txt"),
           "PASS: Kael wields Vesper; actual native Wind Cutter then melee produced exactly one"
-              + " Afterwind; native tooltip/item render.\n");
+              + " Afterwind; native 105 attack tooltip; Afterwind I/II show ordered 30%/75% effects"
+              + " and formatted EP, after a real Chromatic Orb upgrade.\n");
       mc.stop();
       return;
     }

@@ -1,5 +1,12 @@
 # Changelog
 
+## Additions 1.20.1 — Vesper balance and tooltip
+
+- Increase Vesper's baseline damage from 96 to 105. Retain 1.7 attack speed, +1 reach and 3,960 durability.
+- Increase Afterwind I from 20% to 30% of raw attack damage, and make Afterwind II reach 75% instead of 25%. Preserve the 0.2-second delay, three-second cooldown and native Wind defenses.
+- Put live damage and timing below the native Afterwind engraving heading, including the over-cap level-II effect. Format Vesper's native EP durability values with separators and remove the fixed, misplaced description.
+- Update the in-game guide, wiki and item captures. Existing Vespers and infused engraving levels use the new values automatically.
+
 ## Additions 1.20.0 — Vesper
 
 - Give Kael the unique sword Vesper and drop his equipped Vesper through native equipment loot, preserving its wear and engravings. Upgrade existing Kaels using their original Hihiirokane Sword while preserving wear, engravings and wounded resources.

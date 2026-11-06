@@ -78,7 +78,7 @@ public final class VesperGameTests {
   public static void vesperIsSlightlyStrongerThanNightRoseWithoutRequiringItsAddon(
       GameTestHelper h) {
     var stack = VesperItem.create(h.getLevel().registryAccess());
-    near(h, stat(stack, Attributes.ATTACK_DAMAGE, 1), 96, "Vesper baseline damage");
+    near(h, stat(stack, Attributes.ATTACK_DAMAGE, 1), 105, "Vesper baseline damage");
     near(h, stat(stack, Attributes.ATTACK_SPEED, 4), 1.7, "Vesper attack speed");
     near(h, stat(stack, Attributes.ENTITY_INTERACTION_RANGE, 0), 1, "Vesper extra reach");
     h.assertTrue(stack.getMaxDamage() == 3960, "Incorrect actual durability");
@@ -88,7 +88,7 @@ public final class VesperGameTests {
       double damage = stat(reference, Attributes.ATTACK_DAMAGE, 1),
           speed = stat(reference, Attributes.ATTACK_SPEED, 4);
       System.out.println(
-          "Vesper/Night Rose actual comparison: damage=96/"
+          "Vesper/Night Rose actual comparison: damage=105/"
               + damage
               + ", speed=1.7/"
               + speed
@@ -96,7 +96,7 @@ public final class VesperGameTests {
               + stack.getMaxDamage()
               + "/"
               + reference.getMaxDamage());
-      h.assertTrue(96 > damage && 96 / damage <= 1.1, "Damage exceeds slight upgrade budget");
+      h.assertTrue(105 > damage && 105 / damage <= 1.2, "Damage exceeds slight upgrade budget");
       near(h, 1.7, speed, "Reference speed mismatch");
       near(
           h,
@@ -145,7 +145,7 @@ public final class VesperGameTests {
               7,
               () -> {
                 h.assertTrue(seen.size() == 1, "Aftercut did not land exactly once");
-                near(h, seen.getFirst(), attack * .2, "Aftercut used amplified primary damage");
+                near(h, seen.getFirst(), attack * .3, "Aftercut used amplified primary damage");
                 t.invulnerableTime = 0;
                 t.hurt(wind(p), 5);
                 t.invulnerableTime = 0;
@@ -294,12 +294,57 @@ public final class VesperGameTests {
         p.registryAccess()
             .registryOrThrow(Registries.ENCHANTMENT)
             .getHolderOrThrow(Afterwind.ENGRAVING);
-    stack.enchant(afterwind, 2);
-    VesperItem.engrave(stack, p.registryAccess());
+    var sharpness =
+        p.registryAccess()
+            .registryOrThrow(Registries.ENCHANTMENT)
+            .getHolderOrThrow(Enchantments.SHARPNESS);
+    stack.enchant(sharpness, 2);
+    stack.setDamageValue(123);
+    var upgraded = dev.heavenlyrestriction.chromatic.ChromaticOrb.upgrade(stack);
+    h.assertTrue(
+        !upgraded.isEmpty() && dev.heavenlyrestriction.chromatic.ChromaticOrb.infused(upgraded),
+        "Orb did not infuse Vesper");
+    p.setItemSlot(EquipmentSlot.MAINHAND, upgraded);
+    VesperItem.engrave(upgraded, p.registryAccess());
     h.assertTrue(Afterwind.level(p) == 2, "Default engraving reset infused level");
-    near(h, Afterwind.coefficient(1), .2, "Afterwind I damage");
-    near(h, Afterwind.coefficient(2), .25, "Afterwind II damage");
-    h.succeed();
+    h.assertTrue(
+        upgraded.getDamageValue() == 123
+            && EnchantmentHelper.getItemEnchantmentLevel(sharpness, upgraded) == 2,
+        "Orb lost wear or another enchantment");
+    near(h, Afterwind.coefficient(1), .3, "Afterwind I damage");
+    near(h, Afterwind.coefficient(2), .75, "Afterwind II damage");
+    var t = enemy(h, p);
+    var seen = new ArrayList<Float>();
+    java.util.function.Consumer<LivingIncomingDamageEvent> observer =
+        e -> {
+          if (e.getEntity() == t && e.getSource().is(Afterwind.DAMAGE)) seen.add(e.getAmount());
+        };
+    NeoForge.EVENT_BUS.addListener(observer);
+    h.runAfterDelay(
+        5,
+        () -> {
+          double attack;
+          try (var raw = ExponentiationContext.raw(p, ExponentiationContext.DAMAGE)) {
+            attack = p.getAttributeValue(Attributes.ATTACK_DAMAGE);
+          }
+          t.hurt(wind(p), 5);
+          t.invulnerableTime = 0;
+          t.hurt(p.damageSources().playerAttack(p), 15);
+          double expected = attack * .75;
+          h.runAfterDelay(
+              7,
+              () -> {
+                h.assertTrue(seen.size() == 1, "Orb-enhanced aftercut did not land exactly once");
+                near(
+                    h,
+                    seen.getFirst(),
+                    expected,
+                    "Orb-enhanced aftercut did not deal 75% raw attack");
+                NeoForge.EVENT_BUS.unregister(observer);
+                t.discard();
+                h.succeed();
+              });
+        });
   }
 
   @GameTest(template = "empty", timeoutTicks = 100)

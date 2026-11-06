@@ -26,7 +26,7 @@ public final class VesperItem extends TensuraSwordItem {
           TensuraToolTiers.HIHIIROKANE::getRepairIngredient);
 
   public VesperItem() {
-    super(TIER, 19, -2.3f, 1, 0, 0, 0, new Item.Properties().fireResistant().rarity(Rarity.EPIC));
+    super(TIER, 28, -2.3f, 1, 0, 0, 0, new Item.Properties().fireResistant().rarity(Rarity.EPIC));
   }
 
   public static void engrave(ItemStack stack, RegistryAccess access) {
@@ -61,8 +61,5 @@ public final class VesperItem extends TensuraSwordItem {
     lines.add(
         Component.translatable("item.heavenlyrestriction.vesper.desc")
             .withStyle(ChatFormatting.GRAY));
-    lines.add(
-        Component.translatable("item.heavenlyrestriction.vesper.afterwind")
-            .withStyle(ChatFormatting.DARK_AQUA));
   }
 }

@@ -68,7 +68,10 @@
   "item.heavenlyrestriction.vesper": "Vesper",
   "enchantment.heavenlyrestriction.afterwind": "Afterwind",
   "item.heavenlyrestriction.vesper.desc": "The Starless Wayfarer’s silver blade.",
-  "item.heavenlyrestriction.vesper.afterwind": "Wind hits mark a foe for 5s. A sword strike releases a delayed Wind cut.",
   "death.attack.afterwind": "%1$s was caught in %2$s’s afterwind",
-  "death.attack.afterwind.player": "%1$s was caught in %2$s’s afterwind"
+  "death.attack.afterwind.player": "%1$s was caught in %2$s’s afterwind",
+  "enchantment.heavenlyrestriction.afterwind.desc": "Wind damage prepares a delayed Wind cut from your next sword strike.",
+  "item.heavenlyrestriction.vesper.afterwind.mark": "Wind hits mark this enemy for %ss.",
+  "item.heavenlyrestriction.vesper.afterwind.damage": "Next sword strike: %s%% raw attack as Wind.",
+  "item.heavenlyrestriction.vesper.afterwind.timing": "Delay %ss • Cooldown %ss • Range %s blocks."
 }
