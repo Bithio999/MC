@@ -35,3 +35,7 @@ A disposable online FakePlayer without the skill explores a checkerboard build 8
 The native suite adds remote-session isolation, stale/unknown-dimension rejection, private remote pins, shared overview persistence and asynchronous detail palette round-tripping. JVM tests cover sparse explored-terrain mip levels, negative coordinates, layer isolation, replacement/removal and restoring the index from saved base entries.
 
 The 1.16.1 extension uses the same `-PmapUiOnly=true` run. It verifies complete advertised registry coverage, Name A–Z and Mod A–Z ordering, selection identity across sort/filter changes, live incremental filtering, no-match safety, mod-ID filtering, query/sort retention on resize, and scrollbar travel at both GUI scales. Screenshots include the alphabetical, mod-grouped and filtered structure browser.
+
+## 1.19.1 structure travel correction
+
+The native suite now uses real StructureStart fixtures for travel. Added cases put a predicted icon three chunks away from its origin, reject missing predicted and confirmed destinations, remove stale Locate fallbacks, and prevent late alternate/empty survey results from restoring invalid sites. The normal-world `-PmapTravelOnly=true` profile also verifies the native menu handoff and actual Warp path with the origin-first validation.

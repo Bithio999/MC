@@ -45,21 +45,45 @@ public final class MapAutoStructures {
   private record ChunkKey(UUID world, String dimension, long chunk) {}
 
   // Cache empty starts too: changing zoom must not regenerate the same rejected candidates.
-  private static final Map<ChunkKey, List<MapData.Marker>> CHUNKS =
+  private record ChunkResult(List<MapData.Marker> markers, boolean actual) {}
+
+  private static final Map<ChunkKey, ChunkResult> CHUNKS =
       Collections.synchronizedMap(
           new LinkedHashMap<>(256, .75f, true) {
             @Override
-            protected boolean removeEldestEntry(Map.Entry<ChunkKey, List<MapData.Marker>> entry) {
+            protected boolean removeEldestEntry(Map.Entry<ChunkKey, ChunkResult> entry) {
               return size() > 4096;
             }
           });
 
   public static List<MapData.Marker> cached(UUID world, String dimension, ChunkPos pos) {
-    return CHUNKS.get(new ChunkKey(world, dimension, pos.toLong()));
+    var result = CHUNKS.get(new ChunkKey(world, dimension, pos.toLong()));
+    return result == null ? null : result.markers;
   }
 
-  public static void invalidate(UUID world, String dimension, ChunkPos pos) {
-    CHUNKS.remove(new ChunkKey(world, dimension, pos.toLong()));
+  public static void confirm(
+      UUID world, String dimension, ChunkPos pos, List<MapData.Marker> markers) {
+    var key = new ChunkKey(world, dimension, pos.toLong());
+    var result = new ChunkResult(List.copyOf(markers), true);
+    synchronized (CHUNKS) {
+      if (result.equals(CHUNKS.put(key, result))) return;
+    }
+    var it = CACHE.entrySet().iterator();
+    while (it.hasNext()) {
+      var entry = it.next();
+      var tile = entry.getKey().tile;
+      if (entry.getKey().world.equals(world)
+          && entry.getKey().dimension.equals(dimension)
+          && inside(
+              pos,
+              tile.minChunkX(),
+              tile.minChunkZ(),
+              tile.minChunkX() + tile.chunks() - 1,
+              tile.minChunkZ() + tile.chunks() - 1)) {
+        cachedMarkers -= entry.getValue().markers().size();
+        it.remove();
+      }
+    }
   }
 
   public static final class View {
@@ -281,7 +305,7 @@ public final class MapAutoStructures {
                     var chunkKey = new ChunkKey(key.world, key.dimension, pos.toLong());
                     var reused = CHUNKS.get(chunkKey);
                     if (reused != null) {
-                      for (var marker : reused) {
+                      for (var marker : reused.markers) {
                         if (markers.size() >= 65536 && !markers.containsKey(marker.key()))
                           throw new IllegalStateException("Survey tile marker limit exceeded");
                         markers.put(marker.key(), marker);
@@ -325,12 +349,12 @@ public final class MapAutoStructures {
                                 start,
                                 false);
                         }
-                        publishChunk(job, chunkKey, local, markers, epoch);
+                        publishChunk(job, chunkKey, local, markers, epoch, true);
                         continue;
                       }
                     }
                     if (!generate) {
-                      publishChunk(job, chunkKey, local, markers, epoch);
+                      publishChunk(job, chunkKey, local, markers, epoch, false);
                       continue;
                     }
                     // Exactly the native weighted set/variant/fallback algorithm, against an
@@ -346,7 +370,7 @@ public final class MapAutoStructures {
                             pos,
                             entry.getValue(),
                             true);
-                    publishChunk(job, chunkKey, local, markers, epoch);
+                    publishChunk(job, chunkKey, local, markers, epoch, false);
                   }
                 } catch (InterruptedException ex) {
                   Thread.currentThread().interrupt();
@@ -366,13 +390,14 @@ public final class MapAutoStructures {
                           if (epoch != EPOCH.get() || JOBS.get(key) != job || job.cancelled) return;
                           JOBS.remove(key);
                           if (MapData.get(level.getServer()).world.equals(key.world)) {
+                            var corrected = MapData.get(level.getServer()).current(result);
                             if (complete)
                               MapData.get(level.getServer())
-                                  .replaceSurveyTile(key.dimension, key.tile, result);
-                            else result.forEach(MapData.get(level.getServer())::add);
-                            var old = CACHE.put(key, new Cached(complete, result));
+                                  .replaceSurveyTile(key.dimension, key.tile, corrected);
+                            else corrected.forEach(MapData.get(level.getServer())::add);
+                            var old = CACHE.put(key, new Cached(complete, corrected));
                             cachedMarkers +=
-                                result.size() - (old == null ? 0 : old.markers().size());
+                                corrected.size() - (old == null ? 0 : old.markers().size());
                             while (CACHE.size() > 512 || cachedMarkers > 65536) {
                               var first = CACHE.keySet().iterator().next();
                               cachedMarkers -= CACHE.remove(first).markers().size();
@@ -392,10 +417,18 @@ public final class MapAutoStructures {
       ChunkKey key,
       Map<String, MapData.Marker> local,
       Map<String, MapData.Marker> all,
-      long epoch) {
+      long epoch,
+      boolean actual) {
     if (!job.alive() || epoch != EPOCH.get()) return;
-    var result = List.copyOf(local.values());
-    CHUNKS.put(key, result);
+    List<MapData.Marker> result;
+    synchronized (CHUNKS) {
+      var existing = CHUNKS.get(key);
+      if (existing != null && existing.actual) result = existing.markers;
+      else {
+        result = List.copyOf(local.values());
+        CHUNKS.put(key, new ChunkResult(result, actual));
+      }
+    }
     for (var marker : result) {
       if (all.size() >= 65536 && !all.containsKey(marker.key()))
         throw new IllegalStateException("Survey tile marker limit exceeded");

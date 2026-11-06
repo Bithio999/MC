@@ -778,7 +778,7 @@
         {
           "title": "Travel and players",
           "lines": [
-            "Select a structure in your current dimension and choose Travel… in its actions. Choose a learned usable coordinate-teleport skill. Its native menu opens with a safe surface arrival prefilled. Confirm Warp to teleport with that skill’s normal costs and restrictions. Merely browsing another dimension never grants cross-dimension travel.",
+            "Select a structure in your current dimension and choose Travel… in its actions. Choose a learned usable coordinate-teleport skill. The site is verified first; missing locations are removed from the map. Its native menu opens with a safe surface arrival prefilled. Confirm Warp to teleport with that skill’s normal costs and restrictions. Merely browsing another dimension never grants cross-dimension travel.",
             "All online player locations refresh twice per second, including players beyond render distance. Your arrow is gold; other players are cyan. Focus on map in a player’s actions switches to their dimension and centers on them. Offline players disappear."
           ]
         },

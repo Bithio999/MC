@@ -526,15 +526,8 @@ public final class MaraudersMapGameTests {
     RestrictionData.learnReward(p, HeavenlyRestriction.INSTANT_TRANSMISSION.get());
     MapService.open(p);
     var session = MapService.session(p);
-    var marker =
-        new MapData.Marker(
-            "travel/" + p.getUUID(),
-            "minecraft:village_plains",
-            session.dimension,
-            p.getBlockX(),
-            p.getBlockY(),
-            p.getBlockZ());
-    MapData.get(p.server).add(marker);
+    var fixture = travelFixture(p, 0, false);
+    var marker = fixture.marker();
     var energy = io.github.manasmods.tensura.storage.TensuraStorages.getExistenceFrom(p);
     double aura = energy.getAura(), magicules = energy.getMagicule();
     var before = p.position();
@@ -584,7 +577,7 @@ public final class MaraudersMapGameTests {
               h.assertTrue(
                   energy.getAura() == aura && energy.getMagicule() == magicules,
                   "Preparing menu charged resources");
-              MapData.get(p.server).removeStructure(marker.key());
+              fixture.close();
               h.succeed();
             });
   }
@@ -595,15 +588,8 @@ public final class MaraudersMapGameTests {
     RestrictionData.learnReward(p, HeavenlyRestriction.INSTANT_TRANSMISSION.get());
     MapService.open(p);
     var session = MapService.session(p);
-    var marker =
-        new MapData.Marker(
-            "forgotten/" + p.getUUID(),
-            "minecraft:village_plains",
-            session.dimension,
-            p.getBlockX(),
-            p.getBlockY(),
-            p.getBlockZ());
-    MapData.get(p.server).add(marker);
+    var fixture = travelFixture(p, 0, false);
+    var marker = fixture.marker();
     h.assertTrue(
         MapTravel.prepare(
             p,
@@ -626,7 +612,7 @@ public final class MaraudersMapGameTests {
                   MapService.session(p) == session && session.travel == null,
                   "Forgotten skill still opened native menu");
               MapService.close(p);
-              MapData.get(p.server).removeStructure(marker.key());
+              fixture.close();
               h.succeed();
             });
   }
@@ -924,5 +910,240 @@ public final class MaraudersMapGameTests {
               MapService.close(p);
             })
         .thenSucceed();
+  }
+
+  private record TravelFixture(
+      ServerPlayer player,
+      net.minecraft.world.level.chunk.ChunkAccess chunk,
+      Structure type,
+      StructureStart old,
+      MapData.Marker marker)
+      implements AutoCloseable {
+    @Override
+    public void close() {
+      chunk.setStartForStructure(type, old == null ? StructureStart.INVALID_START : old);
+      MapService.capture(player.serverLevel(), chunk);
+    }
+  }
+
+  private static ChunkPos unusedTravelChunk() {
+    var uuid = UUID.randomUUID();
+    return new ChunkPos(
+        100000 + Math.floorMod(uuid.getMostSignificantBits(), 100000),
+        -200000 - Math.floorMod(uuid.getLeastSignificantBits(), 100000));
+  }
+
+  private static TravelFixture travelFixture(ServerPlayer p, int offsetChunks, boolean predicted) {
+    var level = p.serverLevel();
+    var pos = unusedTravelChunk();
+    var chunk =
+        level.getChunk(pos.x, pos.z, predicted ? ChunkStatus.STRUCTURE_STARTS : ChunkStatus.FULL);
+    var type =
+        level
+            .registryAccess()
+            .registryOrThrow(Registries.STRUCTURE)
+            .getOrThrow(BuiltinStructures.BURIED_TREASURE);
+    var old = chunk.getStartForStructure(type);
+    var at = new BlockPos(pos.getMiddleBlockX() + offsetChunks * 16, 64, pos.getMiddleBlockZ());
+    var start =
+        new StructureStart(
+            type,
+            pos,
+            0,
+            new PiecesContainer(List.of(new BuriedTreasurePieces.BuriedTreasurePiece(at))));
+    chunk.setStartForStructure(type, start);
+    String dim = level.dimension().location().toString();
+    var marker =
+        new MapData.Marker(
+            dim + "/minecraft:buried_treasure/" + pos.toLong(),
+            "minecraft:buried_treasure",
+            dim,
+            at.getX(),
+            at.getY(),
+            at.getZ(),
+            predicted);
+    if (predicted) MapData.get(p.server).add(marker);
+    else MapService.capture(level, chunk);
+    return new TravelFixture(p, chunk, type, old, marker);
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 400)
+  public static void crossChunkPredictedTravelChecksTheOriginAndKeepsTheRealMarker(
+      GameTestHelper h) {
+    var p = reader(h);
+    RestrictionData.learnReward(p, HeavenlyRestriction.INSTANT_TRANSMISSION.get());
+    MapService.open(p);
+    var session = MapService.session(p);
+    var fixture = travelFixture(p, 3, true);
+    var marker = fixture.marker();
+    var data = MapData.get(p.server);
+    h.assertTrue(
+        marker.predicted() && data.structures.containsKey(marker.key()),
+        "Predicted fixture was not inserted");
+    h.assertTrue(
+        !marker.sourceChunk().equals(new ChunkPos(marker.x() >> 4, marker.z() >> 4)),
+        "Fixture does not span chunks");
+    h.assertTrue(
+        MapTravel.prepare(
+            p,
+            session,
+            marker.key(),
+            HeavenlyRestriction.INSTANT_TRANSMISSION.get().getRegistryName().toString()),
+        "Predicted structure travel rejected");
+    h.startSequence()
+        .thenWaitUntil(
+            () -> {
+              MapTravel.advance(p, session);
+              h.assertTrue(session.travel == null, "Travel still preparing");
+            })
+        .thenExecute(
+            () -> {
+              h.assertTrue(
+                  MapService.session(p) == null,
+                  "Valid cross-chunk structure failed native menu handoff: " + session.message);
+              h.assertTrue(
+                  data.structures.containsKey(marker.key())
+                      && !data.structures.get(marker.key()).predicted(),
+                  "Valid marker disappeared instead of becoming confirmed");
+              fixture.close();
+            })
+        .thenSucceed();
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 200)
+  public static void missingPredictedDestinationIsRemovedAndCannotTravelThroughFoundFallback(
+      GameTestHelper h) {
+    var p = reader(h);
+    RestrictionData.learnReward(p, HeavenlyRestriction.INSTANT_TRANSMISSION.get());
+    MapService.open(p);
+    var session = MapService.session(p);
+    var data = MapData.get(p.server);
+    var pos = unusedTravelChunk();
+    String dim = session.dimension;
+    var marker =
+        new MapData.Marker(
+            dim + "/minecraft:buried_treasure/" + pos.toLong(),
+            "minecraft:buried_treasure",
+            dim,
+            pos.getMiddleBlockX(),
+            64,
+            pos.getMiddleBlockZ(),
+            true);
+    data.add(marker);
+    session.found = marker;
+    h.assertTrue(
+        MapTravel.prepare(
+            p,
+            session,
+            marker.key(),
+            HeavenlyRestriction.INSTANT_TRANSMISSION.get().getRegistryName().toString()),
+        "Could not start verification");
+    h.startSequence()
+        .thenWaitUntil(
+            () -> {
+              MapTravel.advance(p, session);
+              h.assertTrue(session.travel == null, "Verification pending");
+            })
+        .thenExecute(
+            () -> {
+              h.assertTrue(
+                  MapService.session(p) == session, "Nonexistent destination opened teleport menu");
+              h.assertTrue(
+                  !data.structures.containsKey(marker.key()) && session.found == null,
+                  "Rejected marker or Locate fallback survived");
+              data.add(marker);
+              h.assertTrue(
+                  !data.structures.containsKey(marker.key()),
+                  "Late survey reintroduced rejected prediction");
+              session.found = marker;
+              h.assertTrue(
+                  !MapTravel.prepare(
+                      p,
+                      session,
+                      marker.key(),
+                      HeavenlyRestriction.INSTANT_TRANSMISSION.get().getRegistryName().toString()),
+                  "Stale found fallback permitted travel");
+              h.assertTrue(
+                  !MapService.snapshot(p, session).contains("found"),
+                  "Snapshot kept stale Locate marker");
+              MapService.close(p);
+            })
+        .thenSucceed();
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 200)
+  public static void missingConfirmedDestinationAlsoRequiresNativeVerification(GameTestHelper h) {
+    var p = reader(h);
+    RestrictionData.learnReward(p, HeavenlyRestriction.INSTANT_TRANSMISSION.get());
+    MapService.open(p);
+    var session = MapService.session(p);
+    var fixture = travelFixture(p, 0, false);
+    var marker = fixture.marker();
+    fixture.chunk().setStartForStructure(fixture.type(), StructureStart.INVALID_START);
+    h.assertTrue(
+        MapTravel.prepare(
+            p,
+            session,
+            marker.key(),
+            HeavenlyRestriction.INSTANT_TRANSMISSION.get().getRegistryName().toString()),
+        "Could not verify old confirmed marker");
+    h.startSequence()
+        .thenWaitUntil(
+            () -> {
+              MapTravel.advance(p, session);
+              h.assertTrue(session.travel == null, "Verification pending");
+            })
+        .thenExecute(
+            () -> {
+              h.assertTrue(
+                  MapService.session(p) == session, "Stale confirmed marker bypassed verification");
+              h.assertTrue(
+                  !MapData.get(p.server).structures.containsKey(marker.key()),
+                  "Stale confirmed marker not removed");
+              fixture.close();
+              MapService.close(p);
+            })
+        .thenSucceed();
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 100)
+  public static void discoveredStartsOverrideLateVariantsAndEmptyDiscoveriesPersist(
+      GameTestHelper h) {
+    var data = new MapData();
+    String dim = "minecraft:overworld";
+    var pos = new ChunkPos(991, -997);
+    String a = dim + "/minecraft:village_plains/" + pos.toLong(),
+        b = dim + "/minecraft:village_desert/" + pos.toLong();
+    var prediction =
+        new MapData.Marker(a, "minecraft:village_plains", dim, 15860, 64, -15940, true);
+    var actual = new MapData.Marker(b, "minecraft:village_desert", dim, 15864, 68, -15940);
+    data.add(prediction);
+    data.reconcileStarts(dim, pos, List.of(actual));
+    data.add(prediction);
+    data.replaceSurveyTile(
+        dim,
+        new SurveyTiles.Tile(Math.floorDiv(pos.x, 32), Math.floorDiv(pos.z, 32), 0),
+        List.of(prediction));
+    h.assertTrue(
+        data.structures.size() == 1 && data.structures.get(b).equals(actual),
+        "Stale variant displaced native discovery");
+    h.assertTrue(
+        data.current(List.of(prediction)).isEmpty(),
+        "Completed survey cache retained rejected variant");
+    data.reconcileStarts(dim, pos, List.of());
+    data.add(actual);
+    data.add(prediction);
+    h.assertTrue(
+        data.structures.isEmpty(), "Empty discovery allowed stale actual/predicted marker");
+    var restored =
+        MapData.load(
+            data.save(new CompoundTag(), h.getLevel().registryAccess()),
+            h.getLevel().registryAccess());
+    h.assertTrue(restored.structures.isEmpty(), "Removed markers survived saved atlas round trip");
+    MapAutoStructures.confirm(data.world, dim, pos, List.of());
+    h.assertTrue(
+        MapAutoStructures.cached(data.world, dim, pos).isEmpty(),
+        "Survey cache did not retain empty discovery");
+    h.succeed();
   }
 }

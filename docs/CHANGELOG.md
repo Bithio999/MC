@@ -1,5 +1,11 @@
 # Changelog
 
+## Additions 1.19.1 — Structure verification and marker reconciliation
+
+- Verify every teleport destination against its native structure-origin chunk before preparing a landing chunk. Keep valid cross-chunk structure icons and confirm predictions using actual bounds.
+- Reconcile discovered chunks, including empty ones, against predicted and stale confirmed markers. Update source-chunk and completed-tile caches, prevent late survey results from restoring rejected sites, and clear stale Locate fallbacks.
+- Keep failed reads/cancelled preparation separate from disproven structures; retain markers when verification cannot complete. Require cached predictions to pass native Locate verification.
+
 ## Additions 1.19.0 — Faster, clearer Marauder’s Map
 
 - Replace enlarged, interpolated previews with screen-density biome tiles and progressive native-height relief. Keep biome boundaries crisp and recorded block pixels visible when zoomed out.

@@ -9,6 +9,7 @@ import net.minecraft.nbt.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.*;
 import net.minecraft.world.level.chunk.*;
+import net.minecraft.world.level.chunk.status.ChunkStatus;
 import net.minecraft.world.level.levelgen.structure.*;
 import net.neoforged.neoforge.event.level.ChunkEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
@@ -298,7 +299,8 @@ public final class MapService {
             data.structures.values().stream()
                 .filter(
                     m ->
-                        m.dimension().equals(s.dimension)
+                        !m.predicted()
+                            && m.dimension().equals(s.dimension)
                             && m.type().equals(id.toString())
                             && Math.hypot(m.x() - (double) s.cx, m.z() - (double) s.cz)
                                 <= SEARCH_RANGE)
@@ -336,29 +338,39 @@ public final class MapService {
 
   public static void loaded(ChunkEvent.Load e) {
     if (e.getLevel() instanceof ServerLevel level && level.getServer().overworld() != null) {
-      MapAutoStructures.invalidate(
-          MapData.get(level.getServer()).world,
-          level.dimension().location().toString(),
-          e.getChunk().getPos());
       capture(level, e.getChunk());
     }
   }
 
   public static void capture(ServerLevel level, ChunkAccess chunk) {
-    if (chunk.getAllStarts().isEmpty()) return;
+    if (chunk == null || !chunk.getPersistedStatus().isOrAfter(ChunkStatus.STRUCTURE_STARTS))
+      return;
     var registry = level.registryAccess().registryOrThrow(Registries.STRUCTURE);
-    var d = MapData.get(level.getServer());
+    var data = MapData.get(level.getServer());
+    String dimension = level.dimension().location().toString();
+    var actual = new ArrayList<MapData.Marker>();
     for (var entry : chunk.getAllStarts().entrySet()) {
       var start = entry.getValue();
       var id = registry.getKey(entry.getKey());
       if (id == null || start == null || !start.isValid()) continue;
       var box = start.getBoundingBox();
-      String dim = level.dimension().location().toString();
-      String key = dim + "/" + id + "/" + chunk.getPos().toLong();
-      d.add(
+      String key = dimension + "/" + id + "/" + chunk.getPos().toLong();
+      actual.add(
           new MapData.Marker(
-              key, id.toString(), dim, box.getCenter().getX(), box.minY(), box.getCenter().getZ()));
+              key,
+              id.toString(),
+              dimension,
+              box.getCenter().getX(),
+              box.minY(),
+              box.getCenter().getZ()));
     }
+    data.reconcileStarts(dimension, chunk.getPos(), actual);
+    MapAutoStructures.confirm(data.world, dimension, chunk.getPos(), actual);
+    for (var session : SESSIONS.values())
+      if (session.found != null
+          && session.found.dimension().equals(dimension)
+          && chunk.getPos().equals(session.found.sourceChunk()))
+        session.found = data.structures.get(session.found.key());
   }
 
   private static void captureNearby(ServerPlayer p) {
@@ -565,6 +577,7 @@ public final class MapService {
       t.putInt("candidates", s.search.candidates);
       t.putString("searchType", s.search.type.unwrapKey().orElseThrow().location().toString());
     }
+    if (s.found != null) s.found = d.structures.get(s.found.key());
     if (s.found != null) {
       var tag = s.found.tag();
       tag.putString("name", name(s.found.type()));

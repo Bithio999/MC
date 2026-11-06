@@ -61,7 +61,7 @@ Pan anywhere, including places nobody has visited. A crisp biome overview appear
 
 Enable **Structures** under **Layers** to show automatic vanilla and addon markers for the viewed area, at every zoom level and in unexplored regions. Panning or zooming starts discovery; **Locate is not required**. Markers appear as they are found, and overlapping views reuse completed discovery. The footer reports progress. Turning Structures off pauses discovery.
 
-Locations follow native generation rules, variants, frequency and biome requirements. Saved structures take precedence. Unvisited sites say **World-generation location** in their tooltip; actual generation confirms the start. Automatic markers do not require generating terrain or spawning mobs. Use custom pins for player-built landmarks.
+Locations follow native generation rules, variants, frequency and biome requirements. Saved structures take precedence. Discovered terrain corrects predictions and removes sites that do not exist; confirmed structures keep their markers. Unvisited sites say **World-generation location** in their tooltip; actual generation confirms the start. Automatic markers do not require generating terrain or spawning mobs. Use custom pins for player-built landmarks.
 
 **Locate structure…** opens the full list of registered vanilla and addon structures. Choose **Name A–Z** for alphabetical order or **Mod A–Z** to group by mod, with alphabetical names inside each group. Each entry shows its mod; hover for the complete structure ID. The search bar narrows entries as you type by name, mod or ID. Scroll or drag the scrollbar to browse the list.
 
@@ -85,6 +85,8 @@ Select an entry and press **Start search** to search up to **100,000 blocks arou
 ## Travel and player locations
 
 Select a structure in your character’s current dimension and choose **Travel…** from its actions. Choose a learned, usable coordinate-teleport skill such as **Spatial Motion**, **Spatial Manipulation** or **Instant Transmission**.
+
+The site is checked against its native structure start first. Missing sites are removed from the map and cannot open a teleport menu. Valid sites keep their icon, including structures that span several chunks.
 
 The skill’s native menu opens with **X, Y, Z and dimension prefilled** for a safe surface arrival near the structure. Check the coordinates and confirm **Warp**. Underground structures use a surface approach. If no clear ground is available, choose another structure.
 

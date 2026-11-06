@@ -4,6 +4,7 @@ import java.util.*;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.*;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.saveddata.SavedData;
 
 /**
@@ -19,16 +20,68 @@ public final class MapData extends SavedData {
   private final LinkedHashMap<String, Marker> markerData = new LinkedHashMap<>();
   public final Map<String, Marker> structures = Collections.unmodifiableMap(markerData);
 
+  private record Source(String dimension, long chunk) {}
+
+  private final Map<Source, Set<String>> sourceMarkers = new HashMap<>();
+  private final Map<Source, Map<String, Marker>> discovered =
+      new LinkedHashMap<>(256, .75f, true) {
+        @Override
+        protected boolean removeEldestEntry(Map.Entry<Source, Map<String, Marker>> e) {
+          return size() > 8192;
+        }
+      };
+
+  /**
+   * Resolve late survey results against already discovered native starts, including empty chunks.
+   */
+  public Marker current(Marker marker) {
+    var pos = marker.sourceChunk();
+    var known = pos == null ? null : discovered.get(new Source(marker.dimension(), pos.toLong()));
+    return known == null ? marker : known.get(marker.key());
+  }
+
+  public List<Marker> current(Collection<Marker> markers) {
+    var result = new LinkedHashMap<String, Marker>();
+    for (var marker : markers) {
+      var actual = current(marker);
+      if (actual != null) result.put(actual.key(), actual);
+    }
+    return List.copyOf(result.values());
+  }
+
+  public void reconcileStarts(String dimension, ChunkPos chunk, List<Marker> actual) {
+    var source = new Source(dimension, chunk.toLong());
+    var known = new LinkedHashMap<String, Marker>();
+    actual.forEach(m -> known.put(m.key(), m));
+    discovered.put(source, Map.copyOf(known));
+    for (String id : List.copyOf(sourceMarkers.getOrDefault(source, Set.of())))
+      if (!known.containsKey(id)) removeStructure(id);
+    actual.forEach(this::add);
+  }
+
   public Marker removeStructure(String key) {
     structureIndex.remove(key);
     var removed = markerData.remove(key);
-    if (removed != null) setDirty();
+    if (removed != null) {
+      var pos = removed.sourceChunk();
+      if (pos != null) {
+        var source = new Source(removed.dimension(), pos.toLong());
+        var ids = sourceMarkers.get(source);
+        if (ids != null) {
+          ids.remove(key);
+          if (ids.isEmpty()) sourceMarkers.remove(source);
+        }
+      }
+      setDirty();
+    }
     return removed;
   }
 
   public void clearStructures() {
     structureIndex.clear();
     markerData.clear();
+    sourceMarkers.clear();
+    discovered.clear();
     setDirty();
   }
 
@@ -42,6 +95,17 @@ public final class MapData extends SavedData {
       String key, String type, String dimension, int x, int y, int z, boolean predicted) {
     public Marker(String key, String type, String dimension, int x, int y, int z) {
       this(key, type, dimension, x, y, z, false);
+    }
+
+    /** Native starts are keyed by their origin chunk, not their bounding-box center. */
+    public ChunkPos sourceChunk() {
+      String prefix = dimension + "/" + type + "/";
+      if (!key.startsWith(prefix)) return null;
+      try {
+        return new ChunkPos(Long.parseLong(key.substring(prefix.length())));
+      } catch (NumberFormatException ex) {
+        return null;
+      }
     }
 
     public CompoundTag tag() {
@@ -141,9 +205,16 @@ public final class MapData extends SavedData {
   }
 
   public void add(Marker marker) {
+    marker = current(marker);
+    if (marker == null) return;
     var old = structures.get(marker.key());
     if (marker.equals(old) || (old != null && !old.predicted() && marker.predicted())) return;
     markerData.put(marker.key(), marker);
+    var source = marker.sourceChunk();
+    if (source != null)
+      sourceMarkers
+          .computeIfAbsent(new Source(marker.dimension(), source.toLong()), k -> new HashSet<>())
+          .add(marker.key());
     structureIndex.put(marker.key(), marker.dimension(), marker.x(), marker.z(), marker);
     while (structures.size() > MAX_STRUCTURES)
       removeStructure(structures.keySet().iterator().next());

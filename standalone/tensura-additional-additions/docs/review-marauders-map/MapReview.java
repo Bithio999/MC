@@ -1304,10 +1304,12 @@ public final class MapReview {
                     .getSkill(HeavenlyRestriction.INSTANT_TRANSMISSION.get())
                     .orElseThrow();
             i.setMastery(i.getMaxMastery());
-            MapData.get(p.server)
-                .structures
-                .entrySet()
-                .removeIf(e -> e.getValue().type().equals("minecraft:stronghold"));
+            var atlas = MapData.get(p.server);
+            atlas.structures.values().stream()
+                .filter(m -> m.type().equals("minecraft:stronghold"))
+                .map(MapData.Marker::key)
+                .toList()
+                .forEach(atlas::removeStructure);
           });
       phase = 30;
       wait = 0;
