@@ -1,5 +1,10 @@
 # Changelog
 
+## Additions 1.20.2 — Vesper blade connection
+
+- Align Vesper's blade root with the grip and center of the guard. Add a solid silver collar and remove the sideways step at the join.
+- Repack the native 64×64 sprite and refresh the wiki's item captures.
+
 ## Additions 1.20.1 — Vesper balance and tooltip
 
 - Increase Vesper's baseline damage from 96 to 105. Retain 1.7 attack speed, +1 reach and 3,960 durability.

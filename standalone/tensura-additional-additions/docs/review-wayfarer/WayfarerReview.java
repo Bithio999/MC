@@ -471,11 +471,22 @@ public final class WayfarerReview {
     if (phase == 905 && wait > 20) {
       checkVesperTooltip(true);
       shot("vesper-item-ii");
+      mc.setScreen(null);
+      mc.options.hideGui = false;
+      mc.options.setCameraType(CameraType.FIRST_PERSON);
+      server(p -> camera(p, root.add(6, 2, 9), root.add(3, 4, -8)));
+      phase = 906;
+      wait = 0;
+      return;
+    }
+    if (phase == 906 && wait > 30) {
+      shot("vesper-first-person");
       Files.writeString(
           OUT.resolve("passed-vesper.txt"),
           "PASS: Kael wields Vesper; actual native Wind Cutter then melee produced exactly one"
               + " Afterwind; native 105 attack tooltip; Afterwind I/II show ordered 30%/75% effects"
-              + " and formatted EP, after a real Chromatic Orb upgrade.\n");
+              + " and formatted EP, after a real Chromatic Orb upgrade; first-person held"
+              + " sword.\n");
       mc.stop();
       return;
     }
