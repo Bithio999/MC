@@ -2,9 +2,11 @@
 
 [All wikis](../README.md) · [TensuraAdditionalAdditions](TensuraAdditionalAdditions.md) · [The High Realm](Additions-The-High-Realm.md)
 
-An otherworlder who survived the loss of his own world. His silver hair, dark embroidered coat and Hihiirokane Sword mark a rare encounter among the realm’s elite monsters.
+An otherworlder who survived the loss of his own world. His silver hair, navy coat with gold compass embroidery and Hihiirokane Sword mark a rare encounter among the realm’s elite monsters.
 
 ![Kael Veyr in The High Realm](../media/kael-portrait.png)
+
+![Kael’s coat and compass embroidery](../media/kael-skin-back.png)
 
 | Boss data | Default |
 | --- | --- |

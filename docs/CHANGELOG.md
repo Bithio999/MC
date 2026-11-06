@@ -1,5 +1,11 @@
 # Changelog
 
+## Additions 1.19.2 — Kael’s native-style skin
+
+- Rework Kael’s skin at the same 64×64 pixel density as Tensura’s otherworlders: clustered silver hair, simple teal eyes, navy clothing, a pale collar and gold trim.
+- Add a readable small back compass and align its restrained emissive mask. Preserve native player geometry, equipment, combat and stats.
+- Include source art and reproducible UV packing, and update the portrait and front/back/side wiki captures.
+
 ## Additions 1.19.1 — Structure verification and marker reconciliation
 
 - Verify every teleport destination against its native structure-origin chunk before preparing a landing chunk. Keep valid cross-chunk structure icons and confirm predictions using actual bounds.

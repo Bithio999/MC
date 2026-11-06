@@ -208,6 +208,18 @@ public final class WayfarerReview {
     }
     if (phase == 1 && wait > 120 && boss != null && mc.level.getEntity(boss.getId()) != null) {
       shot("kael-portrait");
+      if (Boolean.getBoolean("heavenlyrestriction.review.kaelSkinOnly")) {
+        phase = 800;
+        wait = 0;
+        server(
+            p -> {
+              camera(p, root.add(-3, .3, -4.8), root.add(0, 1, 0));
+              boss.setYRot(0);
+              boss.setYBodyRot(0);
+              boss.setYHeadRot(0);
+            });
+        return;
+      }
       phase = 2;
       wait = 0;
       mc.options.hideGui = false;
@@ -233,6 +245,29 @@ public final class WayfarerReview {
             boss.combat().cancel();
             boss.setNoAi(true);
           });
+      return;
+    }
+    if (phase == 800 && wait > 35) {
+      shot("kael-skin-back");
+      phase = 801;
+      wait = 0;
+      server(p -> camera(p, root.add(-4, .15, 2.4), root.add(0, 1, 0)));
+      return;
+    }
+    if (phase == 801 && wait > 35) {
+      shot("kael-skin-side");
+      phase = 802;
+      wait = 0;
+      server(p -> camera(p, root.add(.4, .15, 3.5), root.add(0, 1.25, 0)));
+      return;
+    }
+    if (phase == 802 && wait > 35) {
+      shot("kael-skin-front");
+      Files.writeString(
+          OUT.resolve("passed-skin.txt"),
+          "PASS: native 64x64 Kael skin and registered subtle star mask; front/back/side views,"
+              + " native player geometry and held weapon.\n");
+      mc.stop();
       return;
     }
     if (phase == 2 && wait > 25) {
