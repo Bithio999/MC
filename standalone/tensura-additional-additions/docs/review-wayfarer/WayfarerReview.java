@@ -37,6 +37,29 @@ public final class WayfarerReview {
   private static volatile KaelVeyrEntity boss;
   private static volatile Husk dummy;
   private static Vec3 root;
+  private static volatile int vesperWind, vesperCuts;
+  private static java.util.function.Consumer<
+          net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent>
+      vesperObserver;
+
+  private static final class VesperScreen extends net.minecraft.client.gui.screens.Screen {
+    VesperScreen() {
+      super(net.minecraft.network.chat.Component.literal("Vesper"));
+    }
+
+    @Override
+    public void render(net.minecraft.client.gui.GuiGraphics g, int x, int y, float partial) {
+      g.fill(0, 0, width, height, 0xff101b29);
+      var stack = Minecraft.getInstance().player.getMainHandItem();
+      g.drawCenteredString(font, "Vesper", width / 2, 30, 0xffe1c78b);
+      g.pose().pushPose();
+      g.pose().translate(width - 170, height / 2 - 65, 0);
+      g.pose().scale(7, 7, 1);
+      g.renderItem(stack, 0, 0);
+      g.pose().popPose();
+      g.renderTooltip(font, stack, 16, height / 2 - 70);
+    }
+  }
 
   private static void check(boolean ok, String message) {
     if (!ok) throw new IllegalStateException(message);
@@ -166,6 +189,8 @@ public final class WayfarerReview {
                                 x + dx,
                                 z + dz)
                             + 6);
+            boolean vesperReview = Boolean.getBoolean("heavenlyrestriction.review.vesperOnly");
+            if (vesperReview) y = 160;
             root = new Vec3(x + .5, y + 1, z + .5);
             // A safe pale courtyard above generated ground, only in the disposable review copy.
             for (int dx = -27; dx <= 27; dx++)
@@ -177,9 +202,13 @@ public final class WayfarerReview {
                             : Blocks.SMOOTH_QUARTZ)
                         .defaultBlockState(),
                     2);
-                for (int dy = 1; dy <= 4; dy++)
-                  level.setBlock(
-                      new BlockPos(x + dx, y + dy, z + dz), Blocks.AIR.defaultBlockState(), 2);
+                for (int dy = 1;
+                    dy <= (vesperReview ? level.getMaxBuildHeight() - y - 1 : 4);
+                    dy++) {
+                  var clear = new BlockPos(x + dx, y + dy, z + dz);
+                  if (!level.getBlockState(clear).isAir())
+                    level.setBlock(clear, Blocks.AIR.defaultBlockState(), 2);
+                }
               }
             boss = WayfarerContent.KAEL.get().create(level);
             boss.setPos(root);
@@ -207,7 +236,10 @@ public final class WayfarerReview {
       return;
     }
     if (phase == 1 && wait > 120 && boss != null && mc.level.getEntity(boss.getId()) != null) {
-      shot("kael-portrait");
+      shot(
+          Boolean.getBoolean("heavenlyrestriction.review.vesperOnly")
+              ? "kael-vesper"
+              : "kael-portrait");
       if (Boolean.getBoolean("heavenlyrestriction.review.kaelSkinOnly")) {
         phase = 800;
         wait = 0;
@@ -220,7 +252,7 @@ public final class WayfarerReview {
             });
         return;
       }
-      phase = 2;
+      phase = Boolean.getBoolean("heavenlyrestriction.review.vesperOnly") ? 900 : 2;
       wait = 0;
       mc.options.hideGui = false;
       mc.options.fov().set(58);
@@ -236,10 +268,12 @@ public final class WayfarerReview {
             dummy.setCustomName(
                 net.minecraft.network.chat.Component.literal("Combat Review Dummy"));
             boss.level().addFreshEntity(dummy);
-            RaceAPI.getRaceFrom(dummy).setRace(TensuraRaces.HUMAN_SAINT.get(), false);
-            dummy.getAttribute(TensuraAttributes.MAX_SPIRITUAL_HEALTH).setBaseValue(200000);
-            TensuraStorages.getExistenceFrom(dummy).setSpiritualHealth(200000);
-            EnergyHelper.setBaseMaxEP(dummy, 20_000_000);
+            if (!Boolean.getBoolean("heavenlyrestriction.review.vesperOnly")) {
+              RaceAPI.getRaceFrom(dummy).setRace(TensuraRaces.HUMAN_SAINT.get(), false);
+              dummy.getAttribute(TensuraAttributes.MAX_SPIRITUAL_HEALTH).setBaseValue(200000);
+              TensuraStorages.getExistenceFrom(dummy).setSpiritualHealth(200000);
+              EnergyHelper.setBaseMaxEP(dummy, 20_000_000);
+            }
             dummy.setTarget(boss);
             boss.setTarget(dummy);
             boss.combat().cancel();
@@ -267,6 +301,121 @@ public final class WayfarerReview {
           OUT.resolve("passed-skin.txt"),
           "PASS: native 64x64 Kael skin and registered subtle star mask; front/back/side views,"
               + " native player geometry and held weapon.\n");
+      mc.stop();
+      return;
+    }
+    if (phase == 900 && wait > 25 && dummy != null) {
+      server(
+          p -> {
+            check(
+                boss.getMainHandItem().getItem()
+                    instanceof dev.heavenlyrestriction.vesper.VesperItem,
+                "Boss does not wield Vesper");
+            dummy.getAttribute(Attributes.MAX_HEALTH).setBaseValue(100000);
+            dummy.setHealth(100000);
+            vesperObserver =
+                e -> {
+                  if (e.getEntity() == dummy
+                      && dev.heavenlyrestriction.RestrictionData.attacker(e.getSource()) == boss) {
+                    System.out.println(
+                        "[Vesper hit] type="
+                            + e.getSource().typeHolder().unwrapKey()
+                            + " element="
+                            + ((io.github.manasmods.tensura.damage.TensuraDamageSource)
+                                    e.getSource())
+                                .tensura$getElement()
+                            + " ability="
+                            + ((io.github.manasmods.tensura.damage.TensuraDamageSource)
+                                    e.getSource())
+                                .tensura$getAbilityInstance()
+                            + " raw="
+                            + e.getAmount()
+                            + " hp="
+                            + dummy.getHealth()
+                            + " shp="
+                            + TensuraStorages.getExistenceFrom(dummy).getSpiritualHealth());
+                    if (e.getSource().is(dev.heavenlyrestriction.vesper.Afterwind.DAMAGE))
+                      vesperCuts++;
+                    else if (((io.github.manasmods.tensura.damage.TensuraDamageSource)
+                                    e.getSource())
+                                .tensura$getElement()
+                            == io.github.manasmods.tensura.ability.magic.Element.WIND
+                        || e.getSource()
+                            .typeHolder()
+                            .unwrapKey()
+                            .orElseThrow()
+                            .location()
+                            .getPath()
+                            .contains("wind")) vesperWind++;
+                  }
+                };
+            net.neoforged.neoforge.common.NeoForge.EVENT_BUS.addListener(vesperObserver);
+          });
+      cast(WayfarerCombat.Action.WIND_CUTTER, 4);
+      phase = 901;
+      wait = 0;
+      return;
+    }
+    if (phase == 901 && wait > 15) {
+      check(wait < 300, "Native Wind Cutter never reached the review enemy");
+      if (vesperWind == 0) return;
+      server(
+          p -> {
+            boss.combat().cancel();
+            boss.setNoAi(true);
+            boss.teleportTo(dummy.getX(), dummy.getY(), dummy.getZ() - 1.8);
+            boss.setYRot(0);
+            boss.setYBodyRot(0);
+            boss.setYHeadRot(0);
+            dummy.invulnerableTime = 0;
+            camera(p, root.add(6, .7, 10), dummy.position().add(0, 1, 0));
+            System.out.println(
+                "[Vesper melee] held="
+                    + boss.getMainHandItem()
+                    + " accepted="
+                    + boss.doHurtTarget(dummy)
+                    + " posthp="
+                    + dummy.getHealth()
+                    + " postshp="
+                    + TensuraStorages.getExistenceFrom(dummy).getSpiritualHealth());
+          });
+      phase = 902;
+      wait = 0;
+      return;
+    }
+    if (phase == 902 && wait > 6) {
+      check(
+          vesperCuts == 1,
+          "Native wind/sword combo did not produce exactly one Afterwind cut: wind="
+              + vesperWind
+              + " cuts="
+              + vesperCuts);
+      shot("vesper-afterwind");
+      server(
+          p -> {
+            p.getInventory().clearContent();
+            p.setItemSlot(
+                EquipmentSlot.MAINHAND,
+                dev.heavenlyrestriction.vesper.VesperItem.create(p.registryAccess()));
+            p.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(1);
+            net.neoforged.neoforge.common.NeoForge.EVENT_BUS.unregister(vesperObserver);
+          });
+      phase = 903;
+      wait = 0;
+      return;
+    }
+    if (phase == 903 && wait > 20) {
+      mc.setScreen(new VesperScreen());
+      phase = 904;
+      wait = 0;
+      return;
+    }
+    if (phase == 904 && wait > 20) {
+      shot("vesper-item");
+      Files.writeString(
+          OUT.resolve("passed-vesper.txt"),
+          "PASS: Kael wields Vesper; actual native Wind Cutter then melee produced exactly one"
+              + " Afterwind; native tooltip/item render.\n");
       mc.stop();
       return;
     }

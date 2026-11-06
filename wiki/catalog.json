@@ -1270,5 +1270,11 @@
     "title": "Chromatic Orb",
     "category": "Equipment",
     "mod": "additions"
+  },
+  {
+    "slug": "Additions-Vesper",
+    "title": "Vesper",
+    "category": "Gear",
+    "mod": "additions"
   }
 ]

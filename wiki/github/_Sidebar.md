@@ -62,6 +62,7 @@
 - [Exponentiation](https://github.com/Bithio999/MC/wiki/Additions-Exponentiation)
 - [Aura recovery](https://github.com/Bithio999/MC/wiki/Additions-Aura-Regeneration)
 - [Equipment](https://github.com/Bithio999/MC/wiki/Additions-Weapons)
+- [Vesper](https://github.com/Bithio999/MC/wiki/Additions-Vesper)
 - [Chromatic Orb](https://github.com/Bithio999/MC/wiki/Additions-Chromatic-Orb)
 
 **Dimensions**

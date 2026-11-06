@@ -1,0 +1,5 @@
+gradle.projectsEvaluated {
+ def reference = rootProject.providers.gradleProperty('vesperReferenceJar').orNull
+ if (reference == null || !rootProject.file(reference).isFile()) throw new GradleException('Set -PvesperReferenceJar to the local Tensura Not Enough Bosses reference JAR.')
+ rootProject.dependencies.add('runtimeOnly', rootProject.files(reference))
+}

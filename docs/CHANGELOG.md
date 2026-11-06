@@ -1,5 +1,12 @@
 # Changelog
 
+## Additions 1.20.0 — Vesper
+
+- Give Kael the unique sword Vesper and drop his equipped Vesper through native equipment loot, preserving its wear and engravings. Upgrade existing Kaels using their original Hihiirokane Sword while preserving wear, engravings and wounded resources.
+- Benchmark against the actual Night Rose from Tensura: Not Enough Bosses: Vesper has 96 baseline attack damage versus 90, the same 1.7 attack speed and +1 reach, and 3,960 actual durability versus 3,600.
+- Add Afterwind: successful Wind damage marks a foe for five seconds; the next direct sword strike releases one delayed Wind cut for 20% of the raw attack attribute. Use a three-second wielder cooldown, native defenses and native spiritual-damage handling. Chromatic Orb raises the coefficient to 25% at level II.
+- Add native-style silver/navy/gold sword art, item tooltips and in-game/wiki documentation.
+
 ## Additions 1.19.2 — Kael’s native-style skin
 
 - Rework Kael’s skin at the same 64×64 pixel density as Tensura’s otherworlders: clustered silver hair, simple teal eyes, navy clothing, a pale collar and gold trim.

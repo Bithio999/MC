@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "heavenlyrestriction:nullification"
+    "heavenlyrestriction:nullification",
+    "heavenlyrestriction:afterwind"
   ]
 }

@@ -1,0 +1,7 @@
+{
+  "type": "heavenlyrestriction:vesper",
+  "engravings": {
+    "heavenlyrestriction:afterwind": 1
+  },
+  "minEP": 1000000
+}

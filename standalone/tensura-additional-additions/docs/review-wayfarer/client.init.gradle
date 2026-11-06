@@ -2,5 +2,6 @@ gradle.projectsEvaluated {
  rootProject.sourceSets.main.java.srcDir(rootProject.file('docs/review-wayfarer'))
  rootProject.neoForge.runs.client.gameDirectory=rootProject.file('/workspace/validation-wayfarer/client')
  if (rootProject.providers.gradleProperty('kaelSkinOnly').isPresent()) rootProject.neoForge.runs.client.systemProperty('heavenlyrestriction.review.kaelSkinOnly','true')
+ if (rootProject.providers.gradleProperty('vesperOnly').isPresent()) rootProject.neoForge.runs.client.systemProperty('heavenlyrestriction.review.vesperOnly','true')
  rootProject.neoForge.runs.client.programArguments.addAll('--quickPlaySingleplayer','Wayfarer Review','--width','1280','--height','720')
 }

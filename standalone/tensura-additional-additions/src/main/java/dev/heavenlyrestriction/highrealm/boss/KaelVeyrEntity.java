@@ -148,9 +148,7 @@ public final class KaelVeyrEntity extends OtherworlderEntity
     setAge(0);
     anchor = blockPosition();
     RaceAPI.getRaceFrom(this).setRace(TensuraRaces.DIVINE_HUMAN.get(), false);
-    var weapon = BuiltInRegistries.ITEM.get(ResourceLocation.parse("tensura:hihiirokane_sword"));
-    inventory.setItem(getSlotId(EquipmentSlot.MAINHAND), new ItemStack(weapon));
-    updateContainerEquipment();
+    equipVesper();
     TensuraStorages.getExistenceFrom(this).setTrueHero(true);
     WayfarerLoadout.apply(this);
     base(Attributes.MAX_HEALTH, HP);
@@ -163,11 +161,37 @@ public final class KaelVeyrEntity extends OtherworlderEntity
     pool.setSpiritualHealth(getAttributeValue(TensuraAttributes.MAX_SPIRITUAL_HEALTH));
     pool.markDirty();
     setHealth(getMaxHealth());
-    setDropChance(EquipmentSlot.MAINHAND, 0);
+    setDropChance(EquipmentSlot.MAINHAND, 2);
     TensuraBehaviourHelper.setHome(this, (ServerLevel) level(), anchor);
     combat.delay(80);
     initialized = true;
     observe();
+  }
+
+  /** Upgrade only the original sword, preserving its wear and native engravings. */
+  public void equipVesper() {
+    var old = getMainHandItem();
+    if (!old.isEmpty()
+        && !BuiltInRegistries.ITEM
+            .getKey(old.getItem())
+            .toString()
+            .equals("tensura:hihiirokane_sword")) return;
+    var next = dev.heavenlyrestriction.vesper.VesperItem.create(level().registryAccess());
+    if (!old.isEmpty()) {
+      for (var engraving :
+          net.minecraft.world.item.enchantment.EnchantmentHelper.getEnchantmentsForCrafting(old)
+              .entrySet()) next.enchant(engraving.getKey(), engraving.getIntValue());
+      if (old.isDamageableItem())
+        next.setDamageValue(
+            Math.min(
+                next.getMaxDamage() - 1,
+                Math.round(
+                    old.getDamageValue() / (float) old.getMaxDamage() * next.getMaxDamage())));
+    }
+    inventory.setItem(getSlotId(EquipmentSlot.MAINHAND), next);
+    updateContainerEquipment();
+    // Native guaranteed equipment drop preserves wear; tamed otherworlders use inventory loot.
+    setDropChance(EquipmentSlot.MAINHAND, 2);
   }
 
   /** Hard cap actual EP, including native kill rewards; never refill wounded resource pools. */

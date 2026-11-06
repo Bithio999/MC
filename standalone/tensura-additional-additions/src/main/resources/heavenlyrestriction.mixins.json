@@ -70,7 +70,9 @@
     "MapSurveyNoiseMixin",
     "ChromaticAnvilMixin",
     "ChromaticGrindstoneMixin",
-    "ChromaticRepairMixin"
+    "ChromaticRepairMixin",
+    "AfterwindHitMixin",
+    "AfterwindSpiritualHitMixin"
   ],
   "injectors": {
     "defaultRequire": 1

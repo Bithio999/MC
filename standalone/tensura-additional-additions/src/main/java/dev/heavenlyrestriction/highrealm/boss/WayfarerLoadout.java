@@ -15,7 +15,7 @@ import java.util.*;
  */
 public final class WayfarerLoadout {
   private static final String VERSION = "heavenlyrestriction:wayfarer_loadout";
-  private static final int CURRENT = 4;
+  private static final int CURRENT = 5;
 
   public static List<ManasSkill> uniques() {
     return List.of(
@@ -73,6 +73,7 @@ public final class WayfarerLoadout {
       race.setRace(TensuraRaces.DIVINE_HUMAN.get(), false);
     remove(boss, ExtraSkills.ULTRASPEED_REGENERATION.get());
     remove(boss, ExtraSkills.WIND_MANIPULATION.get());
+    boss.equipVesper();
     apply(boss);
     boss.setHealth(hp);
     pool.setAura(ap);

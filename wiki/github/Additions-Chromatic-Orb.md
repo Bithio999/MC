@@ -76,6 +76,7 @@ Bonuses apply in each engraving’s normal equipment slots and attack conditions
 | **Dead End Rainbow** | I → II | At full attack charge, direct SHP damage changes from **clamp(S/7 + 10% of S, 10, 500)** to **clamp(S/7 + 20% of S, 20, 1,000)**, where **S** is the target’s maximum SHP. The **1-second** player cooldown remains. Armor mitigation is already fully bypassed at I. <!-- engraving: tensura:dead_end_rainbow --> |
 | **Intangibility** | I → II | Projectile piercing amount **5 → 10**. Armor mitigation is already fully bypassed at I, and the native melee shield-bypass condition does not become stronger. <!-- engraving: tensura:intangibility --> |
 | **Nullification** | I → II | **No stronger effect.** Barrier shattering, skill-effect removal, spiritual targeting and the **2-second skill seal** remain unchanged. <!-- engraving: heavenlyrestriction:nullification --> |
+| **Afterwind** | I → II | [Vesper](https://github.com/Bithio999/MC/wiki/Additions-Vesper) delayed Wind cut: **20% → 25%** of raw attack damage. The **0.2-second delay**, **3-second cooldown** and **5-second mark** stay the same. <!-- engraving: heavenlyrestriction:afterwind --> |
 
 ### Mysticism addon engravings
 

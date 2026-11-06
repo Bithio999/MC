@@ -668,8 +668,8 @@
         {
           "title": "Kael Veyr · Rare otherworlder boss",
           "lines": [
-            "Rare Divine Human / True Hero, capped at 15M actual EP even after kills. Default native bonuses give 10,000 HP and 37,100 SHP; only HP has a boss bar. He uses a Hihiirokane Sword, Martial Master, Mathematician, Seer, Aura Slash and wind magic. He opens fights with Magic Wind Transform. Law Manipulation cleanses harmful effects and takes over enemy magic when valid. Divine Ki Release, Eye of Truth and Unpredictability are mastered and active. Wind Domination supplies passive bonuses only. Infinite Regeneration restores HP/SHP with magicules. Native skill costs, cooldowns and seals apply.",
-            "Natural spawning uses weight 1 and a 2.5% acceptance roll, with a 20-minute realm-wide cooldown, no other wild Kael within 512 blocks, and no spawning within 192 blocks of the return sanctum. The cooldown permits future rolls, not a guaranteed spawn. Loot includes Hihiirokane Ingots, Magic Ore, Echo Shards and Netherite Scrap."
+            "Rare Divine Human / True Hero, capped at 15M actual EP even after kills. Default native bonuses give 10,000 HP and 37,100 SHP; only HP has a boss bar. He uses Vesper, Martial Master, Mathematician, Seer, Aura Slash and wind magic. He opens fights with Magic Wind Transform. Law Manipulation cleanses harmful effects and takes over enemy magic when valid. Divine Ki Release, Eye of Truth and Unpredictability are mastered and active. Wind Domination supplies passive bonuses only. Infinite Regeneration restores HP/SHP with magicules. Native skill costs, cooldowns and seals apply.",
+            "Natural spawning uses weight 1 and a 2.5% acceptance roll, with a 20-minute realm-wide cooldown, no other wild Kael within 512 blocks, and no spawning within 192 blocks of the return sanctum. The cooldown permits future rolls, not a guaranteed spawn. Loot includes Vesper, a Starless Core, Hihiirokane Ingots, Magic Ore, Echo Shards and Netherite Scrap."
           ]
         }
       ]
@@ -857,6 +857,48 @@
             "Breathing Support II and Nullification II have the same functional effects as level I. Nullification still seals skills for 2 seconds. Mysticism’s Boreal Frost II also keeps its original duration and amplifier.",
             "Slotting IV can hold four cores, but the supported native versions have no four-core combination recipes. A supported recipe is required for a core-combination attack or cast.",
             "Blessings of Vitality, Vigor, Transcendence, Growth and Restoration stay unchanged, as do curses, Tsukumogami and ordinary enchantments."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "vesper",
+      "title": "Vesper",
+      "category": "Gear",
+      "summary": "Kael’s unique sword. Wind hits empower a delayed follow-up cut.",
+      "icon": "heavenlyrestriction:textures/item/vesper.png",
+      "keywords": [
+        "vesper",
+        "afterwind",
+        "kael",
+        "sword",
+        "wind",
+        "engraving",
+        "night rose"
+      ],
+      "related": [
+        "high-realm",
+        "chromatic-orb"
+      ],
+      "sections": [
+        {
+          "title": "Obtaining and stats",
+          "lines": [
+            "Kael Veyr wields Vesper and drops one with Afterwind I. Baseline attack damage: 96 with 1 base attack. Attack speed: 1.7; extra reach: 1 block. Durability: 3,960; repair with Hihiirokane Ingots."
+          ]
+        },
+        {
+          "title": "Afterwind",
+          "lines": [
+            "While holding Vesper, successfully dealing Wind damage marks that enemy for 5 seconds. Your next direct sword strike on that enemy releases a Wind cut after 0.2 seconds. The cut deals 20% of your raw attack attribute, with normal Wind bonuses and defenses.",
+            "One cut per wielder every 3 seconds. Marks do not stack. Switching away, death or changing dimension cancels the pending cut. The enemy must remain within 12 blocks.",
+            "Damage types: Physical for ordinary sword hits; Wind elemental for Afterwind. No extra resource cost."
+          ]
+        },
+        {
+          "title": "Chromatic Orb",
+          "lines": [
+            "One Chromatic Orb can raise Afterwind to level II: the raw-attack coefficient increases from 20% to 25%. Cooldown, delay and mark duration stay the same."
           ]
         }
       ]

@@ -2,7 +2,7 @@
 
 [All wikis](https://github.com/Bithio999/MC/wiki/Home) · [TensuraAdditionalAdditions](https://github.com/Bithio999/MC/wiki/TensuraAdditionalAdditions) · [The High Realm](https://github.com/Bithio999/MC/wiki/Additions-The-High-Realm)
 
-An otherworlder who survived the loss of his own world. His silver hair, navy coat with gold compass embroidery and Hihiirokane Sword mark a rare encounter among the realm’s elite monsters.
+An otherworlder who survived the loss of his own world. His silver hair, navy coat with gold compass embroidery and [Vesper](https://github.com/Bithio999/MC/wiki/Additions-Vesper) mark a rare encounter among the realm’s elite monsters.
 
 ![Kael Veyr in The High Realm](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/kael-portrait.png)
 
@@ -14,8 +14,10 @@ An otherworlder who survived the loss of his own world. His silver hair, navy co
 | Actual EP | **15,000,000 maximum** · kill rewards cannot exceed this cap |
 | HP / SHP | **10,000 / 37,100** with native race and support bonuses |
 | Location | All three High Realm biomes |
-| Weapon | Hihiirokane Sword |
+| Weapon | [Vesper](https://github.com/Bithio999/MC/wiki/Additions-Vesper) |
 | Health display | HP boss bar |
+
+Kael drops one engraved **Vesper** on defeat. Its Afterwind engraving rewards alternating wind damage and sword strikes.
 
 ## Finding Kael
 
@@ -37,7 +39,7 @@ Infinite Regeneration restores HP and SHP using magicules. Wind Domination is us
 
 | Native ability | Use | Damage type |
 | --- | --- | --- |
-| **Sword attacks** | Hihiirokane Sword melee. | Physical |
+| **Sword attacks** | [Vesper](https://github.com/Bithio999/MC/wiki/Additions-Vesper) melee. | Physical |
 | **Aura Slash** | Native weapon-based ranged slash. | Physical · aura slash |
 | **Martial Master** | Native dash when grounded with a safe destination near the target. | Physical |
 | **Wind Cutter** | Native wind-blade projectiles. | Wind + magic |
@@ -61,8 +63,8 @@ Infinite Regeneration restores HP and SHP using magicules. Wind Domination is us
 
 ## Rewards
 
+- **1 [Vesper](https://github.com/Bithio999/MC/wiki/Additions-Vesper)** with **Afterwind I**
 - **1 Starless Core** for crafting a [Chromatic Orb](https://github.com/Bithio999/MC/wiki/Additions-Chromatic-Orb)
-
 - **4–8 Hihiirokane Ingots**
 - **8–16 Magic Ore**
 - **2–4 Echo Shards**
