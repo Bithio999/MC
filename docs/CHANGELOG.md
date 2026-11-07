@@ -1,5 +1,11 @@
 # Changelog
 
+## Additions 1.20.3 — Afterwind dummies and held orientation
+
+- Recognize accepted damage recorded by Tensura training dummies, whose HP stays full. Track a fresh native damage record so old, blocked or immune hits cannot prime or consume Afterwind.
+- Roll Vesper's held model around its length to face the cutting edge forward in either hand, in first and third person. Preserve the inventory artwork and blade direction.
+- Add real training-dummy regressions and update the in-game guide, wiki and combat/held captures.
+
 ## Additions 1.20.2 — Vesper blade connection
 
 - Align Vesper's blade root with the grip and center of the guard. Add a solid silver collar and remove the sideways step at the join.

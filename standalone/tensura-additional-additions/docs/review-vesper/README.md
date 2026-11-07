@@ -15,7 +15,7 @@ gradle clean test runGameTestServer \
 
 Omit both `reference.init.gradle` and its property to run without the reference addon. All functional tests still run; only the live Night Rose comparison is skipped. The Vesper tests cover real HP/SHP damage, immune hits, expiry, cooldown, weapon switching, nonrecursive delayed hits, raw attack scaling, over-cap engraving preservation, boss loot and migration of a saved Kael without resource restoration.
 
-Add `-PvesperFocus=true` to run only the eight Vesper tests. The full profile includes both the existing addon tests and the dedicated `vesperreview` template namespace. The loot regression invokes the complete native `dropAllDeathLoot` transaction, including the loot table and equipment, after the death-prevention boundary; it checks exactly one sword and preserved level-II engraving/wear.
+Add `-PvesperFocus=true` to run only the eleven Vesper tests. The full profile includes both the existing addon tests and the dedicated `vesperreview` template namespace. The three native training-dummy regressions cover constant-HP damage, immune/stale hits and counter resets, using the real dummy entity on its required block. The loot regression invokes the complete native `dropAllDeathLoot` transaction, including the loot table and equipment, after the death-prevention boundary; it checks exactly one sword and preserved level-II engraving/wear.
 
 The guarded real-client review uses a disposable `Wayfarer Review` save. It verifies Kael’s equipped sword, his native Wind Cutter → sword combo, one delayed Afterwind hit, and native item rendering for both Afterwind I (30%) and Orb-enhanced Afterwind II (75%):
 

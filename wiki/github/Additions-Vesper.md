@@ -28,6 +28,10 @@ The cut deals **30% of your raw attack attribute**, then uses normal Wind boosts
 
 ![Kael landing an Afterwind combo](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/vesper-afterwind.png)
 
+Damage recorded by **Tensura’s training dummy** also counts, even though its HP stays full.
+
+![Vesper held with its cutting edge facing forward](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/vesper-held.png)
+
 ## Chromatic Orb
 
 A [Chromatic Orb](https://github.com/Bithio999/MC/wiki/Additions-Chromatic-Orb) raises Afterwind to **level II**, increasing its raw-attack coefficient from **30% to 75%**. Delay, cooldown and mark duration remain the same.

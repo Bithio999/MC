@@ -41,6 +41,31 @@ public final class VesperGameTests {
     return t;
   }
 
+  private static io.github.manasmods.tensura.entity.human.golem.TrainingDummyEntity dummy(
+      GameTestHelper h, ServerPlayer p) {
+    var t =
+        (io.github.manasmods.tensura.entity.human.golem.TrainingDummyEntity)
+            BuiltInRegistries.ENTITY_TYPE
+                .get(ResourceLocation.parse("tensura:training_dummy"))
+                .create(h.getLevel());
+    t.setPos(p.position().add(0, 0, 3));
+    t.setNoAi(true);
+    h.getLevel()
+        .setBlock(
+            t.blockPosition().below(),
+            net.minecraft.world.level.block.Blocks.STONE.defaultBlockState(),
+            3);
+    h.getLevel()
+        .setBlock(
+            t.blockPosition(),
+            io.github.manasmods.tensura.registry.block.TensuraBlocks.TRAINING_DUMMY
+                .get()
+                .defaultBlockState(),
+            3);
+    h.getLevel().addFreshEntity(t);
+    return t;
+  }
+
   private static DamageSource wind(ServerPlayer p) {
     var source =
         new DamageSource(
@@ -441,6 +466,140 @@ public final class VesperGameTests {
               "Native death loot replaced the equipped sword's engraving/wear");
           boss.discard();
           h.succeed();
+        });
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 100)
+  public static void nativeTrainingDummyRecordsAfterwindWithoutLosingHealth(GameTestHelper h) {
+    var p = wielder(h);
+    var t = dummy(h, p);
+    int[] cuts = {0};
+    java.util.function.Consumer<LivingIncomingDamageEvent> observer =
+        e -> {
+          if (e.getEntity() == t && e.getSource().is(Afterwind.DAMAGE)) cuts[0]++;
+        };
+    NeoForge.EVENT_BUS.addListener(observer);
+    h.runAfterDelay(
+        5,
+        () -> {
+          float hp = t.getHealth();
+          t.hurt(wind(p), 5);
+          h.assertTrue(
+              t.lastDamageTaken > 0 && t.getHealth() == hp,
+              "Fixture must record Wind damage without losing HP");
+          t.invulnerableTime = 0;
+          t.hurt(p.damageSources().playerAttack(p), 10);
+          int before = t.damageNumber;
+          h.runAfterDelay(
+              7,
+              () -> {
+                h.assertTrue(
+                    cuts[0] == 1
+                        && t.lastDamageTaken > 0
+                        && t.getLastCombat() != null
+                        && t.getLastCombat().source().is(Afterwind.DAMAGE),
+                    "Dummy did not record exactly one real Afterwind cut: cuts="
+                        + cuts[0]
+                        + " count="
+                        + t.damageNumber
+                        + " before="
+                        + before
+                        + " last="
+                        + t.lastDamageTaken
+                        + " tick="
+                        + t.tickCount
+                        + " damageTick="
+                        + t.lastDamageTick);
+                h.assertTrue(t.getHealth() == hp, "Afterwind changed the dummy's health behavior");
+                NeoForge.EVENT_BUS.unregister(observer);
+                t.discard();
+                h.succeed();
+              });
+        });
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 140)
+  public static void nativeDummyImmuneHitsAndOldRecordsDoNotPrimeOrConsume(GameTestHelper h) {
+    var p = wielder(h);
+    var t = dummy(h, p);
+    int[] cuts = {0};
+    java.util.function.Consumer<LivingIncomingDamageEvent> observer =
+        e -> {
+          if (e.getEntity() == t && e.getSource().is(Afterwind.DAMAGE)) cuts[0]++;
+        };
+    NeoForge.EVENT_BUS.addListener(observer);
+    h.runAfterDelay(
+        5,
+        () -> {
+          t.hurt(p.damageSources().playerAttack(p), 5);
+          t.setInvulnerable(true);
+          t.hurt(wind(p), 5);
+          t.setInvulnerable(false);
+          t.invulnerableTime = 0;
+          t.hurt(p.damageSources().playerAttack(p), 5);
+          h.runAfterDelay(
+              7,
+              () -> {
+                h.assertTrue(cuts[0] == 0, "An old record or immune Wind hit primed Afterwind");
+                t.invulnerableTime = 0;
+                t.hurt(wind(p), 5);
+                t.setInvulnerable(true);
+                t.hurt(p.damageSources().playerAttack(p), 5);
+                h.runAfterDelay(
+                    7,
+                    () -> {
+                      h.assertTrue(cuts[0] == 0, "Immune sword strike consumed the mark");
+                      t.setInvulnerable(false);
+                      t.invulnerableTime = 0;
+                      t.hurt(p.damageSources().playerAttack(p), 5);
+                      h.runAfterDelay(
+                          7,
+                          () -> {
+                            h.assertTrue(
+                                cuts[0] == 1,
+                                "Accepted sword strike failed to consume the retained mark");
+                            NeoForge.EVENT_BUS.unregister(observer);
+                            t.discard();
+                            h.succeed();
+                          });
+                    });
+              });
+        });
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 100)
+  public static void nativeDummyCounterResetStillRegistersANewWindHit(GameTestHelper h) {
+    var p = wielder(h);
+    var t = dummy(h, p);
+    int[] cuts = {0};
+    java.util.function.Consumer<LivingIncomingDamageEvent> observer =
+        e -> {
+          if (e.getEntity() == t && e.getSource().is(Afterwind.DAMAGE)) cuts[0]++;
+        };
+    NeoForge.EVENT_BUS.addListener(observer);
+    h.runAfterDelay(
+        5,
+        () -> {
+          t.hurt(p.damageSources().playerAttack(p), 5);
+          h.assertTrue(t.damageNumber == 1, "Expected first native damage record");
+          h.runAfterDelay(
+              8,
+              () -> {
+                t.tickCount = Math.max(t.tickCount, t.lastDamageTick + 6);
+                t.invulnerableTime = 0;
+                t.hurt(wind(p), 5);
+                h.assertTrue(t.damageNumber == 1, "Expected native counter to restart at one");
+                t.invulnerableTime = 0;
+                t.hurt(p.damageSources().playerAttack(p), 5);
+                h.runAfterDelay(
+                    7,
+                    () -> {
+                      h.assertTrue(cuts[0] == 1, "Counter reset hid the new Wind hit");
+                      NeoForge.EVENT_BUS.unregister(observer);
+                      t.discard();
+                      h.succeed();
+                    });
+              });
         });
   }
 }

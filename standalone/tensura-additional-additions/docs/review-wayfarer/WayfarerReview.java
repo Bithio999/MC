@@ -35,7 +35,7 @@ public final class WayfarerReview {
   private static int wait, age;
   private static volatile String error;
   private static volatile KaelVeyrEntity boss;
-  private static volatile Husk dummy;
+  private static volatile Mob dummy;
   private static Vec3 root;
   private static volatile int vesperWind, vesperCuts;
   private static java.util.function.Consumer<
@@ -147,7 +147,17 @@ public final class WayfarerReview {
         p -> {
           boss.combat().cancel();
           boss.teleportTo(root.x, root.y, root.z);
+          if (dummy instanceof io.github.manasmods.tensura.entity.human.golem.TrainingDummyEntity)
+            boss.level().setBlock(dummy.blockPosition(), Blocks.AIR.defaultBlockState(), 3);
           dummy.setPos(root.add(0, 0, distance));
+          if (dummy instanceof io.github.manasmods.tensura.entity.human.golem.TrainingDummyEntity)
+            boss.level()
+                .setBlock(
+                    dummy.blockPosition(),
+                    io.github.manasmods.tensura.registry.block.TensuraBlocks.TRAINING_DUMMY
+                        .get()
+                        .defaultBlockState(),
+                    3);
           boss.setTarget(dummy);
           dummy.setTarget(boss);
           boss.setNoAi(false);
@@ -304,14 +314,31 @@ public final class WayfarerReview {
       server(
           p -> {
             camera(p, root.add(16, 9, 20), root.add(0, 3, 7));
-            dummy = new Husk(EntityType.HUSK, boss.level());
+            boolean vesper = Boolean.getBoolean("heavenlyrestriction.review.vesperOnly");
+            dummy =
+                vesper
+                    ? (Mob)
+                        net.minecraft.core.registries.BuiltInRegistries.ENTITY_TYPE
+                            .get(
+                                net.minecraft.resources.ResourceLocation.parse(
+                                    "tensura:training_dummy"))
+                            .create(boss.level())
+                    : new Husk(EntityType.HUSK, boss.level());
             dummy.setNoAi(true);
-            dummy.setNoGravity(false);
+            dummy.setNoGravity(vesper);
             dummy.getAttribute(Attributes.MAX_HEALTH).setBaseValue(10000);
             dummy.setHealth(10000);
             dummy.setPos(root.add(0, 0, 12));
             dummy.setCustomName(
                 net.minecraft.network.chat.Component.literal("Combat Review Dummy"));
+            if (vesper)
+              boss.level()
+                  .setBlock(
+                      dummy.blockPosition(),
+                      io.github.manasmods.tensura.registry.block.TensuraBlocks.TRAINING_DUMMY
+                          .get()
+                          .defaultBlockState(),
+                      3);
             boss.level().addFreshEntity(dummy);
             if (!Boolean.getBoolean("heavenlyrestriction.review.vesperOnly")) {
               RaceAPI.getRaceFrom(dummy).setRace(TensuraRaces.HUMAN_SAINT.get(), false);
@@ -481,12 +508,38 @@ public final class WayfarerReview {
     }
     if (phase == 906 && wait > 30) {
       shot("vesper-first-person");
+      mc.options.setCameraType(CameraType.THIRD_PERSON_FRONT);
+      phase = 907;
+      wait = 0;
+      return;
+    }
+    if (phase == 907 && wait > 20) {
+      shot("vesper-third-person");
+      mc.player.setMainArm(HumanoidArm.LEFT);
+      server(p -> p.setMainArm(HumanoidArm.LEFT));
+      mc.options.setCameraType(CameraType.FIRST_PERSON);
+      phase = 908;
+      wait = 0;
+      return;
+    }
+    if (phase == 908 && wait > 20) {
+      shot("vesper-first-person-left");
+      mc.options.setCameraType(CameraType.THIRD_PERSON_FRONT);
+      phase = 909;
+      wait = 0;
+      return;
+    }
+    if (phase == 909 && wait > 20) {
+      shot("vesper-third-person-left");
+      mc.player.setMainArm(HumanoidArm.RIGHT);
+      server(p -> p.setMainArm(HumanoidArm.RIGHT));
+      mc.options.setCameraType(CameraType.FIRST_PERSON);
       Files.writeString(
           OUT.resolve("passed-vesper.txt"),
-          "PASS: Kael wields Vesper; actual native Wind Cutter then melee produced exactly one"
-              + " Afterwind; native 105 attack tooltip; Afterwind I/II show ordered 30%/75% effects"
-              + " and formatted EP, after a real Chromatic Orb upgrade; first-person held"
-              + " sword.\n");
+          "PASS: Kael wields Vesper; actual native Wind Cutter then melee on a native training"
+              + " dummy produced exactly one Afterwind; native 105 attack tooltip; Afterwind I/II"
+              + " show ordered 30%/75% effects and formatted EP, after a real Chromatic Orb"
+              + " upgrade; first-person held sword in both hands and first/third person.\n");
       mc.stop();
       return;
     }

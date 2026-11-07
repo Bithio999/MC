@@ -4,6 +4,7 @@ import dev.heavenlyrestriction.*;
 import dev.heavenlyrestriction.exponentiation.ExponentiationContext;
 import io.github.manasmods.tensura.ability.magic.Element;
 import io.github.manasmods.tensura.damage.TensuraDamageSource;
+import io.github.manasmods.tensura.entity.human.golem.TrainingDummyEntity;
 import io.github.manasmods.tensura.storage.TensuraStorages;
 import java.util.*;
 import net.minecraft.core.particles.*;
@@ -20,7 +21,7 @@ import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import org.joml.Vector3f;
 
-/** A single Wind-to-sword combo, committed only after real HP/SHP/absorption damage. */
+/** A Wind-to-sword combo committed after real damage, including native dummy damage records. */
 public final class Afterwind {
   public static final ResourceKey<Enchantment> ENGRAVING =
       ResourceKey.create(Registries.ENCHANTMENT, HeavenlyRestriction.id("afterwind"));
@@ -66,6 +67,7 @@ public final class Afterwind {
       float health,
       double shp,
       float absorption,
+      long dummyStamp,
       float attack,
       int level,
       boolean wind,
@@ -120,6 +122,7 @@ public final class Afterwind {
         target.getHealth(),
         TensuraStorages.getExistenceFrom(target).getSpiritualHealth(),
         target.getAbsorptionAmount(),
+        dummyStamp(target),
         attack,
         level,
         wind,
@@ -131,7 +134,10 @@ public final class Afterwind {
     boolean damaged =
         target.getHealth() < hit.health - .0001f
             || TensuraStorages.getExistenceFrom(target).getSpiritualHealth() < hit.shp - .0001
-            || target.getAbsorptionAmount() < hit.absorption - .0001f;
+            || target.getAbsorptionAmount() < hit.absorption - .0001f
+            || target instanceof TrainingDummyEntity dummy
+                && dummy.lastDamageTaken > 0
+                && dummyStamp(dummy) != hit.dummyStamp;
     if (!damaged) return;
     var owner = hit.owner;
     long now = owner.level().getGameTime();
@@ -168,6 +174,13 @@ public final class Afterwind {
             owner);
     ((TensuraDamageSource) source).tensura$setElement(Element.WIND);
     return source;
+  }
+
+  /** Native dummies record successful damage instead of reducing their HP. */
+  private static long dummyStamp(LivingEntity target) {
+    return target instanceof TrainingDummyEntity dummy
+        ? ((long) dummy.lastDamageTick << 32) | Integer.toUnsignedLong(dummy.damageNumber)
+        : 0;
   }
 
   public static void tick(ServerTickEvent.Post event) {

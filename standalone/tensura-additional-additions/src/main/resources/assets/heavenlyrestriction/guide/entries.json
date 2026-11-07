@@ -892,7 +892,8 @@
           "lines": [
             "While holding Vesper, successfully dealing Wind damage marks that enemy for 5 seconds. Your next direct sword strike on that enemy releases a Wind cut after 0.2 seconds. The cut deals 30% of your raw attack attribute, with normal Wind bonuses and defenses.",
             "One cut per wielder every 3 seconds. Marks do not stack. Switching away, death or changing dimension cancels the pending cut. The enemy must remain within 12 blocks.",
-            "Damage types: Physical for ordinary sword hits; Wind elemental for Afterwind. No extra resource cost."
+            "Damage types: Physical for ordinary sword hits; Wind elemental for Afterwind. No extra resource cost.",
+            "Damage recorded by Tensura training dummies also counts, even though their HP stays full."
           ]
         },
         {
