@@ -25,6 +25,8 @@ Find a move below, then open its entry for targeting, damage, cost and cooldown.
 | [Magic Assignment](https://github.com/Bithio999/MC/wiki/Additions-Split-Mind#magic-assignment) | [Split Mind](https://github.com/Bithio999/MC/wiki/Additions-Split-Mind) | Active, Press | None |
 | [Auto-Cast](https://github.com/Bithio999/MC/wiki/Additions-Split-Mind#auto-cast) | [Split Mind](https://github.com/Bithio999/MC/wiki/Additions-Split-Mind) | Active, Toggle | Assigned magic’s native damage type |
 | [Open Map](https://github.com/Bithio999/MC/wiki/Additions-Marauders-Map#open-map) | [Marauder's Map](https://github.com/Bithio999/MC/wiki/Additions-Marauders-Map) | Active, Press | None |
+| [Compound Interest](https://github.com/Bithio999/MC/wiki/Additions-Critical-Merchant#compound-interest) | [Critical Merchant](https://github.com/Bithio999/MC/wiki/Additions-Critical-Merchant) | Passive, Toggle | Original attack’s damage type |
+| [Guaranteed Profit](https://github.com/Bithio999/MC/wiki/Additions-Critical-Merchant#guaranteed-profit) | [Critical Merchant](https://github.com/Bithio999/MC/wiki/Additions-Critical-Merchant) | Active, Press | None |
 
 ## Ultimate
 

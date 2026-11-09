@@ -10,10 +10,12 @@ Use Tensura’s normal Ability Selection menu. This addon has no Godly skill tie
 
 [Ability directory](https://github.com/Bithio999/MC/wiki/Additions-Abilities).
 
-[Exponentiation](https://github.com/Bithio999/MC/wiki/Additions-Exponentiation) squares supported beneficial values while learned and equipped in your current skill preset. Movement is excluded.
+[Exponentiation](https://github.com/Bithio999/MC/wiki/Additions-Exponentiation) raises supported beneficial values to ^1.2 while learned and equipped in your current skill preset. Movement is excluded.
 
 [Loan Shark](https://github.com/Bithio999/MC/wiki/Additions-Loan-Shark) lends skill copies, earns EP while they are used, and recalls or claims them through its report ledger.
 
 [Split Mind](https://github.com/Bithio999/MC/wiki/Additions-Split-Mind) adds +9 learning/mastery gain, Thought Acceleration, Chant Annulment and automatic casting of one assigned learned magic.
 
 [Marauder's Map](https://github.com/Bithio999/MC/wiki/Additions-Marauders-Map) maps visited and unvisited terrain, tracks all online players, locates structures and saves private pins.
+
+[Critical Merchant](https://github.com/Bithio999/MC/wiki/Additions-Critical-Merchant) compounds critical damage with chained coin flips and prepares ten guaranteed critical hits.

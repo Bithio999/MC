@@ -1,5 +1,12 @@
 # Changelog
 
+## Additions 1.21.0 — Critical Merchant
+
+- Add the rollable Critical Merchant Unique with Compound Interest: double each critical's damage, then keep doubling on successful 50% coin flips until the first failure, up to 100 additional rolls.
+- Add Guaranteed Profit: 1,000 magicules and a 20-second cooldown prepare the next ten landed hits as criticals. Recasting refreshes rather than stacks the count. Blocked/immune hits refund their reserved guarantee.
+- Integrate native melee/mob criticals, owned projectile and direct spiritual hits, training dummies and Unbound without a second base critical multiplier. Keep damage types and defenses; bound numerical results to the native float transport range.
+- Add native skill-menu/HUD integration, remaining-hit display, an original pixel icon, crit feedback, the in-game guide and a scoped wiki entry. Fettered Human's automatic paid-skill blacklist excludes the new Unique.
+
 ## Additions 1.20.3 — Afterwind dummies and held orientation
 
 - Recognize accepted damage recorded by Tensura training dummies, whose HP stays full. Track a fresh native damage record so old, blocked or immune hits cannot prime or consume Afterwind.

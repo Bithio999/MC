@@ -1,0 +1,5 @@
+gradle.projectsEvaluated {
+ rootProject.sourceSets.main.java.srcDir(rootProject.file('docs/review-critical-merchant'))
+ rootProject.neoForge.runs.client.gameDirectory=rootProject.file('/workspace/validation-wayfarer/client')
+ rootProject.neoForge.runs.client.programArguments.addAll('--quickPlaySingleplayer','Wayfarer Review','--width','1280','--height','720')
+}

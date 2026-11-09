@@ -72,7 +72,10 @@
     "ChromaticGrindstoneMixin",
     "ChromaticRepairMixin",
     "AfterwindHitMixin",
-    "AfterwindSpiritualHitMixin"
+    "AfterwindSpiritualHitMixin",
+    "CriticalMerchantHitMixin",
+    "CriticalMerchantSpiritualMixin",
+    "CriticalMerchantEffectMixin"
   ],
   "injectors": {
     "defaultRequire": 1

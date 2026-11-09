@@ -18,6 +18,7 @@ public final class HeavenlyRestriction {
     public static final RegistrySupplier<ChainedSkill> CHAINED=SKILLS.register(id("chained"),ChainedSkill::new);
     public static final RegistrySupplier<ParallelWorldJumperSkill> PARALLEL_WORLD_JUMPER=SKILLS.register(id("parallel_world_jumper"),ParallelWorldJumperSkill::new);
     public static final RegistrySupplier<ExponentiationSkill> EXPONENTIATION=SKILLS.register(id("exponentiation"),ExponentiationSkill::new);
+    public static final RegistrySupplier<CriticalMerchantSkill> CRITICAL_MERCHANT=SKILLS.register(id("critical_merchant"),CriticalMerchantSkill::new);
     public static final RegistrySupplier<ProspectorSkill> PROSPECTOR=SKILLS.register(id("prospector"),ProspectorSkill::new);
     public static final RegistrySupplier<LoanSharkSkill> LOAN_SHARK=SKILLS.register(id("loan_shark"),LoanSharkSkill::new);
     public static final RegistrySupplier<SplitMindSkill> SPLIT_MIND=SKILLS.register(id("split_mind"),SplitMindSkill::new);
@@ -77,6 +78,7 @@ public final class HeavenlyRestriction {
         NeoForge.EVENT_BUS.addListener(ChainedCommands::register);
         NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.HIGHEST,UnboundCounter::incoming);
         NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.LOWEST,UnboundCritical::critical);
+        dev.heavenlyrestriction.critical.CriticalMerchant.register();
         NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.LOWEST,(net.neoforged.neoforge.event.entity.living.LivingDeathEvent e)->UnboundCounter.clear(e.getEntity()));
         NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerLoggedOutEvent e)->UnboundCounter.clear(e.getEntity()));
         NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerChangedDimensionEvent e)->UnboundCounter.clear(e.getEntity()));

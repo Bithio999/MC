@@ -1276,5 +1276,12 @@
     "title": "Vesper",
     "category": "Gear",
     "mod": "additions"
+  },
+  {
+    "slug": "Additions-Critical-Merchant",
+    "title": "Critical Merchant",
+    "category": "Skills",
+    "tier": "Unique",
+    "mod": "additions"
   }
 ]

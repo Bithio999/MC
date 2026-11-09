@@ -903,6 +903,49 @@
           ]
         }
       ]
+    },
+    {
+      "id": "critical-merchant",
+      "title": "Critical Merchant",
+      "category": "Skills",
+      "summary": "Unique · Compound critical damage and prepare ten guaranteed critical hits.",
+      "icon": "heavenlyrestriction:textures/skill/critical_merchant.png",
+      "keywords": [
+        "critical",
+        "crit",
+        "merchant",
+        "compound interest",
+        "guaranteed profit",
+        "dice",
+        "luck"
+      ],
+      "related": [
+        "unbound",
+        "exponentiation"
+      ],
+      "sections": [
+        {
+          "title": "Compound Interest · Passive toggle",
+          "lines": [
+            "Every critical hit gets a guaranteed ×2 damage bonus. Roll a 50% chance to double that bonus again; each success permits another roll. Stop at the first failure, after at most 100 additional rolls. Each critical starts a fresh chain.",
+            "Before defenses, a 100-damage critical becomes 200, then 400 after one successful roll, then 800 after two. Original damage types, armor, resistances and barriers still apply."
+          ]
+        },
+        {
+          "title": "Guaranteed Profit · Active press",
+          "lines": [
+            "Cost: 1,000 magicules. Cooldown: 20 seconds. Your next 10 landed hits are guaranteed critical hits, including owned projectiles and abilities. Misses, blocked hits and immune targets do not spend a hit. Training-dummy damage counts.",
+            "The active works independently of the passive. Toggle Compound Interest on to amplify the guaranteed criticals. Recasting refreshes the count to 10, never stacks it; the skill mode shows the remaining count. Guarantees clear on death or forgetting the skill."
+          ]
+        },
+        {
+          "title": "Obtaining",
+          "lines": [
+            "A rollable Unique Skill in Tensura’s normal Unique pool, subject to server reincarnation settings. Fettered Human excludes it because Guaranteed Profit costs magicules.",
+            "Damage type: the original attack’s type. Guaranteed Profit itself deals no damage."
+          ]
+        }
+      ]
     }
   ]
 }

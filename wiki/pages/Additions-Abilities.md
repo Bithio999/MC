@@ -25,6 +25,8 @@ Find a move below, then open its entry for targeting, damage, cost and cooldown.
 | [Magic Assignment](Additions-Split-Mind.md#magic-assignment) | [Split Mind](Additions-Split-Mind.md) | Active, Press | None |
 | [Auto-Cast](Additions-Split-Mind.md#auto-cast) | [Split Mind](Additions-Split-Mind.md) | Active, Toggle | Assigned magic’s native damage type |
 | [Open Map](Additions-Marauders-Map.md#open-map) | [Marauder's Map](Additions-Marauders-Map.md) | Active, Press | None |
+| [Compound Interest](Additions-Critical-Merchant.md#compound-interest) | [Critical Merchant](Additions-Critical-Merchant.md) | Passive, Toggle | Original attack’s damage type |
+| [Guaranteed Profit](Additions-Critical-Merchant.md#guaranteed-profit) | [Critical Merchant](Additions-Critical-Merchant.md) | Active, Press | None |
 
 ## Ultimate
 

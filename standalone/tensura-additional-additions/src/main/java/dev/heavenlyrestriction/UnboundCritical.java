@@ -20,6 +20,8 @@ public final class UnboundCritical implements AutoCloseable {
         event.setCriticalHit(true);event.setDamageMultiplier(Math.max(event.getDamageMultiplier(),(float)event.getEntity().getAttributeValue(ManasCoreAttributes.CRITICAL_DAMAGE_MULTIPLIER)));
         var frame=ATTACK.get();if(frame!=null && frame.owner==event.getEntity())frame.criticalTarget=event.getTarget();
     }
+    public static void noteCritical(Player owner,Entity target){var frame=ATTACK.get();if(frame!=null && frame.owner==owner)frame.criticalTarget=target;}
+    public static boolean meleeCritical(LivingEntity owner,LivingEntity target,DamageSource source){var frame=ATTACK.get();return frame!=null && frame.owner==owner && frame.criticalTarget==target && source.is(net.minecraft.world.damagesource.DamageTypes.PLAYER_ATTACK) && source.getDirectEntity()==owner && ((TensuraDamageSource)source).tensura$getAbilityInstance()==null;}
     public static void apply(LivingEntity owner,LivingEntity target,DamageSource source,Changeable<Float> amount){
         if(!enabled(owner) || owner==target || amount.get()<=0)return;
         var frame=ATTACK.get();

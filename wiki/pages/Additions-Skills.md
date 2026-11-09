@@ -10,10 +10,12 @@ Use Tensura’s normal Ability Selection menu. This addon has no Godly skill tie
 
 [Ability directory](Additions-Abilities.md).
 
-[Exponentiation](Additions-Exponentiation.md) squares supported beneficial values while learned and equipped in your current skill preset. Movement is excluded.
+[Exponentiation](Additions-Exponentiation.md) raises supported beneficial values to ^1.2 while learned and equipped in your current skill preset. Movement is excluded.
 
 [Loan Shark](Additions-Loan-Shark.md) lends skill copies, earns EP while they are used, and recalls or claims them through its report ledger.
 
 [Split Mind](Additions-Split-Mind.md) adds +9 learning/mastery gain, Thought Acceleration, Chant Annulment and automatic casting of one assigned learned magic.
 
 [Marauder's Map](Additions-Marauders-Map.md) maps visited and unvisited terrain, tracks all online players, locates structures and saves private pins.
+
+[Critical Merchant](Additions-Critical-Merchant.md) compounds critical damage with chained coin flips and prepares ten guaranteed critical hits.

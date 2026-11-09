@@ -73,5 +73,9 @@
   "enchantment.heavenlyrestriction.afterwind.desc": "Wind damage prepares a delayed Wind cut from your next sword strike.",
   "item.heavenlyrestriction.vesper.afterwind.mark": "Wind hits mark this enemy for %ss.",
   "item.heavenlyrestriction.vesper.afterwind.damage": "Next sword strike: %s%% raw attack as Wind.",
-  "item.heavenlyrestriction.vesper.afterwind.timing": "Delay %ss • Cooldown %ss • Range %s blocks."
+  "item.heavenlyrestriction.vesper.afterwind.timing": "Delay %ss • Cooldown %ss • Range %s blocks.",
+  "heavenlyrestriction.skill.critical_merchant": "Critical Merchant",
+  "heavenlyrestriction.skill.critical_merchant.description": "Compound Interest [Passive, Toggle]: Double critical-hit damage, then roll a 50% chance to double it again. Each success allows another roll, ending on failure, up to 100 additional rolls per critical. Guaranteed Profit [Active, Press]: Spend 1,000 magicules to prepare your next 10 landed hits as criticals. 20-second cooldown; recasting refreshes the count to 10. The passive can be toggled independently. Native damage types and defenses still apply.",
+  "heavenlyrestriction.skill.mode.critical_merchant.guaranteed_profit": "Guaranteed Profit (%s/10)",
+  "heavenlyrestriction.critical_merchant.payout": "Critical Merchant • Bonus ×%s • %s guaranteed hits left"
 }
