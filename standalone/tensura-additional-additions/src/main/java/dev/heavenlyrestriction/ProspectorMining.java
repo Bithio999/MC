@@ -19,17 +19,18 @@ import java.util.Optional;
 public final class ProspectorMining {
     public static final ResourceKey<LootTable> FINDS=ResourceKey.create(Registries.LOOT_TABLE,HeavenlyRestriction.id("gameplay/prospector_finds"));
     public static final ResourceKey<LootTable> MASTERED_FINDS=ResourceKey.create(Registries.LOOT_TABLE,HeavenlyRestriction.id("gameplay/prospector_finds_mastered"));
-    public static ResourceKey<LootTable> findsTable(LivingEntity owner){return active(owner).filter(i->i.isMastered(owner)).isPresent()?MASTERED_FINDS:FINDS;}
+    public static ResourceKey<LootTable> findsTable(LivingEntity owner){if(dev.heavenlyrestriction.forge.ForgeSynthesis.active(owner).isPresent())return ResourceKey.create(Registries.LOOT_TABLE,HeavenlyRestriction.id("gameplay/hephaestus_finds"));return active(owner).filter(i->i.isMastered(owner)).isPresent()?MASTERED_FINDS:FINDS;}
     public static Optional<ManasSkillInstance> active(LivingEntity owner){
         if(owner==null || !owner.isAlive() || owner.isSpectator())return Optional.empty();
+        var forge=dev.heavenlyrestriction.forge.ForgeSynthesis.active(owner);if(forge.isPresent())return forge;
         return SkillAPI.getSkillsFrom(owner).getSkill(HeavenlyRestriction.PROSPECTOR.get()).filter(i->i.getMastery()>=0 && i.isToggled() && i.canInteractSkill(owner));
     }
-    public static void speed(PlayerEvent.BreakSpeed e){if(active(e.getEntity()).isPresent())e.setNewSpeed(e.getNewSpeed()*1.5f);}
+    public static void speed(PlayerEvent.BreakSpeed e){if(active(e.getEntity()).isPresent())e.setNewSpeed(e.getNewSpeed()*(dev.heavenlyrestriction.forge.ForgeSynthesis.active(e.getEntity()).isPresent()?2f:1.5f));}
     /** A loot-only copy preserves the actual item's enchants, durability and components. No reroll/double loot evaluation. */
     public static ItemStack lootTool(LivingEntity miner,ItemStack tool){
         if(tool.isEmpty() || active(miner).isEmpty())return tool;
         var fortune=miner.registryAccess().registryOrThrow(Registries.ENCHANTMENT).getHolderOrThrow(Enchantments.FORTUNE);
-        var copy=tool.copy();copy.enchant(fortune,Math.min(255,EnchantmentHelper.getItemEnchantmentLevel(fortune,tool)+3));return copy;
+        var copy=tool.copy();copy.enchant(fortune,Math.min(255,EnchantmentHelper.getItemEnchantmentLevel(fortune,tool)+(dev.heavenlyrestriction.forge.ForgeSynthesis.active(miner).isPresent()?5:3)));return copy;
     }
     public static void finds(BlockDropsEvent e){
         if(!(e.getBreaker() instanceof ServerPlayer p) || p.isCreative() || active(p).isEmpty() || !(e.getState().is(Blocks.STONE) || e.getState().is(Blocks.DEEPSLATE)) || !e.getTool().isCorrectToolForDrops(e.getState()))return;

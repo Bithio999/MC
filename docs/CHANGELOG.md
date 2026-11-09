@@ -1,5 +1,13 @@
 # Changelog
 
+## Additions 1.22.0 — Hephaestus, Lord of the Forge
+
+- Synthesize mastered Prospector + Godly Craftsman after True Demon Lord / True Hero awakening and personally forging qualifying high-tier equipment. No EP threshold. A configurable 250,000 permanent-magicule acquisition cost is paid after awakening bonuses.
+- Retain native engraving knowledge, both ingredient stores and affected presets. Start the Ultimate learned and unmastered.
+- Add improved Prospector mining benefits and signed equipment with +20% item stats and 50% reduced ordinary / EP durability damage. Add Divine Forge crafting, native refining / engraving, tempering and repair.
+- Deploy up to six actual weapons with Terraprisma-style autonomous slashes, native enchantment / engraving effects and persistent item escrow. Recall on separation events.
+- Designate one Magnum Opus for +50% item stats and 75% reduced wear, replacing ordinary bonuses. No Overforge. Add the replacement hammer-and-anvil icon, native menu integration and skill guides.
+
 ## Additions 1.21.0 — Critical Merchant
 
 - Add the rollable Critical Merchant Unique with Compound Interest: double each critical's damage, then keep doubling on successful 50% coin flips until the first failure, up to 100 additional rolls.

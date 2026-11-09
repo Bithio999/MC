@@ -27,12 +27,13 @@ public final class Nullification {
     public static boolean sealed(LivingEntity owner){return owner.hasEffect(HeavenlyArsenal.SKILL_SEAL);}
     public static EventResult activate(Changeable<ManasSkillInstance> instance,LivingEntity owner,int key,int mode){return sealed(owner)?EventResult.interruptFalse():EventResult.pass();}
     public static boolean engraved(LivingEntity owner){
-        ItemStack weapon=owner.getMainHandItem();
+        ItemStack weapon=dev.heavenlyrestriction.forge.ForgeArsenal.weapon(owner);
         if(weapon.getItem() instanceof InvertedSpearItem){if(!owner.level().isClientSide())InvertedSpearItem.engrave(weapon,owner.level().registryAccess());return true;}
         return owner.level().registryAccess().registryOrThrow(Registries.ENCHANTMENT).getHolder(ENGRAVING).map(h->EnchantmentHelper.getItemEnchantmentLevel(h,weapon)>0).orElse(false);
     }
     /** A held spear does not lend its engraving to unrelated spells or projectiles. */
     public static LivingEntity wielder(DamageSource source){
+        var deployed=dev.heavenlyrestriction.forge.ForgeArsenal.wielder(source);if(deployed!=null)return engraved(deployed)?deployed:null;
         if(!(source.getDirectEntity() instanceof LivingEntity owner) || source.getEntity()!=owner)return null;
         var ability=((TensuraDamageSource)source).tensura$getAbilityInstance();
         if(ability!=null && !(ability.getSkill() instanceof ChainedSkill))return null;

@@ -438,6 +438,8 @@ public final class VesperGameTests {
               "dropAllDeathLoot", net.minecraft.server.level.ServerLevel.class, DamageSource.class);
       drop.setAccessible(true);
       drop.invoke(boss, h.getLevel(), boss.damageSources().genericKill());
+      // A real accepted death stops gear regeneration. Freeze this loot-only fixture too.
+      boss.discard();
     } catch (ReflectiveOperationException exception) {
       throw new IllegalStateException("Could not invoke native death loot transaction", exception);
     }
@@ -463,7 +465,10 @@ public final class VesperGameTests {
           h.assertTrue(
               EnchantmentHelper.getItemEnchantmentLevel(engraving, swords.getFirst()) == 2
                   && swords.getFirst().getDamageValue() == 100,
-              "Native death loot replaced the equipped sword's engraving/wear");
+              "Native death loot replaced the equipped sword's engraving/wear: level="
+                  + EnchantmentHelper.getItemEnchantmentLevel(engraving, swords.getFirst())
+                  + " wear="
+                  + swords.getFirst().getDamageValue());
           boss.discard();
           h.succeed();
         });

@@ -58,6 +58,7 @@ public final class Afterwind {
     final LinkedHashMap<UUID, Long> marks = new LinkedHashMap<>();
     long ready;
     Cut cut;
+    boolean arsenal;
   }
 
   private record Cut(LivingEntity target, float damage, long due, ServerLevel level) {}
@@ -74,15 +75,18 @@ public final class Afterwind {
       boolean strike) {}
 
   public static int level(LivingEntity owner) {
-    if (owner == null || !(owner.getMainHandItem().getItem() instanceof VesperItem)) return 0;
-    VesperItem.engrave(owner.getMainHandItem(), owner.level().registryAccess());
+    if (owner == null) return 0;
+    var weapon = dev.heavenlyrestriction.forge.ForgeArsenal.weapon(owner);
+    if (!(weapon.getItem() instanceof VesperItem)) return 0;
+    VesperItem.engrave(weapon, owner.level().registryAccess());
     var holder =
         owner
             .level()
             .registryAccess()
             .registryOrThrow(Registries.ENCHANTMENT)
             .getHolderOrThrow(ENGRAVING);
-    return EnchantmentHelper.getItemEnchantmentLevel(holder, owner.getMainHandItem());
+    return EnchantmentHelper.getItemEnchantmentLevel(
+        holder, dev.heavenlyrestriction.forge.ForgeArsenal.weapon(owner));
   }
 
   public static double coefficient(int level) {
@@ -93,7 +97,7 @@ public final class Afterwind {
     if (target.level().isClientSide() || source.is(DAMAGE)) return null;
     var owner = RestrictionData.attacker(source);
     int level = level(owner);
-    if (level < 1 || owner == target || !RestrictionData.canHarm(owner, target)) return null;
+    if (owner == null || owner == target || !RestrictionData.canHarm(owner, target)) return null;
     var tagged = (TensuraDamageSource) source;
     boolean wind =
         tagged.tensura$getElement() == Element.WIND
@@ -107,15 +111,37 @@ public final class Afterwind {
                 ResourceKey.create(
                     Registries.DAMAGE_TYPE, ResourceLocation.parse("tensura:tornado")));
     var ability = tagged.tensura$getAbilityInstance();
+    if (level < 1 && wind) {
+      var deployed = dev.heavenlyrestriction.forge.ForgeArsenal.vesper(owner);
+      if (!deployed.isEmpty()) {
+        var holder =
+            owner
+                .registryAccess()
+                .registryOrThrow(Registries.ENCHANTMENT)
+                .getHolderOrThrow(ENGRAVING);
+        level = EnchantmentHelper.getItemEnchantmentLevel(holder, deployed);
+      }
+    }
+    if (level < 1) return null;
+    boolean arsenal = dev.heavenlyrestriction.forge.ForgeArsenal.wielder(source) == owner;
     boolean strike =
-        source.getDirectEntity() == owner
-            && source.getEntity() == owner
-            && (source.is(DamageTypes.PLAYER_ATTACK) || source.is(DamageTypes.MOB_ATTACK))
-            && (ability == null || ability.getSkill() instanceof ChainedSkill);
+        arsenal
+            || source.getDirectEntity() == owner
+                && source.getEntity() == owner
+                && (source.is(DamageTypes.PLAYER_ATTACK) || source.is(DamageTypes.MOB_ATTACK))
+                && (ability == null || ability.getSkill() instanceof ChainedSkill);
     if (!wind && !strike) return null;
     float attack;
     try (var raw = ExponentiationContext.raw(owner, ExponentiationContext.DAMAGE)) {
-      attack = (float) Math.max(0, owner.getAttributeValue(Attributes.ATTACK_DAMAGE));
+      attack =
+          arsenal
+              ? (float)
+                  dev.heavenlyrestriction.forge.ForgeItems.weaponDamage(
+                      dev.heavenlyrestriction.forge.ForgeArsenal.weapon(owner),
+                      owner,
+                      target,
+                      source)
+              : (float) Math.max(0, owner.getAttributeValue(Attributes.ATTACK_DAMAGE));
     }
     return new Hit(
         owner,
@@ -130,7 +156,11 @@ public final class Afterwind {
   }
 
   public static void after(LivingEntity target, Hit hit) {
-    if (hit == null || !hit.owner.isAlive() || level(hit.owner) < 1 || !target.isAlive()) return;
+    if (hit == null
+        || !hit.owner.isAlive()
+        || level(hit.owner) < 1
+            && !(hit.wind && dev.heavenlyrestriction.forge.ForgeArsenal.hasVesper(hit.owner))
+        || !target.isAlive()) return;
     boolean damaged =
         target.getHealth() < hit.health - .0001f
             || TensuraStorages.getExistenceFrom(target).getSpiritualHealth() < hit.shp - .0001
@@ -142,6 +172,9 @@ public final class Afterwind {
     var owner = hit.owner;
     long now = owner.level().getGameTime();
     var state = STATES.computeIfAbsent(owner, k -> new State());
+    state.arsenal |=
+        dev.heavenlyrestriction.forge.ForgeArsenal.weapon(owner) != owner.getMainHandItem()
+            || hit.wind && dev.heavenlyrestriction.forge.ForgeArsenal.hasVesper(owner);
     state.marks.values().removeIf(expiry -> expiry < now);
     // A wind-transformed melee strike can arm the next strike, but never its own aftercut.
     if (hit.strike
@@ -187,7 +220,11 @@ public final class Afterwind {
     for (var entry : List.copyOf(STATES.entrySet())) {
       var owner = entry.getKey();
       var state = entry.getValue();
-      if (owner == null || owner.isRemoved() || !owner.isAlive() || level(owner) < 1) {
+      if (owner == null
+          || owner.isRemoved()
+          || !owner.isAlive()
+          || level(owner) < 1
+              && !(state.arsenal && dev.heavenlyrestriction.forge.ForgeArsenal.hasVesper(owner))) {
         STATES.remove(owner);
         continue;
       }

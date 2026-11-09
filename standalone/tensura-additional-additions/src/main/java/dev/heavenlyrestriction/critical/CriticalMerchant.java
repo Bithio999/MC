@@ -161,6 +161,12 @@ public final class CriticalMerchant {
     return null;
   }
 
+  public static boolean criticalOrGuaranteed(
+      LivingEntity owner, LivingEntity target, DamageSource source) {
+    var hit = find(owner, target, source);
+    return hit != null && (hit.critical || hit.reserved);
+  }
+
   public static boolean observe(LivingEntity target, DamageSource source, BooleanSupplier damage) {
     return observe(target, source, damage, true);
   }

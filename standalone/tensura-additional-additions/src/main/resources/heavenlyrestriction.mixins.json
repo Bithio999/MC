@@ -75,7 +75,11 @@
     "AfterwindSpiritualHitMixin",
     "CriticalMerchantHitMixin",
     "CriticalMerchantSpiritualMixin",
-    "CriticalMerchantEffectMixin"
+    "CriticalMerchantEffectMixin",
+    "ForgeWearMixin",
+    "ForgeHitMixin",
+    "ForgeCriticalMixin",
+    "ForgeCraftMixin"
   ],
   "injectors": {
     "defaultRequire": 1

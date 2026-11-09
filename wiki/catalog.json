@@ -1283,5 +1283,12 @@
     "category": "Skills",
     "tier": "Unique",
     "mod": "additions"
+  },
+  {
+    "slug": "Additions-Hephaestus",
+    "title": "Hephaestus, Lord of the Forge",
+    "category": "Skills",
+    "tier": "Ultimate",
+    "mod": "additions"
   }
 ]

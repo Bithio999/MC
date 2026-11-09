@@ -946,6 +946,69 @@
           ]
         }
       ]
+    },
+    {
+      "id": "hephaestus",
+      "title": "Hephaestus, Lord of the Forge",
+      "category": "Skills",
+      "summary": "Ultimate · Combine Prospector and Godly Craftsman to forge exceptional equipment and command a living arsenal.",
+      "icon": "heavenlyrestriction:textures/skill/hephaestus.png",
+      "keywords": [
+        "forge",
+        "smithing",
+        "crafting",
+        "ultimate",
+        "synthesis",
+        "tempering",
+        "masterpiece",
+        "terraprisma",
+        "arsenal",
+        "hephaestus",
+        "godly craftsman"
+      ],
+      "related": [
+        "prospector",
+        "chromatic-orb",
+        "vesper"
+      ],
+      "sections": [
+        {
+          "title": "Synthesis",
+          "lines": [
+            "Fully master Prospector and Godly Craftsman, become a True Demon Lord or True Hero, and personally craft or smith Netherite or Hihiirokane equipment. No EP requirement. Activate the unfinished entry in the native Ultimate menu to view requirements and confirm synthesis.",
+            "The default acquisition cost is 250,000 permanent magicules, configurable and affected by Tensura’s skill-cost gamerule. Awakening bonuses apply first. Hephaestus replaces its components and starts learned, unmastered; stored items, engraving knowledge and affected presets are retained."
+          ]
+        },
+        {
+          "title": "Master of the Crucible · Passive toggle",
+          "lines": [
+            "+100% mining speed, stacking Fortune V, 3% material finds from stone/deepslate and differentiated ore sight within 32 blocks.",
+            "Personally forged equipment gains +20% attack damage / armor / toughness and 50% reduced durability damage. Bonuses apply once per item. Both ordinary and EP wear are reduced; maximum durability is unchanged. Damage type: original equipment type."
+          ]
+        },
+        {
+          "title": "Divine Forge · Active press",
+          "lines": [
+            "Craft, use native refining and engraving, access storage, temper or repair. Recover returns your old Prospector refining ingredients.",
+            "Reforge / Temper: 2,000 magicules + one material. Iron / Diamond / Netherite / Hihiirokane give 10% / 20% / 30% / 35% temper strength. Keen improves critical damage; Piercing ignores part of armor reduction; Conductor improves elemental damage; Enduring reduces wear. Only one temper applies.",
+            "Repair: 500 magicules + one material; restores 30% / 60% / 90% / 100% ordinary and native EP durability. Engravings and Chromatic Orb history remain. Damage type: none directly."
+          ]
+        },
+        {
+          "title": "Living Arsenal · Active press",
+          "lines": [
+            "Deploy up to six actual melee weapons. They hover in formation and slash with curved lunges and prismatic wakes, like Terraprisma. They prioritize your attack target, then visible hostiles or combat opponents within 32 blocks, respecting alliances and PvP rules.",
+            "Cost: 1,000 magicules per deployed weapon and 10 per weapon each second. Each uses its own damage, enchantments and engravings. Press again or use Recall all to return the committed weapons. Death, logout, dimension changes or losing the skill also recall them; saved escrow survives a restart. Damage type: Physical, with normal native conversions / engraving follow-ups."
+          ]
+        },
+        {
+          "title": "Magnum Opus · Active press",
+          "lines": [
+            "Designate one personally forged item: +50% equipment stats and 75% reduced wear replace the ordinary forging benefits. Cost: 50,000 magicules + two selected materials, Diamond or better.",
+            "Changing designation removes the old masterpiece’s special bonus, even outside loaded inventories. It keeps its ordinary forged benefits. The active piece has a glint, gold identification and a golden arsenal wake. No Overforge. Damage type: none directly."
+          ]
+        }
+      ]
     }
   ]
 }

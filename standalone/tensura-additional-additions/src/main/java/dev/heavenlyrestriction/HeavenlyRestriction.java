@@ -19,6 +19,7 @@ public final class HeavenlyRestriction {
     public static final RegistrySupplier<ParallelWorldJumperSkill> PARALLEL_WORLD_JUMPER=SKILLS.register(id("parallel_world_jumper"),ParallelWorldJumperSkill::new);
     public static final RegistrySupplier<ExponentiationSkill> EXPONENTIATION=SKILLS.register(id("exponentiation"),ExponentiationSkill::new);
     public static final RegistrySupplier<CriticalMerchantSkill> CRITICAL_MERCHANT=SKILLS.register(id("critical_merchant"),CriticalMerchantSkill::new);
+    public static final RegistrySupplier<HephaestusSkill> HEPHAESTUS=SKILLS.register(id("hephaestus"),HephaestusSkill::new);
     public static final RegistrySupplier<ProspectorSkill> PROSPECTOR=SKILLS.register(id("prospector"),ProspectorSkill::new);
     public static final RegistrySupplier<LoanSharkSkill> LOAN_SHARK=SKILLS.register(id("loan_shark"),LoanSharkSkill::new);
     public static final RegistrySupplier<SplitMindSkill> SPLIT_MIND=SKILLS.register(id("split_mind"),SplitMindSkill::new);
@@ -34,6 +35,7 @@ public final class HeavenlyRestriction {
         SKILLS.register(id("sovereign_rebirth"),()->new AuraRegenerationSkill(3)));
     public HeavenlyRestriction(net.neoforged.bus.api.IEventBus modBus,net.neoforged.fml.ModContainer container){
         HeavenlyArsenal.register(modBus);
+        dev.heavenlyrestriction.forge.ForgeEvents.register(modBus,container);
         dev.heavenlyrestriction.chromatic.ChromaticContent.register(modBus);
         modBus.addListener(dev.heavenlyrestriction.cartography.MapNetwork::register);
         NeoForge.EVENT_BUS.addListener(dev.heavenlyrestriction.cartography.MapService::tick);

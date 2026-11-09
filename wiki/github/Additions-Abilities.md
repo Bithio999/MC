@@ -38,6 +38,10 @@ Find a move below, then open its entry for targeting, damage, cost and cooldown.
 | [Martial Supremacy](https://github.com/Bithio999/MC/wiki/Additions-Unbound#improved-combat) | [Unbound](https://github.com/Bithio999/MC/wiki/Additions-Unbound) | Passive toggle | Modifier — Battlewill or other Physical branch |
 | [Broken Limit](https://github.com/Bithio999/MC/wiki/Additions-Unbound#improved-combat) | [Unbound](https://github.com/Bithio999/MC/wiki/Additions-Unbound) | Passive mastered | Modifier — preserves attack type |
 | [Unerring Body](https://github.com/Bithio999/MC/wiki/Additions-Unbound#improved-combat) | [Unbound](https://github.com/Bithio999/MC/wiki/Additions-Unbound) | Passive in slot | None |
+| [Master of the Crucible](https://github.com/Bithio999/MC/wiki/Additions-Hephaestus#master-of-the-crucible) | [Hephaestus, Lord of the Forge](https://github.com/Bithio999/MC/wiki/Additions-Hephaestus) | Passive, Toggle | None directly; original equipment type |
+| [Divine Forge](https://github.com/Bithio999/MC/wiki/Additions-Hephaestus#divine-forge) | [Hephaestus, Lord of the Forge](https://github.com/Bithio999/MC/wiki/Additions-Hephaestus) | Active, Press | None |
+| [Living Arsenal](https://github.com/Bithio999/MC/wiki/Additions-Hephaestus#living-arsenal) | [Hephaestus, Lord of the Forge](https://github.com/Bithio999/MC/wiki/Additions-Hephaestus) | Active, Press | Physical; native weapon conversions and follow-ups retain their types |
+| [Magnum Opus](https://github.com/Bithio999/MC/wiki/Additions-Hephaestus#magnum-opus) | [Hephaestus, Lord of the Forge](https://github.com/Bithio999/MC/wiki/Additions-Hephaestus) | Active, Press | None |
 
 ## Extra
 

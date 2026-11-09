@@ -65,6 +65,7 @@
 - [Vesper](https://github.com/Bithio999/MC/wiki/Additions-Vesper)
 - [Chromatic Orb](https://github.com/Bithio999/MC/wiki/Additions-Chromatic-Orb)
 - [Critical Merchant](https://github.com/Bithio999/MC/wiki/Additions-Critical-Merchant)
+- [Hephaestus](https://github.com/Bithio999/MC/wiki/Additions-Hephaestus)
 
 **Dimensions**
 

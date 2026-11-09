@@ -19,3 +19,7 @@ Use Tensura’s normal Ability Selection menu. This addon has no Godly skill tie
 [Marauder's Map](Additions-Marauders-Map.md) maps visited and unvisited terrain, tracks all online players, locates structures and saves private pins.
 
 [Critical Merchant](Additions-Critical-Merchant.md) compounds critical damage with chained coin flips and prepares ten guaranteed critical hits.
+
+## Ultimate synthesis
+
+[Hephaestus, Lord of the Forge](Additions-Hephaestus.md) combines fully mastered Prospector and Godly Craftsman after awakening and a personal forging achievement. No EP requirement. It adds Divine Forge, Living Arsenal and Magnum Opus.

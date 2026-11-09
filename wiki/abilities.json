@@ -1462,5 +1462,49 @@
     "secondary_damage_id": null,
     "anchor": "guaranteed-profit",
     "mod": "additions"
+  },
+  {
+    "skill": "Additions-Hephaestus",
+    "name": "Master of the Crucible",
+    "tier": "Ultimate",
+    "kind": "Passive, Toggle",
+    "damage": "None directly; original equipment type",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "anchor": "master-of-the-crucible",
+    "mod": "additions"
+  },
+  {
+    "skill": "Additions-Hephaestus",
+    "name": "Divine Forge",
+    "tier": "Ultimate",
+    "kind": "Active, Press",
+    "damage": "None",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "anchor": "divine-forge",
+    "mod": "additions"
+  },
+  {
+    "skill": "Additions-Hephaestus",
+    "name": "Living Arsenal",
+    "tier": "Ultimate",
+    "kind": "Active, Press",
+    "damage": "Physical; native weapon conversions and follow-ups retain their types",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "anchor": "living-arsenal",
+    "mod": "additions"
+  },
+  {
+    "skill": "Additions-Hephaestus",
+    "name": "Magnum Opus",
+    "tier": "Ultimate",
+    "kind": "Active, Press",
+    "damage": "None",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "anchor": "magnum-opus",
+    "mod": "additions"
   }
 ]

@@ -38,6 +38,10 @@ Find a move below, then open its entry for targeting, damage, cost and cooldown.
 | [Martial Supremacy](Additions-Unbound.md#improved-combat) | [Unbound](Additions-Unbound.md) | Passive toggle | Modifier — Battlewill or other Physical branch |
 | [Broken Limit](Additions-Unbound.md#improved-combat) | [Unbound](Additions-Unbound.md) | Passive mastered | Modifier — preserves attack type |
 | [Unerring Body](Additions-Unbound.md#improved-combat) | [Unbound](Additions-Unbound.md) | Passive in slot | None |
+| [Master of the Crucible](Additions-Hephaestus.md#master-of-the-crucible) | [Hephaestus, Lord of the Forge](Additions-Hephaestus.md) | Passive, Toggle | None directly; original equipment type |
+| [Divine Forge](Additions-Hephaestus.md#divine-forge) | [Hephaestus, Lord of the Forge](Additions-Hephaestus.md) | Active, Press | None |
+| [Living Arsenal](Additions-Hephaestus.md#living-arsenal) | [Hephaestus, Lord of the Forge](Additions-Hephaestus.md) | Active, Press | Physical; native weapon conversions and follow-ups retain their types |
+| [Magnum Opus](Additions-Hephaestus.md#magnum-opus) | [Hephaestus, Lord of the Forge](Additions-Hephaestus.md) | Active, Press | None |
 
 ## Extra
 
