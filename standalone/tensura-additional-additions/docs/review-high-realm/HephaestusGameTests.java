@@ -1439,4 +1439,158 @@ public final class HephaestusGameTests {
     h.assertTrue(skill.getMaxLevel(forbidden) == 0, "Native forbidden engraving was unlocked");
     h.succeed();
   }
+
+  private static int curses(ItemStack item) {
+    return EnchantmentHelper.getEnchantmentsForCrafting(item).entrySet().stream()
+        .filter(
+            e ->
+                !e.getKey()
+                    .is(io.github.manasmods.tensura.data.TensuraTags.Enchantments.TSUKUMOGAMI))
+        .filter(
+            e ->
+                e.getKey().is(net.minecraft.tags.EnchantmentTags.CURSE)
+                    || io.github.manasmods.tensura.enchantment.EngravingHelper.CONFIG.curseEngraving
+                        .contains(e.getKey().getRegisteredName()))
+        .mapToInt(e -> e.getIntValue())
+        .sum();
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 100)
+  public static void cruciblePreventsNewCursesOnAllEquipmentButPreservesExistingOnes(
+      GameTestHelper h) {
+    var p = smith(h);
+    var curse = engraving(p, "minecraft:binding_curse");
+    for (var type :
+        List.of(
+            Items.DIAMOND_SWORD,
+            Items.DIAMOND_HELMET,
+            Items.DIAMOND_CHESTPLATE,
+            Items.DIAMOND_LEGGINGS,
+            Items.DIAMOND_BOOTS,
+            Items.DIAMOND_PICKAXE,
+            Items.BOW,
+            Items.SHIELD)) {
+      var item = new ItemStack(type);
+      io.github.manasmods.tensura.enchantment.EngravingHelper.applyCurseEngraving(p, item, 1);
+      io.github.manasmods.tensura.enchantment.EngravingHelper.increaseEngraving(p, item, curse, 1);
+      h.assertTrue(curses(item) == 0, "Curse generated on " + type);
+      item.enchant(curse, 1);
+      var before = EnchantmentHelper.getEnchantmentsForCrafting(item);
+      io.github.manasmods.tensura.enchantment.EngravingHelper.applyCurseEngraving(p, item, 1);
+      h.assertTrue(
+          EnchantmentHelper.getEnchantmentsForCrafting(item).equals(before),
+          "Existing curse was removed or increased on " + type);
+    }
+    SkillAPI.getSkillsFrom(p)
+        .getSkill(HeavenlyRestriction.HEPHAESTUS.get())
+        .orElseThrow()
+        .setToggled(false);
+    var unprotected = new ItemStack(Items.DIAMOND_CHESTPLATE);
+    io.github.manasmods.tensura.enchantment.EngravingHelper.applyCurseEngraving(p, unprotected, 1);
+    h.assertTrue(curses(unprotected) > 0, "Toggling off did not restore native curse generation");
+    var other = player(h);
+    var ordinary = new ItemStack(Items.DIAMOND_SWORD);
+    io.github.manasmods.tensura.enchantment.EngravingHelper.applyCurseEngraving(other, ordinary, 1);
+    h.assertTrue(curses(ordinary) > 0, "Passive leaked to another player");
+    h.succeed();
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 100)
+  public static void nativeGrowthStillGrantsPositiveEngravingsAndTsukumogami(GameTestHelper h) {
+    var p = smith(h);
+    var config = io.github.manasmods.tensura.enchantment.EngravingHelper.CONFIG;
+    double old = config.curseChance;
+    try {
+      config.curseChance = 100;
+      var item = new ItemStack(Items.DIAMOND_SWORD);
+      item.set(TensuraDataComponents.RANDOM_ENGRAVING_LEVEL.get(), 2);
+      p.getRandom().setSeed(11);
+      io.github.manasmods.tensura.enchantment.EngravingHelper.grantRandomEngraving(
+          p, item, config.godEP);
+      h.assertTrue(curses(item) == 0, "EP growth generated a curse");
+      h.assertTrue(
+          EnchantmentHelper.hasTag(
+              item, io.github.manasmods.tensura.data.TensuraTags.Enchantments.TSUKUMOGAMI),
+          "Natural god-tier Tsukumogami was blocked");
+      h.assertTrue(
+          EnchantmentHelper.getEnchantmentsForCrafting(item).size() >= 2,
+          "Positive engraving reward was blocked");
+      SkillAPI.getSkillsFrom(p)
+          .getSkill(HeavenlyRestriction.HEPHAESTUS.get())
+          .orElseThrow()
+          .setToggled(false);
+      var ordinary = new ItemStack(Items.DIAMOND_SWORD);
+      ordinary.set(TensuraDataComponents.RANDOM_ENGRAVING_LEVEL.get(), 2);
+      p.getRandom().setSeed(11);
+      io.github.manasmods.tensura.enchantment.EngravingHelper.grantRandomEngraving(
+          p, ordinary, config.godEP);
+      h.assertTrue(curses(ordinary) > 0, "Forced native control did not generate a curse");
+    } finally {
+      config.curseChance = old;
+    }
+    h.succeed();
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 100)
+  public static void crucibleProtectsNativeEngravingMenuWithoutChangingResearch(GameTestHelper h) {
+    var p = smith(h);
+    var skill = HeavenlyRestriction.HEPHAESTUS.get();
+    var config =
+        io.github.manasmods.manascore.config.ConfigRegistry.getConfig(
+                io.github.manasmods.tensura.config.ability.skill.UniqueSkillConfig.class)
+            .GodlyCraftsman;
+    float old = config.curseChance;
+    try {
+      config.curseChance = 1;
+      var rune = engraving(p, "tensura:severance");
+      IResearcherEnchanter.addEnchantments(p, engravingMap(rune, 1), skill);
+      for (boolean enabled : List.of(true, false)) {
+        SkillAPI.getSkillsFrom(p).getSkill(skill).orElseThrow().setToggled(enabled);
+        var menu = engraver(p, skill);
+        menu.getSlot(37).set(new ItemStack(Items.DIAMOND_SWORD));
+        menu.editSelection(0, 1);
+        h.assertTrue(menu.getExperienceCost() > 0, "Menu did not exercise the curse-roll path");
+        menu.handleFinalizeEnchantment();
+        var output = menu.getItemOutput().getItem(0);
+        h.assertTrue(
+            !output.isEmpty() && EnchantmentHelper.getItemEnchantmentLevel(rune, output) == 1,
+            "Normal manual engraving was blocked");
+        h.assertTrue(
+            enabled ? curses(output) == 0 : curses(output) > 0,
+            "Native engraving-menu curse roll ignored passive toggle");
+      }
+    } finally {
+      config.curseChance = old;
+    }
+    h.succeed();
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 100)
+  public static void deployedArsenalGrowthKeepsTsukumogamiWithoutRollingCurses(GameTestHelper h) {
+    var p = smith(h);
+    var config = io.github.manasmods.tensura.enchantment.EngravingHelper.CONFIG;
+    double old = config.curseChance;
+    try {
+      config.curseChance = 100;
+      var item = new ItemStack(Items.DIAMOND_SWORD);
+      item.set(TensuraDataComponents.EP.get(), config.godEP - 1);
+      item.set(TensuraDataComponents.EP_GAIN.get(), .1d);
+      item.set(TensuraDataComponents.MAX_EP.get(), config.godEP * 2);
+      item.set(TensuraDataComponents.RANDOM_ENGRAVING_LEVEL.get(), 2);
+      p.getInventory().setItem(1, item);
+      h.assertTrue(ForgeArsenal.deploy(p, List.of(1)), "Deployment failed");
+      p.getRandom().setSeed(11);
+      ForgeArsenal.gainGearEP(p, config.godEP * 100);
+      var grown = ForgeArsenal.item(p, 0);
+      h.assertTrue(curses(grown) == 0, "Deployed blade generated a curse");
+      h.assertTrue(
+          EnchantmentHelper.hasTag(
+              grown, io.github.manasmods.tensura.data.TensuraTags.Enchantments.TSUKUMOGAMI),
+          "Deployed blade lost its normal Tsukumogami reward");
+      ForgeArsenal.recall(p);
+    } finally {
+      config.curseChance = old;
+    }
+    h.succeed();
+  }
 }

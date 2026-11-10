@@ -1,5 +1,10 @@
 # Changelog
 
+## Additions 1.22.5 — Crucible curse protection
+
+- Master of the Crucible prevents new curses from native equipment growth and engraving rolls while toggled on, covering weapons, armor, tools and other equipment, including deployed arsenal items.
+- Preserve existing curses, positive engraving rewards and normal Tsukumogami generation. Toggling off restores normal curse generation.
+
 ## Additions 1.22.4 — Arsenal EP and engraving-loop fixes
 
 - Include every deployed weapon in Tensura’s native equipment-EP reward pass for qualifying kills, preserving native growth engravings, caps, random engravings and evolution.

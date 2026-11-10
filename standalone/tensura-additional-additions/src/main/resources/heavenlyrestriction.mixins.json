@@ -86,7 +86,8 @@
     "ForgeGearEPMixin",
     "ForgeGearEPAccess",
     "ForgeResearchMixin",
-    "ForgeResearchMenuMixin"
+    "ForgeResearchMenuMixin",
+    "ForgeCurseMixin"
   ],
   "injectors": {
     "defaultRequire": 1

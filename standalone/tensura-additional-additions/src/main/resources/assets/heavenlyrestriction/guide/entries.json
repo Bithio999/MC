@@ -983,7 +983,7 @@
           "title": "Master of the Crucible · Passive toggle",
           "lines": [
             "+100% mining speed, stacking Fortune V, 3% material finds from stone/deepslate and differentiated ore sight within 32 blocks.",
-            "Personally forged equipment gains +20% attack damage / armor / toughness and 50% reduced durability damage. Bonuses apply once per item. Both ordinary and EP wear are reduced; maximum durability is unchanged. Damage type: original equipment type."
+            "Personally forged equipment gains +20% attack damage / armor / toughness and 50% reduced durability damage. Bonuses apply once per item. Both ordinary and EP wear are reduced; maximum durability is unchanged. While toggled on, prevent new curses from equipment EP growth and engraving rolls on weapons, armor, tools and other equipment. Existing curses remain; Tsukumogami generation is unchanged. Damage type: original equipment type."
           ]
         },
         {

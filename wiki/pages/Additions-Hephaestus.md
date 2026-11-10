@@ -32,6 +32,7 @@ The crafting achievement requires an actual craft or smithing result while you h
 - **+100% mining speed**, **Fortune V** added to the tool’s Fortune, and a **3%** material-find chance when properly mining stone or deepslate.
 - Subtle ore markers within **32 blocks**, differentiated by material, including magic ore.
 - Equipment you personally forge gains **+20% weapon attack damage, armor and armor toughness**, and **50% reduced durability damage**.
+- **Prevents new curse generation** on all equipment while toggled on, including growth and engraving rolls. Existing curses remain, and **Tsukumogami generation is unchanged**.
 
 Forging bonuses apply once per item and remain on the equipment. They reduce ordinary wear and native EP durability loss; maximum durability is unchanged. **Damage type:** none directly; improved equipment retains its normal damage type.
 
