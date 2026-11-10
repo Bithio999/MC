@@ -17,7 +17,7 @@
 
 ## Obtaining
 
-Owning a component reveals an unfinished Hephaestus entry in Tensura’s **Skills → Ultimate** menu. Slot and activate that entry to open **Synthesis**. Complete the listed conditions, then confirm twice to combine the skills.
+Owning a component reveals an unfinished Hephaestus entry in Tensura’s **Skills → Ultimate** menu. Slot and activate that entry to open **Synthesis**. Complete the listed conditions, choose **Synthesize Hephaestus**, and confirm the dialog.
 
 Awakening bonuses are applied **before** the acquisition cost. Synthesis waits until awakening is finished. Already-awakened players can qualify later. Hephaestus replaces both components and begins learned, unmastered. Engraving knowledge, stored materials and affected presets are retained.
 
@@ -39,7 +39,7 @@ Forging bonuses apply once per item and remain on the equipment. They reduce ord
 
 ## Divine Forge · Active, Press
 
-Use the native-style side tabs, equipment search and Tools / Metal / Type (temper) dropdowns. Choose the action, then Apply. **Reforge** applies the bonus to equipment crafted before you acquired Hephaestus.
+Use the workshop’s **Forge** tab. Select equipment on the left, choose a forge action and material on the right, then press the gold action button. **Utilities** opens crafting, refining, engraving and storage. **Reforge** applies the bonus to equipment crafted before you acquired Hephaestus.
 
 Open the forge to craft, use Tensura’s native refining and engraving menus, access inherited storage, temper equipment or repair it. **Recover** returns the previous Prospector refining ingredients to your inventory.
 
@@ -58,6 +58,8 @@ Iron provides **10%**, Diamond **20%**, Netherite **30%**, and Hihiirokane **35%
 
 ![Divine Forge](../media/hephaestus-forge.png)
 
+![Forge action selection](../media/hephaestus-forge-actions.png)
+
 ![Forge at a smaller GUI size](../media/hephaestus-forge-compact.png)
 
 <a id="living-arsenal"></a>
@@ -68,7 +70,7 @@ Deploy up to **six actual melee weapons** from your inventory. They hover in a c
 
 Weapons prioritize your attack target, then visible hostile mobs or combat opponents within **32 blocks**. They use their own damage, enchantments, engravings and applicable wear reduction. Allies are excluded and normal server PvP rules apply.
 
-**Cost:** 1,000 magicules per weapon to deploy, then 10 magicules per weapon each second. Deployed weapons are unavailable for other uses. Activate again to manage the arsenal. Select any combination of weapons before deploying; add weapons while active and recall individual blades. **Shift-activate** or choose **Recall all** to return everything. Death, logout, dimension travel or losing access to the skill recalls the weapons; saved escrow protects them across a restart.
+**Cost:** 1,000 magicules per weapon to deploy, then 10 magicules per weapon each second. Deployed weapons are unavailable for other uses. Activate again to manage the arsenal. Check inventory weapons on the left and choose **Deploy selected**. The six-slot rack on the right shows deployed blades: click a blade to recall it. Add weapons while the arsenal is active. **Shift-activate** or choose **Recall all** to return everything. Death, logout, dimension travel or losing access to the skill recalls the weapons; saved escrow protects them across a restart.
 
 **Damage type:** Physical weapon attacks. Native elemental conversions and engraving follow-ups retain their own types and defenses.
 
@@ -81,6 +83,8 @@ Weapons prioritize your attack target, then visible hostile mobs or combat oppon
 <a id="magnum-opus"></a>
 
 ## Magnum Opus · Active, Press
+
+Open **Masterpiece**, select your forged equipment and a material, then **Designate masterpiece** and confirm.
 
 Designate **one personally forged item** as your masterpiece. It receives **+50% equipment stats** and **75% reduced durability damage**, replacing the ordinary +20% / 50% forging benefits. The item gains a glint and gold masterpiece identification; a deployed masterpiece has a golden wake.
 

@@ -91,6 +91,59 @@ public final class HephaestusReview {
         "Click not accepted: " + label);
   }
 
+  private static void checkBounds() {
+    var screen = Minecraft.getInstance().screen;
+    for (var child : screen.children())
+      if (child instanceof net.minecraft.client.gui.components.AbstractWidget w && w.visible) {
+        check(
+            w.getX() >= 0
+                && w.getY() >= 0
+                && w.getX() + w.getWidth() <= screen.width
+                && w.getY() + w.getHeight() <= screen.height,
+            "Widget outside viewport: " + w.getMessage());
+      }
+    var widgets =
+        screen.children().stream()
+            .filter(
+                c ->
+                    c instanceof net.minecraft.client.gui.components.AbstractWidget w
+                        && w.visible
+                        && w.active)
+            .map(c -> (net.minecraft.client.gui.components.AbstractWidget) c)
+            .toList();
+    for (int a = 0; a < widgets.size(); a++)
+      for (int b = a + 1; b < widgets.size(); b++) {
+        var one = widgets.get(a);
+        var two = widgets.get(b);
+        check(
+            one.getX() + one.getWidth() <= two.getX()
+                || two.getX() + two.getWidth() <= one.getX()
+                || one.getY() + one.getHeight() <= two.getY()
+                || two.getY() + two.getHeight() <= one.getY(),
+            "Overlapping controls: " + one.getMessage() + " / " + two.getMessage());
+      }
+  }
+
+  private static void select(String name) {
+    var screen = Minecraft.getInstance().screen;
+    for (int n = 0; n < 12; n++) {
+      boolean found =
+          screen.children().stream()
+              .anyMatch(
+                  w ->
+                      w instanceof AbstractButton b
+                          && b.visible
+                          && b.getMessage() != null
+                          && b.getMessage().getString().equals("Select " + name));
+      if (found) {
+        click("Select " + name);
+        return;
+      }
+      click("Next page");
+    }
+    throw new IllegalStateException("Missing equipment " + name);
+  }
+
   private static void grant(ServerPlayer p, ManasSkill skill) {
     RestrictionData.learnReward(p, skill);
     var i = SkillAPI.getSkillsFrom(p).getSkill(skill).orElseThrow();
@@ -115,6 +168,13 @@ public final class HephaestusReview {
   private static void step() throws Exception {
     var mc = Minecraft.getInstance();
     mc.options.pauseOnLostFocus = false;
+    org.lwjgl.glfw.GLFW.glfwSetCursorPos(mc.getWindow().getWindow(), 4, 4);
+    // Park the fixture pointer without relying on desktop focus / native motion callbacks.
+    for (String name : List.of("xpos", "ypos")) {
+      var field = net.minecraft.client.MouseHandler.class.getDeclaredField(name);
+      field.setAccessible(true);
+      field.setDouble(mc.mouseHandler, 4);
+    }
     if (error != null || ++age > 6000) {
       Files.createDirectories(OUT);
       Files.writeString(
@@ -239,13 +299,14 @@ public final class HephaestusReview {
         && wait > 20
         && mc.screen instanceof dev.heavenlyrestriction.client.ForgeScreen) {
       shot("hephaestus-synthesis");
-      click("Synthesize Hephaestus");
+      click("Primary action");
       phase = 4;
       wait = 0;
       return;
     }
     if (phase == 4 && wait > 24) {
-      click("Synthesize Hephaestus");
+      shot("hephaestus-confirm-synthesis");
+      click("Confirm");
       phase = 5;
       wait = 0;
       return;
@@ -307,6 +368,16 @@ public final class HephaestusReview {
     }
     if (phase == 60 && wait > 10) {
       shot("hephaestus-forge-compact");
+      checkBounds();
+      mc.getWindow().setGuiScale(4);
+      mc.screen.resize(mc, mc.getWindow().getGuiScaledWidth(), mc.getWindow().getGuiScaledHeight());
+      phase = 601;
+      wait = 0;
+      return;
+    }
+    if (phase == 601 && wait > 8) {
+      checkBounds();
+      shot("hephaestus-forge-small");
       mc.options.guiScale().set(2);
       mc.resizeDisplay();
       phase = 61;
@@ -314,25 +385,55 @@ public final class HephaestusReview {
       return;
     }
     if (phase == 61 && wait > 5) {
-      click("Apply");
+      checkBounds();
+      click("Action");
+      phase = 610;
+      wait = 0;
+      return;
+    }
+    if (phase == 610 && wait > 5) {
+      checkBounds();
+      shot("hephaestus-forge-actions");
+      click("Temper · Keen");
+      click("Material");
+      phase = 611;
+      wait = 0;
+      return;
+    }
+    if (phase == 611 && wait > 5) {
+      checkBounds();
+      shot("hephaestus-forge-materials");
+      click("Diamond · 32 owned");
+      click("Primary action");
       phase = 7;
       wait = 0;
       return;
     }
     if (phase == 7 && wait > 20) {
+      click("Utilities");
+      phase = 701;
+      wait = 0;
+      return;
+    }
+    if (phase == 701 && wait > 8) {
+      checkBounds();
+      shot("hephaestus-forge-utilities");
+      mc.screen.keyPressed(org.lwjgl.glfw.GLFW.GLFW_KEY_ESCAPE, 0, 0);
       click("Magnum Opus");
       phase = 8;
       wait = 0;
       return;
     }
     if (phase == 8 && wait > 5) {
-      click("Designate masterpiece");
+      click("Primary action");
       phase = 9;
       wait = 0;
       return;
     }
     if (phase == 9 && wait > 25) {
-      click("Designate masterpiece");
+      checkBounds();
+      shot("hephaestus-confirm-masterpiece");
+      click("Confirm");
       phase = 10;
       wait = 0;
       return;
@@ -360,20 +461,39 @@ public final class HephaestusReview {
       return;
     }
     if (phase == 12 && wait > 8) {
-      for (int n = 0; n < 6; n++) {
-        int left = (mc.screen.width - 254) / 2, top = (mc.screen.height - 163) / 2;
-        check(
-            mc.screen.mouseClicked(left + 48, top + 52 + n * 13, 0),
-            "Arsenal checkbox failed " + n);
-      }
-      click("Deploy selected");
+      for (String name :
+          List.of(
+              "Netherite Sword",
+              "Vesper",
+              "Inverted Spear of Heaven",
+              "Diamond Sword",
+              "Iron Sword",
+              "Golden Sword")) select(name);
+      click("Primary action");
       phase = 13;
       wait = 0;
       return;
     }
-    if (phase == 13 && wait > 25) {
+    if (phase == 13 && wait > 70) {
+      checkBounds();
       shot("hephaestus-arsenal-menu");
-      click("Recall");
+      mc.getWindow().setGuiScale(4);
+      mc.screen.resize(mc, mc.getWindow().getGuiScaledWidth(), mc.getWindow().getGuiScaledHeight());
+      phase = 1300;
+      wait = 0;
+      return;
+    }
+    if (phase == 1300 && wait > 8) {
+      checkBounds();
+      shot("hephaestus-arsenal-small");
+      mc.options.guiScale().set(2);
+      mc.resizeDisplay();
+      phase = 1301;
+      wait = 0;
+      return;
+    }
+    if (phase == 1301 && wait > 8) {
+      click("Recall blade 1");
       phase = 130;
       wait = 0;
       return;
@@ -387,10 +507,8 @@ public final class HephaestusReview {
       return;
     }
     if (phase == 131 && wait > 5) {
-      int left = (mc.screen.width - 254) / 2, top = (mc.screen.height - 163) / 2;
-      check(
-          mc.screen.mouseClicked(left + 48, top + 52 + 5 * 13, 0), "Incremental selection failed");
-      click("Deploy selected");
+      select("Netherite Sword");
+      click("Primary action");
       phase = 132;
       wait = 0;
       return;
@@ -476,7 +594,7 @@ public final class HephaestusReview {
     if (phase == 17 && damaged && recalled && wait > 20) {
       Files.writeString(
           OUT.resolve("passed-hephaestus.txt"),
-          "PASS: native Ultimate learning entry; two-click synthesis with confirmation surviving"
+          "PASS: native Ultimate learning entry; explicit synthesis confirmation surviving"
               + " refresh; 250000 permanent magicules charged once; both parents replaced,"
               + " learned/unmastered Ultimate; native Forge UI tempering; one masterpiece; six real"
               + " weapons escrowed, individual menu recall and incremental redeployment, autonomous"

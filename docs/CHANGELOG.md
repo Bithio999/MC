@@ -1,5 +1,13 @@
 # Changelog
 
+## Additions 1.22.2 — The Additions workshop
+
+- Replace the repurposed ability-selection screen with a dedicated workshop: Tensura-inspired cyan bevels, dark panels, copper-gold accents and a compact Additions crest.
+- Separate equipment, forge actions, materials and the six-slot weapon rack. Keep crafting/refining/engraving/storage in Utilities; combine action and temper selection in one menu.
+- Add explicit synthesis/masterpiece confirmations, clear selection checkboxes, visible costs and contextual requirement hints. Preserve selections and confirmations across live refreshes.
+- Fit compact viewports without fractional scaling. Correct popover depth so items cannot draw through menus, and block interaction and tooltips behind dialogs.
+- Refresh the guide, wiki and in-game captures.
+
 ## Additions 1.22.1 — Forge and arsenal fixes
 
 - Apply forging bonuses and achievement credit at Tensura’s Smithing Bench, including normal pickup and shift-click. Fix vanilla quick-transfer ordering and portable crafting recipe updates.

@@ -77,6 +77,12 @@ public final class ForgeService {
     t.putDouble("cost", ForgeSynthesis.cost(p));
     t.putBoolean("affordable", ForgeSynthesis.affordable(p));
     t.putBoolean("deployed", ForgeArsenal.active(p));
+    t.putDouble("magicules", TensuraStorages.getExistenceFrom(p).getMagicule());
+    t.putDouble("workCost", bill(p, 2000));
+    t.putDouble("repairCost", bill(p, 500));
+    t.putDouble("opusCost", bill(p, 50000));
+    t.putDouble("deployCost", bill(p, 1000));
+    t.putDouble("upkeepCost", bill(p, 10));
     var items = new ListTag();
     for (int slot = 0; slot < p.getInventory().items.size(); slot++) {
       var s = p.getInventory().getItem(slot);
@@ -108,6 +114,7 @@ public final class ForgeService {
     for (var m : materials()) {
       var row = new CompoundTag();
       row.putString("name", m.name);
+      row.put("stack", stack(new ItemStack(m.item), p));
       row.putDouble("quality", m.quality);
       row.putInt("count", count(p, m.item));
       materials.add(row);
