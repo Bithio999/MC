@@ -21,7 +21,7 @@ Owning a component reveals an unfinished Hephaestus entry in Tensura’s **Skill
 
 Awakening bonuses are applied **before** the acquisition cost. Synthesis waits until awakening is finished. Already-awakened players can qualify later. Hephaestus replaces both components and begins learned, unmastered. Engraving knowledge, stored materials and affected presets are retained.
 
-The crafting achievement requires an actual craft or smithing result while you have Godly Craftsman. The eligible equipment can be changed with the `heavenlyrestriction:hephaestus_synthesis_equipment` item tag. There is no EP threshold.
+The crafting achievement requires an actual craft or smithing result while you have Godly Craftsman. **Tensura’s Smithing Bench**, the vanilla smithing table and crafting tables are supported, including shift-click. Previewing a recipe does not count. The eligible equipment can be changed with the `heavenlyrestriction:hephaestus_synthesis_equipment` item tag. There is no EP threshold.
 
 ![Synthesis requirements](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/hephaestus-synthesis.png)
 
@@ -38,6 +38,8 @@ Forging bonuses apply once per item and remain on the equipment. They reduce ord
 <a id="divine-forge"></a>
 
 ## Divine Forge · Active, Press
+
+Use the native-style side tabs, equipment search and Tools / Metal / Type (temper) dropdowns. Choose the action, then Apply. **Reforge** applies the bonus to equipment crafted before you acquired Hephaestus.
 
 Open the forge to craft, use Tensura’s native refining and engraving menus, access inherited storage, temper equipment or repair it. **Recover** returns the previous Prospector refining ingredients to your inventory.
 
@@ -62,13 +64,15 @@ Iron provides **10%**, Diamond **20%**, Netherite **30%**, and Hihiirokane **35%
 
 ## Living Arsenal · Active, Press
 
-Deploy up to **six actual melee weapons** from your inventory. They hover in formation, then perform rapid, curved lunges and slashes with prismatic trails, inspired by Terraria’s Terraprisma.
+Deploy up to **six actual melee weapons** from your inventory. They hover in a compact formation and take turns making curved slashes with short, tapered wakes, inspired by Terraria’s Terraprisma. The blades turn into each cut. A shared **24-tick round** spaces attacks evenly across the deployed weapons; each weapon attacks once per round.
 
 Weapons prioritize your attack target, then visible hostile mobs or combat opponents within **32 blocks**. They use their own damage, enchantments, engravings and applicable wear reduction. Allies are excluded and normal server PvP rules apply.
 
-**Cost:** 1,000 magicules per weapon to deploy, then 10 magicules per weapon each second. Deployed weapons are unavailable for other uses. Activate again or choose **Recall all** to return them. Death, logout, dimension travel or losing access to the skill recalls the weapons; saved escrow protects them across a restart.
+**Cost:** 1,000 magicules per weapon to deploy, then 10 magicules per weapon each second. Deployed weapons are unavailable for other uses. Activate again to manage the arsenal. Select any combination of weapons before deploying; add weapons while active and recall individual blades. **Shift-activate** or choose **Recall all** to return everything. Death, logout, dimension travel or losing access to the skill recalls the weapons; saved escrow protects them across a restart.
 
 **Damage type:** Physical weapon attacks. Native elemental conversions and engraving follow-ups retain their own types and defenses.
+
+![Arsenal selection](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/hephaestus-arsenal-menu.png)
 
 ![Living Arsenal formation](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/hephaestus-arsenal.png)
 

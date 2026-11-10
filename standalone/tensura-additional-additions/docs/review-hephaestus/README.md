@@ -6,7 +6,7 @@ Review fixtures are opt-in and must not enter the production JAR. Use Java 21 an
 gradle clean test runGameTestServer -I docs/review-high-realm/server.init.gradle -PforgeFocus=true --no-daemon
 ```
 
-The eighteen Hephaestus cases cover native Ultimate classification and all three modes; synthesis without an EP gate; mastery, awakening, achievement and affordability failures; native awakening-before-cost ordering; both inherited containers and presets; genuine crafting; item stats and non-stacking; fractional ordinary wear and native EP durability; material consumption and preservation of engraving/Orb history; one saved masterpiece; real weapon escrow and duplicate-safe recall; session rejection; an autonomous Nullification spear hit; Keen, Conductor, Piercing and Enduring; a deployed Vesper’s delayed Afterwind; and scoped offensive engraving attributes restored after a hit.
+The twenty-four Hephaestus cases cover native Ultimate classification and all three modes; synthesis without an EP gate; mastery, awakening, achievement and affordability failures; native awakening-before-cost ordering; both inherited containers and presets; genuine crafting; item stats and non-stacking; fractional ordinary wear and native EP durability; material consumption and preservation of engraving/Orb history; one saved masterpiece; real weapon escrow and duplicate-safe recall; session rejection; an autonomous Nullification spear hit; Keen, Conductor, Piercing and Enduring; a deployed Vesper’s delayed Afterwind; and scoped offensive engraving attributes restored after a hit. Additional cases exercise real Tensura Smithing Bench normal/shift takes, Hihiirokane synthesis credit and attack bonuses, native equipped armor/toughness, crafting-table quick transfer, vanilla smithing and incremental deployment / individual recall. Two JVM timing cases cover every arsenal size, reversed entity tick order, idle gaps and sparse roster changes.
 
 Omit `-PforgeFocus=true` for the full native suite. Repeated tests accumulate generated terrain in `run/world`; check available space first. Only clear that disposable world after stopping the test server. Never clear a user's client save.
 
@@ -16,6 +16,11 @@ The real-client harness is guarded to the disposable `Wayfarer Review` save:
 DISPLAY=:99 LIBGL_ALWAYS_SOFTWARE=1 ALSOFT_DRIVERS=null gradle clean runClient -I docs/review-hephaestus/client.init.gradle --no-daemon
 ```
 
-It changes the review character, nearby mobs and a small review courtyard. It exercises the native Ultimate entry and activation event, persistent two-click synthesis confirmation across refreshes, the exact permanent-magicule bill, real menu actions, both GUI scales, a masterpiece, six committed weapons, visible client lunges, actual damage and six-item recall. Require a **fresh** `/workspace/validation-wayfarer/capture/passed-hephaestus.txt`; successful Gradle exit alone is insufficient. Earlier failed markers are historical and do not establish the current result. Inspect the corresponding PNGs.
+It changes the review character, nearby mobs and a small review courtyard. It exercises the native Ultimate entry and activation event, persistent two-click synthesis confirmation across refreshes, the exact permanent-magicule bill, real menu actions, both GUI scales, a masterpiece, six committed weapons, individual recall and incremental redeployment through the menu, visible client lunges, actual damage and six-item recall. Require a **fresh** `/workspace/validation-wayfarer/capture/passed-hephaestus.txt`; successful Gradle exit alone is insufficient. Earlier failed markers are historical and do not establish the current result. Inspect the corresponding PNGs.
 
-The API profile is `gradle clean test -PneoOtherworldDirectory=/tmp/realm-api-profile --no-daemon`. Do not run Gradle profiles concurrently. After any review/API profile, run a **clean baseline production build** and `python3 scripts/verify-distribution.py` before copying a release JAR.
+The native API-profile check also exercises Tensura 2.0.1.4 / NeoForge 21.1.248 (the dependency runtimes are included only for this review):
+
+```sh
+gradle clean test runGameTestServer -PneoOtherworldDirectory=/tmp/realm-api-profile -I docs/review-high-realm/server.init.gradle -I docs/review-high-realm/api-runtime.init.gradle -PforgeFocus=true --no-daemon
+```
+ Do not run Gradle profiles concurrently. After any review/API profile, run a **clean baseline production build** and `python3 scripts/verify-distribution.py` before copying a release JAR.

@@ -72,7 +72,11 @@ public final class HephaestusReview {
     var mc = Minecraft.getInstance();
     var button =
         mc.screen.children().stream()
-            .filter(w -> w instanceof AbstractButton b && b.getMessage().getString().equals(label))
+            .filter(
+                w ->
+                    w instanceof AbstractButton b
+                        && b.getMessage() != null
+                        && b.getMessage().getString().equals(label))
             .map(w -> (AbstractButton) w)
             .findFirst()
             .orElseThrow(() -> new IllegalStateException("Button not found: " + label));
@@ -310,7 +314,7 @@ public final class HephaestusReview {
       return;
     }
     if (phase == 61 && wait > 5) {
-      click("Temper");
+      click("Apply");
       phase = 7;
       wait = 0;
       return;
@@ -356,12 +360,47 @@ public final class HephaestusReview {
       return;
     }
     if (phase == 12 && wait > 8) {
-      click("Deploy up to six");
+      for (int n = 0; n < 6; n++) {
+        int left = (mc.screen.width - 254) / 2, top = (mc.screen.height - 163) / 2;
+        check(
+            mc.screen.mouseClicked(left + 48, top + 52 + n * 13, 0),
+            "Arsenal checkbox failed " + n);
+      }
+      click("Deploy selected");
       phase = 13;
       wait = 0;
       return;
     }
     if (phase == 13 && wait > 25) {
+      shot("hephaestus-arsenal-menu");
+      click("Recall");
+      phase = 130;
+      wait = 0;
+      return;
+    }
+    if (phase == 130 && wait > 20) {
+      server(
+          p ->
+              check(ForgeArsenal.count(p) == 5, "Individual menu recall did not keep five blades"));
+      phase = 131;
+      wait = 0;
+      return;
+    }
+    if (phase == 131 && wait > 5) {
+      int left = (mc.screen.width - 254) / 2, top = (mc.screen.height - 163) / 2;
+      check(
+          mc.screen.mouseClicked(left + 48, top + 52 + 5 * 13, 0), "Incremental selection failed");
+      click("Deploy selected");
+      phase = 132;
+      wait = 0;
+      return;
+    }
+    if (phase == 132 && wait > 25) {
+      server(
+          p ->
+              check(
+                  ForgeArsenal.count(p) == 6,
+                  "Incremental menu deployment did not restore six blades"));
       mc.setScreen(null);
       mc.options.setCameraType(CameraType.THIRD_PERSON_BACK);
       phase = 14;
@@ -440,7 +479,8 @@ public final class HephaestusReview {
           "PASS: native Ultimate learning entry; two-click synthesis with confirmation surviving"
               + " refresh; 250000 permanent magicules charged once; both parents replaced,"
               + " learned/unmastered Ultimate; native Forge UI tempering; one masterpiece; six real"
-              + " weapons escrowed, autonomous strikes and exact six-item recall.\n");
+              + " weapons escrowed, individual menu recall and incremental redeployment, autonomous"
+              + " strikes and exact six-item recall.\n");
       mc.options.setCameraType(CameraType.FIRST_PERSON);
       mc.stop();
     }

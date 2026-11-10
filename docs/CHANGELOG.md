@@ -1,5 +1,12 @@
 # Changelog
 
+## Additions 1.22.1 — Forge and arsenal fixes
+
+- Apply forging bonuses and achievement credit at Tensura’s Smithing Bench, including normal pickup and shift-click. Fix vanilla quick-transfer ordering and portable crafting recipe updates.
+- Sequence Living Arsenal through a shared 24-tick round, align blades with their cuts, and reduce idle / return visual clutter.
+- Add individual weapon selection, incremental deployment and individual recall in a native Tensura frame with side tabs and dropdowns. Reopening manages active blades; shift-activation recalls all.
+- Fit the Hephaestus emblem to native 32×32 skill frames and refresh both guides and client captures.
+
 ## Additions 1.22.0 — Hephaestus, Lord of the Forge
 
 - Synthesize mastered Prospector + Godly Craftsman after True Demon Lord / True Hero awakening and personally forging qualifying high-tier equipment. No EP threshold. A configurable 250,000 permanent-magicule acquisition cost is paid after awakening bonuses.

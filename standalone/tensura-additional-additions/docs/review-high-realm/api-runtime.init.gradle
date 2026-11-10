@@ -1,0 +1,6 @@
+// The API profile is compile-only by default. Native API-profile tests also need these runtimes.
+gradle.projectsEvaluated {
+ if (rootProject.providers.gradleProperty('neoOtherworldDirectory').isPresent()) {
+  rootProject.dependencies.add('runtimeOnly', rootProject.fileTree(dir: 'libs/runtime', include: '*.jar'))
+ }
+}

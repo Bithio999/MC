@@ -79,7 +79,10 @@
     "ForgeWearMixin",
     "ForgeHitMixin",
     "ForgeCriticalMixin",
-    "ForgeCraftMixin"
+    "ForgeCraftMixin",
+    "ForgeQuickCraftMixin",
+    "ForgeBenchMixin",
+    "ForgeBenchTakeMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -281,3 +281,9 @@ Combine equipment on the left with the orb on the right of an anvil. Taking the 
 ## Marauder’s Map
 
 Open the learned Unique to pan and zoom across dimensions. A crisp biome preview appears first, then terrain relief; recorded surfaces and zoomed-in native detail show actual blocks and builds. Recent terrain is retained when reopening the map. Exploration is shared, custom pins stay private, and structure markers appear as they are discovered. **Locate structure…** keeps its searchable vanilla/addon catalog and searches up to **100,000 blocks around the viewed map center**. [Controls and travel](../../../wiki/pages/Additions-Marauders-Map.md).
+
+## Hephaestus, Lord of the Forge — Ultimate
+
+Master Prospector and Godly Craftsman, awaken as a True Demon Lord / True Hero, and personally forge Netherite or Hihiirokane equipment. Tensura’s **Smithing Bench** counts, including shift-click. Open the unfinished Ultimate entry and confirm synthesis; the default price is 250,000 permanent magicules after awakening bonuses. There is no EP threshold.
+
+Use the forge’s side tabs and dropdowns to work equipment or manage up to six actual weapons. Click inventory weapons to select a group, then **Deploy**. Select a deployed weapon to **Recall** just that blade; **Tools → Recall all** or shift-activating Living Arsenal returns everything. Weapons take turns in one 24-tick round. Forged equipment receives +20% attack/armor/toughness and 50% reduced wear; **Reforge** applies these benefits to older equipment. One designated masterpiece replaces those bonuses with +50% / 75%. [Costs, tempers and pictures](../../../wiki/pages/Additions-Hephaestus.md).

@@ -93,6 +93,17 @@ public final class ForgeService {
       items.add(row);
     }
     t.put("items", items);
+    var roster = new ListTag();
+    for (int index : ForgeArsenal.roster(p)) {
+      var row = new CompoundTag();
+      var weapon = ForgeArsenal.item(p, index);
+      row.putInt("slot", -index - 2);
+      row.putString("name", weapon.getHoverName().getString());
+      row.putBoolean("weapon", true);
+      row.put("stack", stack(weapon, p));
+      roster.add(row);
+    }
+    t.put("armaments", roster);
     var materials = new ListTag();
     for (var m : materials()) {
       var row = new CompoundTag();
@@ -223,7 +234,15 @@ public final class ForgeService {
         p.openMenu(
             new SimpleMenuProvider(
                 (container, inv, player) ->
-                    new CraftingMenu(container, inv, ContainerLevelAccess.NULL),
+                    new CraftingMenu(
+                        container,
+                        inv,
+                        ContainerLevelAccess.create(player.level(), player.blockPosition())) {
+                      @Override
+                      public boolean stillValid(net.minecraft.world.entity.player.Player user) {
+                        return user == player && user.isAlive();
+                      }
+                    },
                 Component.translatable("heavenlyrestriction.forge.title")));
       }
       case "refine" -> {
@@ -255,10 +274,25 @@ public final class ForgeService {
         ForgeArsenal.recall(p);
         state(p, false, "Arsenal recalled.");
       }
+      case "recall_one" -> {
+        boolean done = ForgeArsenal.recall(p, -slot - 2);
+        state(p, false, done ? "Weapon recalled." : "That weapon is no longer deployed.");
+      }
+      case "deploy_set" -> {
+        long mask = Integer.toUnsignedLong(slot) | ((long) (value & 15) << 32);
+        var slots = new ArrayList<Integer>();
+        for (int n = 0; n < 36; n++) if ((mask & (1L << n)) != 0) slots.add(n);
+        boolean done = (value & ~15) == 0 && ForgeArsenal.deploy(p, slots);
+        state(
+            p,
+            false,
+            done ? "Selected weapons deployed." : "Check free slots, weapons and magicules.");
+      }
       case "deploy_all" -> {
         var slots = new ArrayList<Integer>();
-        for (int n = 0; n < p.getInventory().items.size() && slots.size() < 6; n++)
-          if (ForgeItems.weapon(p.getInventory().getItem(n))) slots.add(n);
+        for (int n = 0;
+            n < p.getInventory().items.size() && slots.size() < 6 - ForgeArsenal.count(p);
+            n++) if (ForgeItems.weapon(p.getInventory().getItem(n))) slots.add(n);
         boolean done = ForgeArsenal.deploy(p, slots);
         state(
             p,

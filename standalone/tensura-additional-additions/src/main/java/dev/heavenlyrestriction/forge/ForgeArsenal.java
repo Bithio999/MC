@@ -20,6 +20,7 @@ import net.neoforged.neoforge.event.tick.PlayerTickEvent;
  * skills.
  */
 public final class ForgeArsenal {
+  private static final Map<ServerPlayer, ArsenalSequence> SEQUENCES = new WeakHashMap<>();
   private static final String ITEMS = "hephaestus_arsenal";
 
   private record Weapon(LivingEntity owner, ItemStack item) {}
@@ -54,7 +55,24 @@ public final class ForgeArsenal {
   }
 
   public static boolean active(ServerPlayer p) {
-    return !items(p).isEmpty();
+    return count(p) > 0;
+  }
+
+  public static int[] roster(ServerPlayer p) {
+    var saved = items(p);
+    return java.util.stream.IntStream.range(0, saved.size())
+        .filter(n -> !saved.getCompound(n).getCompound("stack").isEmpty())
+        .toArray();
+  }
+
+  public static int count(ServerPlayer p) {
+    return roster(p).length;
+  }
+
+  public static boolean launch(ServerPlayer p, int index) {
+    return SEQUENCES
+        .computeIfAbsent(p, ignored -> new ArsenalSequence())
+        .launch(index, p.getServer().getTickCount(), roster(p));
   }
 
   private static ListTag items(ServerPlayer p) {
@@ -95,10 +113,9 @@ public final class ForgeArsenal {
   }
 
   public static boolean deploy(ServerPlayer p, List<Integer> slots) {
-    if (active(p)
-        || ForgeSynthesis.owned(p).filter(i -> i.canInteractSkill(p)).isEmpty()
+    if (ForgeSynthesis.owned(p).filter(i -> i.canInteractSkill(p)).isEmpty()
         || slots.isEmpty()
-        || slots.size() > 6
+        || count(p) + slots.size() > 6
         || new HashSet<>(slots).size() != slots.size()) return false;
     for (int slot : slots)
       if (slot < 0
@@ -108,27 +125,51 @@ public final class ForgeArsenal {
     double cost = ForgeService.bill(p, 1000 * slots.size());
     var ep = TensuraStorages.getExistenceFrom(p);
     if (ep.getMagicule() < cost) return false;
-    var list = new ListTag();
+    var list = items(p).copy();
+    var added = new ArrayList<Integer>();
     for (int slot : slots) {
       var entry = new CompoundTag();
       entry.put("stack", p.getInventory().getItem(slot).save(p.registryAccess()));
-      list.add(entry);
+      int index = 0;
+      while (index < list.size() && !list.getCompound(index).getCompound("stack").isEmpty())
+        index++;
+      if (index < list.size()) list.set(index, entry);
+      else list.add(entry);
+      added.add(index);
     }
     RestrictionData.of(p).put(ITEMS, list);
     for (int slot : slots) p.getInventory().setItem(slot, ItemStack.EMPTY);
     ep.setMagicule(ep.getMagicule() - cost);
     ep.markDirty();
     p.getInventory().setChanged();
-    for (int n = 0; n < list.size(); n++) ArsenalBlade.spawn(p, n, list.size());
+    for (int n : added) ArsenalBlade.spawn(p, n, count(p));
     p.serverLevel()
         .playSound(
             null, p.blockPosition(), SoundEvents.TRIDENT_RETURN, SoundSource.PLAYERS, .8f, .7f);
     return true;
   }
 
+  public static boolean recall(ServerPlayer p, int index) {
+    var stack = item(p, index);
+    if (stack.isEmpty()) return false;
+    var saved = items(p).copy();
+    var row = saved.getCompound(index);
+    saved.set(index, new CompoundTag());
+    RestrictionData.of(p).put(ITEMS, saved);
+    if (row.hasUUID("entity")) {
+      var e = p.serverLevel().getEntity(row.getUUID("entity"));
+      if (e instanceof ArsenalBlade) e.discard();
+    }
+    if (!p.getInventory().add(stack)) p.drop(stack, false);
+    p.getInventory().setChanged();
+    if (!active(p)) SEQUENCES.remove(p);
+    return true;
+  }
+
   public static void recall(ServerPlayer p) {
     var saved = items(p).copy();
     RestrictionData.of(p).remove(ITEMS);
+    SEQUENCES.remove(p);
     // Clear escrow before returning anything, so repeated callbacks cannot return it twice.
     for (var tag : saved) {
       var item =
@@ -211,7 +252,7 @@ public final class ForgeArsenal {
                 target.getX(),
                 target.getY() + target.getBbHeight() * .5,
                 target.getZ(),
-                7,
+                2,
                 .25,
                 .3,
                 .25,

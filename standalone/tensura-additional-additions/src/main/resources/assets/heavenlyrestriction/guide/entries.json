@@ -989,7 +989,7 @@
         {
           "title": "Divine Forge · Active press",
           "lines": [
-            "Craft, use native refining and engraving, access storage, temper or repair. Recover returns your old Prospector refining ingredients.",
+            "Craft, use native refining and engraving, access storage, temper or repair. Forging bonuses also apply at Tensura’s Smithing Bench, including shift-click results. Reforge can apply the bonus to older equipment. Recover returns your old Prospector refining ingredients.",
             "Reforge / Temper: 2,000 magicules + one material. Iron / Diamond / Netherite / Hihiirokane give 10% / 20% / 30% / 35% temper strength. Keen improves critical damage; Piercing ignores part of armor reduction; Conductor improves elemental damage; Enduring reduces wear. Only one temper applies.",
             "Repair: 500 magicules + one material; restores 30% / 60% / 90% / 100% ordinary and native EP durability. Engravings and Chromatic Orb history remain. Damage type: none directly."
           ]
@@ -998,7 +998,7 @@
           "title": "Living Arsenal · Active press",
           "lines": [
             "Deploy up to six actual melee weapons. They hover in formation and slash with curved lunges and prismatic wakes, like Terraprisma. They prioritize your attack target, then visible hostiles or combat opponents within 32 blocks, respecting alliances and PvP rules.",
-            "Cost: 1,000 magicules per deployed weapon and 10 per weapon each second. Each uses its own damage, enchantments and engravings. Press again or use Recall all to return the committed weapons. Death, logout, dimension changes or losing the skill also recall them; saved escrow survives a restart. Damage type: Physical, with normal native conversions / engraving follow-ups."
+            "Cost: 1,000 magicules per deployed weapon and 10 per weapon each second. Each uses its own damage, enchantments and engravings. Select weapons individually in the native-style arsenal menu; deploy the selected group, add weapons while active, or recall one at a time. All swords take turns in one 24-tick round. Press again to manage; shift-press or use Recall all to return everything. Death, logout, dimension changes or losing the skill also recall them; saved escrow survives a restart. Damage type: Physical, with normal native conversions / engraving follow-ups."
           ]
         },
         {

@@ -2,58 +2,60 @@ package dev.heavenlyrestriction.client;
 
 import dev.heavenlyrestriction.*;
 import dev.heavenlyrestriction.forge.ForgeNetwork;
+import io.github.manasmods.tensura.client.screen.templates.SimpleScreen;
 import io.github.manasmods.tensura.client.screen.widgets.SimpleButton;
+import io.github.manasmods.tensura.util.client.ScreenHelper;
 import java.util.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.*;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.nbt.*;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.*;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 
-/**
- * Native Tensura buttons, a clipped equipment ledger and stable confirmations during live refresh.
- */
+/** The native Tensura frame, search, list rows and side tabs, with server-owned item actions. */
 @EventBusSubscriber(
     modid = HeavenlyRestriction.ID,
     bus = EventBusSubscriber.Bus.MOD,
     value = Dist.CLIENT)
-public final class ForgeScreen extends Screen {
-  private static final int GOLD = 0xffedbf72,
-      TEXT = 0xffe8e3db,
-      MUTED = 0xffaaa6a1,
-      LINE = 0xff66584a;
-  private float uiScale = 1;
-
-  public float uiScale() {
-    return uiScale;
-  }
-
+public final class ForgeScreen extends SimpleScreen {
+  private static final ResourceLocation
+      FRAME =
+          ResourceLocation.parse(
+              "tensura:textures/gui/ability_selection/ability_selection_gui.png"),
+      ROW = ResourceLocation.parse("tensura:textures/gui/ability_button.png");
+  private static final int TEXT = 0xffdceff2, MUTED = 0xff91b4bd, GOLD = 0xffffd277;
   private CompoundTag state;
-  private String tab, query = "", notice = "";
-  private int x, y, w, h, page, selected = -1, material = 1, temper = 1, age;
+  private String tab, query = "", notice = "", dropdown = "", action = "temper";
+  private int detailScroll;
+  private int page, selected = -1, material = 1, temper = 1, age;
   private boolean waiting, pending, confirm;
   private ForgeNetwork.Request queued;
-  private EditBox search;
-  private final List<Button> rows = new ArrayList<>(), controls = new ArrayList<>();
+  private final Set<Integer> staged = new LinkedHashSet<>();
+  private final List<ForgeButton> rows = new ArrayList<>(), controls = new ArrayList<>();
+  private final List<AbstractWidget> popup = new ArrayList<>();
 
   public ForgeScreen(CompoundTag state) {
-    super(Component.translatable("heavenlyrestriction.forge.title"));
+    super(Component.translatable("heavenlyrestriction.forge.title"), 254, 163);
     this.state = state.copy();
     tab = state.getString("mode");
     if (tab.equals("masterpiece")) tab = "opus";
     if (!state.getBoolean("learned")) tab = "synthesis";
   }
 
+  public float uiScale() {
+    return 1;
+  }
+
   @SubscribeEvent
-  public static void setup(FMLClientSetupEvent event) {
-    event.enqueueWork(() -> ForgeNetwork.receiver = ForgeScreen::receive);
+  public static void setup(FMLClientSetupEvent e) {
+    e.enqueueWork(() -> ForgeNetwork.receiver = ForgeScreen::receive);
   }
 
   public static void receive(CompoundTag tag) {
@@ -83,6 +85,7 @@ public final class ForgeScreen extends Screen {
       s.queued = null;
       s.send(q);
     } else s.pending = false;
+    s.staged.removeIf(slot -> s.inventory().stream().noneMatch(row -> row.getInt("slot") == slot));
     if (changed) {
       s.tab = "forge";
       s.confirm = false;
@@ -94,9 +97,14 @@ public final class ForgeScreen extends Screen {
   private void request(String action) {
     if (pending) return;
     pending = !action.equals("refresh");
-    var r =
-        new ForgeNetwork.Request(
-            state.getUUID("session"), action, selected, temper * 10 + material);
+    int slot = selected, value = temper * 10 + material;
+    if (action.equals("deploy_set")) {
+      long mask = 0;
+      for (int n : staged) if (n >= 0 && n < 36) mask |= 1L << n;
+      slot = (int) mask;
+      value = (int) (mask >>> 32);
+    }
+    var r = new ForgeNetwork.Request(state.getUUID("session"), action, slot, value);
     if (waiting) queued = r;
     else send(r);
     refresh();
@@ -108,37 +116,74 @@ public final class ForgeScreen extends Screen {
   }
 
   private class ForgeButton extends SimpleButton {
-    private final boolean materialControl;
+    private final String label;
+    private final ItemStack icon;
+    private java.util.function.BooleanSupplier allowed = () -> true;
 
-    ForgeButton(int x, int y, int width, String label, Runnable call) {
-      super(x, y, width, 18, Component.literal(label), Component.literal(label), b -> call.run());
-      materialControl = label.equals("Material");
+    ForgeButton(
+        int x,
+        int y,
+        int width,
+        int height,
+        ResourceLocation texture,
+        String label,
+        ItemStack icon,
+        Runnable call) {
+      super(
+          x,
+          y,
+          width,
+          height,
+          texture,
+          icon.isEmpty() ? Component.literal(label) : Component.empty(),
+          Component.literal(label),
+          b -> call.run());
+      this.label = label;
+      this.icon = icon;
       setActiveCheck(() -> active);
       setClickedCheck(() -> active && visible && isHovered());
     }
 
     @Override
-    protected void renderWidget(GuiGraphics g, int mx, int my, float partial) {
-      if (materialControl) {
-        var mats = state.getList("materials", Tag.TAG_COMPOUND);
-        if (!mats.isEmpty()) {
-          var m = mats.getCompound(material % mats.size());
-          text =
-              Component.literal(
-                  m.getString("name")
-                      + " ("
-                      + m.getInt("count")
-                      + ") · "
-                      + Math.round(m.getDouble("quality") * 100)
-                      + "%");
-        }
-      }
-      super.renderWidget(g, mx, my, partial);
+    public Component getMessage() {
+      return Component.literal(label);
     }
 
     @Override
-    public boolean mouseClicked(double mx, double my, int b) {
-      if (active && visible && b == 0 && isMouseOver(mx, my)) {
+    protected void renderWidget(GuiGraphics g, int mx, int my, float partial) {
+      var saved = text;
+      text = null;
+      super.renderWidget(g, mx, my, partial);
+      text = saved;
+      if (!icon.isEmpty())
+        g.renderItem(icon, getX() + (getWidth() - 16) / 2, getY() + (getHeight() - 16) / 2);
+      else {
+        g.blit(
+            ROW, getX(), getY(), getWidth(), getHeight(), 0, isHovered() ? 13 : 0, 89, 13, 89, 26);
+        String caption =
+            switch (label) {
+              case "Synthesize Hephaestus" -> confirm ? "Confirm synthesis" : "Synthesize";
+              case "Designate masterpiece" -> confirm ? "Confirm masterpiece" : "Designate";
+              case "Temper" -> "Type";
+              case "Deploy selected" -> "Deploy (" + staged.size() + ")";
+              case "‹ page" -> "‹";
+              case "› page" -> "›";
+              case "Action" ->
+                  action.substring(0, 1).toUpperCase(Locale.ROOT) + action.substring(1);
+              default -> label;
+            };
+        g.drawCenteredString(
+            font,
+            fit(caption, getWidth() - 4),
+            getX() + getWidth() / 2,
+            getY() + 3,
+            active ? TEXT : MUTED);
+      }
+    }
+
+    @Override
+    public boolean mouseClicked(double mx, double my, int button) {
+      if (active && visible && button == 0 && isMouseOver(mx, my)) {
         onPress();
         playDownSound(Minecraft.getInstance().getSoundManager());
         return true;
@@ -147,38 +192,52 @@ public final class ForgeScreen extends Screen {
     }
   }
 
-  private Button button(int bx, int by, int bw, String label, Runnable call) {
-    var b = addRenderableWidget(new ForgeButton(bx, by, bw, label, call));
+  private ForgeButton button(int x, int y, int width, String label, Runnable call) {
+    var b =
+        addRenderableWidget(
+            new ForgeButton(
+                guiLeft + x, guiTop + y, width, 13, null, label, ItemStack.EMPTY, call));
     controls.add(b);
     return b;
   }
 
+  private List<CompoundTag> inventory() {
+    var out = new ArrayList<CompoundTag>();
+    for (var t : state.getList("items", Tag.TAG_COMPOUND)) out.add((CompoundTag) t);
+    return out;
+  }
+
   private List<CompoundTag> items() {
-    var list = new ArrayList<CompoundTag>();
-    for (var tag : state.getList("items", Tag.TAG_COMPOUND)) {
-      var r = (CompoundTag) tag;
-      if ((!tab.equals("arsenal") || r.getBoolean("weapon"))
-          && r.getString("name").toLowerCase(Locale.ROOT).contains(query.toLowerCase(Locale.ROOT)))
-        list.add(r);
-    }
-    return list;
+    var out = new ArrayList<CompoundTag>();
+    if (tab.equals("arsenal"))
+      for (var t : state.getList("armaments", Tag.TAG_COMPOUND)) out.add((CompoundTag) t);
+    out.addAll(inventory());
+    return out.stream()
+        .filter(
+            r ->
+                (!tab.equals("arsenal") || r.getBoolean("weapon"))
+                    && r.getString("name")
+                        .toLowerCase(Locale.ROOT)
+                        .contains(query.toLowerCase(Locale.ROOT)))
+        .toList();
   }
 
   private CompoundTag chosen() {
-    for (var r : items()) if (r.getInt("slot") == selected) return r;
-    return null;
+    return items().stream().filter(r -> r.getInt("slot") == selected).findFirst().orElse(null);
   }
 
-  private ItemStack stack(CompoundTag r) {
-    return r == null
+  private ItemStack stack(CompoundTag row) {
+    return row == null
         ? ItemStack.EMPTY
-        : ItemStack.parseOptional(minecraft.level.registryAccess(), r.getCompound("stack"));
+        : ItemStack.parseOptional(minecraft.level.registryAccess(), row.getCompound("stack"));
   }
 
   private void switchTab(String next) {
     tab = next;
-    query = "";
+    detailScroll = 0;
     page = 0;
+    query = "";
+    dropdown = "";
     confirm = false;
     notice = "";
     rebuildWidgets();
@@ -186,52 +245,59 @@ public final class ForgeScreen extends Screen {
 
   @Override
   protected void init() {
+    super.init();
     controls.clear();
     rows.clear();
-    w = 450;
-    h = 324;
-    uiScale = Math.max(.1f, Math.min(1f, Math.min((width - 12) / 450f, (height - 12) / 324f)));
-    x = (int) (width / uiScale - w) / 2;
-    y = (int) (height / uiScale - h) / 2;
-    int bw = (w - 28) / 4;
+    popup.clear();
+    for (var nativeTab : ScreenHelper.getMenuTabs(0, guiLeft, guiTop))
+      if (nativeTab.getY() == guiTop + 2) addRenderableWidget(nativeTab);
     String[] tabs = {"forge", "arsenal", "opus", "synthesis"},
-        names = {"Divine Forge", "Living Arsenal", "Magnum Opus", "Synthesis"};
+        labels = {"Divine Forge", "Living Arsenal", "Magnum Opus", "Synthesis"};
+    Item[] icons = {Items.ANVIL, Items.DIAMOND_SWORD, Items.NETHER_STAR, Items.END_CRYSTAL};
     for (int n = 0; n < 4; n++) {
       String next = tabs[n];
-      var b = button(x + 8 + n * (bw + 4), y + 39, bw, names[n], () -> switchTab(next));
-      b.active = state.getBoolean("learned") || next.equals("synthesis");
+      var b =
+          addRenderableWidget(
+              new ForgeButton(
+                  guiLeft + 233,
+                  guiTop + 30 + n * 26,
+                  21,
+                  24,
+                  ScreenHelper.getTabTexture(5),
+                  labels[n],
+                  new ItemStack(icons[n]),
+                  () -> switchTab(next)));
+      b.setUvOffsetCheck(() -> tab.equals(next) || b.isHovered());
+      b.allowed = () -> state.getBoolean("learned") || next.equals("synthesis");
+      controls.add(b);
     }
+    button(5, 28, 18, "‹", this::onClose);
     if (tab.equals("synthesis")) {
       button(
-          x + 12,
-          y + h - 31,
-          w - 24,
-          "Synthesize Hephaestus",
-          () -> {
-            if (!confirm) {
-              confirm = true;
-              return;
-            }
-            confirm = false;
-            request("synthesize");
-          });
+                  116,
+                  142,
+                  111,
+                  "Synthesize Hephaestus",
+                  () -> {
+                    if (!confirm) {
+                      confirm = true;
+                      return;
+                    }
+                    confirm = false;
+                    request("synthesize");
+                  })
+              .allowed =
+          () -> state.getBoolean("ready");
       refresh();
       return;
     }
-    if (tab.equals("forge")) {
-      int b = (w - 31) / 5;
-      String[] actions = {"craft", "refine", "engrave", "storage", "recover"},
-          labels = {"Craft", "Refine", "Engrave", "Storage", "Recover"};
-      for (int n = 0; n < 5; n++) {
-        String a = actions[n];
-        button(x + 9 + n * (b + 3), y + 64, b, labels[n], () -> request(a));
-      }
-    }
-    search =
+    var search =
         addRenderableWidget(
-            new EditBox(font, x + 10, y + 87, 197, 16, Component.literal("Search equipment")));
+            new EditBox(
+                font, guiLeft + 28, guiTop + 31, 78, 9, Component.literal("Search equipment")));
+    search.setBordered(false);
     search.setMaxLength(60);
-    search.setHint(Component.literal("Search equipment…"));
+    search.setHint(Component.literal("Search…"));
     search.setValue(query);
     search.setResponder(
         q -> {
@@ -239,145 +305,182 @@ public final class ForgeScreen extends Screen {
           page = 0;
           refresh();
         });
-    for (int n = 0; n < 6; n++) {
+    for (int n = 0; n < 7; n++) {
       int index = n;
-      var b =
-          addRenderableWidget(
-              new ForgeButton(
-                  x + 9,
-                  y + 108 + n * 24,
-                  199,
-                  "",
-                  () -> {
-                    var data = items();
-                    int at = page * 6 + index;
-                    if (at < data.size()) {
-                      selected = data.get(at).getInt("slot");
-                      confirm = false;
-                      refresh();
-                    }
-                  }) {
-                @Override
-                protected void renderWidget(GuiGraphics g, int mx, int my, float partial) {
-                  var data = items();
-                  int at = page * 6 + index;
-                  if (at >= data.size()) return;
-                  var r = data.get(at);
-                  boolean chosen = r.getInt("slot") == selected;
-                  g.fill(
-                      getX(),
-                      getY(),
-                      getX() + width,
-                      getY() + 22,
-                      chosen ? GOLD : isHovered() ? 0xffa58b69 : LINE);
-                  g.fill(
-                      getX() + 1,
-                      getY() + 1,
-                      getX() + width - 1,
-                      getY() + 21,
-                      chosen ? 0xff3c342c : 0xff292827);
-                  g.renderItem(stack(r), getX() + 3, getY() + 3);
-                  g.drawString(
-                      font,
-                      fit(r.getString("name"), width - 29),
-                      getX() + 25,
-                      getY() + 7,
-                      chosen ? GOLD : TEXT,
-                      false);
+      var row =
+          new ForgeButton(
+              guiLeft + 6,
+              guiTop + 46 + n * 13,
+              89,
+              13,
+              ROW,
+              "",
+              ItemStack.EMPTY,
+              () -> {
+                int at = page * 7 + index;
+                if (at >= items().size()) return;
+                selected = items().get(at).getInt("slot");
+                confirm = false;
+                if (tab.equals("arsenal") && selected >= 0) {
+                  if (!staged.remove(selected)
+                      && staged.size() + state.getList("armaments", 10).size() < 6)
+                    staged.add(selected);
                 }
-              });
-      rows.add(b);
+                refresh();
+              }) {
+            @Override
+            protected void renderWidget(GuiGraphics g, int mx, int my, float pt) {
+              int at = page * 7 + index;
+              if (at >= items().size()) return;
+              var row = items().get(at);
+              int slot = row.getInt("slot");
+              g.blit(
+                  ROW, getX(), getY(), 0, slot == selected || isHovered() ? 13 : 0, 89, 13, 89, 26);
+              g.pose().pushPose();
+              g.pose().translate(getX() + 1, getY() + 1, 0);
+              g.pose().scale(.65f, .65f, 1);
+              g.renderItem(stack(row), 0, 0);
+              g.pose().popPose();
+              String prefix =
+                  tab.equals("arsenal")
+                      ? (slot < 0 ? "↑ " : staged.contains(slot) ? "✓ " : "+ ")
+                      : "";
+              g.drawString(
+                  font,
+                  fit(prefix + row.getString("name"), 73),
+                  getX() + 13,
+                  getY() + 3,
+                  slot < 0 ? GOLD : TEXT,
+                  false);
+            }
+          };
+      rows.add(addRenderableWidget(row));
     }
     button(
-        x + 10,
-        y + 257,
-        26,
-        "‹",
+        6,
+        145,
+        17,
+        "‹ page",
         () -> {
           page = Math.max(0, page - 1);
           refresh();
         });
     button(
-        x + 181,
-        y + 257,
-        26,
-        "›",
+        78,
+        145,
+        17,
+        "› page",
         () -> {
-          page = Math.min(Math.max(0, (items().size() - 1) / 6), page + 1);
+          page = Math.min(Math.max(0, (items().size() - 1) / 7), page + 1);
           refresh();
         });
-    if (!tab.equals("arsenal")) {
-      button(
-          x + 221,
-          y + 179,
-          w - 232,
-          "Material",
-          () -> {
-            material = (material + 1) % state.getList("materials", Tag.TAG_COMPOUND).size();
-            confirm = false;
-          });
-    }
+    button(116, 30, 37, "Tools", () -> drop("tools"));
     if (tab.equals("forge")) {
-      String[] labels = {"Keen", "Piercing", "Conductor", "Enduring"};
+      button(156, 30, 34, "Metal", () -> drop("metal"));
+      button(193, 30, 34, "Temper", () -> drop("temper"));
+      button(116, 142, 54, "Action", () -> drop("action"));
+      button(173, 142, 54, "Apply", () -> request(action)).allowed = () -> chosen() != null;
+    } else if (tab.equals("opus")) {
+      button(156, 30, 71, "Material", () -> drop("metal"));
+      button(
+                  116,
+                  142,
+                  111,
+                  "Designate masterpiece",
+                  () -> {
+                    if (!confirm) {
+                      confirm = true;
+                      return;
+                    }
+                    confirm = false;
+                    request("opus");
+                  })
+              .allowed =
+          () -> chosen() != null;
+    } else {
+      button(116, 142, 64, "Deploy selected", () -> request("deploy_set")).allowed =
+          () -> !staged.isEmpty();
+      button(183, 142, 44, "Recall", () -> request("recall_one")).allowed = () -> selected <= -2;
+    }
+    refresh();
+  }
+
+  private void drop(String name) {
+    boolean close = dropdown.equals(name);
+    for (var w : popup) removeWidget(w);
+    popup.clear();
+    dropdown = close ? "" : name;
+    if (close) return;
+    var labels = new ArrayList<String>();
+    var actions = new ArrayList<Runnable>();
+    if (name.equals("tools")) {
+      if (tab.equals("arsenal")) {
+        labels.addAll(List.of("Clear selection", "Recall all"));
+        actions.add(
+            () -> {
+              staged.clear();
+              refresh();
+            });
+        actions.add(() -> request("recall"));
+      } else {
+        labels.addAll(List.of("Craft", "Refine", "Engrave", "Storage", "Recover"));
+        for (String a : List.of("craft", "refine", "engrave", "storage", "recover"))
+          actions.add(() -> request(a));
+      }
+    } else if (name.equals("metal")) {
+      var mats = state.getList("materials", 10);
+      for (int n = 0; n < mats.size(); n++) {
+        int pick = n;
+        labels.add(mats.getCompound(n).getString("name"));
+        actions.add(
+            () -> {
+              material = pick;
+              confirm = false;
+            });
+      }
+    } else if (name.equals("temper")) {
       for (int n = 0; n < 4; n++) {
         int pick = n + 1;
-        button(
-            x + 221 + (n % 2) * ((w - 236) / 2 + 4),
-            y + 203 + (n / 2) * 22,
-            (w - 236) / 2,
-            labels[n],
+        labels.add(new String[] {"Keen", "Piercing", "Conductor", "Enduring"}[n]);
+        actions.add(
             () -> {
               temper = pick;
               confirm = false;
             });
       }
-      int b = (w - 240) / 3;
-      button(x + 221, y + 253, b, "Reforge", () -> request("reforge"));
-      button(x + 225 + b, y + 253, b, "Temper", () -> request("temper"));
-      button(x + 229 + b * 2, y + 253, b, "Repair", () -> request("repair"));
+    } else {
+      for (String a : List.of("reforge", "temper", "repair")) {
+        labels.add(a.substring(0, 1).toUpperCase(Locale.ROOT) + a.substring(1));
+        actions.add(() -> action = a);
+      }
     }
-    if (tab.equals("opus"))
-      button(
-          x + 221,
-          y + 223,
-          w - 232,
-          "Designate masterpiece",
-          () -> {
-            if (!confirm) {
-              confirm = true;
-              return;
-            }
-            confirm = false;
-            request("opus");
-          });
-    if (tab.equals("arsenal")) {
-      button(x + 221, y + 195, w - 232, "Deploy selected", () -> request("deploy"));
-      button(x + 221, y + 219, w - 232, "Deploy up to six", () -> request("deploy_all"));
-      button(x + 221, y + 243, w - 232, "Recall all", () -> request("recall"));
+    int by = name.equals("action") ? 142 - labels.size() * 13 : 44;
+    for (int n = 0; n < labels.size(); n++) {
+      var run = actions.get(n);
+      var b =
+          new ForgeButton(
+              guiLeft + 116,
+              guiTop + by + n * 13,
+              111,
+              13,
+              ROW,
+              labels.get(n),
+              ItemStack.EMPTY,
+              () -> {
+                run.run();
+                drop(name);
+              });
+      addRenderableWidget(b);
+      popup.add(b);
     }
-    button(x + 10, y + h - 28, 197, "Close", this::onClose);
-    refresh();
-  }
-
-  private String fit(String text, int max) {
-    return font.width(text) <= max
-        ? text
-        : font.plainSubstrByWidth(text, Math.max(0, max - 8)) + "…";
   }
 
   private void refresh() {
-    var data = items();
-    if (!data.isEmpty() && chosen() == null) selected = data.getFirst().getInt("slot");
-    for (int n = 0; n < rows.size(); n++) rows.get(n).visible = page * 6 + n < data.size();
-    for (var b : controls) {
-      String label = b.getMessage().getString();
-      b.active =
-          !pending
-              && (state.getBoolean("learned")
-                  || label.equals("Synthesis")
-                  || label.equals("Synthesize Hephaestus"));
-      if (label.equals("Synthesize Hephaestus")) b.active = !pending && state.getBoolean("ready");
-    }
+    if (chosen() == null) selected = items().isEmpty() ? -1 : items().getFirst().getInt("slot");
+    page = Math.min(page, Math.max(0, (items().size() - 1) / 7));
+    for (int n = 0; n < rows.size(); n++) rows.get(n).visible = page * 7 + n < items().size();
+    for (var b : controls) b.active = !pending && b.allowed.getAsBoolean();
+    for (var b : popup) b.active = !pending;
   }
 
   @Override
@@ -385,211 +488,159 @@ public final class ForgeScreen extends Screen {
     if (++age % 20 == 0 && !waiting && !pending) request("refresh");
   }
 
-  private void line(GuiGraphics g, String text, int bx, int by, int width, int color) {
-    g.drawWordWrap(font, Component.literal(text), bx, by, width, color);
+  private String fit(String s, int w) {
+    return font.width(s) <= w ? s : font.plainSubstrByWidth(s, Math.max(0, w - 6)) + "…";
   }
 
-  private void gate(GuiGraphics g, String text, boolean ready, int yy) {
-    g.drawString(
-        font, (ready ? "✓  " : "•  ") + text, x + 21, yy, ready ? 0xffa3d6a1 : MUTED, false);
+  private void text(GuiGraphics g, String s, int x, int y, int width, int color) {
+    g.drawWordWrap(font, Component.literal(s), guiLeft + x, guiTop + y, width, color);
+  }
+
+  private String material() {
+    var list = state.getList("materials", 10);
+    if (list.isEmpty()) return "";
+    var r = list.getCompound(material % list.size());
+    return r.getString("name") + " ×" + r.getInt("count");
   }
 
   @Override
-  public void renderBackground(GuiGraphics g, int mx, int my, float partial) {
-    g.fill(x - 2, y - 2, x + w + 2, y + h + 2, 0xff11100f);
-    g.fill(x, y, x + w, y + h, LINE);
-    g.fill(x + 1, y + 1, x + w - 1, y + h - 1, 0xff242322);
-    g.fill(x + 1, y + 1, x + w - 1, y + 34, 0xff302a24);
-    g.blit(
-        HeavenlyRestriction.id("textures/skill/hephaestus.png"),
-        x + 9,
-        y + 5,
-        0,
-        0,
-        25,
-        25,
-        25,
-        25);
-    g.drawString(font, "Hephaestus", x + 41, y + 7, GOLD, false);
-    g.drawString(font, "LORD OF THE FORGE", x + 41, y + 20, MUTED, false);
-    g.drawString(
-        font,
-        fit(
-            tab.equals("synthesis")
-                ? "Mastery · Awakening · Craftsmanship"
-                : "Materials shape the masterpiece",
-            w - 190),
-        x + 183,
-        y + 15,
-        MUTED,
-        false);
-    int activeTab = List.of("forge", "arsenal", "opus", "synthesis").indexOf(tab);
-    int tabWidth = (w - 28) / 4;
-    g.fill(
-        x + 8 + activeTab * (tabWidth + 4),
-        y + 58,
-        x + 8 + activeTab * (tabWidth + 4) + tabWidth,
-        y + 60,
-        GOLD);
+  public void renderBackground(GuiGraphics g, int mx, int my, float pt) {
+    g.blit(FRAME, guiLeft, guiTop, 0, 0, 254, 163);
+    g.drawString(font, "Hephaestus", guiLeft + 105, guiTop + 10, TEXT, false);
+    // Clear the baked preset boxes and unused cooldown/mode decorations of the native frame.
+    g.fill(guiLeft + 5, guiTop + 145, guiLeft + 110, guiTop + 159, 0xff33343a);
+    g.fill(guiLeft + 116, guiTop + 28, guiLeft + 154, guiTop + 68, 0xff4c4c4c);
+    g.fill(guiLeft + 189, guiTop + 28, guiLeft + 228, guiTop + 68, 0xff4c4c4c);
     if (tab.equals("synthesis")) {
-      g.fill(x + 10, y + 69, x + w - 10, y + h - 40, 0xff1d1d1c);
-      g.drawString(font, "Combine mastered skills into one Ultimate", x + 21, y + 80, GOLD, false);
-      gate(g, "Prospector fully mastered", state.getBoolean("prospector"), y + 106);
-      gate(g, "Godly Craftsman fully mastered", state.getBoolean("craftsman"), y + 126);
-      gate(g, "True Demon Lord or True Hero", state.getBoolean("awakened"), y + 146);
-      gate(
-          g,
-          "Personally forge qualifying high-tier equipment",
-          state.getBoolean("crafted"),
-          y + 166);
-      gate(g, "Awakening bonuses fully applied", state.getBoolean("settled"), y + 186);
-      gate(
-          g,
-          String.format(
-              Locale.ROOT, "Acquisition: %,.0f permanent magicules", state.getDouble("cost")),
-          state.getBoolean("affordable"),
-          y + 206);
-      g.drawString(font, "No EP requirement.", x + 21, y + 229, GOLD, false);
-      line(
-          g,
-          confirm
-              ? "Confirm synthesis: both component skills will be replaced. Hephaestus starts"
-                    + " learned, unmastered."
-              : notice.isEmpty()
-                  ? "The cost is paid once, after awakening. Stored ingredients and engraving"
-                        + " knowledge are retained."
-                  : notice,
-          x + 21,
-          y + 245,
-          w - 42,
-          confirm ? GOLD : MUTED);
-      return;
-    }
-    g.fill(x + 8, y + 85, x + 210, y + 280, 0xff1b1b1b);
-    g.fill(x + 215, y + 85, x + w - 8, y + 280, 0xff1d1d1c);
-    g.drawCenteredString(
-        font, (page + 1) + " / " + Math.max(1, (items().size() + 5) / 6), x + 108, y + 262, MUTED);
-    var row = chosen();
-    g.enableScissor(x + 219, y + 87, x + w - 11, y + 176);
-    if (row != null) {
-      g.renderItem(stack(row), x + 223, y + 91);
-      g.drawString(font, fit(row.getString("name"), w - 269), x + 246, y + 96, GOLD, false);
-      String info =
-          tab.equals("arsenal")
-              ? "Actual weapon, enchantments and engravings. 1,000 magicules to deploy each; 10/sec"
-                    + " upkeep each. Up to six blades."
-              : tab.equals("opus")
-                  ? "One active masterpiece per smith. +50% item stats, 75% reduced wear. Replaces"
-                        + " the ordinary forged bonuses. Cost: 50,000 MP + two selected materials;"
-                        + " Diamond or better."
-                  : "Forged: +20% attack / armor / toughness; 50% reduced wear. Reforge / temper:"
-                        + " 2,000 MP + one material. Repair: 500 MP + one material.";
-      line(g, info, x + 223, y + 115, w - 240, MUTED);
-    } else line(g, "No matching equipment in your inventory.", x + 223, y + 102, w - 240, MUTED);
-    g.disableScissor();
-    if (!tab.equals("arsenal")) {
-      var mats = state.getList("materials", Tag.TAG_COMPOUND);
-      if (!mats.isEmpty()) {
-        var m = mats.getCompound(material % mats.size());
+      g.blit(
+          HeavenlyRestriction.id("textures/skill/hephaestus.png"),
+          guiLeft + 155,
+          guiTop + 30,
+          0,
+          0,
+          32,
+          32,
+          32,
+          32);
+      String[] keys = {"prospector", "craftsman", "awakened", "crafted", "settled", "affordable"},
+          names =
+              {
+                "Prospector mastery",
+                "Craftsman mastery",
+                "True awakening",
+                "High-tier forging",
+                "Awakening settled",
+                "Magicules available"
+              };
+      for (int n = 0; n < keys.length; n++)
         g.drawString(
             font,
-            fit(
-                m.getString("name")
-                    + " · "
-                    + m.getInt("count")
-                    + " owned · "
-                    + Math.round(m.getDouble("quality") * 100)
-                    + "%",
-                w - 240),
-            x + 225,
-            y + 184,
-            GOLD,
+            fit((state.getBoolean(keys[n]) ? "✓ " : "• ") + names[n], 85),
+            guiLeft + 6,
+            guiTop + 48 + n * 14,
+            state.getBoolean(keys[n]) ? 0xff88dfbd : MUTED,
             false);
-      }
-    }
-    if (tab.equals("forge"))
-      g.drawString(
-          font,
-          "Temper: " + new String[] {"", "Keen", "Piercing", "Conductor", "Enduring"}[temper],
-          x + 223,
-          y + 153,
-          GOLD,
-          false);
-    if (tab.equals("opus") && confirm)
-      line(
+      g.enableScissor(guiLeft + 121, guiTop + 71, guiLeft + 222, guiTop + 130);
+      detail(
           g,
-          "Press again to confirm. Your previous masterpiece loses its designation.",
-          x + 223,
-          y + 248,
-          w - 240,
-          GOLD);
-    if (!notice.isEmpty())
-      g.drawString(font, fit(notice, w - 231), x + 221, y + h - 23, GOLD, false);
+          confirm
+              ? "Confirm replacement of both mastered skills. Ingredients and knowledge are kept."
+              : "Cost: "
+                  + String.format(Locale.ROOT, "%,.0f", state.getDouble("cost"))
+                  + " permanent MP. Paid after awakening. No EP gate.",
+          confirm ? GOLD : TEXT);
+      g.disableScissor();
+      return;
+    }
+    g.drawCenteredString(
+        font,
+        (page + 1) + " / " + Math.max(1, (items().size() + 6) / 7),
+        guiLeft + 51,
+        guiTop + 147,
+        MUTED);
+    var row = chosen();
+    if (row != null) {
+      g.renderItem(stack(row), guiLeft + 163, guiTop + 42);
+    }
+    String detail =
+        tab.equals("arsenal")
+            ? state.getList("armaments", 10).size()
+                + "/6 deployed · "
+                + staged.size()
+                + " selected. Click + to select. 1,000 MP each; 10 MP/sec each. 24-tick round."
+            : tab.equals("opus")
+                ? "+50% item stats; 75% less wear. One masterpiece. 50,000 MP +2 "
+                    + material()
+                    + "."
+                : (action.equals("repair")
+                        ? "Repair: 500 MP +1 "
+                        : action.equals("reforge")
+                            ? "Reforge: 2,000 MP +1 "
+                            : "Temper: 2,000 MP +1 ")
+                    + material()
+                    + ". +20% forged stats; 50% less wear. "
+                    + new String[] {"", "Keen", "Piercing", "Conductor", "Enduring"}[temper]
+                    + ".";
+    if (confirm) detail = "Press again to confirm. Previous masterpiece loses its designation.";
+    g.enableScissor(guiLeft + 121, guiTop + 71, guiLeft + 222, guiTop + 130);
+    detail(g, detail, confirm ? GOLD : TEXT);
+    g.disableScissor();
+    if (!notice.isEmpty()) {
+      /* Long action feedback belongs in a hover tooltip, not across other panes. */
+      g.drawString(font, fit(notice, 108), guiLeft + 116, guiTop + 134, GOLD, false);
+    }
   }
 
-  private final class ScaledGraphics extends GuiGraphics {
-    ScaledGraphics(GuiGraphics original) {
-      super(Minecraft.getInstance(), original.bufferSource());
-      pose().mulPose(original.pose().last().pose());
-      pose().scale(uiScale, uiScale, 1);
-    }
-
-    @Override
-    public void enableScissor(int a, int b, int c, int d) {
-      super.enableScissor(
-          (int) (a * uiScale),
-          (int) (b * uiScale),
-          (int) Math.ceil(c * uiScale),
-          (int) Math.ceil(d * uiScale));
-    }
-
-    @Override
-    public int guiWidth() {
-      return (int) (ForgeScreen.this.width / uiScale);
-    }
-
-    @Override
-    public int guiHeight() {
-      return (int) (ForgeScreen.this.height / uiScale);
+  private void detail(GuiGraphics g, String text, int color) {
+    var lines = font.split(Component.literal(text), 98);
+    detailScroll = Math.clamp(detailScroll, 0, Math.max(0, lines.size() - 6));
+    for (int n = 0; n < 6 && n + detailScroll < lines.size(); n++)
+      g.drawString(
+          font, lines.get(n + detailScroll), guiLeft + 122, guiTop + 72 + n * 9, color, false);
+    if (lines.size() > 6) {
+      g.fill(guiLeft + 220, guiTop + 72, guiLeft + 222, guiTop + 127, 0xff173c48);
+      int top = guiTop + 72 + (int) (detailScroll / (double) (lines.size() - 6) * 39);
+      g.fill(guiLeft + 220, top, guiLeft + 222, top + 16, 0xff6b9ca6);
     }
   }
 
   @Override
-  public void render(GuiGraphics original, int mouseX, int mouseY, float partial) {
-    original.flush();
-    var g = new ScaledGraphics(original);
-    int mx = (int) (mouseX / uiScale), my = (int) (mouseY / uiScale);
-    renderBackground(g, mx, my, partial);
-    super.render(g, mx, my, partial);
+  public void renderTooltip(GuiGraphics g, int mx, int my) {
+    if (!dropdown.isEmpty()) return;
     for (int n = 0; n < rows.size(); n++)
-      if (rows.get(n).isHovered() && page * 6 + n < items().size())
-        g.renderTooltip(font, stack(items().get(page * 6 + n)), mx, my);
-    g.flush();
+      if (rows.get(n).isHovered() && page * 7 + n < items().size())
+        g.renderTooltip(font, stack(items().get(page * 7 + n)), mx, my);
+    if (!notice.isEmpty()
+        && mx >= guiLeft + 116
+        && mx < guiLeft + 227
+        && my >= guiTop + 132
+        && my < guiTop + 141)
+      g.renderTooltip(font, font.split(Component.literal(notice), 180), mx, my);
   }
 
   @Override
-  public boolean mouseClicked(double x, double y, int button) {
-    return super.mouseClicked(x / uiScale, y / uiScale, button);
+  public boolean mouseClicked(double mx, double my, int button) {
+    if (!dropdown.isEmpty()) {
+      for (int n = popup.size() - 1; n >= 0; n--)
+        if (popup.get(n).mouseClicked(mx, my, button)) return true;
+      drop(dropdown);
+      return true;
+    }
+    return super.mouseClicked(mx, my, button);
   }
 
   @Override
-  public boolean mouseReleased(double x, double y, int button) {
-    return super.mouseReleased(x / uiScale, y / uiScale, button);
-  }
-
-  @Override
-  public boolean mouseDragged(double x, double y, int button, double dx, double dy) {
-    return super.mouseDragged(x / uiScale, y / uiScale, button, dx / uiScale, dy / uiScale);
-  }
-
-  @Override
-  public boolean mouseScrolled(double x, double y, double dx, double dy) {
-    return super.mouseScrolled(x / uiScale, y / uiScale, dx, dy);
-  }
-
-  @Override
-  public boolean isPauseScreen() {
-    return false;
+  public boolean mouseScrolled(double mx, double my, double dx, double dy) {
+    if (mx >= guiLeft + 5 && mx <= guiLeft + 109 && my >= guiTop + 45 && my <= guiTop + 139) {
+      page = Math.clamp(page + (dy < 0 ? 1 : -1), 0, Math.max(0, (items().size() - 1) / 7));
+      refresh();
+      return true;
+    }
+    if (mx >= guiLeft + 119 && mx <= guiLeft + 224 && my >= guiTop + 69 && my <= guiTop + 132) {
+      detailScroll = Math.max(0, detailScroll + (dy < 0 ? 1 : -1));
+      return true;
+    }
+    return super.mouseScrolled(mx, my, dx, dy);
   }
 
   @Override

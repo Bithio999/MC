@@ -145,6 +145,11 @@ public final class ForgeItems {
     craftedBy(event.getCrafting(), event.getEntity());
   }
 
+  public static void prepare(ItemStack s, net.minecraft.world.entity.player.Player player) {
+    if (player instanceof ServerPlayer p
+        && (ForgeSynthesis.hasCraftsman(p) || ForgeSynthesis.active(p).isPresent())) stamp(p, s);
+  }
+
   public static void craftedBy(ItemStack s, net.minecraft.world.entity.player.Player player) {
     if (!(player instanceof ServerPlayer p)
         || !ForgeSynthesis.hasCraftsman(p) && ForgeSynthesis.active(p).isEmpty()

@@ -628,4 +628,186 @@ public final class HephaestusGameTests {
     near(h, attr.getValue(), before, "Held boost restoration");
     h.succeed();
   }
+
+  @GameTest(template = "empty", timeoutTicks = 100)
+  public static void tensuraBenchNormalTakeSignsTheRealEquipment(GameTestHelper h) {
+    var p = smith(h);
+    var bench = bench(p, Items.DIAMOND_SWORD);
+    h.assertTrue(bench.canCraft(), "Bench recipe unavailable");
+    var output = bench.getSlot(36).remove(1);
+    bench.getSlot(36).onTake(p, output);
+    h.assertTrue(ForgeItems.own(p, output), "Tensura bench output was not signed");
+    near(h, attack(output), 8.4, "Tensura bench actual crafted bonus");
+    h.assertTrue(
+        !RestrictionData.of(p).getBoolean("hephaestus_forged_high_tier"),
+        "Diamond credited high-tier");
+    h.succeed();
+  }
+
+  private static io.github.manasmods.tensura.menu.SmithingBenchMenu bench(
+      ServerPlayer p, Item result) {
+    p.getInventory().clearContent();
+    TensuraStorages.getPlayerDataFrom(p)
+        .getKnownSchematics()
+        .addAll(
+            p
+                .level()
+                .getRecipeManager()
+                .getAllRecipesFor(
+                    io.github.manasmods.tensura.registry.recipe.TensuraRecipes.SMITHING_BENCH_TYPE
+                        .get())
+                .stream()
+                .flatMap(r -> r.value().getRequiredSchematics().stream())
+                .distinct()
+                .toList());
+    var bench =
+        new io.github.manasmods.tensura.menu.SmithingBenchMenu(
+            1, p.getInventory(), net.minecraft.world.inventory.ContainerLevelAccess.NULL);
+    for (int n = 0; n < bench.getRecipes().size(); n++) {
+      var recipe = bench.getRecipes().get(n).value();
+      if (!recipe.getOutput().is(result)) continue;
+      var ingredients = recipe.getIngredients();
+      var amounts = recipe.getIngredientAmount();
+      for (int i = 0; i < ingredients.size(); i++)
+        if (!ingredients.get(i).isEmpty() && amounts.get(i) > 0) {
+          var item = ingredients.get(i).getItems()[0].copy();
+          item.setCount(amounts.get(i));
+          p.getInventory().add(item);
+        }
+      bench.clickMenuButton(p, n);
+      return bench;
+    }
+    throw new IllegalStateException("Missing bench recipe for " + result);
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 100)
+  public static void tensuraBenchShiftTakeRetainsForgingStatsAndHighTierCredit(GameTestHelper h) {
+    var p = smith(h);
+    var hihi =
+        net.minecraft.core.registries.BuiltInRegistries.ITEM.get(
+            net.minecraft.resources.ResourceLocation.parse("tensura:hihiirokane_sword"));
+    var bench = bench(p, hihi);
+    h.assertTrue(
+        !RestrictionData.of(p).getBoolean("hephaestus_forged_high_tier"),
+        "Preview awarded achievement");
+    h.assertTrue(!bench.quickMoveStack(p, 36).isEmpty(), "Tensura quick take failed");
+    var crafted = p.getInventory().items.stream().filter(i -> i.is(hihi)).findFirst().orElseThrow();
+    h.assertTrue(ForgeItems.own(p, crafted), "Shift-transferred item lost signature");
+    h.assertTrue(
+        RestrictionData.of(p).getBoolean("hephaestus_forged_high_tier"),
+        "Bench take missed high-tier credit");
+    near(h, ForgeItems.statBonus(crafted), .2, "Bench forging bonus");
+    var ordinary = crafted.copy();
+    ordinary.remove(ForgeContent.WORK.get());
+    near(h, attack(crafted), attack(ordinary) * 1.2, "Native Hihiirokane attack bonus");
+    h.succeed();
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 100)
+  public static void craftingTableShiftTakeBonusSurvivesTransferAndEquipping(GameTestHelper h) {
+    var p = smith(h);
+    p.getInventory().clearContent();
+    var menu =
+        new net.minecraft.world.inventory.CraftingMenu(
+            1,
+            p.getInventory(),
+            net.minecraft.world.inventory.ContainerLevelAccess.create(
+                p.level(), p.blockPosition()));
+    menu.getSlot(2).set(new ItemStack(Items.DIAMOND));
+    menu.getSlot(5).set(new ItemStack(Items.DIAMOND));
+    menu.getSlot(8).set(new ItemStack(Items.STICK));
+    h.assertTrue(!menu.quickMoveStack(p, 0).isEmpty(), "Real recipe shift craft failed");
+    var sword =
+        p.getInventory().items.stream()
+            .filter(i -> i.is(Items.DIAMOND_SWORD))
+            .findFirst()
+            .orElseThrow();
+    h.assertTrue(ForgeItems.own(p, sword), "Transferred sword unsigned");
+    // FakePlayer intentionally skips equipment ticking; use a real tracked living entity.
+    var wearer = target(h, p.position().add(2, 0, 0));
+    wearer.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(1);
+    wearer.setItemSlot(EquipmentSlot.MAINHAND, sword);
+    h.runAfterDelay(
+        5,
+        () -> {
+          near(
+              h, wearer.getAttributeValue(Attributes.ATTACK_DAMAGE), 8.4, "Equipped forged damage");
+          wearer.discard();
+          h.succeed();
+        });
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 100)
+  public static void individualRecallAndIncrementalDeploymentKeepOtherWeaponsIntact(
+      GameTestHelper h) {
+    var p = smith(h);
+    p.getInventory().clearContent();
+    for (int n = 0; n < 3; n++) material(p, n, Items.DIAMOND_SWORD, 1);
+    h.assertTrue(ForgeArsenal.deploy(p, List.of(0, 1)), "First deployment failed");
+    var retained = ForgeArsenal.item(p, 1).copy();
+    h.assertTrue(ForgeArsenal.recall(p, 0), "Individual recall failed");
+    h.assertTrue(!ForgeArsenal.recall(p, 0), "Repeated recall duplicated");
+    h.assertTrue(
+        ForgeArsenal.count(p) == 1 && ItemStack.matches(retained, ForgeArsenal.item(p, 1)),
+        "Other weapon changed");
+    h.assertTrue(ForgeArsenal.deploy(p, List.of(2)), "Incremental deployment failed");
+    h.assertTrue(
+        ForgeArsenal.count(p) == 2 && !ForgeArsenal.item(p, 0).isEmpty(), "Escrow hole not reused");
+    ForgeArsenal.recall(p);
+    int count =
+        p.getInventory().items.stream()
+            .filter(i -> i.is(Items.DIAMOND_SWORD))
+            .mapToInt(ItemStack::getCount)
+            .sum();
+    h.assertTrue(count == 3, "Individual controls lost or duplicated weapons");
+    h.succeed();
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 100)
+  public static void vanillaSmithingShiftTakePreservesAndEquipsForgedBonus(GameTestHelper h) {
+    var p = smith(h);
+    p.getInventory().clearContent();
+    var menu = new net.minecraft.world.inventory.SmithingMenu(1, p.getInventory());
+    menu.getSlot(0).set(new ItemStack(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE));
+    menu.getSlot(1).set(new ItemStack(Items.DIAMOND_SWORD));
+    menu.getSlot(2).set(new ItemStack(Items.NETHERITE_INGOT));
+    h.assertTrue(!menu.quickMoveStack(p, 3).isEmpty(), "Vanilla smithing failed");
+    var sword =
+        p.getInventory().items.stream()
+            .filter(i -> i.is(Items.NETHERITE_SWORD))
+            .findFirst()
+            .orElseThrow();
+    near(h, attack(sword), 9.6, "Transferred netherite sword");
+    h.assertTrue(
+        ForgeItems.own(p, sword) && RestrictionData.of(p).getBoolean("hephaestus_forged_high_tier"),
+        "Smithing lost bonus/achievement");
+    h.succeed();
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 100)
+  public static void tensuraBenchArmorBonusChangesEquippedArmorAndToughness(GameTestHelper h) {
+    var p = smith(h);
+    var bench = bench(p, Items.DIAMOND_CHESTPLATE);
+    bench.quickMoveStack(p, 36);
+    var armor =
+        p.getInventory().items.stream()
+            .filter(i -> i.is(Items.DIAMOND_CHESTPLATE))
+            .findFirst()
+            .orElseThrow();
+    var wearer = target(h, p.position().add(2, 0, 0));
+    wearer.getAttribute(Attributes.ARMOR).setBaseValue(0);
+    wearer.setItemSlot(EquipmentSlot.CHEST, armor);
+    h.runAfterDelay(
+        5,
+        () -> {
+          near(h, wearer.getAttributeValue(Attributes.ARMOR), 9.6, "Equipped forged armor");
+          near(
+              h,
+              wearer.getAttributeValue(Attributes.ARMOR_TOUGHNESS),
+              2.4,
+              "Equipped forged toughness");
+          wearer.discard();
+          h.succeed();
+        });
+  }
 }

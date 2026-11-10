@@ -109,7 +109,7 @@ public final class HephaestusSkill extends Skill
     }
     if (!canInteractSkill(i, e) || !canActivateSkill(i, e, mode)) return;
     if (mode == 1) {
-      if (ForgeArsenal.active(p)) ForgeArsenal.recall(p);
+      if (p.isShiftKeyDown()) ForgeArsenal.recall(p);
       else ForgeService.open(p, "arsenal");
     } else ForgeService.open(p, mode == 2 ? "masterpiece" : "forge");
   }

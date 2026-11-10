@@ -20,7 +20,7 @@ public final class ArsenalBlade extends Entity {
       PHASE = SynchedEntityData.defineId(ArsenalBlade.class, EntityDataSerializers.INT);
   private UUID owner = new UUID(0, 0);
   private ServerPlayer caster;
-  private int count = 1, age, nextAttack;
+  private int age;
   private LivingEntity target;
   private Vec3 start, control, end;
   private boolean hit;
@@ -28,6 +28,10 @@ public final class ArsenalBlade extends Entity {
   private int lerpTicks;
   private Vec3 lerpTarget;
   private float lerpYaw, lerpPitch;
+  public final org.joml.Quaternionf rotation = new org.joml.Quaternionf();
+  public final org.joml.Quaternionf previousRotation = new org.joml.Quaternionf();
+  private Vec3 previousClientPosition;
+  private int previousPhase;
 
   public ArsenalBlade(EntityType<? extends ArsenalBlade> type, Level level) {
     super(type, level);
@@ -65,33 +69,36 @@ public final class ArsenalBlade extends Entity {
     b.caster = owner;
     b.entityData.set(OWNER, owner.getId());
     b.entityData.set(INDEX, index);
-    b.count = count;
     b.visual(ForgeArsenal.item(owner, index));
     b.setPos(b.home(owner, 0));
-    b.nextAttack = 8 + index * 3;
     ForgeArsenal.bind(owner, index, b);
     owner.level().addFreshEntity(b);
     return b;
   }
 
   private Vec3 home(ServerPlayer p, float time) {
-    double spread = (index() - (count - 1) * .5) * .58;
+    int[] live = ForgeArsenal.roster(p);
+    int order = java.util.Arrays.binarySearch(live, index());
+    double spread = (order - (live.length - 1) * .5) * .52;
     Vec3 forward = p.getLookAngle().multiply(1, 0, 1).normalize();
     if (forward.lengthSqr() < .001) forward = new Vec3(0, 0, 1);
     var side = new Vec3(-forward.z, 0, forward.x);
     return p.position()
-        .add(0, 1.8 + Math.abs(spread) * .25 + Math.sin((time + index() * 7) * .08) * .10, 0)
-        .add(forward.scale(-.75))
+        .add(0, 2.05 + Math.abs(spread) * .22 + Math.sin((time + index() * 7) * .08) * .10, 0)
+        .add(forward.scale(-1.05))
         .add(side.scale(spread));
   }
 
   private LivingEntity target(ServerPlayer p) {
     var focus = p.getLastHurtMob();
-    if (focus != null && SplitMindCasting.enemy(p, focus)) return focus;
+    if (focus != null && p.distanceToSqr(focus) <= 32 * 32 && SplitMindCasting.enemy(p, focus))
+      return focus;
     return p
         .level()
         .getEntitiesOfClass(
-            LivingEntity.class, p.getBoundingBox().inflate(32), e -> SplitMindCasting.enemy(p, e))
+            LivingEntity.class,
+            p.getBoundingBox().inflate(32),
+            e -> p.distanceToSqr(e) <= 32 * 32 && SplitMindCasting.enemy(p, e))
         .stream()
         .min(Comparator.comparingDouble(p::distanceToSqr))
         .orElse(null);
@@ -107,8 +114,32 @@ public final class ArsenalBlade extends Entity {
         setXRot(net.minecraft.util.Mth.rotLerp(1f / lerpTicks, getXRot(), lerpPitch));
         lerpTicks--;
       }
-      trail.addFirst(position());
-      while (trail.size() > 12) trail.removeLast();
+      previousRotation.set(rotation);
+      Vec3 delta =
+          previousClientPosition == null ? Vec3.ZERO : position().subtract(previousClientPosition);
+      if (phase() != previousPhase || delta.lengthSqr() > 36) trail.clear();
+      if (phase() == 1 && delta.lengthSqr() > .00001) {
+        Vec3 tangent = delta.normalize();
+        var desired =
+            new org.joml.Quaternionf()
+                .rotationTo(
+                    new org.joml.Vector3f(0, 1, 0),
+                    new org.joml.Vector3f((float) tangent.x, (float) tangent.y, (float) tangent.z));
+        // Bank the cutting plane into the curve; use a quaternion to avoid yaw/pitch flips.
+        desired.rotateY((index() % 2 == 0 ? 1 : -1) * .45f);
+        rotation.slerp(desired, .7f);
+        trail.addFirst(position());
+        while (trail.size() > 5) trail.removeLast();
+      } else {
+        var desired =
+            new org.joml.Quaternionf()
+                .rotateY((float) Math.toRadians(-getYRot()))
+                .rotateZ((index() % 2 == 0 ? 1 : -1) * .18f);
+        rotation.slerp(desired, .22f);
+        trail.clear();
+      }
+      previousClientPosition = position();
+      previousPhase = phase();
       return;
     }
     var p = caster == null ? level().getServer().getPlayerList().getPlayer(owner) : caster;
@@ -127,7 +158,7 @@ public final class ArsenalBlade extends Entity {
       setPos(position().lerp(home, .28));
       setYRot(-p.getYRot() + index() * 5);
       setXRot(-12);
-      if (tickCount >= nextAttack && (target = target(p)) != null) {
+      if ((target = target(p)) != null && ForgeArsenal.launch(p, index())) {
         start = position();
         age = 0;
         hit = false;
@@ -170,7 +201,6 @@ public final class ArsenalBlade extends Entity {
       setPos(position().lerp(home, .3));
       if (age >= 9 || distanceToSqr(home) < .06) {
         entityData.set(PHASE, 0);
-        nextAttack = tickCount + 5 + index() % 3;
       }
     }
     Vec3 delta = position().subtract(before);
