@@ -43,6 +43,8 @@ Use the workshop’s **Forge** tab. Select equipment on the left, choose a forge
 
 Open the forge to craft, use Tensura’s native refining and engraving menus, access inherited storage, temper equipment or repair it. **Recover** returns the previous Prospector refining ingredients to your inventory.
 
+**Overcap engraving research:** Lord of the Forge can retain levels above an engraving’s ordinary maximum, within its research limits. Applying an Orb-eligible overcap automatically marks the receiving equipment as already Chromatic-infused, so it cannot take another Orb. Normal capped engravings leave the Orb upgrade available. Native engraving blacklists still apply. Godly Craftsman cannot research overcap engravings; previously stored overcap knowledge is normalized to the ordinary engraving maximum. Ordinary enchantment bonuses remain unchanged.
+
 **Reforge / Temper:** 2,000 magicules and one selected material. Reforging signs unmarked equipment and applies the ordinary forging benefits. Signed equipment from another smith cannot be overwritten.
 
 | Temper | Weapon effect | Worn armor effect |
@@ -74,7 +76,7 @@ Iron provides **10%**, Diamond **20%**, Netherite **30%**, and Hihiirokane **35%
 
 Deploy up to **six actual melee weapons** from your inventory. They hover in a compact formation and take turns making curved slashes with short, tapered wakes, inspired by Terraria’s Terraprisma. The blades turn into each cut. A shared **24-tick round** spaces attacks evenly across the deployed weapons; each weapon attacks once per round.
 
-Weapons prioritize your attack target, then visible hostile mobs or combat opponents within **32 blocks**. They use their own damage, enchantments, engravings and applicable wear reduction. Allies are excluded and normal server PvP rules apply.
+Weapons prioritize your attack target, then visible hostile mobs or combat opponents within **32 blocks**. They use their own damage, enchantments, engravings and applicable wear reduction. All eligible deployed weapons gain EP from your qualifying kills, using Tensura’s normal equipment-growth rates, engravings, caps and evolutions. Growth remains on the item after recall; normal held equipment still receives its usual reward. Allies are excluded and normal server PvP rules apply.
 
 **Cost:** 1,000 magicules per weapon to deploy, then 10 magicules per weapon each second. Deployed weapons are unavailable for other uses. Activate again to manage the arsenal. Check inventory weapons on the left and choose **Deploy selected**. The six-slot rack on the right shows deployed blades: click a blade to recall it. Add weapons while the arsenal is active. **Shift-activate** or choose **Recall all** to return everything. Death, logout, dimension travel or losing access to the skill recalls the weapons; saved escrow protects them across a restart.
 

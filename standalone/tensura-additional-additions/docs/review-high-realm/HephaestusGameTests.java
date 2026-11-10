@@ -1032,4 +1032,411 @@ public final class HephaestusGameTests {
     near(h, ForgeItems.wearMultiplier(chest), .5, "Replaced Enduring kept wear benefit");
     h.succeed();
   }
+
+  private static ItemStack growingSword(ServerPlayer p) {
+    var s = new ItemStack(Items.DIAMOND_SWORD);
+    forge(p, s);
+    s.set(TensuraDataComponents.EP.get(), 100d);
+    s.set(TensuraDataComponents.MAX_EP.get(), 1_000_000_000d);
+    s.set(TensuraDataComponents.EP_GAIN.get(), .1d);
+    s.set(TensuraDataComponents.EP_DURABILITY.get(), 100d);
+    return s;
+  }
+
+  private static net.minecraft.world.entity.monster.Husk rewardTarget(
+      GameTestHelper h, ServerPlayer p) {
+    var mob = target(h, p.position().add(0, 0, 3));
+    io.github.manasmods.tensura.util.EnergyHelper.setBaseMaxEP(mob, 10000);
+    mob.setHealth(.1f);
+    return mob;
+  }
+
+  private static void kill(GameTestHelper h, ServerPlayer p, LivingEntity victim) {
+    h.assertTrue(victim.hurt(p.damageSources().playerAttack(p), 10000), "Kill was rejected");
+    h.assertTrue(!victim.isAlive(), "Victim did not die");
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 100)
+  public static void normalKillsGrowEveryDeployedWeaponExactlyLikeHeldEquipment(GameTestHelper h) {
+    var p = smith(h);
+    p.getInventory().clearContent();
+    var held = growingSword(p);
+    p.getInventory().setItem(0, held);
+    p.getInventory().selected = 0;
+    for (int n = 1; n <= 6; n++) p.getInventory().setItem(n, growingSword(p));
+    h.assertTrue(ForgeArsenal.deploy(p, List.of(1, 2, 3, 4, 5, 6)), "Deployment failed");
+    var victim = rewardTarget(h, p);
+    h.runAfterDelay(
+        5,
+        () -> {
+          kill(h, p, victim);
+          double expected = held.get(TensuraDataComponents.EP.get());
+          h.assertTrue(expected > 100, "Held weapon did not receive native EP");
+          for (int n = 0; n < 6; n++)
+            near(
+                h,
+                ForgeArsenal.item(p, n).get(TensuraDataComponents.EP.get()),
+                expected,
+                "Deployed weapon native gain " + n);
+          ForgeArsenal.recall(p);
+          long count =
+              p.getInventory().items.stream().filter(i -> i.is(Items.DIAMOND_SWORD)).count();
+          h.assertTrue(count == 7, "Growth/recall lost or duplicated items");
+          for (var item : p.getInventory().items)
+            if (item.is(Items.DIAMOND_SWORD))
+              near(h, item.get(TensuraDataComponents.EP.get()), expected, "Recall lost EP");
+          h.succeed();
+        });
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 100)
+  public static void arsenalLethalHitKeepsItsAwardAfterHitWriteback(GameTestHelper h) {
+    var p = smith(h);
+    p.getInventory().clearContent();
+    var held = growingSword(p);
+    var weapon = growingSword(p);
+    p.getInventory().setItem(0, held);
+    p.getInventory().setItem(1, weapon);
+    h.assertTrue(ForgeArsenal.deploy(p, List.of(1)), "Deployment failed");
+    var victim = rewardTarget(h, p);
+    h.runAfterDelay(
+        5,
+        () -> {
+          var blade =
+              h.getLevel()
+                  .getEntitiesOfClass(ArsenalBlade.class, p.getBoundingBox().inflate(8))
+                  .getFirst();
+          h.assertTrue(
+              ForgeArsenal.hit(p, victim, 0, blade) && !victim.isAlive(),
+              "Arsenal did not land lethal hit");
+          double expected = held.get(TensuraDataComponents.EP.get());
+          h.assertTrue(expected > 100, "No native payout");
+          near(
+              h,
+              ForgeArsenal.item(p, 0).get(TensuraDataComponents.EP.get()),
+              expected,
+              "Hit writeback reverted the award");
+          near(
+              h,
+              blade.item().get(TensuraDataComponents.EP.get()),
+              expected,
+              "Visual item did not refresh");
+          ForgeArsenal.recall(p);
+          h.succeed();
+        });
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 100)
+  public static void deployedGearUsesNativeGrowthEngravingsAndSkipsExcludedRewards(
+      GameTestHelper h) {
+    var p = smith(h);
+    p.getInventory().clearContent();
+    var held = growingSword(p);
+    var weapon = growingSword(p);
+    var growth =
+        p.registryAccess()
+            .registryOrThrow(Registries.ENCHANTMENT)
+            .getHolderOrThrow(
+                net.minecraft.resources.ResourceKey.create(
+                    Registries.ENCHANTMENT,
+                    net.minecraft.resources.ResourceLocation.parse("tensura:growth")));
+    held.enchant(growth, 2);
+    weapon.enchant(growth, 2);
+    p.getInventory().setItem(0, held);
+    p.getInventory().setItem(1, weapon);
+    h.assertTrue(ForgeArsenal.deploy(p, List.of(1)), "Deployment failed");
+    var excluded = rewardTarget(h, p);
+    TensuraStorages.getExistenceFrom(excluded).setSkippingEPDrop(true);
+    var ordinary = rewardTarget(h, p);
+    h.runAfterDelay(
+        5,
+        () -> {
+          kill(h, p, excluded);
+          near(
+              h,
+              ForgeArsenal.item(p, 0).get(TensuraDataComponents.EP.get()),
+              100,
+              "Excluded reward grew equipment");
+          kill(h, p, ordinary);
+          double expected = held.get(TensuraDataComponents.EP.get());
+          h.assertTrue(expected > 100, "No native growth-engraving payout");
+          near(
+              h,
+              ForgeArsenal.item(p, 0).get(TensuraDataComponents.EP.get()),
+              expected,
+              "Growth engraving diverged from native equipment");
+          ForgeArsenal.recall(p);
+          h.succeed();
+        });
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 100)
+  public static void arsenalEvolutionStaysInEscrowAndPreservesForgeAndChromaticData(
+      GameTestHelper h) {
+    var p = smith(h);
+    p.getInventory().clearContent();
+    var held = growingSword(p);
+    var weapon = growingSword(p);
+    for (var s : List.of(held, weapon)) {
+      s.set(TensuraDataComponents.EP.get(), 99d);
+      s.set(TensuraDataComponents.MAX_EP.get(), 100d);
+      s.set(
+          TensuraDataComponents.EVOLUTION.get(),
+          net.minecraft.resources.ResourceLocation.parse("tensura:mithril_sword"));
+    }
+    weapon.set(dev.heavenlyrestriction.chromatic.ChromaticContent.INFUSED.get(), true);
+    temper(weapon, ForgeItems.Temper.KEEN, .2);
+    var signature = ForgeItems.data(weapon).getUUID("work");
+    var heldSignature = ForgeItems.data(held).getUUID("work");
+    p.getInventory().setItem(0, held);
+    p.getInventory().setItem(1, weapon);
+    h.assertTrue(ForgeArsenal.deploy(p, List.of(1)), "Deployment failed");
+    var victim = rewardTarget(h, p);
+    h.runAfterDelay(
+        5,
+        () -> {
+          var blade =
+              h.getLevel()
+                  .getEntitiesOfClass(ArsenalBlade.class, p.getBoundingBox().inflate(8))
+                  .getFirst();
+          h.assertTrue(ForgeArsenal.hit(p, victim, 0, blade), "Lethal hit failed");
+          var evolved = ForgeArsenal.item(p, 0);
+          h.assertTrue(
+              net.minecraft.core.registries.BuiltInRegistries.ITEM
+                  .getKey(evolved.getItem())
+                  .toString()
+                  .equals("tensura:mithril_sword"),
+              "Escrow did not evolve");
+          h.assertTrue(
+              p.getMainHandItem().getItem() == evolved.getItem(),
+              "Native held reference did not evolve identically");
+          h.assertTrue(
+              ForgeItems.data(p.getMainHandItem()).getUUID("work").equals(heldSignature),
+              "Escrow evolution replaced the actual held item");
+          near(
+              h,
+              evolved.get(TensuraDataComponents.EP.get()),
+              p.getMainHandItem().get(TensuraDataComponents.EP.get()),
+              "Evolved EP diverged");
+          h.assertTrue(
+              ForgeItems.data(evolved).getUUID("work").equals(signature)
+                  && ForgeItems.temper(evolved) == ForgeItems.Temper.KEEN
+                  && dev.heavenlyrestriction.chromatic.ChromaticOrb.infused(evolved),
+              "Evolution lost persistent item data");
+          ForgeArsenal.recall(p);
+          h.succeed();
+        });
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 100)
+  public static void deploymentInitializesFreshNativeGearAndNativeCapStillApplies(
+      GameTestHelper h) {
+    var p = smith(h);
+    p.getInventory().clearContent();
+    var nativeSword =
+        new ItemStack(
+            BuiltInRegistries.ITEM.get(
+                net.minecraft.resources.ResourceLocation.parse("tensura:hihiirokane_sword")));
+    h.assertTrue(
+        !nativeSword.has(TensuraDataComponents.EP.get()), "Fixture is already initialized");
+    p.getInventory().setItem(1, nativeSword);
+    h.assertTrue(ForgeArsenal.deploy(p, List.of(1)), "Fresh gear deployment failed");
+    h.assertTrue(
+        ForgeArsenal.item(p, 0).has(TensuraDataComponents.EP.get()),
+        "Native gear not initialized on deployment");
+    ForgeArsenal.recall(p);
+    p.getInventory().clearContent();
+    var capped = growingSword(p);
+    capped.set(TensuraDataComponents.MAX_EP.get(), 110d);
+    p.getInventory().setItem(1, capped);
+    h.assertTrue(ForgeArsenal.deploy(p, List.of(1)), "Capped deployment failed");
+    var victim = rewardTarget(h, p);
+    h.runAfterDelay(
+        5,
+        () -> {
+          kill(h, p, victim);
+          near(
+              h,
+              ForgeArsenal.item(p, 0).get(TensuraDataComponents.EP.get()),
+              110,
+              "Native EP cap bypassed");
+          ForgeArsenal.recall(p);
+          h.succeed();
+        });
+  }
+
+  private static net.minecraft.core.Holder<Enchantment> engraving(ServerPlayer p, String id) {
+    return p.registryAccess()
+        .registryOrThrow(Registries.ENCHANTMENT)
+        .getHolderOrThrow(
+            net.minecraft.resources.ResourceKey.create(
+                Registries.ENCHANTMENT, net.minecraft.resources.ResourceLocation.parse(id)));
+  }
+
+  private static io.github.manasmods.tensura.menu.ResearcherEnchantingMenu engraver(
+      ServerPlayer p, ManasSkill skill) {
+    p.experienceLevel = 100;
+    p.totalExperience = 100000;
+    p.experienceProgress = 0;
+    return new io.github.manasmods.tensura.menu.ResearcherEnchantingMenu(
+        1, p.getInventory(), p, skill);
+  }
+
+  private static ItemEnchantments engravingMap(
+      net.minecraft.core.Holder<Enchantment> enchantment, int level) {
+    var map = new ItemEnchantments.Mutable(ItemEnchantments.EMPTY);
+    map.set(enchantment, level);
+    return map.toImmutable();
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 100)
+  public static void godlyCraftsmanRejectsOvercapResearchWithoutConsumingItButLearnsOtherEntries(
+      GameTestHelper h) {
+    var p = player(h);
+    grant(p, UniqueSkills.GODLY_CRAFTSMAN.get());
+    var afterwind = engraving(p, "heavenlyrestriction:afterwind");
+    var sharp = engraving(p, "minecraft:sharpness");
+    var donor = new ItemStack(Items.DIAMOND_SWORD);
+    donor.enchant(afterwind, afterwind.value().getMaxLevel());
+    donor = dev.heavenlyrestriction.chromatic.ChromaticOrb.upgrade(donor);
+    h.assertTrue(!donor.isEmpty(), "Orb did not produce donor");
+    donor.enchant(sharp, 3);
+    var menu = engraver(p, UniqueSkills.GODLY_CRAFTSMAN.get());
+    menu.getSlot(36).set(donor);
+    var memory = IResearcherEnchanter.getAllEnchantments(p, UniqueSkills.GODLY_CRAFTSMAN.get());
+    h.assertTrue(
+        memory.getLevel(afterwind) == 0 && memory.getLevel(sharp) == 3,
+        "Godly Craftsman learned an overcap or lost normal research");
+    var remaining = menu.getBookInput().getItem(0);
+    h.assertTrue(
+        EnchantmentHelper.getItemEnchantmentLevel(afterwind, remaining)
+                == afterwind.value().getMaxLevel() + 1
+            && dev.heavenlyrestriction.chromatic.ChromaticOrb.infused(remaining),
+        "Blocked donor engraving or Orb history was consumed");
+    h.succeed();
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 100)
+  public static void godlyCraftsmanDirectResearchAndLegacyKnowledgeCannotTransferOvercaps(
+      GameTestHelper h) {
+    var p = player(h);
+    var skill = UniqueSkills.GODLY_CRAFTSMAN.get();
+    var instance = grant(p, skill);
+    var rune = engraving(p, "heavenlyrestriction:afterwind");
+    var supplied = new ItemEnchantments.Mutable(engravingMap(rune, rune.value().getMaxLevel() + 1));
+    h.assertTrue(
+        !IResearcherEnchanter.addEnchantments(p, supplied, skill),
+        "Direct API bypassed research guard");
+    h.assertTrue(
+        supplied.getLevel(rune) == rune.value().getMaxLevel() + 1, "Rejected source was consumed");
+    instance
+        .getOrCreateTag()
+        .put(
+            IResearcherEnchanter.STORED_ENCHANTMENTS,
+            IResearcherEnchanter.getEnchantmentsTag(engravingMap(rune, 3), p.registryAccess()));
+    var clean = IResearcherEnchanter.getAllEnchantments(p, skill);
+    h.assertTrue(
+        clean.getLevel(rune) == rune.value().getMaxLevel(), "Old knowledge was not capped");
+    var persisted =
+        IResearcherEnchanter.getItemEnchantments(
+            instance.getOrCreateTag().getCompound(IResearcherEnchanter.STORED_ENCHANTMENTS),
+            p.registryAccess());
+    h.assertTrue(
+        persisted.getLevel(rune) == rune.value().getMaxLevel(), "Legacy fix was not persisted");
+    var menu = engraver(p, skill);
+    menu.getSlot(37).set(new ItemStack(Items.DIAMOND_SWORD));
+    IResearcherEnchanter.setSelectedEnchantment(p, ItemEnchantments.EMPTY, rune, 3, skill);
+    menu.handleFinalizeEnchantment();
+    h.assertTrue(
+        EnchantmentHelper.getItemEnchantmentLevel(rune, menu.getItemOutput().getItem(0))
+            == rune.value().getMaxLevel(),
+        "Forged selection bypassed application cap");
+    h.succeed();
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 100)
+  public static void lordOfForgeCanResearchNativeOvercapsAndApplyingThemSpendsOrbAllowance(
+      GameTestHelper h) {
+    var p = smith(h);
+    var skill = HeavenlyRestriction.HEPHAESTUS.get();
+    var rune = engraving(p, "tensura:severance");
+    int over = rune.value().getMaxLevel() + 1;
+    h.assertTrue(
+        IResearcherEnchanter.addEnchantments(p, engravingMap(rune, over), skill),
+        "Lord of Forge could not research native overcap");
+    h.assertTrue(
+        IResearcherEnchanter.getAllEnchantments(p, skill).getLevel(rune) == over,
+        "Lord knowledge was capped like Godly Craftsman");
+    for (int cycle = 0; cycle < 3; cycle++) {
+      var menu = engraver(p, skill);
+      var fresh = new ItemStack(Items.DIAMOND_SWORD);
+      menu.getSlot(37).set(fresh);
+      menu.editSelection(0, over);
+      var preview = menu.getItemOutput().getItem(0);
+      h.assertTrue(
+          dev.heavenlyrestriction.chromatic.ChromaticOrb.infused(preview)
+              && !dev.heavenlyrestriction.chromatic.ChromaticOrb.infused(fresh),
+          "Preview did not reserve output allowance or changed input");
+      menu.handleFinalizeEnchantment();
+      var output = menu.getItemOutput().getItem(0);
+      h.assertTrue(
+          EnchantmentHelper.getItemEnchantmentLevel(rune, output) == over,
+          "Applied overcap level changed");
+      h.assertTrue(
+          dev.heavenlyrestriction.chromatic.ChromaticOrb.infused(output)
+              && dev.heavenlyrestriction.chromatic.ChromaticOrb.upgrade(output).isEmpty(),
+          "Copy / Orb loop is still possible");
+    }
+    h.succeed();
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 100)
+  public static void godlyCraftsmanEditingExistingOrbEquipmentKeepsItsOvercapAndSpentAllowance(
+      GameTestHelper h) {
+    var p = player(h);
+    var skill = UniqueSkills.GODLY_CRAFTSMAN.get();
+    grant(p, skill);
+    var rune = engraving(p, "heavenlyrestriction:afterwind");
+    var base = new ItemStack(Items.DIAMOND_SWORD);
+    base.enchant(rune, rune.value().getMaxLevel());
+    var infused = dev.heavenlyrestriction.chromatic.ChromaticOrb.upgrade(base);
+    var menu = engraver(p, skill);
+    menu.getSlot(37).set(infused);
+    IResearcherEnchanter.setSelectedEnchantment(
+        p, EnchantmentHelper.getEnchantmentsForCrafting(infused), rune, 3, skill);
+    menu.handleFinalizeEnchantment();
+    var output = menu.getItemOutput().getItem(0);
+    h.assertTrue(
+        EnchantmentHelper.getItemEnchantmentLevel(rune, output) == rune.value().getMaxLevel() + 1,
+        "Editing destroyed an existing legitimate overcap or raised it again");
+    h.assertTrue(
+        dev.heavenlyrestriction.chromatic.ChromaticOrb.infused(output)
+            && dev.heavenlyrestriction.chromatic.ChromaticOrb.upgrade(output).isEmpty(),
+        "Editing reset the Orb allowance");
+    h.succeed();
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 100)
+  public static void ordinaryLordEngravingsStillAllowOneOrbAndNativeBlacklistsRemain(
+      GameTestHelper h) {
+    var p = smith(h);
+    var skill = HeavenlyRestriction.HEPHAESTUS.get();
+    var rune = engraving(p, "tensura:severance");
+    h.assertTrue(
+        IResearcherEnchanter.addEnchantments(
+            p, engravingMap(rune, rune.value().getMaxLevel()), skill),
+        "Normal research failed");
+    var menu = engraver(p, skill);
+    menu.getSlot(37).set(new ItemStack(Items.DIAMOND_SWORD));
+    menu.editSelection(0, rune.value().getMaxLevel());
+    menu.handleFinalizeEnchantment();
+    var output = menu.getItemOutput().getItem(0);
+    h.assertTrue(
+        !dev.heavenlyrestriction.chromatic.ChromaticOrb.infused(output)
+            && !dev.heavenlyrestriction.chromatic.ChromaticOrb.upgrade(output).isEmpty(),
+        "Normal engraving incorrectly spent Orb allowance");
+    var forbidden = engraving(p, "tensura:growth");
+    h.assertTrue(skill.getMaxLevel(forbidden) == 0, "Native forbidden engraving was unlocked");
+    h.succeed();
+  }
 }

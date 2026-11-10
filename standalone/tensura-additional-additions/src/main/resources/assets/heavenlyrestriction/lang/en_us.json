@@ -96,5 +96,6 @@
   "heavenlyrestriction.forge.weapon.keen": "+%s%% critical damage",
   "heavenlyrestriction.forge.weapon.piercing": "Ignores %s%% of armor mitigation",
   "heavenlyrestriction.forge.weapon.conductor": "+%s%% elemental damage",
-  "heavenlyrestriction.forge.weapon.enduring": "Takes %s%% less durability damage"
+  "heavenlyrestriction.forge.weapon.enduring": "Takes %s%% less durability damage",
+  "heavenlyrestriction.forge.research_overcap": "Godly Craftsman cannot store overcap engravings."
 }

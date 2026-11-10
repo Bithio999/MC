@@ -174,6 +174,16 @@ public final class HephaestusSkill extends Skill
   }
 
   @Override
+  public int getMaxLevel(
+      net.minecraft.core.Holder<net.minecraft.world.item.enchantment.Enchantment> enchantment) {
+    int ordinary = IResearcherEnchanter.super.getMaxLevel(enchantment);
+    return ordinary > 0
+            && enchantment.is(io.github.manasmods.tensura.data.TensuraTags.Enchantments.ENGRAVING)
+        ? Math.max(ordinary, Math.min(255, enchantment.value().getMaxLevel() + 1))
+        : ordinary;
+  }
+
+  @Override
   public boolean isAllowedToCopyEnchantments(LivingEntity e, ItemStack s) {
     return craftsman().isAllowedToCopyEnchantments(e, s);
   }

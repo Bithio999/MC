@@ -94,3 +94,10 @@ These apply when Mysticism is installed, including the checked Neo Otherworld 1.
 - **Armor and protection limits:** armor mitigation cannot fall below zero. Native protection-point and resistance limits still apply; an extra level does not guarantee the same increase to final damage or defense in every build.
 - **Protected blessings:** **Blessing of Vitality, Blessing of Vigor, Blessing of Transcendence, Blessing of Growth and Blessing of Restoration** receive **no level increase**.
 - **Protected curses:** curse-tagged engravings, including **Tsukumogami**, and configured curse engravings stay unchanged. Ordinary enchantments such as Sharpness also stay unchanged.
+
+
+## Engraving research
+
+Godly Craftsman cannot store engravings above their ordinary maximum. Rejected overcap engravings stay on the donor; other eligible entries can still be learned. Existing overcap knowledge in that skill is normalized when read.
+
+[Lord of the Forge](https://github.com/Bithio999/MC/wiki/Additions-Hephaestus) can store overcap levels within its research limits. Applying an Orb-eligible overcap marks the receiving equipment’s Chromatic upgrade as used. This blocks repeatedly copying the engraving to a fresh item and raising it with another Orb. Applying only normal capped levels keeps the upgrade available. Editing already-infused equipment retains its level and spent upgrade.

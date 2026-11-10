@@ -23,7 +23,19 @@ public final class ForgeArsenal {
   private static final Map<ServerPlayer, ArsenalSequence> SEQUENCES = new WeakHashMap<>();
   private static final String ITEMS = "hephaestus_arsenal";
 
-  private record Weapon(LivingEntity owner, ItemStack item) {}
+  private static final class Weapon {
+    final LivingEntity owner;
+    final int index;
+    final Weapon previous;
+    ItemStack item;
+
+    Weapon(LivingEntity owner, int index, ItemStack item) {
+      this.owner = owner;
+      this.index = index;
+      this.item = item;
+      this.previous = CURRENT.get();
+    }
+  }
 
   private static final ThreadLocal<Weapon> CURRENT = new ThreadLocal<>();
 
@@ -112,6 +124,27 @@ public final class ForgeArsenal {
         && list.getCompound(index).getUUID("entity").equals(blade.getUUID());
   }
 
+  public static void gainGearEP(ServerPlayer player, double totalEP) {
+    if (!active(player) || !Double.isFinite(totalEP) || totalEP <= 0) return;
+    for (int index : roster(player)) {
+      var hit = CURRENT.get();
+      while (hit != null && (hit.owner != player || hit.index != index)) hit = hit.previous;
+      boolean striking = hit != null;
+      ItemStack before = striking ? hit.item : item(player, index);
+      if (before.isEmpty()) continue;
+      // Older deployments may predate native initialization; this is idempotent.
+      io.github.manasmods.tensura.handler.GearHandler.initiateGearExistence(player.level(), before);
+      var grown = ForgeGearGrowth.award(player, before, totalEP);
+      io.github.manasmods.tensura.handler.GearHandler.updateTsukumogami(player, grown);
+      if (striking) hit.item = grown;
+      store(player, index, grown);
+      var row = items(player).getCompound(index);
+      if (row.hasUUID("entity")
+          && player.serverLevel().getEntity(row.getUUID("entity")) instanceof ArsenalBlade blade)
+        blade.visual(grown);
+    }
+  }
+
   public static boolean deploy(ServerPlayer p, List<Integer> slots) {
     if (ForgeSynthesis.owned(p).filter(i -> i.canInteractSkill(p)).isEmpty()
         || slots.isEmpty()
@@ -129,7 +162,10 @@ public final class ForgeArsenal {
     var added = new ArrayList<Integer>();
     for (int slot : slots) {
       var entry = new CompoundTag();
-      entry.put("stack", p.getInventory().getItem(slot).save(p.registryAccess()));
+      var weapon = p.getInventory().getItem(slot);
+      io.github.manasmods.tensura.handler.GearHandler.initiateGearExistence(p.level(), weapon);
+      io.github.manasmods.tensura.handler.GearHandler.updateTsukumogami(p, weapon);
+      entry.put("stack", weapon.save(p.registryAccess()));
       int index = 0;
       while (index < list.size() && !list.getCompound(index).getCompound("stack").isEmpty())
         index++;
@@ -216,6 +252,7 @@ public final class ForgeArsenal {
     var item = item(p, index);
     var skill = ForgeSynthesis.owned(p);
     if (item.isEmpty() || skill.isEmpty() || !RestrictionData.canHarm(p, target)) return false;
+    var context = new Weapon(p, index, item);
     DamageSource source =
         new DamageSource(
             p.registryAccess()
@@ -225,7 +262,7 @@ public final class ForgeArsenal {
             p) {
           @Override
           public ItemStack getWeaponItem() {
-            return item;
+            return context.item;
           }
         };
     var tagged = (TensuraDamageSource) source;
@@ -234,17 +271,18 @@ public final class ForgeArsenal {
     tagged.tensura$setSkillType(io.github.manasmods.tensura.ability.skill.Skill.SkillType.ULTIMATE);
     ((IndependentHitSource) source).restriction$independentHit();
     var previous = CURRENT.get();
-    CURRENT.set(new Weapon(p, item));
+    CURRENT.set(context);
     try (var offense = ForgeOffenseContext.open(p, item)) {
       float damage = (float) ForgeItems.weaponDamage(item, p, target, source);
       boolean hit = target.hurt(source, damage);
       if (hit) {
         TensuraEnchantmentHelper.doAdditionalAfterAttack(
-            p.serverLevel(), target, p, source, item, damage);
-        EnchantmentHelper.doPostAttackEffectsWithItemSource(p.serverLevel(), target, source, item);
+            p.serverLevel(), target, p, source, context.item, damage);
+        EnchantmentHelper.doPostAttackEffectsWithItemSource(
+            p.serverLevel(), target, source, context.item);
         TensuraEnchantmentHelper.doAdditionalAfterDamage(
-            p.serverLevel(), target, p, source, item, damage);
-        item.hurtAndBreak(1, p.serverLevel(), p, broken -> {});
+            p.serverLevel(), target, p, source, context.item, damage);
+        context.item.hurtAndBreak(1, p.serverLevel(), p, broken -> {});
         skill.get().addMasteryPoint(p);
         p.serverLevel()
             .sendParticles(
@@ -258,8 +296,8 @@ public final class ForgeArsenal {
                 .25,
                 .04);
       }
-      store(p, index, item);
-      blade.visual(item);
+      store(p, index, context.item);
+      blade.visual(context.item);
       return hit;
     } finally {
       if (previous == null) CURRENT.remove();

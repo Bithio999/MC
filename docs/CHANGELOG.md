@@ -1,5 +1,14 @@
 # Changelog
 
+## Additions 1.22.4 — Arsenal EP and engraving-loop fixes
+
+- Include every deployed weapon in Tensura’s native equipment-EP reward pass for qualifying kills, preserving native growth engravings, caps, random engravings and evolution.
+- Initialize fresh native gear on deployment and update its synced visual item after growth. Preserve the actual weapon’s growth/evolution through lethal-hit writeback and recall.
+- Keep held equipment rewards and native kill exclusions intact. Evolved arsenal items stay in escrow and retain forge identity, tempers and Chromatic history.
+
+- Prevent Godly Craftsman from storing overcap engravings, preserve rejected donor entries and normalize legacy overcap knowledge. Keep ordinary enchantment bonuses.
+- Let Lord of the Forge retain Orb-tier engraving knowledge; applying an eligible overcap marks the receiving equipment’s Orb upgrade as spent. Guard both preview and final application, preserving existing infused items and native blacklists.
+
 ## Additions 1.22.3 — Armor tempers
 
 - Activate Keen critical damage and Piercing armor penetration from correctly worn armor; give Conductor armor elemental protection. Each temper has one effect per item and may be mixed across a set.

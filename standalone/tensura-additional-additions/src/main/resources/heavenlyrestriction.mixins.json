@@ -82,7 +82,11 @@
     "ForgeCraftMixin",
     "ForgeQuickCraftMixin",
     "ForgeBenchMixin",
-    "ForgeBenchTakeMixin"
+    "ForgeBenchTakeMixin",
+    "ForgeGearEPMixin",
+    "ForgeGearEPAccess",
+    "ForgeResearchMixin",
+    "ForgeResearchMenuMixin"
   ],
   "injectors": {
     "defaultRequire": 1
