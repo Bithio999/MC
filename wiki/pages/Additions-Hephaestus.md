@@ -45,14 +45,20 @@ Open the forge to craft, use Tensura’s native refining and engraving menus, ac
 
 **Reforge / Temper:** 2,000 magicules and one selected material. Reforging signs unmarked equipment and applies the ordinary forging benefits. Signed equipment from another smith cannot be overwritten.
 
-| Temper | Benefit |
-| --- | --- |
-| Keen | Increased critical-hit damage |
-| Piercing | Ignores part of armor’s damage reduction |
-| Conductor | Increased elemental damage |
-| Enduring | Further reduces durability damage |
+| Temper | Weapon effect | Worn armor effect |
+| --- | --- | --- |
+| Keen | Increased critical-hit damage | Increased critical-hit damage |
+| Piercing | Ignores part of armor’s damage reduction | Ignores part of armor’s damage reduction |
+| Conductor | Increased elemental damage | Reduced elemental damage taken, including native SHP damage |
+| Enduring | Further reduces item wear | Further reduces that armor piece’s ordinary and EP wear |
 
 Iron provides **10%**, Diamond **20%**, Netherite **30%**, and Hihiirokane **35%** temper strength. Only one temper applies; replacing it consumes the material again. Tempers are separate from enchantments, engravings and the [Chromatic Orb](Additions-Chromatic-Orb.md).
+
+**Armor tempers activate only in their proper equipped slot.** Helmet and boots contribute **15%** each, chestplate **40%**, and leggings **30%** of their material’s strength. A matching full set contributes the listed material percentage once, up to **35%**; mixing tempers divides that total among their effects. For example, a Diamond chestplate contributes **8%** critical damage with Keen, **8%** armor penetration with Piercing, or **8%** elemental damage reduction with Conductor. Armor’s offensive bonuses add to the weapon’s bonus rather than multiplying it. Enduring’s full material strength applies to that piece’s wear instead of using the slot weight.
+
+![Armor temper effects](../media/hephaestus-armor-actions.png)
+
+![Armor contribution tooltip](../media/hephaestus-armor-tooltip.png)
 
 **Repair:** 500 magicules and one selected material. Restores 30% / 60% / 90% / 100% of ordinary durability and native EP durability, respectively, without changing engravings or the Orb’s one-use history. **Damage type:** none directly.
 

@@ -24,6 +24,11 @@ public final class ForgeEvents {
     NeoForge.EVENT_BUS.addListener(EventPriority.LOWEST, ForgeTempering::melee);
     NeoForge.EVENT_BUS.addListener(EventPriority.LOWEST, ForgeTempering::damage);
     NeoForge.EVENT_BUS.addListener(EventPriority.LOWEST, ForgeTempering::incoming);
+    TensuraEntityEvents.SPIRITUAL_HURT_EVENT.register(
+        (target, attacker, amount, resistance, damage, source) -> {
+          ForgeTempering.spiritual(target, source.get(), damage);
+          return EventResult.pass();
+        });
     NeoForge.EVENT_BUS.addListener(
         (net.neoforged.neoforge.event.tick.EntityTickEvent.Post e) -> {
           if (e.getEntity() instanceof net.minecraft.world.entity.LivingEntity living

@@ -81,7 +81,37 @@ public final class ForgeItems {
   }
 
   public static double strength(ItemStack s) {
-    return Math.clamp(data(s).getDouble("quality"), 0, .35);
+    double quality = data(s).getDouble("quality");
+    return Double.isFinite(quality) ? Math.clamp(quality, 0, .35) : 0;
+  }
+
+  public static boolean armor(ItemStack s) {
+    return s.getItem() instanceof ArmorItem;
+  }
+
+  /** A complete set contributes one material strength, not four independent multipliers. */
+  public static double armorWeight(ItemStack s) {
+    if (!(s.getItem() instanceof ArmorItem armor)) return 0;
+    return switch (armor.getEquipmentSlot()) {
+      case HEAD, FEET -> .15;
+      case CHEST -> .4;
+      case LEGS -> .3;
+      default -> 0;
+    };
+  }
+
+  public static Component temperDescription(ItemStack s, Temper temper, double quality) {
+    double percent = quality * 100 * (armor(s) && temper != Temper.ENDURING ? armorWeight(s) : 1);
+    String number =
+        java.math.BigDecimal.valueOf(percent)
+            .setScale(2, java.math.RoundingMode.HALF_UP)
+            .stripTrailingZeros()
+            .toPlainString();
+    return Component.translatable(
+        "heavenlyrestriction.forge."
+            + (armor(s) ? "armor." : "weapon.")
+            + temper.name().toLowerCase(Locale.ROOT),
+        number);
   }
 
   public static double wearMultiplier(ItemStack s) {
@@ -192,7 +222,7 @@ public final class ForgeItems {
               Component.translatable(
                       "heavenlyrestriction.forge.wear", Math.round((1 - wearMultiplier(s)) * 100))
                   .withStyle(ChatFormatting.GRAY));
-    if (temper(s) != Temper.NONE)
+    if (temper(s) != Temper.NONE) {
       e.getToolTip()
           .add(
               Component.translatable(
@@ -200,6 +230,9 @@ public final class ForgeItems {
                       temper(s).name(),
                       Math.round(strength(s) * 100))
                   .withStyle(ChatFormatting.YELLOW));
+      e.getToolTip()
+          .add(temperDescription(s, temper(s), strength(s)).copy().withStyle(ChatFormatting.GRAY));
+    }
   }
 
   public static double weaponDamage(

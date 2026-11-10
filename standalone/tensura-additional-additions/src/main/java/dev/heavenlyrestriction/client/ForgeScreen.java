@@ -661,6 +661,16 @@ public final class ForgeScreen extends SimpleScreen {
     for (var b : controls) {
       b.active = !pending && !modal() && b.allowed.getAsBoolean();
       if (b.key.equals("Primary action")) hint(b, requirementHint());
+      if (b.key.equals("Action"))
+        hint(
+            b,
+            action.equals("temper") && chosen() != null
+                ? ForgeItems.temperDescription(
+                        stack(chosen()),
+                        ForgeItems.Temper.values()[temper],
+                        metal().getDouble("quality"))
+                    .getString()
+                : "");
     }
     if (search != null) {
       search.active = !modal();
@@ -799,6 +809,12 @@ public final class ForgeScreen extends SimpleScreen {
                 refresh();
               });
       b.icon = icons.get(n);
+      if (name.equals("action") && n >= 1 && n <= 4 && chosen() != null)
+        hint(
+            b,
+            ForgeItems.temperDescription(
+                    stack(chosen()), ForgeItems.Temper.values()[n], metal().getDouble("quality"))
+                .getString());
       if (name.equals("metal")) {
         int pick = n;
         b.chosen = () -> material == pick;

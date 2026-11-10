@@ -810,4 +810,226 @@ public final class HephaestusGameTests {
           h.succeed();
         });
   }
+
+  private static ItemStack plate(
+      ServerPlayer smith, Item item, ForgeItems.Temper type, double quality) {
+    var stack = new ItemStack(item);
+    ForgeItems.stamp(smith, stack);
+    temper(stack, type, quality);
+    return stack;
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 100)
+  public static void armorTempersWeightOnlyCorrectlyWornSlotsAndNeverExceedOneSet(
+      GameTestHelper h) {
+    var p = smith(h);
+    p.getInventory().clearContent();
+    var helmet = plate(p, Items.DIAMOND_HELMET, ForgeItems.Temper.KEEN, .35);
+    var chest = plate(p, Items.DIAMOND_CHESTPLATE, ForgeItems.Temper.KEEN, .35);
+    p.setItemSlot(EquipmentSlot.MAINHAND, chest);
+    near(h, ForgeTempering.armorPower(p, ForgeItems.Temper.KEEN), 0, "Carried armor activated");
+    p.setItemSlot(EquipmentSlot.HEAD, chest);
+    near(h, ForgeTempering.armorPower(p, ForgeItems.Temper.KEEN), 0, "Wrong-slot armor activated");
+    p.setItemSlot(EquipmentSlot.HEAD, helmet);
+    p.setItemSlot(EquipmentSlot.CHEST, chest);
+    near(h, ForgeTempering.armorPower(p, ForgeItems.Temper.KEEN), .35 * .55, "Helmet/chest weight");
+    p.setItemSlot(
+        EquipmentSlot.LEGS, plate(p, Items.DIAMOND_LEGGINGS, ForgeItems.Temper.KEEN, .35));
+    p.setItemSlot(EquipmentSlot.FEET, plate(p, Items.DIAMOND_BOOTS, ForgeItems.Temper.KEEN, .35));
+    near(
+        h,
+        ForgeTempering.armorPower(p, ForgeItems.Temper.KEEN),
+        .35,
+        "Full set stacked four times");
+    p.setItemSlot(EquipmentSlot.CHEST, ItemStack.EMPTY);
+    near(
+        h,
+        ForgeTempering.armorPower(p, ForgeItems.Temper.KEEN),
+        .35 * .6,
+        "Unequipping did not remove contribution");
+    h.succeed();
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 100)
+  public static void keenArmorBuffsBareHandCriticalsWithoutGivingDefensiveOrElementalEffects(
+      GameTestHelper h) {
+    var p = smith(h);
+    p.getInventory().clearContent();
+    grant(p, HeavenlyRestriction.CRITICAL_MERCHANT.get()).setToggled(false);
+    dev.heavenlyrestriction.critical.CriticalMerchant.press(
+        dev.heavenlyrestriction.critical.CriticalMerchant.instance(p).orElseThrow(), p);
+    var victim = dummy(h, p);
+    h.runAfterDelay(
+        5,
+        () -> {
+          var source = p.damageSources().playerAttack(p);
+          victim.hurt(source, 20);
+          float baseline = victim.lastDamageTaken;
+          victim.invulnerableTime = 0;
+          p.setItemSlot(
+              EquipmentSlot.CHEST, plate(p, Items.DIAMOND_CHESTPLATE, ForgeItems.Temper.KEEN, .2));
+          victim.hurt(source, 20);
+          near(h, victim.lastDamageTaken, baseline * 1.08, "Keen armor critical bonus");
+          near(
+              h,
+              ForgeTempering.armorPower(p, ForgeItems.Temper.CONDUCTOR),
+              0,
+              "Keen also granted elemental protection");
+          victim.discard();
+          h.succeed();
+        });
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 100)
+  public static void piercingArmorContributesToActualArmorPenetrationAdditivelyWithWeapon(
+      GameTestHelper h) {
+    var p = smith(h);
+    p.getInventory().clearContent();
+    var sword = new ItemStack(Items.DIAMOND_SWORD);
+    forge(p, sword);
+    temper(sword, ForgeItems.Temper.PIERCING, .2);
+    p.setItemSlot(EquipmentSlot.MAINHAND, sword);
+    var victim = target(h, p.position().add(0, 0, 3));
+    victim.getAttribute(Attributes.ARMOR).setBaseValue(20);
+    var reductions = new ArrayList<Float>();
+    java.util.function.Consumer<net.neoforged.neoforge.event.entity.living.LivingDamageEvent.Post>
+        listener =
+            event -> {
+              if (event.getEntity() == victim)
+                reductions.add(
+                    event.getReduction(
+                        net.neoforged.neoforge.common.damagesource.DamageContainer.Reduction
+                            .ARMOR));
+            };
+    net.neoforged.neoforge.common.NeoForge.EVENT_BUS.addListener(listener);
+    h.runAfterDelay(
+        5,
+        () -> {
+          try {
+            victim.hurt(p.damageSources().playerAttack(p), 20);
+            victim.setHealth(1024);
+            victim.invulnerableTime = 0;
+            p.setItemSlot(
+                EquipmentSlot.CHEST,
+                plate(p, Items.DIAMOND_CHESTPLATE, ForgeItems.Temper.PIERCING, .2));
+            victim.hurt(p.damageSources().playerAttack(p), 20);
+            h.assertTrue(reductions.size() == 2, "Missing mitigation records");
+            near(
+                h,
+                reductions.get(1),
+                reductions.get(0) * .72 / .8,
+                "Weapon and armor penetration compounded");
+            near(
+                h,
+                ForgeTempering.armorPower(p, ForgeItems.Temper.KEEN),
+                0,
+                "Piercing also granted critical damage");
+            victim.discard();
+            h.succeed();
+          } finally {
+            net.neoforged.neoforge.common.NeoForge.EVENT_BUS.unregister(listener);
+          }
+        });
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 100)
+  public static void conductorArmorReducesElementalHPHitsButNotPhysicalDamageAndNeedsNoAttacker(
+      GameTestHelper h) {
+    var p = smith(h);
+    var victim = target(h, p.position().add(0, 0, 3));
+    var chest = plate(p, Items.DIAMOND_CHESTPLATE, ForgeItems.Temper.NONE, .2);
+    victim.setItemSlot(EquipmentSlot.CHEST, chest);
+    h.runAfterDelay(
+        5,
+        () -> {
+          float hp = victim.getHealth();
+          var fire = victim.damageSources().onFire();
+          victim.hurt(fire, 20);
+          float baseline = hp - victim.getHealth();
+          victim.setHealth(hp);
+          victim.invulnerableTime = 0;
+          temper(chest, ForgeItems.Temper.CONDUCTOR, .2);
+          victim.hurt(fire, 20);
+          near(h, hp - victim.getHealth(), baseline * .92, "Environmental elemental protection");
+          victim.setHealth(hp);
+          victim.invulnerableTime = 0;
+          var physical = p.damageSources().playerAttack(p);
+          victim.hurt(physical, 20);
+          float guarded = hp - victim.getHealth();
+          victim.setHealth(hp);
+          victim.invulnerableTime = 0;
+          temper(chest, ForgeItems.Temper.NONE, .2);
+          victim.hurt(physical, 20);
+          near(h, hp - victim.getHealth(), guarded, "Conductor reduced physical damage");
+          victim.discard();
+          h.succeed();
+        });
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 100)
+  public static void
+      conductorArmorProtectsNativeDirectSpiritualDamageAndKeenArmorBoostsItsCriticals(
+          GameTestHelper h) {
+    var p = smith(h);
+    p.getInventory().clearContent();
+    var victim = target(h, p.position().add(0, 0, 3));
+    io.github.manasmods.manascore.race.api.RaceAPI.getRaceFrom(victim)
+        .setRace(io.github.manasmods.tensura.registry.race.TensuraRaces.HUMAN_SAINT.get(), false);
+    var energy = TensuraStorages.getExistenceFrom(victim);
+    h.runAfterDelay(
+        5,
+        () -> {
+          var source = p.damageSources().playerAttack(p);
+          ((io.github.manasmods.tensura.damage.TensuraDamageSource) source)
+              .tensura$setElement(io.github.manasmods.tensura.ability.magic.Element.WIND);
+          energy.setSpiritualHealth(1000);
+          io.github.manasmods.tensura.damage.TensuraDamageHelper.directSpiritualHurt(
+              victim, p, source, 20, 0);
+          double baseline = 1000 - energy.getSpiritualHealth();
+          h.assertTrue(baseline > 0, "SHP fixture took no damage");
+          victim.setItemSlot(
+              EquipmentSlot.CHEST,
+              plate(p, Items.DIAMOND_CHESTPLATE, ForgeItems.Temper.CONDUCTOR, .2));
+          energy.setSpiritualHealth(1000);
+          io.github.manasmods.tensura.damage.TensuraDamageHelper.directSpiritualHurt(
+              victim, p, source, 20, 0);
+          near(h, 1000 - energy.getSpiritualHealth(), baseline * .92, "Conductor SHP protection");
+          grant(p, HeavenlyRestriction.CRITICAL_MERCHANT.get()).setToggled(false);
+          dev.heavenlyrestriction.critical.CriticalMerchant.press(
+              dev.heavenlyrestriction.critical.CriticalMerchant.instance(p).orElseThrow(), p);
+          energy.setSpiritualHealth(1000);
+          io.github.manasmods.tensura.damage.TensuraDamageHelper.directSpiritualHurt(
+              victim, p, source, 20, 0);
+          double critical = 1000 - energy.getSpiritualHealth();
+          p.setItemSlot(
+              EquipmentSlot.CHEST, plate(p, Items.DIAMOND_CHESTPLATE, ForgeItems.Temper.KEEN, .2));
+          energy.setSpiritualHealth(1000);
+          io.github.manasmods.tensura.damage.TensuraDamageHelper.directSpiritualHurt(
+              victim, p, source, 20, 0);
+          near(h, 1000 - energy.getSpiritualHealth(), critical * 1.08, "Keen SHP critical bonus");
+          victim.discard();
+          h.succeed();
+        });
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 100)
+  public static void armorTemperingUsesRealForgeAndEnduringReducesBothWearPools(GameTestHelper h) {
+    var p = smith(h);
+    p.getInventory().clearContent();
+    p.getInventory().setItem(0, new ItemStack(Items.DIAMOND_CHESTPLATE));
+    material(p, 5, Items.DIAMOND, 2);
+    h.assertTrue(ForgeService.work(p, 0, "temper", 41), "Armor was rejected by forge");
+    var chest = p.getInventory().getItem(0);
+    near(h, ForgeItems.armorWeight(chest), .4, "Chest weight");
+    chest.hurtAndBreak(20, p.serverLevel(), p, b -> {});
+    h.assertTrue(chest.getDamageValue() == 8, "Enduring armor wear reduction failed");
+    chest.set(TensuraDataComponents.EP_DURABILITY.get(), 1000d);
+    chest.set(TensuraDataComponents.EP_DURABILITY.get(), 900d);
+    near(h, chest.get(TensuraDataComponents.EP_DURABILITY.get()), 960, "Enduring EP wear");
+    h.assertTrue(ForgeService.work(p, 0, "temper", 31), "Replacing armor temper failed");
+    h.assertTrue(
+        ForgeItems.temper(chest) == ForgeItems.Temper.CONDUCTOR, "Old temper survived replacement");
+    near(h, ForgeItems.wearMultiplier(chest), .5, "Replaced Enduring kept wear benefit");
+    h.succeed();
+  }
 }

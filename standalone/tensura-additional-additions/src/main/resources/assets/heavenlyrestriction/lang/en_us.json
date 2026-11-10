@@ -88,5 +88,13 @@
   "heavenlyrestriction.forge.opus": "Magnum Opus · Active masterpiece",
   "heavenlyrestriction.forge.stats": "+%s%% forged equipment stats",
   "heavenlyrestriction.forge.wear": "%s%% reduced durability damage",
-  "heavenlyrestriction.forge.temper": "%s temper · %s%%"
+  "heavenlyrestriction.forge.temper": "%s temper · %s%%",
+  "heavenlyrestriction.forge.armor.keen": "When worn: +%s%% critical damage",
+  "heavenlyrestriction.forge.armor.piercing": "When worn: ignore %s%% of armor mitigation",
+  "heavenlyrestriction.forge.armor.conductor": "When worn: %s%% less elemental damage taken",
+  "heavenlyrestriction.forge.armor.enduring": "This piece takes %s%% less durability damage",
+  "heavenlyrestriction.forge.weapon.keen": "+%s%% critical damage",
+  "heavenlyrestriction.forge.weapon.piercing": "Ignores %s%% of armor mitigation",
+  "heavenlyrestriction.forge.weapon.conductor": "+%s%% elemental damage",
+  "heavenlyrestriction.forge.weapon.enduring": "Takes %s%% less durability damage"
 }

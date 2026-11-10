@@ -144,6 +144,29 @@ public final class HephaestusReview {
     throw new IllegalStateException("Missing equipment " + name);
   }
 
+  private static void hover(String name) throws Exception {
+    var mc = Minecraft.getInstance();
+    var button =
+        mc.screen.children().stream()
+            .filter(
+                w ->
+                    w instanceof AbstractButton b
+                        && b.visible
+                        && b.getMessage() != null
+                        && b.getMessage().getString().equals(name))
+            .map(w -> (AbstractButton) w)
+            .findFirst()
+            .orElseThrow();
+    var fx = net.minecraft.client.MouseHandler.class.getDeclaredField("xpos");
+    var fy = net.minecraft.client.MouseHandler.class.getDeclaredField("ypos");
+    fx.setAccessible(true);
+    fy.setAccessible(true);
+    fx.setDouble(
+        mc.mouseHandler, (button.getX() + button.getWidth() / 2d) * mc.getWindow().getGuiScale());
+    fy.setDouble(
+        mc.mouseHandler, (button.getY() + button.getHeight() / 2d) * mc.getWindow().getGuiScale());
+  }
+
   private static void grant(ServerPlayer p, ManasSkill skill) {
     RestrictionData.learnReward(p, skill);
     var i = SkillAPI.getSkillsFrom(p).getSkill(skill).orElseThrow();
@@ -592,13 +615,64 @@ public final class HephaestusReview {
       return;
     }
     if (phase == 17 && damaged && recalled && wait > 20) {
+      server(
+          p -> {
+            p.getInventory().clearContent();
+            p.getInventory().setItem(0, new ItemStack(Items.DIAMOND_CHESTPLATE));
+            p.getInventory().setItem(9, new ItemStack(Items.DIAMOND, 32));
+            check(ForgeService.work(p, 0, "temper", 31), "Armor tempering failed");
+            ForgeService.open(p, "forge");
+          });
+      phase = 171;
+      wait = 0;
+      return;
+    }
+    if (phase == 171
+        && wait > 20
+        && mc.screen instanceof dev.heavenlyrestriction.client.ForgeScreen) {
+      click("Action");
+      phase = 172;
+      wait = 0;
+      return;
+    }
+    if (phase == 172) {
+      hover("Temper · Keen");
+      if (wait > 20) {
+        shot("hephaestus-armor-actions");
+        click("Temper · Keen");
+        click("Primary action");
+        phase = 173;
+        wait = 0;
+      }
+      return;
+    }
+    if (phase == 173 && wait > 20) {
+      server(
+          p ->
+              check(
+                  ForgeItems.temper(p.getInventory().getItem(0)) == ForgeItems.Temper.KEEN,
+                  "Armor UI did not replace temper"));
+      phase = 174;
+      wait = 0;
+      return;
+    }
+    if (phase == 174) {
+      hover("Select Diamond Chestplate");
+      if (wait > 12) {
+        shot("hephaestus-armor-tooltip");
+        phase = 175;
+        wait = 0;
+      }
+      return;
+    }
+    if (phase == 175 && wait > 2) {
       Files.writeString(
           OUT.resolve("passed-hephaestus.txt"),
           "PASS: native Ultimate learning entry; explicit synthesis confirmation surviving"
               + " refresh; 250000 permanent magicules charged once; both parents replaced,"
               + " learned/unmastered Ultimate; native Forge UI tempering; one masterpiece; six real"
               + " weapons escrowed, individual menu recall and incremental redeployment, autonomous"
-              + " strikes and exact six-item recall.\n");
+              + " strikes and exact six-item recall; armor temper selection/replacement and contribution tooltips.\n");
       mc.options.setCameraType(CameraType.FIRST_PERSON);
       mc.stop();
     }

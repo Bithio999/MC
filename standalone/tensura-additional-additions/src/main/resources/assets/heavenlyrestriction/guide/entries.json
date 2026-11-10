@@ -990,7 +990,7 @@
           "title": "Divine Forge · Active press",
           "lines": [
             "In Forge, select equipment, choose an action and material, and press the gold action button. Utilities opens crafting, native refining and engraving, storage and ingredient recovery. Forging bonuses also apply at Tensura’s Smithing Bench, including shift-click results. Reforge can apply the bonus to older equipment. Recover returns your old Prospector refining ingredients.",
-            "Reforge / Temper: 2,000 magicules + one material. Iron / Diamond / Netherite / Hihiirokane give 10% / 20% / 30% / 35% temper strength. Keen improves critical damage; Piercing ignores part of armor reduction; Conductor improves elemental damage; Enduring reduces wear. Only one temper applies.",
+            "Reforge / Temper: 2,000 magicules + one material. Iron / Diamond / Netherite / Hihiirokane give 10% / 20% / 30% / 35% temper strength. Keen improves critical damage; Piercing ignores part of armor reduction. On weapons Conductor improves elemental damage; on worn armor it reduces elemental damage taken, including SHP hits. Enduring reduces item wear. Each temper has one effect per item. Armor slots contribute 15% head, 40% chest, 30% legs and 15% feet of the material strength; full sets contribute up to 35%, with offensive bonuses added to the weapon. Enduring instead applies its full strength to that piece’s wear.",
             "Repair: 500 magicules + one material; restores 30% / 60% / 90% / 100% ordinary and native EP durability. Engravings and Chromatic Orb history remain. Damage type: none directly."
           ]
         },

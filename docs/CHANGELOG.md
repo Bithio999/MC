@@ -1,5 +1,12 @@
 # Changelog
 
+## Additions 1.22.3 — Armor tempers
+
+- Activate Keen critical damage and Piercing armor penetration from correctly worn armor; give Conductor armor elemental protection. Each temper has one effect per item and may be mixed across a set.
+- Weight combat contributions by slot (15% head, 40% chest, 30% legs, 15% boots), capping a complete set at one material strength. Add offensive contributions to the weapon bonus instead of multiplying it.
+- Preserve Enduring’s full per-item ordinary / EP wear reduction. Keep worn effects inactive for carried and wrong-slot armor.
+- Cover normal HP and native direct SHP damage, environmental elemental hits, and armor-only critical attacks. Add effect previews and exact contribution tooltips, wiki explanations and regression cases.
+
 ## Additions 1.22.2 — The Additions workshop
 
 - Replace the repurposed ability-selection screen with a dedicated workshop: Tensura-inspired cyan bevels, dark panels, copper-gold accents and a compact Additions crest.
