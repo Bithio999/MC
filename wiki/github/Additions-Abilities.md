@@ -42,6 +42,11 @@ Find a move below, then open its entry for targeting, damage, cost and cooldown.
 | [Divine Forge](https://github.com/Bithio999/MC/wiki/Additions-Hephaestus#divine-forge) | [Hephaestus, Lord of the Forge](https://github.com/Bithio999/MC/wiki/Additions-Hephaestus) | Active, Press | None |
 | [Living Arsenal](https://github.com/Bithio999/MC/wiki/Additions-Hephaestus#living-arsenal) | [Hephaestus, Lord of the Forge](https://github.com/Bithio999/MC/wiki/Additions-Hephaestus) | Active, Press | Physical; native weapon conversions and follow-ups retain their types |
 | [Magnum Opus](https://github.com/Bithio999/MC/wiki/Additions-Hephaestus#magnum-opus) | [Hephaestus, Lord of the Forge](https://github.com/Bithio999/MC/wiki/Additions-Hephaestus) | Active, Press | None |
+| [Unified Intellect](https://github.com/Bithio999/MC/wiki/Additions-Metis#unified-intellect) | [Metis, Lord of Wisdom](https://github.com/Bithio999/MC/wiki/Additions-Metis) | Passive, Toggle | None |
+| [Parallel Matrix](https://github.com/Bithio999/MC/wiki/Additions-Metis#parallel-matrix) | [Metis, Lord of Wisdom](https://github.com/Bithio999/MC/wiki/Additions-Metis) | Active, Press | None |
+| [Autonomous Sage](https://github.com/Bithio999/MC/wiki/Additions-Metis#autonomous-sage) | [Metis, Lord of Wisdom](https://github.com/Bithio999/MC/wiki/Additions-Metis) | Active, Toggle | Assigned magic’s native damage type |
+| [Optimal Solution](https://github.com/Bithio999/MC/wiki/Additions-Metis#optimal-solution) | [Metis, Lord of Wisdom](https://github.com/Bithio999/MC/wiki/Additions-Metis) | Passive, Toggle | None |
+| [Great Sage utilities](https://github.com/Bithio999/MC/wiki/Additions-Metis#inherited-utilities) | [Metis, Lord of Wisdom](https://github.com/Bithio999/MC/wiki/Additions-Metis) | Active, Press | None |
 
 ## Extra
 

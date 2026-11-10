@@ -115,6 +115,29 @@ public final class SplitMindNetwork {
     var out = new CompoundTag();
     out.putBoolean("allowed", allowed(p));
     if (!out.getBoolean("allowed")) return out;
+    out.merge(catalog(p, query, category, page));
+    var mind =
+        SkillAPI.getSkillsFrom(p).getSkill(HeavenlyRestriction.SPLIT_MIND.get()).orElseThrow();
+    out.putString("assignment", mind.getOrCreateTag().getString(SplitMindCasting.ASSIGNED));
+    out.putInt("assignedMode", SplitMindCasting.assignedMode(mind));
+    out.putString(
+        "assignedName",
+        SplitMindCasting.assigned(p, mind).map(i -> i.getSkill().getName().getString()).orElse(""));
+    out.putString(
+        "assignedModeName",
+        SplitMindCasting.assigned(p, mind)
+            .map(
+                i ->
+                    ((Magic) i.getSkill())
+                        .getModeName(i, SplitMindCasting.assignedMode(mind))
+                        .getString())
+            .orElse(""));
+    out.putBoolean("auto", mind.getOrCreateTag().getBoolean(SplitMindCasting.AUTO));
+    return out;
+  }
+
+  public static CompoundTag catalog(ServerPlayer p, String query, int category, int page) {
+    var out = new CompoundTag();
     query = query.length() > 64 ? query.substring(0, 64) : query;
     category = Math.clamp(category, 0, 2);
     final String search = query.toLowerCase(Locale.ROOT);
@@ -170,23 +193,6 @@ public final class SplitMindNetwork {
       row.put("modes", modes);
       rows.add(row);
     }
-    var mind =
-        SkillAPI.getSkillsFrom(p).getSkill(HeavenlyRestriction.SPLIT_MIND.get()).orElseThrow();
-    out.putString("assignment", mind.getOrCreateTag().getString(SplitMindCasting.ASSIGNED));
-    out.putInt("assignedMode", SplitMindCasting.assignedMode(mind));
-    out.putString(
-        "assignedName",
-        SplitMindCasting.assigned(p, mind).map(i -> i.getSkill().getName().getString()).orElse(""));
-    out.putString(
-        "assignedModeName",
-        SplitMindCasting.assigned(p, mind)
-            .map(
-                i ->
-                    ((Magic) i.getSkill())
-                        .getModeName(i, SplitMindCasting.assignedMode(mind))
-                        .getString())
-            .orElse(""));
-    out.putBoolean("auto", mind.getOrCreateTag().getBoolean(SplitMindCasting.AUTO));
     out.putString("query", query);
     out.putInt("category", category);
     out.putInt("page", page);

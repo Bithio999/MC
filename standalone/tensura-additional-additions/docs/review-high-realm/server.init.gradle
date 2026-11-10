@@ -1,5 +1,5 @@
 gradle.projectsEvaluated {
- rootProject.neoForge.runs.gameTestServer.systemProperty('neoforge.enabledGameTestNamespaces', rootProject.providers.gradleProperty('forgeFocus').isPresent() ? 'forgereview' : rootProject.providers.gradleProperty('merchantFocus').isPresent() ? 'merchantreview' : rootProject.providers.gradleProperty('vesperFocus').isPresent() ? 'vesperreview' : 'heavenlyrestriction,vesperreview,merchantreview,forgereview')
+ rootProject.neoForge.runs.gameTestServer.systemProperty('neoforge.enabledGameTestNamespaces', rootProject.providers.gradleProperty('metisFocus').isPresent() ? 'metisreview' : rootProject.providers.gradleProperty('forgeFocus').isPresent() ? 'forgereview' : rootProject.providers.gradleProperty('merchantFocus').isPresent() ? 'merchantreview' : rootProject.providers.gradleProperty('vesperFocus').isPresent() ? 'vesperreview' : 'heavenlyrestriction,vesperreview,merchantreview,forgereview,metisreview')
  rootProject.sourceSets.main.java.srcDir(rootProject.file('docs/review-high-realm'))
  rootProject.sourceSets.main.java.exclude('**/HighRealmReview.java')
  rootProject.sourceSets.main.resources.setSrcDirs([rootProject.file('docs/review-high-realm/resources'), rootProject.file('src/main/resources')])

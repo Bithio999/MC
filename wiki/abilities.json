@@ -1506,5 +1506,60 @@
     "secondary_damage_id": null,
     "anchor": "magnum-opus",
     "mod": "additions"
+  },
+  {
+    "name": "Unified Intellect",
+    "skill": "Additions-Metis",
+    "anchor": "unified-intellect",
+    "kind": "Passive, Toggle",
+    "damage": "None",
+    "tier": "Ultimate",
+    "mod": "additions",
+    "damage_id": null,
+    "secondary_damage_id": null
+  },
+  {
+    "name": "Parallel Matrix",
+    "skill": "Additions-Metis",
+    "anchor": "parallel-matrix",
+    "kind": "Active, Press",
+    "damage": "None",
+    "tier": "Ultimate",
+    "mod": "additions",
+    "damage_id": null,
+    "secondary_damage_id": null
+  },
+  {
+    "name": "Autonomous Sage",
+    "skill": "Additions-Metis",
+    "anchor": "autonomous-sage",
+    "kind": "Active, Toggle",
+    "damage": "Assigned magic’s native damage type",
+    "tier": "Ultimate",
+    "mod": "additions",
+    "damage_id": null,
+    "secondary_damage_id": null
+  },
+  {
+    "name": "Optimal Solution",
+    "skill": "Additions-Metis",
+    "anchor": "optimal-solution",
+    "kind": "Passive, Toggle",
+    "damage": "None",
+    "tier": "Ultimate",
+    "mod": "additions",
+    "damage_id": null,
+    "secondary_damage_id": null
+  },
+  {
+    "name": "Great Sage utilities",
+    "skill": "Additions-Metis",
+    "anchor": "inherited-utilities",
+    "kind": "Active, Press",
+    "damage": "None",
+    "tier": "Ultimate",
+    "mod": "additions",
+    "damage_id": null,
+    "secondary_damage_id": null
   }
 ]

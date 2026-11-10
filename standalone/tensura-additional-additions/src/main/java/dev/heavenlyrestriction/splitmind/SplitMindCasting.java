@@ -56,7 +56,19 @@ public final class SplitMindCasting {
     return context != null && context.owner() == owner && context.spell() == spell;
   }
 
+  public static boolean automatic(LivingEntity owner) {
+    var context = INVOCATION.get();
+    return context != null && context.owner() == owner;
+  }
+
+  public static boolean selfTarget(LivingEntity owner) {
+    var context = INVOCATION.get();
+    return context != null && context.owner() == owner && context.target() == owner;
+  }
+
   public static double magiculeFactor(LivingEntity owner) {
+    if (dev.heavenlyrestriction.metis.MetisMatrix.owned(owner).isPresent())
+      return dev.heavenlyrestriction.metis.MetisMatrix.costFactor(owner);
     return SkillAPI.getSkillsFrom(owner)
             .getSkill(HeavenlyRestriction.SPLIT_MIND.get())
             .filter(i -> i.getMastery() >= 0 && i.isMastered(owner))
@@ -65,7 +77,7 @@ public final class SplitMindCasting {
         : 1;
   }
 
-  private static <T> T autoInvoke(
+  public static <T> T autoInvoke(
       ServerPlayer p, ManasSkillInstance spell, int mode, LivingEntity target, Supplier<T> work) {
     var before = INVOCATION.get();
     INVOCATION.set(new Invocation(p, spell, mode, target));
@@ -181,7 +193,7 @@ public final class SplitMindCasting {
     return e instanceof LivingEntity living && enemy(p, living) ? living : null;
   }
 
-  private static boolean funded(ServerPlayer p, ManasSkillInstance i, int mode) {
+  public static boolean funded(ServerPlayer p, ManasSkillInstance i, int mode) {
     if (p.hasInfiniteMaterials()) return true;
     var magic = (Magic) i.getSkill();
     var pool = TensuraStorages.getExistenceFrom(p);
@@ -197,6 +209,7 @@ public final class SplitMindCasting {
       LivingEntity e,
       int key,
       int mode) {
+    if (skill.get() != null) dev.heavenlyrestriction.metis.MetisCasting.manual(e, skill.get());
     var current = CASTS.get(e.getUUID());
     // One owned spell instance shares its cooldown/tag state. Manual use of that same
     // spell takes priority, while every different spell can run alongside automation.
@@ -208,7 +221,11 @@ public final class SplitMindCasting {
   }
 
   public static void tick(PlayerTickEvent.Post event) {
-    if (event.getEntity() instanceof ServerPlayer p) update(p);
+    if (event.getEntity() instanceof ServerPlayer p) {
+      update(p);
+      dev.heavenlyrestriction.metis.MetisIntellect.update(p);
+      dev.heavenlyrestriction.metis.MetisCasting.update(p);
+    }
   }
 
   public static void update(ServerPlayer p) {
@@ -296,7 +313,9 @@ public final class SplitMindCasting {
   public static boolean tickAimed(TickingSkill held, LivingEntity e, Supplier<Boolean> original) {
     var cast = CASTS.get(e.getUUID());
     if (cast == null || cast.held() != held || !(e instanceof ServerPlayer p))
-      return original.get();
+      return e instanceof ServerPlayer player
+          ? dev.heavenlyrestriction.metis.MetisCasting.tickAimed(held, player, original)
+          : original.get();
     var enemy = target(p, cast);
     if (enemy == null || !SplitMindModes.allowed(p, cast.spell(), cast.mode())) return false;
     var pool = TensuraStorages.getExistenceFrom(p);
@@ -336,6 +355,13 @@ public final class SplitMindCasting {
       p.setYHeadRot(head);
       p.yBodyRot = body;
     }
+  }
+
+  public static void cancelAll(LivingEntity e) {
+    cancel(e);
+    dev.heavenlyrestriction.metis.MetisCasting.cancel(e);
+    if (e instanceof ServerPlayer player)
+      dev.heavenlyrestriction.metis.MetisIntellect.clear(player);
   }
 
   public static void cancel(LivingEntity e) {

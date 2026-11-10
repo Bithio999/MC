@@ -1290,5 +1290,12 @@
     "category": "Skills",
     "tier": "Ultimate",
     "mod": "additions"
+  },
+  {
+    "slug": "Additions-Metis",
+    "title": "Metis, Lord of Wisdom",
+    "category": "Skills",
+    "mod": "additions",
+    "tier": "Ultimate"
   }
 ]

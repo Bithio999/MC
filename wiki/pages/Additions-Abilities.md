@@ -42,6 +42,11 @@ Find a move below, then open its entry for targeting, damage, cost and cooldown.
 | [Divine Forge](Additions-Hephaestus.md#divine-forge) | [Hephaestus, Lord of the Forge](Additions-Hephaestus.md) | Active, Press | None |
 | [Living Arsenal](Additions-Hephaestus.md#living-arsenal) | [Hephaestus, Lord of the Forge](Additions-Hephaestus.md) | Active, Press | Physical; native weapon conversions and follow-ups retain their types |
 | [Magnum Opus](Additions-Hephaestus.md#magnum-opus) | [Hephaestus, Lord of the Forge](Additions-Hephaestus.md) | Active, Press | None |
+| [Unified Intellect](Additions-Metis.md#unified-intellect) | [Metis, Lord of Wisdom](Additions-Metis.md) | Passive, Toggle | None |
+| [Parallel Matrix](Additions-Metis.md#parallel-matrix) | [Metis, Lord of Wisdom](Additions-Metis.md) | Active, Press | None |
+| [Autonomous Sage](Additions-Metis.md#autonomous-sage) | [Metis, Lord of Wisdom](Additions-Metis.md) | Active, Toggle | Assigned magic’s native damage type |
+| [Optimal Solution](Additions-Metis.md#optimal-solution) | [Metis, Lord of Wisdom](Additions-Metis.md) | Passive, Toggle | None |
+| [Great Sage utilities](Additions-Metis.md#inherited-utilities) | [Metis, Lord of Wisdom](Additions-Metis.md) | Active, Press | None |
 
 ## Extra
 

@@ -23,3 +23,5 @@ Use Tensura’s normal Ability Selection menu. This addon has no Godly skill tie
 ## Ultimate synthesis
 
 [Hephaestus, Lord of the Forge](https://github.com/Bithio999/MC/wiki/Additions-Hephaestus) combines fully mastered Prospector and Godly Craftsman after awakening and a personal forging achievement. No EP requirement. It adds Divine Forge, Living Arsenal and Magnum Opus.
+
+[Metis, Lord of Wisdom](https://github.com/Bithio999/MC/wiki/Additions-Metis) combines fully mastered Split Mind and Great Sage after completed true awakening and learning three magics. It adds a three-thread magical matrix (four at mastery), independent auto-casting and automatic magic-circle analysis. No EP requirement.

@@ -1,5 +1,13 @@
 # Changelog
 
+## Additions 1.23.0 — Metis, Lord of Wisdom
+
+- Combine mastered Split Mind and Great Sage through explicit, post-awakening synthesis; retain stored items, spell assignment and preset utility modes. No EP gate.
+- Add Unified Intellect, a three/four-thread Parallel Matrix, Autonomous Sage and Optimal Solution. Automatically analyze eligible visible magic circles through native copy/acquisition rules.
+- Coordinate native owned spells, self-healing/support and resistance-aware offensive choices while preserving manual casting and the camera. Automatic magicule costs fall by 30%, or 40% at mastery.
+- Apply background magicule discounts to direct-consumption healing as well as standard native magic payments; manual costs stay unchanged. Recover cleanly from expired matrix sessions.
+- Retain Great Sage’s appraisal, manual analysis, refining and repeat crafting. Add an original icon, a native-style matrix/synthesis menu and wiki/in-game guide entries.
+
 ## Additions 1.22.5 — Crucible curse protection
 
 - Master of the Crucible prevents new curses from native equipment growth and engraving rolls while toggled on, covering weapons, armor, tools and other equipment, including deployed arsenal items.

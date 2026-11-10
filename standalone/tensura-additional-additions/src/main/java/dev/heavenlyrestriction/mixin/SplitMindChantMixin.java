@@ -11,6 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class SplitMindChantMixin {
   @Inject(method = "hasChantAnnulment", at = @At("HEAD"), cancellable = true, remap = false)
   private static void additions$splitMind(LivingEntity e, CallbackInfoReturnable<Boolean> cir) {
-    if (SplitMindSkill.active(e)) cir.setReturnValue(true);
+    if (SplitMindSkill.active(e) || dev.heavenlyrestriction.metis.MetisMatrix.active(e))
+      cir.setReturnValue(true);
   }
 }

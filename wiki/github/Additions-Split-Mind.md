@@ -55,3 +55,7 @@ Press to enable or disable automatic casting. It targets the **nearest visible h
 Successful paid casts train Split Mind; menu clicks and toggle switching do not. This switch is independent of the passive checkbox. **Damage type:** Whatever the assigned magic normally deals. **Cost:** Its normal aura; 75% of its magicule cost when Split Mind is mastered. **Cooldown:** Its normal cooldown; no additional Split Mind cooldown.
 
 Split Mind is excluded from **Fettered Human** starting rolls because Auto-Cast uses magicule-cost abilities. The usual server allowlist can override that rule.
+
+## Evolution
+
+[Metis, Lord of Wisdom](https://github.com/Bithio999/MC/wiki/Additions-Metis) combines fully mastered Split Mind and Great Sage after completed true awakening and learning three magics. It retains the assignment and adds a multi-thread matrix.

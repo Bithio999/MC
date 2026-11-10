@@ -87,7 +87,9 @@
     "ForgeGearEPAccess",
     "ForgeResearchMixin",
     "ForgeResearchMenuMixin",
-    "ForgeCurseMixin"
+    "ForgeCurseMixin",
+    "MetisSelfTargetMixin",
+    "MetisCostMixin"
   ],
   "injectors": {
     "defaultRequire": 1

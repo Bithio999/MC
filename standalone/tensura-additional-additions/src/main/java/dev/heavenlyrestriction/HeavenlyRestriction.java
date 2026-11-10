@@ -19,6 +19,7 @@ public final class HeavenlyRestriction {
     public static final RegistrySupplier<ParallelWorldJumperSkill> PARALLEL_WORLD_JUMPER=SKILLS.register(id("parallel_world_jumper"),ParallelWorldJumperSkill::new);
     public static final RegistrySupplier<ExponentiationSkill> EXPONENTIATION=SKILLS.register(id("exponentiation"),ExponentiationSkill::new);
     public static final RegistrySupplier<CriticalMerchantSkill> CRITICAL_MERCHANT=SKILLS.register(id("critical_merchant"),CriticalMerchantSkill::new);
+    public static final RegistrySupplier<MetisSkill> METIS=SKILLS.register(id("metis"),MetisSkill::new);
     public static final RegistrySupplier<HephaestusSkill> HEPHAESTUS=SKILLS.register(id("hephaestus"),HephaestusSkill::new);
     public static final RegistrySupplier<ProspectorSkill> PROSPECTOR=SKILLS.register(id("prospector"),ProspectorSkill::new);
     public static final RegistrySupplier<LoanSharkSkill> LOAN_SHARK=SKILLS.register(id("loan_shark"),LoanSharkSkill::new);
@@ -36,6 +37,8 @@ public final class HeavenlyRestriction {
     public HeavenlyRestriction(net.neoforged.bus.api.IEventBus modBus,net.neoforged.fml.ModContainer container){
         HeavenlyArsenal.register(modBus);
         dev.heavenlyrestriction.forge.ForgeEvents.register(modBus,container);
+        modBus.addListener(dev.heavenlyrestriction.metis.MetisNetwork::register);
+        container.registerConfig(net.neoforged.fml.config.ModConfig.Type.SERVER,dev.heavenlyrestriction.metis.MetisConfig.SPEC,"tensura-additions-metis.toml");
         dev.heavenlyrestriction.chromatic.ChromaticContent.register(modBus);
         modBus.addListener(dev.heavenlyrestriction.cartography.MapNetwork::register);
         NeoForge.EVENT_BUS.addListener(dev.heavenlyrestriction.cartography.MapService::tick);
@@ -47,9 +50,9 @@ public final class HeavenlyRestriction {
         modBus.addListener(dev.heavenlyrestriction.splitmind.SplitMindNetwork::register);
         NeoForge.EVENT_BUS.addListener(dev.heavenlyrestriction.splitmind.SplitMindCasting::tick);
         NeoForge.EVENT_BUS.addListener(dev.heavenlyrestriction.splitmind.SplitMindCasting::spawned);
-        NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerLoggedOutEvent e)->dev.heavenlyrestriction.splitmind.SplitMindCasting.cancel(e.getEntity()));
-        NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerChangedDimensionEvent e)->dev.heavenlyrestriction.splitmind.SplitMindCasting.cancel(e.getEntity()));
-        NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.entity.living.LivingDeathEvent e)->dev.heavenlyrestriction.splitmind.SplitMindCasting.cancel(e.getEntity()));
+        NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerLoggedOutEvent e)->dev.heavenlyrestriction.splitmind.SplitMindCasting.cancelAll(e.getEntity()));
+        NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerChangedDimensionEvent e)->dev.heavenlyrestriction.splitmind.SplitMindCasting.cancelAll(e.getEntity()));
+        NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.entity.living.LivingDeathEvent e)->dev.heavenlyrestriction.splitmind.SplitMindCasting.cancelAll(e.getEntity()));
         dev.heavenlyrestriction.highrealm.HighRealm.register(modBus,container);
         dev.heavenlyrestriction.loans.LoanShark.register();
         modBus.addListener(dev.heavenlyrestriction.loans.LoanNetwork::register);

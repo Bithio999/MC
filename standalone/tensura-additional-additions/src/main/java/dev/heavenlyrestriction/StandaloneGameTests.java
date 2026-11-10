@@ -14,12 +14,12 @@ import static dev.heavenlyrestriction.ChainedGameTests.near;
 @PrefixGameTestTemplate(false)
 public final class StandaloneGameTests {
     @GameTest(template="empty",timeoutTicks=100)
-    public static void independentlyLoadsFiveRacesSeventeenSkillsTwoVisualsAndOneBoss(GameTestHelper h){
+    public static void independentlyLoadsFiveRacesEighteenSkillsTwoVisualsAndOneBoss(GameTestHelper h){
         h.assertTrue(!net.neoforged.fml.ModList.get().isLoaded("wildhunt"),"Tensura Myths contaminated the standalone runtime");
         long races=RaceAPI.getRaceRegistry().getIds().stream().filter(id->id.getNamespace().equals(HeavenlyRestriction.ID)).count();
         long skills=SkillAPI.getSkillRegistry().getIds().stream().filter(id->id.getNamespace().equals(HeavenlyRestriction.ID)).count();
         long entities=net.minecraft.core.registries.BuiltInRegistries.ENTITY_TYPE.keySet().stream().filter(id->id.getNamespace().equals(HeavenlyRestriction.ID)).count();
-        h.assertTrue(races==5 && skills==17 && entities==3,"Unrelated or missing standalone content: "+races+" races, "+skills+" skills, "+entities+" entities");
+        h.assertTrue(races==5 && skills==18 && entities==3,"Unrelated or missing standalone content: "+races+" races, "+skills+" skills, "+entities+" entities");
         var p=player(h);var visual=ArtVisualEntity.spawn(h.getLevel(),ArtVisualEntity.CHAINED_RUSH,p.position(),new net.minecraft.world.phys.Vec3(16,0,0),14);
         h.assertTrue(visual.noPhysics && visual.kind()==ArtVisualEntity.CHAINED_RUSH && visual.end().x==16,"Standalone dash visual lost its synced shape");visual.discard();h.succeed();
     }

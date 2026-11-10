@@ -1009,6 +1009,70 @@
           ]
         }
       ]
+    },
+    {
+      "id": "metis",
+      "title": "Metis, Lord of Wisdom",
+      "category": "Skills",
+      "summary": "Ultimate · Split Mind + Great Sage · Parallel spell matrix and automatic circle analysis.",
+      "icon": "heavenlyrestriction:textures/skill/metis.png",
+      "keywords": [
+        "matrix",
+        "great sage",
+        "wisdom",
+        "metis",
+        "circle",
+        "analysis",
+        "chant",
+        "parallel",
+        "ultimate",
+        "synthesis",
+        "auto cast"
+      ],
+      "related": [
+        "split-mind",
+        "hephaestus"
+      ],
+      "sections": [
+        {
+          "title": "Synthesis",
+          "lines": [
+            "Fully master Split Mind and Great Sage, complete True Demon Lord/True Hero awakening, and learn three distinct aspectual/spiritual magics. Open the unfinished Metis entry in Skills → Ultimate and confirm synthesis. No EP requirement.",
+            "Default cost: 250,000 permanent magicules, configurable and affected by mpSkillCost. Awakening bonuses apply first. Stored items, the Split Mind assignment and affected presets survive. Autonomous Sage starts disabled."
+          ]
+        },
+        {
+          "title": "Unified Intellect · Passive toggle",
+          "lines": [
+            "Chant Annulment, Thought Acceleration and +19 learning/mastery points. Automatically analyze visible magic circles within 32 blocks using normal native copy/acquisition rules; skip your own circles and already learned spells. Record combat opponents’ elemental defenses. Damage type: none."
+          ]
+        },
+        {
+          "title": "Parallel Matrix · Active press",
+          "lines": [
+            "Assign three learned aspectual/spiritual spells, or four when mastered. Choose a thread, spell, learned mode, scheduling priority and offensive targeting preference. One thread per spell. Search and scroll narrow the learned-only list. Damage type: none directly."
+          ]
+        },
+        {
+          "title": "Autonomous Sage · Active toggle",
+          "lines": [
+            "Run assigned spells while fighting and casting manually. Healing is self-directed below 90% HP; support skips redundant buffs. Offense targets hostile mobs/combat opponents within 32 blocks, respecting alliances, PvP and line of sight. Manual use of the same spell takes priority.",
+            "Automatic spells cost 30% fewer magicules; mastery raises the reduction to 40%. Native aura costs, cooldowns, anti-magic and casting rules remain. Damage type: assigned spell’s native type."
+          ]
+        },
+        {
+          "title": "Optimal Solution · Passive toggle",
+          "lines": [
+            "Toggle in the matrix while Unified Intellect is active. Skip active nullifications and prioritize effective assigned spells using elemental resistance/vulnerability, within their scheduling priority band. Does not suppress defenses. Damage type: none."
+          ]
+        },
+        {
+          "title": "Inherited utilities",
+          "lines": [
+            "Analytical Appraisal and Analysis retain Great Sage’s native behavior. Refine / Craft opens repeat crafting; shift-press opens native refining. Both use the preserved shared container. Damage type: none directly."
+          ]
+        }
+      ]
     }
   ]
 }
