@@ -49,6 +49,8 @@ Choose a **Healing**, **Support** or **Offense** priority band, evaluated in tha
 
 Run the assigned spells independently while moving, fighting and casting manually. Offensive spells target hostile mobs or combat opponents, respecting alliances, PvP and line of sight. Healing is attempted below **90% HP**; curing checks for harmful effects. Support avoids reapplying an active buff from the same spell.
 
+Background casting does not swing your arm. Each automated spell has its own native hurt window, so different spells do not suppress each other. A spell keeps its own native repeat-hit behavior; manual damage and defensive invulnerability remain separate.
+
 Automatic spells cost **30% fewer magicules**, increasing to **40% fewer when mastered**. Native aura costs, spell cooldowns, anti-magic and casting rules still apply. Manual use of a spell takes priority over automation of that same spell. Other threads continue independently.
 
 **Damage type:** each assigned spell keeps its native damage type and effects.

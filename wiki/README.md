@@ -5,7 +5,7 @@ Choose the addon you play. Each section has its own skills, progression, picture
 | Wiki | What it includes | Version |
 | --- | --- | --- |
 | **[Tensura Myths](pages/Tensura-Myths.md)** | Hunter and Heavenly Restriction races, skill combinations, Godly skills, dual races, bosses and otherworlders | 0.36.1 |
-| **[TensuraAdditionalAdditions](pages/TensuraAdditionalAdditions.md)** | Heavenly Restriction, Chained/Unbound, Battlewills, the spear, Prospector, Exponentiation and Parallel World Jumper | 1.23.0 |
+| **[TensuraAdditionalAdditions](pages/TensuraAdditionalAdditions.md)** | Heavenly Restriction, Chained/Unbound, Battlewills, the spear, Prospector, Exponentiation and Parallel World Jumper | 1.23.1 |
 
 
 ## Start reading

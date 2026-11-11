@@ -91,6 +91,8 @@ public final class SplitMindCasting {
 
   public static void spawned(net.neoforged.neoforge.event.entity.EntityJoinLevelEvent event) {
     var context = INVOCATION.get();
+    if (!event.getLevel().isClientSide() && context != null)
+      AutoCastCombat.spawned(event.getEntity(), context.owner(), context.spell(), context.mode());
     if (!event.getLevel().isClientSide()
         && context != null
         && event.getEntity()

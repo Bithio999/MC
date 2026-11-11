@@ -1,5 +1,11 @@
 # Changelog
 
+## Additions 1.23.1 — Background casting gestures and hit windows
+
+- Suppress arm-swing state and animation packets only inside owned automatic casting callbacks; preserve manual swings. Applies to Autonomous Sage and the shared Split Mind casting path.
+- Give automatic spells independent native hurt windows instead of resetting a target’s global timer or making all spell hits bypass cooldown. Preserve each spell’s own cadence and native paired magic/elemental hit handling.
+- Retain delayed-projectile provenance and native damage-source copies, preserve manual hit state and explicit defensive invulnerability, and document the native Wind Cutter / Fire / Water Cutter difference.
+
 ## Additions 1.23.0 — Metis, Lord of Wisdom
 
 - Combine mastered Split Mind and Great Sage through explicit, post-awakening synthesis; retain stored items, spell assignment and preset utility modes. No EP gate.

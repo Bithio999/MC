@@ -1057,7 +1057,8 @@
           "title": "Autonomous Sage · Active toggle",
           "lines": [
             "Run assigned spells while fighting and casting manually. Healing is self-directed below 90% HP; support skips redundant buffs. Offense targets hostile mobs/combat opponents within 32 blocks, respecting alliances, PvP and line of sight. Manual use of the same spell takes priority.",
-            "Automatic spells cost 30% fewer magicules; mastery raises the reduction to 40%. Native aura costs, cooldowns, anti-magic and casting rules remain. Damage type: assigned spell’s native type."
+            "Automatic spells cost 30% fewer magicules; mastery raises the reduction to 40%. Native aura costs, cooldowns, anti-magic and casting rules remain. Damage type: assigned spell’s native type.",
+            "Background casting does not swing your arm. Each automated spell has its own native hurt window, so different spells do not suppress each other. A spell keeps its own native repeat-hit behavior; manual damage and defensive invulnerability remain separate."
           ]
         },
         {

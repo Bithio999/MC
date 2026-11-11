@@ -473,4 +473,241 @@ public final class MetisGameTests {
     h.assertTrue(MetisMatrix.slots(p, mind).size() == 1, "Reopened matrix could not save");
     h.succeed();
   }
+
+  private static net.minecraft.world.damagesource.DamageSource autoSource(
+      ServerPlayer p, ManasSkillInstance spell, LivingEntity target) {
+    return SplitMindCasting.autoInvoke(
+        p,
+        spell,
+        0,
+        target,
+        () ->
+            ((Magic) spell.getSkill())
+                .createSource(spell, p, net.minecraft.world.damagesource.DamageTypes.GENERIC, 0));
+  }
+
+  private static LivingEntity bareTarget(GameTestHelper h, ServerPlayer p) {
+    var target = target(h, p.position().add(4, 0, 0));
+    target.getAttribute(Attributes.ARMOR).setBaseValue(0);
+    return target;
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 100)
+  public static void backgroundSpellGesturesDoNotSwingOrInterruptManualSwings(GameTestHelper h) {
+    var p = player(h);
+    var spell = learn(p, AspectualMagics.FIRE.get(), true);
+    p.swinging = false;
+    SplitMindCasting.autoInvoke(
+        p,
+        spell,
+        0,
+        p,
+        () -> {
+          p.swing(net.minecraft.world.InteractionHand.MAIN_HAND, true);
+          return true;
+        });
+    h.assertTrue(!p.swinging, "Automatic spell started an arm swing");
+    p.swing(net.minecraft.world.InteractionHand.MAIN_HAND, true);
+    h.assertTrue(p.swinging, "Manual swing blocked");
+    int swing = p.swingTime;
+    SplitMindCasting.autoInvoke(
+        p,
+        spell,
+        0,
+        p,
+        () -> {
+          p.swing(net.minecraft.world.InteractionHand.OFF_HAND, true);
+          return true;
+        });
+    h.assertTrue(
+        p.swinging
+            && p.swingTime == swing
+            && p.swingingArm == net.minecraft.world.InteractionHand.MAIN_HAND,
+        "Automation changed an existing manual swing");
+    h.succeed();
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 100)
+  public static void differentAutomaticSpellsHitIndependentlyAndKeepOwnNativeWindows(
+      GameTestHelper h) {
+    var p = player(h);
+    var fire = learn(p, AspectualMagics.FIRE.get(), true);
+    var wind = learn(p, AspectualMagics.WIND_CUTTER.get(), true);
+    var t = bareTarget(h, p);
+    var a = autoSource(p, fire, t);
+    var b = autoSource(p, wind, t);
+    float before = t.getHealth();
+    h.assertTrue(
+        t.hurt(a, 10) && t.hurt(b, 10), "Parallel spell damage was lost to another thread");
+    near(h, before - t.getHealth(), 20, "Independent spell totals");
+    h.assertTrue(!t.hurt(a, 10), "Same-spell native hurt cooldown was bypassed");
+    h.assertTrue(t.hurt(a, 15), "Higher same-spell hit was incorrectly blocked");
+    near(h, before - t.getHealth(), 25, "Higher hit should apply only its native difference");
+    t.tickCount += 11;
+    h.assertTrue(t.hurt(a, 10), "Spell window did not age with target ticks");
+    near(h, before - t.getHealth(), 35, "Expired window did not accept full damage");
+    h.succeed();
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 100)
+  public static void autoWindowsDoNotOverwriteManualDamageStateOrGrantImmunityBypass(
+      GameTestHelper h) {
+    var p = player(h);
+    var spell = learn(p, AspectualMagics.FIRE.get(), true);
+    var t = bareTarget(h, p);
+    var manual = p.damageSources().generic();
+    h.assertTrue(t.hurt(manual, 20), "Manual setup failed");
+    int timer = t.invulnerableTime;
+    var source = autoSource(p, spell, t);
+    h.assertTrue(t.hurt(source, 5), "Manual timer blocked automatic spell");
+    h.assertTrue(
+        t.invulnerableTime == timer && !t.hurt(manual, 20),
+        "Auto changed manual timer or last-hit damage");
+    float before = t.getHealth();
+    h.assertTrue(t.hurt(manual, 25), "Native higher manual hit failed");
+    near(h, before - t.getHealth(), 5, "Manual last-hit value was overwritten");
+    t.invulnerableTime = 60;
+    h.assertTrue(!t.hurt(source, 5), "Long defensive window bypassed");
+    t.invulnerableTime = 20;
+    h.assertTrue(!t.hurt(source, 5), "Tail of defensive window bypassed");
+    var immune = bareTarget(h, p);
+    immune.setInvulnerable(true);
+    before = immune.getHealth();
+    h.assertTrue(!immune.hurt(source, 10), "Entity invulnerability bypassed");
+    near(h, immune.getHealth(), before, "Invulnerable entity lost health");
+    h.assertTrue(
+        !source.is(net.minecraft.tags.DamageTypeTags.BYPASSES_INVULNERABILITY),
+        "Source gained immunity bypass");
+    h.succeed();
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 100)
+  public static void
+      projectileProvenanceSurvivesDelayedImpactCopyAndSaveWithoutAffectingManualShots(
+          GameTestHelper h) {
+    var p = player(h);
+    var spell = learn(p, AspectualMagics.FIRE.get(), true);
+    var t = bareTarget(h, p);
+    var shot =
+        SplitMindCasting.autoInvoke(
+            p,
+            spell,
+            0,
+            t,
+            () -> {
+              var e =
+                  new io.github.manasmods.tensura.entity.projectile.magic.FireBoltProjectile(
+                      p.level(), p);
+              e.setSkill(p, spell, (Magic) spell.getSkill(), 0);
+              e.setPos(p.position().add(0, 3, 0));
+              p.level().addFreshEntity(e);
+              return e;
+            });
+    var source = shot.getDamageSource();
+    h.assertTrue(AutoCastCombat.key(source) != null, "Delayed native projectile lost auto origin");
+    var copy = io.github.manasmods.tensura.damage.TensuraDamageHelper.copy(source);
+    h.assertTrue(
+        AutoCastCombat.key(copy).equals(AutoCastCombat.key(source)),
+        "Native source copy lost origin");
+    var tag = new CompoundTag();
+    shot.saveWithoutId(tag);
+    var reloaded =
+        new io.github.manasmods.tensura.entity.projectile.magic.FireBoltProjectile(p.level(), p);
+    reloaded.load(tag);
+    reloaded.setOwner(p);
+    h.assertTrue(
+        AutoCastCombat.key(reloaded.getDamageSource()) != null, "Saved projectile lost origin");
+    var ordinary =
+        new io.github.manasmods.tensura.entity.projectile.magic.FireBoltProjectile(p.level(), p);
+    ordinary.setSkill(p, spell, (Magic) spell.getSkill(), 0);
+    h.assertTrue(
+        AutoCastCombat.key(ordinary.getDamageSource()) == null,
+        "Manual projectile inherited auto behavior from owner");
+    shot.discard();
+    h.succeed();
+  }
+
+  private static float[] nativePair(
+      GameTestHelper h, ServerPlayer p, float magic, float element, boolean automatic)
+      throws Exception {
+    var spell = learn(p, AspectualMagics.FIRE.get(), true);
+    var t = bareTarget(h, p);
+    var source =
+        automatic
+            ? autoSource(p, spell, t)
+            : ((Magic) spell.getSkill())
+                .createSource(spell, p, net.minecraft.world.damagesource.DamageTypes.GENERIC, 0);
+    var other = io.github.manasmods.tensura.damage.TensuraDamageHelper.copy(source);
+    float before = t.getHealth();
+    io.github.manasmods.tensura.damage.TensuraDamageHelper.hurtDouble(
+        t, source, element, other, magic);
+    float first = before - t.getHealth();
+    before = t.getHealth();
+    io.github.manasmods.tensura.damage.TensuraDamageHelper.hurtDouble(
+        t, source, element, other, magic);
+    return new float[] {first, before - t.getHealth()};
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 100)
+  public static void nativePairedDamageCadenceIsPreservedInsideEachAutoThread(GameTestHelper h)
+      throws Exception {
+    var p = player(h);
+    for (var pair : new float[][] {{30, 10}, {20, 10}, {40, 0}, {10, 30}}) {
+      var nativeHits = nativePair(h, p, pair[0], pair[1], false);
+      var autoHits = nativePair(h, p, pair[0], pair[1], true);
+      near(h, autoHits[0], nativeHits[0], "First paired hit changed");
+      near(h, autoHits[1], nativeHits[1], "Native same-spell repeat behavior changed");
+    }
+    h.succeed();
+  }
+
+  private static float[] actualSpellHits(
+      GameTestHelper h, ServerPlayer p, io.github.manasmods.tensura.entity.TensuraProjectile shot)
+      throws Exception {
+    var t = bareTarget(h, p);
+    var method =
+        io.github.manasmods.tensura.entity.TensuraProjectile.class.getDeclaredMethod(
+            "dealDamage", Entity.class);
+    method.setAccessible(true);
+    float before = t.getHealth();
+    method.invoke(shot, t);
+    float first = before - t.getHealth();
+    before = t.getHealth();
+    method.invoke(shot, t);
+    return new float[] {first, before - t.getHealth()};
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 100)
+  public static void nativeWindFireAndWaterRepeatDamageExplainsTheirDifferentHitBehavior(
+      GameTestHelper h) throws Exception {
+    var p = player(h);
+    var c =
+        io.github.manasmods.manascore.config.ConfigRegistry.getConfig(
+            io.github.manasmods.tensura.config.ability.magic.AspectualMagicConfig.class);
+    var wind =
+        new io.github.manasmods.tensura.entity.projectile.magic.WindBladeProjectile(p.level(), p);
+    wind.setDamage(c.WindCutter.windDamage);
+    wind.setSecondaryDamage(c.WindCutter.magicDamage);
+    var fire =
+        new io.github.manasmods.tensura.entity.projectile.magic.FireBoltProjectile(p.level(), p);
+    fire.setDamage(c.Fire.fireDamage);
+    fire.setSecondaryDamage(c.Fire.magicDamage);
+    var water =
+        new io.github.manasmods.tensura.entity.projectile.magic.WaterBladeProjectile(p.level(), p);
+    water.setSecondaryDamage(c.WaterCutter.magicDamage);
+    var w = actualSpellHits(h, p, wind);
+    var f = actualSpellHits(h, p, fire);
+    var a = actualSpellHits(h, p, water);
+    System.out.println(
+        "Native immediate projectile repeats: Wind="
+            + Arrays.toString(w)
+            + " Fire="
+            + Arrays.toString(f)
+            + " Water="
+            + Arrays.toString(a));
+    h.assertTrue(
+        w[0] > 0 && w[1] > 0 && a[0] > 0 && a[1] == 0,
+        "Native mixed vs pure-magic behavior did not reproduce");
+    h.succeed();
+  }
 }

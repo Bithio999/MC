@@ -89,7 +89,12 @@
     "ForgeResearchMenuMixin",
     "ForgeCurseMixin",
     "MetisSelfTargetMixin",
-    "MetisCostMixin"
+    "MetisCostMixin",
+    "AutoCastHurtMixin",
+    "AutoCastDoubleMixin",
+    "AutoCastSwingMixin",
+    "AutoCastSourceMixin",
+    "AutoCastSourceCopyMixin"
   ],
   "injectors": {
     "defaultRequire": 1
