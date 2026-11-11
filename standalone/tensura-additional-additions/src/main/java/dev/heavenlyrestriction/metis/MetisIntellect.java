@@ -62,6 +62,7 @@ public final class MetisIntellect {
     if (p.tickCount % 20 == 0) {
       MetisSynthesis.discover(p);
       refresh(p);
+      MetisMatrix.owned(p).ifPresent(i -> MetisAnalysis.refreshAppraisal(p, i));
     }
     if (p.tickCount % 10 != 0 || !p.isAlive() || p.isSpectator() || !MetisMatrix.active(p)) return;
     var mind = MetisMatrix.owned(p).orElseThrow();

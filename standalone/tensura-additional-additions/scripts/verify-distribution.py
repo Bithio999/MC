@@ -5,7 +5,7 @@ import json, re, struct, tomllib, zipfile
 
 root = Path(__file__).resolve().parents[1]
 resources = root / 'src/main/resources'
-jar = root / 'build/libs/TensuraAdditionalAdditions-1.23.1.jar'
+jar = root / 'build/libs/TensuraAdditionalAdditions-1.23.2.jar'
 assets = resources / 'assets/heavenlyrestriction'
 required_art = [*(f'textures/race/{name}.png' for name in (
     'fettered_human', 'tempered_vessel', 'unshackled', 'heavenly_restricted', 'heavenbreaker')),
@@ -37,7 +37,7 @@ for name in config['mixins'] + config.get('client', []):
 with zipfile.ZipFile(jar) as z:
     names = set(z.namelist())
     mods = tomllib.loads(z.read('META-INF/neoforge.mods.toml').decode())
-    assert [(m['modId'], m['version']) for m in mods['mods']] == [('heavenlyrestriction', '1.23.1')]
+    assert [(m['modId'], m['version']) for m in mods['mods']] == [('heavenlyrestriction', '1.23.2')]
     assert mods['mods'][0]['displayName'] == 'TensuraAdditionalAdditions'
     language=json.loads(z.read('assets/heavenlyrestriction/lang/en_us.json'))
     for key,label in [('heavenlyrestriction.skill.parallel_world_jumper','Parallel World Jumper'),('heavenlyrestriction.skill.fusion','Fusion'),('heavenlyrestriction.skill.prospector','Prospector'),('heavenlyrestriction.skill.mode.prospector.refine','Refine'),('heavenlyrestriction.skill.mode.fusion.fuse','Fuse'),('heavenlyrestriction.skill.mode.parallel_world_jumper.world_hop','World Jump'),('heavenlyrestriction.skill.mode.parallel_world_jumper.world_select','World Select')]:
@@ -80,7 +80,7 @@ with zipfile.ZipFile(jar) as z:
         assert 'dev/heavenlyrestriction/'+cls+'.class' in names
     assert any(e['id']=='hephaestus' for e in guide)
     assert language['heavenlyrestriction.skill.hephaestus']=='Hephaestus, Lord of the Forge'
-    for cls in ['HephaestusSkill','forge/ForgeContent','forge/ForgeConfig','forge/ForgeItems','forge/ForgeSynthesis','forge/ForgeLedger','forge/ForgeService','forge/ForgeNetwork','forge/ForgeArsenal','forge/ArsenalBlade','forge/ForgeOffenseContext','forge/ForgeGearGrowth','forge/ForgeEngravingPolicy','mixin/ForgeResearchMixin','mixin/ForgeResearchMenuMixin','mixin/ForgeCurseMixin','MetisSkill','metis/MetisMatrix','metis/MetisIntellect','metis/MetisMagic','metis/MetisCasting','metis/MetisSynthesis','metis/MetisNetwork','client/MetisScreen','mixin/MetisCostMixin','mixin/MetisSelfTargetMixin','splitmind/AutoCastCombat','splitmind/AutoCastWindowTarget','mixin/AutoCastHurtMixin','mixin/AutoCastDoubleMixin','mixin/AutoCastSwingMixin','mixin/AutoCastSourceMixin','mixin/AutoCastSourceCopyMixin','mixin/ForgeGearEPMixin','mixin/ForgeGearEPAccess','forge/ArsenalSequence','mixin/ForgeBenchMixin','mixin/ForgeBenchTakeMixin','mixin/ForgeQuickCraftMixin','client/ForgeScreen','client/ArsenalRenderer']:
+    for cls in ['HephaestusSkill','forge/ForgeContent','forge/ForgeConfig','forge/ForgeItems','forge/ForgeSynthesis','forge/ForgeLedger','forge/ForgeService','forge/ForgeNetwork','forge/ForgeArsenal','forge/ArsenalBlade','forge/ForgeOffenseContext','forge/ForgeGearGrowth','forge/ForgeEngravingPolicy','mixin/ForgeResearchMixin','mixin/ForgeResearchMenuMixin','mixin/ForgeCurseMixin','MetisSkill','metis/MetisAnalysis','metis/MetisMatrix','metis/MetisIntellect','metis/MetisMagic','metis/MetisCasting','metis/MetisSynthesis','metis/MetisNetwork','client/MetisScreen','mixin/MetisCostMixin','mixin/MetisSelfTargetMixin','splitmind/AutoCastCombat','splitmind/AutoCastWindowTarget','mixin/AutoCastHurtMixin','mixin/AutoCastDoubleMixin','mixin/AutoCastSwingMixin','mixin/AutoCastSourceMixin','mixin/AutoCastSourceCopyMixin','mixin/ForgeGearEPMixin','mixin/ForgeGearEPAccess','forge/ArsenalSequence','mixin/ForgeBenchMixin','mixin/ForgeBenchTakeMixin','mixin/ForgeQuickCraftMixin','client/ForgeScreen','client/ArsenalRenderer']:
         assert 'dev/heavenlyrestriction/'+cls+'.class' in names
     forge_icon='assets/heavenlyrestriction/textures/skill/hephaestus.png'
     assert z.read(forge_icon)==(resources/forge_icon).read_bytes()
@@ -169,4 +169,4 @@ with zipfile.ZipFile(jar) as z:
     for path in ['data/heavenlyrestriction/loot_table/entities/kael_veyr.json','data/heavenlyrestriction/advancement/starless_wayfarer.json','data/c/tags/entity_type/bosses.json','data/tensura/tags/entity_type/boss_for_hero.json','assets/heavenlyrestriction/models/item/kael_veyr_spawn_egg.json']:
         assert z.read(path)==(resources/path).read_bytes()
     assert language['entity.heavenlyrestriction.kael_veyr']=='Kael Veyr'
-print('Independent 1.23.1 JAR, native dependency metadata, all extracted icons/rigs/animations and mixin classes verified; no Myths classes, bundled dependencies or review fixtures.')
+print('Independent 1.23.2 JAR, native dependency metadata, all extracted icons/rigs/animations and mixin classes verified; no Myths classes, bundled dependencies or review fixtures.')

@@ -582,9 +582,8 @@ public final class MetisGameTests {
   }
 
   @GameTest(template = "empty", timeoutTicks = 100)
-  public static void
-      projectileProvenanceSurvivesDelayedImpactCopyAndSaveWithoutAffectingManualShots(
-          GameTestHelper h) {
+  public static void projectileWindowsSurviveDelayedImpactCopyAndSaveAndIncludeManualMagic(
+      GameTestHelper h) {
     var p = player(h);
     var spell = learn(p, AspectualMagics.FIRE.get(), true);
     var t = bareTarget(h, p);
@@ -621,8 +620,9 @@ public final class MetisGameTests {
         new io.github.manasmods.tensura.entity.projectile.magic.FireBoltProjectile(p.level(), p);
     ordinary.setSkill(p, spell, (Magic) spell.getSkill(), 0);
     h.assertTrue(
-        AutoCastCombat.key(ordinary.getDamageSource()) == null,
-        "Manual projectile inherited auto behavior from owner");
+        AutoCastCombat.key(ordinary.getDamageSource()) != null
+            && !AutoCastCombat.key(ordinary.getDamageSource()).equals(AutoCastCombat.key(source)),
+        "Separate manual projectile did not receive its own impact window");
     shot.discard();
     h.succeed();
   }
@@ -708,6 +708,205 @@ public final class MetisGameTests {
     h.assertTrue(
         w[0] > 0 && w[1] > 0 && a[0] > 0 && a[1] == 0,
         "Native mixed vs pure-magic behavior did not reproduce");
+    h.succeed();
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 100)
+  public static void metisAppraisalUsesHigherLevelsWithoutStackingAndRestoresOnRespawn(
+      GameTestHelper h) {
+    var p = player(h);
+    var mind = metis(p, false);
+    mind.getSkill().onPressed(mind, p, 0, 2);
+    near(h, p.getAttributeValue(TensuraAttributes.ANALYSIS_LEVEL), 20, "Appraisal level");
+    near(
+        h,
+        p.getAttribute(TensuraAttributes.ANALYSIS_DISTANCE)
+            .getModifier(
+                io.github.manasmods.tensura.registry.attribute.TensuraGlobalAttributeIds.ANALYSIS)
+            .amount(),
+        15,
+        "Native range");
+    MetisAnalysis.refreshAppraisal(p, mind);
+    near(h, p.getAttributeValue(TensuraAttributes.ANALYSIS_LEVEL), 20, "Refresh stacked appraisal");
+    mind.setMastery(mind.getMaxMastery());
+    mind.getSkill().onSkillMastered(mind, p);
+    near(h, p.getAttributeValue(TensuraAttributes.ANALYSIS_LEVEL), 40, "Mastered appraisal level");
+    near(
+        h,
+        p.getAttribute(TensuraAttributes.ANALYSIS_DISTANCE)
+            .getModifier(
+                io.github.manasmods.tensura.registry.attribute.TensuraGlobalAttributeIds.ANALYSIS)
+            .amount(),
+        25,
+        "Mastered native range");
+    io.github.manasmods.tensura.util.AttributeHelper.removeAnalysisAttributes(p, true, true, false);
+    mind.getSkill().onRespawn(mind, p, false);
+    near(h, p.getAttributeValue(TensuraAttributes.ANALYSIS_LEVEL), 40, "Respawn appraisal");
+    h.succeed();
+  }
+
+  private static LivingEntity analysisTarget(GameTestHelper h, ServerPlayer p, ManasSkill skill) {
+    var t = bareTarget(h, p);
+    var storage = SkillAPI.getSkillsFrom(t);
+    for (var i : List.copyOf(storage.getLearnedSkills())) storage.forgetSkill(i);
+    RestrictionData.learnReward(t, skill);
+    storage.getSkill(skill).orElseThrow().setMastery(0);
+    SkillAPI.getSkillsFrom(p).getSkill(skill).ifPresent(i -> i.setMastery(-1));
+    return t;
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 100)
+  public static void guaranteedAnalysisCopiesResistanceAndNullificationWithShortSeparateCooldowns(
+      GameTestHelper h) {
+    var p = player(h);
+    var mind = metis(p, false);
+    var config = io.github.manasmods.tensura.ability.skill.unique.GreatSageSkill.CONFIG;
+    float chance = config.copyChance, masteredChance = config.copyChanceMastered;
+    try {
+      config.copyChance = 0;
+      config.copyChanceMastered = 0;
+      var resistance = ResistanceSkills.FLAME_ATTACK_RESISTANCE.get();
+      var t = analysisTarget(h, p, resistance);
+      h.assertTrue(
+          !MetisAnalysis.candidates(p, t).isEmpty(),
+          "No eligible resistance: target="
+              + SkillAPI.getSkillsFrom(t).getSkill(resistance).orElseThrow().getMastery()
+              + " player="
+              + SkillAPI.getSkillsFrom(p)
+                  .getSkill(resistance)
+                  .map(i -> i.getMastery())
+                  .orElse(-999d));
+      h.assertTrue(
+          mind.canInteractSkill(p) && mind.canActivateSkill(p, 3), "Analysis cannot activate");
+      h.assertTrue(p.hasLineOfSight(t), "No line of sight");
+      h.assertTrue(
+          MetisAnalysis.copyFrom(p, mind, t),
+          "Guaranteed resistance analysis failed: cost="
+              + resistance.getAcquiringMagiculeCost(resistance.createDefaultInstance())
+              + " max="
+              + p.getAttributeValue(TensuraAttributes.MAX_MAGICULE));
+      h.assertTrue(
+          SkillAPI.getSkillsFrom(p)
+              .getSkill(resistance)
+              .filter(i -> i.getMastery() >= 0)
+              .isPresent(),
+          "Resistance was not learned");
+      h.assertTrue(
+          SkillAPI.getSkillsFrom(t).getSkill(resistance).isPresent(),
+          "Analysis stole target's resistance");
+      h.assertTrue(
+          mind.getCoolDown(3) == 5 && mind.getCoolDown(1) == 0,
+          "Wrong success cooldown or shared auto-cast cooldown");
+      MetisAnalysis.press(p, mind);
+      h.assertTrue(mind.getCoolDown(3) == 5, "Pressing on cooldown shortened it");
+      var nul = ResistanceSkills.FLAME_ATTACK_NULLIFICATION.get();
+      var second = analysisTarget(h, p, nul);
+      h.assertTrue(!MetisAnalysis.copyFrom(p, mind, second), "Analysis bypassed its cooldown");
+      mind.setCoolDown(0, 3);
+      mind.setMastery(mind.getMaxMastery());
+      h.assertTrue(
+          MetisAnalysis.copyFrom(p, mind, second), "Guaranteed nullification analysis failed");
+      h.assertTrue(mind.getCoolDown(3) == 2, "Mastered cooldown was not reduced");
+      h.assertTrue(
+          SkillAPI.getSkillsFrom(p).getSkill(nul).filter(i -> i.getMastery() >= 0).isPresent(),
+          "Nullification was not learned");
+      mind.setCoolDown(0, 3);
+      h.assertTrue(!MetisAnalysis.copyFrom(p, mind, second), "Known skill copied repeatedly");
+    } finally {
+      config.copyChance = chance;
+      config.copyChanceMastered = masteredChance;
+    }
+    h.succeed();
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 100)
+  public static void analysisRetainsTierTemporaryRangeAndProjectileCopyRules(GameTestHelper h) {
+    var p = player(h);
+    var mind = metis(p, false);
+    var t = analysisTarget(h, p, UniqueSkills.GREAT_SAGE.get());
+    h.assertTrue(
+        MetisAnalysis.candidates(p, t).isEmpty() && !MetisAnalysis.copyFrom(p, mind, t),
+        "Analysis copied unique tier");
+    var pending = ResistanceSkills.FLAME_ATTACK_RESISTANCE.get().createDefaultInstance();
+    pending.setMastery(-1);
+    h.assertTrue(!MetisAnalysis.copyable(pending), "Unlearned resistance eligible");
+    pending.setMastery(0);
+    pending.setRemoveTime(100);
+    h.assertTrue(!MetisAnalysis.copyable(pending), "Temporary resistance eligible");
+    var ultimate = HeavenlyRestriction.METIS.get().createDefaultInstance();
+    ultimate.setMastery(0);
+    h.assertTrue(!MetisAnalysis.copyable(ultimate), "Ultimate eligible");
+    var protectedSkill = ExtraSkills.LAW_MANIPULATION.get().createDefaultInstance();
+    protectedSkill.setMastery(0);
+    h.assertTrue(!MetisAnalysis.copyable(protectedSkill), "Protected skill eligible");
+    var spell = AspectualMagics.FIRE.get().createDefaultInstance();
+    spell.setMastery(0);
+    var shot =
+        new io.github.manasmods.tensura.entity.projectile.magic.FireBoltProjectile(p.level(), t);
+    shot.setSkill(t, spell, (Magic) spell.getSkill(), 0);
+    shot.setPos(p.position().add(4, 1, 0));
+    h.assertTrue(
+        MetisAnalysis.copyProjectile(p, mind, shot),
+        "Native copyable magic projectile was not analyzed");
+    mind.setCoolDown(0, 3);
+    h.assertTrue(
+        !MetisAnalysis.copyProjectile(p, mind, shot),
+        "Already owned projectile magic copied again");
+    var remote = analysisTarget(h, p, ResistanceSkills.FLAME_ATTACK_RESISTANCE.get());
+    remote.setPos(p.position().add(31, 0, 0));
+    h.assertTrue(!MetisAnalysis.copyFrom(p, mind, remote), "Native target range bypassed");
+    h.succeed();
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 100)
+  public static void distinctManualMagicProjectilesDealFullDamageWithoutChangingPersistentCadence(
+      GameTestHelper h) throws Exception {
+    var p = player(h);
+    var method =
+        io.github.manasmods.tensura.entity.TensuraProjectile.class.getDeclaredMethod(
+            "dealDamage", Entity.class);
+    method.setAccessible(true);
+    for (int n = 0; n < 3; n++) {
+      var t = bareTarget(h, p);
+      var magic =
+          n == 0
+              ? AspectualMagics.WIND_CUTTER.get()
+              : n == 1 ? AspectualMagics.FIRE.get() : AspectualMagics.WATER_CUTTER.get();
+      var instance = learn(p, magic, true);
+      float total = n == 1 ? 30 : 40;
+      io.github.manasmods.tensura.entity.TensuraProjectile last = null;
+      for (int hit = 0; hit < 2; hit++) {
+        var shot =
+            n == 0
+                ? new io.github.manasmods.tensura.entity.projectile.magic.WindBladeProjectile(
+                    p.level(), p)
+                : n == 1
+                    ? new io.github.manasmods.tensura.entity.projectile.magic.FireBoltProjectile(
+                        p.level(), p)
+                    : new io.github.manasmods.tensura.entity.projectile.magic.WaterBladeProjectile(
+                        p.level(), p);
+        shot.setSkill(p, instance, (Magic) magic, 0);
+        shot.setDamage(n == 2 ? 0 : 10);
+        shot.setSecondaryDamage(n == 0 ? 30 : n == 1 ? 20 : 40);
+        float before = t.getHealth();
+        method.invoke(shot, t);
+        near(h, before - t.getHealth(), total, "Distinct native magic impact " + n + "/" + hit);
+        last = shot;
+      }
+      float before = t.getHealth();
+      method.invoke(last, t);
+      near(
+          h,
+          before - t.getHealth(),
+          n == 0 ? 30 : n == 1 ? 20 : 0,
+          "Persistent projectile native repeat cadence");
+    }
+    var arrow =
+        new net.minecraft.world.entity.projectile.Arrow(
+            p.level(), p, new ItemStack(Items.ARROW), null);
+    h.assertTrue(
+        AutoCastCombat.key(p.damageSources().arrow(arrow, p)) == null,
+        "Ordinary arrow got magic windows");
     h.succeed();
   }
 }

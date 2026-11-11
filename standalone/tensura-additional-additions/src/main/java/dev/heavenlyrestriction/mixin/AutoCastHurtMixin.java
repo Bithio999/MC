@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-/** Independent native hurt windows per automated spell, with no global timer reset. */
+/** Independent native hurt windows per magic projectile or direct automatic spell. */
 @Mixin(LivingEntity.class)
 public abstract class AutoCastHurtMixin implements AutoCastWindowTarget {
   @Unique

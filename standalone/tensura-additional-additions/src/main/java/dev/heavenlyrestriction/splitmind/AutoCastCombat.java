@@ -7,12 +7,19 @@ import net.minecraft.resources.*;
 import net.minecraft.world.damagesource.*;
 import net.minecraft.world.entity.*;
 
-/** Provenance belongs to a cast/source, never to every attack made by a skill owner. */
+/**
+ * Native magic projectiles use distinct impact windows; direct automatic casts retain provenance.
+ */
 public final class AutoCastCombat {
   private static final String TAG = "heavenlyrestriction:auto_cast";
-  private static final Map<DamageSource, Origin> SOURCES = new WeakHashMap<>();
+  private static final Map<DamageSource, Origin> SOURCES =
+      Collections.synchronizedMap(new WeakHashMap<>());
 
-  public record Origin(UUID owner, ResourceLocation spell, int mode) {}
+  public record Origin(UUID owner, ResourceLocation spell, int mode, UUID impact) {
+    public Origin(UUID owner, ResourceLocation spell, int mode) {
+      this(owner, spell, mode, null);
+    }
+  }
 
   public static void created(
       DamageSource source, LivingEntity owner, ManasSkillInstance spell, int mode) {
@@ -44,9 +51,16 @@ public final class AutoCastCombat {
   private static Origin origin(DamageSource source) {
     var attacker = source.getEntity();
     if (attacker == null) return null;
+    var direct = source.getDirectEntity();
+    if (direct instanceof io.github.manasmods.tensura.entity.TensuraProjectile projectile) {
+      var spell = projectile.getSkill();
+      if (spell != null
+          && spell.getSkill() instanceof io.github.manasmods.tensura.ability.magic.Magic)
+        return new Origin(
+            attacker.getUUID(), spell.getSkillId(), projectile.getMode(), projectile.getUUID());
+    }
     var saved = SOURCES.get(source);
     if (saved != null) return saved.owner.equals(attacker.getUUID()) ? saved : null;
-    var direct = source.getDirectEntity();
     if (direct == null || !direct.getPersistentData().contains(TAG)) return null;
     var tag = direct.getPersistentData().getCompound(TAG);
     var id = ResourceLocation.tryParse(tag.getString("spell"));

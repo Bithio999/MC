@@ -10,14 +10,14 @@ Movement, world travel, Schema buffs and aura recovery deal **no direct damage**
 
 ## Native spell hit cooldowns
 
-Tensura handles some spells as separate magic and elemental hits. Its paired-hit routine resets the hurt timer between the two components. This can let part of a rapid repeat through, while a pure magic hit remains blocked by the ordinary hurt window.
+AdditionalAdditions gives each distinct native magic projectile its own hurt window. Rapid manual casts and simultaneous automatic casts therefore apply their full impacts independently. Repeated pulses from one persistent projectile retain native timing; the fix does not bypass resistances or defensive invulnerability. Ordinary arrows, melee and Battlewill projectiles retain their native behavior.
 
-With default values on a target without extra defenses, two immediate native projectile hits produced:
+With default values on a target without extra defenses, two distinct projectiles hitting immediately produce:
 
-| Aspectual spell | First hit | Immediate repeat |
+| Aspectual spell | First projectile | Second projectile |
 | --- | ---: | ---: |
-| Wind Cutter | 40 | 30 |
-| Fire | 30 | 20 |
-| Water Cutter | 40 | 0 |
+| Wind Cutter | 40 | 40 |
+| Fire | 30 | 30 |
+| Water Cutter | 40 | 40 |
 
-The figures are before additional combat modifiers. Wind Cutter and Fire still lose some repeat-hit damage; Water Cutter’s equal repeat is blocked for roughly 10 ticks at normal game speed. Other attacks sharing that window can also affect the result. Metis separates different automated spells’ hurt windows while retaining each spell’s native repeat behavior.
+These are per-projectile totals before additional combat modifiers. Tensura applies mixed magic/elemental damage as paired components. Without this fix, its shared timer can reduce those immediate second impacts to 30, 20 and 0 respectively. The paired components still use Tensura’s native damage processing.

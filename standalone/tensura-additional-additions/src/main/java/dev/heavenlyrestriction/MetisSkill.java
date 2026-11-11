@@ -127,6 +127,7 @@ public final class MetisSkill extends Skill
     super.onSkillMastered(i, e);
     MetisIntellect.remove(e);
     MetisIntellect.refresh(e);
+    if (e instanceof ServerPlayer p) MetisAnalysis.refreshAppraisal(p, i);
   }
 
   @Override
@@ -156,14 +157,11 @@ public final class MetisSkill extends Skill
                     : "heavenlyrestriction.metis.auto_off"),
             true);
       }
-      case 2 -> ((GreatSageSkill) UniqueSkills.GREAT_SAGE.get()).onPressed(i, p, key, 0);
-      case 3 -> { // Native Analysis bills its own mode 1. Move that cooldown to Metis' Analysis
-        // mode.
-        ((GreatSageSkill) UniqueSkills.GREAT_SAGE.get()).onPressed(i, p, key, 1);
-        int cd = i.getCoolDown(1);
-        i.setCoolDown(0, 1);
-        i.setCoolDown(cd, 3);
+      case 2 -> {
+        ((GreatSageSkill) UniqueSkills.GREAT_SAGE.get()).onPressed(i, p, key, 0);
+        MetisAnalysis.refreshAppraisal(p, i);
       }
+      case 3 -> MetisAnalysis.press(p, i);
       case 4 -> {
         if (p.isShiftKeyDown()) openRefiningMenu(p, i);
         else openRepeatCraftingMenu(p, i);
@@ -183,6 +181,7 @@ public final class MetisSkill extends Skill
   public void onRespawn(ManasSkillInstance i, ServerPlayer p, boolean conqueredEnd) {
     ((GreatSageSkill) UniqueSkills.GREAT_SAGE.get()).onRespawn(i, p, conqueredEnd);
     MetisIntellect.refresh(p);
+    MetisAnalysis.refreshAppraisal(p, i);
   }
 
   @Override

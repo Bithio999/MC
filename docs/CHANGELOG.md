@@ -1,5 +1,11 @@
 # Changelog
 
+## Additions 1.23.2 — Metis analysis and native magic impacts
+
+- Give distinct native magic projectiles independent hit windows for both manual and automatic casting. Preserve persistent-projectile pulse timing, ordinary attacks and defensive invulnerability.
+- Make Metis Analysis guaranteed for eligible unowned skills, adding resistances and nullifications while retaining native copying/acquisition protections. Reduce success cooldown to 5 seconds, or 2 seconds mastered.
+- Raise Metis Analytical Appraisal to level 20/40, with configurable levels and cooldowns. Upgrade an already-active appraisal without requiring a retoggle.
+
 ## Additions 1.23.1 — Background casting gestures and hit windows
 
 - Suppress arm-swing state and animation packets only inside owned automatic casting callbacks; preserve manual swings. Applies to Autonomous Sage and the shared Split Mind casting path.

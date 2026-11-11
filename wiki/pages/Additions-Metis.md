@@ -49,7 +49,7 @@ Choose a **Healing**, **Support** or **Offense** priority band, evaluated in tha
 
 Run the assigned spells independently while moving, fighting and casting manually. Offensive spells target hostile mobs or combat opponents, respecting alliances, PvP and line of sight. Healing is attempted below **90% HP**; curing checks for harmful effects. Support avoids reapplying an active buff from the same spell.
 
-Background casting does not swing your arm. Each automated spell has its own native hurt window, so different spells do not suppress each other. A spell keeps its own native repeat-hit behavior; manual damage and defensive invulnerability remain separate.
+Background casting does not swing your arm. Direct automatic spells have independent hurt windows. Distinct native magic projectiles also land independently, including manually cast projectiles. Repeated pulses from one persistent source keep their native timing. Ordinary weapon damage and defensive invulnerability remain separate.
 
 Automatic spells cost **30% fewer magicules**, increasing to **40% fewer when mastered**. Native aura costs, spell cooldowns, anti-magic and casting rules still apply. Manual use of a spell takes priority over automation of that same spell. Other threads continue independently.
 
@@ -67,6 +67,10 @@ Enable it in the matrix while Unified Intellect is on. Metis avoids assigned off
 
 ## Inherited Great Sage utilities
 
-**Analytical Appraisal** retains its native toggle and shift-press filtering. **Analysis** retains Great Sage’s manual copying rules and cooldowns. **Refine / Craft** opens native repeat crafting; shift-press opens refining. Stored items remain in the same shared container.
+**Analytical Appraisal** has analysis level **20**, or **40 when mastered**. It retains the native toggle, shift-press filtering and +15/+25 appraisal distance bonus.
+
+**Analysis** guarantees a copy when an eligible, unowned skill is available and native copying/acquisition protections permit it. In addition to Great Sage’s intrinsic/common/extra pool, it can learn **resistances and nullifications**. The target keeps their skill. Unique and Ultimate skills, temporary skills and protected skills remain excluded. Living-target range is **10 blocks**; eligible magic-projectile range is **30 blocks**. Success cooldown: **5 seconds**, or **2 seconds when mastered**. An unavailable attempt has a **1-second** retry delay. Levels and success cooldowns are configurable.
+
+**Refine / Craft** opens native repeat crafting; shift-press opens refining. Stored items remain in the same shared container.
 
 **Damage type:** none directly.
