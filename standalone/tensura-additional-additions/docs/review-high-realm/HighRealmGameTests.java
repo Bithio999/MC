@@ -354,6 +354,14 @@ public final class HighRealmGameTests {
     var level = realm(h);
     var candidate = orc(level);
     candidate.setPos(2048, 250, 2048);
+    // A natural-spawn density check needs a nearby observer so cold dimension
+    // chunks acquire normal entity tracking, not merely block-generation tickets.
+    var observer =
+        net.neoforged.neoforge.common.util.FakePlayerFactory.get(
+            level, new com.mojang.authlib.GameProfile(UUID.randomUUID(), "RealmDensityObserver"));
+    observer.setPos(candidate.position());
+    observer.setGameMode(net.minecraft.world.level.GameType.SPECTATOR);
+    level.addNewPlayer(observer);
     candidate.getRandom().setSeed(9247);
     double chance = HighRealmConfig.SPAWN_CHANCE.get();
     try {
@@ -379,8 +387,14 @@ public final class HighRealmGameTests {
     // Natural spawning runs in tracked chunks. Let the native entity lookup register
     // this isolated population before exercising the spatial density check.
     var chunk = new net.minecraft.world.level.ChunkPos(candidate.blockPosition());
-    boolean forced = level.getForcedChunks().contains(chunk.toLong());
-    level.setChunkForced(chunk.x, chunk.z, true);
+    var forced = new java.util.HashMap<net.minecraft.world.level.ChunkPos, Boolean>();
+    for (int dx = -1; dx <= 1; dx++)
+      for (int dz = -1; dz <= 1; dz++) {
+        var at = new net.minecraft.world.level.ChunkPos(chunk.x + dx, chunk.z + dz);
+        forced.put(at, level.getForcedChunks().contains(at.toLong()));
+        level.setChunkForced(at.x, at.z, true);
+        level.getChunk(at.x, at.z);
+      }
     var population = new java.util.ArrayList<Mob>();
     for (int n = 0; n < 16; n++) {
       var mob = orc(level);
@@ -389,7 +403,7 @@ public final class HighRealmGameTests {
       mob.setNoGravity(true);
       mob.noPhysics = true;
       HighRealmElites.empower(mob);
-      level.addFreshEntity(mob);
+      h.assertTrue(level.addFreshEntity(mob), "Fixture elite was rejected on join");
       population.add(mob);
     }
     h.startSequence()
@@ -403,7 +417,19 @@ public final class HighRealmGameTests {
                                 HighRealmElites::elite)
                             .size()
                         >= 16,
-                    "Fixture population is not tracked"))
+                    "Fixture population is not tracked: spatial="
+                        + level
+                            .getEntitiesOfClass(
+                                Mob.class,
+                                candidate.getBoundingBox().inflate(64),
+                                HighRealmElites::elite)
+                            .size()
+                        + " alive="
+                        + population.stream().filter(Entity::isAlive).count()
+                        + " lookup="
+                        + population.stream()
+                            .filter(m -> level.getEntity(m.getUUID()) == m)
+                            .count()))
         .thenExecute(
             () -> {
               double oldChance = HighRealmConfig.SPAWN_CHANCE.get();
@@ -438,7 +464,8 @@ public final class HighRealmGameTests {
                 population.forEach(Entity::discard);
                 HighRealmConfig.SPAWN_CHANCE.set(oldChance);
                 HighRealmConfig.LOCAL_CAP.set(oldCap);
-                level.setChunkForced(chunk.x, chunk.z, forced);
+                forced.forEach((at, was) -> level.setChunkForced(at.x, at.z, was));
+                level.removePlayerImmediately(observer, Entity.RemovalReason.DISCARDED);
               }
             });
   }

@@ -1297,5 +1297,11 @@
     "category": "Skills",
     "mod": "additions",
     "tier": "Ultimate"
+  },
+  {
+    "slug": "Additions-Archive-of-Accord",
+    "title": "Archive of Accord",
+    "category": "NPCs",
+    "mod": "additions"
   }
 ]

@@ -68,6 +68,10 @@
 - [Hephaestus](https://github.com/Bithio999/MC/wiki/Additions-Hephaestus)
 - [Metis](https://github.com/Bithio999/MC/wiki/Additions-Metis)
 
+**NPCs and structures**
+
+- [Archive of Accord](https://github.com/Bithio999/MC/wiki/Additions-Archive-of-Accord)
+
 **Dimensions**
 
 - [The High Realm](https://github.com/Bithio999/MC/wiki/Additions-The-High-Realm)

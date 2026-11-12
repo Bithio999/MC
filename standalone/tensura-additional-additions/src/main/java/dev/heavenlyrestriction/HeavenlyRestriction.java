@@ -36,6 +36,7 @@ public final class HeavenlyRestriction {
         SKILLS.register(id("sovereign_rebirth"),()->new AuraRegenerationSkill(3)));
     public HeavenlyRestriction(net.neoforged.bus.api.IEventBus modBus,net.neoforged.fml.ModContainer container){
         HeavenlyArsenal.register(modBus);
+        dev.heavenlyrestriction.mentor.MentorContent.register(modBus,container);
         dev.heavenlyrestriction.forge.ForgeEvents.register(modBus,container);
         modBus.addListener(dev.heavenlyrestriction.metis.MetisNetwork::register);
         container.registerConfig(net.neoforged.fml.config.ModConfig.Type.SERVER,dev.heavenlyrestriction.metis.MetisConfig.SPEC,"tensura-additions-metis.toml");

@@ -1,5 +1,12 @@
 # Changelog
 
+## Additions 1.24.0 — The Archive of Accord
+
+- Add rare Overworld libraries with reading alcoves, galleries and Elias, a protected native otherworlder mentor with an original pixel skin.
+- Choose one eligible Unique Skill per player from a searchable native-style catalogue, including installed addon skills. Default cost: 1,000,000 permanent EP plus one Chromatic Orb, with no additional acquisition charge.
+- Deduct permanent aura/magicule reserves proportionally. Persist the one-time redemption through death, reincarnation, losing a skill and World Jump. Retain native acquisition protections and Chained restrictions.
+- Add deliberate purchase confirmation, server-validated proximity/session handling, configurable price and a datapack exclusion tag. Document the mentor in the wiki and in-game guide.
+
 ## Additions 1.23.2 — Metis analysis and native magic impacts
 
 - Give distinct native magic projectiles independent hit windows for both manual and automatic casting. Preserve persistent-projectile pulse timing, ordinary attacks and defensive invulnerability.

@@ -291,3 +291,7 @@ The workshop uses Forge, Arsenal, Masterpiece and Synthesis tabs. In Forge, sele
 ## Metis, Lord of Wisdom — Ultimate
 
 Combine fully mastered Split Mind and Great Sage after completed true awakening and learning three aspectual/spiritual magics. The native Ultimate menu’s unfinished entry opens explicit synthesis. Default cost: 250,000 permanent magicules after awakening; no EP requirement. Metis retains stored items, refining and crafting. Its Appraisal grants level 20/40; manual Analysis guarantees eligible copies including resistances/nullifications, with a 5-second cooldown (2 mastered) and native protections. It adds automatic visible magic-circle analysis, and manages three independent owned spells (four at mastery). Automatic spells cost 30% fewer magicules, or 40% fewer at mastery. [Matrix, targeting and synthesis](../../../wiki/pages/Additions-Metis.md).
+
+## Archive of Accord
+
+Rare libraries generate in suitable new Overworld chunks. Elias offers each player one permanent, unmastered Unique Skill for 1,000,000 permanent EP plus one Chromatic Orb by default. Search the catalogue and confirm your choice; there is no additional native skill cost. Permanent aura/magicule reserves pay proportionally; temporary/equipment bonuses do not count. The one-use limit survives death, reincarnation, skill loss and World Jump. Existing acquisition protections still apply. [Finding the archive and taking a lesson](../../../wiki/pages/Additions-Archive-of-Accord.md).

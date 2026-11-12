@@ -42,6 +42,7 @@ public final class WorldHop {
         long old=p.server.getWorldData().worldGenOptions().seed(),seed;do{seed=new java.security.SecureRandom().nextLong();}while(seed==old);
         WorldHopJournal.Entry destination;
         try{destination=WorldSelect.destination(p);if(destination==null && !WorldHopJournal.canCreate(WorldSelect.journal(p))){p.sendSystemMessage(Component.literal("Your parallel-world library has reached 128 worlds. Use World Select to revisit a world."));return;}}catch(java.io.IOException ex){p.sendSystemMessage(Component.literal("The selected world is unavailable. Open World Select to choose another destination or New World."));return;}
+        dev.heavenlyrestriction.mentor.MentorLedger.reconcile(p);
         var ticket=new Ticket(UUID.randomUUID(),p.server.getWorldPath(LevelResource.ROOT).toAbsolutePath().normalize(),seed,p.getUUID(),destination);
         if(REQUESTS.putIfAbsent(p.server,ticket)!=null)return;
         p.getPersistentData().remove(WorldSelect.SELECTION);p.unRide();p.closeContainer();i.addMasteryPoint(p);

@@ -53,6 +53,7 @@ public final class ChromaticContent {
                   lines.add(
                       Component.translatable("item.heavenlyrestriction.chromatic_orb.exclusions")
                           .withStyle(ChatFormatting.DARK_GRAY));
+                  lines.add(Component.translatable("item.heavenlyrestriction.chromatic_orb.mentor").withStyle(ChatFormatting.GRAY));
                 }
               });
 

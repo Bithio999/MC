@@ -1,0 +1,15 @@
+{
+  "structures": [
+    {
+      "structure": "heavenlyrestriction:mentor_archive",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 128,
+    "separation": 48,
+    "salt": 178943613,
+    "spread_type": "triangular"
+  }
+}

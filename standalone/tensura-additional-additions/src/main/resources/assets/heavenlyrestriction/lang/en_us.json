@@ -113,5 +113,15 @@
   "heavenlyrestriction.metis.synthesized": "Synthesis complete: Metis, Lord of Wisdom.",
   "heavenlyrestriction.metis.requirements": "The synthesis requirements are not met.",
   "heavenlyrestriction.metis.invalid": "Choose a learned spell and mode. Each spell can occupy one unlocked thread.",
-  "heavenlyrestriction.metis.analysis_unavailable": "No eligible skill could be analyzed."
+  "heavenlyrestriction.metis.analysis_unavailable": "No eligible skill could be analyzed.",
+  "entity.heavenlyrestriction.elias": "Elias, the Archivist",
+  "item.heavenlyrestriction.elias_spawn_egg": "Elias Spawn Egg",
+  "structure.heavenlyrestriction.mentor_archive": "Archive of Accord",
+  "heavenlyrestriction.mentor.title": "Archive of Accord · Unique Skill Mentorship",
+  "heavenlyrestriction.mentor.used": "Your one lesson has already been used.",
+  "heavenlyrestriction.mentor.success": "Your lesson is complete.",
+  "heavenlyrestriction.mentor.cost": "Bring enough permanent EP and one Chromatic Orb.",
+  "heavenlyrestriction.mentor.unavailable": "This skill is unavailable.",
+  "heavenlyrestriction.mentor.price": "The price changed. Review it before confirming.",
+  "item.heavenlyrestriction.chromatic_orb.mentor": "Also used for the Archivist’s lesson."
 }

@@ -17,6 +17,8 @@
 
 ## Obtaining
 
+Missing a component? The [Archivist](Additions-Archive-of-Accord.md) offers one paid Unique Skill lesson per player. The taught component still needs to be mastered before synthesis.
+
 Owning a component reveals an unfinished Hephaestus entry in Tensura’s **Skills → Ultimate** menu. Slot and activate that entry to open **Synthesis**. Complete the listed conditions, choose **Synthesize Hephaestus**, and confirm the dialog.
 
 Awakening bonuses are applied **before** the acquisition cost. Synthesis waits until awakening is finished. Already-awakened players can qualify later. Hephaestus replaces both components and begins learned, unmastered. Engraving knowledge, stored materials and affected presets are retained.

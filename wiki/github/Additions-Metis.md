@@ -17,6 +17,8 @@
 
 ## Obtaining
 
+Missing a component? The [Archivist](https://github.com/Bithio999/MC/wiki/Additions-Archive-of-Accord) offers one paid Unique Skill lesson per player. The taught component still needs to be mastered before synthesis.
+
 Owning either component reveals the unfinished Metis entry in **Skills → Ultimate**. Activate it to open **Synthesis**, meet the requirements and confirm. Awakening bonuses apply before the acquisition cost. Both components are replaced by learned, unmastered Metis. Great Sage’s stored items, the Split Mind assignment and affected presets are retained. Autonomous Sage starts off so you can review the matrix first.
 
 ![Synthesis requirements](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/metis-synthesis.png)

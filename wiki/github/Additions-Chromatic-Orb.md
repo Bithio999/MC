@@ -101,3 +101,7 @@ These apply when Mysticism is installed, including the checked Neo Otherworld 1.
 Godly Craftsman cannot store engravings above their ordinary maximum. Rejected overcap engravings stay on the donor; other eligible entries can still be learned. Existing overcap knowledge in that skill is normalized when read.
 
 [Lord of the Forge](https://github.com/Bithio999/MC/wiki/Additions-Hephaestus) can store overcap levels within its research limits. Applying an Orb-eligible overcap marks the receiving equipment’s Chromatic upgrade as used. This blocks repeatedly copying the engraving to a fresh item and raising it with another Orb. Applying only normal capped levels keeps the upgrade available. Editing already-infused equipment retains its level and spent upgrade.
+
+## Mentorship
+
+One Orb can also pay part of the [Archivist's one-time Unique Skill lesson](https://github.com/Bithio999/MC/wiki/Additions-Archive-of-Accord), along with the configured permanent EP cost. It is consumed by the lesson.

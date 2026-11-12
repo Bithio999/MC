@@ -2,7 +2,7 @@
 
 [All wikis](../README.md) · [TensuraAdditionalAdditions](TensuraAdditionalAdditions.md)
 
-A standalone addon for **Tensura: Reincarnated**, focused on Heavenly Restriction, Battlewills and world travel. Current release: **1.23.2** · Minecraft **1.21.1** · NeoForge.
+A standalone addon for **Tensura: Reincarnated**, focused on Heavenly Restriction, Battlewills and world travel. Current release: **1.24.0** · Minecraft **1.21.1** · NeoForge.
 
 | Explore | Pages |
 | --- | --- |
@@ -14,10 +14,14 @@ A standalone addon for **Tensura: Reincarnated**, focused on Heavenly Restrictio
 | World travel | [Parallel World Jumper](Additions-Parallel-World-Jumper.md) |
 | Gear | [Vesper](Additions-Vesper.md) · [Inverted Spear of Heaven](Additions-Inverted-Spear-of-Heaven.md) · [Nullification](Additions-Nullification.md) |
 
-[Download Additions 1.23.2](../../releases/TensuraAdditionalAdditions-1.23.2.jar). Tensura Myths is not required. Do not install both addons together. Myths’ Godly skills, bosses, hunters and dual-race systems are not part of this addon.
+[Download Additions 1.24.0](../../releases/TensuraAdditionalAdditions-1.24.0.jar). Tensura Myths is not required. Do not install both addons together. Myths’ Godly skills, bosses, hunters and dual-race systems are not part of this addon.
 
 ## Rare boss
 
 [Kael Veyr, the Starless Wayfarer](Additions-Kael-Veyr.md) is a rare 15M-EP otherworlder encounter in The High Realm.
 
 [Chromatic Orb](Additions-Chromatic-Orb.md): a one-time engraving upgrade crafted from High Realm shards and Kael’s Starless Core.
+
+## Unique Skill mentorship
+
+Find **Elias, the Archivist** in the rare [Archive of Accord](Additions-Archive-of-Accord.md). Each player may buy one permanent, unmastered Unique Skill for **1,000,000 permanent EP and one Chromatic Orb** by default.

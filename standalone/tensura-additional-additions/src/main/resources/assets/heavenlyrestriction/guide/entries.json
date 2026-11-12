@@ -1074,6 +1074,50 @@
           ]
         }
       ]
+    },
+    {
+      "id": "archivist",
+      "title": "Elias and the Archive of Accord",
+      "category": "Start",
+      "summary": "One permanent Unique Skill lesson per player, in a rare Overworld library.",
+      "icon": "minecraft:textures/item/book.png",
+      "keywords": [
+        "mentor",
+        "archive",
+        "elias",
+        "unique",
+        "lesson",
+        "chromatic orb",
+        "permanent ep",
+        "synthesis"
+      ],
+      "related": [
+        "hephaestus",
+        "metis",
+        "chromatic-orb"
+      ],
+      "sections": [
+        {
+          "title": "Find the Archivist",
+          "lines": [
+            "Rare Archives of Accord generate in suitable Overworld forests, plains, meadows and savannas. Look in newly generated chunks. Marauder’s Map can locate heavenlyrestriction:mentor_archive; administrators can use /locate structure heavenlyrestriction:mentor_archive. Elias is protected and stays inside the library."
+          ]
+        },
+        {
+          "title": "One extraordinary lesson",
+          "lines": [
+            "Interact with Elias, search the Unique Skill catalogue, select a skill, then confirm Learn this skill. Default price: 1,000,000 permanent EP and one Chromatic Orb. The learned skill is permanent and starts unmastered. There is no additional native magicule acquisition charge.",
+            "The EP cost removes permanent aura/magicule capacity proportionally to your existing reserves; equipment and temporary bonuses cannot fund it. You must retain some permanent EP afterward. The price is configurable."
+          ]
+        },
+        {
+          "title": "A permanent choice",
+          "lines": [
+            "Only one successful purchase per player across all archives. Death, reincarnation, losing the skill and World Jump do not restore the lesson. Unaffordable, blocked and canceled purchases consume nothing.",
+            "The catalogue includes eligible Unique skills from Tensura and installed addons. Already learned skills cannot be purchased. Chained’s restrictions and native unlock protections still apply. Chained itself is excluded; Parallel World Jumper is available only in supported private single-player. No Ultimate or Godly skills. Server datapacks can extend heavenlyrestriction:mentor_excluded."
+          ]
+        }
+      ]
     }
   ]
 }

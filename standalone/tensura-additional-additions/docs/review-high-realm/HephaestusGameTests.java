@@ -565,37 +565,52 @@ public final class HephaestusGameTests {
                   && e.getSource().is(dev.heavenlyrestriction.vesper.Afterwind.DAMAGE)) cuts[0]++;
             };
     net.neoforged.neoforge.common.NeoForge.EVENT_BUS.addListener(listener);
-    h.runAfterDelay(
-        5,
-        () -> {
-          var source = p.damageSources().playerAttack(p);
-          ((io.github.manasmods.tensura.damage.TensuraDamageSource) source)
-              .tensura$setElement(io.github.manasmods.tensura.ability.magic.Element.WIND);
-          t.hurt(source, 20);
-          t.invulnerableTime = 0;
-          var blade =
-              h.getLevel()
-                  .getEntitiesOfClass(ArsenalBlade.class, p.getBoundingBox().inflate(5))
-                  .getFirst();
-          h.assertTrue(ForgeArsenal.hit(p, t, 0, blade), "Vesper did not land its weapon hit");
-        });
-    h.runAfterDelay(
-        11,
-        () -> {
-          try {
-            h.assertTrue(
-                cuts[0] == 1,
-                "Delayed Afterwind did not land exactly once with Vesper deployed: "
-                    + cuts[0]
-                    + " count "
-                    + t.damageNumber);
-            ForgeArsenal.recall(p);
-            t.discard();
-            h.succeed();
-          } finally {
-            net.neoforged.neoforge.common.NeoForge.EVENT_BUS.unregister(listener);
-          }
-        });
+    h.startSequence()
+        .thenWaitUntil(
+            () -> {
+              h.assertTrue(
+                  !h.getLevel()
+                      .getEntitiesOfClass(ArsenalBlade.class, p.getBoundingBox().inflate(5))
+                      .isEmpty(),
+                  "Deployed blade is not tracked yet");
+              h.assertTrue(
+                  h.getLevel()
+                      .getEntitiesOfClass(
+                          net.minecraft.world.entity.LivingEntity.class,
+                          t.getBoundingBox().inflate(.1))
+                      .contains(t),
+                  "Dummy is not tracked yet");
+            })
+        .thenExecute(
+            () -> {
+              var source = p.damageSources().playerAttack(p);
+              ((io.github.manasmods.tensura.damage.TensuraDamageSource) source)
+                  .tensura$setElement(io.github.manasmods.tensura.ability.magic.Element.WIND);
+              t.hurt(source, 20);
+              t.invulnerableTime = 0;
+              var blade =
+                  h.getLevel()
+                      .getEntitiesOfClass(ArsenalBlade.class, p.getBoundingBox().inflate(5))
+                      .getFirst();
+              h.assertTrue(ForgeArsenal.hit(p, t, 0, blade), "Vesper did not land its weapon hit");
+            })
+        .thenIdle(6)
+        .thenExecute(
+            () -> {
+              try {
+                h.assertTrue(
+                    cuts[0] == 1,
+                    "Delayed Afterwind did not land exactly once with Vesper deployed: "
+                        + cuts[0]
+                        + " count "
+                        + t.damageNumber);
+                ForgeArsenal.recall(p);
+                t.discard();
+                h.succeed();
+              } finally {
+                net.neoforged.neoforge.common.NeoForge.EVENT_BUS.unregister(listener);
+              }
+            });
   }
 
   @GameTest(template = "empty", timeoutTicks = 100)
