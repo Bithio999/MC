@@ -290,6 +290,33 @@ public final class MentorGameTests {
     h.assertTrue(
         template.placeInWorld(h.getLevel(), origin, origin, settings, h.getLevel().random, 2),
         "Native template placement failed");
+    // Projecting facade trim must leave the entrance and both connecting passages open.
+    for (var local :
+        List.of(
+            new BlockPos(16, 4, 8),
+            new BlockPos(7, 4, 15),
+            new BlockPos(8, 10, 15),
+            new BlockPos(24, 4, 23))) {
+      var rotated = origin.offset(-local.getZ(), local.getY(), local.getX());
+      h.assertTrue(h.getLevel().getBlockState(rotated).isAir(), "Facade closed passage " + local);
+    }
+    for (int y : new int[] {6, 12, 19}) {
+      var fixture = h.getLevel().getBlockState(origin.offset(-15, y, 4));
+      h.assertTrue(
+          fixture.is(net.minecraft.world.level.block.Blocks.LANTERN)
+              && fixture.getValue(net.minecraft.world.level.block.LanternBlock.HANGING),
+          "Tower floor missing hanging light " + y);
+    }
+    h.assertTrue(
+        h.getLevel()
+            .getBlockState(origin.offset(-24, 8, 27))
+            .is(net.minecraft.world.level.block.Blocks.DARK_OAK_PLANKS),
+        "Bay ceiling missing");
+    h.assertTrue(
+        h.getLevel()
+            .getBlockState(origin.offset(-24, 9, 27))
+            .is(net.minecraft.world.level.block.Blocks.WAXED_WEATHERED_CUT_COPPER),
+        "Bay roof missing");
     h.runAfterDelay(
         5,
         () -> {

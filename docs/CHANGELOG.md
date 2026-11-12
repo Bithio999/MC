@@ -1,5 +1,12 @@
 # Changelog
 
+## Additions 1.24.2 — Archive construction fixes
+
+- Rebuild the gables with straight supporting posts, tie beams and paired clerestories. Add a grounded rear chimney and projecting wall frames; stop timber beneath the roof.
+- Attach hanging lanterns to ceilings or beams with continuous chains, and support standing lanterns on shelves. Light all three tower floors.
+- Rebuild the reading bay with a continuous copper lean-to, infilled end walls, a closed ceiling and a framed doorway on a continuous floor.
+- Remove all exterior trapdoors. Preserve entrances and internal routes, and add construction checks and updated in-game wiki pictures. Revised buildings appear in new chunks.
+
 ## Additions 1.24.1 — Archivist and archive redesign
 
 - Rebuild Elias’s 64×64 skin using Kael’s established otherworlder pixel style, restrained facial detail and native UV layout.

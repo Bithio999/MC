@@ -1,0 +1,11 @@
+# Additions 1.24.2 — Archive construction fixes
+
+The Archive retains its worldgen ID, footprint, biome selection, rarity, NPC and gameplay service. Its construction is rebuilt around grounded frames and closed rooms. Straight king posts, tie beams and paired windows replace the gable log pattern. A rear chimney adds depth, and timber ends stop below the roof. Every hanging lamp has an anchored chain; standing lamps rest on shelves. The tower has one ceiling-supported light on each of its three floors. The reading bay has infilled end walls, a continuous half-step copper lean-to and timber ceiling, plus a framed doorway on a continuous floor. Exterior trapdoors are removed; interior table tops are supported by fence legs.
+
+The authoring script checks lantern supports and chain anchors, gable roof continuity, bay end-wall/roof closure and absence of exterior trapdoors. The native rotated-placement case checks entrance and connecting passage clearance, all three tower lights and the bay's actual ceiling/roof blocks. The opt-in client review inspects the exterior, rear, hall, bay and all tower floors, with native block-light checks at night. Review-only code is excluded from production.
+
+Existing archives retain their blocks. The revised layout appears in newly generated chunks. No existing world terrain or player progression is overwritten.
+
+The authoring checks passed. All **8 required native mentor cases passed** and the server exited successfully on Tensura 2.0.1.3 / NeoForge 21.1.209. This includes native jigsaw generation, actual rotated placement, clear passages, all three hanging tower lights, and the bay ceiling/roof.
+
+The actual-client review completed and saved normally. The final template was inspected from the exterior and rear, inside the hall and reading bay, and on all three tower floors. At night the tower floor centres measured native block light **12, 12 and 11**. The published screenshots show the final roof-safe framing, rear chimney, supported lighting and completed side room. The final clean production build passed **64 JVM tests**, with no failures, errors or skips. The distribution audit verified the 1.24.2 JAR, exact structure asset and metadata, and absence of review fixtures or bundled dependencies. Release SHA-256: `1a04ed264ae66b93f272dc813c65b44849fced04a10325bafc2692078ec2fc2d`.

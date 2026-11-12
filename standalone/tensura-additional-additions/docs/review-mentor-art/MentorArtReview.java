@@ -176,9 +176,30 @@ public final class MentorArtReview {
                     if (!level.getBlockState(at).equals(state)) level.setBlock(at, state, 2);
                   }
                 }
+              // Remove only trees outside the template in this disposable staging patch.
+              for (int dx = -5; dx <= 35; dx++)
+                for (int dz = -5; dz <= 37; dz++) {
+                  if (dx >= 0 && dx <= 30 && dz >= 0 && dz <= 32) continue;
+                  for (int dy = 0; dy < 30; dy++) {
+                    var pos = origin.offset(dx, dy, dz);
+                    var state = level.getBlockState(pos);
+                    if (state.is(net.minecraft.tags.BlockTags.LOGS)
+                        || state.is(net.minecraft.tags.BlockTags.LEAVES))
+                      level.setBlock(pos, Blocks.AIR.defaultBlockState(), 2);
+                  }
+                }
               level
                   .getEntitiesOfClass(MentorEntity.class, new AABB(origin).inflate(60))
                   .forEach(MentorEntity::discard);
+              level
+                  .getEntitiesOfClass(
+                      net.minecraft.world.entity.Mob.class, new AABB(origin).inflate(60))
+                  .forEach(net.minecraft.world.entity.Entity::discard);
+              level
+                  .getEntitiesOfClass(
+                      net.minecraft.world.entity.item.ItemEntity.class,
+                      new AABB(origin).inflate(60))
+                  .forEach(net.minecraft.world.entity.Entity::discard);
               var template =
                   level.getStructureManager().getOrCreate(HeavenlyRestriction.id("mentor_archive"));
               if (!template.placeInWorld(
@@ -213,7 +234,7 @@ public final class MentorArtReview {
         wait = 0;
         return;
       }
-      if (wait < 240) return;
+      if (wait < (phase == 1 ? 240 : 90)) return;
       if (expectedEye != null && mc.player.position().distanceToSqr(expectedEye) > 1) {
         error =
             "Camera did not reach requested position: "
@@ -225,34 +246,92 @@ public final class MentorArtReview {
       if (phase == 1) {
         shot("mentor-archive-exterior");
         ready = false;
-        server(p -> look(p, at(15, 6, 11), at(16, 6, 27)));
+        server(p -> look(p, at(-7, 6, 3), at(4, 10, 15)));
         phase = 2;
         wait = 0;
         return;
       }
       if (phase == 2) {
-        shot("mentor-archive-interior");
+        shot("mentor-archive-tower-depth");
         ready = false;
-        server(p -> look(p, npc.position().add(0, .1, -3.2), npc.position().add(0, 1.1, 0)));
+        server(p -> look(p, at(37, 15, 42), at(16, 9, 23)));
         phase = 3;
         wait = 0;
         return;
       }
       if (phase == 3) {
-        shot("elias-kael-style");
+        shot("mentor-archive-rear");
         ready = false;
-        server(p -> look(p, at(11, 9.4, 15), at(19, 6, 25)));
+        server(p -> look(p, at(15, 6, 11), at(16, 6, 27)));
         phase = 4;
         wait = 0;
         return;
       }
       if (phase == 4) {
-        shot("mentor-archive-gallery");
+        shot("mentor-archive-interior");
+        ready = false;
+        server(p -> look(p, at(22, 3, 24), at(27, 4.5, 24)));
+        phase = 5;
+        wait = 0;
+        return;
+      }
+      if (phase == 5) {
+        shot("mentor-archive-reading-bay");
+        ready = false;
+        server(
+            p -> {
+              p.server.overworld().setDayTime(18000);
+              look(p, at(6, 3, 14), at(3, 4.5, 15));
+            });
+        phase = 6;
+        wait = 0;
+        return;
+      }
+      if (phase == 6) {
+        shot("mentor-archive-tower-ground");
+        ready = false;
+        server(
+            p -> {
+              var lights = new StringBuilder();
+              for (int floor : new int[] {3, 9, 15}) {
+                int light =
+                    p.serverLevel().getBrightness(LightLayer.BLOCK, origin.offset(4, floor, 15));
+                if (light < 8)
+                  throw new IllegalStateException("Dark tower floor " + floor + ": " + light);
+                lights
+                    .append("Tower floor ")
+                    .append(floor)
+                    .append(": block light ")
+                    .append(light)
+                    .append(" at night.\n");
+              }
+              try {
+                Files.writeString(OUT.resolve("tower-light.txt"), lights.toString());
+              } catch (Exception ex) {
+                throw new IllegalStateException(ex);
+              }
+              look(p, at(6, 9, 14), at(3, 10.5, 15));
+            });
+        phase = 7;
+        wait = 0;
+        return;
+      }
+      if (phase == 7) {
+        shot("mentor-archive-tower-middle");
+        ready = false;
+        server(p -> look(p, at(6, 15, 14), at(3, 16.5, 15)));
+        phase = 8;
+        wait = 0;
+        return;
+      }
+      if (phase == 8) {
+        shot("mentor-archive-tower-top");
         Files.writeString(
             OUT.resolve("passed.txt"),
-            "Actual client: revised template, exterior, gallery, interior and Kael-style Elias.\n");
+            "Actual client: exterior, rear, supported lighting, sealed reading bay and all three"
+                + " lit tower floors.\n");
         mc.stop();
-        phase = 5;
+        phase = 9;
       }
     } catch (Throwable ex) {
       error = ex.toString();

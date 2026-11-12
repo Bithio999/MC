@@ -14,7 +14,7 @@
 
 ## Finding the archive
 
-Look for a slate-roofed library with a copper-crowned tower in forests, plains, meadows and savannas. Inside are a reading bay, upper gallery, staircase, tower rooms and Elias’s teaching dais. Archives use a sparse 128-chunk placement grid; unsuitable biomes can make them farther apart. They generate in **new chunks**, including newly explored regions of existing worlds.
+Look for a slate-roofed library with a copper-crowned tower, projecting timber frames, a rear chimney and recessed windows in forests, plains, meadows and savannas. Inside are a reading bay, upper gallery, staircase, tower rooms and Elias’s teaching dais. Archives use a sparse 128-chunk placement grid; unsuitable biomes can make them farther apart. They generate in **new chunks**, including newly explored regions of existing worlds.
 
 Marauder's Map can search for **`heavenlyrestriction:mentor_archive`**. With commands enabled, use:
 
@@ -24,11 +24,21 @@ Marauder's Map can search for **`heavenlyrestriction:mentor_archive`**. With com
 
 Elias stays inside and is protected from ordinary damage. Each archive contains a mentor, but visiting another archive does not grant another lesson.
 
+<details><summary>Building and room views</summary>
+
+![Rear framing and chimney](../media/mentor-archive-rear.png)
+
+![Connected reading bay](../media/mentor-archive-reading-bay.png)
+
+![Tower at night](../media/mentor-archive-tower-ground.png)
+
+</details>
+
 ![Inside the archive](../media/mentor-archive-interior.png)
 
 ![Elias](../media/elias-kael-style.png)
 
-Existing Elias NPCs receive the updated skin. Previously generated buildings keep their original layout.
+Existing buildings keep their generated layout.
 
 ## Taking a lesson
 
