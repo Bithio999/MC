@@ -18,7 +18,7 @@ TEXT_SUFFIXES = {'.md', '.txt', '.java', '.json', '.toml', '.properties', '.grad
 CREDENTIAL = re.compile(rb'gh[pousr]_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,}'
                         rb'|AKIA[A-Z0-9]{16}|-----BEGIN (?:RSA |OPENSSH |EC )?PRIVATE KEY-----')
 EMAIL = re.compile(r'(?<![\w.+%-])[\w.+%-]+@[\w.-]+\.[A-Za-z]{2,}(?![\w.-])')
-PRIVATE_PATH = re.compile(r'(?:[A-Z]:\\Users\\|/Users/)[A-Za-z0-9][A-Za-z0-9_.-]*')
+PRIVATE_PATH = re.compile(r'(?:[A-Z]:\\Users\\|/Users/|/home/)[A-Za-z0-9][A-Za-z0-9_.-]*')
 
 
 def git(*args: str, data: bytes | None = None) -> bytes:
