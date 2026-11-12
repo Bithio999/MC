@@ -67,6 +67,7 @@
 - [Critical Merchant](https://github.com/Bithio999/MC/wiki/Additions-Critical-Merchant)
 - [Hephaestus](https://github.com/Bithio999/MC/wiki/Additions-Hephaestus)
 - [Metis](https://github.com/Bithio999/MC/wiki/Additions-Metis)
+- [Tyche](https://github.com/Bithio999/MC/wiki/Additions-Tyche)
 
 **NPCs and structures**
 

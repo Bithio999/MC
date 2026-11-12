@@ -36,3 +36,7 @@ Unbound’s existing guaranteed criticals retain one base critical multiplier. G
 ![A guaranteed critical on a training dummy](../media/critical-merchant-hit.png)
 
 **Fettered Human:** excluded from its reincarnation rolls because the active costs magicules.
+
+## Ultimate synthesis
+
+Fully mastered Critical Merchant can combine with Tuner into [Tyche, Lord of Fortune](Additions-Tyche.md) after completed awakening and its personal achievements. Pending guaranteed hits and their remaining cooldown transfer.

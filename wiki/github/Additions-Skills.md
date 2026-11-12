@@ -6,7 +6,7 @@
 
 [Battlewills](https://github.com/Bithio999/MC/wiki/Additions-Battlewills) include Schema, Air Walk and Instant Transmission. [Aura recovery](https://github.com/Bithio999/MC/wiki/Additions-Aura-Regeneration) is granted by the lineage’s later evolutions.
 
-Use Tensura’s normal Ability Selection menu. This addon has no Godly skill tier, hunter branch or skill-synthesis system.
+Use Tensura’s normal Ability Selection menu. Ultimate synthesis combines fully mastered component skills after completed true awakening and a personal achievement. Each recipe has a permanent magicule cost; awakening bonuses apply before payment.
 
 [Ability directory](https://github.com/Bithio999/MC/wiki/Additions-Abilities).
 
@@ -25,3 +25,5 @@ Use Tensura’s normal Ability Selection menu. This addon has no Godly skill tie
 [Hephaestus, Lord of the Forge](https://github.com/Bithio999/MC/wiki/Additions-Hephaestus) combines fully mastered Prospector and Godly Craftsman after awakening and a personal forging achievement. No EP requirement. It adds Divine Forge, Living Arsenal and Magnum Opus.
 
 [Metis, Lord of Wisdom](https://github.com/Bithio999/MC/wiki/Additions-Metis) combines fully mastered Split Mind and Great Sage after completed true awakening and learning three magics. It adds a three-thread magical matrix (four at mastery), independent auto-casting and automatic magic-circle analysis. No EP requirement.
+
+[Tyche, Lord of Fortune](https://github.com/Bithio999/MC/wiki/Additions-Tyche) combines Critical Merchant and Tuner: critical odds, a fortune domain and damage-type-based full revival.

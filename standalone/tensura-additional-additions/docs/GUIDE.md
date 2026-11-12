@@ -295,3 +295,14 @@ Combine fully mastered Split Mind and Great Sage after completed true awakening 
 ## Archive of Accord
 
 Rare libraries generate in suitable new Overworld chunks. Elias offers each player one permanent, unmastered Unique Skill for 1,000,000 permanent EP plus one Chromatic Orb by default. Search the catalogue and confirm your choice; there is no additional native skill cost. Permanent aura/magicule reserves pay proportionally; temporary/equipment bonuses do not count. The one-use limit survives death, reincarnation, skill loss and World Jump. Existing acquisition protections still apply. [Finding the archive and taking a lesson](../../../wiki/pages/Additions-Archive-of-Accord.md).
+
+## Tyche — Lord of Fortune
+
+An Ultimate synthesis of fully mastered **Critical Merchant + Tuner** after completed True Hero / True Demon Lord awakening, **50 landed compounded criticals** and **three distinct damage types survived with Tuner**. Open its unfinished entry in **Skills → Ultimate** and confirm. Default cost: **250,000 permanent magicules** after awakening bonuses, with **no EP gate**. Both parents are consumed; pending guarantees, presets and Tuner lockouts transfer.
+
+- **Loaded Dice / Against All Odds — Passive, Toggle:** critical payouts start at ×4, reroll one failed doubling and retain the 100-success chain limit. Below half HP, progressively gain up to +50% attack damage and +25 percentage points of melee/projectile evasion.
+- **Fate Insurance — Passive, True:** an eligible fatal hit restores full current-maximum HP, SHP, magicules and aura, removes harmful effects and clears other native ability cooldowns. Each native damage-message type can trigger once during a shared **five-minute window starting at the first revival**. Further revivals do not extend it or clear their own history. Tuner’s bypass exceptions remain.
+- **Guaranteed Dividend — Active, Press:** 5,000 magicules, 20-second cooldown; ten guaranteed criticals, each using the higher of two payout rolls. Shift-press opens live insurance history even during cooldown.
+- **The House Always Wins — Active, Press:** 20,000 magicules, 90-second cooldown; a 15-second, 16-block moving domain. Suppress nearby enemy native criticals, bypass dodge on your nearby attacks and gain an additional 25% miss chance against ordinary incoming attacks. Native dodge-bypass sources retain their bypass.
+
+Payouts retain the **original attack’s damage type**. The other abilities deal no direct damage. [Full skill page](../../../wiki/pages/Additions-Tyche.md).

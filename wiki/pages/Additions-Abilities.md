@@ -47,6 +47,11 @@ Find a move below, then open its entry for targeting, damage, cost and cooldown.
 | [Autonomous Sage](Additions-Metis.md#autonomous-sage) | [Metis, Lord of Wisdom](Additions-Metis.md) | Active, Toggle | Assigned magic’s native damage type |
 | [Optimal Solution](Additions-Metis.md#optimal-solution) | [Metis, Lord of Wisdom](Additions-Metis.md) | Passive, Toggle | None |
 | [Great Sage utilities](Additions-Metis.md#inherited-utilities) | [Metis, Lord of Wisdom](Additions-Metis.md) | Active, Press | None |
+| [Loaded Dice](Additions-Tyche.md#loaded-dice) | [Tyche, Lord of Fortune](Additions-Tyche.md) | Passive, Toggle | Original attack’s damage type |
+| [Against All Odds](Additions-Tyche.md#against-all-odds) | [Tyche, Lord of Fortune](Additions-Tyche.md) | Passive, Toggle | None directly |
+| [Fate Insurance](Additions-Tyche.md#fate-insurance) | [Tyche, Lord of Fortune](Additions-Tyche.md) | Passive, True | None |
+| [Guaranteed Dividend](Additions-Tyche.md#guaranteed-dividend) | [Tyche, Lord of Fortune](Additions-Tyche.md) | Active, Press | Original attack’s damage type |
+| [The House Always Wins](Additions-Tyche.md#the-house-always-wins) | [Tyche, Lord of Fortune](Additions-Tyche.md) | Active, Press | None |
 
 ## Extra
 

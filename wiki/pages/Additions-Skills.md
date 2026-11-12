@@ -6,7 +6,7 @@
 
 [Battlewills](Additions-Battlewills.md) include Schema, Air Walk and Instant Transmission. [Aura recovery](Additions-Aura-Regeneration.md) is granted by the lineage’s later evolutions.
 
-Use Tensura’s normal Ability Selection menu. This addon has no Godly skill tier, hunter branch or skill-synthesis system.
+Use Tensura’s normal Ability Selection menu. Ultimate synthesis combines fully mastered component skills after completed true awakening and a personal achievement. Each recipe has a permanent magicule cost; awakening bonuses apply before payment.
 
 [Ability directory](Additions-Abilities.md).
 
@@ -25,3 +25,5 @@ Use Tensura’s normal Ability Selection menu. This addon has no Godly skill tie
 [Hephaestus, Lord of the Forge](Additions-Hephaestus.md) combines fully mastered Prospector and Godly Craftsman after awakening and a personal forging achievement. No EP requirement. It adds Divine Forge, Living Arsenal and Magnum Opus.
 
 [Metis, Lord of Wisdom](Additions-Metis.md) combines fully mastered Split Mind and Great Sage after completed true awakening and learning three magics. It adds a three-thread magical matrix (four at mastery), independent auto-casting and automatic magic-circle analysis. No EP requirement.
+
+[Tyche, Lord of Fortune](Additions-Tyche.md) combines Critical Merchant and Tuner: critical odds, a fortune domain and damage-type-based full revival.

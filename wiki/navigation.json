@@ -205,6 +205,10 @@
         [
           "Additions-Metis",
           "Metis"
+        ],
+        [
+          "Additions-Tyche",
+          "Tyche"
         ]
       ]
     ],

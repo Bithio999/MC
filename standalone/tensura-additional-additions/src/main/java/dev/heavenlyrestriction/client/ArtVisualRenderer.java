@@ -24,6 +24,7 @@ public final class ArtVisualRenderer extends software.bernie.geckolib.renderer.G
     @Override protected void applyRotations(ArtVisualEntity e,PoseStack p,float age,float rotation,float partial,float scale){}
     @Override public void render(ArtVisualEntity e,float yaw,float partial,PoseStack p,MultiBufferSource buffers,int light){
         float age=e.tickCount+partial;VfxMesh.begin(e.getPosition(partial));batch.begin();
+        if(e.kind()>=ArtVisualEntity.TYCHE_HOUSE){p.pushPose();TycheGeometry.render(e,p,batch,age);p.popPose();batch.flush(buffers);return;}
         if(e.kind()==ArtVisualEntity.FUSION){FusionGeometry.render(p,batch,age,e.style()==1);batch.flush(buffers);return;}
         if(e.kind()==ArtVisualEntity.UNBOUND_STANCE){p.pushPose();if(e.caster()!=null){Vec3 at=e.caster().getPosition(partial).subtract(e.getPosition(partial));p.translate(at.x,at.y,at.z);}UnboundGeometry.stance(p,batch,e.end(),age);p.popPose();batch.flush(buffers);return;}
         if(e.kind()==ArtVisualEntity.UNBOUND_SLASH){UnboundGeometry.slash(p,batch,e.end(),age);batch.flush(buffers);return;}

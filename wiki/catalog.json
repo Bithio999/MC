@@ -1303,5 +1303,12 @@
     "title": "Archive of Accord",
     "category": "NPCs",
     "mod": "additions"
+  },
+  {
+    "slug": "Additions-Tyche",
+    "title": "Tyche, Lord of Fortune",
+    "category": "Skills",
+    "tier": "Ultimate",
+    "mod": "additions"
   }
 ]

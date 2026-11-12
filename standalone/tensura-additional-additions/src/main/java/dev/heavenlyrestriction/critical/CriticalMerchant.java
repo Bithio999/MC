@@ -1,6 +1,7 @@
 package dev.heavenlyrestriction.critical;
 
 import dev.heavenlyrestriction.*;
+import dev.heavenlyrestriction.tyche.*;
 import io.github.manasmods.manascore.attribute.api.*;
 import io.github.manasmods.manascore.skill.api.*;
 import io.github.manasmods.tensura.entity.human.golem.TrainingDummyEntity;
@@ -42,11 +43,22 @@ public final class CriticalMerchant {
   }
 
   public static Optional<ManasSkillInstance> instance(LivingEntity e) {
-    return e == null
-        ? Optional.empty()
+    if (e == null) return Optional.empty();
+    var ultimate = Tyche.owned(e);
+    return ultimate.isPresent()
+        ? ultimate
         : SkillAPI.getSkillsFrom(e)
             .getSkill(HeavenlyRestriction.CRITICAL_MERCHANT.get())
             .filter(i -> i.getMastery() >= 0);
+  }
+
+  public static boolean tycheUndodge(LivingEntity e, DamageSource source) {
+    if (!Tyche.house(e)) return false;
+    for (var h = CURRENT.get(); h != null; h = h.previous)
+      if (h.owner == e
+          && h.source == source
+          && e.distanceToSqr(h.target) <= Tyche.RADIUS * Tyche.RADIUS) return true;
+    return false;
   }
 
   public static int remaining(ManasSkillInstance i) {
@@ -66,7 +78,8 @@ public final class CriticalMerchant {
         || !i.canInteractSkill(e)
         || !i.canActivateSkill(e, 0)) return;
     var energy = TensuraStorages.getExistenceFrom(e);
-    double cost = SchemaArt.cost(e, COST);
+    boolean tyche = i.getSkill() == HeavenlyRestriction.TYCHE.get();
+    double cost = SchemaArt.cost(e, tyche ? TycheConfig.DIVIDEND_COST.get() : COST);
     if (!Double.isFinite(cost) || energy.getMagicule() < cost) return;
     energy.setMagicule(energy.getMagicule() - cost);
     energy.markDirty();
@@ -74,6 +87,7 @@ public final class CriticalMerchant {
     i.getOrCreateTag().putInt(REMAINING, HITS);
     i.setCoolDown(COOLDOWN, 0);
     i.addMasteryPoint(e);
+    if (tyche) Tyche.visual(e, ArtVisualEntity.TYCHE_DIVIDEND, 1.4, 40);
     SkillAPI.getSkillsFrom(e).checkAndMarkDirty(i);
     level.sendParticles(
         ParticleTypes.ENCHANTED_HIT, e.getX(), e.getY() + 1, e.getZ(), 18, .4, .6, .4, .05);
@@ -86,7 +100,8 @@ public final class CriticalMerchant {
     var i = instance(owner).filter(s -> s.canInteractSkill(owner));
     if (i.isEmpty()
         || !(event.getTarget() instanceof LivingEntity target)
-        || !RestrictionData.canHarm(owner, target)) return;
+        || !RestrictionData.canHarm(owner, target)
+        || Tyche.protectedFrom(owner, target)) return;
     if (remaining(i.get()) > 0 && !event.isCriticalHit()) {
       event.setCriticalHit(true);
       event.setDamageMultiplier(
@@ -168,23 +183,25 @@ public final class CriticalMerchant {
   }
 
   public static boolean observe(LivingEntity target, DamageSource source, BooleanSupplier damage) {
-    return observe(target, source, damage, true);
+    return Tyche.guard(target, source, () -> observe(target, source, damage, true));
   }
 
   public static boolean observeSpiritual(
       LivingEntity target, DamageSource source, BooleanSupplier damage) {
-    return observe(target, source, damage, false);
+    return Tyche.guard(target, source, () -> observe(target, source, damage, false));
   }
 
   private static boolean observe(
       LivingEntity target, DamageSource source, BooleanSupplier damage, boolean nativeHit) {
     if (source == null) return damage.getAsBoolean();
     var owner = RestrictionData.attacker(source);
-    if (target.level().isClientSide() || owner == null || !RestrictionData.canHarm(owner, target))
-      return damage.getAsBoolean();
+    if (target.level().isClientSide()
+        || owner == null
+        || !RestrictionData.canHarm(owner, target)
+        || Tyche.protectedFrom(owner, target)) return damage.getAsBoolean();
     var skill = instance(owner).filter(i -> i.canInteractSkill(owner));
     if (skill.isEmpty()
-        || !skill.get().isToggled() && remaining(skill.get()) == 0
+        || !skill.get().isToggled() && remaining(skill.get()) == 0 && !Tyche.house(owner)
         || find(owner, target, source) != null) return damage.getAsBoolean();
     var hit = new Hit(CURRENT.get(), owner, target, source, skill.get(), nativeHit);
     CURRENT.set(hit);
@@ -195,6 +212,8 @@ public final class CriticalMerchant {
       if (finished) {
         hit.skill.addMasteryPoint(owner);
         report(hit);
+        if (hit.skill.getSkill() == HeavenlyRestriction.CRITICAL_MERCHANT.get()
+            && !hit.skill.isTemporarySkill()) TycheSynthesis.critical(owner);
       }
       return result;
     } finally {
@@ -231,8 +250,12 @@ public final class CriticalMerchant {
     }
     if (!hit.critical) return amount;
     hit.boosted = true;
-    if (hit.skill.isToggled()) {
-      hit.exponent = CriticalPayout.doublings(hit.owner.getRandom()::nextBoolean);
+    boolean tyche = hit.skill.getSkill() == HeavenlyRestriction.TYCHE.get();
+    if (hit.skill.isToggled() || tyche && hit.reserved) {
+      hit.exponent =
+          tyche
+              ? TychePayout.roll(hit.owner.getRandom()::nextBoolean, hit.reserved)
+              : CriticalPayout.doublings(hit.owner.getRandom()::nextBoolean);
       amount = CriticalPayout.multiply(amount, Math.scalb(1d, hit.exponent));
     }
     return amount;
@@ -279,7 +302,9 @@ public final class CriticalMerchant {
     if (hit.owner instanceof ServerPlayer player)
       player.displayClientMessage(
           Component.translatable(
-              "heavenlyrestriction.critical_merchant.payout",
+              hit.skill.getSkill() == HeavenlyRestriction.TYCHE.get()
+                  ? "heavenlyrestriction.tyche.payout"
+                  : "heavenlyrestriction.critical_merchant.payout",
               hit.exponent == 0
                   ? "1"
                   : hit.exponent <= 10 ? Long.toString(1L << hit.exponent) : "2^" + hit.exponent,

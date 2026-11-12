@@ -19,6 +19,7 @@ public final class HeavenlyRestriction {
     public static final RegistrySupplier<ParallelWorldJumperSkill> PARALLEL_WORLD_JUMPER=SKILLS.register(id("parallel_world_jumper"),ParallelWorldJumperSkill::new);
     public static final RegistrySupplier<ExponentiationSkill> EXPONENTIATION=SKILLS.register(id("exponentiation"),ExponentiationSkill::new);
     public static final RegistrySupplier<CriticalMerchantSkill> CRITICAL_MERCHANT=SKILLS.register(id("critical_merchant"),CriticalMerchantSkill::new);
+    public static final RegistrySupplier<TycheSkill> TYCHE=SKILLS.register(id("tyche"),TycheSkill::new);
     public static final RegistrySupplier<MetisSkill> METIS=SKILLS.register(id("metis"),MetisSkill::new);
     public static final RegistrySupplier<HephaestusSkill> HEPHAESTUS=SKILLS.register(id("hephaestus"),HephaestusSkill::new);
     public static final RegistrySupplier<ProspectorSkill> PROSPECTOR=SKILLS.register(id("prospector"),ProspectorSkill::new);
@@ -39,6 +40,8 @@ public final class HeavenlyRestriction {
         dev.heavenlyrestriction.mentor.MentorContent.register(modBus,container);
         dev.heavenlyrestriction.forge.ForgeEvents.register(modBus,container);
         modBus.addListener(dev.heavenlyrestriction.metis.MetisNetwork::register);
+        modBus.addListener(dev.heavenlyrestriction.tyche.TycheNetwork::register);
+        container.registerConfig(net.neoforged.fml.config.ModConfig.Type.SERVER,dev.heavenlyrestriction.tyche.TycheConfig.SPEC,"tensura-additions-tyche.toml");
         container.registerConfig(net.neoforged.fml.config.ModConfig.Type.SERVER,dev.heavenlyrestriction.metis.MetisConfig.SPEC,"tensura-additions-metis.toml");
         dev.heavenlyrestriction.chromatic.ChromaticContent.register(modBus);
         modBus.addListener(dev.heavenlyrestriction.cartography.MapNetwork::register);
@@ -85,6 +88,7 @@ public final class HeavenlyRestriction {
         NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.HIGHEST,UnboundCounter::incoming);
         NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.LOWEST,UnboundCritical::critical);
         dev.heavenlyrestriction.critical.CriticalMerchant.register();
+        dev.heavenlyrestriction.tyche.Tyche.register();
         NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.LOWEST,(net.neoforged.neoforge.event.entity.living.LivingDeathEvent e)->UnboundCounter.clear(e.getEntity()));
         NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerLoggedOutEvent e)->UnboundCounter.clear(e.getEntity()));
         NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerChangedDimensionEvent e)->UnboundCounter.clear(e.getEntity()));

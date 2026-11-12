@@ -1118,6 +1118,58 @@
           ]
         }
       ]
+    },
+    {
+      "id": "tyche",
+      "title": "Tyche, Lord of Fortune",
+      "category": "Skills",
+      "summary": "Ultimate · Critical Merchant + Tuner · Critical odds and survival.",
+      "icon": "heavenlyrestriction:textures/skill/tyche.png",
+      "keywords": [
+        "critical",
+        "tuner",
+        "luck",
+        "fortune",
+        "insurance",
+        "dividend",
+        "synthesis"
+      ],
+      "related": [
+        "critical-merchant",
+        "archivist"
+      ],
+      "sections": [
+        {
+          "title": "Synthesis",
+          "lines": [
+            "Master Critical Merchant and Tuner, complete True Hero/True Demon Lord awakening, land 50 compounded critical hits and survive three distinct damage types with Tuner. Open Tyche’s unfinished Ultimate entry and confirm synthesis. No EP gate. Default cost: 250,000 permanent magicules, paid after awakening bonuses; configurable and affected by mpSkillCost."
+          ]
+        },
+        {
+          "title": "Loaded Dice / Against All Odds · Passive toggle",
+          "lines": [
+            "Critical hits start at ×4, then attempt up to 100 additional doublings. Reroll the first failed doubling once. Below 50% HP, gain progressively up to +50% attack damage and +25 percentage points of melee/projectile evasion. Healing reduces these bonuses. Attacks keep their original damage type."
+          ]
+        },
+        {
+          "title": "Fate Insurance · Passive true",
+          "lines": [
+            "Survive an eligible fatal hit; recover full current-maximum HP, SHP, magicules and aura, remove harmful effects and reset all other native skill/ability cooldowns. Each damage type triggers once in the same five-minute window, beginning with the first revival. New types can still trigger during that window; they do not extend it. Fate Insurance’s own timer and history are preserved. Native Tuner bypass exceptions apply."
+          ]
+        },
+        {
+          "title": "Guaranteed Dividend · Active press",
+          "lines": [
+            "Spend 5,000 magicules for ten guaranteed critical hits. Each uses the higher of two Loaded Dice chains. Cooldown: 20 seconds. Recasting refreshes to ten. Blocked/immune hits refund the guarantee. Shift-press opens synthesis or damage-history information."
+          ]
+        },
+        {
+          "title": "The House Always Wins · Active press",
+          "lines": [
+            "Spend 20,000 magicules for a 15-second, 16-block domain. Nearby enemies cannot critically hit you; your attacks bypass their dodge inside the domain. Gain a 25% miss chance against ordinary incoming attacks; native dodge bypass still applies. Cooldown: 90 seconds. No direct damage."
+          ]
+        }
+      ]
     }
   ]
 }

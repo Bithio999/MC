@@ -1,5 +1,12 @@
 # Changelog
 
+## Additions 1.25.0 — Tyche, Lord of Fortune
+
+- Add an Ultimate synthesized from fully mastered Critical Merchant + Tuner after completed awakening, 50 landed compounded criticals and three distinct Tuner survivals. Default cost: 250,000 permanent magicules; no EP gate.
+- Add Loaded Dice, health-dependent Against All Odds, ten-hit Guaranteed Dividend and a moving fortune domain that suppresses nearby native criticals and bypasses enemy dodge.
+- Add Fate Insurance: full HP/SHP/magicule/aura recovery and other native cooldown resets, once per native damage type in a shared five-minute window. Later revivals do not extend that window. Preserve its own timer and history.
+- Preserve pending guarantees, native presets and existing Tuner lockouts through synthesis. Add a native-style confirmation/history screen, golden coin effects, a new icon and guide/wiki pages.
+
 ## Additions 1.24.3 — Archive context audit
 
 - Lower the compact iron chandelier below the trusses and keep it entirely over the atrium.

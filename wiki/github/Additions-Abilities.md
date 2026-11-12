@@ -47,6 +47,11 @@ Find a move below, then open its entry for targeting, damage, cost and cooldown.
 | [Autonomous Sage](https://github.com/Bithio999/MC/wiki/Additions-Metis#autonomous-sage) | [Metis, Lord of Wisdom](https://github.com/Bithio999/MC/wiki/Additions-Metis) | Active, Toggle | Assigned magic’s native damage type |
 | [Optimal Solution](https://github.com/Bithio999/MC/wiki/Additions-Metis#optimal-solution) | [Metis, Lord of Wisdom](https://github.com/Bithio999/MC/wiki/Additions-Metis) | Passive, Toggle | None |
 | [Great Sage utilities](https://github.com/Bithio999/MC/wiki/Additions-Metis#inherited-utilities) | [Metis, Lord of Wisdom](https://github.com/Bithio999/MC/wiki/Additions-Metis) | Active, Press | None |
+| [Loaded Dice](https://github.com/Bithio999/MC/wiki/Additions-Tyche#loaded-dice) | [Tyche, Lord of Fortune](https://github.com/Bithio999/MC/wiki/Additions-Tyche) | Passive, Toggle | Original attack’s damage type |
+| [Against All Odds](https://github.com/Bithio999/MC/wiki/Additions-Tyche#against-all-odds) | [Tyche, Lord of Fortune](https://github.com/Bithio999/MC/wiki/Additions-Tyche) | Passive, Toggle | None directly |
+| [Fate Insurance](https://github.com/Bithio999/MC/wiki/Additions-Tyche#fate-insurance) | [Tyche, Lord of Fortune](https://github.com/Bithio999/MC/wiki/Additions-Tyche) | Passive, True | None |
+| [Guaranteed Dividend](https://github.com/Bithio999/MC/wiki/Additions-Tyche#guaranteed-dividend) | [Tyche, Lord of Fortune](https://github.com/Bithio999/MC/wiki/Additions-Tyche) | Active, Press | Original attack’s damage type |
+| [The House Always Wins](https://github.com/Bithio999/MC/wiki/Additions-Tyche#the-house-always-wins) | [Tyche, Lord of Fortune](https://github.com/Bithio999/MC/wiki/Additions-Tyche) | Active, Press | None |
 
 ## Extra
 

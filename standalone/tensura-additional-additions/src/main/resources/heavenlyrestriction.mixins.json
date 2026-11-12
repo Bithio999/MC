@@ -94,7 +94,8 @@
     "AutoCastDoubleMixin",
     "AutoCastSwingMixin",
     "AutoCastSourceMixin",
-    "AutoCastSourceCopyMixin"
+    "AutoCastSourceCopyMixin",
+    "TunerProgressMixin"
   ],
   "injectors": {
     "defaultRequire": 1
