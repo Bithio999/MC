@@ -22,6 +22,7 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 public final class MetisMagic {
   public enum Role {
     HEALING,
+    CLEANSING,
     SUPPORT,
     OFFENSE
   }
@@ -31,6 +32,7 @@ public final class MetisMagic {
   }
 
   public static Role role(ManasSkillInstance i, int mode) {
+    if (MetisCleansing.known(i, mode)) return MetisCleansing.role(i, mode);
     if (!(i.getSkill() instanceof Magic)
         && i.getSkill() instanceof io.github.manasmods.tensura.ability.TensuraSkill ability) {
       String id = ability.getModeId(i, mode).toLowerCase(Locale.ROOT);
@@ -66,14 +68,13 @@ public final class MetisMagic {
   }
 
   public static boolean needed(ServerPlayer p, ManasSkillInstance i, int mode) {
+    if (MetisCleansing.known(i, mode)) return MetisCleansing.needed(p, i, mode);
     if (role(i, mode) == Role.OFFENSE) return true;
     if (i.getSkillId().getPath().equals("critical_merchant")
         || i.getSkillId().getPath().equals("tyche"))
       return dev.heavenlyrestriction.critical.CriticalMerchant.remaining(i) == 0;
     String path = i.getSkillId().getPath();
     if (role(i, mode) == Role.HEALING) {
-      if (Set.of("antidote").contains(path))
-        return p.getActiveEffects().stream().anyMatch(e -> !e.getEffect().value().isBeneficial());
       return p.getHealth() < p.getMaxHealth() * .9
           || i.getSkillId().getPath().equals("healer")
               && i.isMastered(p)

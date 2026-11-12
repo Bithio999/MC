@@ -1079,6 +1079,14 @@
             "Use All / Aspectual / Spiritual / Skills / Arts to filter learned abilities. Assign one learned mode per thread. Menu-opening modes are omitted and rejected again by the server; for example Spatial Motion Blink is allowed, while its Warp menu, Great Sage crafting/refining and Prospector refining are not.",
             "Skills and arts keep their normal resource costs and cooldowns; Metis’s 30%/40% magicule discount applies to aspectual/spiritual magic. Main activations are used, without shift-menu shortcuts. Passive-only abilities, automation controllers, world jumping and copied-technique containers are excluded."
           ]
+        },
+        {
+          "title": "Automatic cleansing",
+          "lines": [
+            "At full HP or while injured: Antidote treats Poison, Nausea and Weakness; mastered Antidote also reduces Fatal Poison. Healer Heal treats Infection and heals below 90% HP (also SHP at mastery). Chef treats Severance, permitted harmful effects, or low HP; Lust Invigorate treats permitted harmful effects or low HP. Neither cleanses protected skill effects.",
+            "Empty-hand Isolation treats Severance or harmful effects. Law Manipulation Abnormality Cleanse treats Severance, Cook’s HP reduction, Magic Interference and effects in its native cleansing tag. Learned Spatial Cleanse treats Severance only. Reverser Inverted Fusion [Buff] treats harmful effects outside the skill-debuff tag, excluding Magicule Poison; at mastery it requires an empty hand for automatic use.",
+            "Normal costs, cooldowns and activation protections remain. Native tags can be changed by datapacks. Invigorate also removes unprotected beneficial effects when cast; those alone never trigger it. Metis rechecks conditions before casting and skips a cleanse when another thread has already cured the status."
+          ]
         }
       ]
     },

@@ -92,6 +92,8 @@ public final class MetisCasting {
       var target = target(p, c);
       if (!slots.contains(c.slot)
           || target == null
+          || MetisCleansing.known(c.spell, c.slot.mode())
+              && !MetisMagic.needed(p, c.spell, c.slot.mode())
           || !storage.getHeldSkills().contains(c.held)
           || !usable(p, c.spell, c.slot.mode(), target)) {
         stop(p, c);
@@ -150,6 +152,8 @@ public final class MetisCasting {
             .thenComparingInt(r -> r.slot.index()));
     var recorded = new HashSet<UUID>();
     for (var r : ready) {
+      // An earlier thread may already have removed the status during this same update.
+      if (!MetisMagic.needed(p, r.spell, r.slot.mode())) continue;
       if (!SplitMindCasting.funded(p, r.spell, r.slot.mode())) continue;
       if (r.target != p && mind.get().isToggled() && recorded.add(r.target.getUUID()))
         MetisMagic.record(p, r.target, mind.get());

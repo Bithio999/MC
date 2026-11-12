@@ -55,13 +55,34 @@ Choose a **Healing**, **Support** or **Offense** priority band, evaluated in tha
 
 ## Autonomous Sage · Active, Toggle
 
-Run the assigned abilities independently while moving, fighting and casting manually. Offensive spells target hostile mobs or combat opponents, respecting alliances, PvP and line of sight. Healing is attempted below **90% HP**; curing checks for harmful effects. Support avoids reapplying an active buff from the same spell.
+Run the assigned abilities independently while moving, fighting and casting manually. Offensive spells target hostile mobs or combat opponents, respecting alliances, PvP and line of sight. Healing is attempted below **90% HP** (Healer also checks SHP when mastered). Recognized cleansing modes check their specific removable conditions, even at full HP. Support avoids reapplying an active buff from the same spell.
 
 Background casting does not swing your arm. Direct automatic spells have independent hurt windows. Distinct native magic projectiles also land independently, including manually cast projectiles. Repeated pulses from one persistent source keep their native timing. Ordinary weapon damage and defensive invulnerability remain separate.
 
 Automatic aspectual/spiritual spells cost **30% fewer magicules**, increasing to **40% fewer when mastered**. Assigned skills and arts retain their normal costs. Native aura costs, cooldowns, anti-skill/anti-magic and activation rules still apply. Automatic skill casting does not use a manual recast override to cancel an active stance during cooldown. Manual use of an ability takes priority over automation of that same ability. Other threads continue independently.
 
 **Damage type:** each assigned ability keeps its native damage type and effects.
+
+### Automatic cleansing
+
+Assign the learned mode in Parallel Matrix. These modes target **you**, even when an enemy is in front of you. They cast only when one of the following conditions applies:
+
+| Ability / mode | When Metis casts it |
+| --- | --- |
+| Antidote | Poison, Nausea or Weakness; **mastered** Antidote also treats Fatal Poison using its native level/duration reduction. Low HP alone does not trigger it. |
+| Healer — Heal | Infection, HP below 90%, or **mastered** Healer with SHP below 90%. |
+| Chef | Severance, HP below 90%, or a harmful effect outside Tensura’s protected skill-effect tag that you can afford to remove. |
+| Lust — Invigorate | HP below 90% or a harmful effect outside the protected skill-effect tag. Its native cleansing also removes unprotected beneficial effects; those effects alone never trigger it. |
+| Predator / Gluttony — Isolation | Severance or an affordable harmful effect, with an **empty main hand**. Holding an item pauses automatic Isolation because the native mode can modify equipment instead. |
+| Law Manipulation — Abnormality Cleanse | Severance, Cook’s maximum-HP reduction, Magic Interference or an effect in Tensura’s Law Manipulation cleansing tag. |
+| Spatial Domination — Spatial Cleanse | Severance only. The mode must be learned; native costs determine how much Severance is removed. |
+| Reverser — Inverted Fusion [Buff] | A harmful effect outside Tensura’s protected skill-debuff tag, excluding Magicule Poison. **Mastered** Reverser requires an empty main hand for automatic use to avoid changing held potions or engravings. Native reversal/removal rules apply. |
+
+Native costs, cooldowns and activation restrictions still apply. Metis checks again before each cast and while preparing a cleanse, so a status removed by another thread does not keep triggering it. Mixed healing/cleansing modes still heal when needed without a removable debuff.
+
+Law Manipulation’s default tag includes Hunger, Poison, Blindness, Nausea, Darkness, Mining Fatigue, Slowness, Weakness, Burden, Fragility, Curse, Fatal Poison, Paralysis, Petrification, Hypnosis and Magic Interference. Datapacks can change native tags; Metis reads the active tags.
+
+These are explicit rules for the listed Tensura modes. Enemy buff removal, transformation cancellation and passive revival cleansing are not treated as self-cleansing actions. Degenerate’s Separate retains its native offensive/manual targeting; Metis does not use its situational self-cleanse. Other addons’ modes are not assumed to cleanse solely because of their name.
 
 <a id="optimal-solution"></a>
 

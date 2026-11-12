@@ -6,9 +6,11 @@ import dev.heavenlyrestriction.metis.*;
 import dev.heavenlyrestriction.splitmind.*;
 import io.github.manasmods.manascore.skill.api.*;
 import io.github.manasmods.tensura.ability.magic.*;
+import io.github.manasmods.tensura.ability.skill.unique.CookSkill;
 import io.github.manasmods.tensura.ability.subclass.*;
 import io.github.manasmods.tensura.entity.magic.MagicCircle;
 import io.github.manasmods.tensura.registry.attribute.TensuraAttributes;
+import io.github.manasmods.tensura.registry.effect.TensuraMobEffects;
 import io.github.manasmods.tensura.registry.magic.*;
 import io.github.manasmods.tensura.registry.skill.*;
 import io.github.manasmods.tensura.storage.TensuraStorages;
@@ -16,7 +18,10 @@ import java.util.*;
 import net.minecraft.gametest.framework.*;
 import net.minecraft.nbt.*;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.effect.*;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.*;
 import net.neoforged.neoforge.gametest.*;
@@ -54,6 +59,223 @@ public final class MetisGameTests {
     learn(p, AspectualMagics.WIND_CUTTER.get(), true);
     learn(p, AspectualMagics.HEALING.get(), true);
     return p;
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 100)
+  public static void antidoteMatchesNativeStatusesAndMastery(GameTestHelper h) {
+    var p = player(h);
+    var i = learn(p, AspectualMagics.ANTIDOTE.get(), false);
+    p.setHealth(1);
+    h.assertTrue(!MetisMagic.needed(p, i), "Antidote treated as HP healing");
+    p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 600));
+    h.assertTrue(!MetisMagic.needed(p, i), "Antidote triggered on slowness");
+    p.addEffect(
+        new MobEffectInstance(TensuraMobEffects.getReference(TensuraMobEffects.FATAL_POISON), 600));
+    h.assertTrue(!MetisMagic.needed(p, i), "Unmastered Antidote attempted fatal poison");
+    i.setMastery(i.getMaxMastery());
+    h.assertTrue(MetisMagic.needed(p, i), "Mastered Antidote ignored fatal poison");
+    p.removeAllEffects();
+    for (var effect : List.of(MobEffects.POISON, MobEffects.CONFUSION, MobEffects.WEAKNESS)) {
+      p.addEffect(new MobEffectInstance(effect, 600));
+      h.assertTrue(MetisMagic.needed(p, i), "Antidote missed " + effect);
+      p.removeEffect(effect);
+    }
+    h.succeed();
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 100)
+  public static void healerCleansInfectionAtFullHealthAndStops(GameTestHelper h) {
+    var p = player(h);
+    var mind = metis(p, false);
+    var i = learn(p, UniqueSkills.HEALER.get(), false);
+    var infection = TensuraMobEffects.getReference(TensuraMobEffects.INFECTION);
+    p.setHealth(p.getMaxHealth());
+    p.addEffect(new MobEffectInstance(infection, 600));
+    h.assertTrue(
+        MetisMatrix.assign(p, 0, i.getSkillId().toString(), 0, 0, false),
+        "Healer assignment failed");
+    mind.getOrCreateTag().putBoolean(MetisMatrix.AUTO, true);
+    p.tickCount = 5;
+    MetisCasting.update(p);
+    h.assertTrue(!p.hasEffect(infection), "Full-health Infection was not cured");
+    h.assertTrue(!MetisMagic.needed(p, i), "Cured full-health owner still needs Healer");
+    h.assertTrue(MetisMagic.role(i, 1) == MetisMagic.Role.OFFENSE, "Virus became a self-cleanse");
+    h.succeed();
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 100)
+  public static void chefAndLustRespectSkillTagsAndPerLevelCost(GameTestHelper h) {
+    var p = player(h);
+    var chef = learn(p, UniqueSkills.CHEF.get(), false);
+    var lust = learn(p, UniqueSkills.LUST.get(), false);
+    var infection = TensuraMobEffects.getReference(TensuraMobEffects.INFECTION);
+    p.addEffect(new MobEffectInstance(infection, 600));
+    h.assertTrue(
+        !MetisMagic.needed(p, chef, 0) && !MetisMagic.needed(p, lust, 1),
+        "Protected skill debuff triggered cleanse");
+    p.removeAllEffects();
+    p.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 600));
+    h.assertTrue(!MetisMagic.needed(p, lust, 1), "Beneficial-only effects triggered Invigorate");
+    p.addEffect(new MobEffectInstance(MobEffects.POISON, 600, 2));
+    h.assertTrue(
+        MetisMagic.needed(p, chef, 0) && MetisMagic.needed(p, lust, 1), "Ordinary poison missed");
+    double poisonCost =
+        ((io.github.manasmods.tensura.ability.TensuraSkill) chef.getSkill())
+                .getMagiculeCost(p, chef, 0)
+            * 3;
+    TensuraStorages.getExistenceFrom(p).setMagicule(poisonCost);
+    h.assertTrue(MetisMagic.needed(p, chef, 0), "Exact per-level cost rejected");
+    var schema = learn(p, HeavenlyRestriction.SCHEMA.get(), true);
+    schema.getOrCreateTag().putIntArray("SchemaTree", new int[] {SchemaArt.REGENERATIVE});
+    schema.onToggleOn(p);
+    h.assertTrue(!MetisMagic.needed(p, chef, 0), "Schema cost penalty ignored");
+    TensuraStorages.getExistenceFrom(p).setMagicule(0);
+    h.assertTrue(
+        !MetisMagic.needed(p, chef, 0) && MetisMagic.needed(p, lust, 1),
+        "Chef cost or native zero-cost Invigorate cleanse mishandled");
+    p.removeAllEffects();
+    TensuraStorages.getEffectFrom(p).setSeveranceAmount(1);
+    h.assertTrue(
+        MetisMagic.needed(p, chef, 0) && !MetisMagic.needed(p, lust, 1),
+        "Chef/Lust Severance rules conflated");
+    h.succeed();
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 100)
+  public static void lawManipulationCleansNativeTagSeveranceAndCook(GameTestHelper h) {
+    var p = player(h);
+    var mind = metis(p, false);
+    var i = learn(p, ExtraSkills.LAW_MANIPULATION.get(), false);
+    var slow = MobEffects.MOVEMENT_SLOWDOWN;
+    p.addEffect(new MobEffectInstance(slow, 600));
+    TensuraStorages.getEffectFrom(p).setSeveranceAmount(2);
+    p.getAttribute(Attributes.MAX_HEALTH)
+        .addPermanentModifier(
+            new AttributeModifier(CookSkill.COOK, -2, AttributeModifier.Operation.ADD_VALUE));
+    p.setHealth(p.getMaxHealth());
+    h.assertTrue(MetisMagic.needed(p, i, 0), "Law ignored cleansing state");
+    h.assertTrue(
+        MetisMatrix.assign(p, 0, i.getSkillId().toString(), 0, 1, false), "Law Cleanse rejected");
+    mind.getOrCreateTag().putBoolean(MetisMatrix.AUTO, true);
+    p.tickCount = 5;
+    MetisCasting.update(p);
+    h.assertTrue(
+        !p.hasEffect(slow)
+            && TensuraStorages.getEffectFrom(p).getSeveranceAmount() == 0
+            && !p.getAttribute(Attributes.MAX_HEALTH).hasModifier(CookSkill.COOK),
+        "Native Law cleanse did not run on self");
+    h.assertTrue(!MetisMagic.needed(p, i, 0), "Law repeated with no removable state");
+    p.addEffect(new MobEffectInstance(MobEffects.WITHER, 600));
+    h.assertTrue(!MetisMagic.needed(p, i, 0), "Law treated every harmful effect as removable");
+    h.assertTrue(MetisMagic.role(i, 1) == MetisMagic.Role.OFFENSE, "Takeover became self-cleanse");
+    h.succeed();
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 100)
+  public static void spatialCleanseRequiresLearningAndOnlyTreatsSeverance(GameTestHelper h) {
+    var p = player(h);
+    var mind = metis(p, false);
+    var i = learn(p, ExtraSkills.SPATIAL_DOMINATION.get(), true);
+    h.assertTrue(
+        !MetisMatrix.assign(p, 0, i.getSkillId().toString(), 1, 0, false),
+        "Unlearned Spatial Cleanse assigned");
+    var skill = (io.github.manasmods.tensura.ability.TensuraSkill) i.getSkill();
+    i.getOrCreateTag().putDouble(skill.getModeId(i, 1), skill.getLearningPointRequirement(i, p, 1));
+    p.addEffect(new MobEffectInstance(MobEffects.POISON, 600));
+    h.assertTrue(!MetisMagic.needed(p, i, 1), "Spatial Cleanse attempted poison");
+    TensuraStorages.getEffectFrom(p).setSeveranceAmount(2);
+    h.assertTrue(
+        MetisMatrix.assign(p, 0, i.getSkillId().toString(), 1, 0, false),
+        "Learned Spatial Cleanse rejected");
+    mind.getOrCreateTag().putBoolean(MetisMatrix.AUTO, true);
+    p.tickCount = 5;
+    MetisCasting.update(p);
+    h.assertTrue(
+        TensuraStorages.getEffectFrom(p).getSeveranceAmount() == 0
+            && p.hasEffect(MobEffects.POISON),
+        "Spatial Cleanse did not preserve native removal scope");
+    h.assertTrue(!MetisMagic.needed(p, i, 1), "Spatial Cleanse repeated unnecessarily");
+    h.succeed();
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 100)
+  public static void isolationAndReverseProtectHeldEquipmentAndMatchDebuffs(GameTestHelper h) {
+    var p = player(h);
+    var predator = learn(p, UniqueSkills.PREDATOR.get(), true);
+    var gluttony = learn(p, UniqueSkills.GLUTTONY.get(), true);
+    var reverse = learn(p, UniqueSkills.REVERSER.get(), true);
+    p.addEffect(new MobEffectInstance(MobEffects.POISON, 600));
+    h.assertTrue(
+        MetisMagic.needed(p, predator, 4)
+            && MetisMagic.needed(p, gluttony, 3)
+            && MetisMagic.needed(p, reverse, 1),
+        "Empty-hand cleansing missed");
+    p.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.DIAMOND_SWORD));
+    h.assertTrue(
+        !MetisMagic.needed(p, predator, 4)
+            && !MetisMagic.needed(p, gluttony, 3)
+            && !MetisMagic.needed(p, reverse, 1),
+        "Automation could alter held equipment");
+    p.setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
+    p.removeAllEffects();
+    var poison = TensuraMobEffects.getReference(TensuraMobEffects.MAGICULE_POISON);
+    p.addEffect(new MobEffectInstance(poison, 600));
+    h.assertTrue(!MetisMagic.needed(p, reverse, 1), "Reverse attempted Magicule Poison");
+    h.succeed();
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 100)
+  public static void nativeCleansingCallbacksWorkWithoutAnEnemy(GameTestHelper h) {
+    record Cleanse(ManasSkill skill, int mode) {}
+    for (var c :
+        List.of(
+            new Cleanse(AspectualMagics.ANTIDOTE.get(), 0),
+            new Cleanse(UniqueSkills.PREDATOR.get(), 4),
+            new Cleanse(UniqueSkills.GLUTTONY.get(), 3),
+            new Cleanse(UniqueSkills.LUST.get(), 1),
+            new Cleanse(UniqueSkills.REVERSER.get(), 1))) {
+      var p = player(h);
+      var mind = metis(p, false);
+      var i = learn(p, c.skill(), true);
+      p.addEffect(new MobEffectInstance(MobEffects.POISON, 600));
+      h.assertTrue(
+          MetisMatrix.assign(p, 0, i.getSkillId().toString(), c.mode(), 0, false),
+          "Cleanse rejected: " + i.getSkillId());
+      mind.getOrCreateTag().putBoolean(MetisMatrix.AUTO, true);
+      for (int tick = 5; tick <= 25; tick++) step(p, tick);
+      h.assertTrue(
+          !p.hasEffect(MobEffects.POISON), "Native self-cleanse failed: " + i.getSkillId());
+      h.assertTrue(!MetisMagic.needed(p, i, c.mode()), "Cleanse kept casting: " + i.getSkillId());
+      MetisCasting.cancel(p);
+    }
+    h.succeed();
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 100)
+  public static void cleansingThreadsRecheckAfterAnotherThreadCures(GameTestHelper h) {
+    var p = player(h);
+    var mind = metis(p, false);
+    var healer = learn(p, UniqueSkills.HEALER.get(), false);
+    var chef = learn(p, UniqueSkills.CHEF.get(), false);
+    var lust = learn(p, UniqueSkills.LUST.get(), false);
+    TensuraStorages.getEffectFrom(p).setSeveranceAmount(2);
+    var infection = TensuraMobEffects.getReference(TensuraMobEffects.INFECTION);
+    p.addEffect(new MobEffectInstance(infection, 600));
+    p.addEffect(new MobEffectInstance(MobEffects.POISON, 600));
+    h.assertTrue(
+        MetisMatrix.assign(p, 0, healer.getSkillId().toString(), 0, 0, false)
+            && MetisMatrix.assign(p, 1, chef.getSkillId().toString(), 0, 0, false)
+            && MetisMatrix.assign(p, 2, lust.getSkillId().toString(), 1, 0, false),
+        "Hybrid cleanse assignment rejected");
+    mind.getOrCreateTag().putBoolean(MetisMatrix.AUTO, true);
+    p.tickCount = 5;
+    MetisCasting.update(p);
+    h.assertTrue(
+        !p.hasEffect(infection) && TensuraStorages.getEffectFrom(p).getSeveranceAmount() == 0,
+        "Independent specific cleanses did not run");
+    h.assertTrue(!MetisMagic.needed(p, chef, 0), "Cleanse did not stop");
+    near(h, lust.getMastery(), 0, "Already-cured third thread still cast");
+    h.succeed();
   }
 
   @GameTest(template = "empty", timeoutTicks = 100)

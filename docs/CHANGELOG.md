@@ -1,5 +1,12 @@
 # Changelog
 
+## Additions 1.26.1 — Metis cleansing conditions
+
+- Add effect-specific, self-directed triggers for Antidote, Healer Heal, Chef, Lust Invigorate, Predator/Gluttony Isolation, Law Manipulation Abnormality Cleanse, Spatial Domination Spatial Cleanse and Reverser Inverted Fusion [Buff]. Pure cleanses no longer depend on low HP; mixed modes retain healing triggers.
+- Respect native protected-effect tags, mastery, learned modes and per-level cleansing costs. Pause equipment-changing modes when the main hand would redirect them to an item.
+- Recheck cleansing need during preparation and before each cast, including when another thread cures the status in the same update. Document the exact triggers in the wiki and in-game guide.
+
+
 ## Additions 1.26.0 — Metis skill assignment
 
 - Extend Parallel Matrix to owned, learned active skills and arts alongside aspectual/spiritual magic. Keep three threads, four at mastery, with one thread per ability.
