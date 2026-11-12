@@ -2,7 +2,7 @@
 
 > **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
 
-[All wikis](https://github.com/Bithio999/MC/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/MC/wiki/Tensura-Myths)
+[All wikis](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Tensura-Myths)
 
 Ability pages identify the attack’s damage type. Visual color alone does not determine damage.
 
@@ -16,4 +16,4 @@ Ability pages identify the attack’s damage type. Visual color alone does not d
 
 Water and Ice share an elemental family for Thoth’s cycle, which uses **Water** once. Burn/Frost and other status damage is separate from a move’s opening hit. Shields, armor, resistances and skill effects can reduce the result.
 
-[Ability directory](https://github.com/Bithio999/MC/wiki/Abilities) · [Combat rules](https://github.com/Bithio999/MC/wiki/Mechanics).
+[Ability directory](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Abilities) · [Combat rules](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Mechanics).

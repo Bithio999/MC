@@ -2,11 +2,11 @@
 
 > **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
 
-[All wikis](https://github.com/Bithio999/MC/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/MC/wiki/Tensura-Myths)
+[All wikis](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Tensura-Myths)
 
 Lugh, God of Skills is a Godly Skill for analysing, reconstructing and combining combat techniques. Its persistent Skill Bank and three bound techniques determine the forms and damage types of its attacks, while Countermand seals one enemy technique temporarily.
 
-![Lugh, God of Skills icon](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/assets/skill/lugh.png)
+![Lugh, God of Skills icon](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/assets/skill/lugh.png)
 
 | Skill data | Value |
 | --- | --- |
@@ -29,7 +29,7 @@ Lugh, God of Skills is a Godly Skill for analysing, reconstructing and combining
 
 ## Classification passives
 
-Owning this skill grants the always-active [Godly classification passives](https://github.com/Bithio999/MC/wiki/Godly#classification-passives), independently of its toggle.
+Owning this skill grants the always-active [Godly classification passives](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Godly#classification-passives), independently of its toggle.
 
 ## Passive
 
@@ -76,10 +76,10 @@ Reconstruction does not copy the original skill’s full utility or instant-kill
 
 ## Related
 
-[Skill synthesis](https://github.com/Bithio999/MC/wiki/Skill-Synthesis) · [Godly Skills](https://github.com/Bithio999/MC/wiki/Godly)
+[Skill synthesis](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Skill-Synthesis) · [Godly Skills](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Godly)
 
 ## Pictures and video
 
-![Lugh — lugh library](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/lugh-library.png)
+![Lugh — lugh library](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/lugh-library.png)
 
-![Lugh — lugh reconstruction 0](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/lugh-reconstruction-0.png)
+![Lugh — lugh reconstruction 0](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/lugh-reconstruction-0.png)

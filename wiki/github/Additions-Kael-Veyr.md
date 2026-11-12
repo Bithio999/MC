@@ -1,12 +1,12 @@
 # Kael Veyr, the Starless Wayfarer
 
-[All wikis](https://github.com/Bithio999/MC/wiki/Home) · [TensuraAdditionalAdditions](https://github.com/Bithio999/MC/wiki/TensuraAdditionalAdditions) · [The High Realm](https://github.com/Bithio999/MC/wiki/Additions-The-High-Realm)
+[All wikis](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Home) · [TensuraAdditionalAdditions](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/TensuraAdditionalAdditions) · [The High Realm](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Additions-The-High-Realm)
 
-An otherworlder who survived the loss of his own world. His silver hair, navy coat with gold compass embroidery and [Vesper](https://github.com/Bithio999/MC/wiki/Additions-Vesper) mark a rare encounter among the realm’s elite monsters.
+An otherworlder who survived the loss of his own world. His silver hair, navy coat with gold compass embroidery and [Vesper](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Additions-Vesper) mark a rare encounter among the realm’s elite monsters.
 
-![Kael Veyr in The High Realm](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/kael-portrait.png)
+![Kael Veyr in The High Realm](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/kael-portrait.png)
 
-![Kael’s coat and compass embroidery](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/kael-skin-back.png)
+![Kael’s coat and compass embroidery](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/kael-skin-back.png)
 
 | Boss data | Default |
 | --- | --- |
@@ -14,7 +14,7 @@ An otherworlder who survived the loss of his own world. His silver hair, navy co
 | Actual EP | **15,000,000 maximum** · kill rewards cannot exceed this cap |
 | HP / SHP | **10,000 / 37,100** with native race and support bonuses |
 | Location | All three High Realm biomes |
-| Weapon | [Vesper](https://github.com/Bithio999/MC/wiki/Additions-Vesper) |
+| Weapon | [Vesper](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Additions-Vesper) |
 | Health display | HP boss bar |
 
 Kael drops one engraved **Vesper** on defeat. Its Afterwind engraving rewards alternating wind damage and sword strikes.
@@ -39,7 +39,7 @@ Infinite Regeneration restores HP and SHP using magicules. Wind Domination is us
 
 | Native ability | Use | Damage type |
 | --- | --- | --- |
-| **Sword attacks** | [Vesper](https://github.com/Bithio999/MC/wiki/Additions-Vesper) melee. | Physical |
+| **Sword attacks** | [Vesper](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Additions-Vesper) melee. | Physical |
 | **Aura Slash** | Native weapon-based ranged slash. | Physical · aura slash |
 | **Martial Master** | Native dash when grounded with a safe destination near the target. | Physical |
 | **Wind Cutter** | Native wind-blade projectiles. | Wind + magic |
@@ -55,16 +55,16 @@ Infinite Regeneration restores HP and SHP using magicules. Wind Domination is us
 - **Mathematician:** native casting, resistance degradation, dodge, dodge-negation and critical bonuses. Its appraisal activation is player-only.
 - **Seer:** native defensive/critical passives and Future Vision. Kael prioritizes activating Future Vision when available, without toggling it off while active.
 
-![Kael using native Magic Wind Transform](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/kael-native-wind-transform.png)
+![Kael using native Magic Wind Transform](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/kael-native-wind-transform.png)
 
-![Kael using native Wind Cutter](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/kael-native-wind-cutter.png)
+![Kael using native Wind Cutter](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/kael-native-wind-cutter.png)
 
-![Kael casting native Tornado Blade](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/kael-native-tornado.png)
+![Kael casting native Tornado Blade](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/kael-native-tornado.png)
 
 ## Rewards
 
-- **1 [Vesper](https://github.com/Bithio999/MC/wiki/Additions-Vesper)** with **Afterwind I**
-- **1 Starless Core** for crafting a [Chromatic Orb](https://github.com/Bithio999/MC/wiki/Additions-Chromatic-Orb)
+- **1 [Vesper](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Additions-Vesper)** with **Afterwind I**
+- **1 Starless Core** for crafting a [Chromatic Orb](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Additions-Chromatic-Orb)
 - **4–8 Hihiirokane Ingots**
 - **8–16 Magic Ore**
 - **2–4 Echo Shards**

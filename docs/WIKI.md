@@ -26,7 +26,7 @@ The checker verifies local links, images/video paths, ability anchors, duplicate
 
 ## GitHub Wiki export
 
-GitHub’s Wiki is a separate Git repository, `MC.wiki.git`. Committing `wiki/` to the main repository updates the repository/offline editions, not that separate service.
+GitHub’s Wiki is a separate Git repository, `TensuraAdditionalAdditions.wiki.git`. Committing `wiki/` to the main repository updates the repository/offline editions, not that separate service.
 
 When the Wiki repository is initialized and accessible to the configured credentials:
 

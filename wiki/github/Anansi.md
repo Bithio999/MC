@@ -2,11 +2,11 @@
 
 > **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
 
-[All wikis](https://github.com/Bithio999/MC/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/MC/wiki/Tensura-Myths)
+[All wikis](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Tensura-Myths)
 
 Its damage follows the threads and the shape you construct.
 
-![Anansi, Lord of Schemes icon](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/assets/skill/anansi.png)
+![Anansi, Lord of Schemes icon](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/assets/skill/anansi.png)
 
 | Skill data | Value |
 | --- | --- |
@@ -53,8 +53,8 @@ Its damage follows the threads and the shape you construct.
 
 ## Related
 
-[Skill synthesis](https://github.com/Bithio999/MC/wiki/Skill-Synthesis) · [Godly Skills](https://github.com/Bithio999/MC/wiki/Godly)
+[Skill synthesis](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Skill-Synthesis) · [Godly Skills](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Godly)
 
 ## Pictures and video
 
-![Anansi — anansi network](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/anansi-network.png)
+![Anansi — anansi network](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/anansi-network.png)

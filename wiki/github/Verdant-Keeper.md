@@ -2,11 +2,11 @@
 
 > **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
 
-[All wikis](https://github.com/Bithio999/MC/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/MC/wiki/Tensura-Myths)
+[All wikis](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Tensura-Myths)
 
 Verdant Keeper is a Unique Skill focused on allied hp/shp support and forward root control.
 
-![Verdant Keeper icon](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/assets/skill/verdant_keeper.png)
+![Verdant Keeper icon](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/assets/skill/verdant_keeper.png)
 
 | Skill data | Value |
 | --- | --- |
@@ -47,8 +47,8 @@ Verdant Keeper is a Unique Skill focused on allied hp/shp support and forward ro
 
 ## Related
 
-[Skill synthesis](https://github.com/Bithio999/MC/wiki/Skill-Synthesis) · [Godly Skills](https://github.com/Bithio999/MC/wiki/Godly)
+[Skill synthesis](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Skill-Synthesis) · [Godly Skills](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Godly)
 
 ## Pictures and video
 
-![Verdant Keeper — visual verdant keeper](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/visual-verdant-keeper.png)
+![Verdant Keeper — visual verdant keeper](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/visual-verdant-keeper.png)

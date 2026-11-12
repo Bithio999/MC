@@ -1,8 +1,8 @@
 # Prospector
 
-[All wikis](https://github.com/Bithio999/MC/wiki/Home) · [TensuraAdditionalAdditions](https://github.com/Bithio999/MC/wiki/TensuraAdditionalAdditions)
+[All wikis](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Home) · [TensuraAdditionalAdditions](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/TensuraAdditionalAdditions)
 
-![Prospector](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/assets/additions/prospector.png)
+![Prospector](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/assets/additions/prospector.png)
 
 | Skill data | Value |
 | --- | --- |
@@ -11,7 +11,7 @@
 | Role | Mining, ore discovery and refining |
 | Resource cost | None |
 
-![Prospector in the native Unique skill menu](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/prospector-skill-menu.png)
+![Prospector in the native Unique skill menu](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/prospector-skill-menu.png)
 
 <a id="passive"></a>
 
@@ -41,7 +41,7 @@ Enable its checkbox in Tensura's **Skills → Unique** menu. The passive does no
 
 **Damage type:** None.
 
-![Subtle ore markers through stone, with magic ore identified](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/prospector-ore-sense.png)
+![Subtle ore markers through stone, with magic ore identified](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/prospector-ore-sense.png)
 
 <a id="refine"></a>
 
@@ -51,4 +51,4 @@ Open Tensura's normal refining menu. Place base inputs in the **three left slots
 
 Refine works with the passive disabled. **Damage type:** None. **Cost:** No aura or magicules; recipes consume their ingredients. **Cooldown:** None.
 
-![Prospector using Tensura's native refining menu](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/prospector-refine.png)
+![Prospector using Tensura's native refining menu](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/prospector-refine.png)

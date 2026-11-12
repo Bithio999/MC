@@ -2,7 +2,7 @@
 
 > **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
 
-[All wikis](https://github.com/Bithio999/MC/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/MC/wiki/Tensura-Myths)
+[All wikis](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Tensura-Myths)
 
 An alternate Human branch: Awakened Hunter → Apex Hunter → Sovereign Hunter.
 
@@ -24,8 +24,8 @@ Repeated kills of one boss type give one entry. Player-attributed kills while Hu
 
 ## Related
 
-[Aura regeneration](https://github.com/Bithio999/MC/wiki/Aura-Regeneration) · [Storm Crown](https://github.com/Bithio999/MC/wiki/Storm-Crown)
+[Aura regeneration](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Aura-Regeneration) · [Storm Crown](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Storm-Crown)
 
 ## Pictures and video
 
-![Evolution — hunter icons and barriers](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/hunter-icons-and-barriers.png)
+![Evolution — hunter icons and barriers](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/hunter-icons-and-barriers.png)

@@ -2,11 +2,11 @@
 
 > **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
 
-[All wikis](https://github.com/Bithio999/MC/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/MC/wiki/Tensura-Myths)
+[All wikis](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Tensura-Myths)
 
 Thoth, God of Magic is a Godly Skill focused on elemental sequences, disruption, conversion and autonomous spell fire.
 
-![Thoth, God of Magic icon](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/assets/skill/thoth.png)
+![Thoth, God of Magic icon](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/assets/skill/thoth.png)
 
 | Skill data | Value |
 | --- | --- |
@@ -28,7 +28,7 @@ Thoth, God of Magic is a Godly Skill focused on elemental sequences, disruption,
 
 ## Classification passives
 
-Owning this skill grants the always-active [Godly classification passives](https://github.com/Bithio999/MC/wiki/Godly#classification-passives), independently of its toggle.
+Owning this skill grants the always-active [Godly classification passives](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Godly#classification-passives), independently of its toggle.
 
 ## Passive
 
@@ -75,12 +75,12 @@ Hold to continue, without an activation payment, cooldown, duration limit or tot
 
 ## Related
 
-[Skill synthesis](https://github.com/Bithio999/MC/wiki/Skill-Synthesis) · [Godly Skills](https://github.com/Bithio999/MC/wiki/Godly)
+[Skill synthesis](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Skill-Synthesis) · [Godly Skills](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Godly)
 
 ## Pictures and video
 
-![Thoth — thoth lexicon](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/thoth-lexicon.png)
+![Thoth — thoth lexicon](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/thoth-lexicon.png)
 
-![Thoth — thoth mana crucible](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/thoth-mana-crucible.png)
+![Thoth — thoth mana crucible](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/thoth-mana-crucible.png)
 
-[Watch astral library](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/astral-library.mp4)
+[Watch astral library](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/astral-library.mp4)

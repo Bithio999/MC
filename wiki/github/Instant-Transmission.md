@@ -2,7 +2,7 @@
 
 > **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
 
-[All wikis](https://github.com/Bithio999/MC/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/MC/wiki/Tensura-Myths)
+[All wikis](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Tensura-Myths)
 
 A Battlewill evolution of Instant Move for coordinate self-teleportation.
 
@@ -31,8 +31,8 @@ Native spatial blocks still apply. Invalid or unfunded requests do not start a c
 
 ## Related
 
-[Air Walk](https://github.com/Bithio999/MC/wiki/Air-Walk) · [Schema](https://github.com/Bithio999/MC/wiki/Schema)
+[Air Walk](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Air-Walk) · [Schema](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Schema)
 
 ## Pictures and video
 
-![Instant Transmission — instant transmission coordinates](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/instant-transmission-coordinates.png)
+![Instant Transmission — instant transmission coordinates](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/instant-transmission-coordinates.png)

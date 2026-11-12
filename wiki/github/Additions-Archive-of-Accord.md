@@ -1,6 +1,6 @@
 # Archive of Accord
 
-[All wikis](https://github.com/Bithio999/MC/wiki/Home) · [TensuraAdditionalAdditions](https://github.com/Bithio999/MC/wiki/TensuraAdditionalAdditions) · [Skills](https://github.com/Bithio999/MC/wiki/Additions-Skills)
+[All wikis](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Home) · [TensuraAdditionalAdditions](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/TensuraAdditionalAdditions) · [Skills](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Additions-Skills)
 
 | NPC data | Value |
 | --- | --- |
@@ -10,7 +10,7 @@
 | Default cost | 1,000,000 permanent EP + 1 Chromatic Orb |
 | Limit | One successful lesson per player |
 
-![Archive of Accord](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/mentor-archive-exterior.png)
+![Archive of Accord](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/mentor-archive-exterior.png)
 
 ## Finding the archive
 
@@ -26,19 +26,19 @@ Elias stays inside and is protected from ordinary damage. Each archive contains 
 
 <details><summary>Building and room views</summary>
 
-![Rear framing and chimney](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/mentor-archive-rear.png)
+![Rear framing and chimney](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/mentor-archive-rear.png)
 
-![Chandelier and gallery](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/mentor-archive-chandelier.png)
+![Chandelier and gallery](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/mentor-archive-chandelier.png)
 
-![Connected reading bay](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/mentor-archive-reading-bay.png)
+![Connected reading bay](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/mentor-archive-reading-bay.png)
 
-![Tower at night](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/mentor-archive-tower-ground.png)
+![Tower at night](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/mentor-archive-tower-ground.png)
 
 </details>
 
-![Inside the archive](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/mentor-archive-interior.png)
+![Inside the archive](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/mentor-archive-interior.png)
 
-![Elias](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/elias-kael-style.png)
+![Elias](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/elias-kael-style.png)
 
 Existing buildings keep their generated layout.
 
@@ -46,9 +46,9 @@ Existing buildings keep their generated layout.
 
 Interact with Elias, search by skill name or mod, select a Unique and read its description. Choose **Learn this skill**, review the price and confirm. The skill is permanent and starts **unmastered**.
 
-![Mentor catalogue](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/mentor-skill-menu.png)
+![Mentor catalogue](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/mentor-skill-menu.png)
 
-![Confirming the permanent choice](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/mentor-lesson-confirmation.png)
+![Confirming the permanent choice](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/mentor-lesson-confirmation.png)
 
 The default payment is **one Chromatic Orb and 1,000,000 permanent EP**. Permanent aura and magicule capacities pay proportionally to your current permanent reserves. Equipment and temporary bonuses cannot pay the bill; some permanent EP must remain afterward. There is **no additional magicule acquisition charge**. The EP price is configurable in `tensura-additions-mentor.toml`.
 
@@ -60,12 +60,12 @@ The catalogue includes normal Unique skills from Tensura and installed addons, i
 
 **Anti-Skill** and **Chained** are not purchasable. **Parallel World Jumper** is offered only in supported private single-player worlds. Ultimate skills and skills in the Godly tier are not taught. Servers can extend the `heavenlyrestriction:mentor_excluded` skill tag with a datapack.
 
-After learning the missing component, master it and meet the usual [Hephaestus](https://github.com/Bithio999/MC/wiki/Additions-Hephaestus) or [Metis](https://github.com/Bithio999/MC/wiki/Additions-Metis) synthesis requirements. Taking a lesson does not complete an Ultimate synthesis.
+After learning the missing component, master it and meet the usual [Hephaestus](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Additions-Hephaestus) or [Metis](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Additions-Metis) synthesis requirements. Taking a lesson does not complete an Ultimate synthesis.
 
 <details><summary>Compact menu and completed lesson</summary>
 
-![Compact mentor menu](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/mentor-compact-menu.png)
+![Compact mentor menu](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/mentor-compact-menu.png)
 
-![Completed lesson](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/mentor-lesson-completed.png)
+![Completed lesson](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/mentor-lesson-completed.png)
 
 </details>

@@ -3,7 +3,7 @@
 import argparse,json,re,shutil,subprocess,tempfile
 from pathlib import Path
 from urllib.parse import urlsplit
-ROOT=Path(__file__).resolve().parents[1];WIKI=ROOT/'wiki';REPO='https://github.com/Bithio999/MC';WIKI_URL=REPO+'/wiki'
+ROOT=Path(__file__).resolve().parents[1];WIKI=ROOT/'wiki';REPO='https://github.com/Bithio999/TensuraAdditionalAdditions';WIKI_URL=REPO+'/wiki'
 MODS={'myths':('Tensura Myths','0.36.1','Tensura-Myths'),'additions':('TensuraAdditionalAdditions','1.26.1','TensuraAdditionalAdditions')}
 def export(output):
     catalog=json.loads((WIKI/'catalog.json').read_text());output.mkdir(parents=True,exist_ok=True)

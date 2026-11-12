@@ -2,11 +2,11 @@
 
 > **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
 
-[All wikis](https://github.com/Bithio999/MC/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/MC/wiki/Tensura-Myths)
+[All wikis](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Tensura-Myths)
 
-**Ananke** is the first Myth boss. It uses [Moira](https://github.com/Bithio999/MC/wiki/Moira), [Thoth](https://github.com/Bithio999/MC/wiki/Thoth), Infinite Regeneration and all native resistance/nullification skills.
+**Ananke** is the first Myth boss. It uses [Moira](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Moira), [Thoth](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Thoth), Infinite Regeneration and all native resistance/nullification skills.
 
-![Ananke, the Unwritten End icon](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/assets/race/eclipse_seraph.png)
+![Ananke, the Unwritten End icon](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/assets/race/eclipse_seraph.png)
 
 | Boss data | Value |
 | --- | --- |
@@ -45,7 +45,7 @@ Use it on a lodestone with room for a 1.6-block-wide, 4.1-block-tall entity abov
 
 Infinite Regeneration spends magicules to restore HP/SHP before a fatal defeat can trigger the next form. Each form change refills HP, SHP, aura and magicules. Ananke’s valid fighting area extends **72 blocks** from his anchor.
 
-[Moira’s four attacks, costs, damage types and warnings](https://github.com/Bithio999/MC/wiki/Moira).
+[Moira’s four attacks, costs, damage types and warnings](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Moira).
 
 ## Rewards
 
@@ -56,10 +56,10 @@ Drink a Dawn Testament for 2.4 seconds to heal 50% maximum HP, restore 50% maxim
 
 ## Related
 
-[In-game guide](https://github.com/Bithio999/MC/wiki/In-Game-Guide)
+[In-game guide](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/In-Game-Guide)
 
 ## Pictures and video
 
-![Ananke — ananke](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/ananke.png)
+![Ananke — ananke](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/ananke.png)
 
-[Watch ananke last dawn](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/ananke-last-dawn.mp4)
+[Watch ananke last dawn](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/ananke-last-dawn.mp4)

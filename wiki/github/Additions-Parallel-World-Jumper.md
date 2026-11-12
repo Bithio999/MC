@@ -1,6 +1,6 @@
 # Parallel World Jumper
 
-[All wikis](https://github.com/Bithio999/MC/wiki/Home) · [TensuraAdditionalAdditions](https://github.com/Bithio999/MC/wiki/TensuraAdditionalAdditions)
+[All wikis](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Home) · [TensuraAdditionalAdditions](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/TensuraAdditionalAdditions)
 
 **Damage type: None** — world travel.
 
@@ -44,6 +44,6 @@ Can roll as a reincarnation Unique in a private single-player world. Cannot be a
 
 ## Pictures and video
 
-![Parallel World Jumper — world select 1.5.0](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/additions-world-select-1.5.0.png)
+![Parallel World Jumper — world select 1.5.0](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/additions-world-select-1.5.0.png)
 
-[World Hop transition (recorded on 1.3.0; current worlds use the hidden library)](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/world-hop.mp4)
+[World Hop transition (recorded on 1.3.0; current worlds use the hidden library)](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/world-hop.mp4)

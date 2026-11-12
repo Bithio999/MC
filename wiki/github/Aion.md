@@ -2,11 +2,11 @@
 
 > **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
 
-[All wikis](https://github.com/Bithio999/MC/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/MC/wiki/Tensura-Myths)
+[All wikis](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Tensura-Myths)
 
 Aion, God of Causality is a Godly skill built around spatial precision, battlefield control and a personal HP/SHP/energy rewind with a safe recorded position. Its active arts use magicules and space elemental damage.
 
-![Aion, God of Causality icon](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/assets/skill/aion.png)
+![Aion, God of Causality icon](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/assets/skill/aion.png)
 
 | Skill data | Value |
 | --- | --- |
@@ -65,16 +65,16 @@ Every hole homes toward the moving target and deals its own hit. An active Event
 
 ## Related
 
-[Skill synthesis](https://github.com/Bithio999/MC/wiki/Skill-Synthesis) · [Godly Skills](https://github.com/Bithio999/MC/wiki/Godly)
+[Skill synthesis](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Skill-Synthesis) · [Godly Skills](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Godly)
 
 ## Pictures and video
 
-![Aion — aion singularity flight](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/aion-singularity-flight.png)
+![Aion — aion singularity flight](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/aion-singularity-flight.png)
 
-![Aion — aion singularity impact](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/aion-singularity-impact.png)
+![Aion — aion singularity impact](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/aion-singularity-impact.png)
 
-[Watch aion singularity barrage](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/aion-singularity-barrage.mp4)
+[Watch aion singularity barrage](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/aion-singularity-barrage.mp4)
 
 ## Classification passives
 
-Owning this skill grants the always-active [Godly classification passives](https://github.com/Bithio999/MC/wiki/Godly#classification-passives), independently of its toggle.
+Owning this skill grants the always-active [Godly classification passives](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Godly#classification-passives), independently of its toggle.

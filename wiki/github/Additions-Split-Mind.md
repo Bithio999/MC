@@ -1,8 +1,8 @@
 # Split Mind
 
-[All wikis](https://github.com/Bithio999/MC/wiki/Home) · [TensuraAdditionalAdditions](https://github.com/Bithio999/MC/wiki/TensuraAdditionalAdditions)
+[All wikis](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Home) · [TensuraAdditionalAdditions](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/TensuraAdditionalAdditions)
 
-![Split Mind](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/assets/additions/split_mind.png)
+![Split Mind](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/assets/additions/split_mind.png)
 
 | Skill data | Value |
 | --- | --- |
@@ -11,7 +11,7 @@
 | Role | Learning, accelerated thought and automatic magic casting |
 | Resource cost | Assigned magic’s costs; 25% fewer magicules when mastered; no additional fee |
 
-![Split Mind in the native Unique skill menu](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/split-mind-unique-menu.png)
+![Split Mind in the native Unique skill menu](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/split-mind-unique-menu.png)
 
 <a id="passive"></a>
 
@@ -32,11 +32,11 @@ Open the searchable list of **your learned aspectual and spiritual magic**. Filt
 
 **Damage type:** None. **Cost / cooldown:** None.
 
-![Searchable learned-magic assignment menu](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/split-mind-assignment.png)
+![Searchable learned-magic assignment menu](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/split-mind-assignment.png)
 
-![Choose an unlocked spell mode](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/split-mind-mode-dropdown.png)
+![Choose an unlocked spell mode](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/split-mind-mode-dropdown.png)
 
-![Assigned magic at a smaller GUI size](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/split-mind-assignment-small.png)
+![Assigned magic at a smaller GUI size](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/split-mind-assignment-small.png)
 
 <a id="auto-cast"></a>
 
@@ -58,4 +58,4 @@ Split Mind is excluded from **Fettered Human** starting rolls because Auto-Cast 
 
 ## Evolution
 
-[Metis, Lord of Wisdom](https://github.com/Bithio999/MC/wiki/Additions-Metis) combines fully mastered Split Mind and Great Sage after completed true awakening and learning three magics. It retains the assignment and adds a multi-thread matrix.
+[Metis, Lord of Wisdom](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Additions-Metis) combines fully mastered Split Mind and Great Sage after completed true awakening and learning three magics. It retains the assignment and adds a multi-thread matrix.

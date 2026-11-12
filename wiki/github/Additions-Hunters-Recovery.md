@@ -1,8 +1,8 @@
 # Hunter’s Recovery
 
-[All wikis](https://github.com/Bithio999/MC/wiki/Home) · [TensuraAdditionalAdditions](https://github.com/Bithio999/MC/wiki/TensuraAdditionalAdditions)
+[All wikis](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Home) · [TensuraAdditionalAdditions](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/TensuraAdditionalAdditions)
 
-**Hunter’s Recovery** is an aura-powered Extra Skill granted by [Unshackled](https://github.com/Bithio999/MC/wiki/Additions-Unshackled). It provides recovery inspired by native Self Regeneration.
+**Hunter’s Recovery** is an aura-powered Extra Skill granted by [Unshackled](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Additions-Unshackled). It provides recovery inspired by native Self Regeneration.
 
 | Skill data | Value |
 | --- | --- |
@@ -10,7 +10,7 @@
 | Damage type | None — healing / survival |
 | Resource | Aura |
 | Activation | Passive toggle |
-| Race | [Unshackled](https://github.com/Bithio999/MC/wiki/Additions-Unshackled) |
+| Race | [Unshackled](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Additions-Unshackled) |
 | Acquisition cost | No permanent magicule cost |
 
 ## Recovery
@@ -21,4 +21,4 @@
 
 Only the strongest enabled aura-recovery tier heals. Full health costs nothing; recovery is limited by available aura and normal healing suppression.
 
-[All recovery tiers](https://github.com/Bithio999/MC/wiki/Additions-Aura-Regeneration).
+[All recovery tiers](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Additions-Aura-Regeneration).

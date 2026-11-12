@@ -2,11 +2,11 @@
 
 > **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
 
-[All wikis](https://github.com/Bithio999/MC/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/MC/wiki/Tensura-Myths)
+[All wikis](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Tensura-Myths)
 
 Mirrorbound is a Unique Skill focused on splitting light attacks and timed projectile reflection.
 
-![Mirrorbound icon](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/assets/skill/mirrorbound.png)
+![Mirrorbound icon](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/assets/skill/mirrorbound.png)
 
 | Skill data | Value |
 | --- | --- |
@@ -47,8 +47,8 @@ Mirrorbound is a Unique Skill focused on splitting light attacks and timed proje
 
 ## Related
 
-[Skill synthesis](https://github.com/Bithio999/MC/wiki/Skill-Synthesis) · [Godly Skills](https://github.com/Bithio999/MC/wiki/Godly)
+[Skill synthesis](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Skill-Synthesis) · [Godly Skills](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Godly)
 
 ## Pictures and video
 
-![Mirrorbound — visual mirrorbound](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/visual-mirrorbound.png)
+![Mirrorbound — visual mirrorbound](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/visual-mirrorbound.png)

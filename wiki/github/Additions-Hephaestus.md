@@ -1,8 +1,8 @@
 # Hephaestus, Lord of the Forge
 
-[All wikis](https://github.com/Bithio999/MC/wiki/Home) · [TensuraAdditionalAdditions](https://github.com/Bithio999/MC/wiki/TensuraAdditionalAdditions) · [Skills](https://github.com/Bithio999/MC/wiki/Additions-Skills)
+[All wikis](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Home) · [TensuraAdditionalAdditions](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/TensuraAdditionalAdditions) · [Skills](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Additions-Skills)
 
-![Hephaestus](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/assets/additions/hephaestus.png)
+![Hephaestus](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/assets/additions/hephaestus.png)
 
 | Skill data | Value |
 | --- | --- |
@@ -13,11 +13,11 @@
 | Acquisition | 250,000 permanent magicules by default; configurable and affected by Tensura’s skill-cost gamerule |
 | EP requirement | None |
 
-![Native Ultimate menu](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/hephaestus-ultimate.png)
+![Native Ultimate menu](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/hephaestus-ultimate.png)
 
 ## Obtaining
 
-Missing a component? The [Archivist](https://github.com/Bithio999/MC/wiki/Additions-Archive-of-Accord) offers one paid Unique Skill lesson per player. The taught component still needs to be mastered before synthesis.
+Missing a component? The [Archivist](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Additions-Archive-of-Accord) offers one paid Unique Skill lesson per player. The taught component still needs to be mastered before synthesis.
 
 Owning a component reveals an unfinished Hephaestus entry in Tensura’s **Skills → Ultimate** menu. Slot and activate that entry to open **Synthesis**. Complete the listed conditions, choose **Synthesize Hephaestus**, and confirm the dialog.
 
@@ -25,7 +25,7 @@ Awakening bonuses are applied **before** the acquisition cost. Synthesis waits u
 
 The crafting achievement requires an actual craft or smithing result while you have Godly Craftsman. **Tensura’s Smithing Bench**, the vanilla smithing table and crafting tables are supported, including shift-click. Previewing a recipe does not count. The eligible equipment can be changed with the `heavenlyrestriction:hephaestus_synthesis_equipment` item tag. There is no EP threshold.
 
-![Synthesis requirements](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/hephaestus-synthesis.png)
+![Synthesis requirements](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/hephaestus-synthesis.png)
 
 <a id="master-of-the-crucible"></a>
 
@@ -57,21 +57,21 @@ Open the forge to craft, use Tensura’s native refining and engraving menus, ac
 | Conductor | Increased elemental damage | Reduced elemental damage taken, including native SHP damage |
 | Enduring | Further reduces item wear | Further reduces that armor piece’s ordinary and EP wear |
 
-Iron provides **10%**, Diamond **20%**, Netherite **30%**, and Hihiirokane **35%** temper strength. Only one temper applies; replacing it consumes the material again. Tempers are separate from enchantments, engravings and the [Chromatic Orb](https://github.com/Bithio999/MC/wiki/Additions-Chromatic-Orb).
+Iron provides **10%**, Diamond **20%**, Netherite **30%**, and Hihiirokane **35%** temper strength. Only one temper applies; replacing it consumes the material again. Tempers are separate from enchantments, engravings and the [Chromatic Orb](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Additions-Chromatic-Orb).
 
 **Armor tempers activate only in their proper equipped slot.** Helmet and boots contribute **15%** each, chestplate **40%**, and leggings **30%** of their material’s strength. A matching full set contributes the listed material percentage once, up to **35%**; mixing tempers divides that total among their effects. For example, a Diamond chestplate contributes **8%** critical damage with Keen, **8%** armor penetration with Piercing, or **8%** elemental damage reduction with Conductor. Armor’s offensive bonuses add to the weapon’s bonus rather than multiplying it. Enduring’s full material strength applies to that piece’s wear instead of using the slot weight.
 
-![Armor temper effects](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/hephaestus-armor-actions.png)
+![Armor temper effects](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/hephaestus-armor-actions.png)
 
-![Armor contribution tooltip](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/hephaestus-armor-tooltip.png)
+![Armor contribution tooltip](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/hephaestus-armor-tooltip.png)
 
 **Repair:** 500 magicules and one selected material. Restores 30% / 60% / 90% / 100% of ordinary durability and native EP durability, respectively, without changing engravings or the Orb’s one-use history. **Damage type:** none directly.
 
-![Divine Forge](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/hephaestus-forge.png)
+![Divine Forge](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/hephaestus-forge.png)
 
-![Forge action selection](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/hephaestus-forge-actions.png)
+![Forge action selection](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/hephaestus-forge-actions.png)
 
-![Forge at a smaller GUI size](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/hephaestus-forge-compact.png)
+![Forge at a smaller GUI size](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/hephaestus-forge-compact.png)
 
 <a id="living-arsenal"></a>
 
@@ -85,11 +85,11 @@ Weapons prioritize your attack target, then visible hostile mobs or combat oppon
 
 **Damage type:** Physical weapon attacks. Native elemental conversions and engraving follow-ups retain their own types and defenses.
 
-![Arsenal selection](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/hephaestus-arsenal-menu.png)
+![Arsenal selection](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/hephaestus-arsenal-menu.png)
 
-![Living Arsenal formation](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/hephaestus-arsenal.png)
+![Living Arsenal formation](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/hephaestus-arsenal.png)
 
-![Autonomous weapon attack](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/hephaestus-arsenal-strike.png)
+![Autonomous weapon attack](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/hephaestus-arsenal-strike.png)
 
 <a id="magnum-opus"></a>
 
@@ -103,6 +103,6 @@ Designate **one personally forged item** as your masterpiece. It receives **+50%
 
 **Damage type:** none directly. There is no additional transformation or Overforge activation.
 
-![Masterpiece selection](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/hephaestus-masterpiece.png)
+![Masterpiece selection](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/hephaestus-masterpiece.png)
 
 All forge operation and arsenal costs also respect Schema’s resource-cost penalties.

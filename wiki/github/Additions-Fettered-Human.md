@@ -1,10 +1,10 @@
 # Heavenly Restriction lineage
 
-[All wikis](https://github.com/Bithio999/MC/wiki/Home) · [TensuraAdditionalAdditions](https://github.com/Bithio999/MC/wiki/TensuraAdditionalAdditions)
+[All wikis](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Home) · [TensuraAdditionalAdditions](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/TensuraAdditionalAdditions)
 
 Choose Fettered Human at reincarnation. Difficulty: Hard. The lineage keeps your human appearance.
 
-![Heavenly Restriction lineage icon](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/assets/race/fettered_human.png)
+![Heavenly Restriction lineage icon](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/assets/race/fettered_human.png)
 
 ## Starting resources
 
@@ -37,8 +37,8 @@ Skills with magicule-cost abilities or target-skill stealing/copying are exclude
 
 ## Related
 
-[Chained](https://github.com/Bithio999/MC/wiki/Additions-Chained) · [Unbound](https://github.com/Bithio999/MC/wiki/Additions-Unbound) · [Aura regeneration](https://github.com/Bithio999/MC/wiki/Additions-Aura-Regeneration) · [Air Walk](https://github.com/Bithio999/MC/wiki/Additions-Air-Walk)
+[Chained](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Additions-Chained) · [Unbound](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Additions-Unbound) · [Aura regeneration](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Additions-Aura-Regeneration) · [Air Walk](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Additions-Air-Walk)
 
 ## Pictures and video
 
-![Fettered Human — fettered human selection 1.1.1](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/additions-fettered-human-selection-1.1.1.png)
+![Fettered Human — fettered human selection 1.1.1](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/additions-fettered-human-selection-1.1.1.png)

@@ -1,12 +1,12 @@
 # Schema
 
-[All wikis](https://github.com/Bithio999/MC/wiki/Home) · [TensuraAdditionalAdditions](https://github.com/Bithio999/MC/wiki/TensuraAdditionalAdditions)
+[All wikis](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Home) · [TensuraAdditionalAdditions](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/TensuraAdditionalAdditions)
 
 **Damage type: None** — self-buffs.
 
 A Battlewill with a customizable six-effect tree. Learn: 1,000 points. Master: 2,000 points.
 
-![Schema icon](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/assets/battlewill/schema.png)
+![Schema icon](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/assets/battlewill/schema.png)
 
 | Skill data | Value |
 | --- | --- |
@@ -42,8 +42,8 @@ Qualifying aura recovery, Strength hits and Regenerative healing share one maste
 
 ## Related
 
-[Chained](https://github.com/Bithio999/MC/wiki/Additions-Chained) · [Unbound](https://github.com/Bithio999/MC/wiki/Additions-Unbound) · [Aura regeneration](https://github.com/Bithio999/MC/wiki/Additions-Aura-Regeneration)
+[Chained](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Additions-Chained) · [Unbound](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Additions-Unbound) · [Aura regeneration](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Additions-Aura-Regeneration)
 
 ## Pictures and video
 
-![Schema — schema regenerative mastered build](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/additions-schema-regenerative-mastered-build.png)
+![Schema — schema regenerative mastered build](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/additions-schema-regenerative-mastered-build.png)

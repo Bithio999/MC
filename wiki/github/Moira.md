@@ -2,9 +2,9 @@
 
 > **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
 
-[All wikis](https://github.com/Bithio999/MC/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/MC/wiki/Tensura-Myths)
+[All wikis](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Tensura-Myths)
 
-**Moira, Lord of Finality** belongs to [Ananke](https://github.com/Bithio999/MC/wiki/Ananke). It cannot be rolled, synthesized or equipped by players. Listed values are before defenses and other modifiers.
+**Moira, Lord of Finality** belongs to [Ananke](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Ananke). It cannot be rolled, synthesized or equipped by players. Listed values are before defenses and other modifiers.
 
 | Ability | Damage type / raw damage | Cost | Cooldown |
 | --- | --- | --- | --- |
@@ -39,6 +39,6 @@ Available to Ananke's final phase. Opposed celestial seals gather a dark sun abo
 
 ## Pictures and video
 
-![The Last Dawn](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/ananke-last-dawn.png)
+![The Last Dawn](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/ananke-last-dawn.png)
 
-[Watch The Last Dawn](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/ananke-last-dawn.mp4)
+[Watch The Last Dawn](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/ananke-last-dawn.mp4)

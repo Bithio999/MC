@@ -1,8 +1,8 @@
 # Metis, Lord of Wisdom
 
-[All wikis](https://github.com/Bithio999/MC/wiki/Home) · [TensuraAdditionalAdditions](https://github.com/Bithio999/MC/wiki/TensuraAdditionalAdditions) · [Skills](https://github.com/Bithio999/MC/wiki/Additions-Skills)
+[All wikis](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Home) · [TensuraAdditionalAdditions](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/TensuraAdditionalAdditions) · [Skills](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Additions-Skills)
 
-![Metis](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/assets/additions/metis.png)
+![Metis](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/assets/additions/metis.png)
 
 | Skill data | Value |
 | --- | --- |
@@ -13,15 +13,15 @@
 | Acquisition | 250,000 permanent magicules by default; configurable and affected by Tensura’s skill-cost gamerule |
 | EP requirement | None |
 
-![Metis in the native Ultimate menu](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/metis-ultimate-menu.png)
+![Metis in the native Ultimate menu](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/metis-ultimate-menu.png)
 
 ## Obtaining
 
-Missing a component? The [Archivist](https://github.com/Bithio999/MC/wiki/Additions-Archive-of-Accord) offers one paid Unique Skill lesson per player. The taught component still needs to be mastered before synthesis.
+Missing a component? The [Archivist](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Additions-Archive-of-Accord) offers one paid Unique Skill lesson per player. The taught component still needs to be mastered before synthesis.
 
 Owning either component reveals the unfinished Metis entry in **Skills → Ultimate**. Activate it to open **Synthesis**, meet the requirements and confirm. Awakening bonuses apply before the acquisition cost. Both components are replaced by learned, unmastered Metis. Great Sage’s stored items, the Split Mind assignment and affected presets are retained. Autonomous Sage starts off so you can review the matrix first.
 
-![Synthesis requirements](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/metis-synthesis.png)
+![Synthesis requirements](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/metis-synthesis.png)
 
 <a id="unified-intellect"></a>
 
@@ -41,15 +41,15 @@ Open the matrix to assign **three learned abilities**, or **four when mastered**
 
 **Menu-opening modes are excluded.** For example, Spatial Motion’s Blink is assignable but its Warp menu is not. Great Sage’s crafting/refining and Prospector’s refining are also omitted. Assignment packets and saved threads are checked again on the server. Automation uses the main activation, not shift shortcuts. Passive-only skills, automation controllers, world jumping and copied-technique containers are not assignable.
 
-![Skill assignment](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/metis-skill-assignment.png)
+![Skill assignment](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/metis-skill-assignment.png)
 
-![Blink remains available; Warp’s menu is omitted](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/metis-safe-skill-modes.png)
+![Blink remains available; Warp’s menu is omitted](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/metis-safe-skill-modes.png)
 
 Choose a **Healing**, **Support** or **Offense** priority band, evaluated in that order. This controls scheduling; the ability’s native role controls its target. Offensive spells can favor your current combat target or the nearest enemy within 32 blocks. Self-healing and support remain self-directed regardless of the selected priority band.
 
 **Damage type:** none directly.
 
-![Mastered four-thread matrix](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/metis-mastered-matrix.png)
+![Mastered four-thread matrix](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/metis-mastered-matrix.png)
 
 <a id="autonomous-sage"></a>
 

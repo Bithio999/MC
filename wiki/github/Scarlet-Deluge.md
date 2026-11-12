@@ -2,11 +2,11 @@
 
 > **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
 
-[All wikis](https://github.com/Bithio999/MC/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/MC/wiki/Tensura-Myths)
+[All wikis](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Tensura-Myths)
 
 Scarlet Deluge is a Unique Skill inspired by Uth Duna. It combines travelling currents, aimed whirlpools, and native barriers.
 
-![Scarlet Deluge icon](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/assets/skill/scarlet_deluge.png)
+![Scarlet Deluge icon](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/assets/skill/scarlet_deluge.png)
 
 | Skill data | Value |
 | --- | --- |
@@ -46,10 +46,10 @@ Place a six-second whirlpool at the aim point, up to 24 blocks away along the cr
 
 ## Related
 
-[Skill synthesis](https://github.com/Bithio999/MC/wiki/Skill-Synthesis) · [Godly Skills](https://github.com/Bithio999/MC/wiki/Godly)
+[Skill synthesis](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Skill-Synthesis) · [Godly Skills](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Godly)
 
 ## Pictures and video
 
-![Scarlet Deluge — crushing current](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/crushing-current.png)
+![Scarlet Deluge — crushing current](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/crushing-current.png)
 
-![Scarlet Deluge — scarlet undertow](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/scarlet-undertow.png)
+![Scarlet Deluge — scarlet undertow](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/scarlet-undertow.png)

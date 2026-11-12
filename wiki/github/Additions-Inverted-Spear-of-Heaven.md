@@ -1,10 +1,10 @@
 # Inverted Spear of Heaven
 
-[All wikis](https://github.com/Bithio999/MC/wiki/Home) · [TensuraAdditionalAdditions](https://github.com/Bithio999/MC/wiki/TensuraAdditionalAdditions)
+[All wikis](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Home) · [TensuraAdditionalAdditions](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/TensuraAdditionalAdditions)
 
 A rare weapon from ominous trial vault loot, with the same attack stats as a Hihiirokane Sword.
 
-![Inverted Spear of Heaven icon](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/assets/item/inverted_spear_of_heaven.png)
+![Inverted Spear of Heaven icon](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/assets/item/inverted_spear_of_heaven.png)
 
 ## Stats and obtaining
 
@@ -20,4 +20,4 @@ Held main-hand attacks, Severance Rush and Counter carry the engraving. Spiritua
 
 ## Related
 
-[Chained](https://github.com/Bithio999/MC/wiki/Additions-Chained) · [Unbound](https://github.com/Bithio999/MC/wiki/Additions-Unbound)
+[Chained](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Additions-Chained) · [Unbound](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Additions-Unbound)

@@ -2,11 +2,11 @@
 
 > **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
 
-[All wikis](https://github.com/Bithio999/MC/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/MC/wiki/Tensura-Myths)
+[All wikis](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Tensura-Myths)
 
 A Battlewill with a customizable six-effect tree. Learn: 1,000 points. Master: 2,000 points.
 
-![Schema icon](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/assets/battlewill/schema.png)
+![Schema icon](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/assets/battlewill/schema.png)
 
 | Skill data | Value |
 | --- | --- |
@@ -43,8 +43,8 @@ Qualifying aura recovery, Strength hits and Regenerative healing share one maste
 
 ## Related
 
-[Chained](https://github.com/Bithio999/MC/wiki/Chained) · [Unbound](https://github.com/Bithio999/MC/wiki/Unbound) · [Aura regeneration](https://github.com/Bithio999/MC/wiki/Aura-Regeneration)
+[Chained](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Chained) · [Unbound](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Unbound) · [Aura regeneration](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Aura-Regeneration)
 
 ## Pictures and video
 
-![Schema — schema regenerative mastered build](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/schema-regenerative-mastered-build.png)
+![Schema — schema regenerative mastered build](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/schema-regenerative-mastered-build.png)

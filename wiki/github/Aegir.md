@@ -2,11 +2,11 @@
 
 > **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
 
-[All wikis](https://github.com/Bithio999/MC/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/MC/wiki/Tensura-Myths)
+[All wikis](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Tensura-Myths)
 
 Aegir, Lord of the Abyss is an Ultimate Skill for water refraction, projectile redirection and an expanding tidal shock front. Mirrorsea changes the origins and reach of its other arts.
 
-![Aegir, Lord of the Abyss icon](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/assets/skill/aegir.png)
+![Aegir, Lord of the Abyss icon](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/assets/skill/aegir.png)
 
 | Skill data | Value |
 | --- | --- |
@@ -55,8 +55,8 @@ Aegir, Lord of the Abyss is an Ultimate Skill for water refraction, projectile r
 
 ## Related
 
-[Skill synthesis](https://github.com/Bithio999/MC/wiki/Skill-Synthesis) · [Godly Skills](https://github.com/Bithio999/MC/wiki/Godly)
+[Skill synthesis](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Skill-Synthesis) · [Godly Skills](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Godly)
 
 ## Pictures and video
 
-![Aegir — aegir mirrorsea](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/aegir-mirrorsea.png)
+![Aegir — aegir mirrorsea](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/aegir-mirrorsea.png)

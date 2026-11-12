@@ -1,6 +1,6 @@
 # In-game guide
 
-[All wikis](https://github.com/Bithio999/MC/wiki/Home) · [TensuraAdditionalAdditions](https://github.com/Bithio999/MC/wiki/TensuraAdditionalAdditions)
+[All wikis](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Home) · [TensuraAdditionalAdditions](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/TensuraAdditionalAdditions)
 
 Press **F8**, use the pause-menu **Additions Guide** button, or choose **Guide** below Tensura’s status panel.
 
@@ -12,4 +12,4 @@ The guide covers this addon only and works offline. Single-player pauses while r
 
 ## Pictures and video
 
-![In Game Guide — guide restriction home](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/guide-restriction-home.png)
+![In Game Guide — guide restriction home](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/guide-restriction-home.png)

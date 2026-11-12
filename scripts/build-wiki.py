@@ -28,7 +28,7 @@ def url(value,source,destination):
     if target.is_relative_to(WIKI) and target.is_file():return relative(target,destination)+fragment
     if not target.is_relative_to(ROOT) or not (target.is_file() or target==ROOT/'releases/tensura-addon-wikis.zip'):raise ValueError(f'{source.name}: missing target {value}')
     path=target.relative_to(ROOT).as_posix();raw=target.suffix.lower() in ['.jar','.zip','.mp4','.png','.gif','.webp']
-    return ('https://github.com/Bithio999/MC/raw/refs/heads/main/' if raw else 'https://github.com/Bithio999/MC/blob/main/')+path+fragment
+    return ('https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/' if raw else 'https://github.com/Bithio999/TensuraAdditionalAdditions/blob/main/')+path+fragment
 
 def infobox(content,title,category):
     match=re.search(r'<table>.*?</table>',content,re.S)
@@ -89,7 +89,7 @@ def render(source,destination):
 <title>{html.escape(title)} — {html.escape(label)}</title><link rel="stylesheet" href="{relative(SITE/'wiki.css',destination)}">
 <script defer src="{relative(SITE/'search-index.js',destination)}"></script><script defer src="{relative(SITE/'search.js',destination)}"></script></head>
 <body data-root="{prefix}" data-mod="{mod}"><a class="skip" href="#article">Skip to article</a>
-<div class="global-bar"><span>TENSURA ADDON WIKIS</span><div><a href="https://tensura.wiki.gg/wiki/Tensura:_Reincarnated_Wiki">Base mod wiki</a><a href="https://github.com/Bithio999/MC">GitHub</a></div></div>
+<div class="global-bar"><span>TENSURA ADDON WIKIS</span><div><a href="https://tensura.wiki.gg/wiki/Tensura:_Reincarnated_Wiki">Base mod wiki</a><a href="https://github.com/Bithio999/TensuraAdditionalAdditions">GitHub</a></div></div>
 <header class="masthead"><a class="brand" href="{article_home}"><span class="brand-mark" aria-hidden="true">{mark}</span><span>{label}<small>{version} · Minecraft 1.21.1 · NeoForge</small></span></a>
 <div class="search"><label for="wiki-search">Search {label}</label><input id="wiki-search" type="search" placeholder="Search names, abilities or requirements…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="search-results" aria-expanded="false"><div id="search-results" role="listbox" hidden></div><span id="search-status" class="sr-only" aria-live="polite"></span></div></header>
 <nav class="mod-switch" aria-label="Choose addon">{switches}</nav>

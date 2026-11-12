@@ -1,6 +1,6 @@
 # Aura recovery skills
 
-[All wikis](https://github.com/Bithio999/MC/wiki/Home) · [TensuraAdditionalAdditions](https://github.com/Bithio999/MC/wiki/TensuraAdditionalAdditions)
+[All wikis](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Home) · [TensuraAdditionalAdditions](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/TensuraAdditionalAdditions)
 
 **Damage type: None** — healing.
 
@@ -28,4 +28,4 @@ Granted by the relevant Heavenly Restriction evolutions. Earlier recovery skills
 
 ## Related
 
-[Fettered Human](https://github.com/Bithio999/MC/wiki/Additions-Fettered-Human) · [Schema](https://github.com/Bithio999/MC/wiki/Additions-Schema)
+[Fettered Human](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Additions-Fettered-Human) · [Schema](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Additions-Schema)

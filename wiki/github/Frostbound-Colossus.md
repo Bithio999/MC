@@ -2,11 +2,11 @@
 
 > **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
 
-[All wikis](https://github.com/Bithio999/MC/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/MC/wiki/Tensura-Myths)
+[All wikis](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Tensura-Myths)
 
 Frostbound Colossus is a Unique Skill inspired by Jin Dahaad. It combines avalanche impacts, ice capture, and a defensive carapace.
 
-![Frostbound Colossus icon](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/assets/skill/frostbound_colossus.png)
+![Frostbound Colossus icon](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/assets/skill/frostbound_colossus.png)
 
 | Skill data | Value |
 | --- | --- |
@@ -47,8 +47,8 @@ Aim at one visible hostile within 20 blocks. Deal the listed hit damage, then ap
 
 ## Related
 
-[Skill synthesis](https://github.com/Bithio999/MC/wiki/Skill-Synthesis) · [Godly Skills](https://github.com/Bithio999/MC/wiki/Godly)
+[Skill synthesis](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Skill-Synthesis) · [Godly Skills](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Godly)
 
 ## Pictures and video
 
-![Frostbound Colossus — glacial prison](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/glacial-prison.png)
+![Frostbound Colossus — glacial prison](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/glacial-prison.png)

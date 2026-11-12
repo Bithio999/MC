@@ -1,8 +1,8 @@
 # Tyche, Lord of Fortune
 
-[All wikis](https://github.com/Bithio999/MC/wiki/Home) · [TensuraAdditionalAdditions](https://github.com/Bithio999/MC/wiki/TensuraAdditionalAdditions) · [Skills](https://github.com/Bithio999/MC/wiki/Additions-Skills)
+[All wikis](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Home) · [TensuraAdditionalAdditions](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/TensuraAdditionalAdditions) · [Skills](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Additions-Skills)
 
-![Tyche](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/assets/additions/tyche.png)
+![Tyche](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/assets/additions/tyche.png)
 
 | Skill data | Value |
 | --- | --- |
@@ -13,9 +13,9 @@
 | Acquisition | 250,000 permanent magicules by default; configurable, affected by mpSkillCost |
 | EP requirement | None |
 
-![Tyche synthesis menu](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/tyche-synthesis.png)
+![Tyche synthesis menu](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/tyche-synthesis.png)
 
-![Tyche in Tensura’s Ultimate menu](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/tyche-native-ultimate-menu.png)
+![Tyche in Tensura’s Ultimate menu](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/tyche-native-ultimate-menu.png)
 
 Owning either component reveals Tyche in **Skills → Ultimate**. Open the unfinished entry, meet the requirements and confirm synthesis. Awakening bonuses apply before payment. Both parents are replaced by learned, unmastered Tyche. Existing guaranteed hits, their cooldown and Tuner’s current damage-history lockouts transfer. Affected presets point to Guaranteed Dividend.
 
@@ -37,7 +37,7 @@ At **50% HP or SHP or lower**, automatically gain the **full buff for 20 seconds
 | Swim speed | 1.5× mastered Tuner’s bonus; +3 to the native multiplier by default |
 | Movement speed | 1.1× mastered Tuner’s bonus; +0.088 by default |
 
-![Against All Odds timers](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/tyche-odds-status.png)
+![Against All Odds timers](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/tyche-odds-status.png)
 
 Speed bonuses follow the server’s Tuner settings. Each category applies once: no extra Tuner flat attack-damage or evasion layer is added. Uses the same native toggle as Loaded Dice. Switching it off cancels the active buff but retains its cooldown; remaining at low HP/SHP can trigger it again when ready. Duration and cooldown are configurable. **Damage type:** none directly.
 
@@ -48,7 +48,7 @@ An eligible fatal hit is prevented. Recover **full HP, SHP, magicules and aura**
 
 The incoming damage type is recorded using Tuner’s native damage-message grouping. The first revival starts a **five-minute history window**. Each new type can trigger once during that window; an already recorded type cannot. Later revivals **do not extend the window**. When it expires, all recorded types become eligible again.
 
-![Fate Insurance history](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/tyche-insurance-history.png)
+![Fate Insurance history](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/tyche-insurance-history.png)
 
 The reset preserves **Fate Insurance’s own timer and history**. Void, `/kill`, native level-three barrier-bypass attacks and Tuner’s self/owner-attack exclusions remain ineligible. **Damage type:** none.
 

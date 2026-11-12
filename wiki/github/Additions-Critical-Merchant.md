@@ -1,8 +1,8 @@
 # Critical Merchant
 
-[All wikis](https://github.com/Bithio999/MC/wiki/Home) · [TensuraAdditionalAdditions](https://github.com/Bithio999/MC/wiki/TensuraAdditionalAdditions) · [Skills](https://github.com/Bithio999/MC/wiki/Additions-Skills)
+[All wikis](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Home) · [TensuraAdditionalAdditions](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/TensuraAdditionalAdditions) · [Skills](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Additions-Skills)
 
-![Critical Merchant](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/assets/additions/critical-merchant.png)
+![Critical Merchant](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/assets/additions/critical-merchant.png)
 
 | Skill data | Value |
 | --- | --- |
@@ -11,7 +11,7 @@
 | Role | Critical-hit damage and guaranteed criticals |
 | Resource cost | Passive: none · Active: 1,000 magicules |
 
-![Critical Merchant in Tensura’s Unique menu](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/critical-merchant-menu.png)
+![Critical Merchant in Tensura’s Unique menu](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/critical-merchant-menu.png)
 
 <a id="compound-interest"></a>
 
@@ -33,10 +33,10 @@ This works independently of the passive. Toggle **Compound Interest** on to ampl
 
 Unbound’s existing guaranteed criticals retain one base critical multiplier. Guarantees clear on death or forgetting the skill. **Damage type:** none directly; affected attacks retain their normal types.
 
-![A guaranteed critical on a training dummy](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/critical-merchant-hit.png)
+![A guaranteed critical on a training dummy](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/critical-merchant-hit.png)
 
 **Fettered Human:** excluded from its reincarnation rolls because the active costs magicules.
 
 ## Ultimate synthesis
 
-Fully mastered Critical Merchant can combine with Tuner into [Tyche, Lord of Fortune](https://github.com/Bithio999/MC/wiki/Additions-Tyche) after completed awakening and its personal achievements. Pending guaranteed hits and their remaining cooldown transfer.
+Fully mastered Critical Merchant can combine with Tuner into [Tyche, Lord of Fortune](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Additions-Tyche) after completed awakening and its personal achievements. Pending guaranteed hits and their remaining cooldown transfer.

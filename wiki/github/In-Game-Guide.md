@@ -2,7 +2,7 @@
 
 > **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
 
-[All wikis](https://github.com/Bithio999/MC/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/MC/wiki/Tensura-Myths)
+[All wikis](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Tensura-Myths)
 
 Press **F8**, use the pause-menu **Myths Guide** button, or choose **Guide** below Tensura’s status panel.
 
@@ -14,4 +14,4 @@ The guide covers this addon only and works offline. Single-player pauses while r
 
 ## Pictures and video
 
-![In Game Guide — guide myths home](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/guide-myths-home.png)
+![In Game Guide — guide myths home](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/guide-myths-home.png)

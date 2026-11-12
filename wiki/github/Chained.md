@@ -2,11 +2,11 @@
 
 > **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
 
-[All wikis](https://github.com/Bithio999/MC/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/MC/wiki/Tensura-Myths)
+[All wikis](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Tensura-Myths)
 
 The lineage’s Unique Skill trades magical growth and unrestricted learning for aura and physical combat.
 
-![Chained icon](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/assets/skill/chained.png)
+![Chained icon](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/assets/skill/chained.png)
 
 | Skill data | Value |
 | --- | --- |
@@ -53,8 +53,8 @@ Base damage: path 1.5 × √A + W; arrival 3 × √A + W. A is the base aura pay
 
 ## Related
 
-[Unbound](https://github.com/Bithio999/MC/wiki/Unbound) · [Fettered Human](https://github.com/Bithio999/MC/wiki/Fettered-Human) · [Schema](https://github.com/Bithio999/MC/wiki/Schema) · [Inverted Spear of Heaven](https://github.com/Bithio999/MC/wiki/Inverted-Spear-of-Heaven)
+[Unbound](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Unbound) · [Fettered Human](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Fettered-Human) · [Schema](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Schema) · [Inverted Spear of Heaven](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Inverted-Spear-of-Heaven)
 
 ## Pictures and video
 
-![Chained — chained teleport](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/chained-teleport.png)
+![Chained — chained teleport](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/chained-teleport.png)

@@ -2,7 +2,7 @@
 
 > **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
 
-[All wikis](https://github.com/Bithio999/MC/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/MC/wiki/Tensura-Myths)
+[All wikis](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Tensura-Myths)
 
 Convergent Awakening unites two fully evolved lineages into a single registered race. There are 105 unique pairs among the fifteen supported ancestral families.
 
@@ -29,8 +29,8 @@ Bind the secondary racial action to use the fused action. Restore 50% max HP and
 
 ## Related
 
-[Duo Races](https://github.com/Bithio999/MC/wiki/Duo-Races)
+[Duo Races](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Duo-Races)
 
 ## Pictures and video
 
-![Convergent Awakening — convergent awakening](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/convergent-awakening.png)
+![Convergent Awakening — convergent awakening](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/convergent-awakening.png)

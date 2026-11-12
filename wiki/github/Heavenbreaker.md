@@ -2,7 +2,7 @@
 
 > **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
 
-[All wikis](https://github.com/Bithio999/MC/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/MC/wiki/Tensura-Myths)
+[All wikis](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Tensura-Myths)
 
 **Heavenbreaker** is evolution 4 of four of the **Heavenly Restriction** lineage. A human-looking martial body exchanges magical growth for exceptional physical and aura potential through **Chained**, the Unique Skill inherited from Fettered Human.
 
@@ -10,16 +10,16 @@
 | --- | --- |
 | Ancestry | Human |
 | Stage | 4 / 4 evolutions |
-| Recovery Extra | [Sovereign Rebirth](https://github.com/Bithio999/MC/wiki/Sovereign-Rebirth) |
-| Retained Unique | [Chained](https://github.com/Bithio999/MC/wiki/Chained); granted only by Fettered Human |
+| Recovery Extra | [Sovereign Rebirth](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Sovereign-Rebirth) |
+| Retained Unique | [Chained](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Chained); granted only by Fettered Human |
 | HP racial bonus | +1,000 |
 | SHP racial bonus | +6,600 |
 | Attack bonus | +16 |
 | Movement bonus | +30% of base movement |
 | Knockback resistance bonus | +0.6 |
-| Previous evolution | [Heavenly Restricted](https://github.com/Bithio999/MC/wiki/Heavenly-Restricted) |
+| Previous evolution | [Heavenly Restricted](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Heavenly-Restricted) |
 | Next evolution | Final stage |
 
 ## Evolution
 
-[Heavenly Restriction progression](https://github.com/Bithio999/MC/wiki/Fettered-Human). Racial bonuses replace earlier stages; they do not stack.
+[Heavenly Restriction progression](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Fettered-Human). Racial bonuses replace earlier stages; they do not stack.

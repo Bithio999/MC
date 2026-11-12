@@ -1,8 +1,8 @@
 # Exponentiation
 
-[All wikis](https://github.com/Bithio999/MC/wiki/Home) · [TensuraAdditionalAdditions](https://github.com/Bithio999/MC/wiki/TensuraAdditionalAdditions)
+[All wikis](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Home) · [TensuraAdditionalAdditions](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/TensuraAdditionalAdditions)
 
-![Exponentiation](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/assets/additions/exponentiation.png)
+![Exponentiation](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/assets/additions/exponentiation.png)
 
 | Skill data | Value |
 | --- | --- |
@@ -20,11 +20,11 @@ Learn the skill and equip it in your **current Tensura skill preset**. Supported
 
 **Maximum aura/magicules and movement are excluded. Other capacity bonuses use the same ^1.2 bonus. Attack speed, mining speed and chant speed are included.** Values of 1 or less stay unchanged so fractions do not become weaker. Chances keep their native maximum, item drops keep normal stack limits, and extremely large numbers remain finite.
 
-<video controls preload="metadata" poster="../media/exponentiation-preview-poster.png" src="https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/exponentiation-multipliers-1.8.1.mp4"></video>
+<video controls preload="metadata" poster="../media/exponentiation-preview-poster.png" src="https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/exponentiation-multipliers-1.8.1.mp4"></video>
 
-[Watch/download the recorded 1.8.1 multiplier preview](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/exponentiation-multipliers-1.8.1.mp4). Recorded for 1.8.1: its ^2 values, capacity and permanent resource-gain sections predate the current ^1.2 rules. The tables below describe the current release. This animated reference uses native runtime attribute measurements and tested output examples. Test inputs illustrate the power operation; they are not starting stats.
+[Watch/download the recorded 1.8.1 multiplier preview](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/exponentiation-multipliers-1.8.1.mp4). Recorded for 1.8.1: its ^2 values, capacity and permanent resource-gain sections predate the current ^1.2 rules. The tables below describe the current release. This animated reference uses native runtime attribute measurements and tested output examples. Test inputs illustrate the power operation; they are not starting stats.
 
-![Exponentiation in Tensura’s Unique menu](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/exponentiation-menu.png)
+![Exponentiation in Tensura’s Unique menu](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/exponentiation-menu.png)
 
 ## Outputs and gains
 

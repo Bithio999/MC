@@ -1,10 +1,10 @@
 # The High Realm
 
-[All wikis](https://github.com/Bithio999/MC/wiki/Home) · [TensuraAdditionalAdditions](https://github.com/Bithio999/MC/wiki/TensuraAdditionalAdditions)
+[All wikis](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Home) · [TensuraAdditionalAdditions](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/TensuraAdditionalAdditions)
 
 A late-game dimension of pale ridges, cherry groves and misty basins. **5,000,000 actual maximum EP** is required to enter. EP is checked, not spent. Supports single-player and multiplayer.
 
-![Starwood Grove’s pale ridges and cherry trees at permanent twilight.](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/additions-high-realm-landscape.png)
+![Starwood Grove’s pale ridges and cherry trees at permanent twilight.](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/additions-high-realm-landscape.png)
 
 ## Gate
 
@@ -29,7 +29,7 @@ N C L C N
 
 Use **one Nether Star** on the Lodestone to awaken the gate. In survival, the star is consumed once. Stand inside the awakened arch for **2 seconds**, or use its Lodestone, to enter. Every player must meet the EP requirement. Breaking the frame disables it.
 
-![An awakened High Realm gate.](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/additions-high-realm-gate.png)
+![An awakened High Realm gate.](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/additions-high-realm-gate.png)
 
 ## Landscape and enemies
 
@@ -97,7 +97,7 @@ Player or subordinate kills retain normal loot and EP and add **1–3 Amethyst S
 
 ## Rare otherworlder boss
 
-**[Kael Veyr, the Starless Wayfarer](https://github.com/Bithio999/MC/wiki/Additions-Kael-Veyr)** is a **15 million EP** Divine Human / True Hero who can rarely appear in any of the realm’s three biomes. He uses a Hihiirokane Sword, native sword arts, Wind Domination and learned wind magic.
+**[Kael Veyr, the Starless Wayfarer](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Additions-Kael-Veyr)** is a **15 million EP** Divine Human / True Hero who can rarely appear in any of the realm’s three biomes. He uses a Hihiirokane Sword, native sword arts, Wind Domination and learned wind magic.
 
 He has a separate spawn rule from ordinary elites: **weight 1**, an additional **2.5% acceptance roll**, a **20-minute realm-wide spawn cooldown**, no other wild Kael within **512 blocks**, and no spawning within **192 blocks** of the return sanctum. An elapsed cooldown allows another roll; it does not guarantee a spawn.
 
@@ -107,11 +107,11 @@ The **quartz return arch** in the arrival sanctum is the return gate. Walk throu
 
 The small arrival sanctum is protected from normal block edits. Natural hostile spawns are suppressed within **48 blocks** of its center. The rest of the dimension can be mined and built in. **Beds do not work here.**
 
-![The protected return sanctum.](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/additions-high-realm-arrival.png)
+![The protected return sanctum.](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/additions-high-realm-arrival.png)
 
 ## Saves and settings
 
-The dimension is added to existing saves. Its terrain, awakened gates and individual return points persist after a restart. [World Hop](https://github.com/Bithio999/MC/wiki/Additions-Parallel-World-Jumper) generates a fresh realm for a new seed; returning to a previously visited world restores that world's realm.
+The dimension is added to existing saves. Its terrain, awakened gates and individual return points persist after a restart. [World Hop](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Additions-Parallel-World-Jumper) generates a fresh realm for a new seed; returning to a previously visited world restores that world's realm.
 
 Existing eligible unowned elites receive applicable same-entity evolutions and loadouts when loaded, without refilling resources. Existing unowned elites also receive the halved EP balance once when loaded; current aura and magicules are capped to the new capacity. HP, SHP, damage and skill packages are unchanged. Owned mobs remain unchanged. Old daemon entities remain until normal despawning; new spawns use the upgraded types. Existing vanilla elites are left to despawn normally; no new vanilla elites spawn.
 
@@ -124,4 +124,4 @@ The entry default is **5M EP**. On the first upgrade, existing worlds using the 
 
 ## Chromatic crafting
 
-Unowned elites have a **25% chance** to drop their archetype’s Bulwark, Sentinel or Skirmisher Shard when killed by a player or their subordinate. Combine one of each with Kael’s guaranteed **Starless Core** to craft a [Chromatic Orb](https://github.com/Bithio999/MC/wiki/Additions-Chromatic-Orb).
+Unowned elites have a **25% chance** to drop their archetype’s Bulwark, Sentinel or Skirmisher Shard when killed by a player or their subordinate. Combine one of each with Kael’s guaranteed **Starless Core** to craft a [Chromatic Orb](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Additions-Chromatic-Orb).

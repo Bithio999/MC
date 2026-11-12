@@ -2,7 +2,7 @@
 
 > **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
 
-[All wikis](https://github.com/Bithio999/MC/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/MC/wiki/Tensura-Myths)
+[All wikis](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Tensura-Myths)
 
 Duo Races let an awakened player develop a second ancestral race alongside their primary race. The primary race retains the body, size and normal racial key.
 
@@ -30,10 +30,10 @@ Finish both lineages to unlock their Convergent Awakening. The right-side tabs s
 
 ## Related
 
-[Convergent Awakening](https://github.com/Bithio999/MC/wiki/Convergent-Awakening)
+[Convergent Awakening](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Convergent-Awakening)
 
 ## Pictures and video
 
-![Duo Races — duo status](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/duo-status.png)
+![Duo Races — duo status](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/duo-status.png)
 
-![Duo Races — secondary requirements](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/secondary-requirements.png)
+![Duo Races — secondary requirements](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/secondary-requirements.png)

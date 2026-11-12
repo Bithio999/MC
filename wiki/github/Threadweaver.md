@@ -2,11 +2,11 @@
 
 > **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
 
-[All wikis](https://github.com/Bithio999/MC/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/MC/wiki/Tensura-Myths)
+[All wikis](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Tensura-Myths)
 
 Threadweaver is a Unique Skill focused on single-target leash and spatial severance.
 
-![Threadweaver icon](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/assets/skill/threadweaver.png)
+![Threadweaver icon](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/assets/skill/threadweaver.png)
 
 | Skill data | Value |
 | --- | --- |
@@ -48,8 +48,8 @@ Threadweaver is a Unique Skill focused on single-target leash and spatial severa
 
 ## Related
 
-[Skill synthesis](https://github.com/Bithio999/MC/wiki/Skill-Synthesis) · [Godly Skills](https://github.com/Bithio999/MC/wiki/Godly)
+[Skill synthesis](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Skill-Synthesis) · [Godly Skills](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Godly)
 
 ## Pictures and video
 
-![Threadweaver — visual threadweaver](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/visual-threadweaver.png)
+![Threadweaver — visual threadweaver](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/visual-threadweaver.png)

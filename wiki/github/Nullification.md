@@ -2,9 +2,9 @@
 
 > **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
 
-[All wikis](https://github.com/Bithio999/MC/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/MC/wiki/Tensura-Myths)
+[All wikis](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Tensura-Myths)
 
-**Nullification** is the unique engraving built into the **[Inverted Spear of Heaven](https://github.com/Bithio999/MC/wiki/Inverted-Spear-of-Heaven)**. It is registered in Tensura's engraving classification and uses the normal enchantment component.
+**Nullification** is the unique engraving built into the **[Inverted Spear of Heaven](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Inverted-Spear-of-Heaven)**. It is registered in Tensura's engraving classification and uses the normal enchantment component.
 
 | Engraving data | Value |
 | --- | --- |
@@ -18,4 +18,4 @@
 
 Attacks shatter barriers, clear skill status effects, and block the target’s skill activation for **2 seconds**. The weapon can attack **Spiritual Entities**. Held dash/Counter attacks carry its engraving effects.
 
-[Inverted Spear of Heaven](https://github.com/Bithio999/MC/wiki/Inverted-Spear-of-Heaven).
+[Inverted Spear of Heaven](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Inverted-Spear-of-Heaven).

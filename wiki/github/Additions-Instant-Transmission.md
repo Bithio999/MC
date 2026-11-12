@@ -1,6 +1,6 @@
 # Instant Transmission
 
-[All wikis](https://github.com/Bithio999/MC/wiki/Home) · [TensuraAdditionalAdditions](https://github.com/Bithio999/MC/wiki/TensuraAdditionalAdditions)
+[All wikis](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Home) · [TensuraAdditionalAdditions](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/TensuraAdditionalAdditions)
 
 **Damage type: None** — movement.
 
@@ -30,8 +30,8 @@ Native spatial blocks still apply. Invalid or unfunded requests do not start a c
 
 ## Related
 
-[Air Walk](https://github.com/Bithio999/MC/wiki/Additions-Air-Walk) · [Schema](https://github.com/Bithio999/MC/wiki/Additions-Schema)
+[Air Walk](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Additions-Air-Walk) · [Schema](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Additions-Schema)
 
 ## Pictures and video
 
-![Instant Transmission — instant transmission coordinates](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/additions-instant-transmission-coordinates.png)
+![Instant Transmission — instant transmission coordinates](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/additions-instant-transmission-coordinates.png)

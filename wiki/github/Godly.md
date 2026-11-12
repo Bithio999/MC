@@ -2,17 +2,17 @@
 
 > **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
 
-[All wikis](https://github.com/Bithio999/MC/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/MC/wiki/Tensura-Myths)
+[All wikis](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Tensura-Myths)
 
 Godly is Myths’ tier above Ultimate. Open **Skills → Godly → Ascension** after mastering a combination Ultimate, becoming a **True Hero or True Demon Lord**, and reaching **12M total EP**.
 
 | Skill | Additional ingredient | Role |
 | --- | --- | --- |
-| [Aion](https://github.com/Bithio999/MC/wiki/Aion) | None | Space, rewind and black holes |
-| [Thoth](https://github.com/Bithio999/MC/wiki/Thoth) | Mastered Rune Smith | Elemental magic and aura conversion |
-| [Lugh](https://github.com/Bithio999/MC/wiki/Lugh) | Mastered Threadweaver | Skill Bank and reconstructed attacks |
+| [Aion](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Aion) | None | Space, rewind and black holes |
+| [Thoth](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Thoth) | Mastered Rune Smith | Elemental magic and aura conversion |
+| [Lugh](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Lugh) | Mastered Threadweaver | Skill Bank and reconstructed attacks |
 
-[Demiurge](https://github.com/Bithio999/MC/wiki/Demiurge) is Eschaton’s boss-exclusive Godly skill and cannot be acquired by players.
+[Demiurge](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Demiurge) is Eschaton’s boss-exclusive Godly skill and cannot be acquired by players.
 
 ## Classification passives
 
@@ -32,4 +32,4 @@ Owning any Godly skill grants these automatically, without upkeep, toggle, slot 
 
 ## Pictures
 
-![Godly menu](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/aion-godly-ui.png)
+![Godly menu](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/aion-godly-ui.png)

@@ -2,11 +2,11 @@
 
 > **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
 
-[All wikis](https://github.com/Bithio999/MC/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/MC/wiki/Tensura-Myths)
+[All wikis](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Tensura-Myths)
 
-**Eschaton** is the final Myth boss: an Origin Sovereign with **one billion EP**, [Demiurge](https://github.com/Bithio999/MC/wiki/Demiurge), [Aion](https://github.com/Bithio999/MC/wiki/Aion), [Thoth](https://github.com/Bithio999/MC/wiki/Thoth), Infinite Regeneration and all native resistance/nullification skills.
+**Eschaton** is the final Myth boss: an Origin Sovereign with **one billion EP**, [Demiurge](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Demiurge), [Aion](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Aion), [Thoth](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Thoth), Infinite Regeneration and all native resistance/nullification skills.
 
-![Eschaton, the Last Myth icon](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/assets/race/origin_sovereign.png)
+![Eschaton, the Last Myth icon](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/assets/race/origin_sovereign.png)
 
 | Boss data | Value |
 | --- | --- |
@@ -30,7 +30,7 @@ Craft **Last Convergence**:
 | Dragon's Breath | Dawn Testament | Dragon's Breath |
 | Beacon | Nether Star | Beacon |
 
-The Dawn Testament is obtained from [Ananke](https://github.com/Bithio999/MC/wiki/Ananke). Use the invitation on a beacon on Easy, Normal or Hard, with seven clear blocks above it and sufficient width. The invitation is consumed only after a successful summon; creative players retain it. The ritual fails if another living Eschaton is within 256 blocks. There is no player EP gate.
+The Dawn Testament is obtained from [Ananke](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Ananke). Use the invitation on a beacon on Easy, Normal or Hard, with seven clear blocks above it and sufficient width. The invitation is consumed only after a successful summon; creative players retain it. The ritual fails if another living Eschaton is within 256 blocks. There is no player EP gate.
 
 Prepare a broad, open arena, preferably more than 120 blocks across.
 
@@ -68,15 +68,15 @@ Each form transition refills HP, SHP, aura and magicules. Infinite Regeneration 
 
 ## Related
 
-[In-game guide](https://github.com/Bithio999/MC/wiki/In-Game-Guide)
+[In-game guide](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/In-Game-Guide)
 
 ## Pictures and video
 
-![Eschaton — eschaton form one](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/eschaton-form-one.png)
+![Eschaton — eschaton form one](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/eschaton-form-one.png)
 
-![Eschaton — eschaton final form](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/eschaton-final-form.png)
+![Eschaton — eschaton final form](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/eschaton-final-form.png)
 
-[Watch eschaton aion anime preview](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/eschaton-aion-anime-preview.mp4)
+[Watch eschaton aion anime preview](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/eschaton-aion-anime-preview.mp4)
 
 ## Creation seals
 

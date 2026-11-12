@@ -2,11 +2,11 @@
 
 > **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
 
-[All wikis](https://github.com/Bithio999/MC/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/MC/wiki/Tensura-Myths)
+[All wikis](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Tensura-Myths)
 
 Storm Crown is a Unique Skill inspired by Rey Dau. It combines ricochet lightning with an aimed movement art.
 
-![Storm Crown icon](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/assets/skill/storm_crown.png)
+![Storm Crown icon](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/assets/skill/storm_crown.png)
 
 | Skill data | Value |
 | --- | --- |
@@ -46,8 +46,8 @@ Dash along your full aim direction for up to 16 blocks, including upward and dow
 
 ## Related
 
-[Skill synthesis](https://github.com/Bithio999/MC/wiki/Skill-Synthesis) · [Godly Skills](https://github.com/Bithio999/MC/wiki/Godly)
+[Skill synthesis](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Skill-Synthesis) · [Godly Skills](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Godly)
 
 ## Pictures and video
 
-![Storm Crown — visual storm crown](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/visual-storm-crown.png)
+![Storm Crown — visual storm crown](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/visual-storm-crown.png)

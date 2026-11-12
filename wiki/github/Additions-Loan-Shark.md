@@ -1,8 +1,8 @@
 # Loan Shark
 
-[All wikis](https://github.com/Bithio999/MC/wiki/Home) · [TensuraAdditionalAdditions](https://github.com/Bithio999/MC/wiki/TensuraAdditionalAdditions)
+[All wikis](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Home) · [TensuraAdditionalAdditions](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/TensuraAdditionalAdditions)
 
-![Loan Shark](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/assets/additions/loan_shark.png)
+![Loan Shark](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/assets/additions/loan_shark.png)
 
 | Skill data | Value |
 | --- | --- |
@@ -36,9 +36,9 @@ Income includes EP earned through other skills, items or permanent-stat gains du
 
 Casting/channeling and attributed hits count as use. Toggles count while enabled; native ticking passives count while ticking; detected in-slot combat passives and Exponentiation count while equipped. Resistances and native pure passives that cannot be slotted remain active while owned. Brief casts/hits count for a one-second window. Native ticking eligibility keeps ongoing passives active between callbacks. An equipped active-only skill is not automatically treated as permanently in use.
 
-![Skill gift invitation](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/loan-shark-gift-offer.png)
+![Skill gift invitation](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/loan-shark-gift-offer.png)
 
-![Searchable skill picker](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/loan-shark-loan-picker.png)
+![Searchable skill picker](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/loan-shark-loan-picker.png)
 
 **Damage type:** None.
 
@@ -60,15 +60,15 @@ Activate **Report** to open only the searchable ledger of your gifts. Each recor
 
 Claim checks the current gamerule when used. **Chained and all Ultimate-classified skills are excluded in both modes**, including addon tiers implemented as Ultimate. The gifted copy itself can still be recalled regardless of its tier. The result message identifies whether the reward was copied or stolen. Claimed and recalled gifts leave Report’s active list. Confirmation remains available while its timers refresh.
 
-![Copied claim reward](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/loan-shark-claimed-copy.png)
+![Copied claim reward](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/loan-shark-claimed-copy.png)
 
 Claim sooner, or while the skill is in use, and it only recalls the copy. If no eligible skill can be acquired, nothing extra is taken. Claims are checked on the server; completed contracts cannot be reused. The borrower must be online or loaded to receive an extra skill from Claim. Confirmed subordinate deaths close their loans automatically; player deaths keep respawnable loans. An unloaded living borrower remains listed as unavailable. For an older missing borrower, **Close record** removes the row without taking an extra skill and recalls the marked gift if that borrower later returns.
 
 An unrelated independently acquired instance is not removed as the gifted copy.
 
-![Close an unavailable loan](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/loan-shark-close-unavailable.png)
+![Close an unavailable loan](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/loan-shark-close-unavailable.png)
 
-![Loan Shark report](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/loan-shark-report.png)
+![Loan Shark report](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/loan-shark-report.png)
 
 Usage and contracts persist across save/restart. Time uses running server ticks: an unloaded borrower's use time stops, while its idle interval continues as the server runs. Time while the server is stopped does not count. Screenshots use a prepared scenario with accelerated ledger time.
 

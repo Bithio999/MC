@@ -1,10 +1,10 @@
 # Unbound
 
-[All wikis](https://github.com/Bithio999/MC/wiki/Home) · [TensuraAdditionalAdditions](https://github.com/Bithio999/MC/wiki/TensuraAdditionalAdditions)
+[All wikis](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Home) · [TensuraAdditionalAdditions](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/TensuraAdditionalAdditions)
 
 Chained automatically evolves into this Ultimate when you are Heavenbreaker, fully master Chained, and become a True Hero or True Demon Lord.
 
-![Unbound icon](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/assets/skill/unbound.png)
+![Unbound icon](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/assets/skill/unbound.png)
 
 | Skill data | Value |
 | --- | --- |
@@ -39,10 +39,10 @@ The same 16-block aim teleport and Physical path/arrival formulas as Chained. Co
 
 ## Related
 
-[Chained](https://github.com/Bithio999/MC/wiki/Additions-Chained) · [Inverted Spear of Heaven](https://github.com/Bithio999/MC/wiki/Additions-Inverted-Spear-of-Heaven)
+[Chained](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Additions-Chained) · [Inverted Spear of Heaven](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Additions-Inverted-Spear-of-Heaven)
 
 ## Pictures and video
 
-![Unbound — unbound counter slash](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/additions-unbound-counter-slash.png)
+![Unbound — unbound counter slash](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/additions-unbound-counter-slash.png)
 
-[Counter against Eschaton (Myths recording; the Counter ability is also in Additions)](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/counter-eschaton-8m.mp4)
+[Counter against Eschaton (Myths recording; the Counter ability is also in Additions)](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/counter-eschaton-8m.mp4)

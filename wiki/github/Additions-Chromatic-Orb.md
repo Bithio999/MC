@@ -1,8 +1,8 @@
 # Chromatic Orb
 
-[All wikis](https://github.com/Bithio999/MC/wiki/Home) · [TensuraAdditionalAdditions](https://github.com/Bithio999/MC/wiki/TensuraAdditionalAdditions) · [Equipment](https://github.com/Bithio999/MC/wiki/Additions-Weapons)
+[All wikis](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Home) · [TensuraAdditionalAdditions](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/TensuraAdditionalAdditions) · [Equipment](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Additions-Weapons)
 
-![Chromatic Orb](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/chromatic-orb.png)
+![Chromatic Orb](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/chromatic-orb.png)
 
 A one-time equipment enhancement. In an **anvil**, combine equipment in the left slot with a Chromatic Orb in the right slot. Taking the result costs **one orb and one XP level**.
 
@@ -10,7 +10,7 @@ Every eligible engraving gains **one level**, including beyond its normal maximu
 
 An infused piece cannot use another orb. Its tooltip shows **Chromatic infusion · already applied**. Renaming, repairs, smithing and normal gear evolution preserve that history. A grindstone removes engravings normally and does not make the equipment eligible for another orb.
 
-![Anvil preview showing over-cap engravings and unchanged curses](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/chromatic-anvil-upgrade.png)
+![Anvil preview showing over-cap engravings and unchanged curses](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/chromatic-anvil-upgrade.png)
 
 [Crafting](#crafting) · [Upgraded effects](#upgraded-engraving-effects)
 
@@ -23,9 +23,9 @@ Combine **one of each** ingredient below in any arrangement in a crafting grid t
 | **Bulwark Shard** | High Orcs, Armorsauruses and Horned Bears |
 | **Sentinel Shard** | Dragonewts, Basilisks, Greater Daemons and Arch Daemons |
 | **Skirmisher Shard** | Tempest Star Wolves, Blade Tigers and Knight Spiders |
-| **Starless Core** | [Kael Veyr](https://github.com/Bithio999/MC/wiki/Additions-Kael-Veyr) · one guaranteed per defeat |
+| **Starless Core** | [Kael Veyr](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Additions-Kael-Veyr) · one guaranteed per defeat |
 
-Shards have a **25% drop chance** from the matching unowned [High Realm](https://github.com/Bithio999/MC/wiki/Additions-The-High-Realm) elite. The kill must be credited to a player or their subordinate. Ordinary mobs and owned subordinates do not drop shards.
+Shards have a **25% drop chance** from the matching unowned [High Realm](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Additions-The-High-Realm) elite. The kill must be credited to a player or their subordinate. Ordinary mobs and owned subordinates do not drop shards.
 
 ## Upgraded engraving effects
 
@@ -76,7 +76,7 @@ Bonuses apply in each engraving’s normal equipment slots and attack conditions
 | **Dead End Rainbow** | I → II | At full attack charge, direct SHP damage changes from **clamp(S/7 + 10% of S, 10, 500)** to **clamp(S/7 + 20% of S, 20, 1,000)**, where **S** is the target’s maximum SHP. The **1-second** player cooldown remains. Armor mitigation is already fully bypassed at I. <!-- engraving: tensura:dead_end_rainbow --> |
 | **Intangibility** | I → II | Projectile piercing amount **5 → 10**. Armor mitigation is already fully bypassed at I, and the native melee shield-bypass condition does not become stronger. <!-- engraving: tensura:intangibility --> |
 | **Nullification** | I → II | **No stronger effect.** Barrier shattering, skill-effect removal, spiritual targeting and the **2-second skill seal** remain unchanged. <!-- engraving: heavenlyrestriction:nullification --> |
-| **Afterwind** | I → II | [Vesper](https://github.com/Bithio999/MC/wiki/Additions-Vesper) delayed Wind cut: **30% → 75%** of raw attack damage. The **0.2-second delay**, **3-second cooldown** and **5-second mark** stay the same. <!-- engraving: heavenlyrestriction:afterwind --> |
+| **Afterwind** | I → II | [Vesper](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Additions-Vesper) delayed Wind cut: **30% → 75%** of raw attack damage. The **0.2-second delay**, **3-second cooldown** and **5-second mark** stay the same. <!-- engraving: heavenlyrestriction:afterwind --> |
 
 ### Mysticism addon engravings
 
@@ -100,8 +100,8 @@ These apply when Mysticism is installed, including the checked Neo Otherworld 1.
 
 Godly Craftsman cannot store engravings above their ordinary maximum. Rejected overcap engravings stay on the donor; other eligible entries can still be learned. Existing overcap knowledge in that skill is normalized when read.
 
-[Lord of the Forge](https://github.com/Bithio999/MC/wiki/Additions-Hephaestus) can store overcap levels within its research limits. Applying an Orb-eligible overcap marks the receiving equipment’s Chromatic upgrade as used. This blocks repeatedly copying the engraving to a fresh item and raising it with another Orb. Applying only normal capped levels keeps the upgrade available. Editing already-infused equipment retains its level and spent upgrade.
+[Lord of the Forge](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Additions-Hephaestus) can store overcap levels within its research limits. Applying an Orb-eligible overcap marks the receiving equipment’s Chromatic upgrade as used. This blocks repeatedly copying the engraving to a fresh item and raising it with another Orb. Applying only normal capped levels keeps the upgrade available. Editing already-infused equipment retains its level and spent upgrade.
 
 ## Mentorship
 
-One Orb can also pay part of the [Archivist's one-time Unique Skill lesson](https://github.com/Bithio999/MC/wiki/Additions-Archive-of-Accord), along with the configured permanent EP cost. It is consumed by the lesson.
+One Orb can also pay part of the [Archivist's one-time Unique Skill lesson](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Additions-Archive-of-Accord), along with the configured permanent EP cost. It is consumed by the lesson.

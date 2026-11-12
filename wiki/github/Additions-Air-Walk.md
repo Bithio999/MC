@@ -1,12 +1,12 @@
 # Air Walk
 
-[All wikis](https://github.com/Bithio999/MC/wiki/Home) · [TensuraAdditionalAdditions](https://github.com/Bithio999/MC/wiki/TensuraAdditionalAdditions)
+[All wikis](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Home) · [TensuraAdditionalAdditions](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/TensuraAdditionalAdditions)
 
 **Damage type: None** — movement.
 
 A Battlewill evolution of Air Float / Air Flight.
 
-![Air Walk icon](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/assets/battlewill/air_sovereignty.png)
+![Air Walk icon](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/assets/battlewill/air_sovereignty.png)
 
 | Skill data | Value |
 | --- | --- |
@@ -27,4 +27,4 @@ Cost: 30 aura to activate and 30 aura per second actually flying. Mastery halves
 
 ## Related
 
-[Instant Transmission](https://github.com/Bithio999/MC/wiki/Additions-Instant-Transmission) · [Schema](https://github.com/Bithio999/MC/wiki/Additions-Schema)
+[Instant Transmission](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Additions-Instant-Transmission) · [Schema](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Additions-Schema)

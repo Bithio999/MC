@@ -2,9 +2,9 @@
 
 > **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
 
-[All wikis](https://github.com/Bithio999/MC/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/MC/wiki/Tensura-Myths)
+[All wikis](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Tensura-Myths)
 
-**Demiurge, God of Genesis** belongs to [Eschaton](https://github.com/Bithio999/MC/wiki/Eschaton). It cannot be rolled, synthesized or equipped by players. Listed values are before defenses and other modifiers.
+**Demiurge, God of Genesis** belongs to [Eschaton](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Eschaton). It cannot be rolled, synthesized or equipped by players. Listed values are before defenses and other modifiers.
 
 | Ability | Damage type / raw damage | Cost | Cooldown |
 | --- | --- | --- | --- |
@@ -74,10 +74,10 @@ Eschaton rises toward an apex six blocks above his starting position while a lan
 
 **Geometry:** 56-block damage sphere centered on the saved casting origin.
 
-Creation seals feed a growing black world seed above Eschaton. A vast canopy, broad converging ribbons, saturated light plumes and rising fragments surround the lensed seed. The formation compresses before its final expanding nova and pressure front, making its buildup visible across the arena. Break a seal for a seven-block horizontal, ten-block vertical refuge and a large drain of current reserves. Break all three to cancel the nova and create an eight-second opening. See [creation seals](https://github.com/Bithio999/MC/wiki/Eschaton#creation-seals) for exact resource drains and placement rules.
+Creation seals feed a growing black world seed above Eschaton. A vast canopy, broad converging ribbons, saturated light plumes and rising fragments surround the lensed seed. The formation compresses before its final expanding nova and pressure front, making its buildup visible across the arena. Break a seal for a seven-block horizontal, ten-block vertical refuge and a large drain of current reserves. Break all three to cancel the nova and create an eight-second opening. See [creation seals](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Eschaton#creation-seals) for exact resource drains and placement rules.
 
 ## Pictures and video
 
-![Apocalypse release](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/eschaton-apocalypse-release.png)
+![Apocalypse release](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/eschaton-apocalypse-release.png)
 
-[Watch Eschaton’s arts](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/eschaton-aion-anime-preview.mp4)
+[Watch Eschaton’s arts](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/eschaton-aion-anime-preview.mp4)

@@ -2,7 +2,7 @@
 
 > **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
 
-[All wikis](https://github.com/Bithio999/MC/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/MC/wiki/Tensura-Myths)
+[All wikis](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Tensura-Myths)
 
 Toggle a recovery skill to heal with aura. Only your strongest toggled tier works; full reserves cost nothing.
 
@@ -28,4 +28,4 @@ Granted by the relevant hunter or Heavenly Restriction evolutions. Earlier recov
 
 ## Related
 
-[Fettered Human](https://github.com/Bithio999/MC/wiki/Fettered-Human) · [Schema](https://github.com/Bithio999/MC/wiki/Schema)
+[Fettered Human](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Fettered-Human) · [Schema](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Schema)

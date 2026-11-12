@@ -1,8 +1,8 @@
 # Fusion
 
-[All wikis](https://github.com/Bithio999/MC/wiki/Home) · [TensuraAdditionalAdditions](https://github.com/Bithio999/MC/wiki/TensuraAdditionalAdditions)
+[All wikis](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Home) · [TensuraAdditionalAdditions](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/TensuraAdditionalAdditions)
 
-![Fusion](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/assets/additions/fusion.png)
+![Fusion](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/assets/additions/fusion.png)
 
 | Skill data | Value |
 | --- | --- |
@@ -36,7 +36,7 @@ Press **Fuse** again or choose **Pause → Separate Fusion** to end early. The a
 
 Open Tensura’s **Ability Selection** menu. Borrowed skills appear in their normal categories, such as **Skills → Unique**, **Magic**, or **Battlewills**. Search `f:temporary` to find temporary entries. Select and slot active abilities normally; passives follow their normal toggle/slot rules. Borrowed entries disappear after separation, and any previous learning entry is restored.
 
-![Borrowed skills in the receiving player’s native menu](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/fusion-player-unique-menu.png)
+![Borrowed skills in the receiving player’s native menu](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/fusion-player-unique-menu.png)
 
 ## Separation
 
@@ -50,10 +50,10 @@ Can roll as a normal reincarnation Unique. Excluded from Fettered Human’s star
 
 ## Player invitation
 
-![Fusion invitation](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/fusion-consent.png)
+![Fusion invitation](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/fusion-consent.png)
 
 ## In-game preview
 
-![Fusion preview](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/fusion-poster.png)
+![Fusion preview](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/fusion-poster.png)
 
-[Fusion — recorded on 1.6.0, before combined HP/SHP](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/fusion.mp4)
+[Fusion — recorded on 1.6.0, before combined HP/SHP](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/fusion.mp4)

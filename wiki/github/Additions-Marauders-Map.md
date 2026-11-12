@@ -1,8 +1,8 @@
 # Marauder's Map
 
-[All wikis](https://github.com/Bithio999/MC/wiki/Home) · [TensuraAdditionalAdditions](https://github.com/Bithio999/MC/wiki/TensuraAdditionalAdditions)
+[All wikis](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Home) · [TensuraAdditionalAdditions](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/TensuraAdditionalAdditions)
 
-![Marauder’s Map](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/assets/additions/marauders_map.png)
+![Marauder’s Map](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/assets/additions/marauders_map.png)
 
 | Skill data | Value |
 | --- | --- |
@@ -12,7 +12,7 @@
 | Cost / cooldown | None |
 | Damage type | None |
 
-![The dimension atlas and its compact controls](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/marauders-map-redesign.png)
+![The dimension atlas and its compact controls](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/marauders-map-redesign.png)
 
 <a id="open-map"></a>
 
@@ -33,7 +33,7 @@ Slot the learned skill in Tensura’s **Skills → Unique** menu and activate **
 
 North stays at the top. The scale bar shows distance; the footer shows cursor coordinates and survey progress. Nearby structures cluster with counts when zoomed out. Zoom in to separate them.
 
-![Actions appear when a marker is selected](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/marauders-map-marker-actions.png)
+![Actions appear when a marker is selected](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/marauders-map-marker-actions.png)
 
 ## Dimension tabs
 
@@ -41,21 +41,21 @@ The **grass block**, **crimson nylium** and **end stone** tabs show the **Overwo
 
 The **eye** tab opens **Other dimensions**, a scrollable dropdown for addon dimensions. Type to filter it, then choose a dimension. Each dimension remembers its map position and zoom. Browsing never teleports your character.
 
-![The searchable Other dimensions dropdown](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/marauders-map-other-dimensions.png)
+![The searchable Other dimensions dropdown](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/marauders-map-other-dimensions.png)
 
-![Viewing the Nether below its roof](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/marauders-map-nether.png)
+![Viewing the Nether below its roof](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/marauders-map-nether.png)
 
-![Viewing The High Realm from the atlas](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/marauders-map-high-realm.png)
+![Viewing The High Realm from the atlas](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/marauders-map-high-realm.png)
 
 ## Terrain and shared exploration
 
 Pan anywhere, including places nobody has visited. A crisp biome overview appears first, followed by terrain relief. Unexplored terrain is a world-generation preview; trees, builds and exact surfaces appear through recorded exploration or native detail when you zoom in. Recorded block pixels remain visible when zoomed out. Nether maps look below the roof. Reopening the map reuses recently viewed terrain.
 
-![Crisp terrain and relief in an unexplored region](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/marauders-map-crisp-unexplored.png)
+![Crisp terrain and relief in an unexplored region](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/marauders-map-crisp-unexplored.png)
 
 **Exploration is shared between players on the same server.** Actual terrain and builds around all online players are recorded, including players without this skill. Those recorded surfaces can be viewed by other players without visiting or loading the area on their client. Recording starts with this version and refreshes gradually as players explore. Existing local map caches still work. **Custom pins remain private.**
 
-![A distant player’s actual build appears through shared exploration](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/marauders-map-shared-exploration.png)
+![A distant player’s actual build appears through shared exploration](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/marauders-map-shared-exploration.png)
 
 ## Structure markers and Locate
 
@@ -65,13 +65,13 @@ Locations follow native generation rules, variants, frequency and biome requirem
 
 **Locate structure…** opens the full list of registered vanilla and addon structures. Choose **Name A–Z** for alphabetical order or **Mod A–Z** to group by mod, with alphabetical names inside each group. Each entry shows its mod; hover for the complete structure ID. The search bar narrows entries as you type by name, mod or ID. Scroll or drag the scrollbar to browse the list.
 
-![All structures sorted alphabetically](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/marauders-map-structures-alphabetical.png)
+![All structures sorted alphabetically](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/marauders-map-structures-alphabetical.png)
 
-![Structures grouped by mod](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/marauders-map-structures-by-mod.png)
+![Structures grouped by mod](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/marauders-map-structures-by-mod.png)
 
 Select an entry and press **Start search** to search up to **100,000 blocks around the viewed map center**. The search runs in the background and centers on a result automatically. **Map tools → Show located structure** returns to it later. **Escape cancels** a search. If nothing is found, pan to another area and try again.
 
-![Live search narrows vanilla and addon structures](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/marauders-map-structures-filtered-large.png)
+![Live search narrows vanilla and addon structures](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/marauders-map-structures-filtered-large.png)
 
 | Structure group | Color |
 | --- | --- |
@@ -90,7 +90,7 @@ The site is checked against its native structure start first. Missing sites are 
 
 The skill’s native menu opens with **X, Y, Z and dimension prefilled** for a safe surface arrival near the structure. Check the coordinates and confirm **Warp**. Underground structures use a surface approach. If no clear ground is available, choose another structure.
 
-![The native teleport menu with arrival coordinates filled in](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/marauders-map-spatial-motion.png)
+![The native teleport menu with arrival coordinates filled in](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/marauders-map-spatial-motion.png)
 
 Preparing coordinates is free. Confirming Warp uses the skill’s normal resource cost, charge time, mastery, cooldown and restrictions. The atlas grants no teleport skill or cross-dimension travel; remote tabs are for viewing.
 
@@ -100,8 +100,8 @@ Preparing coordinates is free. Confirming Warp uses the skill’s normal resourc
 
 **Right-click empty map space → Add pin here…**, or press **N** for the map center. Give the pin a name and X/Y/Z coordinates, then choose from **8 colors** and **6 icons**: Pin, Home, Danger, Treasure, Portal or Camp.
 
-![The right-click pin menu](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/marauders-map-pin-context.png)
+![The right-click pin menu](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/marauders-map-pin-context.png)
 
-![The pin editor](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/marauders-map-pin-editor.png)
+![The pin editor](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/marauders-map-pin-editor.png)
 
 Select a pin to open **Focus on map**, **Edit pin…** or **Delete pin…**. Deletion requires confirmation. Up to **256 pins per player across dimensions** are saved privately on the server and survive reconnects. Only the viewed dimension’s pins appear; other players cannot see or edit them.

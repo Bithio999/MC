@@ -2,11 +2,11 @@
 
 > **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
 
-[All wikis](https://github.com/Bithio999/MC/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/MC/wiki/Tensura-Myths)
+[All wikis](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Tensura-Myths)
 
 Black Flame is a Unique Skill inspired by Nu Udra. It uses visible oil tentacles to pull targets into burning ground.
 
-![Black Flame icon](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/assets/skill/black_flame.png)
+![Black Flame icon](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/assets/skill/black_flame.png)
 
 | Skill data | Value |
 | --- | --- |
@@ -47,8 +47,8 @@ While toggled on, gain 8 armor, 50% melee attack and 50% flame boost. Fire-tagge
 
 ## Related
 
-[Skill synthesis](https://github.com/Bithio999/MC/wiki/Skill-Synthesis) · [Godly Skills](https://github.com/Bithio999/MC/wiki/Godly)
+[Skill synthesis](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Skill-Synthesis) · [Godly Skills](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Godly)
 
 ## Pictures and video
 
-![Black Flame — oil lash](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/oil-lash.png)
+![Black Flame — oil lash](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/oil-lash.png)
