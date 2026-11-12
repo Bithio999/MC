@@ -110,9 +110,18 @@ public final class MentorGameTests {
         "Missing synthesis components");
     h.assertTrue(
         !catalog.contains(HeavenlyRestriction.CHAINED.get())
+            && !catalog.contains(UniqueSkills.ANTI_SKILL.get())
             && !catalog.contains(HeavenlyRestriction.METIS.get())
             && !catalog.contains(HeavenlyRestriction.PARALLEL_WORLD_JUMPER.get()),
         "Special/Ultimate/multiplayer-only exclusion failed");
+    h.assertTrue(
+        MentorService.purchase(p, UniqueSkills.ANTI_SKILL.getId()).equals("unavailable"),
+        "Anti-Skill accepted by server-side purchase validation");
+    near(h, EnergyHelper.getBaseMaxEP(p), 10_000_000, "Excluded lesson charged EP");
+    h.assertTrue(
+        MentorLedger.reconcile(p).isEmpty()
+            && p.getInventory().countItem(ChromaticContent.ORB.get()) == 2,
+        "Excluded lesson consumed Orb or redemption");
     RestrictionData.learnReward(p, HeavenlyRestriction.CHAINED.get());
     ChainedState.initialize(p);
     h.assertTrue(

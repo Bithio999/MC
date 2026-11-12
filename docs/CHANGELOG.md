@@ -1,5 +1,11 @@
 # Changelog
 
+## Additions 1.24.1 — Archivist and archive redesign
+
+- Rebuild Elias’s 64×64 skin using Kael’s established otherworlder pixel style, restrained facial detail and native UV layout.
+- Rebuild the Archive of Accord with a steep slate gable, lower entrance roof, copper-crowned tower, recessed windows, reading bay, connected gallery and usable stairs. Keep its existing worldgen ID and rarity; revised buildings appear in new chunks.
+- Exclude Anti-Skill from the mentor catalogue and server-side purchases, without removing skills players already own. Update the wiki and in-game guide.
+
 ## Additions 1.24.0 — The Archive of Accord
 
 - Add rare Overworld libraries with reading alcoves, galleries and Elias, a protected native otherworlder mentor with an original pixel skin.

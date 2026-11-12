@@ -10,11 +10,11 @@
 | Default cost | 1,000,000 permanent EP + 1 Chromatic Orb |
 | Limit | One successful lesson per player |
 
-![Archive of Accord](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/mentor-archive-interior.png)
+![Archive of Accord](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/mentor-archive-exterior.png)
 
 ## Finding the archive
 
-Look for a slate-roofed, two-storey library in forests, plains, meadows and savannas. Inside are reading alcoves, upper galleries and Elias's teaching dais. Archives use a sparse 128-chunk placement grid; unsuitable biomes can make them farther apart. They generate in **new chunks**, including newly explored regions of existing worlds.
+Look for a slate-roofed library with a copper-crowned tower in forests, plains, meadows and savannas. Inside are a reading bay, upper gallery, staircase, tower rooms and Elias’s teaching dais. Archives use a sparse 128-chunk placement grid; unsuitable biomes can make them farther apart. They generate in **new chunks**, including newly explored regions of existing worlds.
 
 Marauder's Map can search for **`heavenlyrestriction:mentor_archive`**. With commands enabled, use:
 
@@ -23,6 +23,12 @@ Marauder's Map can search for **`heavenlyrestriction:mentor_archive`**. With com
 ```
 
 Elias stays inside and is protected from ordinary damage. Each archive contains a mentor, but visiting another archive does not grant another lesson.
+
+![Inside the archive](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/mentor-archive-interior.png)
+
+![Elias](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/elias-kael-style.png)
+
+Existing Elias NPCs receive the updated skin. Previously generated buildings keep their original layout.
 
 ## Taking a lesson
 
@@ -40,7 +46,7 @@ Canceled, unaffordable or blocked attempts consume nothing. Successful purchases
 
 The catalogue includes normal Unique skills from Tensura and installed addons, including synthesis partners such as **Great Sage**, **Godly Craftsman**, **Split Mind** and **Prospector**. Already learned skills cannot be purchased. Existing acquisition restrictions and native unlock protections still apply.
 
-**Chained** is excluded because it belongs to its reincarnation lineage. **Parallel World Jumper** is offered only in supported private single-player worlds. Ultimate skills and skills in the Godly tier are not taught. Servers can extend the `heavenlyrestriction:mentor_excluded` skill tag with a datapack.
+**Anti-Skill** and **Chained** are not purchasable. **Parallel World Jumper** is offered only in supported private single-player worlds. Ultimate skills and skills in the Godly tier are not taught. Servers can extend the `heavenlyrestriction:mentor_excluded` skill tag with a datapack.
 
 After learning the missing component, master it and meet the usual [Hephaestus](https://github.com/Bithio999/MC/wiki/Additions-Hephaestus) or [Metis](https://github.com/Bithio999/MC/wiki/Additions-Metis) synthesis requirements. Taking a lesson does not complete an Ultimate synthesis.
 

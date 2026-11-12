@@ -1,1 +1,7 @@
-{"replace": false, "values": ["heavenlyrestriction:chained"]}
+{
+  "replace": false,
+  "values": [
+    "heavenlyrestriction:chained",
+    "tensura:anti_skill"
+  ]
+}
