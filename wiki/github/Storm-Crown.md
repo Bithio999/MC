@@ -1,5 +1,7 @@
 # Storm Crown
 
+> **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
+
 [All wikis](https://github.com/Bithio999/MC/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/MC/wiki/Tensura-Myths)
 
 Storm Crown is a Unique Skill inspired by Rey Dau. It combines ricochet lightning with an aimed movement art.

@@ -1,5 +1,7 @@
 # Briar Monarch
 
+> **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
+
 [All wikis](../README.md) · [Tensura Myths](Tensura-Myths.md)
 
 **Briar Monarch** is the unique Convergent race formed from **Beastfolk** and **Goblin** ancestry. Beastfolk vitality and Goblin spirit form a single stable lineage.

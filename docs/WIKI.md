@@ -4,8 +4,9 @@ The player-facing wiki lives in `wiki/pages/*.md`; `wiki/README.md` is the share
 
 ## Addon sections
 
-- **Tensura Myths 0.36.1:** home `Tensura-Myths.md`; existing unprefixed article URLs remain valid.
-- **TensuraAdditionalAdditions 1.9.4:** home `TensuraAdditionalAdditions.md`; content pages use `Additions-` prefixes.
+- **Tensura Myths 0.36.1 (discontinued archive):** home `Tensura-Myths.md`; existing unprefixed article URLs remain valid.
+- **TensuraAdditionalAdditions 1.26.1 (active):** home `TensuraAdditionalAdditions.md`; content pages use `Additions-` prefixes.
+- `wiki/catalog.json` assigns every article a `mod`: `myths` or `additions`.
 - `wiki/navigation.json` contains separate navigation groups. The site and search keep the selected scope; the shared home searches all sections and labels results by addon.
 - Shared content has separate pages. Do not link an Additions article to Myths-only content. Use the correct release/guide when checking values.
 
@@ -19,7 +20,7 @@ python3 scripts/build-wiki.py
 python3 scripts/verify-wiki.py
 ```
 
-The build produces the shared `wiki/index.html`, all `wiki/site/*.html`, per-addon ability directories, scoped offline search, `wiki/github/*.md`, and `releases/tensura-addon-wikis.zip`. Original addon icons and local pictures/video are included. Fixed ZIP timestamps and sorted files make the bundle reproducible. Older versioned ZIP releases are retained unchanged.
+The build produces the shared `wiki/index.html`, all `wiki/site/*.html`, per-addon ability directories, scoped offline search, `wiki/github/*.md`, and `releases/tensura-addon-wikis.zip`. Original addon icons and local pictures/video are included. Fixed ZIP timestamps and sorted files make the bundle reproducible. The Myths section is a discontinued archive; preserve its archive notices when editing or rebuilding. Older versioned Myths ZIPs are historical snapshots.
 
 The checker verifies local links, images/video paths, ability anchors, duplicate IDs, canonical/HTML targets and addon boundaries. Browser review should cover desktop/mobile, search within each addon section, and video controls. The site uses no remote script, font or search service.
 

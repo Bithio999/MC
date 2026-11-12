@@ -1,5 +1,7 @@
 # Leviathan Beast
 
+> **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
+
 [All wikis](../README.md) · [Tensura Myths](Tensura-Myths.md)
 
 **Leviathan Beast** is the unique Convergent race formed from **Beastfolk** and **Merfolk** ancestry. Beastfolk vitality and Merfolk spirit form a single stable lineage.

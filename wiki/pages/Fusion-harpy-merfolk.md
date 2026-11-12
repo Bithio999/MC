@@ -1,5 +1,7 @@
 # Siren Seraph
 
+> **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
+
 [All wikis](../README.md) · [Tensura Myths](Tensura-Myths.md)
 
 **Siren Seraph** is the unique Convergent race formed from **Harpy** and **Merfolk** ancestry. Harpy vitality and Merfolk spirit form a single stable lineage.

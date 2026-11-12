@@ -1,5 +1,7 @@
 # Elder Starwyrm
 
+> **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
+
 [All wikis](../README.md) · [Tensura Myths](Tensura-Myths.md)
 
 **Elder Starwyrm** is the unique Convergent race formed from **Lizardman** and **Elf** ancestry. Lizardman vitality and Elf spirit form a single stable lineage.

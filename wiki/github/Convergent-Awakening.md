@@ -1,5 +1,7 @@
 # Convergent Awakening
 
+> **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
+
 [All wikis](https://github.com/Bithio999/MC/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/MC/wiki/Tensura-Myths)
 
 Convergent Awakening unites two fully evolved lineages into a single registered race. There are 105 unique pairs among the fifteen supported ancestral families.

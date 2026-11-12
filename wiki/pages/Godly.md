@@ -1,5 +1,7 @@
 # Godly Skills
 
+> **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
+
 [All wikis](../README.md) · [Tensura Myths](Tensura-Myths.md)
 
 Godly is Myths’ tier above Ultimate. Open **Skills → Godly → Ascension** after mastering a combination Ultimate, becoming a **True Hero or True Demon Lord**, and reaching **12M total EP**.

@@ -1,5 +1,7 @@
 # Apex Hunter
 
+> **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
+
 [All wikis](https://github.com/Bithio999/MC/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/MC/wiki/Tensura-Myths)
 
 **Apex Hunter** is the second stage of the alternate Human hunter evolution branch. It preserves the player’s Human appearance and advances through encounters with distinct boss types.

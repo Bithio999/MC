@@ -1,5 +1,7 @@
 # Abyssal Cetus
 
+> **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
+
 [All wikis](../README.md) · [Tensura Myths](Tensura-Myths.md)
 
 **Abyssal Cetus** is the unique Convergent race formed from **Orc** and **Merfolk** ancestry. Orc vitality and Merfolk spirit form a single stable lineage.

@@ -1,5 +1,7 @@
 # Primal Paragon
 
+> **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
+
 [All wikis](../README.md) · [Tensura Myths](Tensura-Myths.md)
 
 **Primal Paragon** is the unique Convergent race formed from **Beastfolk** and **Human** ancestry. Beastfolk vitality and Human spirit form a single stable lineage.

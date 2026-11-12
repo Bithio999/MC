@@ -1,5 +1,7 @@
 # Rune Smith
 
+> **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
+
 [All wikis](../README.md) · [Tensura Myths](Tensura-Myths.md)
 
 Rune Smith is a Unique Skill focused on armed proximity trap and remote demolition.

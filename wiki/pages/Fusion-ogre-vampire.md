@@ -1,5 +1,7 @@
 # Crimson Yaksha
 
+> **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
+
 [All wikis](../README.md) · [Tensura Myths](Tensura-Myths.md)
 
 **Crimson Yaksha** is the unique Convergent race formed from **Ogre** and **Vampire** ancestry. Ogre vitality and Vampire spirit form a single stable lineage.

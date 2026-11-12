@@ -1,5 +1,7 @@
 # Frostbound Colossus
 
+> **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
+
 [All wikis](../README.md) · [Tensura Myths](Tensura-Myths.md)
 
 Frostbound Colossus is a Unique Skill inspired by Jin Dahaad. It combines avalanche impacts, ice capture, and a defensive carapace.

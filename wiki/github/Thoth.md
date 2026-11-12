@@ -1,5 +1,7 @@
 # Thoth, God of Magic
 
+> **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
+
 [All wikis](https://github.com/Bithio999/MC/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/MC/wiki/Tensura-Myths)
 
 Thoth, God of Magic is a Godly Skill focused on elemental sequences, disruption, conversion and autonomous spell fire.

@@ -1,5 +1,7 @@
 # Sovereign Rebirth
 
+> **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
+
 [All wikis](../README.md) · [Tensura Myths](Tensura-Myths.md)
 
 **Sovereign Rebirth** is an aura-powered Extra Skill granted by [Sovereign Hunter](Sovereign-Hunter.md) or [Heavenbreaker](Heavenbreaker.md). It provides recovery inspired by native Infinite Regeneration.

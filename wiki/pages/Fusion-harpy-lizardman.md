@@ -1,5 +1,7 @@
 # Quetzal Sovereign
 
+> **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
+
 [All wikis](../README.md) · [Tensura Myths](Tensura-Myths.md)
 
 **Quetzal Sovereign** is the unique Convergent race formed from **Harpy** and **Lizardman** ancestry. Harpy vitality and Lizardman spirit form a single stable lineage.

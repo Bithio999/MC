@@ -1,5 +1,7 @@
 # Schema
 
+> **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
+
 [All wikis](../README.md) · [Tensura Myths](Tensura-Myths.md)
 
 A Battlewill with a customizable six-effect tree. Learn: 1,000 points. Master: 2,000 points.

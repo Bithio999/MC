@@ -1,5 +1,7 @@
 # Sylvan Protean
 
+> **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
+
 [All wikis](../README.md) · [Tensura Myths](Tensura-Myths.md)
 
 **Sylvan Protean** is the unique Convergent race formed from **Elf** and **Slime** ancestry. Elf vitality and Slime spirit form a single stable lineage.

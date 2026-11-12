@@ -1,5 +1,7 @@
 # Skill synthesis
 
+> **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
+
 [All wikis](../README.md) · [Tensura Myths](Tensura-Myths.md)
 
 Skill synthesis combines two mastered Unique Skills into one new Ultimate. It is available to any race at 2,000,000 total EP.

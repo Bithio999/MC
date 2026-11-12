@@ -1,5 +1,7 @@
 # Tidal Susanoo
 
+> **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
+
 [All wikis](../README.md) · [Tensura Myths](Tensura-Myths.md)
 
 **Tidal Susanoo** is the unique Convergent race formed from **Ogre** and **Merfolk** ancestry. Ogre vitality and Merfolk spirit form a single stable lineage.

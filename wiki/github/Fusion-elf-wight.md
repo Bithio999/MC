@@ -1,5 +1,7 @@
 # Pale Star Oracle
 
+> **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
+
 [All wikis](https://github.com/Bithio999/MC/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/MC/wiki/Tensura-Myths)
 
 **Pale Star Oracle** is the unique Convergent race formed from **Elf** and **Wight** ancestry. Elf vitality and Wight spirit form a single stable lineage.

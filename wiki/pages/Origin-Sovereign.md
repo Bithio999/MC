@@ -1,5 +1,7 @@
 # Origin Sovereign
 
+> **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
+
 [All wikis](../README.md) · [Tensura Myths](Tensura-Myths.md)
 
 **Origin Sovereign** is Eschaton's boss-exclusive divine, spiritual lineage. It has no player evolution path, secondary-race selection or reincarnation roll.

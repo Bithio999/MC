@@ -1,5 +1,7 @@
 # Abyssal Scylla
 
+> **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
+
 [All wikis](../README.md) · [Tensura Myths](Tensura-Myths.md)
 
 **Abyssal Scylla** is the unique Convergent race formed from **Merfolk** and **Daemon** ancestry. Merfolk vitality and Daemon spirit form a single stable lineage.

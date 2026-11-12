@@ -1,5 +1,7 @@
 # Infernal Forgemaster
 
+> **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
+
 [All wikis](../README.md) · [Tensura Myths](Tensura-Myths.md)
 
 **Infernal Forgemaster** is the unique Convergent race formed from **Dwarf** and **Daemon** ancestry. Dwarf vitality and Daemon spirit form a single stable lineage.

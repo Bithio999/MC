@@ -1,5 +1,7 @@
 # Inverted Spear of Heaven
 
+> **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
+
 [All wikis](../README.md) · [Tensura Myths](Tensura-Myths.md)
 
 A rare weapon from ominous trial vault loot, with the same attack stats as a Hihiirokane Sword.

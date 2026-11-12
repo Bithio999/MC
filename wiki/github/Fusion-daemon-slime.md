@@ -1,5 +1,7 @@
 # Abyssal Progenitor
 
+> **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
+
 [All wikis](https://github.com/Bithio999/MC/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/MC/wiki/Tensura-Myths)
 
 **Abyssal Progenitor** is the unique Convergent race formed from **Slime** and **Daemon** ancestry. Slime vitality and Daemon spirit form a single stable lineage.

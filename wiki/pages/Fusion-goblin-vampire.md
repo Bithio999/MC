@@ -1,5 +1,7 @@
 # Sanguine Puck
 
+> **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
+
 [All wikis](../README.md) · [Tensura Myths](Tensura-Myths.md)
 
 **Sanguine Puck** is the unique Convergent race formed from **Goblin** and **Vampire** ancestry. Goblin vitality and Vampire spirit form a single stable lineage.

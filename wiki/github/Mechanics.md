@@ -1,5 +1,7 @@
 # Combat rules
 
+> **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
+
 [All wikis](https://github.com/Bithio999/MC/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/MC/wiki/Tensura-Myths)
 
 Listed ability damage is before armor, barriers, resistances, dodge and other modifiers. Damage color or the size of an animation does not enlarge its stated hit area.

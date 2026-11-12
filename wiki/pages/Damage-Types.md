@@ -1,5 +1,7 @@
 # Damage types
 
+> **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
+
 [All wikis](../README.md) · [Tensura Myths](Tensura-Myths.md)
 
 Ability pages identify the attack’s damage type. Visual color alone does not determine damage.

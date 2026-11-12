@@ -1,5 +1,7 @@
 # Azure Leviathan
 
+> **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
+
 [All wikis](../README.md) · [Tensura Myths](Tensura-Myths.md)
 
 **Azure Leviathan** is the unique Convergent race formed from **Lizardman** and **Merfolk** ancestry. Lizardman vitality and Merfolk spirit form a single stable lineage.

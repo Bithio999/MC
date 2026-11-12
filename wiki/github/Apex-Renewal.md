@@ -1,5 +1,7 @@
 # Apex Renewal
 
+> **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
+
 [All wikis](https://github.com/Bithio999/MC/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/MC/wiki/Tensura-Myths)
 
 **Apex Renewal** is an aura-powered Extra Skill granted by [Apex Hunter](https://github.com/Bithio999/MC/wiki/Apex-Hunter) or [Heavenly Restricted](https://github.com/Bithio999/MC/wiki/Heavenly-Restricted). It provides recovery inspired by native Ultraspeed Regeneration.

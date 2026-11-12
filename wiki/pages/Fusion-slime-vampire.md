@@ -1,5 +1,7 @@
 # Sanguine Protean
 
+> **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
+
 [All wikis](../README.md) · [Tensura Myths](Tensura-Myths.md)
 
 **Sanguine Protean** is the unique Convergent race formed from **Slime** and **Vampire** ancestry. Slime vitality and Vampire spirit form a single stable lineage.

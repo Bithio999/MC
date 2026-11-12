@@ -1,5 +1,12 @@
 # Changelog
 
+## Repository maintenance
+
+- Make AdditionalAdditions the active project; discontinue Myths at 0.36.1 and retain its source and reference documentation as an archive.
+- Remove the retired standalone project and its releases, media and documentation.
+- Audit tracked content, packaged downloads and commit metadata for personal information; use a generic contributor identity for public history and future commits.
+
+
 ## Additions 1.26.1 — Metis cleansing conditions
 
 - Add effect-specific, self-directed triggers for Antidote, Healer Heal, Chef, Lust Invigorate, Predator/Gluttony Isolation, Law Manipulation Abnormality Cleanse, Spatial Domination Spatial Cleanse and Reverser Inverted Fusion [Buff]. Pure cleanses no longer depend on low HP; mixed modes retain healing triggers.

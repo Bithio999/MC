@@ -6,3 +6,23 @@ libs/
 *.iml
 
 __pycache__/
+
+# Private local state and credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+credentials.json
+launcher_accounts.json
+launcher_profiles.json
+usercache.json
+server.properties
+logs/
+crash-reports/
+world/
+worlds/
+saves/
+playerdata/

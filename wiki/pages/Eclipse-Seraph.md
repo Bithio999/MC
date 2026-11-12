@@ -1,5 +1,7 @@
 # Eclipse Seraph
 
+> **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
+
 [All wikis](../README.md) · [Tensura Myths](Tensura-Myths.md)
 
 **Eclipse Seraph** is Ananke's boss lineage: an ancient six-winged arbiter of the unwritten end. It is not a player progression route.

@@ -1,5 +1,7 @@
 # Heavenly Restricted
 
+> **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
+
 [All wikis](../README.md) · [Tensura Myths](Tensura-Myths.md)
 
 **Heavenly Restricted** is evolution 3 of four of the **Heavenly Restriction** lineage. A human-looking martial body exchanges magical growth for exceptional physical and aura potential through **Chained**, the Unique Skill inherited from Fettered Human.

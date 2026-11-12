@@ -1,5 +1,7 @@
 # Bloodforge Titan
 
+> **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
+
 [All wikis](../README.md) · [Tensura Myths](Tensura-Myths.md)
 
 **Bloodforge Titan** is the unique Convergent race formed from **Giant** and **Vampire** ancestry. Giant vitality and Vampire spirit form a single stable lineage.

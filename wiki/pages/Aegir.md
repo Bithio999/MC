@@ -1,5 +1,7 @@
 # Aegir, Lord of the Abyss
 
+> **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
+
 [All wikis](../README.md) · [Tensura Myths](Tensura-Myths.md)
 
 Aegir, Lord of the Abyss is an Ultimate Skill for water refraction, projectile redirection and an expanding tidal shock front. Mirrorsea changes the origins and reach of its other arts.

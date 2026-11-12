@@ -1,5 +1,7 @@
 # Adamant Warlord
 
+> **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
+
 [All wikis](../README.md) · [Tensura Myths](Tensura-Myths.md)
 
 **Adamant Warlord** is the unique Convergent race formed from **Orc** and **Human** ancestry. Orc vitality and Human spirit form a single stable lineage.

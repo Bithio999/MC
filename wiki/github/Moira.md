@@ -1,5 +1,7 @@
 # Moira, Lord of Finality
 
+> **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
+
 [All wikis](https://github.com/Bithio999/MC/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/MC/wiki/Tensura-Myths)
 
 **Moira, Lord of Finality** belongs to [Ananke](https://github.com/Bithio999/MC/wiki/Ananke). It cannot be rolled, synthesized or equipped by players. Listed values are before defenses and other modifiers.

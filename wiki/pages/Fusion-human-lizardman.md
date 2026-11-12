@@ -1,5 +1,7 @@
 # Dragonheart Exemplar
 
+> **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
+
 [All wikis](../README.md) · [Tensura Myths](Tensura-Myths.md)
 
 **Dragonheart Exemplar** is the unique Convergent race formed from **Lizardman** and **Human** ancestry. Lizardman vitality and Human spirit form a single stable lineage.

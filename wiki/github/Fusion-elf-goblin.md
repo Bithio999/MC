@@ -1,5 +1,7 @@
 # Thornsong Sovereign
 
+> **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
+
 [All wikis](https://github.com/Bithio999/MC/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/MC/wiki/Tensura-Myths)
 
 **Thornsong Sovereign** is the unique Convergent race formed from **Goblin** and **Elf** ancestry. Goblin vitality and Elf spirit form a single stable lineage.

@@ -1,5 +1,7 @@
 # Hunter’s Recovery
 
+> **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
+
 [All wikis](../README.md) · [Tensura Myths](Tensura-Myths.md)
 
 **Hunter’s Recovery** is an aura-powered Extra Skill granted by [Awakened Hunter](Awakened-Hunter.md) or [Unshackled](Unshackled.md). It provides recovery inspired by native Self Regeneration.

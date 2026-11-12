@@ -1,5 +1,7 @@
 # In-game guide
 
+> **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
+
 [All wikis](../README.md) · [Tensura Myths](Tensura-Myths.md)
 
 Press **F8**, use the pause-menu **Myths Guide** button, or choose **Guide** below Tensura’s status panel.

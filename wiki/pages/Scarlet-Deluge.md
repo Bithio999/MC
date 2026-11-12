@@ -1,5 +1,7 @@
 # Scarlet Deluge
 
+> **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
+
 [All wikis](../README.md) · [Tensura Myths](Tensura-Myths.md)
 
 Scarlet Deluge is a Unique Skill inspired by Uth Duna. It combines travelling currents, aimed whirlpools, and native barriers.

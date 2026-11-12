@@ -1,5 +1,7 @@
 # Ability directory
 
+> **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
+
 [All wikis](https://github.com/Bithio999/MC/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/MC/wiki/Tensura-Myths)
 
 Find a move below, then open its entry for targeting, damage, cost and cooldown. “None” means no direct attack damage.

@@ -1,5 +1,7 @@
 # Heavenly Asura
 
+> **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
+
 [All wikis](../README.md) · [Tensura Myths](Tensura-Myths.md)
 
 **Heavenly Asura** is the unique Convergent race formed from **Ogre** and **Human** ancestry. Ogre vitality and Human spirit form a single stable lineage.

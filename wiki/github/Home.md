@@ -1,25 +1,25 @@
 # Tensura addon wikis
 
-Choose the addon you play. Each section has its own skills, progression, pictures and videos.
+**TensuraAdditionalAdditions is the active project.** The Myths wiki is preserved as a discontinued archive. Each section has separate navigation, skills, progression, pictures and videos.
 
-| Wiki | What it includes | Version |
+| Wiki | Status | Version |
 | --- | --- | --- |
-| **[Tensura Myths](https://github.com/Bithio999/MC/wiki/Tensura-Myths)** | Hunter and Heavenly Restriction races, skill combinations, Godly skills, dual races, bosses and otherworlders | 0.36.1 |
-| **[TensuraAdditionalAdditions](https://github.com/Bithio999/MC/wiki/TensuraAdditionalAdditions)** | Heavenly Restriction, Chained/Unbound, Battlewills, the spear, Prospector, Exponentiation and Parallel World Jumper | 1.26.1 |
+| **[TensuraAdditionalAdditions](https://github.com/Bithio999/MC/wiki/TensuraAdditionalAdditions)** | Active — Heavenly Restriction, Battlewills, skills, gear, world travel and The High Realm | 1.26.1 |
+| **[Tensura Myths](https://github.com/Bithio999/MC/wiki/Tensura-Myths)** | Discontinued — archived races, skills, dual races, bosses and otherworlders | Final: 0.36.1 |
 
+Both require **Tensura: Reincarnated**, Minecraft **1.21.1** and **NeoForge**. They are alternative distributions; do not install them together.
 
 ## Start reading
 
-- **Myths:** [Install](https://github.com/Bithio999/MC/wiki/Getting-Started) · [Skills](https://github.com/Bithio999/MC/wiki/Skills) · [Races](https://github.com/Bithio999/MC/wiki/Races) · [Bosses](https://github.com/Bithio999/MC/wiki/Bosses).
-- **Additions:** [Install](https://github.com/Bithio999/MC/wiki/Additions-Getting-Started) · [Heavenly Restriction](https://github.com/Bithio999/MC/wiki/Additions-Fettered-Human) · [Battlewills](https://github.com/Bithio999/MC/wiki/Additions-Battlewills) · [World travel](https://github.com/Bithio999/MC/wiki/Additions-Parallel-World-Jumper).
+- **AdditionalAdditions:** [Install](https://github.com/Bithio999/MC/wiki/Additions-Getting-Started) · [Heavenly Restriction](https://github.com/Bithio999/MC/wiki/Additions-Fettered-Human) · [Skills](https://github.com/Bithio999/MC/wiki/Additions-Skills) · [Battlewills](https://github.com/Bithio999/MC/wiki/Additions-Battlewills) · [World travel](https://github.com/Bithio999/MC/wiki/Additions-Parallel-World-Jumper).
+- **Myths archive:** [Status](https://github.com/Bithio999/MC/blob/main/DISCONTINUED.md) · [Install](https://github.com/Bithio999/MC/wiki/Getting-Started) · [Skills](https://github.com/Bithio999/MC/wiki/Skills) · [Races](https://github.com/Bithio999/MC/wiki/Races) · [Bosses](https://github.com/Bithio999/MC/wiki/Bosses).
 
-
-Each entry lists what the content does, how to obtain/use it, and the relevant damage types, costs and cooldowns. Values are defaults before defenses and other bonuses. Development notes and change history live in the repository’s docs, outside these entries.
+Entries cover use, obtainment, damage types, costs, cooldowns and necessary limits. Values are defaults before defenses and other bonuses. Development notes and change history live outside the gameplay entries.
 
 ## Offline edition
 
-[Download the wikis](https://github.com/Bithio999/MC/raw/refs/heads/main/releases/tensura-addon-wikis.zip), extract the ZIP, and open `index.html`. Search is scoped to the selected addon; the main page searches all sections. Pictures and linked videos are included for offline viewing.
+[Download the wikis](https://github.com/Bithio999/MC/raw/refs/heads/main/releases/tensura-addon-wikis.zip), extract the ZIP, and open `index.html`. Search is scoped to the selected addon; the main page searches both sections. Pictures and linked videos work offline.
 
-Myths and Additions include an **F8** in-game guide covering their installed addon. [Myths guide](https://github.com/Bithio999/MC/wiki/In-Game-Guide) · [Additions guide](https://github.com/Bithio999/MC/wiki/Additions-In-Game-Guide).
+AdditionalAdditions includes an **F8** [in-game guide](https://github.com/Bithio999/MC/wiki/Additions-In-Game-Guide).
 
 [Base mod wiki](https://tensura.wiki.gg/wiki/Tensura:_Reincarnated_Wiki) · [Source and downloads](https://github.com/Bithio999/MC/blob/main/README.md) · [Wiki authoring](https://github.com/Bithio999/MC/blob/main/docs/WIKI.md).

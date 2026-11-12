@@ -1,5 +1,7 @@
 # Basilisk Regent
 
+> **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
+
 [All wikis](../README.md) · [Tensura Myths](Tensura-Myths.md)
 
 **Basilisk Regent** is the unique Convergent race formed from **Goblin** and **Lizardman** ancestry. Goblin vitality and Lizardman spirit form a single stable lineage.

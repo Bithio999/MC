@@ -1,5 +1,7 @@
 # Black Flame
 
+> **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
+
 [All wikis](../README.md) · [Tensura Myths](Tensura-Myths.md)
 
 Black Flame is a Unique Skill inspired by Nu Udra. It uses visible oil tentacles to pull targets into burning ground.

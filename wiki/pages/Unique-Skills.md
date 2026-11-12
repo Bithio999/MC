@@ -1,5 +1,7 @@
 # Unique Skills
 
+> **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
+
 [All wikis](../README.md) · [Tensura Myths](Tensura-Myths.md)
 
 Eight skills join Tensura’s reincarnation pool. Chained is granted separately by Fettered Human.

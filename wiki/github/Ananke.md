@@ -1,5 +1,7 @@
 # Ananke, the Unwritten End
 
+> **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
+
 [All wikis](https://github.com/Bithio999/MC/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/MC/wiki/Tensura-Myths)
 
 **Ananke** is the first Myth boss. It uses [Moira](https://github.com/Bithio999/MC/wiki/Moira), [Thoth](https://github.com/Bithio999/MC/wiki/Thoth), Infinite Regeneration and all native resistance/nullification skills.

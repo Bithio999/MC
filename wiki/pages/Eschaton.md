@@ -1,5 +1,7 @@
 # Eschaton, the Last Myth
 
+> **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
+
 [All wikis](../README.md) · [Tensura Myths](Tensura-Myths.md)
 
 **Eschaton** is the final Myth boss: an Origin Sovereign with **one billion EP**, [Demiurge](Demiurge.md), [Aion](Aion.md), [Thoth](Thoth.md), Infinite Regeneration and all native resistance/nullification skills.

@@ -87,10 +87,3 @@
 - [Damage types](https://github.com/Bithio999/MC/wiki/Additions-Damage-Types)
 - [Commands](https://github.com/Bithio999/MC/wiki/Additions-Commands)
 
-
-**Start**
-
-
-**Skills**
-
-

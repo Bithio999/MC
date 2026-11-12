@@ -1,5 +1,7 @@
 # Ultimate Skills
 
+> **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
+
 [All wikis](../README.md) · [Tensura Myths](Tensura-Myths.md)
 
 Combine two specified mastered Uniques at **2M total EP** through **Skills → Ultimate → Synthesis**. The ingredients are replaced.

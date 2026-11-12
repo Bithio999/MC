@@ -1,5 +1,7 @@
 # Demiurge, God of Genesis
 
+> **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
+
 [All wikis](https://github.com/Bithio999/MC/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/MC/wiki/Tensura-Myths)
 
 **Demiurge, God of Genesis** belongs to [Eschaton](https://github.com/Bithio999/MC/wiki/Eschaton). It cannot be rolled, synthesized or equipped by players. Listed values are before defenses and other modifiers.

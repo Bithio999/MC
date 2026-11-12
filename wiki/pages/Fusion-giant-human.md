@@ -1,5 +1,7 @@
 # Atlas Ascendant
 
+> **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
+
 [All wikis](../README.md) · [Tensura Myths](Tensura-Myths.md)
 
 **Atlas Ascendant** is the unique Convergent race formed from **Giant** and **Human** ancestry. Giant vitality and Human spirit form a single stable lineage.

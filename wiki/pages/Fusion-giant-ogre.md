@@ -1,5 +1,7 @@
 # Indra Colossus
 
+> **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
+
 [All wikis](../README.md) · [Tensura Myths](Tensura-Myths.md)
 
 **Indra Colossus** is the unique Convergent race formed from **Ogre** and **Giant** ancestry. Ogre vitality and Giant spirit form a single stable lineage.

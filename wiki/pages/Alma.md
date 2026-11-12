@@ -1,5 +1,7 @@
 # Alma
 
+> **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
+
 [All wikis](../README.md) · [Tensura Myths](Tensura-Myths.md)
 
 Alma is the expedition handler and researcher. Her skin follows the dark hair, round glasses, rust expedition coat and cream hood of her base appearance.

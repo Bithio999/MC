@@ -1,5 +1,7 @@
 # Runebound Fafnir
 
+> **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
+
 [All wikis](../README.md) · [Tensura Myths](Tensura-Myths.md)
 
 **Runebound Fafnir** is the unique Convergent race formed from **Lizardman** and **Dwarf** ancestry. Lizardman vitality and Dwarf spirit form a single stable lineage.

@@ -1,5 +1,7 @@
 # Ossuary Protean
 
+> **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
+
 [All wikis](../README.md) · [Tensura Myths](Tensura-Myths.md)
 
 **Ossuary Protean** is the unique Convergent race formed from **Slime** and **Wight** ancestry. Slime vitality and Wight spirit form a single stable lineage.

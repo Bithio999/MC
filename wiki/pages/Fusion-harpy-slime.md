@@ -1,5 +1,7 @@
 # Cloudborn Protean
 
+> **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
+
 [All wikis](../README.md) · [Tensura Myths](Tensura-Myths.md)
 
 **Cloudborn Protean** is the unique Convergent race formed from **Harpy** and **Slime** ancestry. Harpy vitality and Slime spirit form a single stable lineage.

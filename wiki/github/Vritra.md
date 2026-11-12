@@ -1,5 +1,7 @@
 # Vritra, Lord of Cataclysm
 
+> **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
+
 [All wikis](https://github.com/Bithio999/MC/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/MC/wiki/Tensura-Myths)
 
 Vritra, Lord of Cataclysm is an Ultimate Skill focused on piercing plasma, delayed fire and travelling demolition.

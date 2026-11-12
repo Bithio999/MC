@@ -1,5 +1,7 @@
 # Duo Races
 
+> **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
+
 [All wikis](../README.md) · [Tensura Myths](Tensura-Myths.md)
 
 Duo Races let an awakened player develop a second ancestral race alongside their primary race. The primary race retains the body, size and normal racial key.

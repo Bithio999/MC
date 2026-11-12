@@ -1,5 +1,7 @@
 # Getting started
 
+> **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
+
 [All wikis](../README.md) · [Tensura Myths](Tensura-Myths.md)
 
 Install **Java 21**, **Minecraft 1.21.1 / NeoForge 21.1.209+**, **Tensura 2.0.1.3** and its required libraries, then add [Tensura Myths 0.36.1](../../releases/tensura-myths-0.36.1.jar). Myths also requires **GeckoLib 4.9.3 (4.x)**. Update both client and server for multiplayer.

@@ -6,7 +6,7 @@ import html,json,re,shutil,subprocess,sys,zipfile,os
 try:import markdown
 except ImportError:raise SystemExit('Install the documentation renderer: python3 -m pip install Markdown==3.7')
 ROOT=Path(__file__).resolve().parents[1];WIKI=ROOT/'wiki';SITE=WIKI/'site'
-MODS={'myths':{'name':'Tensura Myths','version':'0.36.1','home':'Tensura-Myths','mark':'M'},'additions':{'name':'TensuraAdditionalAdditions','version':'1.26.1','home':'TensuraAdditionalAdditions','mark':'A'},'retired_addon':{'name':'Tensura retired_addon','version':'1.2.0','home':'Tensura-retired_addon','mark':'K'}}
+MODS={'myths':{'name':'Tensura Myths','version':'0.36.1','home':'Tensura-Myths','mark':'M'},'additions':{'name':'TensuraAdditionalAdditions','version':'1.26.1','home':'TensuraAdditionalAdditions','mark':'A'}}
 subprocess.run([sys.executable,str(ROOT/'scripts/build-ability-index.py')],check=True)
 catalog=json.loads((WIKI/'catalog.json').read_text());metadata={e['slug']:e for e in catalog};navigation=json.loads((WIKI/'navigation.json').read_text());abilities=json.loads((WIKI/'abilities.json').read_text())
 SITE.mkdir(exist_ok=True)
@@ -63,22 +63,22 @@ def render(source,destination):
     if lead:intro=lead[1];content=content[lead.end():]
     content=re.sub(r'(<table>.*?</table>)',r'<div class="article-table">\1</div>',content,flags=re.S)
     nav=''
-    scopes=[mod] if mod in MODS else list(MODS)
+    scopes=[mod] if mod in MODS else ['additions','myths']
     for scope in scopes:
         if not config:nav+='<h2 class="nav-mod">'+MODS[scope]['name']+'</h2>'
         for heading,entries in (navigation[scope] if config else [('Browse',navigation[scope][0][1]+navigation[scope][1][1][:1])]):
             nav+='<section><h2>'+html.escape(heading)+'</h2>'+''.join('<a href="'+route(key,destination)+'"'+(' aria-current="page"' if key==slug else '')+'>'+html.escape(name)+'</a>' for key,name in entries)+'</section>'
     switches='<a href="'+relative(WIKI/'index.html',destination)+'"'+(' aria-current="page"' if home else '')+'>All wikis</a>'
-    for scope,info in MODS.items():switches+='<a href="'+route(info['home'],destination)+'"'+(' aria-current="page"' if scope==mod else '')+'>'+html.escape(info['name'])+'</a>'
+    for scope,info in sorted(MODS.items(),key=lambda pair: pair[0]!='additions'):switches+='<a href="'+route(info['home'],destination)+'"'+(' aria-current="page"' if scope==mod else '')+'>'+html.escape(info['name'])+'</a>'
     if home:
         cards=''
-        for scope,info in MODS.items():
-            image='retired_addon-wooden-king.png' if scope=='retired_addon' else 'eschaton-form-one.png' if scope=='myths' else 'marauders-map.png';desc='Wooden Monkey King, forest arts and Tree Flight.' if scope=='retired_addon' else 'Skills, races, Godly ascension and Myth bosses.' if scope=='myths' else 'Heavenly Restriction, Battlewills, cartography and world travel.'
-            cards+='<a class="mod-card '+scope+'" href="'+route(info['home'],destination)+'"><img src="'+relative(WIKI/'media'/image,destination)+'" alt="'+html.escape(info['name'])+'"><div><small>VERSION '+info['version']+'</small><h2>'+info['name']+'</h2><p>'+desc+'</p><strong>Open this wiki →</strong></div></a>'
+        for scope,info in sorted(MODS.items(),key=lambda pair: pair[0]!='additions'):
+            image='eschaton-form-one.png' if scope=='myths' else 'marauders-map.png';desc='Discontinued archive. Final release: 0.36.1.' if scope=='myths' else 'Active: Heavenly Restriction, Battlewills, cartography and world travel.'
+            cards+='<a class="mod-card '+scope+'" href="'+route(info['home'],destination)+'"><img src="'+relative(WIKI/'media'/image,destination)+'" alt="'+html.escape(info['name'])+'"><div><small>'+('DISCONTINUED · ' if scope=='myths' else 'ACTIVE · ')+info['version']+'</small><h2>'+info['name']+'</h2><p>'+desc+'</p><strong>Open this wiki →</strong></div></a>'
         # The visual cards replace the Markdown comparison table.
         content=re.sub(r'<div class="article-table"><table>.*?</table></div>', '<div class="mod-grid">'+cards+'</div>',content,count=1,flags=re.S)
     toc='<details class="contents"><summary>On this page</summary>'+renderer.toc+'</details>' if len(renderer.toc_tokens)>2 and not home else ''
-    version=config['version'] if config else 'Myths 0.36.1 · Additions 1.26.1 · retired_addon 1.2.0';mark=config['mark'] if config else 'T';prefix=relative(WIKI,destination)+'/'
+    version=(config['version']+(' · Discontinued' if mod=='myths' else ' · Active')) if config else 'Additions 1.26.1 · Myths archive 0.36.1';mark=config['mark'] if config else 'T';prefix=relative(WIKI,destination)+'/'
     title_id=markdown.extensions.toc.slugify(title,'-')
     title_attr='' if re.search(r'id="'+re.escape(title_id)+r'"',content) else ' id="'+html.escape(title_id)+'"'
     article_home=route(config['home'],destination) if config else relative(WIKI/'index.html',destination)

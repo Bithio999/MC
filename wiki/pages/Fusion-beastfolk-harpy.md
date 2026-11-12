@@ -1,5 +1,7 @@
 # Gryphon Sovereign
 
+> **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
+
 [All wikis](../README.md) · [Tensura Myths](Tensura-Myths.md)
 
 **Gryphon Sovereign** is the unique Convergent race formed from **Beastfolk** and **Harpy** ancestry. Beastfolk vitality and Harpy spirit form a single stable lineage.

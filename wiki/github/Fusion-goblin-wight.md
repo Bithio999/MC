@@ -1,5 +1,7 @@
 # Ossuary Trickster
 
+> **Discontinued archive:** Tensura Myths ended at 0.36.1. No further updates are planned.
+
 [All wikis](https://github.com/Bithio999/MC/wiki/Home) · [Tensura Myths](https://github.com/Bithio999/MC/wiki/Tensura-Myths)
 
 **Ossuary Trickster** is the unique Convergent race formed from **Goblin** and **Wight** ancestry. Goblin vitality and Wight spirit form a single stable lineage.
