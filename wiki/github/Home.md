@@ -4,7 +4,7 @@
 
 | Wiki | Status | Version |
 | --- | --- | --- |
-| **[TensuraAdditionalAdditions](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/TensuraAdditionalAdditions)** | Active — Heavenly Restriction, Battlewills, skills, gear, world travel and The High Realm | 1.26.1 |
+| **[TensuraAdditionalAdditions](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/TensuraAdditionalAdditions)** | Active — Heavenly Restriction, Battlewills, skills, gear, world travel and The High Realm | 1.26.2 |
 | **[Tensura Myths](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Tensura-Myths)** | Discontinued — archived races, skills, dual races, bosses and otherworlders | Final: 0.36.1 |
 
 Both require **Tensura: Reincarnated**, Minecraft **1.21.1** and **NeoForge**. They are alternative distributions; do not install them together.

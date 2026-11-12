@@ -17,12 +17,16 @@
 
 ![Tyche in Tensura’s Ultimate menu](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/wiki/media/tyche-native-ultimate-menu.png)
 
+*Menu screenshots were recorded before the 1.26.2 balance change; use the current values below.*
+
 Owning either component reveals Tyche in **Skills → Ultimate**. Open the unfinished entry, meet the requirements and confirm synthesis. Awakening bonuses apply before payment. Both parents are replaced by learned, unmastered Tyche. Existing guaranteed hits, their cooldown and Tuner’s current damage-history lockouts transfer. Affected presets point to Guaranteed Dividend.
 
 <a id="loaded-dice"></a>
 ## Loaded Dice · Passive, Toggle
 
-Criticals begin at **×4**, then use Critical Merchant’s **50% doubling chain** with up to **100 additional successful doublings**. The first failed roll gets **one reroll per chain**. This improves the critical’s payout; it does not itself make every attack critical. Damage retains its original type and normal defenses apply.
+Criticals begin at **×2**. Each successful **50% roll** compounds that bonus by **×1.35**, up to **100 successes**. The first failed roll gets **one reroll per chain**; the next failure ends the chain. There is **no separate payout cap**.
+
+**Bonus multiplier = 2 × 1.35ⁿ**, where *n* is the number of successes (0–100). This multiplies already-critical damage. For example, a 100-damage critical becomes **200**, **270**, or **364.5** with zero, one, or two successes. Loaded Dice does not itself make every attack critical. Damage retains its original type and normal defenses apply.
 
 <a id="against-all-odds"></a>
 ## Against All Odds · Passive, Toggle

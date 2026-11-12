@@ -41,6 +41,57 @@ public final class TycheGameTests {
   }
 
   @GameTest(template = "empty", timeoutTicks = 100)
+  public static void reducedPayoutAppliesOnceAndDividendStillWorksWithPassiveOff(GameTestHelper h) {
+    var p = player(h);
+    var i = tyche(p);
+    p.getAttribute(ManasCoreAttributes.CRITICAL_ATTACK_CHANCE).setBaseValue(100);
+    p.getAttribute(ManasCoreAttributes.CRITICAL_DAMAGE_MULTIPLIER).setBaseValue(2.5);
+    var t = CriticalMerchantGameTests.dummy(h, p);
+    h.runAfterDelay(
+        5,
+        () -> {
+          try (var capture = new CriticalMerchantGameTests.Capture(t)) {
+            i.setToggled(false);
+            p.resetAttackStrengthTicker();
+            p.attack(t);
+            float baseline = capture.values.getLast();
+            h.assertTrue(baseline > 0, "Native baseline critical did not land");
+            i.setToggled(true);
+            for (int n = 0; n < 8; n++) {
+              t.invulnerableTime = 0;
+              p.resetAttackStrengthTicker();
+              p.attack(t);
+              assertPayout(h, baseline, capture.values.getLast());
+            }
+            h.assertTrue(CriticalMerchant.remaining(i) == 0, "Passive created guarantees");
+            i.setToggled(false);
+            CriticalMerchant.press(i, p);
+            t.invulnerableTime = 0;
+            p.resetAttackStrengthTicker();
+            p.attack(t);
+            assertPayout(h, baseline, capture.values.getLast());
+            h.assertTrue(
+                CriticalMerchant.remaining(i) == 9, "Dividend did not spend exactly one hit");
+          }
+          t.discard();
+          h.succeed();
+        });
+  }
+
+  private static void assertPayout(GameTestHelper h, double baseline, double result) {
+    double successes =
+        Math.log(result / baseline / TychePayout.BASE) / Math.log(TychePayout.PER_SUCCESS);
+    h.assertTrue(
+        successes >= -.0001
+            && successes <= 100.0001
+            && Math.abs(successes - Math.rint(successes)) < .001,
+        "Tyche used the wrong payout or repeated the native critical bonus: "
+            + baseline
+            + " -> "
+            + result);
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 100)
   public static void insuranceFullyRestoresAndClearsOtherCooldownsButPreservesOwnClock(
       GameTestHelper h) {
     var p = player(h);

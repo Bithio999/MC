@@ -13,13 +13,17 @@
 
 ![Critical Merchant in Tensura’s Unique menu](../media/critical-merchant-menu.png)
 
+*Screenshots were recorded before the 1.26.2 balance change; current payout values are below.*
+
 <a id="compound-interest"></a>
 
 ## Compound Interest · Passive, Toggle
 
-Every critical hit receives a guaranteed **×2 damage bonus**. It then has a **50% chance** to double again. Every success permits another 50% roll; the chain ends on its **first failure**, after at most **100 additional rolls**.
+Every critical hit receives a guaranteed **×1.5 damage bonus**. Each successful **50% roll** multiplies that bonus by **×1.25**. The chain ends on its **first failure** or after **100 successes**. There is **no separate payout cap**.
 
-Each critical starts a fresh chain. Before defenses, a **100-damage critical** becomes **200**, then **400** after one successful roll, then **800** after two.
+**Bonus multiplier = 1.5 × 1.25ⁿ**, where *n* is the number of successful rolls (0–100). This multiplies damage that has already received its normal critical bonus.
+
+Each critical starts a fresh chain. Before defenses, a **100-damage critical** becomes **150**, then **187.5** after one successful roll, then **234.375** after two.
 
 Enable the passive through Tensura’s **Skills → Unique** checkbox. **Damage type:** the original attack’s type. Normal armor, resistances, barriers and other defenses still apply.
 

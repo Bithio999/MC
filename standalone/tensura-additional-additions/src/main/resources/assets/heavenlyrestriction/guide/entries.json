@@ -927,8 +927,8 @@
         {
           "title": "Compound Interest · Passive toggle",
           "lines": [
-            "Every critical hit gets a guaranteed ×2 damage bonus. Roll a 50% chance to double that bonus again; each success permits another roll. Stop at the first failure, after at most 100 additional rolls. Each critical starts a fresh chain.",
-            "Before defenses, a 100-damage critical becomes 200, then 400 after one successful roll, then 800 after two. Original damage types, armor, resistances and barriers still apply."
+            "Every critical hit gets a guaranteed ×1.5 damage bonus. Each successful 50% roll multiplies that bonus by ×1.25. Stop at the first failure or 100 successes. Each critical starts a fresh chain; there is no separate payout cap.",
+            "Before defenses, a 100-damage critical becomes 150, then 187.5 after one success, then 234.375 after two. The bonus is 1.5 × 1.25^successes. Original damage types, armor, resistances and barriers still apply."
           ]
         },
         {
@@ -1163,7 +1163,7 @@
         {
           "title": "Loaded Dice / Against All Odds · Passive toggle",
           "lines": [
-            "Critical hits start at ×4, then attempt up to 100 additional doublings. Reroll the first failed doubling once. Attacks keep their original damage type.",
+            "Critical hits start at ×2; each successful 50% roll multiplies that bonus by ×1.35. Reroll the first failure once; the next failure stops the chain. Maximum: 100 successes, with no separate payout cap. Bonus = 2 × 1.35^successes. Attacks keep their original damage type.",
             "At or below 50% HP or SHP, gain the full buff for 20 seconds with a 60-second cooldown from activation. +50% attack damage, +25 melee/projectile evasion points. Attack/swim-speed bonuses are 50% stronger than mastered Tuner, and movement bonus only 10% stronger, using the server’s Tuner settings. Each category applies once; no duplicate flat attack/evasion layer. Healing does not cancel the buff. Toggling off cancels it but retains cooldown. Timings are configurable."
           ]
         },

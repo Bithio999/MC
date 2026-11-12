@@ -115,7 +115,8 @@ public final class CriticalMerchant {
     final long dummy, batch;
     final boolean reserved;
     boolean critical, boosted, landed;
-    int exponent;
+    int successes;
+    double payout = 1;
 
     Hit(
         Hit previous,
@@ -248,11 +249,13 @@ public final class CriticalMerchant {
     hit.boosted = true;
     boolean tyche = hit.skill.getSkill() == HeavenlyRestriction.TYCHE.get();
     if (hit.skill.isToggled() || tyche && hit.reserved) {
-      hit.exponent =
+      hit.successes =
           tyche
               ? TychePayout.roll(hit.owner.getRandom()::nextBoolean, hit.reserved)
-              : CriticalPayout.doublings(hit.owner.getRandom()::nextBoolean);
-      amount = CriticalPayout.multiply(amount, Math.scalb(1d, hit.exponent));
+              : CriticalPayout.successes(hit.owner.getRandom()::nextBoolean);
+      hit.payout =
+          tyche ? TychePayout.multiplier(hit.successes) : CriticalPayout.multiplier(hit.successes);
+      amount = CriticalPayout.multiply(amount, hit.payout);
     }
     return amount;
   }
@@ -284,7 +287,7 @@ public final class CriticalMerchant {
   private static void report(Hit hit) {
     if (!(hit.owner.level() instanceof ServerLevel level)) return;
     var at = hit.target.getBoundingBox().getCenter();
-    int count = Math.min(24, 5 + hit.exponent * 2);
+    int count = Math.min(24, 5 + hit.successes * 2);
     level.sendParticles(
         new DustParticleOptions(new Vector3f(1, .72f, .16f), 1.1f),
         at.x,
@@ -301,9 +304,7 @@ public final class CriticalMerchant {
               hit.skill.getSkill() == HeavenlyRestriction.TYCHE.get()
                   ? "heavenlyrestriction.tyche.payout"
                   : "heavenlyrestriction.critical_merchant.payout",
-              hit.exponent == 0
-                  ? "1"
-                  : hit.exponent <= 10 ? Long.toString(1L << hit.exponent) : "2^" + hit.exponent,
+              CriticalPayout.label(hit.payout),
               remaining(hit.skill)),
           true);
   }

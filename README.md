@@ -2,7 +2,7 @@
 
 An active addon for **Tensura: Reincarnated**, **Minecraft 1.21.1** and **NeoForge**.
 
-[Download 1.26.1](releases/TensuraAdditionalAdditions-1.26.1.jar) · [Gameplay wiki](wiki/pages/TensuraAdditionalAdditions.md) · [Development guide](standalone/tensura-additional-additions/README.md) · [Validation](standalone/tensura-additional-additions/docs/VALIDATION-1.26.1.md)
+[Download 1.26.2](releases/TensuraAdditionalAdditions-1.26.2.jar) · [Gameplay wiki](wiki/pages/TensuraAdditionalAdditions.md) · [Development guide](standalone/tensura-additional-additions/README.md) · [Validation](standalone/tensura-additional-additions/docs/VALIDATION-1.26.2.md)
 
 Heavenly Restriction and its race evolutions, Chained/Unbound, Battlewills, Inverted Spear of Heaven, Unique and Ultimate skills, Marauder’s Map, Fusion, Parallel World Jumper, The High Realm and its encounters, Chromatic Orb, Vesper and the Archive of Accord.
 

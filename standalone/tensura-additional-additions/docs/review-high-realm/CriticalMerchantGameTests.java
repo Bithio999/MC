@@ -48,7 +48,7 @@ public final class CriticalMerchantGameTests {
     return p;
   }
 
-  private static TrainingDummyEntity dummy(GameTestHelper h, LivingEntity p) {
+  static TrainingDummyEntity dummy(GameTestHelper h, LivingEntity p) {
     var t =
         (TrainingDummyEntity)
             BuiltInRegistries.ENTITY_TYPE
@@ -75,7 +75,7 @@ public final class CriticalMerchantGameTests {
     h.assertTrue(Math.abs(a - b) < .001, label + ": " + a + " / " + b);
   }
 
-  private static final class Capture implements AutoCloseable {
+  static final class Capture implements AutoCloseable {
     final List<Float> values = new ArrayList<>();
     final java.util.function.Consumer<LivingIncomingDamageEvent> listener;
 
@@ -93,13 +93,14 @@ public final class CriticalMerchantGameTests {
   }
 
   private static void payoutRatio(GameTestHelper h, float base, float boosted) {
-    double exponent = Math.log(boosted / base) / Math.log(2);
+    double exponent =
+        Math.log(boosted / base / CriticalPayout.BASE) / Math.log(CriticalPayout.PER_SUCCESS);
     h.assertTrue(
         base > 0
-            && exponent >= .9999
-            && exponent <= 101.0001
+            && exponent >= -.0001
+            && exponent <= 100.0001
             && Math.abs(exponent - Math.rint(exponent)) < .001,
-        "Native crit must receive one power-of-two payout, without a second base critical: "
+        "Native crit must receive one reduced compound payout, without a second base critical: "
             + base
             + " -> "
             + boosted);

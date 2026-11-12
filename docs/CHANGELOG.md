@@ -1,5 +1,12 @@
 # Changelog
 
+## Additions 1.26.2 — Critical payout balance
+
+- Critical Merchant: replace the guaranteed ×2 and repeated doublings with ×1.5 followed by ×1.25 per successful 50% roll.
+- Tyche: replace the guaranteed ×4 and repeated doublings with ×2 followed by ×1.35 per successful 50% roll. Keep its one failed-roll reroll and Dividend’s better-of-two chains.
+- Keep 100 successful rolls for both skills, with no separate payout cap. Report the actual decimal multiplier in the payout message. Native critical bonuses, damage types, defenses, costs, cooldowns, guarantee counts and Tyche’s defensive abilities are retained.
+
+
 ## Repository maintenance
 
 - Make AdditionalAdditions the active project; discontinue Myths at 0.36.1 and retain its source and reference documentation as an archive.

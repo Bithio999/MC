@@ -302,9 +302,13 @@ Rare libraries generate in suitable new Overworld chunks. Elias offers each play
 
 An Ultimate synthesis of fully mastered **Critical Merchant + Tuner** after completed True Hero / True Demon Lord awakening, **50 landed compounded criticals** and **three distinct damage types survived with Tuner**. Open its unfinished entry in **Skills → Ultimate** and confirm. Default cost: **250,000 permanent magicules** after awakening bonuses, with **no EP gate**. Both parents are consumed; pending guarantees, presets and Tuner lockouts transfer.
 
-- **Loaded Dice — Passive, Toggle:** critical payouts start at ×4, reroll one failed doubling and retain the 100-success chain limit.
+- **Loaded Dice — Passive, Toggle:** critical payouts start at ×2 and compound by ×1.35 per successful 50% roll. Reroll the first failed roll once; retain the 100-success limit without a separate payout cap.
 - **Against All Odds — Passive, Toggle:** at 50% HP or SHP or lower, gain the full buff for 20 seconds; cooldown 60 seconds from activation. +50% attack damage and +25 percentage points of melee/projectile evasion. Add attack-speed and swim-speed bonuses 50% stronger than mastered Tuner’s, and movement-speed bonus only 10% stronger. Each category applies once; no additional flat attack or evasion layer. Healing does not cancel it; toggling off cancels it without resetting cooldown. Timings are configurable.
 - **Fate Insurance — Passive, True:** an eligible fatal hit restores full current-maximum HP, SHP, magicules and aura, removes harmful effects and clears other native ability cooldowns. Each native damage-message type can trigger once during a shared **five-minute window starting at the first revival**. Further revivals do not extend it or clear their own history. Tuner’s bypass exceptions remain.
 - **Guaranteed Dividend — Active, Press:** 5,000 magicules, 20-second cooldown; ten guaranteed criticals, each using the higher of two payout rolls. Shift-press opens passive timers and live insurance history even during cooldown.
 
 Payouts retain the **original attack’s damage type**. The other abilities deal no direct damage. [Full skill page](../../../wiki/pages/Additions-Tyche.md).
+
+## Critical Merchant — Unique
+
+Compound Interest multiplies already-critical damage by **1.5 × 1.25ⁿ**, where *n* is the number of successful 50% continuation rolls. Stop at the first failure or 100 successes; no separate payout cap. Guaranteed Profit retains its 1,000-magicule cost, 20-second cooldown and ten critical hits. [Full skill page](../../../wiki/pages/Additions-Critical-Merchant.md).

@@ -1,23 +1,30 @@
 package dev.heavenlyrestriction.tyche;
 
+import dev.heavenlyrestriction.critical.CriticalPayout;
 import java.util.function.BooleanSupplier;
 
-/** Two guaranteed doublings, up to 100 successes, and one failed-roll reroll per chain. */
+/** A stronger geometric payout, up to 100 successes, and one failed-roll reroll per chain. */
 public final class TychePayout {
+  public static final double BASE = 2, PER_SUCCESS = 1.35;
+
   public static int chain(BooleanSupplier coin) {
-    int exponent = 2;
+    int successes = 0;
     boolean rerolled = false;
-    for (int roll = 0; roll < 100; roll++) {
+    while (successes < CriticalPayout.MAX_SUCCESSES) {
       if (coin.getAsBoolean()) {
-        exponent++;
+        successes++;
         continue;
       }
       if (rerolled) break;
       rerolled = true;
       if (!coin.getAsBoolean()) break;
-      exponent++;
+      successes++;
     }
-    return exponent;
+    return successes;
+  }
+
+  public static double multiplier(int successes) {
+    return BASE * Math.pow(PER_SUCCESS, Math.clamp(successes, 0, CriticalPayout.MAX_SUCCESSES));
   }
 
   public static int roll(BooleanSupplier coin, boolean dividend) {
