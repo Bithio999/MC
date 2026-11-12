@@ -334,4 +334,70 @@ public final class MentorGameTests {
           h.succeed();
         });
   }
+
+  @GameTest(template = "empty", timeoutTicks = 400)
+  public static void archiveEveryBlockSurvivesInAllFourRotations(GameTestHelper h) {
+    var level = h.getLevel();
+    var template =
+        level.getStructureManager().get(HeavenlyRestriction.id("mentor_archive")).orElseThrow();
+    var saved = template.save(new CompoundTag());
+    int expected =
+        saved.getList("blocks", Tag.TAG_COMPOUND).size()
+            - template
+                .filterBlocks(
+                    BlockPos.ZERO,
+                    new StructurePlaceSettings(),
+                    net.minecraft.world.level.block.Blocks.AIR)
+                .size();
+    int index = 0;
+    for (var rotation : Rotation.values()) {
+      var origin =
+          new BlockPos(
+              h.absolutePos(BlockPos.ZERO).getX() + 80 + index++ * 80,
+              level.getMaxBuildHeight() - template.getSize().getY() - 8,
+              h.absolutePos(BlockPos.ZERO).getZ() + 120);
+      var settings = new StructurePlaceSettings().setRotation(rotation).setIgnoreEntities(true);
+      h.assertTrue(
+          template.placeInWorld(level, origin, origin, settings, level.random, 2),
+          "Placement failed " + rotation);
+      int count = 0;
+      for (int x = 0; x < template.getSize().getX(); x++)
+        for (int y = 0; y < template.getSize().getY(); y++)
+          for (int z = 0; z < template.getSize().getZ(); z++) {
+            var local =
+                net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate
+                    .transform(
+                        new BlockPos(x, y, z),
+                        net.minecraft.world.level.block.Mirror.NONE,
+                        rotation,
+                        BlockPos.ZERO);
+            var pos = origin.offset(local);
+            var state = level.getBlockState(pos);
+            if (state.isAir()) continue;
+            count++;
+            h.assertTrue(
+                state.canSurvive(level, pos),
+                "Invalid survival " + rotation + " " + pos + " " + state);
+            if (state.is(net.minecraft.world.level.block.Blocks.LADDER)) {
+              var back =
+                  pos.relative(
+                      state
+                          .getValue(net.minecraft.world.level.block.LadderBlock.FACING)
+                          .getOpposite());
+              h.assertTrue(
+                  level.getBlockState(back).isSolidRender(level, back),
+                  "Ladder lacks opaque backing " + pos);
+            }
+            if (state.is(net.minecraft.world.level.block.Blocks.DARK_OAK_FENCE))
+              h.assertTrue(
+                  level
+                      .getBlockState(pos.below())
+                      .isFaceSturdy(level, pos.below(), net.minecraft.core.Direction.UP),
+                  "Unsupported fence " + pos);
+          }
+      h.assertTrue(
+          count == expected, "Block count mismatch " + rotation + ": " + count + " / " + expected);
+    }
+    h.succeed();
+  }
 }

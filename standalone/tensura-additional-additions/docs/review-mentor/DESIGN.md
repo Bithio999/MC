@@ -16,3 +16,9 @@ Elias retains Kael's established classic 64×64 otherworlder pixel style. His te
 ## Visual review
 
 From the standalone project, use Java 21 and `runClient -I docs/review-mentor-art/client.init.gradle`. This opt-in harness requires the disposable `Archive Review 3` save in `/workspace/validation-mentor/client`, refuses non-review save paths, and leaves the redemption ledger alone. It places the actual template on level terrain, removes trees only in the staging border outside the template, and checks camera arrival before capturing exterior, rear, hall, bay and all three tower rooms. Tower light levels are checked at night. The development LWJGL stack override and all review classes are excluded from production.
+
+## Context audit
+
+The current template is checked by `scripts/audit-mentor-archive.py`, which reads the generated NBT independently of the authoring script. Every cell participates in the support, connection and enclosure audit. The report records block counts and failures. Native tests separately scan real placements in every rotation. The client review adds the specific chandelier, rail, gable, roof-junction, foundation and window-alignment viewpoints and standing-player route clearance.
+
+The hall stairwell now sits outside the narrower atrium rail. All rails stand on whole floor blocks and the stair run has a continuous timber underside. The chandelier uses a compact iron frame at height 10 below the trusses, with lamps at height 8. Subsidiary roofs end at the main wall instead of replacing its full blocks with stair/slab voids. The foundation is continuous. The bay layout has a defined mirror axis with a centred bench/window and paired shelf lamps.

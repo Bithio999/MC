@@ -281,7 +281,7 @@ public final class MentorArtReview {
         server(
             p -> {
               p.server.overworld().setDayTime(18000);
-              look(p, at(6, 3, 14), at(3, 4.5, 15));
+              look(p, at(6, 3, 14), at(2, 4.5, 17));
             });
         phase = 6;
         wait = 0;
@@ -310,7 +310,7 @@ public final class MentorArtReview {
               } catch (Exception ex) {
                 throw new IllegalStateException(ex);
               }
-              look(p, at(6, 9, 14), at(3, 10.5, 15));
+              look(p, at(6, 9, 14), at(2, 10.5, 17));
             });
         phase = 7;
         wait = 0;
@@ -319,19 +319,105 @@ public final class MentorArtReview {
       if (phase == 7) {
         shot("mentor-archive-tower-middle");
         ready = false;
-        server(p -> look(p, at(6, 15, 14), at(3, 16.5, 15)));
+        server(p -> look(p, at(6, 15, 14), at(2, 16.5, 17)));
         phase = 8;
         wait = 0;
         return;
       }
       if (phase == 8) {
         shot("mentor-archive-tower-top");
+        ready = false;
+        server(
+            p -> {
+              p.serverLevel().setDayTime(6000);
+              look(p, at(11.5, 9, 15.5), at(16.5, 9.5, 19.5));
+            });
+        phase = 9;
+        wait = 0;
+        return;
+      }
+      if (phase == 9) {
+        shot("mentor-archive-chandelier");
+        ready = false;
+        server(p -> look(p, at(23.5, 10, 20), at(20.5, 8, 23.5)));
+        phase = 10;
+        wait = 0;
+        return;
+      }
+      if (phase == 10) {
+        shot("mentor-archive-gallery-rails");
+        ready = false;
+        server(p -> look(p, at(16, 14, 12), at(16, 16, 8)));
+        phase = 11;
+        wait = 0;
+        return;
+      }
+      if (phase == 11) {
+        shot("mentor-archive-front-gable");
+        ready = false;
+        server(p -> look(p, at(28, 11, 24), at(24, 11, 24)));
+        phase = 12;
+        wait = 0;
+        return;
+      }
+      if (phase == 12) {
+        shot("mentor-archive-roof-junction");
+        ready = false;
+        server(p -> look(p, at(26, 2, 16), at(25, 1, 20)));
+        phase = 13;
+        wait = 0;
+        return;
+      }
+      if (phase == 13) {
+        shot("mentor-archive-foundation");
+        ready = false;
+        server(p -> look(p, at(16, 7, 37), at(16, 7, 30)));
+        phase = 14;
+        wait = 0;
+        return;
+      }
+      if (phase == 14) {
+        shot("mentor-archive-window-alignment");
+        ready = false;
+        server(
+            p -> {
+              var level = p.serverLevel();
+              java.util.function.Consumer<Vec3> free =
+                  v -> {
+                    var pos = at(v.x, v.y, v.z);
+                    var box =
+                        p.getDimensions(net.minecraft.world.entity.Pose.STANDING)
+                            .makeBoundingBox(pos);
+                    if (!level.noCollision(box))
+                      throw new IllegalStateException("Blocked standing-player route " + v);
+                  };
+              for (int n = 0; n < 6; n++) free.accept(new Vec3(20.5, 4 + n, 20 + n + .65));
+              for (double x = 16.5; x <= 27.5; x++)
+                free.accept(new Vec3(x, x < 18 ? 3.0625 : 3, 24.5));
+              for (int z = 10; z <= 28; z++) free.accept(new Vec3(11.5, 9, z + .5));
+              for (int z = 22; z <= 26; z++) free.accept(new Vec3(23.5, 9, z + .5));
+              for (int floor : new int[] {3, 9})
+                for (int x = 4; x <= 10; x++) free.accept(new Vec3(x + .5, floor, 15.5));
+              try {
+                Files.writeString(
+                    OUT.resolve("routes.txt"),
+                    "Standing-player clearance: all six stair steps, hall-to-bay path, gallery"
+                        + " corridors and both tower links passed.\n");
+              } catch (Exception ex) {
+                throw new IllegalStateException(ex);
+              }
+            });
+        phase = 15;
+        wait = 0;
+        return;
+      }
+      if (phase == 15) {
         Files.writeString(
             OUT.resolve("passed.txt"),
-            "Actual client: exterior, rear, supported lighting, sealed reading bay and all three"
-                + " lit tower floors.\n");
+            "Actual client: all reported problem areas, all rooms, nighttime tower lighting and"
+                + " standing-player route clearance passed.\n");
         mc.stop();
-        phase = 9;
+        phase = 16;
       }
     } catch (Throwable ex) {
       error = ex.toString();

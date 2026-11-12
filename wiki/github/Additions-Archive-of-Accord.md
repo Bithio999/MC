@@ -28,6 +28,8 @@ Elias stays inside and is protected from ordinary damage. Each archive contains 
 
 ![Rear framing and chimney](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/mentor-archive-rear.png)
 
+![Chandelier and gallery](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/mentor-archive-chandelier.png)
+
 ![Connected reading bay](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/mentor-archive-reading-bay.png)
 
 ![Tower at night](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/mentor-archive-tower-ground.png)

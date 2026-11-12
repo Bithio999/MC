@@ -1,5 +1,14 @@
 # Changelog
 
+## Additions 1.24.3 — Archive context audit
+
+- Lower the compact iron chandelier below the trusses and keep it entirely over the atrium.
+- Move the tower ladder to opaque corner backing, remove the cartography table and support the tower roof cap.
+- Center rear windows between their frame posts. Align the reading-bay window, bench and paired lamps around its centre.
+- Separate the stairwell from the atrium railing, add supported guards and a timber underside, and clear the outer gallery route.
+- Stop porch and bay roofs before the main wall, preserving a closed wall at both junctions. Replace interrupted footing strips with continuous plinths.
+- Audit every template cell, supports, attachments, grounded connections, symmetry and the half-block enclosure. Add native survival checks in all four rotations and an in-game route/inspection report.
+
 ## Additions 1.24.2 — Archive construction fixes
 
 - Rebuild the gables with straight supporting posts, tie beams and paired clerestories. Add a grounded rear chimney and projecting wall frames; stop timber beneath the roof.

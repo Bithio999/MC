@@ -1,0 +1,13 @@
+# Additions 1.24.3 — Archive context audit
+
+The archive keeps its 31×29×33 bounds and worldgen/service IDs. The chandelier sits below the trusses above the smaller central atrium. The tower ladder is backed by an opaque corner pier, the cartography table is removed, and the roof cap has a central support. End-window panels are centred between their posts. The bay uses a centred three-wide window/bench and paired shelf lights. The stairwell is separate from the atrium rail and has supported guards and timber undersheathing. Both subsidiary roofs stop outside the main wall. Foundation strips are complete full-block plinths.
+
+`python3 scripts/audit-mentor-archive.py` decodes the actual generated NBT. It checks all **29,667 cells**, including **6,209 non-air blocks**, rather than checking only selected coordinates. Checks cover ladder backing, lamp anchors, fence/carpet/table supports, grounded connectivity, complete plinths, mirrored end elevations and bay layout, and enclosure on a half-block grid that models stair/slab voids. The intentional open entrance is temporarily sealed for the flood check. Six interior probes cover the hall, gallery/attic, three tower rooms and bay. The deterministic [audit report](review-mentor/context-audit.json) has no errors.
+
+The baseline native suite passed **all 9 required cases** and exited successfully. The additional case places the real template in all four rotations, scans its complete bounds, verifies native survival for every non-air block and block counts against the native template, and checks opaque ladder backing and full support under every fence. Existing native generation, placement, NPC and service cases also passed.
+
+The opt-in client review captures every reported problem area and all rooms, checks night lighting and standing-player collision clearance through the staircase, gallery corridors, tower links and bay entrance. Review code is excluded from production. The actual-client review completed and exited normally. Every specific reported area was captured and inspected. Standing-player clearance checks passed on all six stair steps, the hall-to-bay path, the gallery corridors and both tower links. Night lighting checks passed again. The [illustrated context review](review-mentor/CONTEXT-REVIEW.md) records the inspected results.
+
+Existing buildings are not modified. Revised archives generate in new chunks.
+
+The final clean production build passed **64 JVM tests**, with no failures, errors or skips. The distribution audit now automatically runs the complete NBT context audit and verified the 1.24.3 metadata, exact packaged assets and absence of review classes or bundled dependencies. Release SHA-256: `327e350ef568d700aaea2a52690878b8417d11140f64487be56551afced81c19`.
