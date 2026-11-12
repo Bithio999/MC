@@ -25,7 +25,7 @@ public final class ArtVisualEntity extends Entity implements GeoEntity {
     public Vec3 end(){return new Vec3(entityData.get(X),entityData.get(Y),entityData.get(Z));}
     public void setCaster(Entity e){entityData.set(CASTER,e.getId());}public Entity caster(){return level().getEntity(entityData.get(CASTER));}
     @Override protected void defineSynchedData(SynchedEntityData.Builder b){b.define(KIND,0);b.define(LIFE,16);b.define(STYLE,0);b.define(CASTER,-1);b.define(X,0f);b.define(Y,0f);b.define(Z,0f);}
-    @Override public void tick(){super.tick();if((kind()==FUSION || kind()>=TYCHE_HOUSE) && caster()!=null)setPos(caster().position());if(!level().isClientSide() && (tickCount>=lifetime() || kind()==TYCHE_HOUSE && (!(caster() instanceof LivingEntity owner) || !dev.heavenlyrestriction.tyche.Tyche.house(owner))))discard();}
+    @Override public void tick(){super.tick();if((kind()==FUSION || kind()>=TYCHE_HOUSE) && caster()!=null)setPos(caster().position());if(!level().isClientSide() && (tickCount>=lifetime() || kind()==TYCHE_HOUSE))discard();}
     @Override public AABB getBoundingBoxForCulling(){return new AABB(position(),position().add(end())).inflate(Math.max(4,Math.abs(end().x)));}
     @Override public boolean shouldRenderAtSqrDistance(double distance){return distance<128*128;}
     @Override protected void readAdditionalSaveData(CompoundTag tag){}@Override protected void addAdditionalSaveData(CompoundTag tag){}

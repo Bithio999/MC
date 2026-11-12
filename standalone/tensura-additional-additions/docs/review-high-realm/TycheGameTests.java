@@ -4,7 +4,10 @@ import static dev.heavenlyrestriction.TestFixtures.*;
 
 import dev.heavenlyrestriction.critical.*;
 import dev.heavenlyrestriction.tyche.*;
+import io.github.manasmods.manascore.attribute.api.ManasCoreAttributes;
 import io.github.manasmods.manascore.skill.api.*;
+import io.github.manasmods.tensura.ability.skill.unique.TunerSkill;
+import io.github.manasmods.tensura.damage.TensuraDamageSource;
 import io.github.manasmods.tensura.registry.attribute.TensuraAttributes;
 import io.github.manasmods.tensura.registry.skill.UniqueSkills;
 import io.github.manasmods.tensura.storage.TensuraStorages;
@@ -15,8 +18,6 @@ import net.minecraft.nbt.*;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.*;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.event.entity.player.CriticalHitEvent;
 import net.neoforged.neoforge.gametest.*;
 
 @GameTestHolder("tychereview")
@@ -28,6 +29,9 @@ public final class TycheGameTests {
 
   static ManasSkillInstance tyche(ServerPlayer p) {
     var i = learn(p, HeavenlyRestriction.TYCHE.get(), false);
+    p.setHealth(p.getMaxHealth());
+    TensuraStorages.getExistenceFrom(p)
+        .setSpiritualHealth(p.getAttributeValue(TensuraAttributes.MAX_SPIRITUAL_HEALTH));
     i.onToggleOn(p);
     return i;
   }
@@ -64,7 +68,7 @@ public final class TycheGameTests {
     h.assertTrue(
         other.getCooldownList().stream().allMatch(n -> n == 0), "Other cooldowns retained");
     near(h, i.getCoolDown(0), 0, "Dividend cooldown");
-    near(h, i.getCoolDown(1), 0, "House cooldown");
+    near(h, i.getCoolDown(1), 0, "Against All Odds cooldown");
     near(h, i.getCoolDown(2), 300, "Insurance clock");
     h.succeed();
   }
@@ -158,36 +162,106 @@ public final class TycheGameTests {
   }
 
   @GameTest(template = "empty", timeoutTicks = 100)
-  public static void adversityTracksCurrentHealthAndDoesNotStackOrRemainAfterToggle(
+  public static void oddsAtHalfHpGrantsFullNonDuplicatedBuffsAndPersistsThroughHealing(
       GameTestHelper h) {
     var p = player(h);
     var i = tyche(p);
     p.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(10);
-    p.setHealth(p.getMaxHealth() * .25f);
+    p.getAttribute(Attributes.ATTACK_SPEED).setBaseValue(4);
+    p.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(.1);
+    p.getAttribute(ManasCoreAttributes.SWIM_SPEED_MULTIPLIER).setBaseValue(1);
+    p.getAttribute(TensuraAttributes.AUTO_MELEE_DODGE_CHANCE).setBaseValue(0);
+    p.getAttribute(TensuraAttributes.AUTO_PROJECTILE_DODGE_CHANCE).setBaseValue(0);
+    p.setHealth(p.getMaxHealth() * .5f);
+    Tyche.checkOdds(p);
+    near(
+        h,
+        p.getAttributeValue(Attributes.ATTACK_DAMAGE),
+        15,
+        "Full damage without duplicate flat bonus");
+    near(
+        h,
+        p.getAttributeValue(TensuraAttributes.AUTO_MELEE_DODGE_CHANCE),
+        25,
+        "Melee dodge duplicated");
+    near(
+        h,
+        p.getAttributeValue(TensuraAttributes.AUTO_PROJECTILE_DODGE_CHANCE),
+        25,
+        "Projectile dodge duplicated");
+    near(
+        h,
+        p.getAttributeValue(Attributes.ATTACK_SPEED),
+        4 + TunerSkill.CONFIG.bonusAttackSpeed * 3,
+        "Attack speed stronger than mastered Tuner");
+    near(
+        h,
+        p.getAttributeValue(Attributes.MOVEMENT_SPEED),
+        .1 + TunerSkill.CONFIG.bonusSpeed * 2.2,
+        "Slight movement increase");
+    near(
+        h,
+        p.getAttributeValue(ManasCoreAttributes.SWIM_SPEED_MULTIPLIER),
+        1 + TunerSkill.CONFIG.bonusSwim * 3,
+        "Swim speed");
+    h.assertTrue(
+        Tyche.oddsTicks(i) == TycheConfig.ODDS_DURATION.get() * 20
+            && i.getCoolDown(1) == TycheConfig.ODDS_COOLDOWN.get(),
+        "Wrong duration/cooldown");
+    p.setHealth(p.getMaxHealth());
     Tyche.refresh(p);
-    near(h, p.getAttributeValue(Attributes.ATTACK_DAMAGE), 12.5, "Low HP damage");
     Tyche.refresh(p);
-    near(h, p.getAttributeValue(Attributes.ATTACK_DAMAGE), 12.5, "Bonus stacked");
-    i.onToggleOff(p);
-    near(h, p.getAttributeValue(Attributes.ATTACK_DAMAGE), 10, "Toggle retained bonus");
+    near(
+        h,
+        p.getAttributeValue(Attributes.ATTACK_DAMAGE),
+        15,
+        "Healing canceled timed buff or refresh stacked it");
+    Tyche.advanceOdds(i, p);
+    Tyche.checkOdds(p);
+    h.assertTrue(
+        Tyche.oddsTicks(i) == TycheConfig.ODDS_DURATION.get() * 20 - 1, "Check extended duration");
     h.succeed();
   }
 
   @GameTest(template = "empty", timeoutTicks = 100)
-  public static void housePaysOnceAndCriticalProtectionHasRangeAndOwnership(GameTestHelper h) {
+  public static void oddsAtHalfShpTriggersWithFullPhysicalHealth(GameTestHelper h) {
     var p = player(h);
     var i = tyche(p);
     var energy = TensuraStorages.getExistenceFrom(p);
-    double before = energy.getMagicule();
-    h.assertTrue(Tyche.housePress(i, p), "House rejected");
-    near(h, before - energy.getMagicule(), TycheConfig.HOUSE_COST.get(), "House cost");
-    h.assertTrue(!Tyche.housePress(i, p), "Recast ignored cooldown");
-    var enemy = target(h, p.position().add(2, 0, 0));
-    h.assertTrue(Tyche.protectedFrom(enemy, p), "Nearby enemy not protected against");
-    enemy.setPos(p.position().add(30, 0, 0));
-    h.assertTrue(!Tyche.protectedFrom(enemy, p), "House affected distant enemy");
-    Tyche.clear(i, p);
-    h.assertTrue(!Tyche.house(p), "Cleanup retained house");
+    var max = p.getAttributeValue(TensuraAttributes.MAX_SPIRITUAL_HEALTH);
+    h.assertTrue(max > 0, "Fixture lacks SHP capacity");
+    energy.setSpiritualHealth(max * .5001);
+    Tyche.checkOdds(p);
+    h.assertTrue(Tyche.oddsTicks(i) == 0, "Above half triggered");
+    energy.setSpiritualHealth(max * .5);
+    Tyche.checkOdds(p);
+    h.assertTrue(
+        Tyche.oddsTicks(i) > 0 && p.getHealth() == p.getMaxHealth(), "SHP-only trigger failed");
+    h.succeed();
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 100)
+  public static void oddsExpiresAndCannotBypassCooldownByToggling(GameTestHelper h) {
+    var p = player(h);
+    var i = tyche(p);
+    double damage = p.getAttributeValue(Attributes.ATTACK_DAMAGE),
+        speed = p.getAttributeValue(Attributes.MOVEMENT_SPEED);
+    p.setHealth(p.getMaxHealth() * .5f);
+    Tyche.checkOdds(p);
+    for (int n = 0; n < TycheConfig.ODDS_DURATION.get() * 20; n++) Tyche.advanceOdds(i, p);
+    h.assertTrue(Tyche.oddsTicks(i) == 0, "Buff failed to expire");
+    near(h, p.getAttributeValue(Attributes.ATTACK_DAMAGE), damage, "Damage persisted after expiry");
+    near(
+        h,
+        p.getAttributeValue(Attributes.MOVEMENT_SPEED),
+        speed,
+        "Movement persisted after expiry");
+    i.onToggleOff(p);
+    i.onToggleOn(p);
+    h.assertTrue(Tyche.oddsTicks(i) == 0 && i.onCoolDown(1), "Toggle bypassed cooldown");
+    i.setCoolDown(0, 1);
+    Tyche.checkOdds(p);
+    h.assertTrue(Tyche.oddsTicks(i) > 0, "Low pools failed to trigger after cooldown");
     h.succeed();
   }
 
@@ -246,65 +320,98 @@ public final class TycheGameTests {
   }
 
   @GameTest(template = "empty", timeoutTicks = 100)
-  public static void houseSuppressesNativeMeleeCriticalsEvenAgainstGuaranteedHits(
-      GameTestHelper h) {
+  public static void removedHouseMigratesWithoutTouchingInsuranceAndCannotBeCast(GameTestHelper h) {
     var p = player(h);
-    var defense = tyche(p);
-    h.assertTrue(Tyche.housePress(defense, p), "House rejected");
-    var enemy = player(h);
-    enemy.setPos(p.position().add(2, 0, 0));
-    var offense = learn(enemy, HeavenlyRestriction.CRITICAL_MERCHANT.get(), false);
-    CriticalMerchant.press(offense, enemy);
-    // NeoForge FakePlayer deliberately forbids harming players. House must honor that.
-    h.assertTrue(!Tyche.protectedFrom(enemy, p), "House ignored fake-player PvP protection");
-    var defender = target(h, enemy.position().add(2, 0, 0));
-    RestrictionData.learnReward(defender, HeavenlyRestriction.TYCHE.get());
-    var mobSkill =
-        SkillAPI.getSkillsFrom(defender).getSkill(HeavenlyRestriction.TYCHE.get()).orElseThrow();
-    mobSkill.setMastery(0);
-    defender.getAttribute(TensuraAttributes.MAX_MAGICULE).setBaseValue(1000000);
-    TensuraStorages.getExistenceFrom(defender).setMagicule(1000000);
-    h.assertTrue(Tyche.housePress(mobSkill, defender), "Mob House rejected");
-    h.assertTrue(Tyche.protectedFrom(enemy, defender), "Native hostile fixture not protected");
-    var event = new CriticalHitEvent(enemy, defender, 2.5f, true);
-    NeoForge.EVENT_BUS.post(event);
+    var i = tyche(p);
+    i.getOrCreateTag().putInt("TycheHouseTicks", 250);
+    i.setCoolDown(90, 1);
+    i.setCoolDown(13, 0);
+    i.setCoolDown(123, 2);
+    var history = new CompoundTag();
+    history.putBoolean("generic", true);
+    i.getOrCreateTag().put(FateInsurance.HISTORY, history);
+    Tyche.migrate(i);
+    Tyche.refresh(p);
     h.assertTrue(
-        !event.isCriticalHit() && event.getDamageMultiplier() == 1,
-        "Native critical survived House");
-    h.assertTrue(CriticalMerchant.remaining(offense) == 10, "Suppressed crit consumed a guarantee");
+        !i.getOrCreateTag().contains("TycheHouseTicks") && i.getCoolDown(1) == 0,
+        "Legacy field/cooldown retained");
+    h.assertTrue(
+        i.getCoolDown(0) == 13
+            && i.getCoolDown(2) == 123
+            && i.getOrCreateTag().getCompound(FateInsurance.HISTORY).contains("generic"),
+        "Unrelated cooldown/history modified");
+    var energy = TensuraStorages.getExistenceFrom(p);
+    double mp = energy.getMagicule();
+    i.onPressed(p, 0, 1);
+    near(h, energy.getMagicule(), mp, "Removed active charged magicules");
+    h.assertTrue(Tyche.oddsTicks(i) == 0, "Press manually triggered passive");
+    h.assertTrue(
+        HeavenlyRestriction.TYCHE.get().nextMode(p, i, 0, false) == 0
+            && HeavenlyRestriction.TYCHE.get().nextMode(p, i, 0, true) == 0,
+        "Removed active still cycles");
+    var t = target(h, p.position().add(2, 0, 0));
+    var source = p.damageSources().playerAttack(p);
+    CriticalMerchant.observe(
+        t,
+        source,
+        () -> {
+          h.assertTrue(
+              !((TensuraDamageSource) source).tensura$isDodgeBypass(),
+              "Removed dodge bypass remains");
+          return false;
+        });
     h.succeed();
   }
 
   @GameTest(template = "empty", timeoutTicks = 100)
-  public static void houseDodgeBypassOnlyExistsInsideNearbyOwnedDamageTransaction(
+  public static void oddsSerializationAndToggleCleanupRetainCooldown(GameTestHelper h) {
+    var p = player(h);
+    var i = tyche(p);
+    p.setHealth(p.getMaxHealth() * .5f);
+    Tyche.checkOdds(p);
+    var copy = HeavenlyRestriction.TYCHE.get().createDefaultInstance();
+    copy.deserialize(i.serialize(new CompoundTag()));
+    h.assertTrue(
+        Tyche.oddsTicks(copy) == Tyche.oddsTicks(i) && copy.getCoolDown(1) == i.getCoolDown(1),
+        "Native save lost passive timers");
+    i.onToggleOff(p);
+    h.assertTrue(Tyche.oddsTicks(i) == 0 && i.onCoolDown(1), "Toggle cleanup erased cooldown");
+    h.assertTrue(
+        p.getAttribute(Attributes.ATTACK_DAMAGE)
+                    .getModifier(HeavenlyRestriction.id("tyche_adversity"))
+                == null
+            && p.getAttribute(Attributes.ATTACK_SPEED)
+                    .getModifier(HeavenlyRestriction.id("tyche_adversity"))
+                == null,
+        "Toggle retained modifiers");
+    h.succeed();
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 100)
+  public static void physicalAndSpiritualDamageTransactionsCheckThresholdImmediately(
       GameTestHelper h) {
     var p = player(h);
     var i = tyche(p);
-    i.setToggled(false);
-    h.assertTrue(Tyche.housePress(i, p), "House rejected");
-    var target = target(h, p.position().add(2, 0, 0));
-    var source = p.damageSources().playerAttack(p);
-    h.assertTrue(!CriticalMerchant.tycheUndodge(p, source), "Global dodge bypass leaked");
     CriticalMerchant.observe(
-        target,
-        source,
+        p,
+        p.damageSources().generic(),
         () -> {
-          h.assertTrue(
-              CriticalMerchant.tycheUndodge(p, source), "Nearby attack did not bypass dodge");
-          return false;
+          p.setHealth(p.getMaxHealth() * .5f);
+          return true;
         });
-    target.setPos(p.position().add(30, 0, 0));
-    CriticalMerchant.observe(
-        target,
-        source,
+    h.assertTrue(Tyche.oddsTicks(i) > 0, "Physical damage path missed threshold");
+    Tyche.clearOdds(i, p);
+    i.setCoolDown(0, 1);
+    p.setHealth(p.getMaxHealth());
+    CriticalMerchant.observeSpiritual(
+        p,
+        p.damageSources().generic(),
         () -> {
-          h.assertTrue(!CriticalMerchant.tycheUndodge(p, source), "Distant attack bypassed dodge");
-          return false;
+          TensuraStorages.getExistenceFrom(p)
+              .setSpiritualHealth(p.getAttributeValue(TensuraAttributes.MAX_SPIRITUAL_HEALTH) * .5);
+          return true;
         });
-    h.assertTrue(!CriticalMerchant.tycheUndodge(p, source), "Transaction cleanup failed");
-    h.assertTrue(i.canIgnoreCoolDown(p, 0) == false, "Unshifted active ignores cooldown");
-    p.setShiftKeyDown(true);
-    h.assertTrue(i.canIgnoreCoolDown(p, 0), "History inaccessible during Dividend cooldown");
+    h.assertTrue(Tyche.oddsTicks(i) > 0, "Spiritual damage path missed threshold");
     h.succeed();
   }
 

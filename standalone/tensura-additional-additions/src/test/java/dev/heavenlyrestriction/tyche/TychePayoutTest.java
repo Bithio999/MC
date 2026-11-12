@@ -48,11 +48,13 @@ class TychePayoutTest {
   }
 
   @Test
-  void adversityIsBoundedAndFallsAsHealthRecovers() {
-    assertEquals(0, TychePayout.adversity(20, 20));
-    assertEquals(0, TychePayout.adversity(10, 20));
-    assertEquals(.5, TychePayout.adversity(5, 20));
-    assertEquals(1, TychePayout.adversity(-1, 20));
-    assertEquals(0, TychePayout.adversity(0, 0));
+  void halfThresholdIncludesExactHalfAndZeroButNotAbsentOrInvalidCapacity() {
+    assertFalse(TychePayout.atHalf(20, 20));
+    assertFalse(TychePayout.atHalf(10.01, 20));
+    assertTrue(TychePayout.atHalf(10, 20));
+    assertTrue(TychePayout.atHalf(0, 20));
+    assertFalse(TychePayout.atHalf(0, 0));
+    assertFalse(TychePayout.atHalf(Double.NaN, 20));
+    assertFalse(TychePayout.atHalf(1, Double.POSITIVE_INFINITY));
   }
 }

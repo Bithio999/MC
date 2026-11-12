@@ -58,19 +58,19 @@ public final class TycheSkill extends Skill {
 
   @Override
   public int nextMode(LivingEntity e, ManasSkillInstance i, int m, boolean reverse) {
-    return Math.floorMod(m + (reverse ? -1 : 1), 2);
+    return 0; // Dividend is the only castable combat mode.
   }
 
   @Override
   public String getModeId(ManasSkillInstance i, int m) {
-    return "tyche." + (m == 1 ? "house" : m == 2 ? "insurance" : "dividend");
+    return "tyche." + (m == 1 ? "odds" : m == 2 ? "insurance" : "dividend");
   }
 
   @Override
   public Component getModeName(ManasSkillInstance i, int m) {
     return Component.translatable(
         "heavenlyrestriction.skill.mode." + getModeId(i, m),
-        m == 0 ? CriticalMerchant.remaining(i) : i.getOrCreateTag().getInt(Tyche.HOUSE_TICKS) / 20);
+        m == 0 ? CriticalMerchant.remaining(i) : (Tyche.oddsTicks(i) + 19) / 20);
   }
 
   @Override
@@ -81,25 +81,27 @@ public final class TycheSkill extends Skill {
   @Override
   public void onToggleOn(ManasSkillInstance i, LivingEntity e) {
     i.setToggled(true);
+    Tyche.checkOdds(e);
     Tyche.refresh(e);
   }
 
   @Override
   public void onToggleOff(ManasSkillInstance i, LivingEntity e) {
     i.setToggled(false);
-    Tyche.refresh(e);
+    Tyche.clearOdds(i, e);
   }
 
   @Override
   public boolean canIgnoreCoolDown(ManasSkillInstance i, LivingEntity e, int mode) {
-    return i.getMastery() < 0 || mode == FateInsurance.MODE || mode == 0 && e.isShiftKeyDown();
+    return i.getMastery() < 0
+        || mode == FateInsurance.MODE
+        || mode == Tyche.ODDS_MODE
+        || mode == 0 && e.isShiftKeyDown();
   }
 
   @Override
   public double getMagiculeCost(LivingEntity e, ManasSkillInstance i, int m) {
-    return m == 0 && e.isShiftKeyDown()
-        ? 0
-        : m == 0 ? TycheConfig.DIVIDEND_COST.get() : m == 1 ? TycheConfig.HOUSE_COST.get() : 0;
+    return m == 0 && e.isShiftKeyDown() ? 0 : m == 0 ? TycheConfig.DIVIDEND_COST.get() : 0;
   }
 
   @Override
@@ -113,13 +115,12 @@ public final class TycheSkill extends Skill {
       if (e instanceof ServerPlayer p) TycheNetwork.open(p);
       return;
     }
-    if ((mode == FateInsurance.MODE || mode == 0 && e.isShiftKeyDown())
+    if ((mode == FateInsurance.MODE || mode == Tyche.ODDS_MODE || mode == 0 && e.isShiftKeyDown())
         && e instanceof ServerPlayer p) {
       TycheNetwork.open(p);
       return;
     }
     if (mode == 0) CriticalMerchant.press(i, e);
-    else if (mode == 1) Tyche.housePress(i, e);
   }
 
   @Override

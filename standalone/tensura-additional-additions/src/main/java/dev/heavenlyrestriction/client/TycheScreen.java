@@ -175,9 +175,20 @@ public final class TycheScreen extends Screen {
       String history =
           "Recorded damage types: "
               + (state.getString("history").isEmpty() ? "None" : state.getString("history"));
-      g.enableScissor(x + 12, y + 74, x + w - 12, y + h - 55);
+      g.drawString(
+          font,
+          "Against All Odds: "
+              + state.getInt("oddsSeconds")
+              + "s active · "
+              + state.getInt("oddsCooldown")
+              + "s cooldown",
+          x + 12,
+          y + 74,
+          0xffa4dfb5,
+          false);
+      g.enableScissor(x + 12, y + 91, x + w - 12, y + h - 55);
       g.drawWordWrap(
-          font, Component.literal(history), x + 12, y + 77 - historyScroll, w - 26, 0xffb8d1dc);
+          font, Component.literal(history), x + 12, y + 94 - historyScroll, w - 26, 0xffb8d1dc);
       g.disableScissor();
       if (state.getString("notice").isEmpty())
         g.drawString(
@@ -211,7 +222,7 @@ public final class TycheScreen extends Screen {
                               w - 26)
                           .size()
                       * 9
-                  - (h - 132));
+                  - (h - 149));
       historyScroll = Math.clamp(historyScroll - (int) (sy * 18), 0, max);
       return true;
     }

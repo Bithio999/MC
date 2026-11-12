@@ -1,5 +1,12 @@
 # Changelog
 
+## Additions 1.25.1 — Timed Against All Odds
+
+- Remove The House Always Wins, including critical suppression, extra miss chance, dodge bypass and the moving field.
+- At or below 50% HP or SHP, Against All Odds grants its full buff for 20 seconds, with a 60-second cooldown from activation. Healing no longer reduces it. Toggling off cancels the buff without resetting cooldown.
+- Keep +50% attack damage and +25 melee/projectile evasion points. Add attack/swim-speed bonuses 50% stronger than mastered Tuner’s, and a movement bonus only 10% stronger. Use native Tuner configuration; add each category once.
+- Preserve existing Dividend and Fate Insurance data when removing the old field. Show both passive timers in the status menu, and update skill descriptions and guides.
+
 ## Additions 1.25.0 — Tyche, Lord of Fortune
 
 - Add an Ultimate synthesized from fully mastered Critical Merchant + Tuner after completed awakening, 50 landed compounded criticals and three distinct Tuner survivals. Default cost: 250,000 permanent magicules; no EP gate.

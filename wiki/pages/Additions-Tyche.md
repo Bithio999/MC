@@ -27,7 +27,19 @@ Criticals begin at **×4**, then use Critical Merchant’s **50% doubling chain*
 <a id="against-all-odds"></a>
 ## Against All Odds · Passive, Toggle
 
-Below **50% HP**, progressively gain up to **+50% attack damage** and **+25 percentage points of melee/projectile evasion** as HP approaches zero. Recovering HP reduces the bonuses. Uses the same native Ultimate-menu toggle as Loaded Dice. **Damage type:** none directly.
+At **50% HP or SHP or lower**, automatically gain the **full buff for 20 seconds**. **Cooldown: 60 seconds from activation**. Healing does not reduce or cancel it. The bonuses are:
+
+| Effect | Full bonus |
+| --- | --- |
+| Attack damage | +50% |
+| Melee and projectile evasion | +25 percentage points each |
+| Attack speed | 1.5× mastered Tuner’s bonus; +0.6 by default |
+| Swim speed | 1.5× mastered Tuner’s bonus; +3 to the native multiplier by default |
+| Movement speed | 1.1× mastered Tuner’s bonus; +0.088 by default |
+
+![Against All Odds timers](../media/tyche-odds-status.png)
+
+Speed bonuses follow the server’s Tuner settings. Each category applies once: no extra Tuner flat attack-damage or evasion layer is added. Uses the same native toggle as Loaded Dice. Switching it off cancels the active buff but retains its cooldown; remaining at low HP/SHP can trigger it again when ready. Duration and cooldown are configurable. **Damage type:** none directly.
 
 <a id="fate-insurance"></a>
 ## Fate Insurance · Passive, True
@@ -45,19 +57,6 @@ The reset preserves **Fate Insurance’s own timer and history**. Void, `/kill`,
 
 **5,000 magicules · 20-second cooldown.** Your next **ten landed hits** are guaranteed criticals. Each rolls two Loaded Dice chains and uses the higher result, including when the passive is off. Recasting refreshes to ten; fully blocked, immune or failed hits do not spend a guarantee. Melee, owned projectiles and direct spiritual damage use the shared critical pipeline.
 
-Shift-press opens synthesis or your current insurance history. **Damage type:** the original attack’s type.
+Shift-press opens synthesis, passive timers and your current insurance history. **Damage type:** the original attack’s type.
 
-<a id="the-house-always-wins"></a>
-## The House Always Wins · Active, Press
-
-**20,000 magicules · 90-second cooldown.** For **15 seconds**, a **16-block** domain follows you:
-
-- Nearby enemies’ native critical hits against you become ordinary hits.
-- Your attacks bypass enemy dodge inside the domain.
-- Incoming attacks have an additional **25%** chance to miss. Native dodge-bypass attacks retain their bypass.
-
-Alliance and PvP rules apply. The field ends on losing the skill, respawning, logging out or changing dimensions. **Damage type:** none directly.
-
-![The House Always Wins](../media/tyche-house.png)
-
-Configuration: `tensura-additions-tyche.toml` controls synthesis cost, achievement counts and active magicule costs.
+Configuration: `tensura-additions-tyche.toml` controls synthesis cost, achievements, Dividend cost, and Against All Odds duration/cooldown.

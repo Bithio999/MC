@@ -25,8 +25,11 @@ public final class TychePayout {
     return dividend ? Math.max(first, chain(coin)) : first;
   }
 
-  public static double adversity(double health, double maximum) {
-    return maximum > 0 ? Math.clamp(1 - health / (maximum * .5), 0, 1) : 0;
+  public static boolean atHalf(double value, double maximum) {
+    return Double.isFinite(value)
+        && Double.isFinite(maximum)
+        && maximum > 0
+        && value <= maximum * .5;
   }
 
   private TychePayout() {}

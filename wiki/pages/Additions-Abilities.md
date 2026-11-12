@@ -51,7 +51,6 @@ Find a move below, then open its entry for targeting, damage, cost and cooldown.
 | [Against All Odds](Additions-Tyche.md#against-all-odds) | [Tyche, Lord of Fortune](Additions-Tyche.md) | Passive, Toggle | None directly |
 | [Fate Insurance](Additions-Tyche.md#fate-insurance) | [Tyche, Lord of Fortune](Additions-Tyche.md) | Passive, True | None |
 | [Guaranteed Dividend](Additions-Tyche.md#guaranteed-dividend) | [Tyche, Lord of Fortune](Additions-Tyche.md) | Active, Press | Original attack’s damage type |
-| [The House Always Wins](Additions-Tyche.md#the-house-always-wins) | [Tyche, Lord of Fortune](Additions-Tyche.md) | Active, Press | None |
 
 ## Extra
 

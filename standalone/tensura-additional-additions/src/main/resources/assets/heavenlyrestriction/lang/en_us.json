@@ -125,9 +125,10 @@
   "heavenlyrestriction.mentor.price": "The price changed. Review it before confirming.",
   "item.heavenlyrestriction.chromatic_orb.mentor": "Also used for the Archivist’s lesson.",
   "heavenlyrestriction.skill.tyche": "Tyche, Lord of Fortune",
-  "heavenlyrestriction.skill.tyche.description": "[Passive - Toggle] Loaded Dice: criticals start at ×4, chain further doublings and reroll one failure. Against All Odds: below half HP, progressively gain up to +50% attack damage and +25 evasion points.\n[Passive - True] Fate Insurance: survive an eligible fatal attack, fully recover HP/SHP/magicules/aura and reset other ability cooldowns. Each damage type works once per five-minute history window. Insurance never resets itself.\n[Active - Press] Guaranteed Dividend: ten critical hits, each using the better of two payout rolls. Shift: synthesis/history.\n[Active - Press] The House Always Wins: a 16-block fortune domain for 15 seconds; suppress enemy criticals, bypass dodge inside it and gain a 25% chance to evade ordinary incoming attacks.",
+  "heavenlyrestriction.skill.tyche.description": "[Passive - Toggle] Loaded Dice: criticals start at ×4, chain further doublings and reroll one failure. Against All Odds: at 50% HP or SHP, gain the full buff for 20 seconds with a 60-second cooldown. +50% attack damage, +25 melee/projectile evasion points; attack/swim-speed bonuses are 50% stronger than mastered Tuner, movement bonus only 10% stronger.\n[Passive - True] Fate Insurance: survive an eligible fatal attack, fully recover HP/SHP/magicules/aura and reset other ability cooldowns. Each damage type works once per five-minute history window. Insurance never resets itself.\n[Active - Press] Guaranteed Dividend: ten critical hits, each using the better of two payout rolls. Shift: synthesis/passive status.",
   "heavenlyrestriction.skill.mode.tyche.dividend": "Guaranteed Dividend (%s)",
-  "heavenlyrestriction.skill.mode.tyche.house": "The House Always Wins (%ss)",
   "heavenlyrestriction.skill.mode.tyche.insurance": "Fate Insurance",
-  "heavenlyrestriction.tyche.payout": "Loaded Dice ×%s · Dividend hits: %s"
+  "heavenlyrestriction.tyche.payout": "Loaded Dice ×%s · Dividend hits: %s",
+  "heavenlyrestriction.skill.mode.tyche.odds": "Against All Odds (%ss)",
+  "heavenlyrestriction.tyche.odds": "Against All Odds · Full buff for %ss"
 }

@@ -1148,7 +1148,8 @@
         {
           "title": "Loaded Dice / Against All Odds · Passive toggle",
           "lines": [
-            "Critical hits start at ×4, then attempt up to 100 additional doublings. Reroll the first failed doubling once. Below 50% HP, gain progressively up to +50% attack damage and +25 percentage points of melee/projectile evasion. Healing reduces these bonuses. Attacks keep their original damage type."
+            "Critical hits start at ×4, then attempt up to 100 additional doublings. Reroll the first failed doubling once. Attacks keep their original damage type.",
+            "At or below 50% HP or SHP, gain the full buff for 20 seconds with a 60-second cooldown from activation. +50% attack damage, +25 melee/projectile evasion points. Attack/swim-speed bonuses are 50% stronger than mastered Tuner, and movement bonus only 10% stronger, using the server’s Tuner settings. Each category applies once; no duplicate flat attack/evasion layer. Healing does not cancel the buff. Toggling off cancels it but retains cooldown. Timings are configurable."
           ]
         },
         {
@@ -1161,12 +1162,6 @@
           "title": "Guaranteed Dividend · Active press",
           "lines": [
             "Spend 5,000 magicules for ten guaranteed critical hits. Each uses the higher of two Loaded Dice chains. Cooldown: 20 seconds. Recasting refreshes to ten. Blocked/immune hits refund the guarantee. Shift-press opens synthesis or damage-history information."
-          ]
-        },
-        {
-          "title": "The House Always Wins · Active press",
-          "lines": [
-            "Spend 20,000 magicules for a 15-second, 16-block domain. Nearby enemies cannot critically hit you; your attacks bypass their dodge inside the domain. Gain a 25% miss chance against ordinary incoming attacks; native dodge bypass still applies. Cooldown: 90 seconds. No direct damage."
           ]
         }
       ]

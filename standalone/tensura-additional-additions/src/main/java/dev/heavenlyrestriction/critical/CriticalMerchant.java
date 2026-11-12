@@ -52,15 +52,6 @@ public final class CriticalMerchant {
             .filter(i -> i.getMastery() >= 0);
   }
 
-  public static boolean tycheUndodge(LivingEntity e, DamageSource source) {
-    if (!Tyche.house(e)) return false;
-    for (var h = CURRENT.get(); h != null; h = h.previous)
-      if (h.owner == e
-          && h.source == source
-          && e.distanceToSqr(h.target) <= Tyche.RADIUS * Tyche.RADIUS) return true;
-    return false;
-  }
-
   public static int remaining(ManasSkillInstance i) {
     return i.getTag() == null ? 0 : Math.clamp(i.getTag().getInt(REMAINING), 0, HITS);
   }
@@ -100,8 +91,7 @@ public final class CriticalMerchant {
     var i = instance(owner).filter(s -> s.canInteractSkill(owner));
     if (i.isEmpty()
         || !(event.getTarget() instanceof LivingEntity target)
-        || !RestrictionData.canHarm(owner, target)
-        || Tyche.protectedFrom(owner, target)) return;
+        || !RestrictionData.canHarm(owner, target)) return;
     if (remaining(i.get()) > 0 && !event.isCriticalHit()) {
       event.setCriticalHit(true);
       event.setDamageMultiplier(
@@ -183,25 +173,31 @@ public final class CriticalMerchant {
   }
 
   public static boolean observe(LivingEntity target, DamageSource source, BooleanSupplier damage) {
-    return Tyche.guard(target, source, () -> observe(target, source, damage, true));
+    try {
+      return observe(target, source, damage, true);
+    } finally {
+      Tyche.checkOdds(target);
+    }
   }
 
   public static boolean observeSpiritual(
       LivingEntity target, DamageSource source, BooleanSupplier damage) {
-    return Tyche.guard(target, source, () -> observe(target, source, damage, false));
+    try {
+      return observe(target, source, damage, false);
+    } finally {
+      Tyche.checkOdds(target);
+    }
   }
 
   private static boolean observe(
       LivingEntity target, DamageSource source, BooleanSupplier damage, boolean nativeHit) {
     if (source == null) return damage.getAsBoolean();
     var owner = RestrictionData.attacker(source);
-    if (target.level().isClientSide()
-        || owner == null
-        || !RestrictionData.canHarm(owner, target)
-        || Tyche.protectedFrom(owner, target)) return damage.getAsBoolean();
+    if (target.level().isClientSide() || owner == null || !RestrictionData.canHarm(owner, target))
+      return damage.getAsBoolean();
     var skill = instance(owner).filter(i -> i.canInteractSkill(owner));
     if (skill.isEmpty()
-        || !skill.get().isToggled() && remaining(skill.get()) == 0 && !Tyche.house(owner)
+        || !skill.get().isToggled() && remaining(skill.get()) == 0
         || find(owner, target, source) != null) return damage.getAsBoolean();
     var hit = new Hit(CURRENT.get(), owner, target, source, skill.get(), nativeHit);
     CURRENT.set(hit);

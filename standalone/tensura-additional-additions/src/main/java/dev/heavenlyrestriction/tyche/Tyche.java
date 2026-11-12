@@ -1,35 +1,29 @@
 package dev.heavenlyrestriction.tyche;
 
-import dev.architectury.event.EventResult;
 import dev.heavenlyrestriction.*;
 import dev.heavenlyrestriction.critical.CriticalMerchant;
-import io.github.manasmods.manascore.attribute.api.AttributeEvents;
+import io.github.manasmods.manascore.attribute.api.ManasCoreAttributes;
 import io.github.manasmods.manascore.skill.api.*;
-import io.github.manasmods.tensura.damage.TensuraDamageSource;
+import io.github.manasmods.tensura.ability.skill.unique.TunerSkill;
 import io.github.manasmods.tensura.registry.attribute.TensuraAttributes;
 import io.github.manasmods.tensura.storage.TensuraStorages;
 import java.util.*;
-import java.util.function.BooleanSupplier;
 import net.minecraft.core.Holder;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.*;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.*;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.bus.api.EventPriority;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.player.*;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 
 public final class Tyche {
-  public static final String HOUSE_TICKS = "TycheHouseTicks";
-  public static final double RADIUS = 16;
+  // Keep existing native cooldown indices: 0 Dividend, 1 Odds, 2 Insurance.
+  public static final int ODDS_MODE = 1;
+  public static final String ODDS_TICKS = "TycheOddsTicks";
   private static final ResourceLocation BONUS = HeavenlyRestriction.id("tyche_adversity");
-
-  private record Defense(Defense previous, LivingEntity target, DamageSource source) {}
-
-  private static final ThreadLocal<Defense> DEFENSE = new ThreadLocal<>();
 
   public static Optional<ManasSkillInstance> owned(LivingEntity e) {
     return e == null
@@ -39,62 +33,21 @@ public final class Tyche {
             .filter(i -> i.getMastery() >= 0);
   }
 
-  public static boolean house(LivingEntity e) {
-    return owned(e)
-        .filter(i -> i.canInteractSkill(e) && i.getOrCreateTag().getInt(HOUSE_TICKS) > 0)
-        .isPresent();
+  /** Drop the removed field and its cooldown without touching Dividend or Insurance. */
+  public static void migrate(ManasSkillInstance i) {
+    if (i.getOrCreateTag().contains("TycheHouseTicks")) {
+      i.getOrCreateTag().remove("TycheHouseTicks");
+      i.setCoolDown(0, ODDS_MODE);
+      i.markDirty();
+    }
   }
 
-  public static boolean protectedFrom(LivingEntity owner, LivingEntity target) {
-    return owner != null
-        && owner != target
-        && house(target)
-        && owner.level() == target.level()
-        && owner.distanceToSqr(target) <= RADIUS * RADIUS
-        && RestrictionData.canHarm(owner, target);
-  }
-
-  public static boolean guard(LivingEntity target, DamageSource source, BooleanSupplier action) {
-    if (source == null) return action.getAsBoolean();
-    var owner = RestrictionData.attacker(source);
-    if (target.level().isClientSide() || !protectedFrom(owner, target))
-      return action.getAsBoolean();
-    for (var f = DEFENSE.get(); f != null; f = f.previous)
-      if (f.target == target && f.source == source) return action.getAsBoolean();
-    if (!((TensuraDamageSource) source).tensura$isDodgeBypass()
-        && target.getRandom().nextFloat() < .25f) {
-      visual(target, ArtVisualEntity.TYCHE_DIVIDEND, 1, 16);
-      return false;
-    }
-    var f = new Defense(DEFENSE.get(), target, source);
-    DEFENSE.set(f);
-    try {
-      return action.getAsBoolean();
-    } finally {
-      if (f.previous == null) DEFENSE.remove();
-      else DEFENSE.set(f.previous);
-    }
+  public static int oddsTicks(ManasSkillInstance i) {
+    return Math.max(0, i.getOrCreateTag().getInt(ODDS_TICKS));
   }
 
   public static void register() {
     NeoForge.EVENT_BUS.addListener(Tyche::tick);
-    NeoForge.EVENT_BUS.addListener(
-        EventPriority.LOWEST,
-        (CriticalHitEvent e) -> {
-          if (e.getTarget() instanceof LivingEntity target
-              && protectedFrom(e.getEntity(), target)) {
-            e.setCriticalHit(false);
-            e.setDamageMultiplier(1);
-          }
-        });
-    AttributeEvents.CRITICAL_ATTACK_CHANCE_EVENT.register(
-        (owner, target, base, mult, chance) -> {
-          if (target instanceof LivingEntity t && protectedFrom(owner, t)) {
-            chance.set(-1d);
-            return EventResult.interruptFalse();
-          }
-          return EventResult.pass();
-        });
     NeoForge.EVENT_BUS.addListener(
         (PlayerEvent.PlayerLoggedOutEvent e) ->
             owned(e.getEntity()).ifPresent(i -> clear(i, e.getEntity())));
@@ -109,36 +62,92 @@ public final class Tyche {
         .ifPresent(
             i -> {
               FateInsurance.expire(i);
-              int left = i.getOrCreateTag().getInt(HOUSE_TICKS);
-              if (left > 0) {
-                i.getOrCreateTag().putInt(HOUSE_TICKS, left - 1);
-                if (left % 20 == 0) i.markDirty();
-              }
+              advanceOdds(i, e);
             });
     if (e.tickCount % 5 == 0) refresh(e);
     if (e instanceof ServerPlayer p && e.tickCount % 20 == 0) TycheSynthesis.discover(p);
   }
 
+  public static void advanceOdds(ManasSkillInstance i, LivingEntity e) {
+    if (e.level().isClientSide()) return;
+    migrate(i);
+    int left = oddsTicks(i);
+    if (left > 0) {
+      if (!i.isToggled() || !i.canInteractSkill(e) || !e.isAlive()) left = 1;
+      i.getOrCreateTag().putInt(ODDS_TICKS, left - 1);
+      if (left % 20 == 0 || left == 1) i.markDirty();
+      if (left == 1) refresh(e);
+    }
+    checkOdds(e);
+  }
+
+  /** Called after both physical and direct spiritual damage, with a tick fallback. */
+  public static void checkOdds(LivingEntity e) {
+    if (e == null || e.level().isClientSide() || !e.isAlive()) return;
+    owned(e)
+        .ifPresent(
+            i -> {
+              migrate(i);
+              if (!i.isToggled()
+                  || !i.canInteractSkill(e)
+                  || oddsTicks(i) > 0
+                  || i.onCoolDown(ODDS_MODE)) return;
+              var energy = TensuraStorages.getExistenceFrom(e);
+              if (!TychePayout.atHalf(e.getHealth(), e.getMaxHealth())
+                  && !TychePayout.atHalf(
+                      energy.getSpiritualHealth(),
+                      e.getAttributeValue(TensuraAttributes.MAX_SPIRITUAL_HEALTH))) return;
+              i.getOrCreateTag().putInt(ODDS_TICKS, TycheConfig.ODDS_DURATION.get() * 20);
+              i.setCoolDown(TycheConfig.ODDS_COOLDOWN.get(), ODDS_MODE);
+              i.addMasteryPoint(e);
+              i.markDirty();
+              refresh(e);
+              visual(e, ArtVisualEntity.TYCHE_DIVIDEND, 1.4, 40);
+              if (e instanceof ServerPlayer p)
+                p.displayClientMessage(
+                    Component.translatable(
+                        "heavenlyrestriction.tyche.odds", TycheConfig.ODDS_DURATION.get()),
+                    true);
+            });
+  }
+
   public static void refresh(LivingEntity e) {
     if (e.level().isClientSide()) return;
-    double severity =
-        owned(e).filter(i -> i.isToggled() && i.canInteractSkill(e)).isPresent()
-            ? TychePayout.adversity(e.getHealth(), e.getMaxHealth())
-            : 0;
+    boolean active =
+        owned(e)
+            .filter(i -> oddsTicks(i) > 0 && i.isToggled() && i.canInteractSkill(e))
+            .isPresent();
     modifier(
         e,
         Attributes.ATTACK_DAMAGE,
-        severity * .5,
+        active ? .5 : 0,
         AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
     modifier(
         e,
         TensuraAttributes.AUTO_MELEE_DODGE_CHANCE,
-        severity * 25,
+        active ? 25 : 0,
         AttributeModifier.Operation.ADD_VALUE);
     modifier(
         e,
         TensuraAttributes.AUTO_PROJECTILE_DODGE_CHANCE,
-        severity * 25,
+        active ? 25 : 0,
+        AttributeModifier.Operation.ADD_VALUE);
+    // Native mastered Tuner multiplies its configured bonuses by two. Add missing categories
+    // once: attack/swim bonuses are 50% stronger, movement only 10% stronger.
+    modifier(
+        e,
+        Attributes.ATTACK_SPEED,
+        active ? TunerSkill.CONFIG.bonusAttackSpeed * 3 : 0,
+        AttributeModifier.Operation.ADD_VALUE);
+    modifier(
+        e,
+        Attributes.MOVEMENT_SPEED,
+        active ? TunerSkill.CONFIG.bonusSpeed * 2.2 : 0,
+        AttributeModifier.Operation.ADD_VALUE);
+    modifier(
+        e,
+        ManasCoreAttributes.SWIM_SPEED_MULTIPLIER,
+        active ? TunerSkill.CONFIG.bonusSwim * 3 : 0,
         AttributeModifier.Operation.ADD_VALUE);
   }
 
@@ -152,37 +161,25 @@ public final class Tyche {
     if (amount > 0) a.addTransientModifier(new AttributeModifier(BONUS, amount, op));
   }
 
-  public static boolean housePress(ManasSkillInstance i, LivingEntity e) {
-    if (e.level().isClientSide()
-        || i.getMastery() < 0
-        || i.onCoolDown(1)
-        || !i.canInteractSkill(e)
-        || !i.canActivateSkill(e, 1)) return false;
-    var energy = TensuraStorages.getExistenceFrom(e);
-    double cost = SchemaArt.cost(e, TycheConfig.HOUSE_COST.get());
-    if (!Double.isFinite(cost) || energy.getMagicule() < cost) return false;
-    energy.setMagicule(energy.getMagicule() - cost);
-    energy.markDirty();
-    i.getOrCreateTag().putInt(HOUSE_TICKS, 300);
-    i.setCoolDown(90, 1);
-    i.addMasteryPoint(e);
+  public static void clearOdds(ManasSkillInstance i, LivingEntity e) {
+    if (e.level().isClientSide()) return;
+    i.getOrCreateTag().putInt(ODDS_TICKS, 0);
+    for (var type :
+        List.of(
+            Attributes.ATTACK_DAMAGE,
+            Attributes.ATTACK_SPEED,
+            Attributes.MOVEMENT_SPEED,
+            ManasCoreAttributes.SWIM_SPEED_MULTIPLIER,
+            TensuraAttributes.AUTO_MELEE_DODGE_CHANCE,
+            TensuraAttributes.AUTO_PROJECTILE_DODGE_CHANCE))
+      modifier(e, type, 0, AttributeModifier.Operation.ADD_VALUE);
     i.markDirty();
-    visual(e, ArtVisualEntity.TYCHE_HOUSE, RADIUS, 300);
-    return true;
   }
 
   public static void clear(ManasSkillInstance i, LivingEntity e) {
-    i.getOrCreateTag().putInt(HOUSE_TICKS, 0);
+    migrate(i);
+    clearOdds(i, e);
     CriticalMerchant.clear(i);
-    modifier(e, Attributes.ATTACK_DAMAGE, 0, AttributeModifier.Operation.ADD_VALUE);
-    modifier(
-        e, TensuraAttributes.AUTO_MELEE_DODGE_CHANCE, 0, AttributeModifier.Operation.ADD_VALUE);
-    modifier(
-        e,
-        TensuraAttributes.AUTO_PROJECTILE_DODGE_CHANCE,
-        0,
-        AttributeModifier.Operation.ADD_VALUE);
-    i.markDirty();
   }
 
   public static void visual(LivingEntity e, int kind, double radius, int ticks) {

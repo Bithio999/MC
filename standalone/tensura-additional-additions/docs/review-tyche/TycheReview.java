@@ -154,6 +154,8 @@ public final class TycheReview {
               energy.setTrueHero(true);
               energy.setAura(1_000_000);
               energy.setMagicule(1_000_000);
+              energy.setSpiritualHealth(
+                  p.getAttributeValue(TensuraAttributes.MAX_SPIRITUAL_HEALTH));
               p.setHealth(p.getMaxHealth());
               for (int x = -4045; x <= -3995; x++)
                 for (int z = -4105; z <= -4055; z++)
@@ -253,7 +255,14 @@ public final class TycheReview {
               var i = Tyche.owned(p).orElseThrow();
               CriticalMerchant.press(i, p);
               check(CriticalMerchant.remaining(i) == 10, "Dividend failed");
-              check(Tyche.housePress(i, p), "House failed");
+              p.setHealth(p.getMaxHealth() * .5f);
+              Tyche.checkOdds(p);
+              check(
+                  Tyche.oddsTicks(i) > 0 && i.getCoolDown(1) == TycheConfig.ODDS_COOLDOWN.get(),
+                  "Timed Against All Odds failed");
+              p.setHealth(p.getMaxHealth());
+              Tyche.refresh(p);
+              check(Tyche.oddsTicks(i) > 0, "Healing canceled buff");
             });
         mc.options.hideGui = true;
         phase = 4;
@@ -261,7 +270,16 @@ public final class TycheReview {
         return;
       }
       if (phase == 4) {
-        shot("tyche-domain-first-person");
+        shot("tyche-dividend-first-person");
+        server(TycheNetwork::open);
+        phase = 14;
+        wait = 0;
+        return;
+      }
+      if (phase == 14) {
+        bounds();
+        shot("tyche-odds-status");
+        mc.setScreen(null);
         mc.options.setCameraType(CameraType.THIRD_PERSON_BACK);
         server(p -> p.connection.teleport(p.getX(), p.getY(), p.getZ(), p.getYRot(), 28));
         phase = 5;
@@ -269,7 +287,7 @@ public final class TycheReview {
         return;
       }
       if (phase == 5) {
-        shot("tyche-house");
+        shot("tyche-odds");
         server(
             p -> {
               var i = Tyche.owned(p).orElseThrow();
@@ -339,7 +357,8 @@ public final class TycheReview {
         Files.writeString(
             OUT.resolve("passed.txt"),
             "Actual client: synthesis, compact bounds, stable confirmation heartbeat, real cost,"
-                + " Dividend, domain and full player revival/cooldown reset passed.\n");
+                + " Dividend, timed Against All Odds and full player revival/cooldown reset"
+                + " passed.\n");
         mc.options.setCameraType(CameraType.FIRST_PERSON);
         mc.options.hideGui = false;
         mc.options.guiScale().set(guiScale);

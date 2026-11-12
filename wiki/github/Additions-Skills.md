@@ -26,4 +26,4 @@ Use Tensura’s normal Ability Selection menu. Ultimate synthesis combines fully
 
 [Metis, Lord of Wisdom](https://github.com/Bithio999/MC/wiki/Additions-Metis) combines fully mastered Split Mind and Great Sage after completed true awakening and learning three magics. It adds a three-thread magical matrix (four at mastery), independent auto-casting and automatic magic-circle analysis. No EP requirement.
 
-[Tyche, Lord of Fortune](https://github.com/Bithio999/MC/wiki/Additions-Tyche) combines Critical Merchant and Tuner: critical odds, a fortune domain and damage-type-based full revival.
+[Tyche, Lord of Fortune](https://github.com/Bithio999/MC/wiki/Additions-Tyche) combines Critical Merchant and Tuner: critical odds, a timed low-HP/SHP buff and damage-type-based full revival.

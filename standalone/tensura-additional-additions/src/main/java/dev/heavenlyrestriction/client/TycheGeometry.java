@@ -8,7 +8,7 @@ import dev.heavenlyrestriction.ArtVisualEntity;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.world.phys.Vec3;
 
-/** Thin minted coins, orbiting fortune-wheel segments, and gold threads; bounded, LOD-aware. */
+/** Thin minted coin bursts and gold threads; bounded, LOD-aware. */
 final class TycheGeometry {
   static final int GOLD = 0xffffcf62, WHITE_GOLD = 0xfffff1b9;
 
@@ -68,41 +68,8 @@ final class TycheGeometry {
       p.translate(d.x, d.y, d.z);
     }
     double fade = fade(age, e.lifetime());
-    if (e.kind() == ArtVisualEntity.TYCHE_HOUSE) {
-      double r = e.end().x * smooth(age / 14d);
-      ring(p, b, new Vec3(0, .06, 0), r, .065, age * .003, 0, opacity(GOLD, fade * .8));
-      ring(
-          p, b, new Vec3(0, .07, 0), r * .97, .025, -age * .005, 0, opacity(WHITE_GOLD, fade * .5));
-      int arms = decorations(12);
-      for (int n = 0; n < arms; n++) {
-        double a = n * Math.PI * 2 / Math.max(1, arms) + age * .004;
-        Vec3 last = polar(a, r * .8, .08);
-        for (int k = 1; k <= 10; k++) {
-          var next =
-              polar(a + k * .025, r * (.8 + .02 * k), .08 + .09 * Math.sin(k * Math.PI / 10));
-          beam(p, b, last, next, .012, tint(GOLD, fade * .4));
-          last = next;
-        }
-        coin(
-            p,
-            b,
-            polar(a, r * .985, .6 + .2 * Math.sin(age * .05 + n)),
-            .18,
-            age * .045 + n,
-            fade * .95);
-      }
-      // A compact fortune wheel keeps the moving field readable even when its edge is off-screen.
-      ring(p, b, new Vec3(0, .09, 0), 2.25, .025, age * .007, 0, opacity(GOLD, fade * .6));
-      for (int n = 0; n < decorations(12); n++) {
-        double a = n * Math.PI / 6 + age * .007;
-        beam(p, b, polar(a, 2.1, .09), polar(a, 2.4, .09), .018, opacity(WHITE_GOLD, fade * .7));
-      }
-      for (int n = 0; n < 3; n++) {
-        double a = n * Math.PI * 2 / 3 + age * .025;
-        coin(
-            p, b, polar(a, 1.3, 1.2 + .2 * Math.sin(age * .05 + n)), .16, age * .1 + n, fade * .95);
-      }
-    } else {
+    if (e.kind() == ArtVisualEntity.TYCHE_HOUSE) return; // Retired protocol ID.
+    {
       double t = age / e.lifetime(),
           r = e.kind() == ArtVisualEntity.TYCHE_REBIRTH ? 1.1 + Math.sin(t * Math.PI) * 1.3 : 1.15;
       int count = decorations(e.kind() == ArtVisualEntity.TYCHE_REBIRTH ? 16 : 10);

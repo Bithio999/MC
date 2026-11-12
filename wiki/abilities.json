@@ -1605,16 +1605,5 @@
     "mod": "additions",
     "damage_id": null,
     "secondary_damage_id": null
-  },
-  {
-    "name": "The House Always Wins",
-    "skill": "Additions-Tyche",
-    "anchor": "the-house-always-wins",
-    "kind": "Active, Press",
-    "damage": "None",
-    "tier": "Ultimate",
-    "mod": "additions",
-    "damage_id": null,
-    "secondary_damage_id": null
   }
 ]

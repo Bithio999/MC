@@ -144,6 +144,8 @@ public final class TycheNetwork {
         .ifPresent(
             i -> {
               t.putInt("timer", i.getCoolDown(2));
+              t.putInt("oddsSeconds", (Tyche.oddsTicks(i) + 19) / 20);
+              t.putInt("oddsCooldown", i.getCoolDown(Tyche.ODDS_MODE));
               t.putString(
                   "history",
                   String.join(
