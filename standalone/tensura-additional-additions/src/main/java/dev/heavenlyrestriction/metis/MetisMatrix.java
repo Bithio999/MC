@@ -51,7 +51,7 @@ public final class MetisMatrix {
           || !skills.add(id)) continue;
       if (SkillAPI.getSkillsFrom(e)
           .getSkill(id)
-          .filter(s -> SplitMindModes.allowed(e, s, mode))
+          .filter(s -> MetisAbilities.allowed(e, s, mode))
           .isEmpty()) continue;
       result.add(
           new Slot(
@@ -74,7 +74,7 @@ public final class MetisMatrix {
         && (key == null
             || SkillAPI.getSkillsFrom(p)
                 .getSkill(key)
-                .filter(i -> SplitMindModes.allowed(p, i, mode))
+                .filter(i -> MetisAbilities.allowed(p, i, mode))
                 .isEmpty())) return false;
     if (id.isEmpty() && mode != 0) return false;
     var list = mind.get().getOrCreateTag().getList(SLOTS, Tag.TAG_COMPOUND).copy();

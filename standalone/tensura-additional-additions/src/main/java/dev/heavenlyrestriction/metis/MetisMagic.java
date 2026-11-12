@@ -27,6 +27,31 @@ public final class MetisMagic {
   }
 
   public static Role role(ManasSkillInstance i) {
+    return role(i, 0);
+  }
+
+  public static Role role(ManasSkillInstance i, int mode) {
+    if (!(i.getSkill() instanceof Magic)
+        && i.getSkill() instanceof io.github.manasmods.tensura.ability.TensuraSkill ability) {
+      String id = ability.getModeId(i, mode).toLowerCase(Locale.ROOT);
+      String action = id.substring(id.lastIndexOf('.') + 1);
+      if (Set.of("heal", "healing", "self_healing", "self_recovery", "recover", "recovery")
+          .contains(action)) return Role.HEALING;
+      if (Set.of(
+              "strength",
+              "agility",
+              "aura_sword",
+              "physical_barrier",
+              "magical_barrier",
+              "multilayer_barrier",
+              "magic_barrier",
+              "armor",
+              "enhance",
+              "defense",
+              "dividend",
+              "guaranteed_profit")
+          .contains(action)) return Role.SUPPORT;
+    }
     if (i.getSkill() instanceof AspectualMagic a)
       return switch (a.getAspectualType()) {
         case RECOVERY -> Role.HEALING;
@@ -37,12 +62,24 @@ public final class MetisMagic {
   }
 
   public static boolean needed(ServerPlayer p, ManasSkillInstance i) {
-    if (role(i) == Role.OFFENSE) return true;
+    return needed(p, i, 0);
+  }
+
+  public static boolean needed(ServerPlayer p, ManasSkillInstance i, int mode) {
+    if (role(i, mode) == Role.OFFENSE) return true;
+    if (i.getSkillId().getPath().equals("critical_merchant")
+        || i.getSkillId().getPath().equals("tyche"))
+      return dev.heavenlyrestriction.critical.CriticalMerchant.remaining(i) == 0;
     String path = i.getSkillId().getPath();
-    if (role(i) == Role.HEALING) {
+    if (role(i, mode) == Role.HEALING) {
       if (Set.of("antidote").contains(path))
         return p.getActiveEffects().stream().anyMatch(e -> !e.getEffect().value().isBeneficial());
-      return p.getHealth() < p.getMaxHealth() * .9;
+      return p.getHealth() < p.getMaxHealth() * .9
+          || i.getSkillId().getPath().equals("healer")
+              && i.isMastered(p)
+              && io.github.manasmods.tensura.storage.TensuraStorages.getExistenceFrom(p)
+                      .getSpiritualHealth()
+                  < p.getAttributeValue(TensuraAttributes.MAX_SPIRITUAL_HEALTH) * .9;
     }
     if (path.equals("strength") && p.hasEffect(MobEffects.DAMAGE_BOOST)) return false;
     if (path.equals("agility")
@@ -90,6 +127,8 @@ public final class MetisMagic {
 
   public static double effectiveness(
       ServerPlayer p, LivingEntity target, ManasSkillInstance spell, int mode) {
+    if (!(spell.getSkill() instanceof Magic))
+      return 1; // Unknown skill damage types are never guessed.
     var source = ((Magic) spell.getSkill()).createSource(spell, p, damageType(spell), mode);
     double score = 1;
     boolean resistant = false;
@@ -128,7 +167,8 @@ public final class MetisMagic {
     var scores = new ListTag();
     for (var slot : MetisMatrix.slots(p, mind)) {
       var spell = SkillAPI.getSkillsFrom(p).getSkill(slot.id()).orElseThrow();
-      if (role(spell) != Role.OFFENSE) continue;
+      if (!(spell.getSkill() instanceof Magic) || role(spell, slot.mode()) != Role.OFFENSE)
+        continue;
       var score = new CompoundTag();
       score.putString("id", slot.id().toString());
       score.putDouble("effectiveness", effectiveness(p, target, spell, slot.mode()));

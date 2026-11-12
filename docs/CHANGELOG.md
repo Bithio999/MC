@@ -1,5 +1,12 @@
 # Changelog
 
+## Additions 1.26.0 — Metis skill assignment
+
+- Extend Parallel Matrix to owned, learned active skills and arts alongside aspectual/spiritual magic. Keep three threads, four at mastery, with one thread per ability.
+- Add ability filters and per-mode menu exclusion shared by catalogue, assignment packets, saved threads and execution. Inspect callbacks without activating them. Keep Blink while omitting Warp, refining and crafting menus; guard native container opening during background callbacks.
+- Use native press/hold/release, ownership, learning, costs, cooldowns and interference checks. Preserve normal skill/art costs; keep the existing magic discount on aspectual/spiritual spells. Avoid automatic cancel-recasts during skill cooldowns and keep manual use priority.
+- Add native skill, healing, menu-forgery, saved-mode and counter tests, plus helper/lambda menu-inspection tests. Update the wiki and in-game guide.
+
 ## Additions 1.25.1 — Timed Against All Odds
 
 - Remove The House Always Wins, including critical suppression, extra miss chance, dodge bypass and the moving field.

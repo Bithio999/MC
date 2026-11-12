@@ -46,20 +46,33 @@ public final class MetisCasting {
   }
 
   private static LivingEntity target(ServerPlayer p, Cast c) {
-    if (MetisMagic.role(c.spell) != MetisMagic.Role.OFFENSE) return p;
+    if (MetisMagic.role(c.spell, c.slot.mode()) != MetisMagic.Role.OFFENSE) return p;
     var e = p.serverLevel().getEntity(c.target);
     return e instanceof LivingEntity t && SplitMindCasting.enemy(p, t) ? t : null;
   }
 
   public static LivingEntity select(
       ServerPlayer p, MetisMatrix.Slot slot, ManasSkillInstance spell) {
-    if (MetisMagic.role(spell) != MetisMagic.Role.OFFENSE)
-      return MetisMagic.needed(p, spell) ? p : null;
+    if (MetisMagic.role(spell, slot.mode()) != MetisMagic.Role.OFFENSE)
+      return MetisMagic.needed(p, spell, slot.mode()) ? p : null;
     var target =
         io.github.manasmods.tensura.util.ObjectSelectionHelper.getTargetingEntity(p, 32, false);
     if (target == null || !SplitMindCasting.enemy(p, target)) target = p.getLastHurtMob();
     if (slot.currentTarget() && target != null && SplitMindCasting.enemy(p, target)) return target;
     return SplitMindCasting.nearest(p);
+  }
+
+  private static boolean usable(
+      ServerPlayer p, ManasSkillInstance spell, int mode, LivingEntity target) {
+    return SplitMindCasting.autoInvoke(
+        p,
+        spell,
+        mode,
+        target,
+        () ->
+            spell.canInteractSkill(p)
+                && spell.canActivateSkill(p, mode)
+                && SplitMindCasting.funded(p, spell, mode));
   }
 
   public static void update(ServerPlayer p) {
@@ -80,14 +93,13 @@ public final class MetisCasting {
       if (!slots.contains(c.slot)
           || target == null
           || !storage.getHeldSkills().contains(c.held)
-          || !c.spell.canInteractSkill(p)
-          || !c.spell.canActivateSkill(p, c.slot.mode())
-          || !SplitMindCasting.funded(p, c.spell, c.slot.mode())) {
+          || !usable(p, c.spell, c.slot.mode(), target)) {
         stop(p, c);
         continue;
       }
       if (!SplitMindModes.sustained(c.spell, c.slot.mode())
-          && c.held.getDuration() >= ((Magic) c.spell.getSkill()).getCastingTime(c.spell, p)) {
+          && MetisAbilities.releaseAfter(c.spell, p) >= 0
+          && c.held.getDuration() >= MetisAbilities.releaseAfter(c.spell, p)) {
         try {
           var energy = TensuraStorages.getExistenceFrom(p);
           double aura = energy.getAura(), mp = energy.getMagicule(), mastery = c.spell.getMastery();
@@ -119,14 +131,13 @@ public final class MetisCasting {
       int mode = slot.mode();
       if (CASTS.getOrDefault(p, List.of()).stream().anyMatch(c -> c.slot.index() == slot.index())
           || storage.getHeldSkills().stream().anyMatch(t -> t.getSkill() == spell.getSkill())
-          || !spell.canInteractSkill(p)
-          || !spell.canActivateSkill(p, mode)
-          || spell.onCoolDown(mode) && !spell.canIgnoreCoolDown(p, mode)
-          || !MetisMagic.needed(p, spell)) continue;
+          || spell.onCoolDown(mode)
+              && (!(spell.getSkill() instanceof Magic) || !spell.canIgnoreCoolDown(p, mode))
+          || !MetisMagic.needed(p, spell, slot.mode())) continue;
       var target = select(p, slot, spell);
-      if (target == null) continue;
+      if (target == null || !usable(p, spell, mode, target)) continue;
       double score =
-          MetisMagic.role(spell) == MetisMagic.Role.OFFENSE
+          MetisMagic.role(spell, slot.mode()) == MetisMagic.Role.OFFENSE
                   && mind.get().isToggled()
                   && MetisMatrix.optimal(mind.get())
               ? MetisMagic.effectiveness(p, target, spell, mode)
@@ -142,6 +153,29 @@ public final class MetisCasting {
       if (!SplitMindCasting.funded(p, r.spell, r.slot.mode())) continue;
       if (r.target != p && mind.get().isToggled() && recorded.add(r.target.getUUID()))
         MetisMagic.record(p, r.target, mind.get());
+      if (!MetisAbilities.held(r.spell)) {
+        double before = r.spell.getMastery();
+        var energy = TensuraStorages.getExistenceFrom(p);
+        double mp = energy.getMagicule(), aura = energy.getAura();
+        int cooldown = r.spell.getCoolDown(r.slot.mode());
+        boolean fired =
+            SplitMindCasting.autoInvoke(
+                p,
+                r.spell,
+                r.slot.mode(),
+                r.target,
+                () -> {
+                  if (!storage.startHoldSkill(r.spell, 3, r.slot.mode())) return false;
+                  storage.handleSkillRelease(r.spell, 3, r.slot.mode(), false);
+                  return true;
+                });
+        if (fired
+            && (r.spell.getMastery() > before
+                || energy.getMagicule() < mp
+                || energy.getAura() < aura
+                || r.spell.getCoolDown(r.slot.mode()) > cooldown)) mind.get().addMasteryPoint(p);
+        continue;
+      }
       if (SplitMindCasting.autoInvoke(
           p,
           r.spell,
@@ -168,7 +202,7 @@ public final class MetisCasting {
     if (cast.isEmpty()) return original.get();
     var c = cast.get();
     var target = target(p, c);
-    if (target == null || !SplitMindModes.allowed(p, c.spell, c.slot.mode())) return false;
+    if (target == null || !MetisAbilities.allowed(p, c.spell, c.slot.mode())) return false;
     var energy = TensuraStorages.getExistenceFrom(p);
     double aura = energy.getAura(), mp = energy.getMagicule();
     boolean keep = SplitMindCasting.autoInvoke(p, c.spell, c.slot.mode(), target, original);
@@ -176,7 +210,7 @@ public final class MetisCasting {
       MetisMatrix.owned(p).ifPresent(i -> i.addMasteryPoint(p));
     if (!keep
         && SplitMindModes.sustained(c.spell, c.slot.mode())
-        && held.getDuration() >= ((Magic) c.spell.getSkill()).getCastingTime(c.spell, p))
+        && held.getDuration() >= MetisAbilities.releaseAfter(c.spell, p))
       SplitMindCasting.autoInvoke(
           p,
           c.spell,

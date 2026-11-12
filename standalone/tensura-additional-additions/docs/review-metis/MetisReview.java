@@ -22,7 +22,8 @@ import net.neoforged.neoforge.client.event.ClientTickEvent;
 @EventBusSubscriber(modid = HeavenlyRestriction.ID, value = Dist.CLIENT)
 public final class MetisReview {
   private static final Path OUT = Path.of("/workspace/validation-wayfarer/capture");
-  private static int phase, age, wait;
+  private static int phase, age, wait, guiScale;
+  private static boolean hideGui;
   private static net.minecraft.client.gui.screens.Screen previous;
   private static volatile String error;
   private static volatile boolean prepared;
@@ -150,6 +151,10 @@ public final class MetisReview {
     if (++wait < 15) return;
     try {
       if (phase == 0) {
+        guiScale = mc.options.guiScale().get();
+        hideGui = mc.options.hideGui;
+        mc.options.hideGui = true;
+        org.lwjgl.glfw.GLFW.glfwSetCursorPos(mc.getWindow().getWindow(), 5, 5);
         server(
             p -> {
               var storage = SkillAPI.getSkillsFrom(p);
@@ -171,6 +176,10 @@ public final class MetisReview {
                       AspectualMagics.FIRE_LANCE.get(),
                       AspectualMagics.AGILITY.get(),
                       AspectualMagics.STONE_SHOT.get())) learn(p, skill);
+              learn(p, HeavenlyRestriction.CRITICAL_MERCHANT.get());
+              learn(p, HeavenlyRestriction.PROSPECTOR.get());
+              learn(p, UniqueSkills.HEALER.get());
+              learn(p, io.github.manasmods.tensura.registry.skill.ExtraSkills.SPATIAL_MOTION.get());
               MetisSynthesis.discover(p);
               ((io.github.manasmods.manascore.storage.api.StorageHolder) p).manasCore$sync();
               MetisNetwork.open(p);
@@ -185,7 +194,9 @@ public final class MetisReview {
         Files.writeString(
             OUT.resolve("passed-metis.txt"),
             "Native synthesis confirmation, real assignment packet, modes, mastery/four threads,"
-                + " native Ultimate selection and normal/320x180 bounds passed.");
+                + " native Ultimate selection, normal/320x180 bounds, skill assignment, menu-mode"
+                + " exclusion, background container guards and ordinary manual menus passed.");
+        mc.options.hideGui = hideGui;
         mc.stop();
         phase = 10;
         return;
@@ -248,6 +259,28 @@ public final class MetisReview {
               MetisMatrix.assign(p, 2, AspectualMagics.HEALING.getId().toString(), 0, 0, false);
               MetisMatrix.assign(p, 3, AspectualMagics.AGILITY.getId().toString(), 0, 1, false);
               i.markDirty();
+              var spell =
+                  SkillAPI.getSkillsFrom(p).getSkill(AspectualMagics.FIRE.get()).orElseThrow();
+              var provider =
+                  new net.minecraft.world.SimpleMenuProvider(
+                      (id, inv, owner) -> new net.minecraft.world.inventory.CraftingMenu(id, inv),
+                      net.minecraft.network.chat.Component.literal("Review crafting"));
+              var beforeMenu = p.containerMenu;
+              dev.heavenlyrestriction.splitmind.SplitMindCasting.autoInvoke(
+                  p,
+                  spell,
+                  0,
+                  p,
+                  () -> {
+                    check(p.openMenu(provider).isEmpty(), "Automatic container opened");
+                    check(
+                        p.openMenu(provider, data -> {}).isEmpty(),
+                        "Automatic extended container opened");
+                    return true;
+                  });
+              check(p.containerMenu == beforeMenu, "Background menu changed container");
+              check(p.openMenu(provider).isPresent(), "Ordinary manual container blocked");
+              p.closeContainer();
               MetisNetwork.open(p);
             });
         phase = 6;
@@ -260,7 +293,64 @@ public final class MetisReview {
             "Mastered matrix incomplete");
         bounds();
         shot("metis-mastered-matrix");
-        mc.screen.init(mc, 320, 180);
+        click("All");
+        phase = 16;
+        wait = 0;
+        return;
+      }
+      if (phase == 16) {
+        click("Aspectual");
+        phase = 17;
+        wait = 0;
+        return;
+      }
+      if (phase == 17) {
+        click("Spiritual");
+        phase = 18;
+        wait = 0;
+        return;
+      }
+      if (phase == 18) {
+        check(state().getInt("category") == 3, "Skills filter did not persist");
+        click("4 · Agility");
+        click("Critical Merchant");
+        click("Assign");
+        phase = 19;
+        wait = 0;
+        return;
+      }
+      if (phase == 19) {
+        check(
+            state().getList("slots", 10).stream()
+                .anyMatch(
+                    t ->
+                        ((CompoundTag) t).getInt("slot") == 3
+                            && ((CompoundTag) t)
+                                .getString("id")
+                                .equals("heavenlyrestriction:critical_merchant")),
+            "Real skill assignment packet failed");
+        shot("metis-skill-assignment");
+        var spatial =
+            state().getList("rows", 10).stream()
+                .map(t -> (CompoundTag) t)
+                .filter(t -> t.getString("id").equals("tensura:spatial_motion"))
+                .findFirst()
+                .orElseThrow();
+        check(
+            spatial.getList("modes", 10).size() == 1
+                && spatial.getList("modes", 10).getCompound(0).getInt("id") == 0,
+            "Warp menu appeared among assignable modes");
+        click("Spatial Motion");
+        click("Mode: Blink");
+        phase = 20;
+        wait = 0;
+        return;
+      }
+      if (phase == 20) {
+        shot("metis-safe-skill-modes");
+        mc.screen.keyPressed(256, 0, 0);
+        mc.options.guiScale().set(4);
+        mc.resizeDisplay();
         phase = 7;
         wait = 0;
         return;
@@ -276,6 +366,8 @@ public final class MetisReview {
       if (phase == 8) {
         bounds();
         shot("metis-compact-synthesis");
+        mc.options.guiScale().set(guiScale);
+        mc.resizeDisplay();
         var nativeMenu =
             new io.github.manasmods.tensura.client.screen.AbilitySelectionScreen(
                 io.github.manasmods.tensura.client.screen.AbilityCategoriesScreen.AbilityType.SKILL,

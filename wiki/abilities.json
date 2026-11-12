@@ -1534,7 +1534,7 @@
     "skill": "Additions-Metis",
     "anchor": "autonomous-sage",
     "kind": "Active, Toggle",
-    "damage": "Assigned magic’s native damage type",
+    "damage": "Assigned ability’s native damage type and effects",
     "tier": "Ultimate",
     "mod": "additions",
     "damage_id": null,

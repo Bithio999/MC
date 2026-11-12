@@ -176,6 +176,19 @@ public final class MetisScreen extends Screen {
         "Synthesis",
         () -> switchTab("synthesis"),
         () -> true);
+    control(
+        x + 218,
+        y + 35,
+        Math.max(40, Math.min(106, w - 255)),
+        List.of("All", "Aspectual", "Spiritual", "Skills", "Arts").get(category),
+        () -> {
+          category = (category + 1) % 5;
+          page = 0;
+          listScroll = 0;
+          request("list", "", false);
+          rebuildWidgets();
+        },
+        () -> tab.equals("matrix") && state.getBoolean("learned"));
     control(x + w - 29, y + 7, 21, "×", this::onClose, () -> true);
     if (tab.equals("synthesis")) {
       control(
@@ -190,10 +203,10 @@ public final class MetisScreen extends Screen {
           () -> state.getBoolean("ready") && !state.getBoolean("learned"));
       return;
     }
-    search = new EditBox(font, right, top, rw, 18, Component.literal("Search learned magic"));
+    search = new EditBox(font, right, top, rw, 18, Component.literal("Search learned abilities"));
     search.setMaxLength(64);
     search.setValue(query);
-    search.setHint(Component.literal("Search learned magic…"));
+    search.setHint(Component.literal("Search learned abilities…"));
     search.setResponder(
         v -> {
           query = v;
@@ -476,7 +489,9 @@ public final class MetisScreen extends Screen {
           getX() + width - 1,
           getY() + height - 1,
           on ? 0xff243c46 : 0xff122c36);
-      g.fill(getX() + 2, getY() + 2, getX() + width - 2, getY() + 3, on ? 0xff789396 : 0xff28505a);
+      if (height >= 15)
+        g.fill(
+            getX() + 2, getY() + 2, getX() + width - 2, getY() + 3, on ? 0xff789396 : 0xff28505a);
       int pad = 5;
       var texture = icon.get().isBlank() ? null : ResourceLocation.tryParse(icon.get());
       if (texture != null) {
@@ -518,13 +533,13 @@ public final class MetisScreen extends Screen {
       if (h >= 220)
         g.drawString(
             font, "MATRIX  " + state.getInt("capacity") + " THREADS", x + 9, top - 9, CYAN, false);
-      if (h >= 220) g.drawString(font, "LEARNED MAGIC", right, top - 9, CYAN, false);
+      if (h >= 220) g.drawString(font, "LEARNED ABILITIES", right, top - 9, CYAN, false);
       if (spells().isEmpty())
-        g.drawString(font, "No learned magic found", right + 5, top + 31, MUTED, false);
+        g.drawString(font, "No eligible abilities found", right + 5, top + 31, MUTED, false);
       String summary =
           String.format(
               Locale.ROOT,
-              "Auto-cast %s · Magicule cost −%.0f%% · %d analyses",
+              "Auto-cast %s · Magic discount −%.0f%% · %d analyses",
               state.getBoolean("auto") ? "ON" : "OFF",
               (1 - state.getDouble("factor")) * 100,
               state.getInt("dossiers"));
@@ -538,7 +553,7 @@ public final class MetisScreen extends Screen {
                 ? "Updating…"
                 : notice.isEmpty()
                     ? (tab.equals("matrix")
-                        ? "Choose a thread, then a spell and mode."
+                        ? "Choose a thread, then an ability and mode."
                         : "Your components and stored items are preserved until confirmation.")
                     : Component.translatable(notice).getString(),
             w - 18),

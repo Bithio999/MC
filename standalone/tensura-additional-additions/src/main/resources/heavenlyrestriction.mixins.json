@@ -95,7 +95,8 @@
     "AutoCastSwingMixin",
     "AutoCastSourceMixin",
     "AutoCastSourceCopyMixin",
-    "TunerProgressMixin"
+    "TunerProgressMixin",
+    "MetisMenuGuardMixin"
   ],
   "injectors": {
     "defaultRequire": 1

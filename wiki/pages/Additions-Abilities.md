@@ -44,7 +44,7 @@ Find a move below, then open its entry for targeting, damage, cost and cooldown.
 | [Magnum Opus](Additions-Hephaestus.md#magnum-opus) | [Hephaestus, Lord of the Forge](Additions-Hephaestus.md) | Active, Press | None |
 | [Unified Intellect](Additions-Metis.md#unified-intellect) | [Metis, Lord of Wisdom](Additions-Metis.md) | Passive, Toggle | None |
 | [Parallel Matrix](Additions-Metis.md#parallel-matrix) | [Metis, Lord of Wisdom](Additions-Metis.md) | Active, Press | None |
-| [Autonomous Sage](Additions-Metis.md#autonomous-sage) | [Metis, Lord of Wisdom](Additions-Metis.md) | Active, Toggle | Assigned magic’s native damage type |
+| [Autonomous Sage](Additions-Metis.md#autonomous-sage) | [Metis, Lord of Wisdom](Additions-Metis.md) | Active, Toggle | Assigned ability’s native damage type and effects |
 | [Optimal Solution](Additions-Metis.md#optimal-solution) | [Metis, Lord of Wisdom](Additions-Metis.md) | Passive, Toggle | None |
 | [Great Sage utilities](Additions-Metis.md#inherited-utilities) | [Metis, Lord of Wisdom](Additions-Metis.md) | Active, Press | None |
 | [Loaded Dice](Additions-Tyche.md#loaded-dice) | [Tyche, Lord of Fortune](Additions-Tyche.md) | Passive, Toggle | Original attack’s damage type |

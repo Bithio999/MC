@@ -144,7 +144,7 @@ public final class MetisNetwork {
       SESSIONS.remove(p);
       return;
     }
-    if (r.category > 2 || r.slot > 3 || r.priority > 2) return;
+    if (r.category > 4 || r.slot > 3 || r.priority > 2) return;
     String notice = "";
     if (r.action.equals("synthesize"))
       notice =
@@ -184,7 +184,7 @@ public final class MetisNetwork {
     t.putBoolean("affordable", MetisSynthesis.affordable(p));
     t.putBoolean("ready", MetisSynthesis.ready(p));
     if (mind.isEmpty()) return t;
-    t.merge(SplitMindNetwork.catalog(p, query, category, page));
+    t.merge(MetisAbilities.catalog(p, query, category, page));
     t.putInt("capacity", MetisMatrix.capacity(p, mind.get()));
     t.putDouble("factor", MetisMatrix.costFactor(p));
     t.putBoolean("auto", mind.get().getOrCreateTag().getBoolean(MetisMatrix.AUTO));
@@ -197,24 +197,12 @@ public final class MetisNetwork {
       row.putString("id", s.id().toString());
       row.putString("name", spell.getSkill().getName().getString());
       row.putString("icon", spell.getSkill().getSkillIcon().toString());
-      var modes = new ListTag();
-      var available = SplitMindModes.available(p, spell);
-      for (int mode = 0; mode < SplitMindModes.count(spell); mode++) {
-        var option = new CompoundTag();
-        option.putInt("id", mode);
-        option.putString(
-            "name",
-            ((io.github.manasmods.tensura.ability.magic.Magic) spell.getSkill())
-                .getModeName(spell, mode)
-                .getString());
-        option.putBoolean("available", available.contains(mode));
-        modes.add(option);
-      }
+      var modes = MetisAbilities.modes(p, spell);
       row.put("modes", modes);
       row.putInt("mode", s.mode());
       row.putInt("priority", s.priority());
       row.putBoolean("target", s.currentTarget());
-      row.putString("role", MetisMagic.role(spell).name());
+      row.putString("role", MetisMagic.role(spell, s.mode()).name());
       rows.add(row);
     }
     t.put("slots", rows);

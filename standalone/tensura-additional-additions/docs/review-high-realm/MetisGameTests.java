@@ -191,6 +191,171 @@ public final class MetisGameTests {
   }
 
   @GameTest(template = "empty", timeoutTicks = 100)
+  public static void activeSkillsCanBeAssignedWhileMenuModesAndPassivesAreExcluded(
+      GameTestHelper h) {
+    var p = player(h);
+    metis(p, false);
+    var merchant = learn(p, HeavenlyRestriction.CRITICAL_MERCHANT.get(), true);
+    var sage = learn(p, UniqueSkills.GREAT_SAGE.get(), true);
+    var prospector = learn(p, HeavenlyRestriction.PROSPECTOR.get(), true);
+    var fighter = learn(p, UniqueSkills.FIGHTER.get(), true);
+    h.assertTrue(
+        MetisAbilities.allowed(p, merchant, 0),
+        "Critical Merchant excluded: " + MetisAbilities.available(p, merchant));
+    h.assertTrue(
+        MetisMatrix.assign(p, 0, merchant.getSkillId().toString(), 0, 1, false),
+        "Owned active skill rejected");
+    h.assertTrue(
+        !MetisAbilities.allowed(p, sage, 2)
+            && !MetisMatrix.assign(p, 1, sage.getSkillId().toString(), 2, 0, false),
+        "Great Sage crafting/refining menu accepted");
+    h.assertTrue(
+        !MetisAbilities.allowed(p, prospector, 0) && !MetisAbilities.eligible(fighter),
+        "Menu-only/passive-only skill eligible");
+    h.assertTrue(!MetisAbilities.available(p, sage).isEmpty(), "Non-menu Great Sage modes lost");
+    h.succeed();
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 100)
+  public static void assignedPressSkillUsesNativeCostCooldownAndKeepsMagicDiscountSeparate(
+      GameTestHelper h) {
+    var p = player(h);
+    var mind = metis(p, false);
+    var merchant = learn(p, HeavenlyRestriction.CRITICAL_MERCHANT.get(), false);
+    var fire = learn(p, AspectualMagics.FIRE.get(), true);
+    MetisMatrix.assign(p, 0, merchant.getSkillId().toString(), 0, 1, false);
+    mind.getOrCreateTag().putBoolean(MetisMatrix.AUTO, true);
+    var energy = TensuraStorages.getExistenceFrom(p);
+    double mp = energy.getMagicule();
+    p.tickCount = 5;
+    MetisCasting.update(p);
+    h.assertTrue(
+        dev.heavenlyrestriction.critical.CriticalMerchant.remaining(merchant) == 10
+            && merchant.getCoolDown(0) == 20,
+        "Press skill did not activate");
+    near(h, mp - energy.getMagicule(), 1000, "Nonmagic skill was discounted or charged twice");
+    h.assertTrue(
+        SkillAPI.getSkillsFrom(p).getHeldSkills().stream()
+            .noneMatch(t -> t.getSkill() == merchant.getSkill()),
+        "Press skill leaked a held instance");
+    near(
+        h,
+        SplitMindCasting.autoInvoke(p, merchant, 0, p, () -> SplitMindCasting.magiculeFactor(p)),
+        1,
+        "Skill received magic discount");
+    near(
+        h,
+        SplitMindCasting.autoInvoke(p, fire, 0, p, () -> SplitMindCasting.magiculeFactor(p)),
+        .7,
+        "Magic discount lost");
+    h.succeed();
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 100)
+  public static void spatialMotionKeepsBlinkButOmitsWarpMenuAndRejectsForgedMenuPackets(
+      GameTestHelper h) {
+    var p = player(h);
+    var mind = metis(p, false);
+    var spatial = learn(p, ExtraSkills.SPATIAL_MOTION.get(), true);
+    h.assertTrue(
+        MetisAbilities.allowed(p, spatial, 0) && !MetisAbilities.allowed(p, spatial, 1),
+        "Blink/warp distinction failed");
+    MetisNetwork.open(p);
+    var state = MetisNetwork.snapshot(p, "spatial motion", 3, 0);
+    var rows = state.getList("rows", Tag.TAG_COMPOUND);
+    h.assertTrue(
+        rows.size() == 1 && rows.getCompound(0).getList("modes", Tag.TAG_COMPOUND).size() == 1,
+        "Menu mode was included in dropdown");
+    MetisNetwork.handle(
+        p,
+        new MetisNetwork.Request(
+            state.getUUID("session"),
+            "assign",
+            spatial.getSkillId().toString(),
+            "",
+            0,
+            3,
+            0,
+            1,
+            2,
+            true));
+    h.assertTrue(
+        MetisMatrix.slots(p, mind).isEmpty(), "Valid session forged menu assignment accepted");
+    var saved = new ListTag();
+    var row = new CompoundTag();
+    row.putInt("slot", 0);
+    row.putString("id", spatial.getSkillId().toString());
+    row.putInt("mode", 1);
+    saved.add(row);
+    mind.getOrCreateTag().put(MetisMatrix.SLOTS, saved);
+    mind.getOrCreateTag().putBoolean(MetisMatrix.AUTO, true);
+    var container = p.containerMenu;
+    p.tickCount = 5;
+    MetisCasting.update(p);
+    h.assertTrue(
+        MetisMatrix.slots(p, mind).isEmpty()
+            && p.containerMenu == container
+            && SkillAPI.getSkillsFrom(p).getHeldSkills().isEmpty(),
+        "Invalid saved mode executed");
+    h.succeed();
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 100)
+  public static void autoSkillHealingTargetsSelfAndRestoresCrouchState(GameTestHelper h) {
+    var p = player(h);
+    var mind = metis(p, false);
+    var healer = learn(p, UniqueSkills.HEALER.get(), true);
+    h.assertTrue(
+        MetisMagic.role(healer, 0) == MetisMagic.Role.HEALING
+            && MetisMagic.role(healer, 1) == MetisMagic.Role.OFFENSE,
+        "Healer virus treated as self healing");
+    h.assertTrue(
+        MetisMatrix.assign(p, 0, healer.getSkillId().toString(), 0, 0, false),
+        "Native Healer rejected");
+    mind.getOrCreateTag().putBoolean(MetisMatrix.AUTO, true);
+    p.setHealth(p.getMaxHealth() * .5f);
+    p.setShiftKeyDown(true);
+    double mp = TensuraStorages.getExistenceFrom(p).getMagicule();
+    p.tickCount = 5;
+    MetisCasting.update(p);
+    h.assertTrue(
+        p.getHealth() == p.getMaxHealth() && p.isShiftKeyDown(),
+        "Self heal or input restoration failed");
+    h.assertTrue(
+        TensuraStorages.getExistenceFrom(p).getMagicule() < mp,
+        "Skill healing did not pay native cost");
+    h.succeed();
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 100)
+  public static void autoSkillDoesNotUseManualCooldownOverrideToCancelCounter(GameTestHelper h) {
+    var p = player(h);
+    var mind = metis(p, false);
+    var counter = learn(p, HeavenlyRestriction.UNBOUND.get(), true);
+    var enemy = target(h, p.position().add(0, 0, 3));
+    h.assertTrue(
+        MetisMatrix.assign(p, 0, counter.getSkillId().toString(), 1, 2, false),
+        "Counter assignment rejected");
+    mind.getOrCreateTag().putBoolean(MetisMatrix.AUTO, true);
+    afterTracking(
+        h,
+        List.of(enemy),
+        () -> {
+          p.tickCount = 5;
+          MetisCasting.update(p);
+          h.assertTrue(UnboundCounter.active(p), "Automatic counter did not activate");
+          double aura = TensuraStorages.getExistenceFrom(p).getAura();
+          p.tickCount = 10;
+          MetisCasting.update(p);
+          h.assertTrue(
+              UnboundCounter.active(p) && TensuraStorages.getExistenceFrom(p).getAura() == aura,
+              "Automatic recast canceled or recharged active counter");
+          UnboundCounter.clear(p);
+          h.succeed();
+        });
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 100)
   public static void matrixRejectsUnownedLockedDuplicateAndFourthUnmasteredSlots(GameTestHelper h) {
     var p = player(h);
     var i = metis(p, false);
@@ -215,7 +380,7 @@ public final class MetisGameTests {
   }
 
   @GameTest(template = "empty", timeoutTicks = 100)
-  public static void requestRequiresOwnerBoundSessionAndCatalogListsOnlyLearnedMagic(
+  public static void requestRequiresOwnerBoundSessionAndCatalogListsOnlyLearnedEligibleAbilities(
       GameTestHelper h) {
     var p = player(h);
     metis(p, false);

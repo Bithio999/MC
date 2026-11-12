@@ -37,9 +37,15 @@ Owning either component reveals the unfinished Metis entry in **Skills → Ultim
 
 ## Parallel Matrix · Active, Press
 
-Open the matrix to assign **three learned aspectual/spiritual magics**, or **four when mastered**. Select a thread on the left, a spell on the right, then a learned mode. Each spell can occupy one thread. Search narrows the list; scroll within the list on small screens.
+Open the matrix to assign **three learned abilities**, or **four when mastered**: aspectual/spiritual magic, active skills and arts (including Battlewills). Select a thread on the left, an ability on the right, then a learned mode. Each ability can occupy one thread. Search narrows the list; use the **All / Aspectual / Spiritual / Skills / Arts** filter and scroll within the list on small screens.
 
-Choose a **Healing**, **Support** or **Offense** priority band, evaluated in that order. This controls scheduling; the spell’s native role controls its target. Offensive spells can favor your current combat target or the nearest enemy within 32 blocks. Self-healing and support remain self-directed regardless of the selected priority band.
+**Menu-opening modes are excluded.** For example, Spatial Motion’s Blink is assignable but its Warp menu is not. Great Sage’s crafting/refining and Prospector’s refining are also omitted. Assignment packets and saved threads are checked again on the server. Automation uses the main activation, not shift shortcuts. Passive-only skills, automation controllers, world jumping and copied-technique containers are not assignable.
+
+![Skill assignment](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/metis-skill-assignment.png)
+
+![Blink remains available; Warp’s menu is omitted](https://github.com/Bithio999/MC/raw/refs/heads/main/wiki/media/metis-safe-skill-modes.png)
+
+Choose a **Healing**, **Support** or **Offense** priority band, evaluated in that order. This controls scheduling; the ability’s native role controls its target. Offensive spells can favor your current combat target or the nearest enemy within 32 blocks. Self-healing and support remain self-directed regardless of the selected priority band.
 
 **Damage type:** none directly.
 
@@ -49,19 +55,19 @@ Choose a **Healing**, **Support** or **Offense** priority band, evaluated in tha
 
 ## Autonomous Sage · Active, Toggle
 
-Run the assigned spells independently while moving, fighting and casting manually. Offensive spells target hostile mobs or combat opponents, respecting alliances, PvP and line of sight. Healing is attempted below **90% HP**; curing checks for harmful effects. Support avoids reapplying an active buff from the same spell.
+Run the assigned abilities independently while moving, fighting and casting manually. Offensive spells target hostile mobs or combat opponents, respecting alliances, PvP and line of sight. Healing is attempted below **90% HP**; curing checks for harmful effects. Support avoids reapplying an active buff from the same spell.
 
 Background casting does not swing your arm. Direct automatic spells have independent hurt windows. Distinct native magic projectiles also land independently, including manually cast projectiles. Repeated pulses from one persistent source keep their native timing. Ordinary weapon damage and defensive invulnerability remain separate.
 
-Automatic spells cost **30% fewer magicules**, increasing to **40% fewer when mastered**. Native aura costs, spell cooldowns, anti-magic and casting rules still apply. Manual use of a spell takes priority over automation of that same spell. Other threads continue independently.
+Automatic aspectual/spiritual spells cost **30% fewer magicules**, increasing to **40% fewer when mastered**. Assigned skills and arts retain their normal costs. Native aura costs, cooldowns, anti-skill/anti-magic and activation rules still apply. Automatic skill casting does not use a manual recast override to cancel an active stance during cooldown. Manual use of an ability takes priority over automation of that same ability. Other threads continue independently.
 
-**Damage type:** each assigned spell keeps its native damage type and effects.
+**Damage type:** each assigned ability keeps its native damage type and effects.
 
 <a id="optimal-solution"></a>
 
 ## Optimal Solution · Passive, Toggle
 
-Enable it in the matrix while Unified Intellect is on. Metis avoids assigned offensive spells covered by a target’s active nullifications and ranks otherwise available spells by elemental resistance or vulnerability within their priority band. It chooses among your assigned spells; it does not weaken defenses or bypass them.
+Enable it in the matrix while Unified Intellect is on. For aspectual/spiritual magic, Metis avoids assigned offensive spells covered by a target’s active nullifications and ranks otherwise available spells by elemental resistance or vulnerability within their priority band. It chooses among your assigned spells; it does not weaken defenses or bypass them. Skills and arts keep normal priority scheduling without guessing their damage type.
 
 **Damage type:** none.
 

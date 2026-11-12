@@ -41,7 +41,7 @@ public final class SplitMindCasting {
         && context.spell().getSkill() == skill
         && TensuraStorages.getAbilityFrom(context.owner()) == storage
         && SkillAPI.getSkillsFrom(context.owner()).getSkill(skill).orElse(null) == context.spell()
-        && eligible(context.spell());
+        && automaticEligible(context.spell());
   }
 
   public static boolean virtualSlot(
@@ -67,6 +67,10 @@ public final class SplitMindCasting {
   }
 
   public static double magiculeFactor(LivingEntity owner) {
+    var context = INVOCATION.get();
+    if (context != null
+        && context.owner() == owner
+        && !(context.spell().getSkill() instanceof Magic)) return 1;
     if (dev.heavenlyrestriction.metis.MetisMatrix.owned(owner).isPresent())
       return dev.heavenlyrestriction.metis.MetisMatrix.costFactor(owner);
     return SkillAPI.getSkillsFrom(owner)
@@ -103,6 +107,10 @@ public final class SplitMindCasting {
   }
 
   private record Cast(ManasSkillInstance spell, TickingSkill held, UUID target, int mode) {}
+
+  public static boolean automaticEligible(ManasSkillInstance i) {
+    return eligible(i) || dev.heavenlyrestriction.metis.MetisAbilities.eligible(i);
+  }
 
   public static boolean eligible(ManasSkillInstance i) {
     return i.getMastery() >= 0
@@ -197,13 +205,15 @@ public final class SplitMindCasting {
 
   public static boolean funded(ServerPlayer p, ManasSkillInstance i, int mode) {
     if (p.hasInfiniteMaterials()) return true;
-    var magic = (Magic) i.getSkill();
+    var magic = (io.github.manasmods.tensura.ability.TensuraSkill) i.getSkill();
     var pool = TensuraStorages.getExistenceFrom(p);
     return pool.getAura() >= magic.getAuraCost(p, i, mode)
         && pool.getMagicule()
             >= magic.getMagiculeCost(p, i, mode)
-                * magiculeFactor(p)
-                * p.getAttributeValue(TensuraAttributes.MAGIC_COST_MULTIPLIER);
+                * (magic instanceof Magic ? magiculeFactor(p) : 1)
+                * (magic instanceof Magic
+                    ? p.getAttributeValue(TensuraAttributes.MAGIC_COST_MULTIPLIER)
+                    : 1);
   }
 
   public static dev.architectury.event.EventResult manualActivation(
@@ -344,6 +354,9 @@ public final class SplitMindCasting {
   }
 
   private static <T> T aim(ServerPlayer p, LivingEntity target, Supplier<T> work) {
+    boolean shift = p.isShiftKeyDown();
+    p.setShiftKeyDown(
+        false); // Automatic assignment selects the main mode, never its menu shortcut.
     float yaw = p.getYRot(), pitch = p.getXRot(), head = p.getYHeadRot(), body = p.yBodyRot;
     Vec3 d = target.getBoundingBox().getCenter().subtract(p.getEyePosition());
     p.setYRot((float) (Mth.atan2(d.z, d.x) * 180 / Math.PI) - 90);
@@ -352,6 +365,7 @@ public final class SplitMindCasting {
     try {
       return work.get();
     } finally {
+      p.setShiftKeyDown(shift);
       p.setYRot(yaw);
       p.setXRot(pitch);
       p.setYHeadRot(head);
