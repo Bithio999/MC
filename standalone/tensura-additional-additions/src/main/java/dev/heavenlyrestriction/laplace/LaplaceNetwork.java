@@ -133,6 +133,29 @@ public final class LaplaceNetwork {
     try {
       switch (r.operation) {
         case "save" -> notice = Laplace.save(p, r.action, r.equations, r.enabled);
+        case "apply" -> {
+          notice = Laplace.save(p, r.action, r.equations, true);
+          if (notice.startsWith("Saved.")) {
+            var laplace = Laplace.owned(p).orElseThrow();
+            if (!laplace.isToggled()) laplace.onToggleOn(p);
+            SkillAPI.getSkillsFrom(p).checkAndMarkDirty(laplace);
+            notice = "Applied. Formula is active.";
+          }
+        }
+        case "disable" -> {
+          var own = Laplace.owned(p);
+          var action = LaplaceActions.byKey(p, r.action);
+          if (own.isEmpty() || action == null) return;
+          var equations = Laplace.equations(own.get(), action);
+          try {
+            action.model().evaluate(equations);
+          } catch (IllegalArgumentException ex) {
+            equations = new LinkedHashMap<>(action.model().defaults());
+          }
+          notice = Laplace.save(p, r.action, equations, false);
+          if (notice.startsWith("Saved."))
+            notice = "Disabled. This action uses its native formula.";
+        }
         case "synthesize" ->
             notice =
                 LaplaceSynthesis.synthesize(p)
@@ -147,11 +170,16 @@ public final class LaplaceNetwork {
       notice = ex.getMessage();
     }
     SESSIONS.put(p, new Session(s.id, now + 12000, s.dimension));
-    send(p, false, notice);
+    send(p, false, notice, r.operation);
   }
 
   private static void send(ServerPlayer p, boolean open, String notice) {
+    send(p, open, notice, "");
+  }
+
+  private static void send(ServerPlayer p, boolean open, String notice, String operation) {
     var t = snapshot(p);
+    t.putString("operation", operation);
     t.putBoolean("open", open);
     t.putString("notice", notice);
     PacketDistributor.sendToPlayer(p, new State(t));

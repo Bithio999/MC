@@ -1,5 +1,13 @@
 # Changelog
 
+## Additions 1.28.0 — Laplace equation board
+
+- Replace the equation text workflow with a pannable, zoomable board of named outputs, nested input/operator blocks and linked helper equations. Drag to place or swap expressions; Shift-drag copies. Click-to-place, number dialogs, keyboard navigation, undo/redo, reset, advanced text and a compact block drawer remain available.
+- Preview output and the final magicule bill as the board changes; empty slots and invalid/circular graphs block Apply. Preserve existing formulas exactly until edited, including their precedence and dependent equations.
+- Add an explicit Apply & Enable operation: validate and save the owned action, enable it and turn Universal Formula on. Show native, draft, live and paused states. Disable uses the server-owned saved equations and keeps the passive and other actions intact.
+- Refresh server preview inputs without replacing drafts, selection or focus. Preserve board pan/zoom across tools and dialogs. Keep activation, cost, mastery, supported-action and output limits.
+- Document the drag workflow in the F8 guide and wiki with actual-client board captures.
+
 ## Additions 1.27.0 — Laplace, Lord of Equations
 
 - Add an Ultimate synthesis of mastered Exponentiation + Mathematician with exactly Universal Formula and Equation Editor. Complete true awakening, master three distinct supported native skills, and pay 250,000 permanent magicules after awakening bonuses by default. No EP gate. Preserve affected presets.

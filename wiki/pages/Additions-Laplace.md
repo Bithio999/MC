@@ -20,7 +20,7 @@
 
 Owning either component reveals Laplace’s unfinished entry in **Skills → Ultimate**. Activate it, meet the listed requirements and confirm synthesis. Awakening bonuses apply before payment. Both components are replaced by learned, unmastered Laplace; their slots in all presets become Equation Editor. Missing a Unique component? The [Archivist](Additions-Archive-of-Accord.md) offers one paid lesson per player.
 
-![Laplace synthesis](../media/laplace-synthesis.png)
+![Laplace synthesis](../media/laplace-board-synthesis.png)
 
 <a id="universal-formula"></a>
 
@@ -36,16 +36,42 @@ Movement, maximum aura/magicules, costs and cooldowns remain excluded from expon
 
 ## Equation Editor · Active, Press
 
-Open the editor from a native Tensura ability slot.
+Open the editor from a native Tensura ability slot and choose an action. Search narrows the action list; scroll to see more. **NATIVE** means the original formula is running, **LIVE** means the saved edit is active, and **PAUSED** means Universal Formula is off.
 
-1. **Actions:** search your learned, supported actions. A filled diamond marks an enabled edit.
-2. **Equation:** choose an aspect, then edit its equation. The preview compares native and edited output, plus requested, minimum and charged magicules.
-3. **Parameters:** click to insert native constants, state variables, named equations or operators. Hover for their meaning; scroll for more.
-4. Use **Balance cost**, enable the edit and **Save**. **Original** restores the action’s default equations before saving.
+The board shows named outputs on the left, connected to their formulas on the right. Each output compares its native and edited values. The lower panel shows the selected output and the final magicule bill.
 
-![Equation Editor with an enabled regeneration formula](../media/laplace-saved.png)
+### Example: boost Wind Cutter
 
-![Choose a native aspect](../media/laplace-aspects.png)
+1. Open **Wind Cutter** and choose **Math** in the block library.
+2. Drag **Multiply ×** onto **Base Wind damage**. The board keeps that value and creates a new empty input slot.
+3. Drag **2** into the empty slot. The preview immediately shows twice the Wind component and the resulting magicule bill; the separate Magic component stays unchanged.
+4. Choose **Apply & Enable**. This saves the action, enables its edit and turns **Universal Formula** on. Previously enabled actions resume too.
+
+![A completed Wind Cutter equation](../media/laplace-board-doubled.png)
+
+A **DRAFT** changes only the preview. Your previous applied formula keeps running until you apply the new one. **Disable** restores this action’s native formula and retains its saved equations. It leaves other actions and Universal Formula on. Existing formulas from earlier versions load directly onto the board.
+
+### Board controls
+
+| Control | Result |
+| --- | --- |
+| **Inputs** | Drag native constants or current player-state variables into an input |
+| **Math** | Drag an operation onto a value; the old value becomes its first input |
+| **Links** or a named output on the left | Drag a reference into another equation; its result updates dependents |
+| **Number…** | Choose a custom number to place; click an existing number to edit it |
+| Click a library block, then an input | Place without dragging |
+| Drag between occupied inputs | Swap the two expressions |
+| **Shift-drag** | Copy an expression into another input |
+| Right-click an operation | Unwrap it while keeping its first input, or clear the input |
+| **Undo / Redo** | Reverse or repeat an edit; Ctrl+Z / Ctrl+Y also work |
+| **Reset** | Restore this action’s native equations; undo remains available |
+| Drag blank board space or scroll | Pan the board; Shift-scroll pans sideways |
+| **Ctrl-scroll / Fit** | Zoom around the cursor / show the whole board |
+| **More** | Helpers, advanced text, cost balancing and control help |
+
+On small screens, **Blocks** opens the library drawer. It closes while dragging so you can reach the board. Scroll within the library to find more blocks. Empty input slots and invalid equations block Apply and explain what needs attention. Arrow keys select inputs while the board is focused; Enter edits a number or places a selected library block, and Delete clears the input.
+
+![An empty input waiting for a value](../media/laplace-board-empty-slot.png)
 
 ### Linked equations
 
@@ -66,7 +92,7 @@ This reaches double the healing limit as your HP approaches zero. The target’s
 
 Self-Regeneration instead has separate **one-second recovery pulses** and **native upkeep, normally every five seconds**. Its cost is not a per-HP equation. Each action shows its own verified native equations.
 
-Use **+** to create up to four helper equations, named `helper_1`, `helper_2`, and so on. Refer to a helper from another equation to use its result. Removing a referenced helper requires updating its dependents.
+Use **More → Add helper equation** to create up to four helper equations, named `helper_1`, `helper_2`, and so on. Refer to a helper from another equation to use its result. Removing a referenced helper requires updating its dependents.
 
 ```text
 helper_1 = 1 + missing_hp_fraction
@@ -75,7 +101,7 @@ healing = base_healing * helper_1
 
 Available arithmetic: `+ - * / ^`, parentheses, `min(a,b)`, `max(a,b)`, `clamp(value,low,high)` and `abs(value)`. Powers require a nonnegative base and a constant exponent between 0 and 3. Fractions range from **0 to 1**, where 1 means 100%. Inputs are captured before the action’s payment; a projectile retains its paid-for values in flight.
 
-![Parameter palette](../media/laplace-parameters.png)
+![A helper result linked into Wind Cutter](../media/laplace-board-linked.png)
 
 ### Supported actions
 
@@ -92,7 +118,7 @@ This initial catalogue exposes **nine action/mode entries across eight native sk
 | Aspectual Protection | Duration in seconds; cost | None |
 | Aspectual Reinforcement | Duration in seconds; cost | None |
 
-Native projectile counts, target selection, effect levels, cast times, cooldowns, defenses, healing suppression and recovery caps remain. Previews show values before Universal Formula and other modifiers. They use your current state when the editor opens or receives a saved update; actions evaluate live state when cast.
+Native projectile counts, target selection, effect levels, cast times, cooldowns, defenses, healing suppression and recovery caps remain. Previews show values before Universal Formula and other modifiers. Player-state preview inputs refresh from the server while the board is open; actions capture live state when cast. Refreshing does not clear your draft, selection or drag.
 
 ### Balance
 
@@ -108,6 +134,6 @@ Native projectile counts, target selection, effect levels, cast times, cooldowns
 
 For actions with multiple outputs, the output ratio compares their **combined total**. Fixed-cost actions and regeneration upkeep price the strongest possible state of the formula, preventing a cheap activation followed by stronger unpaid pulses. Healing prices the actual missing-HP-clamped recovery; insufficient payment only funds proportional edited healing.
 
-The minimum bill is shown separately and enforced even if the cost equation requests less. **Balance cost** fills a suitable cost equation. Finish casting before saving changes. Circular dependencies, unknown inputs, negative output, unsafe divisors and excessively large values are rejected with an explanation. Formula edits cannot add new effect types or rewrite progression, inventory or resources. Invalid saved formulas fall back entirely to the native action.
+The minimum bill is shown separately and enforced even if the cost equation requests less. **More → Balance cost formula** fills a suitable cost equation; the price floor applies automatically when you use Apply & Enable. Finish casting before saving changes. Circular dependencies, unknown inputs, negative output, unsafe divisors and excessively large values are rejected with an explanation. Formula edits cannot add new effect types or rewrite progression, inventory or resources. Invalid saved formulas fall back entirely to the native action.
 
 **Damage type:** no direct attack; edited attacks keep their native damage type.

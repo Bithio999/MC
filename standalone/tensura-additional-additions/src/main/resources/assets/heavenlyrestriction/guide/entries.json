@@ -1217,8 +1217,16 @@
         {
           "title": "Equation Editor · Active press",
           "lines": [
-            "Choose a learned supported action, select an aspect, then edit its formula. Parameters inserts read-only native constants, player-state fractions, operators and named outputs. Add up to four helper equations with +; reference their names in other equations to use them. Preview shows native and edited results, requested MP, minimum MP and final charged MP. Original restores defaults; Balance cost fills the bill; Enable and Save applies the edit.",
+            "Choose a learned action to open its equation board. Drag inputs, numbers and operators from the block library. Dropping an operator onto a value keeps that value as the first input and creates empty slots; fill them to see output and magicule bill changes immediately. Apply & Enable saves and enables the action and turns Universal Formula on. A draft never changes the live skill until applied. Disable restores the action’s native formula and keeps its saved equations.",
             "Supported: Self-Regeneration HP/SHP pulses and upkeep; Fire and Wind Cutter elemental/Magic components; Water Cutter Magic component and normal/repeat cost; Healing limit and linked actual-healing cost; Strength, Protection and Reinforcement duration and cost. Native targeting, damage types, cast times, effect levels, projectile count, cooldowns and healing suppression remain. Other skills are not editable yet."
+          ]
+        },
+        {
+          "title": "Board controls",
+          "lines": [
+            "Inputs contains native constants and player-state variables. Math contains operations. Links and the output cards create references between equations. Click a number to change it. Number… chooses a custom value. You can click a library block, then an input instead of dragging.",
+            "Drag between occupied inputs to swap; Shift-drag copies. Undo / Redo reverses edits. More adds helpers, opens advanced text, balances the cost formula or explains controls. Reset restores native equations before applying. Scroll or drag blank space to pan; Shift-scroll pans sideways; Ctrl-scroll zooms; Fit shows the full board.",
+            "On small screens use Blocks to open the drawer; scroll its list for more entries. The drawer closes during dragging. While the board is focused, arrow keys select inputs, Enter places a selected block or edits a number, and Delete clears it. Empty slots, cycles and unsafe formulas block Apply. Native and draft values are before other combat/healing modifiers."
           ]
         },
         {

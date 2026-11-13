@@ -2,12 +2,12 @@
 
 An active addon for **Tensura: Reincarnated**, **Minecraft 1.21.1** and **NeoForge**.
 
-[Download 1.27.0](releases/TensuraAdditionalAdditions-1.27.0.jar) · [Gameplay wiki](wiki/pages/TensuraAdditionalAdditions.md) · [Development guide](standalone/tensura-additional-additions/README.md) · [Validation](standalone/tensura-additional-additions/docs/VALIDATION-1.27.0.md)
+[Download 1.28.0](releases/TensuraAdditionalAdditions-1.28.0.jar) · [Gameplay wiki](wiki/pages/TensuraAdditionalAdditions.md) · [Development guide](standalone/tensura-additional-additions/README.md) · [Validation](standalone/tensura-additional-additions/docs/VALIDATION-1.28.0.md)
 
 Heavenly Restriction and its race evolutions, Chained/Unbound, Battlewills, Inverted Spear of Heaven, Unique and Ultimate skills, Marauder’s Map, Fusion, Parallel World Jumper, The High Realm and its encounters, Chromatic Orb, Vesper and the Archive of Accord.
 
 
-**New in 1.27.0:** [Laplace, Lord of Equations](wiki/pages/Additions-Laplace.md) combines Exponentiation and Mathematician. Its two abilities are Universal Formula and Equation Editor, with live native/edited values, linked equations and a parameter palette.
+**New in 1.28.0:** [Laplace’s Equation Editor](wiki/pages/Additions-Laplace.md#equation-editor) is a draggable equation board. Connect inputs and operators, see output and cost changes immediately, then choose **Apply & Enable**.
 
 ## Install
 

@@ -484,4 +484,52 @@ public final class LaplaceGameTests {
         "Appraisal duplicated stronger provider");
     h.succeed();
   }
+
+  @GameTest(template = "empty", timeoutTicks = 100)
+  public static void applyEnablesTheSavedActionAndUniversalFormulaTogether(GameTestHelper h) {
+    var p = player(h);
+    var i = laplace(p, false);
+    i.onToggleOff(p);
+    var spell = learn(p, AspectualMagics.WIND_CUTTER.get(), false);
+    var a = LaplaceActions.find(p, spell, 0);
+    var eq = new LinkedHashMap<>(a.model().defaults());
+    eq.put("elemental_damage", "base_elemental_damage * 2");
+    LaplaceNetwork.open(p);
+    var session = LaplaceNetwork.snapshot(p).getUUID("session");
+    LaplaceNetwork.handle(p, new LaplaceNetwork.Request(session, "apply", a.key(), false, eq));
+    h.assertTrue(
+        i.isToggled() && Laplace.effectiveEnabled(p, i, a.key()),
+        "Apply did not enable both gates");
+    h.assertTrue(Laplace.equations(i, a).equals(eq), "Applied equations did not persist");
+    i.getOrCreateTag().remove("EditUntil");
+    LaplaceNetwork.handle(
+        p,
+        new LaplaceNetwork.Request(session, "disable", a.key(), true, Map.of("untrusted", "1/0")));
+    h.assertTrue(
+        i.isToggled() && !Laplace.effectiveEnabled(p, i, a.key()),
+        "Disable affected the passive or failed to disable the action");
+    h.assertTrue(
+        Laplace.equations(i, a).equals(eq),
+        "Disable replaced the saved equations with packet input");
+    h.succeed();
+  }
+
+  @GameTest(template = "empty", timeoutTicks = 100)
+  public static void invalidBoardApplyCannotToggleOrReplaceTheLiveState(GameTestHelper h) {
+    var p = player(h);
+    var i = laplace(p, false);
+    i.onToggleOff(p);
+    var spell = learn(p, AspectualMagics.FIRE.get(), false);
+    var a = LaplaceActions.find(p, spell, 0);
+    var eq = new LinkedHashMap<>(a.model().defaults());
+    eq.put("elemental_damage", "helper_1");
+    eq.put("helper_1", "elemental_damage");
+    LaplaceNetwork.open(p);
+    var session = LaplaceNetwork.snapshot(p).getUUID("session");
+    LaplaceNetwork.handle(p, new LaplaceNetwork.Request(session, "apply", a.key(), true, eq));
+    h.assertTrue(
+        !i.isToggled() && !Laplace.enabled(i, a.key()), "Invalid equations enabled effects");
+    h.assertTrue(!i.getOrCreateTag().contains(Laplace.PROFILES), "Invalid board wrote profiles");
+    h.succeed();
+  }
 }
