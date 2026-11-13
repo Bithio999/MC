@@ -96,7 +96,13 @@
     "AutoCastSourceMixin",
     "AutoCastSourceCopyMixin",
     "TunerProgressMixin",
-    "MetisMenuGuardMixin"
+    "MetisMenuGuardMixin",
+    "LaplaceMagicMixin",
+    "LaplaceRepeatMixin",
+    "LaplaceUpkeepMixin",
+    "LaplaceDurationMixin",
+    "LaplaceHealingMixin",
+    "LaplaceRegenerationMixin"
   ],
   "injectors": {
     "defaultRequire": 1

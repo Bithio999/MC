@@ -19,8 +19,8 @@ public final class Exponentiation {
     private static final String WAS_ACTIVE="heavenlyrestriction.exponentiation_active";
     public record Rule(boolean included,int role,String exclusion){}
     public static boolean active(LivingEntity owner){
-        if(owner==null || owner.getAttributes()==null || owner instanceof net.minecraft.world.entity.player.Player player && player.getAbilities()==null || owner instanceof net.minecraft.server.level.ServerPlayer serverPlayer && serverPlayer.gameMode==null)return false;var owned=SkillAPI.getSkillsFrom(owner).getSkill(HeavenlyRestriction.EXPONENTIATION.get());if(owned.isEmpty() || owned.get().getMastery()<0 || !owner.isAlive() || owner.isSpectator())return false;var checking=CHECKING.get();if(!checking.add(owner))return false;
-        try{return owned.filter(i->i.getMastery()>=0 && HeavenlyRestriction.EXPONENTIATION.get().isInSlot(owner,i)).isPresent();}
+        if(owner==null || owner.getAttributes()==null || owner instanceof net.minecraft.world.entity.player.Player player && player.getAbilities()==null || owner instanceof net.minecraft.server.level.ServerPlayer serverPlayer && serverPlayer.gameMode==null)return false;if(!owner.isAlive() || owner.isSpectator())return false;var checking=CHECKING.get();if(!checking.add(owner))return false;
+        try{return dev.heavenlyrestriction.laplace.Laplace.active(owner).isPresent() || SkillAPI.getSkillsFrom(owner).getSkill(HeavenlyRestriction.EXPONENTIATION.get()).filter(i->i.getMastery()>=0 && HeavenlyRestriction.EXPONENTIATION.get().isInSlot(owner,i)).isPresent();}
         finally{checking.remove(owner);}
     }
     /** Positive fractional values are retained: a beneficial-only skill must never turn 0.5 into 0.25. */

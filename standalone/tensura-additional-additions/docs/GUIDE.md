@@ -312,3 +312,7 @@ Payouts retain the **original attack’s damage type**. The other abilities deal
 ## Critical Merchant — Unique
 
 Compound Interest multiplies already-critical damage by **1.5 × 1.25ⁿ**, where *n* is the number of successful 50% continuation rolls. Stop at the first failure or 100 successes; no separate payout cap. Guaranteed Profit retains its 1,000-magicule cost, 20-second cooldown and ten critical hits. [Full skill page](../../../wiki/pages/Additions-Critical-Merchant.md).
+
+## Laplace, Lord of Equations
+
+[Full guide and formula examples](../../../wiki/pages/Additions-Laplace.md). Synthesize mastered Exponentiation + Mathematician after completed true awakening and mastering three supported native skills; costs 250,000 permanent magicules by default. No EP requirement. Universal Formula inherits the parents; Equation Editor exposes verified native formulas with helper equations, a parameter palette and native/edited cost previews. Three enabled edits, four mastered.

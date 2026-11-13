@@ -124,3 +124,7 @@ The following **59 native attributes** are covered when their value exceeds 1. E
 - **Fusion:** combining and restoring bodies transfers their existing reserves without treating the transfer as another healing/resource reward.
 
 These tables describe the supported native attribute and output paths. An unrelated addon’s private variables, custom damage engine or separate inventory system are not automatically covered.
+
+## Evolution
+
+Combine fully mastered Exponentiation and Mathematician through [Laplace synthesis](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Additions-Laplace#obtaining). Laplace retains the same beneficial-value rules through Universal Formula.

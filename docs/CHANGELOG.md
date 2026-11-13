@@ -1,5 +1,14 @@
 # Changelog
 
+## Additions 1.27.0 — Laplace, Lord of Equations
+
+- Add an Ultimate synthesis of mastered Exponentiation + Mathematician with exactly Universal Formula and Equation Editor. Complete true awakening, master three distinct supported native skills, and pay 250,000 permanent magicules after awakening bonuses by default. No EP gate. Preserve affected presets.
+- Universal Formula shares Exponentiation’s existing ^1.2 output pipeline and exclusions, and inherits native Mathematician passives and appraisal. Avoid duplicate parent bonuses and prefer stronger existing chant/appraisal providers.
+- Expose verified per-action native equations for Self-Regeneration, aspectual Fire, Wind Cutter, Water Cutter (normal/repeat), Healing, Strength, Protection and Reinforcement. Preserve native targeting, damage types, cast times, effect levels, projectile counts, cooldowns and healing suppression.
+- Add a searchable action catalogue, aspect picker, named helper equations, parameter palette and native/edited results with requested, minimum and final MP bills. Original and Balance cost controls explain and recover edits; save through owner-bound bounded packets with live validation.
+- Allow three enabled edits, four mastered; limit combined output to 3×/4× native and cost discounts to 25%. Stronger output requires a convex minimum bill. Price state-dependent fixed upkeep at maximum output, and Healing at actual recovery; unfunded edited healing cannot recover for free. Freeze projectile values before payment, reject unsafe math, and fall back entirely for invalid saved edits. Keep the edit timer bounded when World Jump changes the world clock.
+- Add original Laplace art, an F8 guide entry, wiki instructions and native-client screenshots.
+
 ## Additions 1.26.2 — Critical payout balance
 
 - Critical Merchant: replace the guaranteed ×2 and repeated doublings with ×1.5 followed by ×1.25 per successful 50% roll.

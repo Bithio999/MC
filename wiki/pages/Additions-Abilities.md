@@ -51,6 +51,8 @@ Find a move below, then open its entry for targeting, damage, cost and cooldown.
 | [Against All Odds](Additions-Tyche.md#against-all-odds) | [Tyche, Lord of Fortune](Additions-Tyche.md) | Passive, Toggle | None directly |
 | [Fate Insurance](Additions-Tyche.md#fate-insurance) | [Tyche, Lord of Fortune](Additions-Tyche.md) | Passive, True | None |
 | [Guaranteed Dividend](Additions-Tyche.md#guaranteed-dividend) | [Tyche, Lord of Fortune](Additions-Tyche.md) | Active, Press | Original attack’s damage type |
+| [Universal Formula](Additions-Laplace.md#universal-formula) | [Laplace, Lord of Equations](Additions-Laplace.md) | Passive, Toggle | None directly; attacks keep their original type |
+| [Equation Editor](Additions-Laplace.md#equation-editor) | [Laplace, Lord of Equations](Additions-Laplace.md) | Active, Press | Edited action retains its native damage type |
 
 ## Extra
 

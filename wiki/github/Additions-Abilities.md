@@ -51,6 +51,8 @@ Find a move below, then open its entry for targeting, damage, cost and cooldown.
 | [Against All Odds](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Additions-Tyche#against-all-odds) | [Tyche, Lord of Fortune](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Additions-Tyche) | Passive, Toggle | None directly |
 | [Fate Insurance](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Additions-Tyche#fate-insurance) | [Tyche, Lord of Fortune](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Additions-Tyche) | Passive, True | None |
 | [Guaranteed Dividend](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Additions-Tyche#guaranteed-dividend) | [Tyche, Lord of Fortune](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Additions-Tyche) | Active, Press | Original attack’s damage type |
+| [Universal Formula](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Additions-Laplace#universal-formula) | [Laplace, Lord of Equations](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Additions-Laplace) | Passive, Toggle | None directly; attacks keep their original type |
+| [Equation Editor](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Additions-Laplace#equation-editor) | [Laplace, Lord of Equations](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Additions-Laplace) | Active, Press | Edited action retains its native damage type |
 
 ## Extra
 

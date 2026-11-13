@@ -17,6 +17,7 @@ public final class MetisAbilities {
     if (i.getSkill() instanceof Magic) return SplitMindCasting.eligible(i);
     if (Set.of(
             "heavenlyrestriction:metis",
+            "heavenlyrestriction:laplace",
             "heavenlyrestriction:split_mind",
             "heavenlyrestriction:parallel_world_jumper",
             "tensura:pride")

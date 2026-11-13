@@ -2,7 +2,7 @@
 
 [All wikis](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Home) · [TensuraAdditionalAdditions](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/TensuraAdditionalAdditions)
 
-A standalone addon for **Tensura: Reincarnated**, focused on Heavenly Restriction, Battlewills and world travel. Current release: **1.26.2** · Minecraft **1.21.1** · NeoForge.
+A standalone addon for **Tensura: Reincarnated**, focused on Heavenly Restriction, Battlewills and world travel. Current release: **1.27.0** · Minecraft **1.21.1** · NeoForge.
 
 | Explore | Pages |
 | --- | --- |
@@ -14,7 +14,7 @@ A standalone addon for **Tensura: Reincarnated**, focused on Heavenly Restrictio
 | World travel | [Parallel World Jumper](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Additions-Parallel-World-Jumper) |
 | Gear | [Vesper](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Additions-Vesper) · [Inverted Spear of Heaven](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Additions-Inverted-Spear-of-Heaven) · [Nullification](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Additions-Nullification) |
 
-[Download Additions 1.26.2](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/releases/TensuraAdditionalAdditions-1.26.2.jar). Tensura Myths is not required. Do not install both addons together. Myths’ Godly skills, bosses, hunters and dual-race systems are not part of this addon.
+[Download Additions 1.27.0](https://github.com/Bithio999/TensuraAdditionalAdditions/raw/refs/heads/main/releases/TensuraAdditionalAdditions-1.27.0.jar). Tensura Myths is not required. Do not install both addons together. Myths’ Godly skills, bosses, hunters and dual-race systems are not part of this addon.
 
 ## Rare boss
 
@@ -25,3 +25,5 @@ A standalone addon for **Tensura: Reincarnated**, focused on Heavenly Restrictio
 ## Unique Skill mentorship
 
 Find **Elias, the Archivist** in the rare [Archive of Accord](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Additions-Archive-of-Accord). Each player may buy one permanent, unmastered Unique Skill for **1,000,000 permanent EP and one Chromatic Orb** by default.
+
+[Laplace, Lord of Equations](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Additions-Laplace) combines Exponentiation and Mathematician. Universal Formula inherits their benefits; Equation Editor changes verified native formulas with a live cost preview.

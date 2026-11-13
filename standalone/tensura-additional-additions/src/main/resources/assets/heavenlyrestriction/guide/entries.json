@@ -1180,6 +1180,55 @@
           ]
         }
       ]
+    },
+    {
+      "id": "laplace",
+      "title": "Laplace, Lord of Equations",
+      "category": "Skills",
+      "summary": "Ultimate · Exponentiation + Mathematician · Edit native action equations.",
+      "icon": "heavenlyrestriction:textures/skill/laplace.png",
+      "keywords": [
+        "formula",
+        "equation",
+        "math",
+        "mathematician",
+        "exponentiation",
+        "ultimate",
+        "synthesis"
+      ],
+      "related": [
+        "exponentiation",
+        "archivist",
+        "metis"
+      ],
+      "sections": [
+        {
+          "title": "Obtaining",
+          "lines": [
+            "Master Exponentiation and Mathematician, complete True Hero/True Demon Lord awakening and master three distinct supported native skills. Open the unfinished Laplace entry in Skills → Ultimate and confirm. Default cost: 250,000 permanent magicules after awakening bonuses. No EP gate. Both parent skills are replaced and presets are remapped."
+          ]
+        },
+        {
+          "title": "Universal Formula · Passive toggle",
+          "lines": [
+            "Retain Exponentiation’s beneficial ^1.2 outputs and Mathematician’s calculating passives, Thought Acceleration and appraisal. Movement, aura/magicule capacities, costs and cooldowns remain excluded from exponentiation. Appraisal is active with the passive. No direct damage."
+          ]
+        },
+        {
+          "title": "Equation Editor · Active press",
+          "lines": [
+            "Choose a learned supported action, select an aspect, then edit its formula. Parameters inserts read-only native constants, player-state fractions, operators and named outputs. Add up to four helper equations with +; reference their names in other equations to use them. Preview shows native and edited results, requested MP, minimum MP and final charged MP. Original restores defaults; Balance cost fills the bill; Enable and Save applies the edit.",
+            "Supported: Self-Regeneration HP/SHP pulses and upkeep; Fire and Wind Cutter elemental/Magic components; Water Cutter Magic component and normal/repeat cost; Healing limit and linked actual-healing cost; Strength, Protection and Reinforcement duration and cost. Native targeting, damage types, cast times, effect levels, projectile count, cooldowns and healing suppression remain. Other skills are not editable yet."
+          ]
+        },
+        {
+          "title": "Balance and limits",
+          "lines": [
+            "Three enabled action/mode edits, or four mastered. Maximum combined output is 3× native, or 4× mastered, before Universal Formula and other modifiers. At most 25% cost discount. Stronger output requires native cost × [1 + 2 × (output ratio − 1)²]: 2× output costs at least 3×; 3× costs at least 9×. Fixed upkeep prices the strongest allowed state. Healing prices actual missing-HP-clamped recovery.",
+            "Five seconds between saved changes. Finish casting before saving. Circular, undefined, negative, unsafe and excessively large equations are rejected. Disabled edits use native formulas; turning Universal Formula off disables all edits. Saved invalid formulas fall back entirely to native values."
+          ]
+        }
+      ]
     }
   ]
 }

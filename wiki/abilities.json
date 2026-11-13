@@ -1605,5 +1605,27 @@
     "mod": "additions",
     "damage_id": null,
     "secondary_damage_id": null
+  },
+  {
+    "skill": "Additions-Laplace",
+    "name": "Universal Formula",
+    "tier": "Ultimate",
+    "kind": "Passive, Toggle",
+    "damage": "None directly; attacks keep their original type",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "anchor": "universal-formula",
+    "mod": "additions"
+  },
+  {
+    "skill": "Additions-Laplace",
+    "name": "Equation Editor",
+    "tier": "Ultimate",
+    "kind": "Active, Press",
+    "damage": "Edited action retains its native damage type",
+    "damage_id": null,
+    "secondary_damage_id": null,
+    "anchor": "equation-editor",
+    "mod": "additions"
   }
 ]

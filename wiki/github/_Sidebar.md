@@ -68,6 +68,7 @@
 - [Hephaestus](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Additions-Hephaestus)
 - [Metis](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Additions-Metis)
 - [Tyche](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Additions-Tyche)
+- [Laplace](https://github.com/Bithio999/TensuraAdditionalAdditions/wiki/Additions-Laplace)
 
 **NPCs and structures**
 

@@ -1310,5 +1310,12 @@
     "category": "Skills",
     "tier": "Ultimate",
     "mod": "additions"
+  },
+  {
+    "slug": "Additions-Laplace",
+    "title": "Laplace, Lord of Equations",
+    "category": "Skills",
+    "tier": "Ultimate",
+    "mod": "additions"
   }
 ]
