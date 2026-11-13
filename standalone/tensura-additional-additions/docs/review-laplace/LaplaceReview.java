@@ -239,7 +239,14 @@ public final class LaplaceReview {
                         AspectualMagics.HEALING.get(),
                         AspectualMagics.STRENGTH.get(),
                         AspectualMagics.PROTECTION.get(),
-                        AspectualMagics.REINFORCEMENT.get())) learn(p, s);
+                        AspectualMagics.REINFORCEMENT.get(),
+                        AspectualMagics.FIRE_BALL.get(),
+                        AspectualMagics.AGILITY.get(),
+                        HeavenlyRestriction.PROSPECTOR.get(),
+                        io.github.manasmods.manascore.skill.api.SkillAPI.getSkillRegistry()
+                            .get(
+                                net.minecraft.resources.ResourceLocation.parse(
+                                    "tensura:aura_slash")))) learn(p, s);
                 LaplaceSynthesis.discover(p);
                 ((io.github.manasmods.manascore.storage.api.StorageHolder) p).manasCore$sync();
                 LaplaceNetwork.open(p);
@@ -546,6 +553,91 @@ public final class LaplaceReview {
               "Actual native client: payment presets, cancel preserves draft, four-way mix, invalid"
                   + " percentages blocked, live bill, Apply & Enable server persistence, healing"
                   + " vital guard, 320×180 layout passed.");
+          click("‹ Actions");
+          mc.screen.children().stream()
+              .filter(c -> c instanceof EditBox)
+              .map(c -> (EditBox) c)
+              .findFirst()
+              .orElseThrow()
+              .setValue("Fire Ball");
+          clickPrefix("Fire Ball");
+          phase = 25;
+        }
+        case 25 -> {
+          if (!(mc.screen instanceof LaplaceScreen screen)
+              || !screen.model().parameterBoard()
+              || mc.screen.children().stream().noneMatch(c -> c instanceof EquationCanvas)) return;
+          shot("laplace-expanded-fireball");
+          String key =
+              screen.model().powerOutputs().stream()
+                  .filter(k -> screen.model().labels().get(k).equals("Fire Damage Charged"))
+                  .findFirst()
+                  .orElseThrow();
+          canvas().reveal(new Address(key, List.of()));
+          click("Math");
+          dragTile("Multiply ×", new Address(key, List.of()));
+          click("Number…");
+          phase = 251;
+        }
+        case 251 -> {
+          mc.screen.children().stream()
+              .filter(c -> c instanceof EditBox)
+              .map(c -> (EditBox) c)
+              .findFirst()
+              .orElseThrow()
+              .setValue("2");
+          click("Use number");
+          String key =
+              ((LaplaceScreen) mc.screen)
+                  .model().powerOutputs().stream()
+                      .filter(
+                          k ->
+                              ((LaplaceScreen) mc.screen)
+                                  .model()
+                                  .labels()
+                                  .get(k)
+                                  .equals("Fire Damage Charged"))
+                      .findFirst()
+                      .orElseThrow();
+          dragTile("2", new Address(key, List.of(1)));
+          click("Payment…");
+          click("Aura");
+          click("Use payment mix");
+          phase = 26;
+        }
+        case 26 -> {
+          if (state().getLong("wait") > 0) return;
+          shot("laplace-expanded-draft");
+          click("Apply & Enable");
+          phase = 27;
+        }
+        case 27 -> {
+          if (!state().getString("notice").startsWith("Applied.")) return;
+          check(
+              ((LaplaceScreen) mc.screen).model().payment().plan().equals(PaymentPlan.AURA),
+              "Expanded payment not persisted");
+          shot("laplace-expanded-live");
+          click("‹ Actions");
+          mc.screen.children().stream()
+              .filter(c -> c instanceof EditBox)
+              .map(c -> (EditBox) c)
+              .findFirst()
+              .orElseThrow()
+              .setValue("Prospector");
+          clickPrefix("Prospector · Passive");
+          phase = 28;
+        }
+        case 28 -> {
+          if (mc.screen.children().stream().noneMatch(c -> c instanceof EquationCanvas)) return;
+          check(
+              ((LaplaceScreen) mc.screen).model().labels().containsValue("Mining speed bonus"),
+              "No Additions passive parameters");
+          shot("laplace-expanded-prospector");
+          Files.writeString(
+              OUT.resolve("passed-expanded-equations.txt"),
+              "Actual client: lazy new-board selection, native charged-field drag edit, aura"
+                  + " resource choice, Apply & Enable with server persistence, authored passive"
+                  + " board and layout checks passed.");
           mc.options.guiScale().set(oldScale);
           mc.options.hideGui = oldHide;
           mc.resizeDisplay();

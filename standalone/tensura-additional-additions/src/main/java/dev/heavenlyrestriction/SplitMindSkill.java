@@ -144,6 +144,11 @@ public final class SplitMindSkill extends Skill {
   }
 
   public static void refresh(LivingEntity e) {
+    var instance=io.github.manasmods.manascore.skill.api.SkillAPI.getSkillsFrom(e).getSkill(net.minecraft.resources.ResourceLocation.parse("heavenlyrestriction:split_mind"));
+    if(instance.isPresent())try(var equations=dev.heavenlyrestriction.laplace.expand.ExpandedRuntime.open(e,instance.get(),-1)){refreshNative(e);return;}
+    refreshNative(e);
+  }
+  private static void refreshNative(LivingEntity e){
     var i = SkillAPI.getSkillsFrom(e).getSkill(HeavenlyRestriction.SPLIT_MIND.get());
     if (i.isPresent() && active(e)) apply(i.get(), e);
     else remove(e);

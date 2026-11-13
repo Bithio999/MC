@@ -134,8 +134,12 @@ public final class LaplaceScreen extends Screen implements EquationCanvas.Host {
       s.noticeAge = s.age;
     }
     boolean learned = s.state.getBoolean("learned");
-    if (!s.selected.isEmpty() && !s.chosen().isEmpty())
+    if (!s.selected.isEmpty() && s.chosen().contains("model"))
       s.liveModel = LaplaceNetwork.decode(s.chosen().getCompound("model"));
+    if(operation.equals("select")){
+      if(s.chosen().contains("model")){s.load(s.selected);s.view="board";s.rebuildWidgets();if(s.canvas!=null)s.canvas.start();}
+      return;
+    }
     if ((operation.equals("apply") || operation.equals("save"))
         && (message.startsWith("Applied.") || message.startsWith("Saved."))) {
       s.load(s.selected);
@@ -179,6 +183,7 @@ public final class LaplaceScreen extends Screen implements EquationCanvas.Host {
     canvas = null;
     var row = chosen();
     if (row.isEmpty()) return;
+    if(!row.contains("model")){view="actions";request("select");return;}
     liveModel = LaplaceNetwork.decode(row.getCompound("model"));
     var formulas = new LinkedHashMap<String, String>();
     var eq = row.getCompound("equations");
@@ -427,7 +432,7 @@ public final class LaplaceScreen extends Screen implements EquationCanvas.Host {
       var row = items.get(n);
       String key = row.getString("key");
       String status =
-          row.getBoolean("enabled") ? (state.getBoolean("passive") ? "LIVE" : "PAUSED") : "NATIVE";
+          row.getBoolean("fixed")?"FIXED":row.getBoolean("enabled") ? (state.getBoolean("passive") ? "LIVE" : "PAUSED") : "NATIVE";
       var b =
           button(
               fit(row.getString("title"), w - 105) + "   ·   " + status,
@@ -442,7 +447,7 @@ public final class LaplaceScreen extends Screen implements EquationCanvas.Host {
                   return;
                 }
                 if (!key.equals(selected)) load(key);
-                view = "board";
+                view = chosen().contains("model")?"board":"actions";
                 libraryOpen = !compact;
                 rebuildWidgets();
                 if (canvas != null) canvas.start();
@@ -451,7 +456,7 @@ public final class LaplaceScreen extends Screen implements EquationCanvas.Host {
           b,
           row.getString("detail")
               + "\n"
-              + "LIVE: saved edit is running. NATIVE: original equations are running. PAUSED: turn"
+              + "FIXED: no numerical effect or resource charge to edit. LIVE: saved edit is running. NATIVE: original equations are running. PAUSED: turn"
               + " Universal Formula on, or Apply & Enable.");
     }
     if (items.isEmpty())
@@ -566,7 +571,7 @@ public final class LaplaceScreen extends Screen implements EquationCanvas.Host {
     tip(
         apply,
         (chosen().getBoolean("requiresStop")
-                ? "Turn Self-Regeneration off before applying changes.\n"
+                ? "Turn this skill off before applying changes.\n"
                 : "")
             + "Save these equations and payment, enable this action and turn on Universal Formula."
             + " Other previously enabled actions resume too. The server checks ownership, costs and"
@@ -638,7 +643,7 @@ public final class LaplaceScreen extends Screen implements EquationCanvas.Host {
       for (String key : board.names())
         tools.add(Map.entry(EquationCanvas.name(key, liveModel), Expr.variable(key)));
     } else {
-      var names = new ArrayList<>(liveModel.inputs().keySet());
+      var names = new ArrayList<>(liveModel.inputs().keySet().stream().filter(k->!k.startsWith("__")).toList());
       names.sort(
           Comparator.comparingInt(
                   (String k) -> k.startsWith("base_") ? 0 : k.equals("missing_hp_fraction") ? 1 : 2)
@@ -885,7 +890,7 @@ public final class LaplaceScreen extends Screen implements EquationCanvas.Host {
             } else {
               modal = "";
               load(switchTo);
-              view = "board";
+              view = chosen().contains("model")?"board":"actions";
               rebuildWidgets();
             }
           });

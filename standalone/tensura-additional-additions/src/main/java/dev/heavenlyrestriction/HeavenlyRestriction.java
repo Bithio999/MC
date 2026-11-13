@@ -45,6 +45,8 @@ public final class HeavenlyRestriction {
         container.registerConfig(net.neoforged.fml.config.ModConfig.Type.SERVER,dev.heavenlyrestriction.laplace.LaplaceConfig.SPEC,"tensura-additions-laplace.toml");
         NeoForge.EVENT_BUS.addListener(dev.heavenlyrestriction.laplace.LaplaceIntellect::tick);
         NeoForge.EVENT_BUS.addListener(dev.heavenlyrestriction.laplace.LaplaceRuntime::projectile);
+        NeoForge.EVENT_BUS.addListener(dev.heavenlyrestriction.laplace.expand.ParameterSnapshots::spawned);
+        NeoForge.EVENT_BUS.addListener(dev.heavenlyrestriction.laplace.expand.ParameterSnapshots::added);
         modBus.addListener(dev.heavenlyrestriction.tyche.TycheNetwork::register);
         container.registerConfig(net.neoforged.fml.config.ModConfig.Type.SERVER,dev.heavenlyrestriction.tyche.TycheConfig.SPEC,"tensura-additions-tyche.toml");
         container.registerConfig(net.neoforged.fml.config.ModConfig.Type.SERVER,dev.heavenlyrestriction.metis.MetisConfig.SPEC,"tensura-additions-metis.toml");

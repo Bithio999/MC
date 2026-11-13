@@ -70,10 +70,8 @@ public final class CriticalMerchant {
         || !i.canActivateSkill(e, 0)) return;
     var energy = TensuraStorages.getExistenceFrom(e);
     boolean tyche = i.getSkill() == HeavenlyRestriction.TYCHE.get();
-    double cost = SchemaArt.cost(e, tyche ? TycheConfig.DIVIDEND_COST.get() : COST);
-    if (!Double.isFinite(cost) || energy.getMagicule() < cost) return;
-    energy.setMagicule(energy.getMagicule() - cost);
-    energy.markDirty();
+    double cost = tyche ? TycheConfig.DIVIDEND_COST.get() : COST;
+    if (!Double.isFinite(cost) || io.github.manasmods.tensura.util.EnergyHelper.isOutOfEnergy(e,0,cost)) return;
     clear(i);
     i.getOrCreateTag().putInt(REMAINING, HITS);
     i.setCoolDown(COOLDOWN, 0);
@@ -255,6 +253,7 @@ public final class CriticalMerchant {
               : CriticalPayout.successes(hit.owner.getRandom()::nextBoolean);
       hit.payout =
           tyche ? TychePayout.multiplier(hit.successes) : CriticalPayout.multiplier(hit.successes);
+      hit.payout *= dev.heavenlyrestriction.laplace.expand.AddonParameters.value(hit.owner,hit.skill.getSkillId().toString(),-1,"critical_payout",1);
       amount = CriticalPayout.multiply(amount, hit.payout);
     }
     return amount;

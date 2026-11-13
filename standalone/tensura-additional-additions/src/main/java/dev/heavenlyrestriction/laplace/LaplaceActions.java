@@ -25,10 +25,13 @@ public final class LaplaceActions {
     var result = new ArrayList<Action>();
     for (var i : SkillAPI.getSkillsFrom(owner).getLearnedSkills()) {
       if (i.getMastery() < 0 || i.getRemoveTime() == -3) continue;
-      for (int mode = 0;
-          mode
-              < (i.getSkill() == AspectualMagics.WATER_CUTTER.get() && i.isMastered(owner) ? 2 : 1);
-          mode++) {
+      var modes =
+          legacy(i)
+              ? (i.getSkill() == AspectualMagics.WATER_CUTTER.get() && i.isMastered(owner)
+                  ? List.of(0, 1)
+                  : List.of(0))
+              : dev.heavenlyrestriction.laplace.expand.ExpandedActions.modes(owner, i);
+      for (int mode : modes) {
         var action = find(owner, i, mode);
         if (action != null) result.add(action);
       }
@@ -39,7 +42,17 @@ public final class LaplaceActions {
 
   public static Action byKey(LivingEntity owner, String key) {
     if (key == null || key.length() > 180) return null;
-    return learned(owner).stream().filter(a -> a.key.equals(key)).findFirst().orElse(null);
+    int split = key.lastIndexOf('#');
+    if (split < 1) return null;
+    int mode;
+    try {
+      mode = Integer.parseInt(key.substring(split + 1));
+    } catch (NumberFormatException ex) {
+      return null;
+    }
+    for (var i : SkillAPI.getSkillsFrom(owner).getLearnedSkills())
+      if (i.getSkillId().toString().equals(key.substring(0, split))) return find(owner, i, mode);
+    return null;
   }
 
   private static double field(Object cfg, String name) {
@@ -52,6 +65,8 @@ public final class LaplaceActions {
 
   public static Action find(LivingEntity owner, ManasSkillInstance i, int mode) {
     if (i == null || i.getMastery() < 0) return null;
+    if (!legacy(i))
+      return dev.heavenlyrestriction.laplace.expand.ExpandedActions.find(owner, i, mode);
     String id = nativeId(i);
     boolean master = i.isMastered(owner);
     if (mode < 0 || mode > 0 && !(id.equals("tensura:water_cutter") && mode == 1 && master))
@@ -173,6 +188,19 @@ public final class LaplaceActions {
     return new Action(key, title, detail, i, mode, model);
   }
 
+  public static boolean legacy(ManasSkillInstance i) {
+    return Set.of(
+            "tensura:self_regeneration",
+            "tensura:fire",
+            "tensura:wind_cutter",
+            "tensura:water_cutter",
+            "tensura:healing",
+            "tensura:strength",
+            "tensura:protection",
+            "tensura:reinforcement")
+        .contains(nativeId(i));
+  }
+
   private static String nativeId(ManasSkillInstance i) {
     if (i.getSkill() == AspectualMagics.FIRE.get()) return "tensura:fire";
     if (i.getSkill() == AspectualMagics.WIND_CUTTER.get()) return "tensura:wind_cutter";
@@ -268,7 +296,7 @@ public final class LaplaceActions {
           Map.copyOf(units),
           List.copyOf(power),
           List.copyOf(costs),
-          Laplace.active(owner).map(i -> i.isMastered(owner) ? 4d : 3d).orElse(3d));
+          Laplace.owned(owner).map(i -> i.isMastered(owner) ? 4d : 3d).orElse(3d));
     }
   }
 

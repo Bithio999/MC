@@ -104,7 +104,16 @@
     "LaplaceUpkeepMixin",
     "LaplaceDurationMixin",
     "LaplaceHealingMixin",
-    "LaplaceRegenerationMixin"
+    "LaplaceRegenerationMixin",
+    "ParameterReadMixin",
+    "LaplaceExpandedCallbacksMixin",
+    "LaplaceExpandedCostMixin",
+    "LaplaceExpandedDirectCostMixin",
+    "LaplaceExpandedConsumeMixin",
+    "LaplaceDelayedEntityMixin",
+    "LaplaceDelayedEffectMixin",
+    "LaplaceAttributeAccess",
+    "LaplaceAttributePowerMixin"
   ],
   "injectors": {
     "defaultRequire": 1
@@ -113,5 +122,6 @@
     "client.RestrictedRaceInfoMixin",
     "client.SchemaProgressMixin",
     "client.FusionRendererMixin"
-  ]
+  ],
+  "plugin": "dev.heavenlyrestriction.laplace.expand.ParameterMixinPlugin"
 }

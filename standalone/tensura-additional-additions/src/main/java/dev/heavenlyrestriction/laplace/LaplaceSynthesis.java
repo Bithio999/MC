@@ -21,7 +21,9 @@ public final class LaplaceSynthesis {
         LaplaceActions.learned(p).stream()
             .filter(
                 a ->
-                    !a.skill().isTemporarySkill()
+                    a.skill().getSkillId().getNamespace().equals("tensura")
+                        && !a.model().powerOutputs().isEmpty()
+                        && !a.skill().isTemporarySkill()
                         && !a.skill().isSubInstance()
                         && a.skill().isMastered(p))
             .map(a -> a.skill().getSkillId())

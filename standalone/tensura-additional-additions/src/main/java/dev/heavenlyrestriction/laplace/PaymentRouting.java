@@ -16,7 +16,7 @@ public final class PaymentRouting {
     private final Scope before;
     private final LivingEntity owner;
     private final PaymentPlan.Policy policy;
-    private double budget;
+    private double budget, reserve;
     private boolean failed, paid;
 
     private Scope(LivingEntity owner, PaymentPlan.Policy policy) {
@@ -35,27 +35,52 @@ public final class PaymentRouting {
       else CURRENT.set(before);
     }
 
+    public void reserve(double budget) {
+      if (!Double.isFinite(budget) || budget < 0)
+        throw new IllegalArgumentException("Invalid resource reserve.");
+      reserve = budget;
+    }
+
     private PaymentPlan.Debit prepare(IExistence energy) {
-      return PaymentPlan.prepare(
-          new PaymentPlan.Pools(
-              energy.getMagicule(),
-              energy.getAura(),
-              owner.getHealth(),
-              energy.getSpiritualHealth()),
-          policy.bill(budget));
+      var debit =
+          PaymentPlan.prepare(
+              new PaymentPlan.Pools(
+                  energy.getMagicule(),
+                  energy.getAura(),
+                  owner.getHealth(),
+                  energy.getSpiritualHealth()),
+              policy.bill(budget));
+      var held = policy.bill(reserve);
+      var after = debit.after();
+      return new PaymentPlan.Debit(
+          after,
+          debit.affordable()
+              && after.magicules() >= held.magicules()
+              && after.aura() >= held.aura()
+              && (held.hp() == 0 || after.hp() >= Math.max(1, held.hp()))
+              && (held.shp() == 0 || after.shp() >= Math.max(1, held.shp())));
     }
   }
 
   public static Scope open(LivingEntity owner, ManasSkillInstance skill, int mode) {
+    return open(owner, skill, mode, false);
+  }
+
+  public static Scope open(LivingEntity owner, ManasSkillInstance skill, int mode, boolean force) {
     PaymentPlan.Policy policy = null;
     if (!owner.level().isClientSide()) {
+      var expanded = dev.heavenlyrestriction.laplace.expand.ExpandedRuntime.current();
+      if (expanded != null
+          && expanded.owner() == owner
+          && expanded.skill().getSkillId().equals(skill.getSkillId()))
+        policy = expanded.action().model().payment();
       var frame = LaplaceRuntime.current();
       if (frame != null
           && frame.owner() == owner
           && frame.action().skill() == skill
           && frame.action().mode() == mode) {
         policy = frame.action().model().payment();
-      } else {
+      } else if (policy == null) {
         var own = Laplace.active(owner);
         var action = own.isEmpty() ? null : LaplaceActions.find(owner, skill, mode);
         if (action != null && Laplace.effectiveEnabled(owner, own.get(), action.key())) {
@@ -67,7 +92,7 @@ public final class PaymentRouting {
         }
       }
     }
-    return new Scope(owner, policy != null && policy.plan().converted() ? policy : null);
+    return new Scope(owner, policy != null && (force || policy.plan().converted()) ? policy : null);
   }
 
   public static Scope healing(LivingEntity owner) {
@@ -80,6 +105,11 @@ public final class PaymentRouting {
   private static Scope current(LivingEntity owner) {
     var scope = CURRENT.get();
     return scope != null && scope.owner == owner && scope.policy != null ? scope : null;
+  }
+
+  public static boolean scoped(LivingEntity owner) {
+    var scope = CURRENT.get();
+    return scope != null && scope.owner == owner;
   }
 
   public static boolean converted(LivingEntity owner) {

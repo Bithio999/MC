@@ -160,12 +160,13 @@ public final class SplitMindCasting {
     return true;
   }
 
+  public static double scanRange(LivingEntity owner){return dev.heavenlyrestriction.laplace.expand.AddonParameters.value(owner,dev.heavenlyrestriction.metis.MetisMatrix.owned(owner).isPresent()?"metis":"split_mind",-1,"scan_radius",32);}
   public static boolean enemy(ServerPlayer p, LivingEntity other) {
     if (!other.isAlive()
         || other == p
         || other.isSpectator()
         || !RestrictionData.canHarm(p, other)
-        || p.distanceToSqr(other) > 32 * 32) return false;
+        || p.distanceToSqr(other) > Math.pow(scanRange(p),2)) return false;
     if (other instanceof Player player
         && (!p.canHarmPlayer(player) || player.isCreative() || !p.getServer().isPvpAllowed()))
       return false;
@@ -190,7 +191,7 @@ public final class SplitMindCasting {
   public static LivingEntity nearest(ServerPlayer p) {
     return p
         .serverLevel()
-        .getEntitiesOfClass(LivingEntity.class, p.getBoundingBox().inflate(32), e -> enemy(p, e))
+        .getEntitiesOfClass(LivingEntity.class, p.getBoundingBox().inflate(scanRange(p)), e -> enemy(p, e))
         .stream()
         .min(
             Comparator.comparingDouble((LivingEntity e) -> p.distanceToSqr(e))
@@ -207,13 +208,8 @@ public final class SplitMindCasting {
     if (p.hasInfiniteMaterials()) return true;
     var magic = (io.github.manasmods.tensura.ability.TensuraSkill) i.getSkill();
     var pool = TensuraStorages.getExistenceFrom(p);
-    return pool.getAura() >= magic.getAuraCost(p, i, mode)
-        && pool.getMagicule()
-            >= magic.getMagiculeCost(p, i, mode)
-                * (magic instanceof Magic ? magiculeFactor(p) : 1)
-                * (magic instanceof Magic
-                    ? p.getAttributeValue(TensuraAttributes.MAGIC_COST_MULTIPLIER)
-                    : 1);
+    double aura=magic.getAuraCost(p,i,mode),mp=magic.getMagiculeCost(p,i,mode)*(magic instanceof Magic?magiculeFactor(p):1)*(magic instanceof Magic?p.getAttributeValue(TensuraAttributes.MAGIC_COST_MULTIPLIER):1);
+    return dev.heavenlyrestriction.laplace.expand.LaplaceFunding.funded(p,i,mode,aura,mp);
   }
 
   public static dev.architectury.event.EventResult manualActivation(

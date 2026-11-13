@@ -332,7 +332,7 @@ public final class MetisMenuInspection {
   }
 
   private static boolean framework(String owner) {
-    return owner.startsWith("java/")
+    return owner.startsWith("dev/heavenlyrestriction/laplace/") || owner.startsWith("java/")
         || owner.startsWith("javax/")
         || owner.startsWith("net/minecraft/")
         || owner.startsWith("com/google/")

@@ -1,5 +1,14 @@
 # Changelog
 
+## Additions 1.30.0 — Expanded Equation Editor
+
+- Extend Laplace’s catalogue to learned Tensura Reincarnated and Additional Additions skills, magic, Battlewills and passive modes. Other addons remain excluded.
+- Discover per-mode native numerical effects without activating skills or changing shared configurations. Keep learning gates, progression, inventories, crafting/engraving rules, roll probabilities, defensive-reduction coefficients, cast timing and cooldowns native. Clearly label fixed actions.
+- Add authored parameters for mining, Schema builds, auto-cast range, Rush/Counter, Fusion, critical payouts and aura recovery. Preserve the existing tailored boards and profiles.
+- Carry selected resource payments through charged casts, actual coordinate confirmations and delayed effect upkeep. Retain cast parameters on projectiles and status effects, including saved hidden effects. Converted consuming helpers check the whole bill and reserves before charging.
+- Load only the selected expanded board, refresh edited native attribute bonuses, end affected native toggles when Universal Formula stops, and prevent sustained-state edits while active. Expanded effect ratios share one product-based output limit.
+- Extend native/client regression coverage and update the F8 guide, gameplay wiki and release packaging.
+
 ## Additions 1.29.0 — Laplace resource payment
 
 - Add per-action magicule, aura, HP and SHP payment presets and percentage mixes to Equation Editor, with conversion equations and live resource bills. Existing profiles retain magicule payment. Keep the balanced cost equation as an MP-equivalent budget; server-configurable defaults are 1 MP eq per aura and 10 MP eq per HP/SHP.

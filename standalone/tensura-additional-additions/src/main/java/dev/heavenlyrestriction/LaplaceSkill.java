@@ -76,17 +76,21 @@ public final class LaplaceSkill extends Skill {
   public void onToggleOn(ManasSkillInstance i, LivingEntity e) {
     i.setToggled(true);
     LaplaceIntellect.refresh(e);
+    dev.heavenlyrestriction.laplace.expand.ExpandedStates.refreshAttributes(e);
   }
 
   @Override
   public void onToggleOff(ManasSkillInstance i, LivingEntity e) {
     i.setToggled(false);
     LaplaceIntellect.remove(e);
+    dev.heavenlyrestriction.laplace.expand.ExpandedStates.stopped(e);
   }
 
   @Override
   public void onForgetSkill(ManasSkillInstance i, LivingEntity e) {
+    i.setToggled(false);
     LaplaceIntellect.remove(e);
+    dev.heavenlyrestriction.laplace.expand.ExpandedStates.stopped(e);
     super.onForgetSkill(i, e);
   }
 

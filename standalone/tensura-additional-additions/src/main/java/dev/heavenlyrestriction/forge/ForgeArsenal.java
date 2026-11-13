@@ -155,9 +155,8 @@ public final class ForgeArsenal {
           || slot >= p.getInventory().items.size()
           || !ForgeItems.weapon(p.getInventory().getItem(slot))
           || p.getInventory().getItem(slot).getCount() != 1) return false;
-    double cost = ForgeService.bill(p, 1000 * slots.size());
     var ep = TensuraStorages.getExistenceFrom(p);
-    if (ep.getMagicule() < cost) return false;
+    try(var equations=dev.heavenlyrestriction.laplace.expand.ExpandedRuntime.open(p,ForgeSynthesis.owned(p).orElseThrow(),1)){if(io.github.manasmods.tensura.util.EnergyHelper.isOutOfEnergy(p,0,1000*slots.size()))return false;}
     var list = items(p).copy();
     var added = new ArrayList<Integer>();
     for (int slot : slots) {
@@ -175,8 +174,6 @@ public final class ForgeArsenal {
     }
     RestrictionData.of(p).put(ITEMS, list);
     for (int slot : slots) p.getInventory().setItem(slot, ItemStack.EMPTY);
-    ep.setMagicule(ep.getMagicule() - cost);
-    ep.markDirty();
     p.getInventory().setChanged();
     for (int n : added) ArsenalBlade.spawn(p, n, count(p));
     p.serverLevel()
@@ -237,13 +234,7 @@ public final class ForgeArsenal {
             }
           }
         var i = ForgeSynthesis.owned(p).filter(s -> s.canInteractSkill(p));
-        double cost = ForgeService.bill(p, live * 10);
-        var ep = TensuraStorages.getExistenceFrom(p);
-        if (live == 0 || i.isEmpty() || ep.getMagicule() < cost) recall(p);
-        else {
-          ep.setMagicule(ep.getMagicule() - cost);
-          ep.markDirty();
-        }
+        if(live==0||i.isEmpty())recall(p);else try(var equations=dev.heavenlyrestriction.laplace.expand.ExpandedRuntime.open(p,i.get(),1)){if(io.github.manasmods.tensura.util.EnergyHelper.isOutOfEnergy(p,0,live*10))recall(p);}
       }
     }
   }
@@ -273,7 +264,7 @@ public final class ForgeArsenal {
     var previous = CURRENT.get();
     CURRENT.set(context);
     try (var offense = ForgeOffenseContext.open(p, item)) {
-      float damage = (float) ForgeItems.weaponDamage(item, p, target, source);
+      float damage = (float) (ForgeItems.weaponDamage(item,p,target,source)*dev.heavenlyrestriction.laplace.expand.AddonParameters.value(p,"hephaestus",1,"arsenal_damage",1));
       boolean hit = target.hurt(source, damage);
       if (hit) {
         TensuraEnchantmentHelper.doAdditionalAfterAttack(

@@ -23,6 +23,11 @@ public final class MetisIntellect {
   private static final Map<ServerPlayer, Map<ResourceLocation, Long>> RETRY = new WeakHashMap<>();
 
   public static void refresh(LivingEntity e) {
+    var instance=io.github.manasmods.manascore.skill.api.SkillAPI.getSkillsFrom(e).getSkill(net.minecraft.resources.ResourceLocation.parse("heavenlyrestriction:metis"));
+    if(instance.isPresent())try(var equations=dev.heavenlyrestriction.laplace.expand.ExpandedRuntime.open(e,instance.get(),-1)){refreshNative(e);return;}
+    refreshNative(e);
+  }
+  private static void refreshNative(LivingEntity e){
     if (e.level().isClientSide()) return;
     var mind = MetisMatrix.owned(e).filter(i -> i.isToggled() && i.canInteractSkill(e));
     if (mind.isEmpty()) {

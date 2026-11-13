@@ -61,6 +61,7 @@ public final class AuraRegenerationSkill extends Skill {
         SkillAPI.getSkillsFrom(entity).checkAndMarkDirty(instance);
     }
     void regenerate(ManasSkillInstance instance, LivingEntity entity) {
+      try(var equations=dev.heavenlyrestriction.laplace.expand.ExpandedRuntime.open(entity,instance,-1)){
         if (!canInteractSkill(instance, entity) || healingBlocked(entity) || SkillUtils.shouldCancelInteraction(entity)) return;
         double maxHP = EffectStorage.getSeveranceMaxHealth(entity);
         double missing = Math.max(0, maxHP - entity.getHealth());
@@ -68,6 +69,7 @@ public final class AuraRegenerationSkill extends Skill {
         boolean mastered = instance.isMastered(entity);
         double hpCost = tier == 1 ? 20 : mastered ? 20 : 30;
         double shpCost = mastered ? 5 : 10;
+        double output=dev.heavenlyrestriction.laplace.expand.AddonParameters.value(entity,instance.getSkillId().toString(),-1,"recovery",1);hpCost/=Math.max(.000001,output);shpCost/=Math.max(.000001,output);
         var energy = TensuraStorages.getExistenceFrom(entity);
         double shp = tier == 3 ? Math.max(0, entity.getAttributeValue(TensuraAttributes.MAX_SPIRITUAL_HEALTH) - energy.getSpiritualHealth()) : 0;
         if (missing == 0 && shp == 0) return;
@@ -83,6 +85,7 @@ public final class AuraRegenerationSkill extends Skill {
         if(entity.level() instanceof net.minecraft.server.level.ServerLevel level && (entity.getHealth()>beforeHP || energy.getSpiritualHealth()>beforeSHP))
             ArtVisualEntity.spawn(level,ArtVisualEntity.HEALING_PULSE,entity.position(),new net.minecraft.world.phys.Vec3(.8+tier*.15,0,0),10).style(tier-1).setCaster(entity);
         addMasteryPoint(instance, entity);
+    }
     }
     /** Match native Infinite Regeneration's healing immunity without its MP drain. */
     public static boolean allowsInfiniteRecovery(LivingEntity entity) {

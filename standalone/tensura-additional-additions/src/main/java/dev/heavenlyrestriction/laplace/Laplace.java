@@ -60,12 +60,20 @@ public final class Laplace {
   }
 
   public static PaymentPlan payment(LivingEntity e, String key) {
+    return payment(e, key, PaymentPlan.MAGICULES);
+  }
+
+  public static PaymentPlan payment(LivingEntity e, String key, PaymentPlan fallback) {
     try {
       return owned(e)
-          .map(i -> readPlan(i.getOrCreateTag().getCompound(PROFILES).getCompound(key)))
-          .orElse(PaymentPlan.MAGICULES);
+          .map(
+              i -> {
+                var row = i.getOrCreateTag().getCompound(PROFILES).getCompound(key);
+                return row.contains("payment") ? readPlan(row) : fallback;
+              })
+          .orElse(fallback);
     } catch (IllegalArgumentException ex) {
-      return PaymentPlan.MAGICULES;
+      return fallback;
     }
   }
 
@@ -100,7 +108,13 @@ public final class Laplace {
 
   public static String save(
       ServerPlayer p, String key, Map<String, String> equations, boolean enable) {
-    return save(p, key, equations, enable, payment(p, key));
+    var action = LaplaceActions.byKey(p, key);
+    return save(
+        p,
+        key,
+        equations,
+        enable,
+        action == null ? PaymentPlan.MAGICULES : action.model().payment().plan());
   }
 
   public static String save(
@@ -119,6 +133,13 @@ public final class Laplace {
             == io.github.manasmods.tensura.registry.skill.CommonSkills.SELF_REGENERATION.get()
         && a.skill().isToggled())
       return "Turn Self-Regeneration off before changing its equations or payment.";
+    if (enable && dev.heavenlyrestriction.laplace.expand.ExpandedStates.requiresStop(p, a))
+      return "End this skill’s active state before applying equations or payment changes.";
+    if (enable
+        && a.model().powerOutputs().isEmpty()
+        && a.model().inputs().getOrDefault("base_cost", 0d) == 0
+        && !a.model().inputs().containsKey("__deferred_cost"))
+      return "This native action has no numerical effects or resource cost to edit.";
     a.model().withPayment(plan).evaluate(equations);
     var profiles = i.getOrCreateTag().getCompound(PROFILES);
     long enabled =
@@ -138,7 +159,19 @@ public final class Laplace {
     profiles.put(key, row);
     i.getOrCreateTag().put(PROFILES, profiles);
     i.getOrCreateTag().putLong("EditUntil", p.level().getGameTime() + 100);
+    i.getOrCreateTag()
+        .putInt("EquationRevision", i.getOrCreateTag().getInt("EquationRevision") + 1);
     i.markDirty();
+    if (a.mode() < 0
+        && dev.heavenlyrestriction.laplace.expand.ExpandedActions.attributeEffects(a.skill())) {
+      var ability = io.github.manasmods.tensura.storage.TensuraStorages.getAbilityFrom(p);
+      for (var slot : ability.getAbilitySlots())
+        if (slot.getSkill() == a.skill().getSkill()) {
+          a.skill().removeAttributeModifiers(p, slot.getMode());
+          a.skill().addHeldAttributeModifiers(p, slot.getMode());
+          break;
+        }
+    }
     return "Saved. " + (enable ? "Edited formula is enabled." : "Native formula is active.");
   }
 

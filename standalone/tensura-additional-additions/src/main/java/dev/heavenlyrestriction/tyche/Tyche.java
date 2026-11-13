@@ -112,6 +112,11 @@ public final class Tyche {
   }
 
   public static void refresh(LivingEntity e) {
+    var instance=io.github.manasmods.manascore.skill.api.SkillAPI.getSkillsFrom(e).getSkill(net.minecraft.resources.ResourceLocation.parse("heavenlyrestriction:tyche"));
+    if(instance.isPresent())try(var equations=dev.heavenlyrestriction.laplace.expand.ExpandedRuntime.open(e,instance.get(),-1)){refreshNative(e);return;}
+    refreshNative(e);
+  }
+  private static void refreshNative(LivingEntity e){
     if (e.level().isClientSide()) return;
     boolean active =
         owned(e)

@@ -56,7 +56,7 @@ public final class MetisCasting {
     if (MetisMagic.role(spell, slot.mode()) != MetisMagic.Role.OFFENSE)
       return MetisMagic.needed(p, spell, slot.mode()) ? p : null;
     var target =
-        io.github.manasmods.tensura.util.ObjectSelectionHelper.getTargetingEntity(p, 32, false);
+        io.github.manasmods.tensura.util.ObjectSelectionHelper.getTargetingEntity(p, dev.heavenlyrestriction.laplace.expand.AddonParameters.value(p,"metis",-1,"scan_radius",32), false);
     if (target == null || !SplitMindCasting.enemy(p, target)) target = p.getLastHurtMob();
     if (slot.currentTarget() && target != null && SplitMindCasting.enemy(p, target)) return target;
     return SplitMindCasting.nearest(p);

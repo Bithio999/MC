@@ -21,7 +21,8 @@ public final class LaplaceNetwork {
   private record Session(
       UUID id,
       long until,
-      net.minecraft.resources.ResourceKey<net.minecraft.world.level.Level> dimension) {}
+      net.minecraft.resources.ResourceKey<net.minecraft.world.level.Level> dimension,
+      String selected) {}
 
   private static final Map<ServerPlayer, Session> SESSIONS = new WeakHashMap<>();
 
@@ -54,7 +55,8 @@ public final class LaplaceNetwork {
               b.writeDouble(p.payment.aura());
               b.writeDouble(p.payment.hp());
               b.writeDouble(p.payment.shp());
-              if (p.equations.size() > 12) throw new IllegalArgumentException("Too many equations");
+              if (p.equations.size() > FormulaSet.MAX_EQUATIONS)
+                throw new IllegalArgumentException("Too many equations");
               b.writeVarInt(p.equations.size());
               p.equations.forEach(
                   (k, v) -> {
@@ -70,7 +72,8 @@ public final class LaplaceNetwork {
               var plan =
                   new PaymentPlan(b.readDouble(), b.readDouble(), b.readDouble(), b.readDouble());
               int n = b.readVarInt();
-              if (n < 0 || n > 12) throw new IllegalArgumentException("Too many equations");
+              if (n < 0 || n > FormulaSet.MAX_EQUATIONS)
+                throw new IllegalArgumentException("Too many equations");
               var eq = new LinkedHashMap<String, String>();
               for (int x = 0; x < n; x++) {
                 String k = b.readUtf(32), v = b.readUtf(160);
@@ -95,7 +98,7 @@ public final class LaplaceNetwork {
   }
 
   public static void register(RegisterPayloadHandlersEvent e) {
-    var r = e.registrar("2");
+    var r = e.registrar("3");
     r.playToServer(
         Request.TYPE,
         Request.CODEC,
@@ -127,7 +130,8 @@ public final class LaplaceNetwork {
     if (!accessible(p)) return;
     p.closeContainer();
     SESSIONS.put(
-        p, new Session(UUID.randomUUID(), p.level().getGameTime() + 12000, p.level().dimension()));
+        p,
+        new Session(UUID.randomUUID(), p.level().getGameTime() + 12000, p.level().dimension(), ""));
     send(p, true, "");
   }
 
@@ -150,6 +154,7 @@ public final class LaplaceNetwork {
       return;
     }
     String notice = "";
+    String selected = s.selected;
     try {
       switch (r.operation) {
         case "save" -> notice = Laplace.save(p, r.action, r.equations, r.enabled, r.payment);
@@ -181,6 +186,10 @@ public final class LaplaceNetwork {
                 LaplaceSynthesis.synthesize(p)
                     ? "Synthesis complete. Your parents have become Laplace."
                     : "Requirements changed. Check the list before confirming.";
+        case "select" -> {
+          if (LaplaceActions.byKey(p, r.action) == null) return;
+          selected = r.action;
+        }
         case "refresh" -> {}
         default -> {
           return;
@@ -189,7 +198,7 @@ public final class LaplaceNetwork {
     } catch (IllegalArgumentException ex) {
       notice = ex.getMessage();
     }
-    SESSIONS.put(p, new Session(s.id, now + 12000, s.dimension));
+    SESSIONS.put(p, new Session(s.id, now + 12000, s.dimension, selected));
     send(p, false, notice, r.operation);
   }
 
@@ -230,17 +239,20 @@ public final class LaplaceNetwork {
       row.putString("key", a.key());
       row.putString("title", a.title());
       row.putString("detail", a.detail());
+      row.putBoolean(
+          "fixed",
+          a.model().powerOutputs().isEmpty()
+              && a.model().inputs().getOrDefault("base_cost", 0d) == 0
+              && !a.model().inputs().containsKey("__deferred_cost"));
       row.putString("icon", a.skill().getSkill().getSkillIcon().toString());
       row.putBoolean("enabled", Laplace.effectiveEnabled(p, own.get(), a.key()));
-      row.put("model", encode(a.model()));
+      boolean full = LaplaceActions.legacy(a.skill()) || s != null && s.selected.equals(a.key());
+      if (full) row.put("model", encode(a.model()));
       row.putBoolean(
-          "requiresStop",
-          a.skill().getSkill()
-                  == io.github.manasmods.tensura.registry.skill.CommonSkills.SELF_REGENERATION.get()
-              && a.skill().isToggled());
+          "requiresStop", dev.heavenlyrestriction.laplace.expand.ExpandedStates.requiresStop(p, a));
       var eq = new CompoundTag();
       Laplace.equations(own.get(), a).forEach(eq::putString);
-      row.put("equations", eq);
+      if (full) row.put("equations", eq);
       rows.add(row);
     }
     t.put("rows", rows);

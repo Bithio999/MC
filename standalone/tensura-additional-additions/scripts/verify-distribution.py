@@ -6,7 +6,7 @@ import json, re, struct, tomllib, zipfile, subprocess, sys
 root = Path(__file__).resolve().parents[1]
 subprocess.run([sys.executable, str(root.parents[1]/'scripts/audit-mentor-archive.py')], check=True)
 resources = root / 'src/main/resources'
-jar = root / 'build/libs/TensuraAdditionalAdditions-1.29.0.jar'
+jar = root / 'build/libs/TensuraAdditionalAdditions-1.30.0.jar'
 assets = resources / 'assets/heavenlyrestriction'
 required_art = [*(f'textures/race/{name}.png' for name in (
     'fettered_human', 'tempered_vessel', 'unshackled', 'heavenly_restricted', 'heavenbreaker')),
@@ -38,7 +38,7 @@ for name in config['mixins'] + config.get('client', []):
 with zipfile.ZipFile(jar) as z:
     names = set(z.namelist())
     mods = tomllib.loads(z.read('META-INF/neoforge.mods.toml').decode())
-    assert [(m['modId'], m['version']) for m in mods['mods']] == [('heavenlyrestriction', '1.29.0')]
+    assert [(m['modId'], m['version']) for m in mods['mods']] == [('heavenlyrestriction', '1.30.0')]
     assert mods['mods'][0]['displayName'] == 'TensuraAdditionalAdditions'
     language=json.loads(z.read('assets/heavenlyrestriction/lang/en_us.json'))
     for key,label in [('heavenlyrestriction.skill.parallel_world_jumper','Parallel World Jumper'),('heavenlyrestriction.skill.fusion','Fusion'),('heavenlyrestriction.skill.prospector','Prospector'),('heavenlyrestriction.skill.mode.prospector.refine','Refine'),('heavenlyrestriction.skill.mode.fusion.fuse','Fuse'),('heavenlyrestriction.skill.mode.parallel_world_jumper.world_hop','World Jump'),('heavenlyrestriction.skill.mode.parallel_world_jumper.world_select','World Select')]:
@@ -124,7 +124,7 @@ with zipfile.ZipFile(jar) as z:
     assert 'Payment…' in str(laplace_page) and 'all-or-nothing' in str(laplace_page)
 
     assert 'heavenlyrestriction:laplace' in ultimate['values']
-    assert not any('LaplaceReview' in n or 'LaplaceGameTests' in n or 'LaplacePaymentGameTests' in n or 'data/laplacereview/' in n for n in names)
+    assert not any('LaplaceReview' in n or 'LaplaceGameTests' in n or 'LaplacePaymentGameTests' in n or 'LaplaceExpansionGameTests' in n or 'data/laplacereview/' in n for n in names)
     for cls in ['LaplaceSkill','client/LaplaceScreen','laplace/FormulaSet','laplace/EquationModel','laplace/Laplace','laplace/LaplaceActions','laplace/LaplaceConfig','laplace/LaplaceIntellect','laplace/LaplaceNetwork','laplace/LaplaceRuntime','laplace/LaplaceSynthesis','mixin/LaplaceMagicMixin','mixin/LaplaceRepeatMixin','mixin/LaplaceUpkeepMixin','mixin/LaplaceDurationMixin','mixin/LaplaceHealingMixin','mixin/LaplaceRegenerationMixin']:
         assert 'dev/heavenlyrestriction/'+cls+'.class' in names
     laplace_icon='assets/heavenlyrestriction/textures/skill/laplace.png'
@@ -214,4 +214,10 @@ with zipfile.ZipFile(jar) as z:
     for path in ['data/heavenlyrestriction/loot_table/entities/kael_veyr.json','data/heavenlyrestriction/advancement/starless_wayfarer.json','data/c/tags/entity_type/bosses.json','data/tensura/tags/entity_type/boss_for_hero.json','assets/heavenlyrestriction/models/item/kael_veyr_spawn_egg.json']:
         assert z.read(path)==(resources/path).read_bytes()
     assert language['entity.heavenlyrestriction.kael_veyr']=='Kael Veyr'
-print('Independent 1.29.0 JAR, native dependency metadata, all extracted icons/rigs/animations and mixin classes verified; no Myths classes, bundled dependencies or review fixtures.')
+print('Independent 1.30.0 JAR, native dependency metadata, all extracted icons/rigs/animations and mixin classes verified; no Myths classes, bundled dependencies or review fixtures.')
+
+with zipfile.ZipFile(jar) as z:
+    assert json.loads(z.read('heavenlyrestriction.mixins.json'))['plugin'] == 'dev.heavenlyrestriction.laplace.expand.ParameterMixinPlugin'
+    for cls in ['ExpandedActions','ExpandedRuntime','ParameterInspection','ParameterKey','ParameterRuntime','ParameterSnapshots','NativeParameters','AddonParameters','ExpandedStates','LaplaceFunding','ParameterMixinPlugin','ParameterTransformer']:
+        assert 'dev/heavenlyrestriction/laplace/expand/'+cls+'.class' in z.namelist(), cls
+print('Expanded Laplace classes, optional parameter plugin and review exclusions passed.')

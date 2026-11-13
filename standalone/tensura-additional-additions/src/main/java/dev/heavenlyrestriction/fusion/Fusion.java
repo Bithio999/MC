@@ -40,8 +40,8 @@ public final class Fusion {
     private static final Map<UUID,Invitation> INVITES=new HashMap<>();
     public static final class Session {
         public final UUID token=UUID.randomUUID();public final ServerPlayer caster,pilot;public final LivingEntity target,hidden;public final boolean subordinate;public final long until;
-        public final int duration;public final double epMultiplier;public final double aura,magicules;public final float health,initialHealth;public final double spirit,initialSpirit;public final List<Loan> loans=new ArrayList<>();public ArtVisualEntity visual;
-        private Session(ServerPlayer caster,LivingEntity target){this.caster=caster;this.target=target;subordinate=!(target instanceof ServerPlayer);pilot=subordinate?caster:(ServerPlayer)target;hidden=subordinate?target:caster;boolean mastered=SkillAPI.getSkillsFrom(caster).getSkill(HeavenlyRestriction.FUSION.get()).filter(i->i.getMastery()>=0 && i.isMastered(caster)).isPresent();duration=mastered?5400:DURATION;epMultiplier=mastered?1.75:1.5;until=caster.serverLevel().getGameTime()+duration;
+        public final double regeneration,damage;public final int duration;public final double epMultiplier;public final double aura,magicules;public final float health,initialHealth;public final double spirit,initialSpirit;public final List<Loan> loans=new ArrayList<>();public ArtVisualEntity visual;
+        private Session(ServerPlayer caster,LivingEntity target){this.caster=caster;this.target=target;subordinate=!(target instanceof ServerPlayer);pilot=subordinate?caster:(ServerPlayer)target;hidden=subordinate?target:caster;boolean mastered=SkillAPI.getSkillsFrom(caster).getSkill(HeavenlyRestriction.FUSION.get()).filter(i->i.getMastery()>=0 && i.isMastered(caster)).isPresent();duration=(int)Math.round(20*dev.heavenlyrestriction.laplace.expand.AddonParameters.value(caster,"fusion",0,"duration",mastered?270:180));regeneration=dev.heavenlyrestriction.laplace.expand.AddonParameters.value(caster,"fusion",0,"regeneration",10);damage=dev.heavenlyrestriction.laplace.expand.AddonParameters.value(caster,"fusion",0,"damage",2);epMultiplier=mastered?1.75:1.5;until=caster.serverLevel().getGameTime()+duration;
             health=caster.getMaxHealth()+target.getMaxHealth();spirit=caster.getAttributeValue(TensuraAttributes.MAX_SPIRITUAL_HEALTH)+target.getAttributeValue(TensuraAttributes.MAX_SPIRITUAL_HEALTH);initialHealth=caster.getHealth()+target.getHealth();initialSpirit=TensuraStorages.getExistenceFrom(caster).getSpiritualHealth()+TensuraStorages.getExistenceFrom(target).getSpiritualHealth();aura=epMultiplier*(EnergyHelper.getMaxAura(caster)+EnergyHelper.getMaxAura(target));magicules=epMultiplier*(EnergyHelper.getMaxMagicule(caster)+EnergyHelper.getMaxMagicule(target));}
     }
     private record Loan(LivingEntity owner,LivingEntity borrower,ManasSkill skill,int originalTime){}
@@ -50,8 +50,8 @@ public final class Fusion {
     public static boolean body(LivingEntity e){var s=session(e);return s!=null && s.pilot==e;}
     public static boolean hidden(LivingEntity e){if(e.level().isClientSide())return clientHidden.test(e);var s=session(e);return s!=null && s.hidden==e;}
     public static boolean embedded(Entity e){return e instanceof LivingEntity living && hidden(living);}
-    public static double regenerationFactor(LivingEntity e){return body(e)?10:1;}
-    public static double damageFactor(LivingEntity e){return body(e)?2:1;}
+    public static double regenerationFactor(LivingEntity e){var s=session(e);return body(e)&&s!=null?s.regeneration:1;}
+    public static double damageFactor(LivingEntity e){var s=session(e);return body(e)&&s!=null?s.damage:1;}
     public static boolean maintained(ServerPlayer p){return SkillAPI.getSkillsFrom(p).getSkill(HeavenlyRestriction.FUSION.get()).filter(i->i.getMastery()>=0).isPresent();}
     public static boolean owned(ServerPlayer p){return SkillAPI.getSkillsFrom(p).getSkill(HeavenlyRestriction.FUSION.get()).filter(i->i.getMastery()>=0 && i.canInteractSkill(p) && i.canActivateSkill(p,0)).isPresent();}
     public static boolean eligible(ServerPlayer p,LivingEntity target){return target!=null && target!=p && target.isAlive() && p.isAlive() && !p.isSpectator() && !target.isSpectator() && p.level()==target.level() && p.distanceToSqr(target)<=256 && session(p)==null && session(target)==null && owned(p) && !p.isPassenger() && !target.isPassenger() && (target instanceof ServerPlayer || SubordinateHelper.isSubordinate(p,target));}
@@ -187,6 +187,6 @@ public final class Fusion {
         NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.LOWEST,(LivingDeathEvent e)->end(e.getEntity(),"Fusion ended: the fused body fell."));
         NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.HIGHEST,(LivingIncomingDamageEvent e)->{if(hidden(e.getEntity()))e.setCanceled(true);});
         NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.LOWEST,(LivingDamageEvent.Pre e)->{var attacker=RestrictionData.attacker(e.getSource());e.setNewDamage((float)(e.getNewDamage()*damageFactor(attacker)));});
-        io.github.manasmods.tensura.event.TensuraEntityEvents.SPIRITUAL_HURT_EVENT.register((target,attacker,amount,resistance,damage,source)->{if(attacker instanceof LivingEntity living && body(living))damage.set(damage.get()*2);return dev.architectury.event.EventResult.pass();});
+        io.github.manasmods.tensura.event.TensuraEntityEvents.SPIRITUAL_HURT_EVENT.register((target,attacker,amount,resistance,damage,source)->{if(attacker instanceof LivingEntity living && body(living))damage.set((float)(damage.get()*damageFactor(living)));return dev.architectury.event.EventResult.pass();});
     }
 }

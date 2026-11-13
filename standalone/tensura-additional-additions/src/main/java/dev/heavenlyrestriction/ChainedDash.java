@@ -16,9 +16,10 @@ public final class ChainedDash {
     private ChainedDash(){}
     public static Optional<Vec3> destination(LivingEntity caster){
         if(!(caster.level() instanceof ServerLevel level))return Optional.empty();
-        var hit=ObjectSelectionHelper.getPlayerPOVHitResult(level,caster,ClipContext.Fluid.NONE,REACH);
+        double reach=dev.heavenlyrestriction.laplace.expand.AddonParameters.value(caster,ChainedState.ultimate(caster)?"unbound":"chained",0,"rush_reach",REACH);
+        var hit=ObjectSelectionHelper.getPlayerPOVHitResult(level,caster,ClipContext.Fluid.NONE,reach);
         Vec3 eye=caster.getEyePosition(),look=caster.getLookAngle();
-        double distance=hit.getType()==HitResult.Type.BLOCK?eye.distanceTo(hit.getLocation()):REACH;
+        double distance=hit.getType()==HitResult.Type.BLOCK?eye.distanceTo(hit.getLocation()):reach;
         Vec3 rayEnd=eye.add(look.scale(distance));
         LivingEntity aimed=null;double nearest=distance;
         for(var target:level.getEntitiesOfClass(LivingEntity.class,new AABB(eye,rayEnd).inflate(1),e->RestrictionData.canHarm(caster,e) && !e.isSpectator())){
@@ -39,7 +40,7 @@ public final class ChainedDash {
         }
         // A MISS has no real block face. Applying its synthetic face offset can put an
         // upward-looking landing in the floor. Keep the aim displacement relative to the feet.
-        if(hit.getType()==HitResult.Type.MISS)return safeNear(level,caster,caster.position().add(look.scale(REACH)),look,Double.NEGATIVE_INFINITY);
+        if(hit.getType()==HitResult.Type.MISS)return safeNear(level,caster,caster.position().add(look.scale(reach)),look,Double.NEGATIVE_INFINITY);
         var cell=hit.getBlockPos().relative(hit.getDirection());
         Vec3 end=ObjectSelectionHelper.getFloorPos(cell);
         if(!level.getBlockState(cell).canBeReplaced())end=ObjectSelectionHelper.getFloorPos(cell.above());

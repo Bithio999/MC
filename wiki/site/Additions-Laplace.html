@@ -5,7 +5,7 @@
 <script defer src="search-index.js"></script><script defer src="search.js"></script></head>
 <body data-root="../" data-mod="additions"><a class="skip" href="#article">Skip to article</a>
 <div class="global-bar"><span>TENSURA ADDON WIKIS</span><div><a href="https://tensura.wiki.gg/wiki/Tensura:_Reincarnated_Wiki">Base mod wiki</a><a href="https://github.com/Bithio999/TensuraAdditionalAdditions">GitHub</a></div></div>
-<header class="masthead"><a class="brand" href="TensuraAdditionalAdditions.html"><span class="brand-mark" aria-hidden="true">A</span><span>TensuraAdditionalAdditions<small>1.29.0 · Active · Minecraft 1.21.1 · NeoForge</small></span></a>
+<header class="masthead"><a class="brand" href="TensuraAdditionalAdditions.html"><span class="brand-mark" aria-hidden="true">A</span><span>TensuraAdditionalAdditions<small>1.30.0 · Active · Minecraft 1.21.1 · NeoForge</small></span></a>
 <div class="search"><label for="wiki-search">Search TensuraAdditionalAdditions</label><input id="wiki-search" type="search" placeholder="Search names, abilities or requirements…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="search-results" aria-expanded="false"><div id="search-results" role="listbox" hidden></div><span id="search-status" class="sr-only" aria-live="polite"></span></div></header>
 <nav class="mod-switch" aria-label="Choose addon"><a href="../index.html">All wikis</a><a href="TensuraAdditionalAdditions.html" aria-current="page">TensuraAdditionalAdditions</a><a href="Tensura-Myths.html">Tensura Myths</a></nav>
 <div class="layout"><button id="navigation-toggle" aria-controls="wiki-navigation" aria-expanded="false">☰ Wiki navigation</button><nav id="wiki-navigation" class="sidebar" aria-label="TensuraAdditionalAdditions navigation"><section><h2>Start</h2><a href="TensuraAdditionalAdditions.html">Additions home</a><a href="Additions-Getting-Started.html">Install</a><a href="Additions-In-Game-Guide.html">In-game guide</a></section><section><h2>Content</h2><a href="Additions-Fettered-Human.html">Heavenly Restriction</a><a href="Additions-Skills.html">Skills</a><a href="Additions-Marauders-Map.html">Marauder&#x27;s Map</a><a href="Additions-Chained.html">Chained</a><a href="Additions-Unbound.html">Unbound</a><a href="Additions-Battlewills.html">Battlewills</a><a href="Additions-Fusion.html">Fusion</a><a href="Additions-Prospector.html">Prospector</a><a href="Additions-Loan-Shark.html">Loan Shark</a><a href="Additions-Split-Mind.html">Split Mind</a><a href="Additions-Parallel-World-Jumper.html">Parallel World Jumper</a><a href="Additions-Exponentiation.html">Exponentiation</a><a href="Additions-Aura-Regeneration.html">Aura recovery</a><a href="Additions-Weapons.html">Equipment</a><a href="Additions-Vesper.html">Vesper</a><a href="Additions-Chromatic-Orb.html">Chromatic Orb</a><a href="Additions-Critical-Merchant.html">Critical Merchant</a><a href="Additions-Hephaestus.html">Hephaestus</a><a href="Additions-Metis.html">Metis</a><a href="Additions-Tyche.html">Tyche</a><a href="Additions-Laplace.html" aria-current="page">Laplace</a></section><section><h2>NPCs and structures</h2><a href="Additions-Archive-of-Accord.html">Archive of Accord</a></section><section><h2>Dimensions</h2><a href="Additions-The-High-Realm.html">The High Realm</a></section><section><h2>Bosses</h2><a href="Additions-Kael-Veyr.html">Kael Veyr</a></section><section><h2>Reference</h2><a href="Additions-Abilities.html">Ability directory</a><a href="Additions-Damage-Types.html">Damage types</a><a href="Additions-Commands.html">Commands</a></section></nav>
@@ -36,7 +36,7 @@
 <p><strong>Damage type:</strong> none directly; enhanced attacks keep their original type.</p>
 <p><a id="equation-editor"></a></p>
 <h2 id="equation-editor-active-press">Equation Editor · Active, Press</h2>
-<p>Open the editor from a native Tensura ability slot and choose an action. Search narrows the action list; scroll to see more. <strong>NATIVE</strong> means the original formula is running, <strong>LIVE</strong> means the saved edit is active, and <strong>PAUSED</strong> means Universal Formula is off.</p>
+<p>Open the editor from a native Tensura ability slot and choose an action. Search narrows the action list; scroll to see more. <strong>NATIVE</strong> means the original formula is running, <strong>LIVE</strong> means the saved edit is active, and <strong>PAUSED</strong> means Universal Formula is off. <strong>FIXED</strong> marks an action with no editable numerical effect or actual resource payment.</p>
 <p>The board shows named outputs on the left, connected to their formulas on the right. Each output compares its native and edited values. The lower panel shows the selected output and the resource bill. <strong>Payment…</strong> chooses how the cost budget is paid.</p>
 <h3 id="example-boost-wind-cutter">Example: boost Wind Cutter</h3>
 <ol>
@@ -117,7 +117,7 @@
 <p>On small screens, <strong>Blocks</strong> opens the library drawer. It closes while dragging so you can reach the board. Scroll within the library to find more blocks. Empty input slots and invalid equations block Apply and explain what needs attention. Arrow keys select inputs while the board is focused; Enter edits a number or places a selected library block, and Delete clears the input.</p>
 <p><img alt="An empty input waiting for a value" src="../media/laplace-board-empty-slot.png" /></p>
 <h3 id="resource-payment">Resource payment</h3>
-<p>Choose <strong>Payment…</strong> beside the bill. Pick <strong>Magicules</strong>, <strong>Aura</strong>, <strong>HP</strong> or <strong>SHP</strong>, or enter percentages that total <strong>100%</strong>. <strong>Use payment mix</strong> updates the draft; <strong>Apply &amp; Enable</strong> commits both the formulas and payment. Closing the payment dialog cancels its unsaved changes. Existing profiles keep 100% magicule payment.</p>
+<p>Choose <strong>Payment…</strong> beside the bill. Pick <strong>Magicules</strong>, <strong>Aura</strong>, <strong>HP</strong> or <strong>SHP</strong>, or enter percentages that total <strong>100%</strong>. <strong>Use payment mix</strong> updates the draft; <strong>Apply &amp; Enable</strong> commits both the formulas and payment. Closing the payment dialog cancels its unsaved changes. Existing profiles keep their saved payment. New actions default to their native magicule/aura split.</p>
 <p>The <strong>Cost budget</strong> equation keeps the same balance rules. Its value is measured in magicule equivalents (<strong>MP eq</strong>), then divided between your chosen resources:</p>
 <div class="article-table"><table>
 <thead>
@@ -148,7 +148,7 @@
 <p>These rates are server-configurable. For example, a <strong>200 MP eq</strong> bill split equally between aura and HP consumes <strong>100 aura + 10 HP</strong>. Native casting cost modifiers and automatic-casting discounts apply before conversion; the board preview is before those modifiers.</p>
 <p><img alt="A four-resource payment mix" src="../media/laplace-payment-mixed.png" /></p>
 <p>Converted and mixed payments are <strong>all-or-nothing</strong>: every pool must cover its share. HP/SHP payments must leave at least <strong>1 point</strong> and are direct costs, bypassing damage defenses and damage-triggered effects. Converted payment uses the caster’s pools, without spending staff EP. Magicule-only payment keeps Tensura’s normal staff behavior.</p>
-<p><strong>Healing and Self-Regeneration can use only magicules and/or aura.</strong> Healing prices actual missing-HP-clamped recovery, rounds the converted budget up to a whole MP equivalent before native discounts and requires the whole converted payment. Turn <strong>Self-Regeneration off</strong> before applying enabled equation/payment changes; disabling its edit remains available.</p>
+<p><strong>Healing and regeneration can use only magicules and/or aura.</strong> Healing prices actual missing-HP-clamped recovery, rounds the converted budget up to a whole MP equivalent before native discounts and requires the whole converted payment. Turn <strong>Self-Regeneration off</strong> before applying enabled equation/payment changes; disabling its edit remains available.</p>
 <p><img alt="Healing payment restrictions" src="../media/laplace-payment-healing.png" /></p>
 <h3 id="linked-equations">Linked equations</h3>
 <p>Changing a named output automatically changes equations that reference it. For example, Healing’s native equations are:</p>
@@ -167,59 +167,69 @@ healing = base_healing * helper_1
 <p>Available arithmetic: <code>+ - * / ^</code>, parentheses, <code>min(a,b)</code>, <code>max(a,b)</code>, <code>clamp(value,low,high)</code> and <code>abs(value)</code>. Powers require a nonnegative base and a constant exponent between 0 and 3. Fractions range from <strong>0 to 1</strong>, where 1 means 100%. Inputs are captured before the action’s payment; a projectile retains its paid-for values in flight.</p>
 <p><img alt="A helper result linked into Wind Cutter" src="../media/laplace-board-linked.png" /></p>
 <h3 id="supported-actions">Supported actions</h3>
-<p>This initial catalogue exposes <strong>nine action/mode entries across eight native skills</strong>. Other actions are not editable yet.</p>
+<p>The catalogue covers learned <strong>Tensura Reincarnated</strong> and <strong>TensuraAdditionalAdditions</strong> skills, magic and Battlewills. It separates active modes from passive effects and respects mode-learning and mastery requirements. Other addons are excluded. The complete board loads when you select an action, keeping the action list lightweight.</p>
+<p>Each action exposes its available numerical effects: for example damage components, range, radius, duration, healing, effect levels or native attribute bonuses. Values use the action’s native units; integer settings are labelled <strong>whole units</strong> and round to the nearest whole number, retaining at least one unit. Native minimum/maximum pairs cannot be inverted. Some native durations use ticks rather than seconds. The board’s labels and native values are the reference for that action.</p>
 <div class="article-table"><table>
 <thead>
 <tr>
-<th>Native skill / mode</th>
-<th>Editable aspects</th>
-<th>Damage type</th>
+<th>Examples</th>
+<th>Editable effects</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Self-Regeneration</td>
-<td>HP per pulse; mastered SHP per pulse; cost budget and upkeep payment</td>
-<td>None</td>
+<td>Fire Ball</td>
+<td>Normal/charged Fire and Magic damage, explosion radius and warp-shot distance</td>
 </tr>
 <tr>
-<td>Aspectual Fire</td>
-<td>Fire and Magic damage per bolt; cost</td>
-<td>Native Fire and Magic</td>
+<td>Agility</td>
+<td>Speed/Haste duration and effect levels</td>
 </tr>
 <tr>
-<td>Aspectual Wind Cutter</td>
-<td>Wind and Magic damage per blade; cost</td>
-<td>Native Wind and Magic</td>
+<td>Aura Slash</td>
+<td>Native attack multiplier and actual aura payment</td>
 </tr>
 <tr>
-<td>Aspectual Water Cutter — normal / mastered Repeat</td>
-<td>Magic damage per blade; cost per use</td>
-<td>Native Water Blade and Magic; primary Water damage is unchanged</td>
+<td>Native passive skills</td>
+<td>Available configured callback effects and native attribute bonuses</td>
 </tr>
 <tr>
-<td>Aspectual Healing</td>
-<td>Healing limit; cost linked to actual healing</td>
-<td>None</td>
+<td>Prospector / Lord of the Forge</td>
+<td>Mining speed and additional Fortune</td>
 </tr>
 <tr>
-<td>Aspectual Strength</td>
-<td>Duration in seconds; cost</td>
-<td>None</td>
+<td>Chained / Unbound</td>
+<td>Rush damage and reach; Unbound Counter damage</td>
 </tr>
 <tr>
-<td>Aspectual Protection</td>
-<td>Duration in seconds; cost</td>
-<td>None</td>
+<td>Split Mind / Metis</td>
+<td>Auto-cast targeting radius and available configured passive effects</td>
 </tr>
 <tr>
-<td>Aspectual Reinforcement</td>
-<td>Duration in seconds; cost</td>
-<td>None</td>
+<td>Schema</td>
+<td>Regeneration, Strength and healing build benefits; drawbacks stay fixed</td>
+</tr>
+<tr>
+<td>Fusion</td>
+<td>Duration, regeneration and damage; permanent progression remains fixed</td>
+</tr>
+<tr>
+<td>Critical Merchant / Tyche</td>
+<td>Final critical payout multiplier; roll odds and the 100-success limit stay fixed</td>
+</tr>
+<tr>
+<td>Aura recovery skills</td>
+<td>Recovery output; healing suppression still applies</td>
 </tr>
 </tbody>
 </table></div>
-<p>Native projectile counts, target selection, effect levels, cast times, cooldowns, defenses, healing suppression and recovery caps remain. Previews show values before Universal Formula and other modifiers. Player-state preview inputs refresh from the server while the board is open; actions capture live state when cast. Refreshing does not clear your draft, selection or drag.</p>
+<p>Self-Regeneration, Fire, Wind Cutter, Water Cutter, Healing, Strength, Protection and Reinforcement retain their earlier tailored boards and saved equations. Water Cutter’s primary native Water damage stays fixed; its exposed Magic component is editable.</p>
+<p><strong>Damage types do not change.</strong> Native targeting and activation restrictions still apply. Equations cannot create a new ability, remove a learning requirement, change an inventory, alter crafting/engraving rules, rewrite a world operation or change permanent EP gains. Cast times, cooldowns, roll chances and native defensive-reduction coefficients stay fixed. A menu-only action can offer an existing payment but has no invented numerical effect; a completely fixed action cannot be enabled.</p>
+<p>Payment is applied where the action actually spends resources, including charged casts and deferred coordinate confirmations. Some native actions advertise a cost but never charge it; the editor preserves that behavior. Coordinate-dependent bills are calculated when confirming the destination. Expanded consuming payments require full funding; native casting prerequisites still apply.</p>
+<p>Turn an edited sustained ability off before applying enabled changes. Turning Universal Formula off removes edited held bonuses and ends affected native toggles. Already-created projectiles and effects retain their cast’s numerical values and upkeep payment, so later edits cannot make them stronger or cheaper.</p>
+<p>Previews show values before Universal Formula and other modifiers. Player-state inputs refresh while the board is open; refreshes preserve your draft. Actions capture the live state when cast.</p>
+<p><img alt="An expanded Fire Ball board using aura" src="../media/laplace-expanded-live.png" /></p>
+<p><img alt="Prospector’s passive equation board" src="../media/laplace-expanded-prospector.png" /></p>
 <h3 id="balance">Balance</h3>
 <div class="article-table"><table>
 <thead>
@@ -259,6 +269,6 @@ healing = base_healing * helper_1
 </tr>
 </tbody>
 </table></div>
-<p>For actions with multiple outputs, the output ratio compares their <strong>combined total</strong>. Fixed-cost actions and regeneration upkeep price the strongest possible state of the formula, preventing a cheap activation followed by stronger unpaid pulses. Healing prices the actual missing-HP-clamped recovery; magicule-only payment retains native proportional healing on a shortfall, while converted/mixed payment requires the full bill.</p>
-<p>The minimum bill is shown separately and enforced even if the cost equation requests less. <strong>More → Balance cost formula</strong> fills a suitable cost equation; the price floor applies automatically when you use Apply &amp; Enable. Finish casting before saving changes. Turn Self-Regeneration off before applying enabled changes to it. Circular dependencies, unknown inputs, negative output, unsafe divisors and excessively large values are rejected with an explanation. Formula edits cannot add new effect types, change inventory or rewrite progression. Payment changes consumption only; it cannot generate resources. Invalid saved formulas fall back entirely to the native action.</p>
+<p>The expanded boards multiply each numerical increase’s ratio to share one output limit: doubling damage and doubling duration consumes 4× output. Lowering another parameter does not subsidize an increase. The original tailored boards retain their combined-total calculation for existing profiles. Fixed-cost actions and regeneration upkeep price the strongest possible state of the formula, preventing a cheap activation followed by stronger unpaid pulses. Healing prices the actual missing-HP-clamped recovery; magicule-only payment retains native proportional healing on a shortfall, while converted/mixed payment requires the full bill.</p>
+<p>The minimum bill is shown separately and enforced even if the cost equation requests less. <strong>More → Balance cost formula</strong> fills a suitable cost equation; the price floor applies automatically when you use Apply &amp; Enable. Finish casting before saving changes. Turn edited sustained abilities off before applying enabled changes. Circular dependencies, unknown inputs, negative output, unsafe divisors and excessively large values are rejected with an explanation. Formula edits cannot add new effect types, change inventory or rewrite progression. Payment changes consumption only; it cannot generate resources. Invalid saved formulas fall back entirely to the native action.</p>
 <p><strong>Damage type:</strong> no direct attack; edited attacks keep their native damage type.</p></div><footer>Unofficial addon reference · Default gameplay values · Pictures and videos illustrate their recorded versions.<br>Original addon artwork. Not affiliated with ManasMods or Capcom.</footer></main></div></body></html>

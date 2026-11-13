@@ -77,7 +77,8 @@ public final class InstantTransmissionArt extends Battlewill implements ISpatial
         var target=new Vec3(x,y,z);double distance=p.position().distanceTo(target);
         if(distance<.001)return false;
         double cost=getAuraCost(p,i,0)*distance;
-        if(!Double.isFinite(cost) || EnergyHelper.isOutOfEnergy(p,cost,0))return false;
+        if(!Double.isFinite(cost))return false;
+        try(var equations=dev.heavenlyrestriction.laplace.expand.ExpandedRuntime.open(p,i,0)){if(EnergyHelper.isOutOfEnergy(p,cost,0))return false;}
         p.closeContainer();
         int ticks=getWarpChargeTick(i,p);
         if(ticks==0)finish(p,i,target);

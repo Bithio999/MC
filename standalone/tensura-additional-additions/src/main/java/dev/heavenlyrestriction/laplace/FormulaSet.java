@@ -4,7 +4,7 @@ import java.util.*;
 
 /** Bounded arithmetic expressions and an acyclic graph of named equations; no scripting runtime. */
 public final class FormulaSet {
-  public static final int MAX_EQUATIONS = 12, MAX_LENGTH = 160, MAX_NODES = 64;
+  public static final int MAX_EQUATIONS = 128, MAX_LENGTH = 160, MAX_NODES = 64;
   public static final double LIMIT = 1e150;
 
   public record Range(double low, double high) {
@@ -155,7 +155,7 @@ public final class FormulaSet {
 
   public FormulaSet(Map<String, String> equations, Map<String, Range> inputs) {
     if (equations.size() > MAX_EQUATIONS)
-      throw new IllegalArgumentException("Use at most 12 equations.");
+      throw new IllegalArgumentException("Use at most 128 equations.");
     nodes = new LinkedHashMap<>();
     ranges = new HashMap<>(inputs);
     for (var entry : equations.entrySet()) {

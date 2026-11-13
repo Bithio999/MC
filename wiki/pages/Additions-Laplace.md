@@ -36,7 +36,7 @@ Movement, maximum aura/magicules, costs and cooldowns remain excluded from expon
 
 ## Equation Editor · Active, Press
 
-Open the editor from a native Tensura ability slot and choose an action. Search narrows the action list; scroll to see more. **NATIVE** means the original formula is running, **LIVE** means the saved edit is active, and **PAUSED** means Universal Formula is off.
+Open the editor from a native Tensura ability slot and choose an action. Search narrows the action list; scroll to see more. **NATIVE** means the original formula is running, **LIVE** means the saved edit is active, and **PAUSED** means Universal Formula is off. **FIXED** marks an action with no editable numerical effect or actual resource payment.
 
 The board shows named outputs on the left, connected to their formulas on the right. Each output compares its native and edited values. The lower panel shows the selected output and the resource bill. **Payment…** chooses how the cost budget is paid.
 
@@ -76,7 +76,7 @@ On small screens, **Blocks** opens the library drawer. It closes while dragging 
 
 ### Resource payment
 
-Choose **Payment…** beside the bill. Pick **Magicules**, **Aura**, **HP** or **SHP**, or enter percentages that total **100%**. **Use payment mix** updates the draft; **Apply & Enable** commits both the formulas and payment. Closing the payment dialog cancels its unsaved changes. Existing profiles keep 100% magicule payment.
+Choose **Payment…** beside the bill. Pick **Magicules**, **Aura**, **HP** or **SHP**, or enter percentages that total **100%**. **Use payment mix** updates the draft; **Apply & Enable** commits both the formulas and payment. Closing the payment dialog cancels its unsaved changes. Existing profiles keep their saved payment. New actions default to their native magicule/aura split.
 
 The **Cost budget** equation keeps the same balance rules. Its value is measured in magicule equivalents (**MP eq**), then divided between your chosen resources:
 
@@ -93,7 +93,7 @@ These rates are server-configurable. For example, a **200 MP eq** bill split equ
 
 Converted and mixed payments are **all-or-nothing**: every pool must cover its share. HP/SHP payments must leave at least **1 point** and are direct costs, bypassing damage defenses and damage-triggered effects. Converted payment uses the caster’s pools, without spending staff EP. Magicule-only payment keeps Tensura’s normal staff behavior.
 
-**Healing and Self-Regeneration can use only magicules and/or aura.** Healing prices actual missing-HP-clamped recovery, rounds the converted budget up to a whole MP equivalent before native discounts and requires the whole converted payment. Turn **Self-Regeneration off** before applying enabled equation/payment changes; disabling its edit remains available.
+**Healing and regeneration can use only magicules and/or aura.** Healing prices actual missing-HP-clamped recovery, rounds the converted budget up to a whole MP equivalent before native discounts and requires the whole converted payment. Turn **Self-Regeneration off** before applying enabled equation/payment changes; disabling its edit remains available.
 
 ![Healing payment restrictions](../media/laplace-payment-healing.png)
 
@@ -129,20 +129,37 @@ Available arithmetic: `+ - * / ^`, parentheses, `min(a,b)`, `max(a,b)`, `clamp(v
 
 ### Supported actions
 
-This initial catalogue exposes **nine action/mode entries across eight native skills**. Other actions are not editable yet.
+The catalogue covers learned **Tensura Reincarnated** and **TensuraAdditionalAdditions** skills, magic and Battlewills. It separates active modes from passive effects and respects mode-learning and mastery requirements. Other addons are excluded. The complete board loads when you select an action, keeping the action list lightweight.
 
-| Native skill / mode | Editable aspects | Damage type |
-| --- | --- | --- |
-| Self-Regeneration | HP per pulse; mastered SHP per pulse; cost budget and upkeep payment | None |
-| Aspectual Fire | Fire and Magic damage per bolt; cost | Native Fire and Magic |
-| Aspectual Wind Cutter | Wind and Magic damage per blade; cost | Native Wind and Magic |
-| Aspectual Water Cutter — normal / mastered Repeat | Magic damage per blade; cost per use | Native Water Blade and Magic; primary Water damage is unchanged |
-| Aspectual Healing | Healing limit; cost linked to actual healing | None |
-| Aspectual Strength | Duration in seconds; cost | None |
-| Aspectual Protection | Duration in seconds; cost | None |
-| Aspectual Reinforcement | Duration in seconds; cost | None |
+Each action exposes its available numerical effects: for example damage components, range, radius, duration, healing, effect levels or native attribute bonuses. Values use the action’s native units; integer settings are labelled **whole units** and round to the nearest whole number, retaining at least one unit. Native minimum/maximum pairs cannot be inverted. Some native durations use ticks rather than seconds. The board’s labels and native values are the reference for that action.
 
-Native projectile counts, target selection, effect levels, cast times, cooldowns, defenses, healing suppression and recovery caps remain. Previews show values before Universal Formula and other modifiers. Player-state preview inputs refresh from the server while the board is open; actions capture live state when cast. Refreshing does not clear your draft, selection or drag.
+| Examples | Editable effects |
+| --- | --- |
+| Fire Ball | Normal/charged Fire and Magic damage, explosion radius and warp-shot distance |
+| Agility | Speed/Haste duration and effect levels |
+| Aura Slash | Native attack multiplier and actual aura payment |
+| Native passive skills | Available configured callback effects and native attribute bonuses |
+| Prospector / Lord of the Forge | Mining speed and additional Fortune |
+| Chained / Unbound | Rush damage and reach; Unbound Counter damage |
+| Split Mind / Metis | Auto-cast targeting radius and available configured passive effects |
+| Schema | Regeneration, Strength and healing build benefits; drawbacks stay fixed |
+| Fusion | Duration, regeneration and damage; permanent progression remains fixed |
+| Critical Merchant / Tyche | Final critical payout multiplier; roll odds and the 100-success limit stay fixed |
+| Aura recovery skills | Recovery output; healing suppression still applies |
+
+Self-Regeneration, Fire, Wind Cutter, Water Cutter, Healing, Strength, Protection and Reinforcement retain their earlier tailored boards and saved equations. Water Cutter’s primary native Water damage stays fixed; its exposed Magic component is editable.
+
+**Damage types do not change.** Native targeting and activation restrictions still apply. Equations cannot create a new ability, remove a learning requirement, change an inventory, alter crafting/engraving rules, rewrite a world operation or change permanent EP gains. Cast times, cooldowns, roll chances and native defensive-reduction coefficients stay fixed. A menu-only action can offer an existing payment but has no invented numerical effect; a completely fixed action cannot be enabled.
+
+Payment is applied where the action actually spends resources, including charged casts and deferred coordinate confirmations. Some native actions advertise a cost but never charge it; the editor preserves that behavior. Coordinate-dependent bills are calculated when confirming the destination. Expanded consuming payments require full funding; native casting prerequisites still apply.
+
+Turn an edited sustained ability off before applying enabled changes. Turning Universal Formula off removes edited held bonuses and ends affected native toggles. Already-created projectiles and effects retain their cast’s numerical values and upkeep payment, so later edits cannot make them stronger or cheaper.
+
+Previews show values before Universal Formula and other modifiers. Player-state inputs refresh while the board is open; refreshes preserve your draft. Actions capture the live state when cast.
+
+![An expanded Fire Ball board using aura](../media/laplace-expanded-live.png)
+
+![Prospector’s passive equation board](../media/laplace-expanded-prospector.png)
 
 ### Balance
 
@@ -156,8 +173,8 @@ Native projectile counts, target selection, effect levels, cast times, cooldowns
 | Between saved changes | 5 seconds |
 | Helper equations | 4 per action |
 
-For actions with multiple outputs, the output ratio compares their **combined total**. Fixed-cost actions and regeneration upkeep price the strongest possible state of the formula, preventing a cheap activation followed by stronger unpaid pulses. Healing prices the actual missing-HP-clamped recovery; magicule-only payment retains native proportional healing on a shortfall, while converted/mixed payment requires the full bill.
+The expanded boards multiply each numerical increase’s ratio to share one output limit: doubling damage and doubling duration consumes 4× output. Lowering another parameter does not subsidize an increase. The original tailored boards retain their combined-total calculation for existing profiles. Fixed-cost actions and regeneration upkeep price the strongest possible state of the formula, preventing a cheap activation followed by stronger unpaid pulses. Healing prices the actual missing-HP-clamped recovery; magicule-only payment retains native proportional healing on a shortfall, while converted/mixed payment requires the full bill.
 
-The minimum bill is shown separately and enforced even if the cost equation requests less. **More → Balance cost formula** fills a suitable cost equation; the price floor applies automatically when you use Apply & Enable. Finish casting before saving changes. Turn Self-Regeneration off before applying enabled changes to it. Circular dependencies, unknown inputs, negative output, unsafe divisors and excessively large values are rejected with an explanation. Formula edits cannot add new effect types, change inventory or rewrite progression. Payment changes consumption only; it cannot generate resources. Invalid saved formulas fall back entirely to the native action.
+The minimum bill is shown separately and enforced even if the cost equation requests less. **More → Balance cost formula** fills a suitable cost equation; the price floor applies automatically when you use Apply & Enable. Finish casting before saving changes. Turn edited sustained abilities off before applying enabled changes. Circular dependencies, unknown inputs, negative output, unsafe divisors and excessively large values are rejected with an explanation. Formula edits cannot add new effect types, change inventory or rewrite progression. Payment changes consumption only; it cannot generate resources. Invalid saved formulas fall back entirely to the native action.
 
 **Damage type:** no direct attack; edited attacks keep their native damage type.

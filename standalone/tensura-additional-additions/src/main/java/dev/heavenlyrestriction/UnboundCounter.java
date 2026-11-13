@@ -16,7 +16,7 @@ import java.util.*;
 /** One enemy hit, one terrain-piercing slash. Stances never survive respawn, logout or a world change. */
 public final class UnboundCounter {
     private static final net.minecraft.resources.ResourceLocation ROOT=HeavenlyRestriction.id("unbound_counter_root");
-    private record Stance(ServerLevel level,long until,double spent,ArtVisualEntity visual){}
+    private record Stance(ServerLevel level,long until,double spent,double multiplier,ArtVisualEntity visual){}
     private static final Map<LivingEntity,Stance> STANCES=Collections.synchronizedMap(new WeakHashMap<>());
     private UnboundCounter(){}
     public static boolean active(LivingEntity e){
@@ -27,11 +27,11 @@ public final class UnboundCounter {
         if(!(e.level() instanceof ServerLevel level))return;
         if(active(e)){clear(e);return;}
         clear(e);if(i.getMastery()<0 || i.onCoolDown(1) || !i.canInteractSkill(e) || !i.canActivateSkill(e,1))return;
-        var energy=TensuraStorages.getExistenceFrom(e);double spent=energy.getAura()*.1,cost=SchemaArt.cost(e,spent);
-        if(!Double.isFinite(cost) || spent<=0 || energy.getAura()<cost)return;
-        energy.setAura(energy.getAura()-cost);energy.markDirty();i.setCoolDown(10,1);i.addMasteryPoint(e);SkillAPI.getSkillsFrom(e).checkAndMarkDirty(i);
+        var energy=TensuraStorages.getExistenceFrom(e);double spent=energy.getAura()*.1;
+        if(!Double.isFinite(spent) || spent<=0 || io.github.manasmods.tensura.util.EnergyHelper.isOutOfEnergy(e,i,1))return;
+        i.setCoolDown(10,1);i.addMasteryPoint(e);SkillAPI.getSkillsFrom(e).checkAndMarkDirty(i);
         var visual=ArtVisualEntity.spawn(level,ArtVisualEntity.UNBOUND_STANCE,e.position(),e.getLookAngle(),60);visual.setCaster(e);
-        STANCES.put(e,new Stance(level,level.getGameTime()+60,spent,visual));
+        STANCES.put(e,new Stance(level,level.getGameTime()+60,spent,dev.heavenlyrestriction.laplace.expand.AddonParameters.value(e,"unbound",1,"counter_damage",1),visual));
         i.getOrCreateTag().putLong("counter_active_until",level.getGameTime()+60);i.getOrCreateTag().putString("counter_dimension",level.dimension().location().toString());i.markDirty();SkillAPI.getSkillsFrom(e).checkAndMarkDirty(i);
         var speed=e.getAttribute(Attributes.MOVEMENT_SPEED);if(speed!=null)speed.addOrUpdateTransientModifier(new AttributeModifier(ROOT,-1,AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
         e.setDeltaMovement(0,e.getDeltaMovement().y,0);e.hurtMarked=true;
@@ -61,7 +61,7 @@ public final class UnboundCounter {
         for(var target:level.getEntitiesOfClass(LivingEntity.class,new AABB(start,start.add(travel)).inflate(3),t->RestrictionData.canHarm(e,t))){
             Vec3 center=target.getBoundingBox().getCenter(),closest=start.add(travel.scale(Math.clamp(center.subtract(start).dot(travel)/length,0,1)));
             if(center.distanceToSqr(closest)>9)continue;
-            ChainedWeaponArts.hit(i,e,target,1,damage(incoming,stance.spent),stance.spent);
+            ChainedWeaponArts.hit(i,e,target,1,(float)(damage(incoming,stance.spent)*stance.multiplier),stance.spent);
         }
         ArtVisualEntity.spawn(level,ArtVisualEntity.UNBOUND_SLASH,start,travel,18);
         level.playSound(null,e.blockPosition(),SoundEvents.TRIDENT_THUNDER.value(),SoundSource.PLAYERS,1.5f,1.35f);

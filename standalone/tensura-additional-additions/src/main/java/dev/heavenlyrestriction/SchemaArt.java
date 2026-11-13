@@ -61,10 +61,10 @@ public final class SchemaArt extends Battlewill {
         return SkillAPI.getSkillsFrom(owner).getSkill(HeavenlyRestriction.SCHEMA.get()).filter(i->i.getMastery()>=0 && i.isToggled());
     }
     public static double battlewillBoost(LivingEntity owner){return ChainedState.active(owner)?ChainedState.buffMultiplier(owner):1;}
-    public static double regenerationFactor(LivingEntity owner){return active(owner).map(i->1+bonus(build(i),i.getMastery(),battlewillBoost(owner))).orElse(1d);}
+    public static double regenerationFactor(LivingEntity owner){return active(owner).map(i->1+bonus(build(i),i.getMastery(),battlewillBoost(owner))*dev.heavenlyrestriction.laplace.expand.AddonParameters.value(owner,"schema",-1,"aura_regeneration",5)/5).orElse(1d);}
     public static double damageFactor(LivingEntity owner){return active(owner).map(i->1-penalty(build(i))).orElse(1d);}
     public static double damageTakenFactor(LivingEntity owner){return active(owner).map(i->1+vulnerability(build(i))).orElse(1d);}
-    public static double healingFactor(LivingEntity owner){return active(owner).map(i->1+healingBonus(build(i),i.getMastery(),battlewillBoost(owner))).orElse(1d);}
+    public static double healingFactor(LivingEntity owner){return active(owner).map(i->1+healingBonus(build(i),i.getMastery(),battlewillBoost(owner))*dev.heavenlyrestriction.laplace.expand.AddonParameters.value(owner,"schema",-1,"healing",.2)/.2).orElse(1d);}
     public static boolean healingActive(LivingEntity owner){return owner!=null && owner.getPersistentData().getBoolean(HEALING_CACHE);}
     public static double costFactor(LivingEntity owner){return active(owner).map(i->1+costPenalty(build(i))).orElse(1d);}
     public static double cost(LivingEntity owner,double amount){return amount>0?amount*costFactor(owner):amount;}
@@ -93,7 +93,7 @@ public final class SchemaArt extends Battlewill {
     public static void refresh(LivingEntity owner){
         if(owner.level().isClientSide())return;
         owner.getPersistentData().putBoolean(HEALING_CACHE,active(owner).filter(i->count(build(i),REGENERATIVE)>0).isPresent());
-        double strength=active(owner).map(i->strengthBonus(build(i),i.getMastery(),battlewillBoost(owner))).orElse(0d);
+        double strength=active(owner).map(i->strengthBonus(build(i),i.getMastery(),battlewillBoost(owner))*dev.heavenlyrestriction.laplace.expand.AddonParameters.value(owner,"schema",-1,"strength",5)/5).orElse(0d);
         // Apply the Battlewill boost exactly once, without feeding this derived modifier back to ChainedBuffs.
         try(var ignored=ChainedContext.ability(owner,null)){
             modifier(owner.getAttribute(TensuraAttributes.AURA_REGENERATION_MULTIPLIER),REGEN,regenerationFactor(owner)-1,AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);

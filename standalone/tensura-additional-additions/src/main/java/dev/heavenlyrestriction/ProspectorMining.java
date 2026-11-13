@@ -25,12 +25,12 @@ public final class ProspectorMining {
         var forge=dev.heavenlyrestriction.forge.ForgeSynthesis.active(owner);if(forge.isPresent())return forge;
         return SkillAPI.getSkillsFrom(owner).getSkill(HeavenlyRestriction.PROSPECTOR.get()).filter(i->i.getMastery()>=0 && i.isToggled() && i.canInteractSkill(owner));
     }
-    public static void speed(PlayerEvent.BreakSpeed e){if(active(e.getEntity()).isPresent())e.setNewSpeed(e.getNewSpeed()*(dev.heavenlyrestriction.forge.ForgeSynthesis.active(e.getEntity()).isPresent()?2f:1.5f));}
+    public static void speed(PlayerEvent.BreakSpeed e){if(active(e.getEntity()).isPresent())e.setNewSpeed(e.getNewSpeed()*(1+(float)dev.heavenlyrestriction.laplace.expand.AddonParameters.value(e.getEntity(),dev.heavenlyrestriction.forge.ForgeSynthesis.active(e.getEntity()).isPresent()?"hephaestus":"prospector",-1,"mining_bonus",dev.heavenlyrestriction.forge.ForgeSynthesis.active(e.getEntity()).isPresent()?1:.5)));}
     /** A loot-only copy preserves the actual item's enchants, durability and components. No reroll/double loot evaluation. */
     public static ItemStack lootTool(LivingEntity miner,ItemStack tool){
         if(tool.isEmpty() || active(miner).isEmpty())return tool;
         var fortune=miner.registryAccess().registryOrThrow(Registries.ENCHANTMENT).getHolderOrThrow(Enchantments.FORTUNE);
-        var copy=tool.copy();copy.enchant(fortune,Math.min(255,EnchantmentHelper.getItemEnchantmentLevel(fortune,tool)+(dev.heavenlyrestriction.forge.ForgeSynthesis.active(miner).isPresent()?5:3)));return copy;
+        var copy=tool.copy();copy.enchant(fortune,Math.min(255,EnchantmentHelper.getItemEnchantmentLevel(fortune,tool)+((int)Math.round(dev.heavenlyrestriction.laplace.expand.AddonParameters.value(miner,dev.heavenlyrestriction.forge.ForgeSynthesis.active(miner).isPresent()?"hephaestus":"prospector",-1,"fortune_bonus",dev.heavenlyrestriction.forge.ForgeSynthesis.active(miner).isPresent()?5:3)))));return copy;
     }
     public static void finds(BlockDropsEvent e){
         if(!(e.getBreaker() instanceof ServerPlayer p) || p.isCreative() || active(p).isEmpty() || !(e.getState().is(Blocks.STONE) || e.getState().is(Blocks.DEEPSLATE)) || !e.getTool().isCorrectToolForDrops(e.getState()))return;

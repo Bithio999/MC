@@ -68,8 +68,10 @@ public abstract class LaplaceEnergyPaymentMixin {
       IExistence energy,
       Operation<Double> original,
       @Local(argsOnly = true) LivingEntity owner,
-      @Local(argsOnly = true, ordinal = 0) double cost) {
-    return PaymentRouting.funding(owner, energy, cost, original.call(energy));
+      @Local(argsOnly = true, ordinal = 0) double cost,
+      @Local(argsOnly = true, ordinal = 1) double remain) {
+    double funding = PaymentRouting.funding(owner, energy, cost, original.call(energy));
+    return PaymentRouting.converted(owner) && funding >= cost ? cost + remain : funding;
   }
 
   @WrapOperation(
@@ -114,6 +116,26 @@ public abstract class LaplaceEnergyPaymentMixin {
       Operation<Boolean> original) {
     try (var scope = PaymentRouting.open(owner, skill, mode)) {
       return original.call(owner, skill, mode, multiplier) || scope.failed();
+    }
+  }
+
+  @com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod(
+      method = "isOutOfEnergy(Lnet/minecraft/world/entity/LivingEntity;DD)Z")
+  private static boolean laplace$direct(
+      LivingEntity owner, double aura, double mp, Operation<Boolean> original) {
+    var frame = dev.heavenlyrestriction.laplace.expand.ExpandedRuntime.current();
+    if (frame == null || frame.owner() != owner || PaymentRouting.scoped(owner))
+      return original.call(owner, aura, mp);
+    double bill =
+        dev.heavenlyrestriction.laplace.expand.ExpandedRuntime.budget(
+            owner,
+            frame.skill(),
+            frame.mode(),
+            mp + aura * dev.heavenlyrestriction.laplace.LaplaceConfig.rates().magiculesPerAura());
+    if (bill < 0) return true;
+    if (Double.isNaN(bill)) return original.call(owner, aura, mp);
+    try (var scope = PaymentRouting.open(owner, frame.skill(), frame.mode())) {
+      return original.call(owner, 0d, bill) || scope.failed();
     }
   }
 }

@@ -3,7 +3,7 @@ loaderVersion="[4,)"
 license="All Rights Reserved"
 [[mods]]
 modId="heavenlyrestriction"
-version="1.29.0"
+version="1.30.0"
 displayName="TensuraAdditionalAdditions"
 description='''Heavenly Restriction, Unique skills, Battlewills, world travel and The High Realm: a late-game dimension with elite mobs. An independent Tensura: Reincarnated addon.'''
 [[dependencies.heavenlyrestriction]]
