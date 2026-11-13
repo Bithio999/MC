@@ -32,6 +32,10 @@ public final class LaplaceScreen extends Screen implements EquationCanvas.Host {
       EDGE = 0xff365a67;
   private CompoundTag state;
   private EquationModel liveModel;
+  private PaymentPlan draftPlan = PaymentPlan.MAGICULES, savedPlan = PaymentPlan.MAGICULES;
+  private final EditBox[] shares = new EditBox[4];
+  private PaymentPlan modalPlan;
+  private String paymentError = "";
   private EquationBoard board;
   private EquationCanvas canvas;
   private EquationCanvas.Viewport viewport;
@@ -184,6 +188,7 @@ public final class LaplaceScreen extends Screen implements EquationCanvas.Host {
         .filter(k -> !formulas.containsKey(k))
         .forEach(k -> formulas.put(k, eq.getString(k)));
     savedEquations = new LinkedHashMap<>(formulas);
+    draftPlan = savedPlan = liveModel.payment().plan();
     try {
       board = new EquationBoard(formulas);
     } catch (IllegalArgumentException ex) {
@@ -207,7 +212,7 @@ public final class LaplaceScreen extends Screen implements EquationCanvas.Host {
 
   @Override
   public EquationModel model() {
-    return liveModel;
+    return liveModel == null ? null : liveModel.withPayment(draftPlan);
   }
 
   @Override
@@ -242,7 +247,7 @@ public final class LaplaceScreen extends Screen implements EquationCanvas.Host {
       return;
     }
     try {
-      preview = liveModel.evaluate(board.formulas());
+      preview = model().evaluate(board.formulas());
     } catch (IllegalArgumentException ex) {
       error = ex.getMessage();
     }
@@ -253,7 +258,7 @@ public final class LaplaceScreen extends Screen implements EquationCanvas.Host {
       var before = board.names();
       action.run();
       try {
-        dirty = !board.formulas().equals(savedEquations);
+        dirty = !board.formulas().equals(savedEquations) || !draftPlan.equals(savedPlan);
       } catch (IllegalArgumentException ex) {
         dirty = true;
       }
@@ -302,7 +307,8 @@ public final class LaplaceScreen extends Screen implements EquationCanvas.Host {
     pending = true;
     awaiting = operation;
     PacketDistributor.sendToServer(
-        new LaplaceNetwork.Request(state.getUUID("session"), operation, selected, true, formulas));
+        new LaplaceNetwork.Request(
+            state.getUUID("session"), operation, selected, true, formulas, draftPlan));
     refreshControls();
   }
 
@@ -531,6 +537,18 @@ public final class LaplaceScreen extends Screen implements EquationCanvas.Host {
     if (viewport == null) canvas.start();
     else canvas.restore(viewport);
     libraryWidgets(libraryWidth);
+    var paymentButton =
+        button(
+            "Payment…",
+            x + w - (compact ? 72 : 90) - 10,
+            previewY + 3,
+            compact ? 72 : 90,
+            14,
+            () -> openModal("payment"));
+    tip(
+        paymentButton,
+        "Choose magicules, aura, HP, SHP, or a percentage mix. The budget equation stays the same."
+            + " Healing and regeneration use magicules/aura only.");
     int applyWidth = compact ? 112 : 145;
     var apply =
         button(
@@ -540,11 +558,19 @@ public final class LaplaceScreen extends Screen implements EquationCanvas.Host {
             applyWidth,
             20,
             () -> request("apply"),
-            () -> !busy() && error.isEmpty() && waitTicks() == 0);
+            () ->
+                !busy()
+                    && error.isEmpty()
+                    && waitTicks() == 0
+                    && !chosen().getBoolean("requiresStop"));
     tip(
         apply,
-        "Save these equations, enable this action and turn on Universal Formula. Other previously"
-            + " enabled actions resume too. The server checks ownership, costs and limits.");
+        (chosen().getBoolean("requiresStop")
+                ? "Turn Self-Regeneration off before applying changes.\n"
+                : "")
+            + "Save these equations and payment, enable this action and turn on Universal Formula."
+            + " Other previously enabled actions resume too. The server checks ownership, costs and"
+            + " limits.");
     if (savedEnabled()) {
       var disable =
           button(
@@ -670,6 +696,10 @@ public final class LaplaceScreen extends Screen implements EquationCanvas.Host {
 
   private void openModal(String kind) {
     modal = kind;
+    if (kind.equals("payment")) {
+      modalPlan = draftPlan;
+      paymentError = "";
+    }
     modalError = "";
     helpScroll = 0;
     temporaryPreview = null;
@@ -686,10 +716,19 @@ public final class LaplaceScreen extends Screen implements EquationCanvas.Host {
 
   private void modalControls() {
     int mw = Math.min(w - 18, 430),
-        mh = Math.min(h - 14, modal.equals("more") ? 230 : modal.equals("help") ? 240 : 150),
+        mh =
+            Math.min(
+                h - 14,
+                modal.equals("payment")
+                    ? 260
+                    : modal.equals("more") ? 230 : modal.equals("help") ? 240 : 150),
         mx = x + (w - mw) / 2,
         my = y + (h - mh) / 2;
     button("×", mx + mw - 24, my + 6, 17, 17, this::closeModal, () -> true);
+    if (modal.equals("payment")) {
+      paymentControls(mx, my, mw, mh);
+      return;
+    }
     if (modal.equals("number") || modal.equals("text")) {
       String initial =
           modal.equals("number")
@@ -873,12 +912,12 @@ public final class LaplaceScreen extends Screen implements EquationCanvas.Host {
         if (numberTarget != null) {
           var test = new EquationBoard(board.formulas());
           test.drop(numberTarget, n);
-          temporaryPreview = liveModel.evaluate(test.formulas());
+          temporaryPreview = model().evaluate(test.formulas());
         }
       } else {
         var test = new EquationBoard(board.formulas());
         test.text(selection.equation(), value);
-        temporaryPreview = liveModel.evaluate(test.formulas());
+        temporaryPreview = model().evaluate(test.formulas());
       }
     } catch (IllegalArgumentException ex) {
       modalError = ex.getMessage();
@@ -1087,7 +1126,8 @@ public final class LaplaceScreen extends Screen implements EquationCanvas.Host {
         return true;
       }
       if (hasControlDown() && key == GLFW.GLFW_KEY_ENTER) {
-        if (error.isEmpty() && waitTicks() == 0) request("apply");
+        if (error.isEmpty() && waitTicks() == 0 && !chosen().getBoolean("requiresStop"))
+          request("apply");
         return true;
       }
       if (getFocused() == canvas) {
@@ -1228,6 +1268,196 @@ public final class LaplaceScreen extends Screen implements EquationCanvas.Host {
     }
   }
 
+  private String billText(PaymentPlan.Bill b) {
+    var parts = new ArrayList<String>();
+    if (b.magicules() > 0) parts.add(EquationModel.pretty(b.magicules()) + " MP");
+    if (b.aura() > 0) parts.add(EquationModel.pretty(b.aura()) + " aura");
+    if (b.hp() > 0) parts.add(EquationModel.pretty(b.hp()) + " HP");
+    if (b.shp() > 0) parts.add(EquationModel.pretty(b.shp()) + " SHP");
+    return parts.isEmpty() ? "No cost" : String.join(" + ", parts);
+  }
+
+  private double[] percentages(PaymentPlan plan) {
+    return new double[] {
+      plan.magicules() * 100, plan.aura() * 100, plan.hp() * 100, plan.shp() * 100
+    };
+  }
+
+  private void paymentControls(int mx, int my, int mw, int mh) {
+    String[] names = {"Magicules", "Aura", "HP", "SHP"};
+    PaymentPlan[] presets = {
+      PaymentPlan.MAGICULES, PaymentPlan.AURA, PaymentPlan.HP, PaymentPlan.SHP
+    };
+    int col = (mw - 28) / 4, fieldY = my + (mh < 220 ? 65 : 72);
+    for (int n = 0; n < 4; n++) {
+      int choice = n;
+      var b =
+          button(
+              names[n],
+              mx + 14 + n * col,
+              my + 31,
+              col - 4,
+              18,
+              () -> {
+                var v = percentages(presets[choice]);
+                for (int k = 0; k < 4; k++) shares[k].setValue(EquationModel.pretty(v[k]));
+              },
+              () -> !busy() && (choice < 2 || liveModel.payment().allowVital()));
+      tip(
+          b,
+          choice < 2
+              ? "Pay the full balanced budget with " + names[n] + "."
+              : "Leaves at least 1 " + names[n] + ". Not available for healing or regeneration.");
+      shares[n] =
+          new EditBox(
+              font,
+              mx + 14 + n * col,
+              fieldY,
+              col - 5,
+              18,
+              Component.literal(names[n] + " percentage"));
+      shares[n].setMaxLength(12);
+      shares[n].setValue(EquationModel.pretty(percentages(modalPlan)[n]));
+      shares[n].setEditable(n < 2 || liveModel.payment().allowVital());
+      addRenderableWidget(shares[n]);
+      tip(
+          shares[n],
+          "Percentage of the cost budget paid in "
+              + names[n]
+              + ". All four shares must total 100%.");
+    }
+    for (var box : shares) box.setResponder(value -> paymentPreview());
+    var use =
+        button(
+            "Use payment mix",
+            mx + 14,
+            my + mh - 29,
+            mw - 28,
+            20,
+            () -> {
+              if (!paymentError.isEmpty() || modalPlan == null) return;
+              draftPlan = modalPlan;
+              edit(() -> {});
+              closeModal();
+            },
+            () -> !busy() && paymentError.isEmpty() && modalPlan != null);
+    tip(
+        use,
+        "Updates this draft. Apply & Enable commits equations and payment together. Closing this"
+            + " dialog discards its changes.");
+    paymentPreview();
+  }
+
+  private void paymentPreview() {
+    paymentError = "";
+    try {
+      double[] v = new double[4];
+      for (int n = 0; n < 4; n++) {
+        v[n] = Double.parseDouble(shares[n].getValue()) / 100;
+      }
+      modalPlan = new PaymentPlan(v[0], v[1], v[2], v[3]);
+      var m = liveModel.withPayment(modalPlan);
+      m.payment().validate();
+      if (board.holes() == 0) m.evaluate(board.formulas());
+    } catch (NumberFormatException ex) {
+      paymentError = "Enter a percentage in every field.";
+      modalPlan = null;
+    } catch (IllegalArgumentException ex) {
+      paymentError = ex.getMessage();
+      modalPlan = null;
+    }
+    refreshControls();
+  }
+
+  private void renderPayment(GuiGraphics g, int mx, int my, int mw, int mh) {
+    boolean small = mh < 220;
+    int col = (mw - 28) / 4;
+    String[] names = {"Magicules %", "Aura %", "HP %", "SHP %"};
+    for (int n = 0; n < 4; n++)
+      g.drawString(
+          font,
+          fit(names[n], col - 5),
+          mx + 14 + n * col,
+          my + (small ? 53 : 59),
+          n >= 2 && !liveModel.payment().allowVital() ? MUTED : TEXT,
+          false);
+    var rates = liveModel.payment().rates();
+    String rate =
+        "1 aura = "
+            + EquationModel.pretty(rates.magiculesPerAura())
+            + " MP eq; 1 HP/SHP = "
+            + EquationModel.pretty(rates.magiculesPerHP())
+            + " / "
+            + EquationModel.pretty(rates.magiculesPerSHP())
+            + " MP eq";
+    g.drawString(
+        font,
+        fit(small ? "Shares must total 100%" : rate, mw - 28),
+        mx + 14,
+        my + (small ? 91 : 102),
+        MUTED,
+        false);
+    String bill = "Fill board inputs to preview payment";
+    double budget = 0;
+    if (modalPlan != null && board.holes() == 0)
+      try {
+        var m = liveModel.withPayment(modalPlan);
+        var r = m.evaluate(board.formulas());
+        budget = r.values().get("magicule_cost");
+        bill = billText(m.bill(r));
+      } catch (IllegalArgumentException ignored) {
+      }
+    if (!small)
+      g.drawString(
+          font,
+          "Cost budget: " + EquationModel.pretty(budget) + " MP eq",
+          mx + 14,
+          my + 118,
+          GOLD,
+          false);
+    g.drawString(
+        font,
+        fit(paymentError.isEmpty() ? bill : paymentError, mw - 28),
+        mx + 14,
+        my + (small ? 105 : 134),
+        paymentError.isEmpty() ? CYAN : 0xffffb0a1,
+        false);
+    if (!small) {
+      if (modalPlan != null) {
+        var v = percentages(modalPlan);
+        String[] res = {"Magicules", "Aura", "HP", "SHP"};
+        double[] div = {
+          1, rates.magiculesPerAura(), rates.magiculesPerHP(), rates.magiculesPerSHP()
+        };
+        for (int n = 0; n < 4; n++)
+          g.drawString(
+              font,
+              fit(
+                  res[n]
+                      + " = budget × "
+                      + EquationModel.pretty(v[n])
+                      + "% / "
+                      + EquationModel.pretty(div[n]),
+                  mw - 28),
+              mx + 14,
+              my + 154 + n * 12,
+              MUTED,
+              false);
+      }
+      g.drawString(
+          font,
+          fit(
+              liveModel.payment().allowVital()
+                  ? "All-or-nothing payment · HP/SHP retain at least 1"
+                  : "Healing & regeneration: magicules / aura only",
+              mw - 28),
+          mx + 14,
+          my + 208,
+          GOLD,
+          false);
+    }
+  }
+
   private void renderPreview(GuiGraphics g) {
     var r = result();
     int pw = w - 20, xx = x + 10;
@@ -1255,10 +1485,11 @@ public final class LaplaceScreen extends Screen implements EquationCanvas.Host {
     g.drawString(
         font, fit(value, split - 16), xx + 8, previewY + 18, r == null ? MUTED : CYAN, false);
     String cost = liveModel.costOutputs().getFirst();
-    g.drawString(font, "MAGICULE BILL", xx + split + 8, previewY + 5, GOLD, false);
+    g.drawString(
+        font, compact ? "PAYMENT" : "RESOURCE PAYMENT", xx + split + 8, previewY + 5, GOLD, false);
     g.drawString(
         font,
-        r == null ? "—" : EquationModel.pretty(r.values().get(cost)) + " MP",
+        r == null ? "—" : fit(billText(model().bill(r)), pw - split - 16),
         xx + split + 8,
         previewY + 18,
         CYAN,
@@ -1267,9 +1498,9 @@ public final class LaplaceScreen extends Screen implements EquationCanvas.Host {
       String detail =
           r == null
               ? error
-              : "Rule minimum "
-                  + EquationModel.pretty(r.minimumCosts().get(cost))
-                  + " MP · before other cost modifiers";
+              : "Budget "
+                  + EquationModel.pretty(r.values().get(cost))
+                  + " MP eq · before native cost modifiers";
       g.drawString(font, fit(detail, pw - split - 16), xx + split + 8, previewY + 34, MUTED, false);
       g.drawString(
           font,
@@ -1318,7 +1549,12 @@ public final class LaplaceScreen extends Screen implements EquationCanvas.Host {
 
   private void renderModal(GuiGraphics g, int mouseX, int mouseY, float dt) {
     int mw = Math.min(w - 18, 430),
-        mh = Math.min(h - 14, modal.equals("more") ? 230 : modal.equals("help") ? 240 : 150),
+        mh =
+            Math.min(
+                h - 14,
+                modal.equals("payment")
+                    ? 260
+                    : modal.equals("more") ? 230 : modal.equals("help") ? 240 : 150),
         mx = x + (w - mw) / 2,
         my = y + (h - mh) / 2;
     g.fill(x + 1, y + 28, x + w - 1, y + h - 1, 0xd0071620);
@@ -1327,6 +1563,7 @@ public final class LaplaceScreen extends Screen implements EquationCanvas.Host {
     g.renderOutline(mx, my, mw, mh, EDGE);
     String heading =
         switch (modal) {
+          case "payment" -> "Choose resource payment";
           case "number" -> "Choose a number";
           case "text" -> "Advanced formula";
           case "more" -> "Board tools";
@@ -1335,16 +1572,21 @@ public final class LaplaceScreen extends Screen implements EquationCanvas.Host {
           default -> "How the equation board works";
         };
     g.drawString(font, heading, mx + 14, my + 11, GOLD, false);
+    if (modal.equals("payment")) {
+      renderPayment(g, mx, my, mw, mh);
+      for (var widget : renderables) widget.render(g, mouseX, mouseY, dt);
+      return;
+    }
     String body =
         switch (modal) {
           case "number", "text" ->
               modalError.isEmpty()
                   ? (temporaryPreview == null
                       ? "Press Enter to use this value."
-                      : "Preview updated. Magicule bill: "
+                      : "Preview updated. Cost budget: "
                           + EquationModel.pretty(
                               temporaryPreview.values().get(liveModel.costOutputs().getFirst()))
-                          + " MP")
+                          + " MP eq")
                   : modalError;
           case "switch", "close" ->
               "Your board has unapplied changes. Keep editing, or discard this draft.";
@@ -1357,7 +1599,9 @@ public final class LaplaceScreen extends Screen implements EquationCanvas.Host {
                   + "Scroll pans; Shift-scroll pans sideways; Ctrl-scroll zooms. Drag blank board"
                   + " space to pan. Fit shows all equations. Ctrl+Z undoes.\n\n"
                   + "Apply & Enable saves the action and turns Universal Formula on. Preview shows"
-                  + " formula values before other modifiers. Native balance limits still apply.";
+                  + " formula values before other modifiers. Payment chooses a resource mix; HP/SHP"
+                  + " costs must leave 1 point. Healing/regeneration cannot pay HP/SHP. Native"
+                  + " balance limits still apply.";
           default -> "";
         };
     int yy = my + (modal.equals("number") || modal.equals("text") ? 68 : 34), limit = my + mh - 36;

@@ -40,6 +40,44 @@ public final class Laplace {
     return result;
   }
 
+  public static PaymentPlan readPlan(net.minecraft.nbt.CompoundTag row) {
+    if (!row.contains("payment")) return PaymentPlan.MAGICULES;
+    var p = row.getCompound("payment");
+    for (String key : List.of("magicules", "aura", "hp", "shp"))
+      if (!p.contains(key, net.minecraft.nbt.Tag.TAG_DOUBLE))
+        throw new IllegalArgumentException("Invalid saved payment mix.");
+    return new PaymentPlan(
+        p.getDouble("magicules"), p.getDouble("aura"), p.getDouble("hp"), p.getDouble("shp"));
+  }
+
+  public static net.minecraft.nbt.CompoundTag encodePlan(PaymentPlan plan) {
+    var p = new net.minecraft.nbt.CompoundTag();
+    p.putDouble("magicules", plan.magicules());
+    p.putDouble("aura", plan.aura());
+    p.putDouble("hp", plan.hp());
+    p.putDouble("shp", plan.shp());
+    return p;
+  }
+
+  public static PaymentPlan payment(LivingEntity e, String key) {
+    try {
+      return owned(e)
+          .map(i -> readPlan(i.getOrCreateTag().getCompound(PROFILES).getCompound(key)))
+          .orElse(PaymentPlan.MAGICULES);
+    } catch (IllegalArgumentException ex) {
+      return PaymentPlan.MAGICULES;
+    }
+  }
+
+  private static boolean paymentValid(ManasSkillInstance i, String key) {
+    try {
+      readPlan(i.getOrCreateTag().getCompound(PROFILES).getCompound(key));
+      return true;
+    } catch (IllegalArgumentException ex) {
+      return false;
+    }
+  }
+
   public static boolean enabled(ManasSkillInstance i, String key) {
     return i.getOrCreateTag().getCompound(PROFILES).getCompound(key).getBoolean("enabled");
   }
@@ -47,7 +85,7 @@ public final class Laplace {
   public static boolean effectiveEnabled(LivingEntity e, ManasSkillInstance i, String key) {
     var rows = i.getOrCreateTag().getCompound(PROFILES);
     return rows.getAllKeys().stream()
-        .filter(k -> enabled(i, k))
+        .filter(k -> enabled(i, k) && paymentValid(i, k))
         .sorted()
         .limit(capacity(e))
         .anyMatch(key::equals);
@@ -62,6 +100,11 @@ public final class Laplace {
 
   public static String save(
       ServerPlayer p, String key, Map<String, String> equations, boolean enable) {
+    return save(p, key, equations, enable, payment(p, key));
+  }
+
+  public static String save(
+      ServerPlayer p, String key, Map<String, String> equations, boolean enable, PaymentPlan plan) {
     var own = owned(p);
     if (own.isEmpty()) return "Learn Laplace first.";
     var i = own.get();
@@ -71,7 +114,12 @@ public final class Laplace {
       return "Wait " + ((remaining(p, i) + 19) / 20) + " seconds before changing another formula.";
     if (!SkillAPI.getSkillsFrom(p).getHeldSkills().isEmpty())
       return "Finish casting before changing equations.";
-    a.model().evaluate(equations);
+    if (enable
+        && a.skill().getSkill()
+            == io.github.manasmods.tensura.registry.skill.CommonSkills.SELF_REGENERATION.get()
+        && a.skill().isToggled())
+      return "Turn Self-Regeneration off before changing its equations or payment.";
+    a.model().withPayment(plan).evaluate(equations);
     var profiles = i.getOrCreateTag().getCompound(PROFILES);
     long enabled =
         profiles.getAllKeys().stream()
@@ -86,6 +134,7 @@ public final class Laplace {
     equations.forEach(values::putString);
     row.put("equations", values);
     row.putBoolean("enabled", enable);
+    row.put("payment", encodePlan(plan));
     profiles.put(key, row);
     i.getOrCreateTag().put(PROFILES, profiles);
     i.getOrCreateTag().putLong("EditUntil", p.level().getGameTime() + 100);

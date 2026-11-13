@@ -92,7 +92,8 @@ public final class LaplaceRuntime {
         m.units(),
         m.powerOutputs(),
         m.costOutputs(),
-        m.powerLimit());
+        m.powerLimit(),
+        m.payment());
   }
 
   public static float regeneration(LivingEntity e, String output, float original) {
@@ -118,6 +119,10 @@ public final class LaplaceRuntime {
   }
 
   private static final ThreadLocal<double[]> HEALING = new ThreadLocal<>();
+
+  public static boolean hasHealing() {
+    return HEALING.get() != null;
+  }
 
   public static void clearHealing() {
     HEALING.remove();

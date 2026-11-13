@@ -1,5 +1,12 @@
 # Changelog
 
+## Additions 1.29.0 — Laplace resource payment
+
+- Add per-action magicule, aura, HP and SHP payment presets and percentage mixes to Equation Editor, with conversion equations and live resource bills. Existing profiles retain magicule payment. Keep the balanced cost equation as an MP-equivalent budget; server-configurable defaults are 1 MP eq per aura and 10 MP eq per HP/SHP.
+- Route the final native bill after casting modifiers and automatic discounts, atomically charging the selected pools once. Retain at least 1 HP/SHP and treat vital payments as direct costs. Converted casts use personal pools; magicule-only casts preserve staff EP funding.
+- Limit healing/regeneration to magicules and aura; converted Healing requires full payment and prices actual recovery. Require Self-Regeneration to be off before applying enabled edits, preserving native upkeep and suppression behavior.
+- Persist and validate payment metadata with owned profiles, reject malformed packet shares, and keep payment drafts through preview refreshes. Update the F8 guide, wiki and release validation with actual-client captures.
+
 ## Additions 1.28.0 — Laplace equation board
 
 - Replace the equation text workflow with a pannable, zoomable board of named outputs, nested input/operator blocks and linked helper equations. Drag to place or swap expressions; Shift-drag copies. Click-to-place, number dialogs, keyboard navigation, undo/redo, reset, advanced text and a compact block drawer remain available.

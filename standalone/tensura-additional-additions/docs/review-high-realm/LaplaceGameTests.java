@@ -136,8 +136,8 @@ public final class LaplaceGameTests {
     var p = player(h);
     laplace(p, false);
     var i = learn(p, CommonSkills.SELF_REGENERATION.get(), true);
-    i.setToggled(true);
     var a = profile(h, p, i, "healing", "base_healing * 2");
+    i.setToggled(true);
     double nativeHeal = a.model().inputs().get("base_healing");
     near(
         h,
@@ -318,6 +318,23 @@ public final class LaplaceGameTests {
     h.succeed();
   }
 
+  /** Inspect native spawn events, independently of terrain/impact survival on later ticks. */
+  private static List<TensuraFlyingProjectile> spawned(ServerPlayer owner, Runnable cast) {
+    var shots = new ArrayList<TensuraFlyingProjectile>();
+    java.util.function.Consumer<net.neoforged.neoforge.event.entity.EntityJoinLevelEvent> listener =
+        event -> {
+          if (event.getEntity() instanceof TensuraFlyingProjectile p && p.getOwner() == owner)
+            shots.add(p);
+        };
+    net.neoforged.neoforge.common.NeoForge.EVENT_BUS.addListener(listener);
+    try {
+      cast.run();
+    } finally {
+      net.neoforged.neoforge.common.NeoForge.EVENT_BUS.unregister(listener);
+    }
+    return shots;
+  }
+
   @GameTest(template = "empty", timeoutTicks = 100)
   public static void waterRepeatAndWindUseTheirPaidComponents(GameTestHelper h) {
     var p = player(h);
@@ -325,56 +342,32 @@ public final class LaplaceGameTests {
     var wind = learn(p, AspectualMagics.WIND_CUTTER.get(), true);
     var a = profile(h, p, wind, "magic_damage", "base_magic_damage * 2");
     var expected = a.model().evaluate(Laplace.equations(Laplace.owned(p).orElseThrow(), a));
-    wind.getSkill().onRelease(wind, p, 1000, 0, 0);
-    h.runAfterDelay(
-        2,
-        () -> {
-          var shots =
-              p.serverLevel()
-                  .getEntitiesOfClass(
-                      TensuraFlyingProjectile.class,
-                      p.getBoundingBox().inflate(24),
-                      e -> e.getOwner() == p);
-          h.assertTrue(shots.size() == 3, "Mastered Wind count changed");
-          for (var shot : shots)
-            near(
-                h,
-                shot.getSecondaryDamage(),
-                expected.values().get("magic_damage"),
-                "Wind Magic component");
-          shots.forEach(net.minecraft.world.entity.Entity::discard);
-          var water = learn(p, AspectualMagics.WATER_CUTTER.get(), true);
-          var wa = LaplaceActions.find(p, water, 1);
-          var eq = new LinkedHashMap<>(wa.model().defaults());
-          eq.put("magic_damage", "base_magic_damage * 2");
-          Laplace.owned(p).orElseThrow().getOrCreateTag().remove("EditUntil");
-          h.assertTrue(Laplace.save(p, wa.key(), eq, true).startsWith("Saved."), "Repeat save");
-          var energy = TensuraStorages.getExistenceFrom(p);
-          double before = energy.getMagicule();
-          var cfg =
-              io.github.manasmods.manascore.config.ConfigRegistry.getConfig(
-                      io.github.manasmods.tensura.config.ability.magic.AspectualMagicConfig.class)
-                  .WaterCutter;
-          water.getSkill().onHeld(water, p, cfg.castTimeRepeat, 1);
-          near(h, before - energy.getMagicule(), cfg.magiculeCostRepeat * 3, "Repeat payment");
-          h.runAfterDelay(
-              2,
-              () -> {
-                var blades =
-                    p.serverLevel()
-                        .getEntitiesOfClass(
-                            TensuraFlyingProjectile.class,
-                            p.getBoundingBox().inflate(32),
-                            e -> e.getOwner() == p);
-                h.assertTrue(blades.size() == 1, "Repeat blade count");
-                near(
-                    h,
-                    blades.getFirst().getSecondaryDamage(),
-                    cfg.magicDamage * 2,
-                    "Repeat output");
-                h.succeed();
-              });
-        });
+    var shots = spawned(p, () -> wind.getSkill().onRelease(wind, p, 1000, 0, 0));
+    h.assertTrue(shots.size() == 3, "Mastered Wind native spawn count: " + shots.size());
+    for (var shot : shots)
+      near(
+          h,
+          shot.getSecondaryDamage(),
+          expected.values().get("magic_damage"),
+          "Wind Magic component");
+    shots.forEach(net.minecraft.world.entity.Entity::discard);
+    var water = learn(p, AspectualMagics.WATER_CUTTER.get(), true);
+    var wa = LaplaceActions.find(p, water, 1);
+    var eq = new LinkedHashMap<>(wa.model().defaults());
+    eq.put("magic_damage", "base_magic_damage * 2");
+    Laplace.owned(p).orElseThrow().getOrCreateTag().remove("EditUntil");
+    h.assertTrue(Laplace.save(p, wa.key(), eq, true).startsWith("Saved."), "Repeat save");
+    var energy = TensuraStorages.getExistenceFrom(p);
+    double before = energy.getMagicule();
+    var cfg =
+        io.github.manasmods.manascore.config.ConfigRegistry.getConfig(
+                io.github.manasmods.tensura.config.ability.magic.AspectualMagicConfig.class)
+            .WaterCutter;
+    var blades = spawned(p, () -> water.getSkill().onHeld(water, p, cfg.castTimeRepeat, 1));
+    near(h, before - energy.getMagicule(), cfg.magiculeCostRepeat * 3, "Repeat payment");
+    h.assertTrue(blades.size() == 1, "Repeat native spawn count: " + blades.size());
+    near(h, blades.getFirst().getSecondaryDamage(), cfg.magicDamage * 2, "Repeat output");
+    h.succeed();
   }
 
   @GameTest(template = "empty", timeoutTicks = 100)

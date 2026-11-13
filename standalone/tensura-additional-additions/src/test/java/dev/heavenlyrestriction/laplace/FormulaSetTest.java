@@ -171,4 +171,56 @@ class FormulaSetTest {
     for (int n = 0; n < 5; n++) eq.put("helper_" + n, "1");
     assertThrows(IllegalArgumentException.class, () -> m.compile(eq));
   }
+
+  @Test
+  void conversionCannotBypassTheConvexBudgetFloor() {
+    var m = model().withPayment(new PaymentPlan(.5, .5, 0, 0));
+    var eq = new LinkedHashMap<>(m.defaults());
+    eq.put("healing", "base_healing * 2");
+    eq.put("magicule_cost", "0");
+    var result = m.evaluate(eq);
+    assertEquals(60, result.values().get("magicule_cost"));
+    assertEquals(new PaymentPlan.Bill(30, 30, 0, 0), m.bill(result));
+  }
+
+  @Test
+  void convertedHealingRoundsBudgetBeforeNativeDiscounts() {
+    var base = model();
+    var m =
+        new EquationModel(
+            base.inputs(),
+            base.bounds(),
+            base.defaults(),
+            base.labels(),
+            base.units(),
+            base.powerOutputs(),
+            base.costOutputs(),
+            base.powerLimit(),
+            new PaymentPlan.Policy(PaymentPlan.AURA, PaymentPlan.Rates.DEFAULT, false, true));
+    var eq = new LinkedHashMap<>(m.defaults());
+    eq.put("magicule_cost", "20.25");
+    var result = m.evaluate(eq);
+    assertEquals(21, result.values().get("magicule_cost"));
+    assertEquals(21, m.bill(result).aura());
+  }
+
+  @Test
+  void excessiveConvertedBillsFailBeforeRenderingOrPayment() {
+    var base = model();
+    var m =
+        new EquationModel(
+            base.inputs(),
+            base.bounds(),
+            base.defaults(),
+            base.labels(),
+            base.units(),
+            base.powerOutputs(),
+            base.costOutputs(),
+            base.powerLimit(),
+            new PaymentPlan.Policy(
+                PaymentPlan.AURA, new PaymentPlan.Rates(.000001, 10, 10), true, false));
+    var eq = new LinkedHashMap<>(m.defaults());
+    eq.put("magicule_cost", "1e150");
+    assertThrows(IllegalArgumentException.class, () -> m.evaluate(eq));
+  }
 }

@@ -46,7 +46,10 @@ public abstract class LaplaceHealingMixin {
               target =
                   "Lio/github/manasmods/tensura/util/EnergyHelper;isOutOfMagiculeConsuming(Lnet/minecraft/world/entity/LivingEntity;D)D"))
   private double laplace$paid(LivingEntity e, double bill, Operation<Double> original) {
-    return LaplaceRuntime.healingShortfall(original.call(e, bill), bill);
+    try (var scope = dev.heavenlyrestriction.laplace.PaymentRouting.healing(e)) {
+      double shortfall = original.call(e, bill);
+      return LaplaceRuntime.healingShortfall(scope.failed() ? bill : shortfall, bill);
+    }
   }
 
   @WrapOperation(

@@ -38,18 +38,18 @@ Movement, maximum aura/magicules, costs and cooldowns remain excluded from expon
 
 Open the editor from a native Tensura ability slot and choose an action. Search narrows the action list; scroll to see more. **NATIVE** means the original formula is running, **LIVE** means the saved edit is active, and **PAUSED** means Universal Formula is off.
 
-The board shows named outputs on the left, connected to their formulas on the right. Each output compares its native and edited values. The lower panel shows the selected output and the final magicule bill.
+The board shows named outputs on the left, connected to their formulas on the right. Each output compares its native and edited values. The lower panel shows the selected output and the resource bill. **Payment…** chooses how the cost budget is paid.
 
 ### Example: boost Wind Cutter
 
 1. Open **Wind Cutter** and choose **Math** in the block library.
 2. Drag **Multiply ×** onto **Base Wind damage**. The board keeps that value and creates a new empty input slot.
-3. Drag **2** into the empty slot. The preview immediately shows twice the Wind component and the resulting magicule bill; the separate Magic component stays unchanged.
+3. Drag **2** into the empty slot. The preview immediately shows twice the Wind component and the resulting cost budget and payment; the separate Magic component stays unchanged.
 4. Choose **Apply & Enable**. This saves the action, enables its edit and turns **Universal Formula** on. Previously enabled actions resume too.
 
 ![A completed Wind Cutter equation](../media/laplace-board-doubled.png)
 
-A **DRAFT** changes only the preview. Your previous applied formula keeps running until you apply the new one. **Disable** restores this action’s native formula and retains its saved equations. It leaves other actions and Universal Formula on. Existing formulas from earlier versions load directly onto the board.
+A **DRAFT** changes only the preview. Your previous applied formula keeps running until you apply the new one. **Disable** restores this action’s native formula and retains its saved equations and payment. It leaves other actions and Universal Formula on. Existing formulas from earlier versions load directly onto the board.
 
 ### Board controls
 
@@ -63,15 +63,39 @@ A **DRAFT** changes only the preview. Your previous applied formula keeps runnin
 | Drag between occupied inputs | Swap the two expressions |
 | **Shift-drag** | Copy an expression into another input |
 | Right-click an operation | Unwrap it while keeping its first input, or clear the input |
-| **Undo / Redo** | Reverse or repeat an edit; Ctrl+Z / Ctrl+Y also work |
+| **Undo / Redo** | Reverse or repeat a board edit; Ctrl+Z / Ctrl+Y also work |
 | **Reset** | Restore this action’s native equations; undo remains available |
 | Drag blank board space or scroll | Pan the board; Shift-scroll pans sideways |
 | **Ctrl-scroll / Fit** | Zoom around the cursor / show the whole board |
+| **Payment…** | Choose one resource or a percentage mix; preview the actual bill |
 | **More** | Helpers, advanced text, cost balancing and control help |
 
 On small screens, **Blocks** opens the library drawer. It closes while dragging so you can reach the board. Scroll within the library to find more blocks. Empty input slots and invalid equations block Apply and explain what needs attention. Arrow keys select inputs while the board is focused; Enter edits a number or places a selected library block, and Delete clears the input.
 
 ![An empty input waiting for a value](../media/laplace-board-empty-slot.png)
+
+### Resource payment
+
+Choose **Payment…** beside the bill. Pick **Magicules**, **Aura**, **HP** or **SHP**, or enter percentages that total **100%**. **Use payment mix** updates the draft; **Apply & Enable** commits both the formulas and payment. Closing the payment dialog cancels its unsaved changes. Existing profiles keep 100% magicule payment.
+
+The **Cost budget** equation keeps the same balance rules. Its value is measured in magicule equivalents (**MP eq**), then divided between your chosen resources:
+
+| Resource | Default exchange rate |
+| --- | --- |
+| Magicules | 1 point pays 1 MP eq |
+| Aura | 1 point pays 1 MP eq |
+| HP | 1 point pays 10 MP eq |
+| SHP | 1 point pays 10 MP eq |
+
+These rates are server-configurable. For example, a **200 MP eq** bill split equally between aura and HP consumes **100 aura + 10 HP**. Native casting cost modifiers and automatic-casting discounts apply before conversion; the board preview is before those modifiers.
+
+![A four-resource payment mix](../media/laplace-payment-mixed.png)
+
+Converted and mixed payments are **all-or-nothing**: every pool must cover its share. HP/SHP payments must leave at least **1 point** and are direct costs, bypassing damage defenses and damage-triggered effects. Converted payment uses the caster’s pools, without spending staff EP. Magicule-only payment keeps Tensura’s normal staff behavior.
+
+**Healing and Self-Regeneration can use only magicules and/or aura.** Healing prices actual missing-HP-clamped recovery, rounds the converted budget up to a whole MP equivalent before native discounts and requires the whole converted payment. Turn **Self-Regeneration off** before applying enabled equation/payment changes; disabling its edit remains available.
+
+![Healing payment restrictions](../media/laplace-payment-healing.png)
 
 ### Linked equations
 
@@ -109,7 +133,7 @@ This initial catalogue exposes **nine action/mode entries across eight native sk
 
 | Native skill / mode | Editable aspects | Damage type |
 | --- | --- | --- |
-| Self-Regeneration | HP per pulse; mastered SHP per pulse; magicule upkeep | None |
+| Self-Regeneration | HP per pulse; mastered SHP per pulse; cost budget and upkeep payment | None |
 | Aspectual Fire | Fire and Magic damage per bolt; cost | Native Fire and Magic |
 | Aspectual Wind Cutter | Wind and Magic damage per blade; cost | Native Wind and Magic |
 | Aspectual Water Cutter — normal / mastered Repeat | Magic damage per blade; cost per use | Native Water Blade and Magic; primary Water damage is unchanged |
@@ -132,8 +156,8 @@ Native projectile counts, target selection, effect levels, cast times, cooldowns
 | Between saved changes | 5 seconds |
 | Helper equations | 4 per action |
 
-For actions with multiple outputs, the output ratio compares their **combined total**. Fixed-cost actions and regeneration upkeep price the strongest possible state of the formula, preventing a cheap activation followed by stronger unpaid pulses. Healing prices the actual missing-HP-clamped recovery; insufficient payment only funds proportional edited healing.
+For actions with multiple outputs, the output ratio compares their **combined total**. Fixed-cost actions and regeneration upkeep price the strongest possible state of the formula, preventing a cheap activation followed by stronger unpaid pulses. Healing prices the actual missing-HP-clamped recovery; magicule-only payment retains native proportional healing on a shortfall, while converted/mixed payment requires the full bill.
 
-The minimum bill is shown separately and enforced even if the cost equation requests less. **More → Balance cost formula** fills a suitable cost equation; the price floor applies automatically when you use Apply & Enable. Finish casting before saving changes. Circular dependencies, unknown inputs, negative output, unsafe divisors and excessively large values are rejected with an explanation. Formula edits cannot add new effect types or rewrite progression, inventory or resources. Invalid saved formulas fall back entirely to the native action.
+The minimum bill is shown separately and enforced even if the cost equation requests less. **More → Balance cost formula** fills a suitable cost equation; the price floor applies automatically when you use Apply & Enable. Finish casting before saving changes. Turn Self-Regeneration off before applying enabled changes to it. Circular dependencies, unknown inputs, negative output, unsafe divisors and excessively large values are rejected with an explanation. Formula edits cannot add new effect types, change inventory or rewrite progression. Payment changes consumption only; it cannot generate resources. Invalid saved formulas fall back entirely to the native action.
 
 **Damage type:** no direct attack; edited attacks keep their native damage type.

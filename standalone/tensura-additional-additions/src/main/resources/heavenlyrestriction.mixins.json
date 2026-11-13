@@ -98,6 +98,8 @@
     "TunerProgressMixin",
     "MetisMenuGuardMixin",
     "LaplaceMagicMixin",
+    "LaplaceMagicPaymentMixin",
+    "LaplaceEnergyPaymentMixin",
     "LaplaceRepeatMixin",
     "LaplaceUpkeepMixin",
     "LaplaceDurationMixin",

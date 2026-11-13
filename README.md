@@ -2,12 +2,12 @@
 
 An active addon for **Tensura: Reincarnated**, **Minecraft 1.21.1** and **NeoForge**.
 
-[Download 1.28.0](releases/TensuraAdditionalAdditions-1.28.0.jar) · [Gameplay wiki](wiki/pages/TensuraAdditionalAdditions.md) · [Development guide](standalone/tensura-additional-additions/README.md) · [Validation](standalone/tensura-additional-additions/docs/VALIDATION-1.28.0.md)
+[Download 1.29.0](releases/TensuraAdditionalAdditions-1.29.0.jar) · [Gameplay wiki](wiki/pages/TensuraAdditionalAdditions.md) · [Development guide](standalone/tensura-additional-additions/README.md) · [Validation](standalone/tensura-additional-additions/docs/VALIDATION-1.29.0.md)
 
 Heavenly Restriction and its race evolutions, Chained/Unbound, Battlewills, Inverted Spear of Heaven, Unique and Ultimate skills, Marauder’s Map, Fusion, Parallel World Jumper, The High Realm and its encounters, Chromatic Orb, Vesper and the Archive of Accord.
 
 
-**New in 1.28.0:** [Laplace’s Equation Editor](wiki/pages/Additions-Laplace.md#equation-editor) is a draggable equation board. Connect inputs and operators, see output and cost changes immediately, then choose **Apply & Enable**.
+**New in 1.29.0:** Laplace’s Equation Editor can pay supported actions with magicules, aura, HP, SHP or a percentage mix. Choose **Payment…**, check the live bill, then **Apply & Enable**. Healing and regeneration use magicules/aura only.
 
 ## Install
 

@@ -11,7 +11,46 @@ public record EquationModel(
     Map<String, String> units,
     List<String> powerOutputs,
     List<String> costOutputs,
-    double powerLimit) {
+    double powerLimit,
+    PaymentPlan.Policy payment) {
+  public EquationModel(
+      Map<String, Double> inputs,
+      Map<String, FormulaSet.Range> bounds,
+      LinkedHashMap<String, String> defaults,
+      Map<String, String> labels,
+      Map<String, String> units,
+      List<String> powerOutputs,
+      List<String> costOutputs,
+      double powerLimit) {
+    this(
+        inputs,
+        bounds,
+        defaults,
+        labels,
+        units,
+        powerOutputs,
+        costOutputs,
+        powerLimit,
+        PaymentPlan.Policy.DEFAULT);
+  }
+
+  public EquationModel withPayment(PaymentPlan plan) {
+    return new EquationModel(
+        inputs,
+        bounds,
+        defaults,
+        labels,
+        units,
+        powerOutputs,
+        costOutputs,
+        powerLimit,
+        payment.withPlan(plan));
+  }
+
+  public PaymentPlan.Bill bill(Result result) {
+    return payment.bill(result.values().get("magicule_cost"));
+  }
+
   public record Result(
       Map<String, Double> values,
       Map<String, Double> nativeValues,
@@ -55,6 +94,7 @@ public record EquationModel(
       Map<String, String> equations,
       Map<String, Double> outputOverrides,
       Map<String, Double> nativeOverrides) {
+    payment.validate();
     var program = compile(equations);
     var nativeProgram = new FormulaSet(defaults, bounds);
     var values = new LinkedHashMap<>(program.evaluate(inputs, outputOverrides));
@@ -75,7 +115,11 @@ public record EquationModel(
     for (String output : costOutputs) {
       double floor = originals.get(output) * price;
       minimum.put(output, floor);
-      values.put(output, Math.max(values.get(output), floor));
+      double charge = Math.max(values.get(output), floor);
+      if (payment.integerBill() && payment.plan().converted()) charge = Math.ceil(charge);
+      payment.bill(
+          charge); // Validate converted amounts before the preview or runtime can use them.
+      values.put(output, charge);
     }
     return new Result(Collections.unmodifiableMap(values), originals, minimum, ratio);
   }

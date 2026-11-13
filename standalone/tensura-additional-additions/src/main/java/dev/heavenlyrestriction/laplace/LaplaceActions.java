@@ -84,8 +84,8 @@ public final class LaplaceActions {
         b.damage(cfg, "fireDamage", "Fire");
         b.cost(field(cfg, "magiculeCost"), "base_cost");
         detail =
-            "Damage per native fire bolt; mastery keeps its native projectile count. Payment and"
-                + " casting time remain native.";
+            "Damage per native fire bolt; mastery keeps its native projectile count and casting"
+                + " time. Payment follows the chosen resource mix.";
       }
       case "tensura:wind_cutter" -> {
         cfg = magic.WindCutter;
@@ -150,7 +150,27 @@ public final class LaplaceActions {
       }
     }
     String title = i.getSkill().getName().getString() + (mode == 1 ? " · Repeat" : "");
-    return new Action(i.getSkillId() + "#" + mode, title, detail, i, mode, b.model());
+    String key = i.getSkillId() + "#" + mode;
+    var raw = b.model();
+    boolean recovery = id.equals("tensura:self_regeneration") || id.equals("tensura:healing");
+    var policy =
+        new PaymentPlan.Policy(
+            Laplace.payment(owner, key),
+            LaplaceConfig.rates(),
+            !recovery,
+            id.equals("tensura:healing"));
+    var model =
+        new EquationModel(
+            raw.inputs(),
+            raw.bounds(),
+            raw.defaults(),
+            raw.labels(),
+            raw.units(),
+            raw.powerOutputs(),
+            raw.costOutputs(),
+            raw.powerLimit(),
+            policy);
+    return new Action(key, title, detail, i, mode, model);
   }
 
   private static String nativeId(ManasSkillInstance i) {
@@ -214,8 +234,8 @@ public final class LaplaceActions {
     void cost(double base, String formula) {
       input("base_cost", base);
       defaults.put("magicule_cost", formula);
-      labels.put("magicule_cost", "Magicule cost");
-      units.put("magicule_cost", "MP");
+      labels.put("magicule_cost", "Cost budget");
+      units.put("magicule_cost", "MP eq");
       costs.add("magicule_cost");
     }
 

@@ -26,8 +26,22 @@ public final class LaplaceNetwork {
   private static final Map<ServerPlayer, Session> SESSIONS = new WeakHashMap<>();
 
   public record Request(
-      UUID session, String operation, String action, boolean enabled, Map<String, String> equations)
+      UUID session,
+      String operation,
+      String action,
+      boolean enabled,
+      Map<String, String> equations,
+      PaymentPlan payment)
       implements CustomPacketPayload {
+    public Request(
+        UUID session,
+        String operation,
+        String action,
+        boolean enabled,
+        Map<String, String> equations) {
+      this(session, operation, action, enabled, equations, PaymentPlan.MAGICULES);
+    }
+
     public static final Type<Request> TYPE = new Type<>(HeavenlyRestriction.id("laplace_request"));
     public static final StreamCodec<RegistryFriendlyByteBuf, Request> CODEC =
         StreamCodec.of(
@@ -36,6 +50,10 @@ public final class LaplaceNetwork {
               b.writeUtf(p.operation, 16);
               b.writeUtf(p.action, 180);
               b.writeBoolean(p.enabled);
+              b.writeDouble(p.payment.magicules());
+              b.writeDouble(p.payment.aura());
+              b.writeDouble(p.payment.hp());
+              b.writeDouble(p.payment.shp());
               if (p.equations.size() > 12) throw new IllegalArgumentException("Too many equations");
               b.writeVarInt(p.equations.size());
               p.equations.forEach(
@@ -49,6 +67,8 @@ public final class LaplaceNetwork {
               var op = b.readUtf(16);
               var action = b.readUtf(180);
               boolean on = b.readBoolean();
+              var plan =
+                  new PaymentPlan(b.readDouble(), b.readDouble(), b.readDouble(), b.readDouble());
               int n = b.readVarInt();
               if (n < 0 || n > 12) throw new IllegalArgumentException("Too many equations");
               var eq = new LinkedHashMap<String, String>();
@@ -56,7 +76,7 @@ public final class LaplaceNetwork {
                 String k = b.readUtf(32), v = b.readUtf(160);
                 if (eq.put(k, v) != null) throw new IllegalArgumentException("Duplicate equation");
               }
-              return new Request(id, op, action, on, eq);
+              return new Request(id, op, action, on, eq, plan);
             });
 
     public Type<Request> type() {
@@ -75,7 +95,7 @@ public final class LaplaceNetwork {
   }
 
   public static void register(RegisterPayloadHandlersEvent e) {
-    var r = e.registrar("1");
+    var r = e.registrar("2");
     r.playToServer(
         Request.TYPE,
         Request.CODEC,
@@ -132,9 +152,9 @@ public final class LaplaceNetwork {
     String notice = "";
     try {
       switch (r.operation) {
-        case "save" -> notice = Laplace.save(p, r.action, r.equations, r.enabled);
+        case "save" -> notice = Laplace.save(p, r.action, r.equations, r.enabled, r.payment);
         case "apply" -> {
-          notice = Laplace.save(p, r.action, r.equations, true);
+          notice = Laplace.save(p, r.action, r.equations, true, r.payment);
           if (notice.startsWith("Saved.")) {
             var laplace = Laplace.owned(p).orElseThrow();
             if (!laplace.isToggled()) laplace.onToggleOn(p);
@@ -213,6 +233,11 @@ public final class LaplaceNetwork {
       row.putString("icon", a.skill().getSkill().getSkillIcon().toString());
       row.putBoolean("enabled", Laplace.effectiveEnabled(p, own.get(), a.key()));
       row.put("model", encode(a.model()));
+      row.putBoolean(
+          "requiresStop",
+          a.skill().getSkill()
+                  == io.github.manasmods.tensura.registry.skill.CommonSkills.SELF_REGENERATION.get()
+              && a.skill().isToggled());
       var eq = new CompoundTag();
       Laplace.equations(own.get(), a).forEach(eq::putString);
       row.put("equations", eq);
@@ -249,6 +274,12 @@ public final class LaplaceNetwork {
             });
     t.put("outputs", outputs);
     t.putDouble("limit", m.powerLimit());
+    t.put("payment", Laplace.encodePlan(m.payment().plan()));
+    t.putDouble("perAura", m.payment().rates().magiculesPerAura());
+    t.putDouble("perHP", m.payment().rates().magiculesPerHP());
+    t.putDouble("perSHP", m.payment().rates().magiculesPerSHP());
+    t.putBoolean("allowVital", m.payment().allowVital());
+    t.putBoolean("integerBill", m.payment().integerBill());
     return t;
   }
 
@@ -276,7 +307,22 @@ public final class LaplaceNetwork {
       else costs.add(k);
     }
     return new EquationModel(
-        inputs, bounds, defaults, labels, units, power, costs, t.getDouble("limit"));
+        inputs,
+        bounds,
+        defaults,
+        labels,
+        units,
+        power,
+        costs,
+        t.getDouble("limit"),
+        t.contains("payment")
+            ? new PaymentPlan.Policy(
+                Laplace.readPlan(t),
+                new PaymentPlan.Rates(
+                    t.getDouble("perAura"), t.getDouble("perHP"), t.getDouble("perSHP")),
+                t.getBoolean("allowVital"),
+                t.getBoolean("integerBill"))
+            : PaymentPlan.Policy.DEFAULT);
   }
 
   private LaplaceNetwork() {}

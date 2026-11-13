@@ -434,6 +434,118 @@ public final class LaplaceReview {
           phase = 18;
         }
         case 18 -> {
+          click("Payment…");
+          phase = 19;
+        }
+        case 19 -> {
+          shot("laplace-payment-compact");
+          click("Aura");
+          click("Use payment mix");
+          check(
+              ((LaplaceScreen) mc.screen).model().payment().plan().equals(PaymentPlan.AURA),
+              "Aura draft not selected");
+          click("Payment…");
+          click("HP");
+          mc.screen.keyPressed(256, 0, 0);
+          check(
+              ((LaplaceScreen) mc.screen).model().payment().plan().equals(PaymentPlan.AURA),
+              "Cancel changed payment draft");
+          mc.options.guiScale().set(2);
+          mc.resizeDisplay();
+          click("Payment…");
+          phase = 20;
+        }
+        case 20 -> {
+          var fields =
+              mc.screen.children().stream()
+                  .filter(c -> c instanceof EditBox)
+                  .map(c -> (EditBox) c)
+                  .toList();
+          check(fields.size() == 4, "Missing resource shares");
+          for (var field : fields) field.setValue("25");
+          phase = 21;
+        }
+        case 21 -> {
+          shot("laplace-payment-mixed");
+          var fields =
+              mc.screen.children().stream()
+                  .filter(c -> c instanceof EditBox)
+                  .map(c -> (EditBox) c)
+                  .toList();
+          fields.getFirst().setValue("99");
+          var apply =
+              mc.screen.children().stream()
+                  .filter(
+                      c ->
+                          c instanceof AbstractButton b
+                              && b.getMessage().getString().equals("Use payment mix"))
+                  .map(c -> (AbstractButton) c)
+                  .findFirst()
+                  .orElseThrow();
+          check(!apply.active, "Invalid percentage sum accepted");
+          fields.getFirst().setValue("25");
+          click("Use payment mix");
+          phase = 22;
+        }
+        case 22 -> {
+          if (state().getLong("wait") > 0) return;
+          check(
+              ((LaplaceScreen) mc.screen)
+                  .model()
+                  .payment()
+                  .plan()
+                  .equals(new PaymentPlan(.25, .25, .25, .25)),
+              "Mix did not update draft");
+          shot("laplace-payment-preview");
+          click("Apply & Enable");
+          phase = 23;
+        }
+        case 23 -> {
+          if (!state().getString("notice").startsWith("Applied.")) return;
+          var row =
+              state().getList("rows", 10).stream()
+                  .map(t -> (CompoundTag) t)
+                  .filter(t -> t.getString("key").contains("wind_cutter"))
+                  .findFirst()
+                  .orElseThrow();
+          check(
+              LaplaceNetwork.decode(row.getCompound("model"))
+                  .payment()
+                  .plan()
+                  .equals(new PaymentPlan(.25, .25, .25, .25)),
+              "Server did not persist payment mix");
+          shot("laplace-payment-live");
+          click("‹ Actions");
+          mc.screen.children().stream()
+              .filter(c -> c instanceof EditBox)
+              .map(c -> (EditBox) c)
+              .findFirst()
+              .orElseThrow()
+              .setValue("healing");
+          clickPrefix("Healing");
+          click("Payment…");
+          phase = 24;
+        }
+        case 24 -> {
+          shot("laplace-payment-healing");
+          for (String name : List.of("HP", "SHP")) {
+            var b =
+                mc.screen.children().stream()
+                    .filter(
+                        c ->
+                            c instanceof AbstractButton v
+                                && v.getMessage().getString().equals(name))
+                    .map(c -> (AbstractButton) c)
+                    .findFirst()
+                    .orElseThrow();
+            check(!b.active, "Recovery vital preset not disabled");
+          }
+          mc.screen.keyPressed(256, 0, 0);
+          Files.writeString(
+              OUT.resolve("passed-resource-payment.txt"),
+              "Actual native client: payment presets, cancel preserves draft, four-way mix, invalid"
+                  + " percentages blocked, live bill, Apply & Enable server persistence, healing"
+                  + " vital guard, 320×180 layout passed.");
           mc.options.guiScale().set(oldScale);
           mc.options.hideGui = oldHide;
           mc.resizeDisplay();
